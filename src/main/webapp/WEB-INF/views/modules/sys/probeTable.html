@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>探针列表</title>
+    #parse("sys/areaHeader.html")  <!--导入CSS和js文件-->
+    <link href="${rc.contextPath}/statics/css/probe.css" rel="stylesheet">  <!--自定义CSS-->
+</head>
+<body>
+
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5 class="fontcolor">测试机管理</h5>
+                </div>
+                <div class="ibox-content" style="padding-bottom: 0">
+                    <div class="row">
+                        <form class="form-horizontal" id="searchcolums" role="form">
+                            <div class="input-group searchspan">
+                                <span class="searchname" title="测试机名">测试机名：</span>
+                                <input type="text" class="form-control" name="name" style="width: 110px" value="">
+                            </div>
+
+
+                            <div class="input-group searchspan">
+                                <span class="searchname" title="IP地址">IP地址：</span>
+                                <input type="text" class="form-control" name="ip" style="width: 110px" value="">
+                            </div>
+
+
+                            <div class="input-group searchspan">
+                                <span class="searchname" title="地市">地市：</span>
+                                <select class="form-control" name="city_man" style="width: 110px">
+                                    <option value="">---请选择---</option>
+                                    <option v-for="item in city_mans">{{ item.message }}</option>
+                                </select>
+                            </div>
+
+
+                            <div class="input-group searchspan">
+                                <span class="searchname" title="区县">区县：</span>
+                                <select class="form-control " name="county" style="width: 110px">
+                                    <option value="">---请选择---</option>
+                                    <option v-for="item in countys">{{ item.message }}</option>
+                                </select>
+                            </div>
+
+
+                            <div class="input-group searchspan">
+                                <span class="searchname" title="软件标识">软件标识：</span>
+                                <input class="form-control" type="text" name="useruid" style="width: 110px"
+                                       value="">
+                            </div>
+
+
+                            <div class="input-group searchspan">
+                                <span class="searchname" title="硬件编码">硬件编码：</span>
+                                <input class="form-control" type="text" name="sysuuid" style="width: 110px"
+                                       value="">
+                            </div>
+
+
+                            <div class="input-group searchspan">
+                                <span class="searchname" title="测试任务组">测试任务组：</span>
+                                <select class="form-control" name="testgroup_name" style="width: 110px">
+                                    <option value="">---请选择---</option>                       <!--vue 绑定value属性    重要！！！！-->
+                                    <option v-for="item in testgroup_names" v-bind:value="item.message.name">{{ item.message.name }}</option>
+                                </select>
+                            </div>
+
+                            <div class="input-group searchspan">
+                                <span class="searchname" title="探针类型">探针类型：</span>
+                                <input class="form-control" type="text" name="model" style="width: 110px" value="">
+                            </div>
+
+
+                            <div class="input-group searchspan">
+                                <span class="searchname" title="BRAS名称">BRAS名称：</span>
+                                <input class="form-control" type="text" name="brasname" style="width: 110px"
+                                       value="">
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="probe_table">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title fontcolor" id="handle" style="padding-bottom: 0px !important;">
+                    <button type="button" class="btn btn-default " v-on:click="testagentadd"><span
+                            class="glyphicon glyphicon-plus"></span>录入
+                    </button>
+                    <button type="button" class="btn btn-default " v-on:click="testagentupdate"><span
+                            class="glyphicon glyphicon-pencil"></span>编辑
+                    </button>
+                    <button type="button" class="btn btn-default " v-on:click="testagentdelBatch"><span
+                            class="glyphicon glyphicon-trash"></span>批量删除
+                    </button>
+                    <button type="button" class="btn btn-default "
+                            v-on:click="testagentview"><span
+                            class="glyphicon glyphicon-zoom-in"></span>查看
+                    </button>
+                    <button id="excel_import" type="button" class="btn btn-default "><span
+                            class="glyphicon glyphicon-save"></span>Excel数据导入
+                    </button>
+                    <button type="button" class="btn btn-default "><a href="../sys/upload/download/testagent"
+                                                                      class="fontcolor"><span
+                            class="glyphicon glyphicon-open"></span>Excel导出</a>
+                    </button>
+                    <div class="btn-group pull-right">
+                        <button type="button" class="btn btn-default " style="margin-right: 5px"
+                                v-on:click="testagentListsearch"><span
+                                class="glyphicon glyphicon-zoom-in"></span>查询
+                        </button>
+                        <button type="button" class="btn btn-default " v-on:click="reset"><span
+                                class="glyphicon glyphicon-refresh"></span>重置
+                        </button>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="row " style="overflow-x: scroll">     <!--表格 verflow-x: scroll超出滚动-->
+                        <table class="table table-bordered " id="probedata_table"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 模态框（Modal） -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="width: 768px"> <!--修改bootstrap modal模态框的宽度-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">{{modaltitle}}</h4>
+                </div>
+                <div class="row" id="probeform_title">
+                    <div class="col-lg-3 col-md-2 col-sm-3">
+                        <h4 class="fontcolor probeformtitle_border">表单信息管理</h4>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <form class="form-horizontal" id="probeform_data" role="form">
+                            <div class="form-group row">
+                                <label for="id"
+                                       class="col-lg-3 col-md-3 col-sm-3 control-label form_border" style="display: none">id:</label>
+                                <div class="col-lg-3 col-md-3 col-sm-3 form_border" style="display: none">
+                                    <input type="text" class="form-control" id="id" name="id"
+                                           placeholder="请输入id">
+                                </div>
+                                <label for="name"
+                                       class="col-lg-3 col-md-3 col-sm-3 control-label form_border">测试机名:</label>
+                                <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                    <input type="text" class="form-control" id="name" name="name"
+                                           placeholder="请输入测试机名">
+                                </div>
+                                <label for="ip"
+                                       class="col-lg-3 col-md-3 col-sm-3 control-label form_border">IP地址:</label>
+                                <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                    <input type="text" class="form-control" id="ip" name="ip"
+                                           placeholder="请输入IP地址">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="bandwidth"
+                                       class="col-lg-3 col-md-3 col-sm-3 control-label form_border">带宽:</label>
+                                <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                    <input type="text" class="form-control" id="bandwidth" name="bandwidth"
+                                           placeholder="请输入带宽">
+                                </div>
+                                <label for="cityMan"
+                                       class="col-lg-3 col-md-3 col-sm-3 control-label form_border">地市:</label>
+                                <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                    <select id="cityMan" class="form-control" name="cityMan">  <!--VUE列表渲染-->
+                                        <option v-for="item in city_mans">
+                                            {{ item.message }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="county"
+                                       class="col-lg-3 col-md-3 col-sm-3 control-label form_border">区县:</label>
+                                <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                    <select id="county" class="form-control" name="county">  <!--VUE列表渲染-->
+                                        <option v-for="item in countys">
+                                            {{ item.message }}
+                                        </option>
+                                    </select>
+                                </div>
+                                <label for="testgroupName"
+                                       class="col-lg-3 col-md-3 col-sm-3 control-label form_border">测试任务组:</label>
+                                <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                    <select id="testgroupName" class="form-control" name="testgroupName">
+                                        <option v-for="item in testgroup_names">
+                                            {{ item.message.name }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="runInterval" class="col-lg-3 col-md-3 col-sm-3 control-label form_border">任务间隔:</label>
+                                <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                    <input type="text" class="form-control" id="runInterval" name="runInterval"
+                                           placeholder="请输入任务间隔">
+                                </div>
+                                <label for="address"
+                                       class="col-lg-3 col-md-3 col-sm-3 control-label form_border">装机地址:</label>
+                                <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                    <input type="text" class="form-control" id="address" name="address"
+                                           placeholder="请输入装机地址">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="brasname" class="col-lg-3 col-md-3 col-sm-3 control-label form_border">BRAS名称:</label>
+                                <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                    <input type="text" class="form-control" id="brasname" name="brasname"
+                                           placeholder="请输入BRAS名称">
+                                </div>
+                                <label for="brasip" class="col-lg-3 col-md-3 col-sm-3 control-label form_border">BRAS_IP:</label>
+                                <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                    <input type="text" class="form-control" id="brasip" name="brasip"
+                                           placeholder="请输入BRAS_IP">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="brasport" class="col-lg-3 col-md-3 col-sm-3 control-label form_border">BRAS端口:</label>
+                                <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                    <input type="text" class="form-control" id="brasport" name="brasport"
+                                           placeholder="请输入BRAS名称">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" v-on:click="submit">确定</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    <!-- 删除确认模态框（Modal） -->
+    <div class="modal fade" id="myModal_delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" style="width: 200px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel_delet">
+                        确认
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <b>确定删除吗?</b>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" v-on:click="cancel_delete">取消
+                    </button>
+                    <button type="button" class="btn btn-primary" v-on:click="delete_data">确定</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+</div>
+
+<script type="text/javascript" src="${rc.contextPath}/js/modules/sys/probeTable.js?_${date.systemTime}"></script>
+
+
+</body>
+
+</html>
