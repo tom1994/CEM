@@ -50,7 +50,6 @@
           id="style_color"/>
     <link href="../../statics/assets/layouts/layout/css/custom.min.css" rel="stylesheet" type="text/css"/>
     <!-- END THEME LAYOUT STYLES -->
-    <link rel="shortcut icon" href="favicon.ico"/>
 </head>
 <!--END Metronic All Links-->
 
@@ -300,15 +299,15 @@
                 <!-- BEGIN PAGE HEADER-->
                 <!-- BEGIN PAGE BAR -->
                 <!--<div class="page-bar">-->
-                    <!--<ul class="page-breadcrumb">-->
-                        <!--<li>-->
-                            <!--<a href="index.html">Home</a>-->
-                            <!--<i class="fa fa-circle"></i>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<span>Dashboard</span>-->
-                        <!--</li>-->
-                    <!--</ul>-->
+                <!--<ul class="page-breadcrumb">-->
+                <!--<li>-->
+                <!--<a href="index.html">Home</a>-->
+                <!--<i class="fa fa-circle"></i>-->
+                <!--</li>-->
+                <!--<li>-->
+                <!--<span>Dashboard</span>-->
+                <!--</li>-->
+                <!--</ul>-->
                 <!--</div>-->
                 <!-- END PAGE BAR -->
                 <!-- BEGIN PAGE TITLE-->
@@ -318,7 +317,8 @@
                 <!-- END PAGE TITLE-->
                 <!-- Main content -->
                 <section class="content" style="background:#fff;">
-                    <iframe scrolling="yes" frameborder="0" style="width:100%;min-height:200px;overflow:visible;background:#fff;" :src="main"></iframe>
+                    <iframe scrolling="yes" frameborder="0"
+                            style="width:100%;min-height:200px;overflow:visible;background:#fff;" :src="main"></iframe>
                 </section>
                 <!-- /.content -->
                 <!-- END PAGE HEADER-->
@@ -345,6 +345,7 @@
 
 <script type="text/javascript">
     var flag = true;
+
     function downloadJSAtOnload() {
         if (flag) {
             console.log("load layout!!!!");
@@ -354,6 +355,7 @@
             flag = false;
         }
     }
+
     //    if (window.addEventListener)
     //        window.addEventListener("load", downloadJSAtOnload, false);
     //    else if (window.attachEvent)

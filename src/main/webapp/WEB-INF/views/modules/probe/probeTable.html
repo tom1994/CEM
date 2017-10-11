@@ -14,20 +14,14 @@
         <div class="col-lg-12 col-md-12 col-sm-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5 class="fontcolor">测试机管理</h5>
+                    <h5 class="fontcolor">探针管理</h5>
                 </div>
                 <div class="ibox-content" style="padding-bottom: 0">
                     <div class="row">
                         <form class="form-horizontal" id="searchcolums" role="form">
                             <div class="input-group searchspan">
-                                <span class="searchname" title="测试机名">测试机名：</span>
+                                <span class="searchname" title="测试机名">探针名：</span>
                                 <input type="text" class="form-control" name="name" style="width: 110px" value="">
-                            </div>
-
-
-                            <div class="input-group searchspan">
-                                <span class="searchname" title="IP地址">IP地址：</span>
-                                <input type="text" class="form-control" name="ip" style="width: 110px" value="">
                             </div>
 
 
@@ -50,21 +44,7 @@
 
 
                             <div class="input-group searchspan">
-                                <span class="searchname" title="软件标识">软件标识：</span>
-                                <input class="form-control" type="text" name="useruid" style="width: 110px"
-                                       value="">
-                            </div>
-
-
-                            <div class="input-group searchspan">
-                                <span class="searchname" title="硬件编码">硬件编码：</span>
-                                <input class="form-control" type="text" name="sysuuid" style="width: 110px"
-                                       value="">
-                            </div>
-
-
-                            <div class="input-group searchspan">
-                                <span class="searchname" title="测试任务组">测试任务组：</span>
+                                <span class="searchname" title="测试任务组">探针组：</span>
                                 <select class="form-control" name="testgroup_name" style="width: 110px">
                                     <option value="">---请选择---</option>                       <!--vue 绑定value属性    重要！！！！-->
                                     <option v-for="item in testgroup_names" v-bind:value="item.message.name">{{ item.message.name }}</option>
@@ -76,12 +56,6 @@
                                 <input class="form-control" type="text" name="model" style="width: 110px" value="">
                             </div>
 
-
-                            <div class="input-group searchspan">
-                                <span class="searchname" title="BRAS名称">BRAS名称：</span>
-                                <input class="form-control" type="text" name="brasname" style="width: 110px"
-                                       value="">
-                            </div>
                         </form>
 
                     </div>
