@@ -1,0 +1,20 @@
+.table-bordered th,
+.table-bordered td {
+    border: 1px solid rgba(224, 224, 224, 0.45) !important;
+}
+
+.table > thead > tr > th,
+.table > tbody > tr > th,
+.table > tfoot > tr > th,
+.table > thead > tr > td,
+.table > tbody > tr > td,
+.table > tfoot > tr > td {
+    text-align: center;
+    padding: 1px !important;
+    line-height: 2.2 !important;
+    vertical-align:middle;
+    border-top: 1px solid #ddd;
+}
+.evaluation_id{
+
+}
