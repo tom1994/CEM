@@ -6,131 +6,449 @@
     <title>CEM</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <link rel="stylesheet" href="${rc.contextPath}/statics/css/bootstrap.min.css">
-    <link rel="stylesheet" href="${rc.contextPath}/statics/css/font-awesome.min.css">
-    <link rel="stylesheet" href="${rc.contextPath}/statics/css/AdminLTE.min.css">
-    <!-- AdminLTE Skins. Choose a skin from the css/skins
-         folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="${rc.contextPath}/statics/css/all-skins.min.css">
-    <link rel="stylesheet" href="${rc.contextPath}/statics/css/main.css">
+    <!--<link rel="stylesheet" href="${rc.contextPath}/statics/css/bootstrap.min.css">-->
+    <!--<link rel="stylesheet" href="${rc.contextPath}/statics/css/font-awesome.min.css">-->
+    <!--<link rel="stylesheet" href="${rc.contextPath}/statics/css/AdminLTE.min.css">-->
+    <!--<link rel="stylesheet" href="../../statics/css/AdminLTE.min.css">-->
+    <!--&lt;!&ndash; AdminLTE Skins. Choose a skin from the css/skins-->
+    <!--folder instead of downloading all of them to reduce the load. &ndash;&gt;-->
+    <!--<link rel="stylesheet" href="${rc.contextPath}/statics/css/all-skins.min.css">-->
+    <!--<link rel="stylesheet" href="${rc.contextPath}/statics/css/main.css">-->
+    <!--<link rel="stylesheet" href="../../statics/css/all-skins.min.css">-->
+    <link rel="stylesheet" href="../../statics/css/main.css">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+
+    <!--BEGIN Metronic All Links-->
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet"
+          type="text/css"/>
+    <link href="../../statics/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet"
+          type="text/css"/>
+    <link href="../../statics/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet"
+          type="text/css"/>
+    <link href="../../statics/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="../../statics/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet"
+          type="text/css"/>
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <link href="../../statics/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css" rel="stylesheet"
+          type="text/css"/>
+    <link href="../../statics/assets/global/plugins/morris/morris.css" rel="stylesheet" type="text/css"/>
+    <link href="../../statics/assets/global/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet"
+          type="text/css"/>
+    <link href="../../statics/assets/global/plugins/jqvmap/jqvmap/jqvmap.css" rel="stylesheet" type="text/css"/>
+    <!-- END PAGE LEVEL PLUGINS -->
+    <!-- BEGIN THEME GLOBAL STYLES -->
+    <link href="../../statics/assets/global/css/components.min.css" rel="stylesheet" id="style_components"
+          type="text/css"/>
+    <link href="../../statics/assets/global/css/plugins.min.css" rel="stylesheet" type="text/css"/>
+    <!-- END THEME GLOBAL STYLES -->
+    <!-- BEGIN THEME LAYOUT STYLES -->
+    <link href="../../statics/assets/layouts/layout/css/layout.min.css" rel="stylesheet" type="text/css"/>
+    <link href="../../statics/assets/layouts/layout/css/themes/darkblue.min.css" rel="stylesheet" type="text/css"
+          id="style_color"/>
+    <link href="../../statics/assets/layouts/layout/css/custom.min.css" rel="stylesheet" type="text/css"/>
+    <!-- END THEME LAYOUT STYLES -->
+    <link rel="shortcut icon" href="favicon.ico"/>
+</head>
+<!--END Metronic All Links-->
+
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<![endif]-->
 </head>
 <!-- ADD THE CLASS layout-boxed TO GET A BOXED LAYOUT -->
-<body class="hold-transition skin-blue sidebar-mini">
+<!--<body class="hold-transition skin-blue sidebar-mini">-->
+<body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white">
 <!-- Site wrapper -->
-<div class="wrapper" id="rrapp" v-cloak>
-    <header class="main-header">
-        <a href="javascript:void(0);" class="logo">
-            <!-- mini logo for sidebar mini 50x50 pixels -->
-            <span class="logo-mini"><b>CEM</b></span>
-            <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><b>CEM系统</b></span>
-        </a>
-        <!-- Header Navbar: style can be found in header.less -->
-        <nav class="navbar navbar-static-top" role="navigation">
-            <!-- Sidebar toggle button-->
-            <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-                <span class="sr-only">Toggle navigation</span>
-            </a>
-            <div style="float:left;color:#fff;padding:15px 10px;">欢迎 {{user.username}}</div>
-            <div class="navbar-custom-menu">
-                <ul class="nav navbar-nav">
-                    <li><a href="javascript:;" @click="updatePassword"><i class="fa fa-lock"></i> &nbsp;修改密码</a></li>
-                    <li><a href="logout"><i class="fa fa-sign-out"></i> &nbsp;退出系统</a></li>
-                </ul>
-            </div>
-        </nav>
-    </header>
+<!--<div class="wrapper" id="rrapp" v-cloak>-->
+<!--<header class="main-header">-->
+<!--<a href="javascript:void(0);" class="logo">-->
+<!--&lt;!&ndash; mini logo for sidebar mini 50x50 pixels &ndash;&gt;-->
+<!--<span class="logo-mini"><b>CEM</b></span>-->
+<!--&lt;!&ndash; logo for regular state and mobile devices &ndash;&gt;-->
+<!--<span class="logo-lg"><b>CEM系统</b></span>-->
+<!--</a>-->
+<!--&lt;!&ndash; Header Navbar: style can be found in header.less &ndash;&gt;-->
+<!--<nav class="navbar navbar-static-top" role="navigation">-->
+<!--&lt;!&ndash; Sidebar toggle button&ndash;&gt;-->
+<!--<a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">-->
+<!--<span class="sr-only">Toggle navigation</span>-->
+<!--</a>-->
+<!--<div style="float:left;color:#fff;padding:15px 10px;">欢迎 {{user.username}}</div>-->
+<!--<div class="navbar-custom-menu">-->
+<!--<ul class="nav navbar-nav">-->
+<!--<li><a href="javascript:;" @click="updatePassword"><i class="fa fa-lock"></i> &nbsp;修改密码</a></li>-->
+<!--<li><a href="logout"><i class="fa fa-sign-out"></i> &nbsp;退出系统</a></li>-->
+<!--</ul>-->
+<!--</div>-->
+<!--</nav>-->
+<!--</header>-->
 
-    <!-- =============================================== -->
+<!--&lt;!&ndash; =============================================== &ndash;&gt;-->
 
-    <!-- Left side column. contains the sidebar -->
-    <aside class="main-sidebar">
-        <!-- sidebar: style can be found in sidebar.less -->
-        <section class="sidebar">
-            <!-- /.search form -->
-            <!-- sidebar menu: : style can be found in sidebar.less -->
-            <ul class="sidebar-menu">
-                <li class="header">导航菜单</li>
+<!--&lt;!&ndash; Left side column. contains the sidebar &ndash;&gt;-->
+<!--<aside class="main-sidebar">-->
+<!--&lt;!&ndash; sidebar: style can be found in sidebar.less &ndash;&gt;-->
+<!--<section class="sidebar">-->
+<!--&lt;!&ndash; /.search form &ndash;&gt;-->
+<!--&lt;!&ndash; sidebar menu: : style can be found in sidebar.less &ndash;&gt;-->
+<!--<ul class="sidebar-menu">-->
+<!--<li class="header">导航菜单</li>-->
 
-                <!-- vue生成的菜单 -->
-                <menu-item :item="item" v-for="item in menuList" class="active"></menu-item>
-            </ul>
-        </section>
-        <!-- /.sidebar -->
-    </aside>
-    <!-- =============================================== -->
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <section class="content-header">
-            <ol class="breadcrumb" id="nav_title" style="position:static;float:none;">
-                <li class="active"><i class="fa fa-home"
-                                      style="font-size:20px;position:relative;top:2px;left:-3px;"></i> &nbsp; 首页
-                </li>
-                <li class="active">{{navTitle}}</li>
-            </ol>
-        </section>
+<!--&lt;!&ndash; vue生成的菜单 &ndash;&gt;-->
+<!--<menu-item :item="item" v-for="item in menuList" class="active"></menu-item>-->
+<!--</ul>-->
+<!--</section>-->
+<!--&lt;!&ndash; /.sidebar &ndash;&gt;-->
+<!--</aside>-->
+<!--&lt;!&ndash; =============================================== &ndash;&gt;-->
 
-        <!-- Main content -->
-        <section class="content" style="background:#fff;">
-            <iframe scrolling="yes" frameborder="0"
-                    style="width:100%;min-height:200px;overflow:visible;background:#fff;" :src="main"></iframe>
-        </section>
-        <!-- /.content -->
-    </div>
-    <!-- /.content-wrapper -->
 
-    <footer class="main-footer">
-        <div class="pull-right hidden-xs">
-            Version 3.0.0
-        </div>
-        Copyright &copy; 2017 <a href="http://www.renren.io" target="_blank">renren.io</a> All Rights Reserved
-    </footer>
+<!--&lt;!&ndash; Content Wrapper. Contains page content &ndash;&gt;-->
+<!--<div class="content-wrapper">-->
+<!--&lt;!&ndash; Content Header (Page header) &ndash;&gt;-->
+<!--<section class="content-header">-->
+<!--<ol class="breadcrumb" id="nav_title" style="position:static;float:none;">-->
+<!--<li class="active"><i class="fa fa-home"-->
+<!--style="font-size:20px;position:relative;top:2px;left:-3px;"></i> &nbsp; 首页-->
+<!--</li>-->
+<!--<li class="active">{{navTitle}}</li>-->
+<!--</ol>-->
+<!--</section>-->
 
-    <!-- Add the sidebar's background. This div must be placed
-         immediately after the control sidebar -->
-    <div class="control-sidebar-bg"></div>
+<!--&lt;!&ndash; Main content &ndash;&gt;-->
+<!--<section class="content" style="background:#fff;">-->
+<!--<iframe scrolling="yes" frameborder="0"-->
+<!--style="width:100%;min-height:200px;overflow:visible;background:#fff;" :src="main"></iframe>-->
+<!--</section>-->
+<!--&lt;!&ndash; /.content &ndash;&gt;-->
+<!--</div>-->
+<!--&lt;!&ndash; /.content-wrapper &ndash;&gt;-->
 
-    <!-- 修改密码 -->
-    <div id="passwordLayer" style="display: none;">
-        <form class="form-horizontal">
-            <div class="form-group">
-                <div class="form-group">
-                    <div class="col-sm-2 control-label">账号</div>
-                    <span class="label label-success" style="vertical-align: bottom;">{{user.username}}</span>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-2 control-label">原密码</div>
-                    <div class="col-sm-10">
-                        <input type="password" class="form-control" v-model="password" placeholder="原密码"/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-2 control-label">新密码</div>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" v-model="newPassword" placeholder="新密码"/>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
+<!--<footer class="main-footer">-->
+<!--<div class="pull-right hidden-xs">-->
+<!--Version 3.0.0-->
+<!--</div>-->
+<!--Copyright &copy; 2017 <a href="http://www.renren.io" target="_blank">renren.io</a> All Rights Reserved-->
+<!--</footer>-->
 
-</div>
+<!--&lt;!&ndash; Add the sidebar's background. This div must be placed-->
+<!--immediately after the control sidebar &ndash;&gt;-->
+<!--<div class="control-sidebar-bg"></div>-->
+
+<!--&lt;!&ndash; 修改密码 &ndash;&gt;-->
+<!--<div id="passwordLayer" style="display: none;">-->
+<!--<form class="form-horizontal">-->
+<!--<div class="form-group">-->
+<!--<div class="form-group">-->
+<!--<div class="col-sm-2 control-label">账号</div>-->
+<!--<span class="label label-success" style="vertical-align: bottom;">{{user.username}}</span>-->
+<!--</div>-->
+<!--<div class="form-group">-->
+<!--<div class="col-sm-2 control-label">原密码</div>-->
+<!--<div class="col-sm-10">-->
+<!--<input type="password" class="form-control" v-model="password" placeholder="原密码"/>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="form-group">-->
+<!--<div class="col-sm-2 control-label">新密码</div>-->
+<!--<div class="col-sm-10">-->
+<!--<input type="text" class="form-control" v-model="newPassword" placeholder="新密码"/>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</form>-->
+<!--</div>-->
+
+<!--</div>-->
 <!-- ./wrapper -->
 
+<div class="page-wrapper" id="rrapp" v-cloak>
+    <!-- BEGIN HEADER -->
+    <div class="page-header navbar navbar-fixed-top">
+        <!-- BEGIN HEADER INNER -->
+        <div class="page-header-inner ">
+            <!-- BEGIN LOGO -->
+            <div class="page-logo">
+                <a href="index.html" style="font-size: 30px;">
+                    <!--<img src="../../statics/img/logo.png" alt="logo" class="logo-default" />-->
+                    <span class="logo-default"><b>CEM系统</b></span>
+                </a>
+                <div class="menu-toggler sidebar-toggler">
+                    <span></span>
+                </div>
+            </div>
+            <!-- END LOGO -->
+            <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+            <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse"
+               data-target=".navbar-collapse">
+                <span></span>
+            </a>
+            <!-- END RESPONSIVE MENU TOGGLER -->
+            <!-- BEGIN TOP NAVIGATION MENU -->
+            <div class="top-menu">
+                <ul class="nav navbar-nav pull-right">
+                    <!-- BEGIN USER LOGIN DROPDOWN -->
+                    <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
+                    <li class="dropdown dropdown-user">
+                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
+                           data-close-others="true">
+                            <img alt="" class="img-circle"
+                                 src="../../statics/assets/layouts/layout/img/avatar3_small.jpg"/>
+                            <span class="username username-hide-on-mobile"> {{user.username}} </span>
+                            <i class="fa fa-angle-down"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-default">
+                            <!--<li class="divider"> </li>-->
+                            <!--<li>-->
+                            <!--<a href="page_user_lock_1.html">-->
+                            <!--<i class="icon-lock"></i> Lock Screen-->
+                            <!--</a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                            <!--<a href="page_user_login_1.html">-->
+                            <!--<i class="icon-key"></i> Log Out </a>-->
+                            <!--</li>-->
+                            <li>
+                                <a href="javascript:;" @click="updatePassword">
+                                    <i class="icon-lock"></i> &nbsp;修改密码
+                                </a>
+                            </li>
+                            <li>
+                                <a href="logout">
+                                    <i class="icon-key"></i> &nbsp;退出系统
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- END USER LOGIN DROPDOWN -->
+                </ul>
+            </div>
+            <!-- END TOP NAVIGATION MENU -->
+        </div>
+        <!-- END HEADER INNER -->
+    </div>
+    <!-- END HEADER -->
+    <!-- BEGIN HEADER & CONTENT DIVIDER -->
+    <div class="clearfix"></div>
+    <!-- END HEADER & CONTENT DIVIDER -->
+    <!-- BEGIN CONTAINER -->
+    <div class="page-container">
+        <!-- BEGIN SIDEBAR -->
+        <div class="page-sidebar-wrapper">
+            <!-- BEGIN SIDEBAR -->
+            <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
+            <!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
+            <div class="page-sidebar navbar-collapse collapse">
+                <!-- BEGIN SIDEBAR MENU -->
+                <!-- DOC: Apply "page-sidebar-menu-light" class right after "page-sidebar-menu" to enable light sidebar menu style(without borders) -->
+                <!-- DOC: Apply "page-sidebar-menu-hover-submenu" class right after "page-sidebar-menu" to enable hoverable(hover vs accordion) sub menu mode -->
+                <!-- DOC: Apply "page-sidebar-menu-closed" class right after "page-sidebar-menu" to collapse("page-sidebar-closed" class must be applied to the body element) the sidebar sub menu mode -->
+                <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
+                <!-- DOC: Set data-keep-expand="true" to keep the submenues expanded -->
+                <!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed -->
+                <!--<ul class="page-sidebar-menu  page-header-fixed " data-keep-expanded="false" data-auto-scroll="true"-->
+                <!--data-slide-speed="200" style="padding-top: 20px">-->
+                <!-- vue生成的菜单 -->
+                <menu-item-m-1 :item="item" v-for="item in menuList"></menu-item-m-1>
+                <!--</ul>-->
+                <!-- END SIDEBAR MENU -->
+                <!-- END SIDEBAR MENU -->
+                <!--<ul data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200"-->
+                <!--class="page-sidebar-menu  page-header-fixed " style="padding-top: 20px;">-->
+                <!--<li class="heading"><h3 class="uppercase">系统管理</h3></li>-->
+                <!--<li class="nav-item">&lt;!&ndash;&ndash;&gt; &lt;!&ndash;&ndash;&gt; <a href="#modules/sys/user.html" class="nav-link "><i-->
+                <!--class="fa fa-user"></i> <span class="title">管理员管理</span></a></li>-->
+                <!--<li class="nav-item">&lt;!&ndash;&ndash;&gt; &lt;!&ndash;&ndash;&gt; <a href="#modules/sys/dept.html" class="nav-link "><i-->
+                <!--class="fa fa-file-code-o"></i> <span class="title">部门管理</span></a></li>-->
+                <!--<li class="nav-item">&lt;!&ndash;&ndash;&gt; &lt;!&ndash;&ndash;&gt; <a href="#modules/sys/role.html" class="nav-link "><i-->
+                <!--class="fa fa-user-secret"></i> <span class="title">角色管理</span></a></li>-->
+                <!--<li class="nav-item">&lt;!&ndash;&ndash;&gt; &lt;!&ndash;&ndash;&gt; <a href="#modules/sys/menu.html" class="nav-link "><i-->
+                <!--class="fa fa-th-list"></i> <span class="title">菜单管理</span></a></li>-->
+                <!--<li class="nav-item">&lt;!&ndash;&ndash;&gt; &lt;!&ndash;&ndash;&gt; <a href="#druid/sql.html" class="nav-link "><i-->
+                <!--class="fa fa-bug"></i> <span class="title">SQL监控</span></a></li>-->
+                <!--<li class="nav-item">&lt;!&ndash;&ndash;&gt; &lt;!&ndash;&ndash;&gt; <a href="#modules/job/schedule.html" class="nav-link "><i-->
+                <!--class="fa fa-tasks"></i> <span class="title">定时任务</span></a></li>-->
+                <!--<li class="nav-item">&lt;!&ndash;&ndash;&gt; &lt;!&ndash;&ndash;&gt; <a href="#modules/sys/config.html" class="nav-link "><i-->
+                <!--class="fa fa-sun-o"></i> <span class="title">参数管理</span></a></li>-->
+                <!--<li class="nav-item">&lt;!&ndash;&ndash;&gt; &lt;!&ndash;&ndash;&gt; <a href="#modules/oss/oss.html" class="nav-link "><i-->
+                <!--class="fa fa-file-image-o"></i> <span class="title">文件上传</span></a></li>-->
+                <!--<li class="nav-item">&lt;!&ndash;&ndash;&gt; &lt;!&ndash;&ndash;&gt; <a href="#modules/sys/log.html" class="nav-link "><i-->
+                <!--class="fa fa-file-text-o"></i> <span class="title">系统日志</span></a></li>-->
+                <!--</ul>-->
+                <!--<ul data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200"-->
+                <!--class="page-sidebar-menu  page-header-fixed " style="padding-top: 20px;">-->
+                <!--<li class="heading"><h3 class="uppercase">探针</h3></li>-->
+                <!--<li class="nav-item"><a href="javascript:;" class="nav-link nav-toggle">&lt;!&ndash;&ndash;&gt; <span class="title">探针信息</span>-->
+                <!--<span class="arrow"></span></a>-->
+                <!--<ul class="sub-menu">-->
+                <!--<li class="nav-item">&lt;!&ndash;&ndash;&gt; &lt;!&ndash;&ndash;&gt; <a href="#index.html" class="nav-link ">&lt;!&ndash;&ndash;&gt; <span-->
+                <!--class="title">菜单一</span></a></li>-->
+                <!--</ul> &lt;!&ndash;&ndash;&gt;</li>-->
+                <!--</ul>-->
+            </div>
+            <!-- END SIDEBAR -->
+        </div>
+        <!-- END SIDEBAR -->
+        <!-- BEGIN CONTENT -->
+        <div class="page-content-wrapper">
+            <!-- BEGIN CONTENT BODY -->
+            <div class="page-content">
+                <!-- BEGIN PAGE HEADER-->
+                <!-- BEGIN PAGE BAR -->
+                <!--<div class="page-bar">-->
+                    <!--<ul class="page-breadcrumb">-->
+                        <!--<li>-->
+                            <!--<a href="index.html">Home</a>-->
+                            <!--<i class="fa fa-circle"></i>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<span>Dashboard</span>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</div>-->
+                <!-- END PAGE BAR -->
+                <!-- BEGIN PAGE TITLE-->
+                <!--<h1 class="page-title"> Admin Dashboard-->
+                <!--<small>statistics, charts, recent events and reports</small>-->
+                <!--</h1>-->
+                <!-- END PAGE TITLE-->
+                <!-- Main content -->
+                <section class="content" style="background:#fff;">
+                    <iframe scrolling="yes" frameborder="0" style="width:100%;min-height:200px;overflow:visible;background:#fff;" :src="main"></iframe>
+                </section>
+                <!-- /.content -->
+                <!-- END PAGE HEADER-->
+            </div>
+            <!-- END CONTENT BODY -->
+        </div>
+        <!-- END CONTENT -->
+    </div>
+    <!-- END CONTAINER -->
+    <!-- BEGIN FOOTER -->
+    <div class="page-footer">
+        <div class="page-footer-inner"> 2016 &copy; Metronic Theme By
+            <a target="_blank" href="http://keenthemes.com">Keenthemes</a> &nbsp;|&nbsp;
+            <a href="http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes"
+               title="Purchase Metronic just for 27$ and get lifetime updates for free" target="_blank">Purchase
+                Metronic!</a>
+        </div>
+        <div class="scroll-to-top">
+            <i class="icon-arrow-up"></i>
+        </div>
+    </div>
+    <!-- END FOOTER -->
+</div>
+
+<script type="text/javascript">
+    var flag = true;
+    function downloadJSAtOnload() {
+        if (flag) {
+            console.log("load layout!!!!");
+            var element = document.createElement("script");
+            element.src = "../../statics/assets/layouts/layout/scripts/layout.min.js";
+            document.body.appendChild(element);
+            flag = false;
+        }
+    }
+    //    if (window.addEventListener)
+    //        window.addEventListener("load", downloadJSAtOnload, false);
+    //    else if (window.attachEvent)
+    //        window.attachEvent("onload", downloadJSAtOnload);
+    //    else window.onload = downloadJSAtOnload;
+</script>
 
 <script src="${rc.contextPath}/statics/libs/jquery.min.js"></script>
 <script src="${rc.contextPath}/statics/libs/vue.min.js"></script>
 <script src="${rc.contextPath}/statics/libs/router.js"></script>
-<script src="${rc.contextPath}/statics/libs/bootstrap.min.js"></script>
-<script src="${rc.contextPath}/statics/libs/app.js"></script>
-<script src="${rc.contextPath}/statics/plugins/layer/layer.js"></script>
+<!--<script src="${rc.contextPath}/statics/libs/bootstrap.min.js"></script>-->
+<!--<script src="${rc.contextPath}/statics/libs/app.js"></script>-->
+<!--<script src="${rc.contextPath}/statics/plugins/layer/layer.js"></script>-->
 <script src="${rc.contextPath}/statics/js/index.js"></script>
+
+
+<!--BEGIN Metronic All Scripts-->
+<!--[if lt IE 9]>
+<script src="../../statics/assets/global/plugins/respond.min.js"></script>
+<script src="../../statics/assets/global/plugins/excanvas.min.js"></script>
+<script src="../../statics/assets/global/plugins/ie8.fix.min.js"></script>
+<![endif]-->
+<!-- BEGIN CORE PLUGINS -->
+<!--<script src="../../statics/assets/global/plugins/jquery.min.js" type="text/javascript"></script>-->
+<script src="../../statics/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="../../statics/assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>
+<script src="../../statics/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js"
+        type="text/javascript"></script>
+<script src="../../statics/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="../../statics/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js"
+        type="text/javascript"></script>
+<!-- END CORE PLUGINS -->
+<!-- BEGIN PAGE LEVEL PLUGINS -->
+<!--<script src="../../statics/assets/global/plugins/moment.min.js" type="text/javascript"></script>-->
+<!--<script src="../../statics/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js"-->
+<!--type="text/javascript"></script>-->
+<script src="../../statics/assets/global/plugins/morris/morris.min.js" type="text/javascript"></script>
+<!--<script src="../../statics/assets/global/plugins/morris/raphael-min.js" type="text/javascript"></script>-->
+<!--<script src="../../statics/assets/global/plugins/counterup/jquery.waypoints.min.js" type="text/javascript"></script>-->
+<!--<script src="../../statics/assets/global/plugins/counterup/jquery.counterup.min.js" type="text/javascript"></script>-->
+<!--<script src="../../statics/assets/global/plugins/amcharts/amcharts/amcharts.js" type="text/javascript"></script>-->
+<!--<script src="../../statics/assets/global/plugins/amcharts/amcharts/serial.js" type="text/javascript"></script>-->
+<!--<script src="../../statics/assets/global/plugins/amcharts/amcharts/pie.js" type="text/javascript"></script>-->
+<!--<script src="../../statics/assets/global/plugins/amcharts/amcharts/radar.js" type="text/javascript"></script>-->
+<!--<script src="../../statics/assets/global/plugins/amcharts/amcharts/themes/light.js" type="text/javascript"></script>-->
+<!--<script src="../../statics/assets/global/plugins/amcharts/amcharts/themes/patterns.js" type="text/javascript"></script>-->
+<!--<script src="../../statics/assets/global/plugins/amcharts/amcharts/themes/chalk.js" type="text/javascript"></script>-->
+<!--<script src="../../statics/assets/global/plugins/amcharts/ammap/ammap.js" type="text/javascript"></script>-->
+<!--<script src="../../statics/assets/global/plugins/amcharts/ammap/maps/js/worldLow.js" type="text/javascript"></script>-->
+<!--<script src="../../statics/assets/global/plugins/amcharts/amstockcharts/amstock.js" type="text/javascript"></script>-->
+<!--<script src="../../statics/assets/global/plugins/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>-->
+<!--<script src="../../statics/assets/global/plugins/horizontal-timeline/horizontal-timeline.js"-->
+<!--type="text/javascript"></script>-->
+<!--<script src="../../statics/assets/global/plugins/flot/jquery.flot.min.js" type="text/javascript"></script>-->
+<!--<script src="../../statics/assets/global/plugins/flot/jquery.flot.resize.min.js" type="text/javascript"></script>-->
+<!--<script src="../../statics/assets/global/plugins/flot/jquery.flot.categories.min.js" type="text/javascript"></script>-->
+<!--<script src="../../statics/assets/global/plugins/jquery-easypiechart/jquery.easypiechart.min.js"-->
+<!--type="text/javascript"></script>-->
+<!--<script src="../../statics/assets/global/plugins/jquery.sparkline.min.js" type="text/javascript"></script>-->
+<!--<script src="../../statics/assets/global/plugins/jqvmap/jqvmap/jquery.vmap.js" type="text/javascript"></script>-->
+<!--<script src="../../statics/assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.russia.js"-->
+<!--type="text/javascript"></script>-->
+<!--<script src="../../statics/assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.world.js"-->
+<!--type="text/javascript"></script>-->
+<!--<script src="../../statics/assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.europe.js"-->
+<!--type="text/javascript"></script>-->
+<!--<script src="../../statics/assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.germany.js"-->
+<!--type="text/javascript"></script>-->
+<!--<script src="../../statics/assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.usa.js" type="text/javascript"></script>-->
+<!--<script src="../../statics/assets/global/plugins/jqvmap/jqvmap/data/jquery.vmap.sampledata.js"-->
+<!--type="text/javascript"></script>-->
+<!-- END PAGE LEVEL PLUGINS -->
+<!-- BEGIN THEME GLOBAL SCRIPTS -->
+<script src="../../statics/assets/global/scripts/app.min.js" type="text/javascript"></script>
+<!-- END THEME GLOBAL SCRIPTS -->
+<!-- BEGIN PAGE LEVEL SCRIPTS -->
+<script src="../../statics/assets/pages/scripts/dashboard.min.js" type="text/javascript"></script>
+<!-- END PAGE LEVEL SCRIPTS -->
+<!-- BEGIN THEME LAYOUT SCRIPTS -->
+<!--<script src="../../statics/assets/layouts/layout/scripts/layout.min.js" type="text/javascript"></script>-->
+<!--<script src="../../statics/assets/layouts/layout/scripts/demo.min.js" type="text/javascript"></script>-->
+<!--<script src="../../statics/assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>-->
+<!--<script src="../../statics/assets/layouts/global/scripts/quick-nav.min.js" type="text/javascript"></script>-->
+<!-- END THEME LAYOUT SCRIPTS -->
+
+
+<script>
+    $(document).ready(function () {
+        console.log("ready!!");
+        $('#clickmewow').click(function () {
+            $('#radio1003').attr('checked', 'checked');
+        });
+    });
+</script>
+<!--END Metronic All Scripts-->
+
 </body>
 </html>
