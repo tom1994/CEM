@@ -1,11 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <h>测试任务列表</h>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>测试任务列表</title>
+    #parse("areaHeader.html")  <!--导入CSS和js文件-->
+    <link href="${rc.contextPath}/statics/css/taskTable.css" rel="stylesheet">  <!--自定义CSS-->
 </head>
+
 <body>
+<div class="wrapper wrapper-content">
+
+    <div class="row" id="test_table">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title fontcolor" id="handle" style="padding-bottom: 0px !important;">
+
+                    <button type="button" class="btn btn-default " v-on:click="testagentdelBatch"><span
+                            class="glyphicon glyphicon-remove"></span>批量取消
+                    </button>
+
+                </div>
+                <div class="ibox-content">
+                    <div class="row " style="overflow-x: scroll">     <!--表格 verflow-x: scroll超出滚动-->
+                        <table class="table table-bordered " id="task_table"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 模态框（Modal） -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="width: 768px"> <!--修改bootstrap modal模态框的宽度-->
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">{{modaltitle}}</h4>
+                </div>
+
+                <div class="row" id="taskform_title">
+                    <div class="col-lg-3 col-md-2 col-sm-3">
+                        <h4 class="fontcolor taskformtitle_border">表单信息管理</h4>
+                    </div>tasktesttarget_title
+                </div>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <form class="form-horizontal" id="taskform_data" role="form">
+
+                            <div class="form-group row">
+                                <label for="name"
+                                       class="col-lg-3 col-md-3 col-sm-3 control-label form_border">测试任务名称：</label>
+                                <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                    <input type="text" class="form-control" id="name" name="name"
+                                           placeholder="请输入名称">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="target"
+                                       class="col-lg-3 col-md-3 col-sm-3 control-label form_border">测试对象:</label>
+                                <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                    <input type="text" class="form-control" id="target" name="target"
+                                           placeholder="请输入测试对象">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="testaddr"
+                                       class="col-lg-3 col-md-3 col-sm-3 control-label form_border">测试目标:</label>
+                                <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                    <input type="text" class="form-control" id="testaddr" name="testaddr"
+                                           placeholder="请输入测试目标">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="strategy"
+                                       class="col-lg-3 col-md-3 col-sm-3 control-label form_border">调度策略:</label>
+                                <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                    <input type="text" class="form-control" id="strategy" name="strategy"
+                                           placeholder="请输入调度策略">
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" v-on:click="submit">确定</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+
+
+</div>
+
+<script type="text/javascript" src="${rc.contextPath}/js/modules/sys/taskTable.js?_${date.systemTime}"></script>
 
 </body>
 </html>

@@ -1,0 +1,97 @@
+body {
+    background-color: #ffffff /*页面背景颜色*/
+}
+
+.wrapper-content {
+    padding: 0px !important; /*wrapper-content去除内边距*/
+}
+
+
+/*表格部分*/
+.fontcolor {
+    color: #b85a60;
+}
+
+a:hover a:visited a:link {
+    color: #b85a60;
+}
+
+a:visited {
+    color: #b85a60;
+}
+
+a:link {
+    color: #b85a60;
+}
+
+.ibox-title {
+    background-color: #EEEEEE;
+}
+
+.selected {
+    background-color: #cce6ff; /*定义选中状态颜色*/
+}
+
+#task_table td {
+    white-space: nowrap; /*//规定段落中的文本不进行换行*/
+}
+
+.modal-body {
+    padding: 0px 30px 0px 30px
+}
+
+#taskform_data .row {
+    border-bottom: 1px solid #e4e4e4;
+    border-top: 1px solid #e4e4e4;
+
+}
+
+#taskform_data .row input { /*设置外边距*/
+    margin: 4px 0 4px 0;
+}
+
+#taskform_data .row select { /*设置外边距*/
+    margin: 4px 0 4px 0;
+}
+
+#taskform_data .form-group {
+    margin-bottom: 0px;
+!important;
+}
+
+.form_border {
+    border-left: 2px solid #e4e4e4;
+    line-height: 36px;
+    min-height: 36px;
+    text-align: center !important;
+}
+
+#taskform_title {
+    margin: 10px 0 0 0 !important;
+    background-color: #dddddd;
+    font-size: 14px;
+    font-weight: bold;
+    height: 30px;
+}
+#tasktesttarget_title{
+    margin: 10px 0 0 0 !important;
+    background-color: #dddddd;
+    font-size: 14px;
+    font-weight: bold;
+    height: 30px;
+}
+
+.taskformtitle_border {
+    margin: 7px 0 0 0;
+
+}
+
+.modal-header {
+    background-color: #1cb395;
+}
+
+#myModalLabel {
+    color: #ffffff;
+}
+
+
