@@ -61,23 +61,36 @@ var vm = new Vue({
             if(menuId == null){
                 return ;
             }
-
-            confirm('确定要删除选中的记录？', function(){
-                $.ajax({
-                    type: "POST",
-                    url: baseURL + "sys/menu/delete",
-                    data: "menuId=" + menuId,
-                    success: function(r){
-                        if(r.code === 0){
-                            alert('操作成功', function(){
-                                vm.reload();
-                            });
-                        }else{
-                            alert(r.msg);
-                        }
+            $.ajax({
+                type: "POST",
+                url: baseURL + "sys/menu/delete",
+                data: "menuId=" + menuId,
+                success: function(r){
+                    if(r.code === 0){
+                        alert('操作成功', function(){
+                            vm.reload();
+                        });
+                    }else{
+                        alert(r.msg);
                     }
-                });
+                }
             });
+            // confirm('确定要删除选中的记录？', function(){
+            //     $.ajax({
+            //         type: "POST",
+            //         url: baseURL + "sys/menu/delete",
+            //         data: "menuId=" + menuId,
+            //         success: function(r){
+            //             if(r.code === 0){
+            //                 alert('操作成功', function(){
+            //                     vm.reload();
+            //                 });
+            //             }else{
+            //                 alert(r.msg);
+            //             }
+            //         }
+            //     });
+            // });
         },
         saveOrUpdate: function () {
             if(vm.validator()){

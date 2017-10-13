@@ -83,5 +83,5 @@
 
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="basePackage" value="io.cem.modules.*.dao" />
-	</bean>
-</beans>
+		</bean>
+		</beans>

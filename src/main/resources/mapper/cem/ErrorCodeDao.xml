@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.cem.modules.cem.dao.ErrorCodeDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.cem.modules.cem.entity.ErrorCodeEntity" id="errorCodeMap">
+        <result property="code" column="code"/>
+        <result property="message" column="message"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="io.cem.modules.cem.entity.ErrorCodeEntity">
+		select * from error_code where code = #{value}
+	</select>
+
+	<select id="queryList" resultType="io.cem.modules.cem.entity.ErrorCodeEntity">
+		select * from error_code
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by code desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from error_code 
+	</select>
+	 
+	<insert id="save" parameterType="io.cem.modules.cem.entity.ErrorCodeEntity">
+		insert into error_code
+		(
+			`code`, 
+			`message`
+		)
+		values
+		(
+			#{code}, 
+			#{message}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="io.cem.modules.cem.entity.ErrorCodeEntity">
+		update error_code 
+		<set>
+			<if test="message != null">`message` = #{message}</if>
+		</set>
+		where code = #{code}
+	</update>
+	
+	<delete id="delete">
+		delete from error_code where code = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from error_code where code in 
+		<foreach item="code" collection="array" open="(" separator="," close=")">
+			#{code}
+		</foreach>
+	</delete>
+
+</mapper>

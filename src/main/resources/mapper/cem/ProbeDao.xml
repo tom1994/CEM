@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.cem.modules.cem.dao.ProbeDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.cem.modules.cem.entity.ProbeEntity" id="probeMap">
+        <result property="id" column="id"/>
+        <result property="serialNumber" column="serial_number"/>
+        <result property="name" column="name"/>
+        <result property="groupId" column="group_id"/>
+        <result property="type" column="type"/>
+        <result property="accessLayer" column="access_layer"/>
+        <result property="ipType" column="ip_type"/>
+        <result property="portIp" column="port_ip"/>
+        <result property="city" column="city"/>
+        <result property="county" column="county"/>
+        <result property="location" column="location"/>
+        <result property="upstream" column="upstream"/>
+        <result property="brasName" column="bras_name"/>
+        <result property="brasIp" column="bras_ip"/>
+        <result property="brasPort" column="bras_port"/>
+        <result property="isp" column="isp"/>
+        <result property="status" column="status"/>
+        <result property="device" column="device"/>
+        <result property="version" column="version"/>
+        <result property="registerTime" column="register_time"/>
+        <result property="concurrentTask" column="concurrent_task"/>
+        <result property="hbInterval" column="hb_interval"/>
+        <result property="lastHbTime" column="last_hb_time"/>
+        <result property="taskInterval" column="task_interval"/>
+        <result property="reportInterval" column="report_interval"/>
+        <result property="lastReportTime" column="last_report_time"/>
+        <result property="updateInterval" column="update_interval"/>
+        <result property="lastUpdateTime" column="last_update_time"/>
+        <result property="remark" column="remark"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="io.cem.modules.cem.entity.ProbeEntity">
+		select * from probe where id = #{value}
+	</select>
+
+	<select id="queryList" resultType="io.cem.modules.cem.entity.ProbeEntity">
+		select * from probe
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from probe 
+	</select>
+	 
+	<insert id="save" parameterType="io.cem.modules.cem.entity.ProbeEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into probe
+		(
+			`serial_number`, 
+			`name`, 
+			`group_id`, 
+			`type`, 
+			`access_layer`, 
+			`ip_type`, 
+			`port_ip`, 
+			`city`, 
+			`county`, 
+			`location`, 
+			`upstream`, 
+			`bras_name`, 
+			`bras_ip`, 
+			`bras_port`, 
+			`isp`, 
+			`status`, 
+			`device`, 
+			`version`, 
+			`register_time`, 
+			`concurrent_task`, 
+			`hb_interval`, 
+			`last_hb_time`, 
+			`task_interval`, 
+			`report_interval`, 
+			`last_report_time`, 
+			`update_interval`, 
+			`last_update_time`, 
+			`remark`, 
+			`create_time`
+		)
+		values
+		(
+			#{serialNumber}, 
+			#{name}, 
+			#{groupId}, 
+			#{type}, 
+			#{accessLayer}, 
+			#{ipType}, 
+			#{portIp}, 
+			#{city}, 
+			#{county}, 
+			#{location}, 
+			#{upstream}, 
+			#{brasName}, 
+			#{brasIp}, 
+			#{brasPort}, 
+			#{isp}, 
+			#{status}, 
+			#{device}, 
+			#{version}, 
+			#{registerTime}, 
+			#{concurrentTask}, 
+			#{hbInterval}, 
+			#{lastHbTime}, 
+			#{taskInterval}, 
+			#{reportInterval}, 
+			#{lastReportTime}, 
+			#{updateInterval}, 
+			#{lastUpdateTime}, 
+			#{remark}, 
+			#{createTime}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="io.cem.modules.cem.entity.ProbeEntity">
+		update probe 
+		<set>
+			<if test="serialNumber != null">`serial_number` = #{serialNumber}, </if>
+			<if test="name != null">`name` = #{name}, </if>
+			<if test="groupId != null">`group_id` = #{groupId}, </if>
+			<if test="type != null">`type` = #{type}, </if>
+			<if test="accessLayer != null">`access_layer` = #{accessLayer}, </if>
+			<if test="ipType != null">`ip_type` = #{ipType}, </if>
+			<if test="portIp != null">`port_ip` = #{portIp}, </if>
+			<if test="city != null">`city` = #{city}, </if>
+			<if test="county != null">`county` = #{county}, </if>
+			<if test="location != null">`location` = #{location}, </if>
+			<if test="upstream != null">`upstream` = #{upstream}, </if>
+			<if test="brasName != null">`bras_name` = #{brasName}, </if>
+			<if test="brasIp != null">`bras_ip` = #{brasIp}, </if>
+			<if test="brasPort != null">`bras_port` = #{brasPort}, </if>
+			<if test="isp != null">`isp` = #{isp}, </if>
+			<if test="status != null">`status` = #{status}, </if>
+			<if test="device != null">`device` = #{device}, </if>
+			<if test="version != null">`version` = #{version}, </if>
+			<if test="registerTime != null">`register_time` = #{registerTime}, </if>
+			<if test="concurrentTask != null">`concurrent_task` = #{concurrentTask}, </if>
+			<if test="hbInterval != null">`hb_interval` = #{hbInterval}, </if>
+			<if test="lastHbTime != null">`last_hb_time` = #{lastHbTime}, </if>
+			<if test="taskInterval != null">`task_interval` = #{taskInterval}, </if>
+			<if test="reportInterval != null">`report_interval` = #{reportInterval}, </if>
+			<if test="lastReportTime != null">`last_report_time` = #{lastReportTime}, </if>
+			<if test="updateInterval != null">`update_interval` = #{updateInterval}, </if>
+			<if test="lastUpdateTime != null">`last_update_time` = #{lastUpdateTime}, </if>
+			<if test="remark != null">`remark` = #{remark}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from probe where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from probe where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

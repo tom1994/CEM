@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.cem.modules.cem.dao.RecordSlaDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.cem.modules.cem.entity.RecordSlaEntity" id="recordSlaMap">
+        <result property="id" column="id"/>
+        <result property="probeId" column="probe_id"/>
+        <result property="port" column="port"/>
+        <result property="taskId" column="task_id"/>
+        <result property="serviceType" column="service_type"/>
+        <result property="taskType" column="task_type"/>
+        <result property="targetType" column="target_type"/>
+        <result property="targetId" column="target_id"/>
+        <result property="targetIp" column="target_ip"/>
+        <result property="targetLoc" column="target_loc"/>
+        <result property="state" column="state"/>
+        <result property="recordDate" column="record_date"/>
+        <result property="recordTime" column="record_time"/>
+        <result property="delay" column="delay"/>
+        <result property="gDelay" column="g_delay"/>
+        <result property="rDelay" column="r_delay"/>
+        <result property="delayStd" column="delay_std"/>
+        <result property="gDelayStd" column="g_delay_std"/>
+        <result property="rDelayStd" column="r_delay_std"/>
+        <result property="delayVar" column="delay_var"/>
+        <result property="gDelayVar" column="g_delay_var"/>
+        <result property="rDelayVar" column="r_delay_var"/>
+        <result property="jitter" column="jitter"/>
+        <result property="gJitter" column="g_jitter"/>
+        <result property="rJitter" column="r_jitter"/>
+        <result property="jitterStd" column="jitter_std"/>
+        <result property="gJitterStd" column="g_jitter_std"/>
+        <result property="rJitterStd" column="r_jitter_std"/>
+        <result property="jitterVar" column="jitter_var"/>
+        <result property="gJitterVar" column="g_jitter_var"/>
+        <result property="rJitterVar" column="r_jitter_var"/>
+        <result property="lossRate" column="loss_rate"/>
+        <result property="gLossRate" column="g_loss_rate"/>
+        <result property="rLossRate" column="r_loss_rate"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="io.cem.modules.cem.entity.RecordSlaEntity">
+		select * from record_sla where id = #{value}
+	</select>
+
+	<select id="queryList" resultType="io.cem.modules.cem.entity.RecordSlaEntity">
+		select * from record_sla
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from record_sla 
+	</select>
+	 
+	<insert id="save" parameterType="io.cem.modules.cem.entity.RecordSlaEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into record_sla
+		(
+			`probe_id`, 
+			`port`, 
+			`task_id`, 
+			`service_type`, 
+			`task_type`, 
+			`target_type`, 
+			`target_id`, 
+			`target_ip`, 
+			`target_loc`, 
+			`state`, 
+			`record_date`, 
+			`record_time`, 
+			`delay`, 
+			`g_delay`, 
+			`r_delay`, 
+			`delay_std`, 
+			`g_delay_std`, 
+			`r_delay_std`, 
+			`delay_var`, 
+			`g_delay_var`, 
+			`r_delay_var`, 
+			`jitter`, 
+			`g_jitter`, 
+			`r_jitter`, 
+			`jitter_std`, 
+			`g_jitter_std`, 
+			`r_jitter_std`, 
+			`jitter_var`, 
+			`g_jitter_var`, 
+			`r_jitter_var`, 
+			`loss_rate`, 
+			`g_loss_rate`, 
+			`r_loss_rate`, 
+			`remark`
+		)
+		values
+		(
+			#{probeId}, 
+			#{port}, 
+			#{taskId}, 
+			#{serviceType}, 
+			#{taskType}, 
+			#{targetType}, 
+			#{targetId}, 
+			#{targetIp}, 
+			#{targetLoc}, 
+			#{state}, 
+			#{recordDate}, 
+			#{recordTime}, 
+			#{delay}, 
+			#{gDelay}, 
+			#{rDelay}, 
+			#{delayStd}, 
+			#{gDelayStd}, 
+			#{rDelayStd}, 
+			#{delayVar}, 
+			#{gDelayVar}, 
+			#{rDelayVar}, 
+			#{jitter}, 
+			#{gJitter}, 
+			#{rJitter}, 
+			#{jitterStd}, 
+			#{gJitterStd}, 
+			#{rJitterStd}, 
+			#{jitterVar}, 
+			#{gJitterVar}, 
+			#{rJitterVar}, 
+			#{lossRate}, 
+			#{gLossRate}, 
+			#{rLossRate}, 
+			#{remark}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="io.cem.modules.cem.entity.RecordSlaEntity">
+		update record_sla 
+		<set>
+			<if test="probeId != null">`probe_id` = #{probeId}, </if>
+			<if test="port != null">`port` = #{port}, </if>
+			<if test="taskId != null">`task_id` = #{taskId}, </if>
+			<if test="serviceType != null">`service_type` = #{serviceType}, </if>
+			<if test="taskType != null">`task_type` = #{taskType}, </if>
+			<if test="targetType != null">`target_type` = #{targetType}, </if>
+			<if test="targetId != null">`target_id` = #{targetId}, </if>
+			<if test="targetIp != null">`target_ip` = #{targetIp}, </if>
+			<if test="targetLoc != null">`target_loc` = #{targetLoc}, </if>
+			<if test="state != null">`state` = #{state}, </if>
+			<if test="recordDate != null">`record_date` = #{recordDate}, </if>
+			<if test="recordTime != null">`record_time` = #{recordTime}, </if>
+			<if test="delay != null">`delay` = #{delay}, </if>
+			<if test="gDelay != null">`g_delay` = #{gDelay}, </if>
+			<if test="rDelay != null">`r_delay` = #{rDelay}, </if>
+			<if test="delayStd != null">`delay_std` = #{delayStd}, </if>
+			<if test="gDelayStd != null">`g_delay_std` = #{gDelayStd}, </if>
+			<if test="rDelayStd != null">`r_delay_std` = #{rDelayStd}, </if>
+			<if test="delayVar != null">`delay_var` = #{delayVar}, </if>
+			<if test="gDelayVar != null">`g_delay_var` = #{gDelayVar}, </if>
+			<if test="rDelayVar != null">`r_delay_var` = #{rDelayVar}, </if>
+			<if test="jitter != null">`jitter` = #{jitter}, </if>
+			<if test="gJitter != null">`g_jitter` = #{gJitter}, </if>
+			<if test="rJitter != null">`r_jitter` = #{rJitter}, </if>
+			<if test="jitterStd != null">`jitter_std` = #{jitterStd}, </if>
+			<if test="gJitterStd != null">`g_jitter_std` = #{gJitterStd}, </if>
+			<if test="rJitterStd != null">`r_jitter_std` = #{rJitterStd}, </if>
+			<if test="jitterVar != null">`jitter_var` = #{jitterVar}, </if>
+			<if test="gJitterVar != null">`g_jitter_var` = #{gJitterVar}, </if>
+			<if test="rJitterVar != null">`r_jitter_var` = #{rJitterVar}, </if>
+			<if test="lossRate != null">`loss_rate` = #{lossRate}, </if>
+			<if test="gLossRate != null">`g_loss_rate` = #{gLossRate}, </if>
+			<if test="rLossRate != null">`r_loss_rate` = #{rLossRate}, </if>
+			<if test="remark != null">`remark` = #{remark}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from record_sla where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from record_sla where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>
