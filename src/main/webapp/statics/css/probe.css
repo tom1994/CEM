@@ -30,19 +30,19 @@ body {
 
 /*表格部分*/
 .fontcolor {
-    color: #b85a60;
+    color: black;
 }
 
 a:hover a:visited a:link {
-    color: #b85a60;
+    color: black;
 }
 
 a:visited {
-    color: #b85a60;
+    color: black;
 }
 
 a:link {
-    color: #b85a60;
+    color: black;
 }
 
 .ibox-title {
