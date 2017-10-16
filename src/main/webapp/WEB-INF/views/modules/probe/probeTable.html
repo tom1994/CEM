@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>探针列表</title>
-    #parse("areaHeader.html")  <!--导入CSS和js文件-->
+    #parse("cemHeader.html")  <!--导入CSS和js文件-->
     <link href="${rc.contextPath}/statics/css/probe.css" rel="stylesheet">  <!--自定义CSS-->
 </head>
 <body>
@@ -20,7 +20,7 @@
                     <div class="row">
                         <form class="form-horizontal" id="searchcolums" role="form">
                             <div class="input-group searchspan">
-                                <span class="searchname" title="测试机名">探针名：</span>
+                                <span class="searchname" title="探针名">探针名：</span>
                                 <input type="text" class="form-control" name="name" style="width: 110px" value="">
                             </div>
 
@@ -67,17 +67,17 @@
         <div class="col-lg-12 col-md-12 col-sm-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title fontcolor" id="handle" style="padding-bottom: 0px !important;">
-                    <button type="button" class="btn btn-default " v-on:click="testagentadd"><span
+                    <button type="button" class="btn btn-default " v-on:click="probeadd"><span
                             class="glyphicon glyphicon-plus"></span>录入
                     </button>
-                    <button type="button" class="btn btn-default " v-on:click="testagentupdate"><span
+                    <button type="button" class="btn btn-default " v-on:click="probeupdate"><span
                             class="glyphicon glyphicon-pencil"></span>编辑
                     </button>
-                    <button type="button" class="btn btn-default " v-on:click="testagentdelBatch"><span
+                    <button type="button" class="btn btn-default " v-on:click="probedelBatch"><span
                             class="glyphicon glyphicon-trash"></span>批量删除
                     </button>
                     <button type="button" class="btn btn-default "
-                            v-on:click="testagentview"><span
+                            v-on:click="probeview"><span
                             class="glyphicon glyphicon-zoom-in"></span>查看
                     </button>
                     <!--<button id="excel_import" type="button" class="btn btn-default "><span-->
@@ -89,7 +89,7 @@
                     </button>
                     <div class="btn-group pull-right">
                         <button type="button" class="btn btn-default " style="margin-right: 5px"
-                                v-on:click="testagentListsearch"><span
+                                v-on:click="probesearch"><span
                                 class="glyphicon glyphicon-zoom-in"></span>查询
                         </button>
                         <button type="button" class="btn btn-default " v-on:click="reset"><span
@@ -130,10 +130,10 @@
                                            placeholder="请输入id">
                                 </div>
                                 <label for="name"
-                                       class="col-lg-3 col-md-3 col-sm-3 control-label form_border">测试机名:</label>
+                                       class="col-lg-3 col-md-3 col-sm-3 control-label form_border">探针名:</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3 form_border">
                                     <input type="text" class="form-control" id="name" name="name"
-                                           placeholder="请输入测试机名">
+                                           placeholder="请输入探针名">
                                 </div>
                                 <label for="ip"
                                        class="col-lg-3 col-md-3 col-sm-3 control-label form_border">IP地址:</label>
@@ -149,10 +149,10 @@
                                     <input type="text" class="form-control" id="bandwidth" name="bandwidth"
                                            placeholder="请输入带宽">
                                 </div>
-                                <label for="cityMan"
+                                <label for="city"
                                        class="col-lg-3 col-md-3 col-sm-3 control-label form_border">地市:</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3 form_border">
-                                    <select id="cityMan" class="form-control" name="cityMan">  <!--VUE列表渲染-->
+                                    <select id="city" class="form-control" name="city">  <!--VUE列表渲染-->
                                         <option v-for="item in city_mans">
                                             {{ item.message }}
                                         </option>
@@ -247,7 +247,8 @@
     </div>
 </div>
 
-<script type="text/javascript" src="${rc.contextPath}/js/modules/probe/probeTable.js?_${date.systemTime}"></script>
+<script type="text/javascript" src="${rc.contextPath}/statics/js/modules/probe/probeTable.js?_${date.systemTime}"></script>
+
 
 
 </body>

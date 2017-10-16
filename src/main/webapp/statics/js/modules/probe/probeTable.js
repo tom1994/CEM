@@ -11,7 +11,7 @@ var probedata_handle = new Vue({
     mounted(){         /*动态加载测试任务组数据*/
         $.ajax({
             type: "POST",   /*GET会乱码*/
-            url: "../testgroup/list",
+            url: "../../cem/probe/list",//Todo:改成测试任务组的list方法
             cache: false,  //禁用缓存
             dataType: "json",
             /* contentType:"application/json",  /!*必须要,不可少*!/*/
@@ -25,7 +25,7 @@ var probedata_handle = new Vue({
         });
     },
     methods: {
-        testagentadd: function () {   /*监听录入触发事件*/
+        probeadd: function () {   /*监听录入触发事件*/
             status = 0;
             /*状态0,表示录入*/
             var forms = $('#probeform_data .form-control');
@@ -42,7 +42,7 @@ var probedata_handle = new Vue({
             $('#myModal').modal('show');
 
         },
-        testagentupdate: function () {     /*监听编辑触发事件*/
+        probeupdate: function () {     /*监听编辑触发事件*/
             status = 1;
             /*状态1表示编辑*/
             var trs = $('#probe_table tbody').find('tr:has(:checked)');
@@ -80,7 +80,7 @@ var probedata_handle = new Vue({
                 toastr.warning('请选择一条记录再编辑！');
             }
         },
-        testagentdelBatch: function () {   /*批量删除监听事件*/
+        probedelBatch: function () {   /*批量删除监听事件*/
             status = 2;
             /*状态2表示删除*/
             var trs = $('#probe_table tbody').find('tr:has(:checked)');
@@ -100,7 +100,7 @@ var probedata_handle = new Vue({
             /*find被选中的行*/
 
         },
-        testagentview: function () {     /*查看监听事件*/
+        probeview: function () {     /*查看监听事件*/
             var trs = $('#probe_table tbody').find('tr:has(:checked)');
             /*find被选中的行*/
             var forms = $('#probeform_data .form-control');
@@ -129,7 +129,7 @@ var probedata_handle = new Vue({
                 toastr.warning('请选择一条记录再查看！');
             }
         },
-        testagentListsearch: function () {   /*查询监听事件*/
+        probesearch: function () {   /*查询监听事件*/
             var data = getFormJson($('#searchcolums'));
             /*得到查询条件*/
             /*获取表单元素的值*/
@@ -151,7 +151,7 @@ function delete_ajax() {
 
     $.ajax({
         type: "POST", /*GET会乱码*/
-        url: "../testagent/delete",
+        url: "../../cem/probe/delete",
         cache: false,  //禁用缓存
         data: ids,  //传入组装的参数
         dataType: "json",
@@ -207,21 +207,10 @@ var delete_data = new Vue({
 var probeform_data = new Vue({
     el: '#myModal',
     data: {
-        modaltitle: "测试机管理录入", /*定义模态框标题*/
+        modaltitle: "探针录入", /*定义模态框标题*/
         countys: [
             {message: '新城区'},
             {message: '碑林区'},
-            {message: '莲湖区'},
-            {message: '雁塔区'},
-            {message: '未央区'},
-            {message: '灞桥区'},
-            {message: '长安区'},
-            {message: '阎良区'},
-            {message: '临潼区'},
-            {message: '蓝田县'},
-            {message: '周至县'},
-            {message: '户县'},
-            {message: '高陵县'}
         ],
         city_mans: [
             {message: '西安市'}
@@ -365,23 +354,9 @@ var probetable = new Vue({
             {title: ''},
             {title: '<div class="checkbox"> <label> <input type="checkbox" id="checkAll"></label> </div>'},
             {title: '<div style="display:none">id</div>'},
-            {title: '<div style="width:142px">测试机名</div>'},
-            {title: '<div style="width:142px">IP地址</div>'},
-            {title: '<div style="width:112px">带宽</div>'},
-            {title: '<div style="width:67px">地市</div>'},
-            {title: '<div style="width:67px">区县</div>'},
-            {title: '<div style="width:92px">软件标识</div>'},
-            {title: '<div style="width:112px">硬件编码</div>'},
-            {title: '<div style="width:112px">测试任务组</div>'},
-            {title: '<div style="width:52px">在线状态</div>'},
-            {title: '<div style="width:112px">在线时间</div>'},
-            {title: '<div style="width:112px">探针类型</div>'},
-            {title: '<div style="width:112px">版本号</div>'},
-            {title: '<div style="width:67px">任务间隔</div>'},
-            {title: '<div style="width:167px">装机地址</div>'},
+            {title: '<div style="width:142px">探针名</div>'},
+            {title: '<div style="width:142px">地市</div>'},
             {title: '<div style="width:142px">BRAS名称</div>'},
-            {title: '<div style="width:112px">BRAS_IP</div>'},
-            {title: '<div style="width:112px">BRAS端口</div>'},
             {title: '<div style="width:52px">操作</div>'}
         ],
         rows: [],
@@ -458,7 +433,7 @@ var probetable = new Vue({
                 //ajax请求数据
                 $.ajax({
                     type: "POST", /*GET会乱码*/
-                    url: "../testagent/list",
+                    url: "../../cem/probe/list",
                     cache: false,  //禁用缓存
                     data: param,  //传入组装的参数
                     dataType: "json",
@@ -480,22 +455,8 @@ var probetable = new Vue({
                                 row.push('<div class="checkbox"> <label> <input type="checkbox" name="selectFlag"></label> </div>');
                                 row.push('<div class="probe_id">'+item.id+'</div>');
                                 row.push(item.name);
-                                row.push(item.ip);
-                                row.push(item.bandwidth);
-                                row.push(item.cityMan);
-                                row.push(item.county);
-                                row.push(item.useruid);
-                                row.push(item.sysuuid);
-                                row.push(item.testgroupName);
-                                row.push(item.onlinestatus);
-                                row.push(item.onlineTime);
-                                row.push(item.model);
-                                row.push(item.version);
-                                row.push(item.runInterval);
-                                row.push(item.address);
-                                row.push(item.brasname);
-                                row.push(item.brasip);
-                                row.push(item.brasport);
+                                row.push(item.location);
+                                row.push(item.brasName);
                                 row.push('<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>');
                                 rows.push(row);
                             });
@@ -506,25 +467,6 @@ var probetable = new Vue({
                             callback(returnData);
                     }
                 });
-            }
-        });
-        new AjaxUpload('#excel_import', {
-            action: '../sys/upload/upload/testagent',
-            name: 'file',
-            autoSubmit: true,
-            responseType: "json",
-            onSubmit: function (file, extension) {
-                if (!(extension && /^(xls|xlsx)$/.test(extension.toLowerCase()))) {
-                    alert('请上传xls或xlsx格式的Excel文件！');
-                    return false;
-                }
-            },
-            onComplete: function (file, r) {
-                if (r.code == 0) {
-                    alert(r.msg);
-                } else {
-                    alert(r.msg);
-                }
             }
         });
     }
