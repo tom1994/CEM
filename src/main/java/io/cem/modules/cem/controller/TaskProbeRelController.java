@@ -1,8 +1,13 @@
 package io.cem.modules.cem.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.alibaba.fastjson.JSONObject;
+import io.cem.common.exception.RRException;
+import io.cem.common.utils.JSONUtils;
+import io.cem.modules.cem.entity.ProbeEntity;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,12 +26,11 @@ import io.cem.common.utils.R;
 /**
  * 
  * 
- * @author chenshun
- * @email sunlightcs@gmail.com
+ * @author Fern
  * @date 2017-10-12 17:12:45
  */
 @RestController
-@RequestMapping("taskproberel")
+@RequestMapping("/cem/taskproberel")
 public class TaskProbeRelController {
 	@Autowired
 	private TaskProbeRelService taskProbeRelService;
@@ -36,15 +40,31 @@ public class TaskProbeRelController {
 	 */
 	@RequestMapping("/list")
 	@RequiresPermissions("taskproberel:list")
-	public R list(@RequestParam Map<String, Object> params){
+//	public R list(@RequestParam Map<String, Object> params){
 		//查询列表数据
-        Query query = new Query(params);
+//        Query query = new Query(params);
 
-		List<TaskProbeRelEntity> taskProbeRelList = taskProbeRelService.queryList(query);
-		int total = taskProbeRelService.queryTotal(query);
+//		List<TaskProbeRelEntity> taskProbeRelList = taskProbeRelService.queryList(query);
+//		int total = taskProbeRelService.queryTotal(query);
 		
-		PageUtils pageUtil = new PageUtils(taskProbeRelList, total, query.getLimit(), query.getPage());
+//		PageUtils pageUtil = new PageUtils(taskProbeRelList, total, query.getLimit(), query.getPage());
 		
+//		return R.ok().put("page", pageUtil);
+//	}
+
+	public R list(String taskdata, Integer page, Integer limit) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		map.put("offset", (page - 1) * limit);
+		map.put("limit", limit);
+		JSONObject taskdata_jsonobject = JSONObject.parseObject(taskdata);
+		try {
+			map.putAll(JSONUtils.jsonToMap(taskdata_jsonobject));
+		} catch (RuntimeException e) {
+			throw new RRException("内部参数错误，请重试！");
+		}
+        List<TaskProbeRelEntity> taskProbeRelList = taskProbeRelService.queryList(map);
+		int total = taskProbeRelService.queryTotal(map);
+		PageUtils pageUtil = new PageUtils(taskProbeRelList, total, limit, page);
 		return R.ok().put("page", pageUtil);
 	}
 	
