@@ -37,7 +37,7 @@ var probedata_handle = new Vue({
             for (var i = 0; i < 11; i++) {
                 forms[i].value = ""
             }
-            probeform_data.modaltitle = "探针理录入";
+            probeform_data.modaltitle = "探针录入";
             /*修改模态框标题*/
             $('#myModal').modal('show');
 
@@ -266,7 +266,7 @@ var probegroup_handle = new Vue({
 
     }
 });
-
+//探针列表删除功能
 function delete_ajax() {
     var ids = JSON.stringify(idArray);
     /*对象数组字符串*/
@@ -320,6 +320,63 @@ var delete_data = new Vue({
             /*清空id数组*/
             idArray[0] = this.id;
             delete_ajax();
+            /*ajax传输*/
+
+        }
+    }
+});
+
+//探针组删除功能
+function deletegroup_ajax() {
+    var ids = JSON.stringify(idArray);
+    /*对象数组字符串*/
+
+    $.ajax({
+        type: "POST", /*GET会乱码*/
+        url: "../../cem/probegroup/delete",
+        cache: false,  //禁用缓存
+        data: ids,  //传入组装的参数
+        dataType: "json",
+        contentType: "application/json", /*必须要,不可少*/
+        success: function (result) {
+            toastr.success("业务信息删除成功!");
+            grouptable.currReset();
+            idArray = [];
+            /*清空id数组*/
+            deletegroup_data.close_modal();
+            /*关闭模态框*/
+        }
+    });
+}
+function deletegroup_this(obj) {
+    deletegroup_data.show_deleteModal();
+    deletegroup_data.id = parseInt(obj.id);
+    /*获取当前行探针组数据id*/
+    console.log(deletegroup_data.id);
+}
+
+var deletegroup_data = new Vue({
+    el: '#myModal_groupdelete',
+    data: {
+        id: null
+    },
+    methods: {
+        show_deleteModal: function () {
+            $(this.$el).modal('show');
+            /*弹出确认模态框*/
+        },
+        close_modal: function (obj) {
+            $(this.$el).modal('hide');
+
+        },
+        cancel_delete: function () {
+
+        },
+        deletegroup_data: function () {
+            idArray = [];
+            /*清空id数组*/
+            idArray[0] = this.id;
+            deletegroup_ajax();
             /*ajax传输*/
 
         }
@@ -687,7 +744,7 @@ var grouptable = new Vue({
                             row.push('<div class="checkbox"> <label> <input type="checkbox" name="selectFlag"></label> </div>');
                             row.push('<div class="probe_id">'+item.id+'</div>');
                             row.push(item.name);
-                            row.push('<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>');
+                            row.push('<a class="fontcolor" onclick="deletegroup_this(this)" id='+item.id+'>删除</a>');
                             rows.push(row);
                         });
                         returnData.data = rows;
