@@ -11,14 +11,14 @@
 
 <div class="wrapper wrapper-content">
     <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="col-lg-8 col-md-8 col-sm-8">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <h5 class="fontcolor">探针管理</h5>
                 </div>
                 <div class="ibox-content" style="padding-bottom: 0">
                     <div class="row">
-                        <form class="form-horizontal" id="searchcolums" role="form">
+                        <form class="form-horizontal" id="probesearch" role="form">
                             <div class="input-group searchspan">
                                 <span class="searchname" title="探针名">探针名：</span>
                                 <input type="text" class="form-control" name="name" style="width: 110px" value="">
@@ -41,32 +41,42 @@
                                     <option v-for="item in countys">{{ item.message }}</option>
                                 </select>
                             </div>
-
-
                             <div class="input-group searchspan">
-                                <span class="searchname" title="测试任务组">探针组：</span>
-                                <select class="form-control" name="testgroup_name" style="width: 110px">
+                                <span class="searchname" title="探针组">探针组：</span>
+                                <select class="form-control" name="probegroup_name" style="width: 110px">
                                     <option value="">---请选择---</option>                       <!--vue 绑定value属性    重要！！！！-->
                                     <option v-for="item in testgroup_names" v-bind:value="item.message.name">{{ item.message.name }}</option>
                                 </select>
                             </div>
-
-                            <div class="input-group searchspan">
-                                <span class="searchname" title="探针类型">探针类型：</span>
-                                <input class="form-control" type="text" name="model" style="width: 110px" value="">
-                            </div>
-
                         </form>
 
                     </div>
                 </div>
             </div>
         </div>
+        <div class="col-lg-4 col-md-4 col-sm-4">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5 class="fontcolor">探针组管理</h5>
+                </div>
+                <div class="ibox-content" style="padding-bottom: 0">
+                    <div class="row">
+                        <form class="form-horizontal" id="groupsearch" role="form">
+                            <div class="input-group searchspan">
+                                <span class="searchname" title="探针组名">探针组名：</span>
+                                <input type="text" class="form-control" name="name" style="width: 110px" value="">
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="row" id="probe_table">
-        <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="col-lg-8 col-md-8 col-sm-8">
             <div class="ibox float-e-margins">
-                <div class="ibox-title fontcolor" id="handle" style="padding-bottom: 0px !important;">
+                <div class="ibox-title fontcolor" id="probehandle" style="padding-bottom: 0px !important;">
                     <button type="button" class="btn btn-default " v-on:click="probeadd"><span
                             class="glyphicon glyphicon-plus"></span>录入
                     </button>
@@ -80,9 +90,6 @@
                             v-on:click="probeview"><span
                             class="glyphicon glyphicon-zoom-in"></span>查看
                     </button>
-                    <!--<button id="excel_import" type="button" class="btn btn-default "><span-->
-                            <!--class="glyphicon glyphicon-save"></span>Excel数据导入-->
-                    <!--</button>-->
                     <button type="button" class="btn btn-default "><a href="../sys/upload/download/testagent"
                                                                       class="fontcolor"><span
                             class="glyphicon glyphicon-open"></span>Excel导出</a>
@@ -100,6 +107,37 @@
                 <div class="ibox-content">
                     <div class="row " style="overflow-x: scroll">     <!--表格 verflow-x: scroll超出滚动-->
                         <table class="table table-bordered " id="probedata_table"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title fontcolor" id="grouphandle" style="padding-bottom: 0px !important;">
+                    <button type="button" class="btn btn-default " v-on:click="groupadd"><span
+                            class="glyphicon glyphicon-plus"></span>录入
+                    </button>
+                    <button type="button" class="btn btn-default " v-on:click="groupupdate"><span
+                            class="glyphicon glyphicon-pencil"></span>编辑
+                    </button>
+                    <button type="button" class="btn btn-default "
+                            v-on:click="groupview"><span
+                            class="glyphicon glyphicon-zoom-in"></span>查看
+                    </button>
+                    <button type="button" class="btn btn-default "><a href="../sys/upload/download/testagent"
+                                                                      class="fontcolor"><span
+                            class="glyphicon glyphicon-open"></span>Excel导出</a>
+                    </button>
+                    <div class="btn-group pull-right">
+                        <button type="button" class="btn btn-default " style="margin-right: 5px"
+                                v-on:click="groupsearch"><span
+                                class="glyphicon glyphicon-zoom-in"></span>查询
+                        </button>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="row " style="overflow-x: scroll">     <!--表格 verflow-x: scroll超出滚动-->
+                        <table class="table table-bordered " id="probegroup_table"></table>
                     </div>
                 </div>
             </div>
@@ -248,8 +286,6 @@
 </div>
 
 <script type="text/javascript" src="${rc.contextPath}/statics/js/modules/probe/probeTable.js?_${date.systemTime}"></script>
-
-
 
 </body>
 

@@ -1,8 +1,12 @@
 package io.cem.modules.cem.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.alibaba.fastjson.JSONObject;
+import io.cem.common.exception.RRException;
+import io.cem.common.utils.JSONUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,32 +23,34 @@ import io.cem.common.utils.R;
 
 
 /**
- * 
- * 
- * @author chenshun
- * @email sunlightcs@gmail.com
+ * @author Miao
+
  * @date 2017-10-12 17:12:46
  */
 @RestController
-@RequestMapping("probegroup")
+@RequestMapping("/cem/probegroup")
 public class ProbeGroupController {
 	@Autowired
-	private ProbeGroupService probeGroupService;
+	private ProbeGroupService ProbeGroupService;
 	
 	/**
 	 * 列表
 	 */
 	@RequestMapping("/list")
 	@RequiresPermissions("probegroup:list")
-	public R list(@RequestParam Map<String, Object> params){
-		//查询列表数据
-        Query query = new Query(params);
-
-		List<ProbeGroupEntity> probeGroupList = probeGroupService.queryList(query);
-		int total = probeGroupService.queryTotal(query);
-		
-		PageUtils pageUtil = new PageUtils(probeGroupList, total, query.getLimit(), query.getPage());
-		
+	public R list(String groupdata, Integer page, Integer limit) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		map.put("offset", (page - 1) * limit);
+		map.put("limit", limit);
+		JSONObject groupdata_jsonobject = JSONObject.parseObject(groupdata);
+		try {
+			map.putAll(JSONUtils.jsonToMap(groupdata_jsonobject));
+		} catch (RuntimeException e) {
+			throw new RRException("内部参数错误，请重试！");
+		}
+		List<ProbeGroupEntity> groupList = ProbeGroupService.queryList(map);
+		int total = ProbeGroupService.queryTotal(map);
+		PageUtils pageUtil = new PageUtils(groupList, total, limit, page);
 		return R.ok().put("page", pageUtil);
 	}
 	
@@ -55,7 +61,7 @@ public class ProbeGroupController {
 	@RequestMapping("/info/{id}")
 	@RequiresPermissions("probegroup:info")
 	public R info(@PathVariable("id") Integer id){
-		ProbeGroupEntity probeGroup = probeGroupService.queryObject(id);
+		ProbeGroupEntity probeGroup = ProbeGroupService.queryObject(id);
 		
 		return R.ok().put("probeGroup", probeGroup);
 	}
@@ -66,7 +72,7 @@ public class ProbeGroupController {
 	@RequestMapping("/save")
 	@RequiresPermissions("probegroup:save")
 	public R save(@RequestBody ProbeGroupEntity probeGroup){
-		probeGroupService.save(probeGroup);
+		ProbeGroupService.save(probeGroup);
 		
 		return R.ok();
 	}
@@ -77,7 +83,7 @@ public class ProbeGroupController {
 	@RequestMapping("/update")
 	@RequiresPermissions("probegroup:update")
 	public R update(@RequestBody ProbeGroupEntity probeGroup){
-		probeGroupService.update(probeGroup);
+		ProbeGroupService.update(probeGroup);
 		
 		return R.ok();
 	}
@@ -88,7 +94,7 @@ public class ProbeGroupController {
 	@RequestMapping("/delete")
 	@RequiresPermissions("probegroup:delete")
 	public R delete(@RequestBody Integer[] ids){
-		probeGroupService.deleteBatch(ids);
+		ProbeGroupService.deleteBatch(ids);
 		
 		return R.ok();
 	}
