@@ -3,7 +3,7 @@
  */
 var status;
 var idArray = new Array();
-var testGroupNames = new Array();
+var probeGroupNames = new Array();
 
 var probedata_handle = new Vue({
     el: '#probehandle',
@@ -48,6 +48,7 @@ var probedata_handle = new Vue({
             var trs = $('#probe_table tbody').find('tr:has(:checked)');
             /*find被选中的行*/
             var forms = $('#probeform_data .form-control');
+            var id = trs.find("td").eq(2).text();
             console.log(trs.length + "表单对象:" + forms.length);
 
             $('#probeform_data input[type=text]').prop("readonly", false);
@@ -57,18 +58,27 @@ var probedata_handle = new Vue({
             if (trs.length == 0) {
                 toastr.warning('请选择编辑项目！');
             } else if (trs.length == 1) {
-                var tds = trs.find("td");
-                for (var i = 0; i < 6; i++) {                /*tds.eq(0).text()取得td的值,注意tds[0].text()取不到*/
-                    console.log(tds.eq(i + 3).text());
-                    forms[i].value = tds.eq(i + 2).text()
-                }
-                forms[6].value = tds.eq(10).text();
-                /*修改测试任务组*/
-                console.log(tds.eq(10).text());
-                for (var j = 0; j < 4; j++) {                /*tds.eq(0).text()取得td的值,注意tds[0].text()取不到*/
-                    console.log(tds.eq(j + 15).text());
-                    forms[j + 7].value = tds.eq(j + 15).text()
-                }
+                $.ajax({
+                    type: "POST",   /*GET会乱码*/
+                    url: "../../cem/probe/info/"+id,
+                    cache: false,  //禁用缓存
+                    dataType: "json",
+                    /* contentType:"application/json",  /!*必须要,不可少*!/*/
+                    success: function (result) {
+                        forms[0].value = result.probe.id;
+                        forms[1].value = result.probe.serialNumber;
+                        forms[2].value = result.probe.name;
+                        forms[3].value = result.probe.type;
+                        forms[4].value = result.probe.city;
+                        forms[5].value = result.probe.county;
+                        forms[6].value = result.probe.location;
+                        forms[7].value = result.probe.ipType;
+                        forms[8].value = result.probe.portIp;
+                        forms[9].value = result.probe.brasName;
+                        forms[10].value = result.probe.brasIp;
+                        forms[11].value = result.probe.brasPort;
+                    }
+                });
                 probeform_data.modaltitle = "探针编辑";
                 /*修改模态框标题*/
                 $('#myModal').modal('show');
@@ -93,28 +103,36 @@ var probedata_handle = new Vue({
                 /*ajax传输*/
 
             }
-            /*find被选中的行*/
-
         },
         probeview: function () {     /*查看监听事件*/
             var trs = $('#probe_table tbody').find('tr:has(:checked)');
             /*find被选中的行*/
             var forms = $('#probeform_data .form-control');
+            var id = trs.find("td").eq(2).text();
             if (trs.length == 0) {
                 toastr.warning('请选择查看项目！');
             } else if (trs.length == 1) {
-                var tds = trs.find("td");
-                for (var i = 0; i < 6; i++) {                /*tds.eq(0).text()取得td的值,注意tds[0].text()取不到*/
-                    console.log(tds.eq(i + 2).text());
-                    forms[i].value = tds.eq(i + 2).text()
-                }
-                forms[6].value = tds.eq(10).text();
-                /*修改测试任务组*/
-                console.log(tds.eq(10).text());
-                for (var j = 0; j < 4; j++) {                /*tds.eq(0).text()取得td的值,注意tds[0].text()取不到*/
-                    console.log(tds.eq(j + 15).text());
-                    forms[j + 7].value = tds.eq(j + 15).text()
-                }
+                $.ajax({
+                    type: "POST",   /*GET会乱码*/
+                    url: "../../cem/probe/info/"+id,
+                    cache: false,  //禁用缓存
+                    dataType: "json",
+                    /* contentType:"application/json",  /!*必须要,不可少*!/*/
+                    success: function (result) {
+                        forms[0].value = result.probe.id;
+                        forms[1].value = result.probe.serialNumber;
+                        forms[2].value = result.probe.name;
+                        forms[3].value = result.probe.type;
+                        forms[4].value = result.probe.city;
+                        forms[5].value = result.probe.county;
+                        forms[6].value = result.probe.location;
+                        forms[7].value = result.probe.ipType;
+                        forms[8].value = result.probe.portIp;
+                        forms[9].value = result.probe.brasName;
+                        forms[10].value = result.probe.brasIp;
+                        forms[11].value = result.probe.brasPort;
+                    }
+                });
                 $('#probeform_data input[type=text]').prop("readonly", true);//将input元素设置为readonly
                 $('#probeform_data select').prop("disabled", true);//将select元素设置为不可变
 
@@ -186,6 +204,7 @@ var probegroup_handle = new Vue({
             var trs = $('#group_table tbody').find('tr:has(:checked)');
             /*find被选中的行*/
             var forms = $('#groupform_data .form-control');
+            var id = trs.find("td").eq(2).text();
             console.log(trs.length + "表单对象:" + forms.length);
 
             $('#groupform_data input[type=text]').prop("readonly", false);
@@ -202,8 +221,9 @@ var probegroup_handle = new Vue({
                     dataType: "json",
                     /* contentType:"application/json",  /!*必须要,不可少*!/*/
                     success: function (result) {
-                        forms[0].value = result.probeGroup.name;
-                        forms[1].value = result.probeGroup.remark;
+                        forms[0].value = result.probeGroup.id;
+                        forms[1].value = result.probeGroup.name;
+                        forms[2].value = result.probeGroup.remark;
                     }
                 });
                 groupform_data.modaltitle = "探针组编辑";
@@ -230,8 +250,9 @@ var probegroup_handle = new Vue({
                     dataType: "json",
                     /* contentType:"application/json",  /!*必须要,不可少*!/*/
                     success: function (result) {
-                        forms[0].value = result.probeGroup.name;
-                        forms[1].value = result.probeGroup.remark;
+                        forms[0].value = result.probeGroup.id;
+                        forms[1].value = result.probeGroup.name;
+                        forms[2].value = result.probeGroup.remark;
                     }
                 });
                 $('#groupform_data input[type=text]').prop("readonly", true);//将input元素设置为readonly
@@ -382,29 +403,31 @@ var probeform_data = new Vue({
     data: {
         modaltitle: "探针录入", /*定义模态框标题*/
         countys: [
-            {message: '新城区'},
-            {message: '碑林区'},
+            {message: '海淀区'},
+            {message: '朝阳区'},
         ],
         citys: [
-            {message: '西安市'}
+            {message: '北京市'}
         ],
-        testgroup_names: []
+        types: [
+            {message: '类型1'},
+            {message: '类型2'}
+        ],
+        ipTypes: [
+            {message:'ip类型1'},
+            {message:'ip类型2'}
+        ],
+        probegroup_names: []
     },
     // 在 `methods` 对象中定义方法
     methods: {
         submit: function () {
-            var testagentJson = getFormJson($('#probeform_data'));
-            if (typeof(testagentJson["cityMan"]) == "undefined") {                  /*3个select必选*/
-                toastr.warning("请录入地市信息!");
-            } else if (typeof(testagentJson["county"]) == "undefined") {
-                toastr.warning("请录入区县信息!");
-            } else if (typeof(testagentJson["testgroupName"]) == "undefined") {
-                toastr.warning("请录入测试任务组!");
+            var probeJson = getFormJson($('#probeform_data'));
+            if (typeof(probeJson["name"]) == "undefined") {
+                toastr.warning("请录入探针名!");
             } else {
-                var testagent = JSON.stringify(testagentJson);
-                /*封装成json数组*/
-                /*获取表单元素的值*/
-                console.log(testagent);
+                var probe = JSON.stringify(probeJson);
+                console.log(probe);
                 var mapstr;
                 if (status == 0) {
                     mapstr = "save";
@@ -413,9 +436,9 @@ var probeform_data = new Vue({
                 }
                 $.ajax({
                     type: "POST", /*GET会乱码*/
-                    url: "../testagent/" + mapstr,
+                    url: "../../cem/probe/" + mapstr,
                     cache: false,  //禁用缓存
-                    data: testagent,  //传入组装的参数
+                    data: probe,  //传入组装的参数
                     dataType: "json",
                     contentType: "application/json", /*必须要,不可少*/
                     success: function (result) {
@@ -463,7 +486,6 @@ var groupform_data = new Vue({
     el: '#groupModal',
     data: {
         modaltitle: "探针组录入", /*定义模态框标题*/
-        probegroup_names: []
     },
     // 在 `methods` 对象中定义方法
     methods: {
@@ -644,7 +666,8 @@ var probetable = new Vue({
             {title: '<div class="checkbox"> <label> <input type="checkbox" id="checkAll"></label> </div>'},
             {title: '<div style=" width:0px;display:none;padding:0px">id</div>'},
             {title: '<div style="width:142px">探针名</div>'},
-            {title: '<div style="width:142px">地市</div>'},
+            {title: '<div style="width:142px">所属位置</div>'},
+            {title: '<div style="width:142px">端口ip</div>'},
             {title: '<div style="width:142px">BRAS名称</div>'},
             {title: '<div style="width:52px">操作</div>'},
         ],
@@ -739,6 +762,7 @@ var probetable = new Vue({
                                 row.push('<div class="probe_id" style="display:none">'+item.id+'</div>');
                                 row.push(item.name);
                                 row.push(item.location);
+                                row.push(item.portIp);
                                 row.push(item.brasName);
                                 row.push('<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>');
                                 rows.push(row);
