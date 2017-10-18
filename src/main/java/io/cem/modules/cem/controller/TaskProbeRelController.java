@@ -10,11 +10,7 @@ import io.cem.common.utils.JSONUtils;
 import io.cem.modules.cem.entity.ProbeEntity;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import io.cem.modules.cem.entity.TaskProbeRelEntity;
 import io.cem.modules.cem.service.TaskProbeRelService;
@@ -94,11 +90,14 @@ public class TaskProbeRelController {
 	/**
 	 * 修改
 	 */
+	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("taskproberel:update")
 	public R update(@RequestBody TaskProbeRelEntity taskProbeRel){
+		System.out.println("port:"+taskProbeRel.getPort());
 		taskProbeRelService.update(taskProbeRel);
-		
+
+
 		return R.ok();
 	}
 	

@@ -1,5 +1,6 @@
 var status;
 var idArray = new Array();
+var test = new Array();
 var testGroupNames = new Array();
 
 var probedata_handle = new Vue({
@@ -8,16 +9,16 @@ var probedata_handle = new Vue({
     mounted(){         /*动态加载测试任务组数据*/
         $.ajax({
             type: "POST",   /*GET会乱码*/
-            url: "../../cem/taskproberel/list",
+            url: "../../cem/taskproberel/list",//Todo:改成测试任务组的list方法
             cache: false,  //禁用缓存
             dataType: "json",
             /* contentType:"application/json",  /!*必须要,不可少*!/*/
             success: function (result) {
-                for(var i=0;i<result.page.list.length;i++){
-                    testGroupNames[i] = {message: result.page.list[i]}
-                }
-                probeform_data.testgroup_names = testGroupNames;    /*注意,这个js执行放在probeform_data和search_data之前才行*/
-                search_data.testgroup_names = testGroupNames;
+                // for(var i=0;i<result.page.list.length;i++){
+                //     testGroupNames[i] = {message: result.page.list[i]}
+                // }
+                // probeform_data.testgroup_names = testGroupNames;    /*注意,这个js执行放在probeform_data和search_data之前才行*/
+                // search_data.testgroup_names = testGroupNames;
             }
         });
     },
@@ -77,19 +78,27 @@ var probedata_handle = new Vue({
                 toastr.warning('请选择一条记录再编辑！');
             }
         },
-        taskdelBatch: function () {   /*批量删除监听事件*/
+        taskdelBatch: function () {   /*批量取消监听事件*/
             status = 2;
-            /*状态2表示删除*/
+            /*状态2表示取消*/
             var trs = $('#probe_table tbody').find('tr:has(:checked)');
             if (trs.length == 0) {
-                toastr.warning('请选择删除项目！');
+                toastr.warning('请需要取消的项目！');
             } else {
-                for (var i = 0; i < trs.length; i++) {       /*取得选中行的id*/
+                for (var i = 0; i < trs.length; i++) {
                     var tds = trs.eq(i).find("td");
-                    idArray[i] = parseInt(tds.eq(2).text());
-                    /*将id加入数组中*/
-                    console.log(tds.eq(2).text())
+                    var statuses = parseInt("0")
+                    test={id:tds.eq(2).text(),taskId:tds.eq(3).text(),probeId:tds.eq(4).text(),port:tds.eq(5).text(),status:statuses,remark:tds.eq(7).text()};
+                    console.log("piliangquxiao:"+test);
+
                 }
+             //   for (var i = 0; i < trs.length; i++) {       /*取得选中行的id*/
+             //       var tds = trs.eq(i).find("td");
+             //       idArray[i] = parseInt(tds.eq(2).text());
+              //      /*将id加入数组中*/
+              //      console.log(tds.eq(2).text())
+
+             //   }
                 delete_ajax();
                 /*ajax传输*/
 
@@ -126,7 +135,7 @@ var probedata_handle = new Vue({
                 toastr.warning('请选择一条记录再查看！');
             }
         },
-        taskListsearch: function () {   /*查询监听事件*/
+      taskListsearch: function () {   /*查询监听事件*/
             var data = getFormJson($('#searchcolums'));
             /*得到查询条件*/
             /*获取表单元素的值*/
@@ -143,14 +152,15 @@ var probedata_handle = new Vue({
     }
 });
 function delete_ajax() {   //取消项目，更改数据库状态信息
-    var ids = JSON.stringify(idArray);
+    var params = JSON.stringify(test);
+    console.log(params);
     /*对象数组字符串*/
 
     $.ajax({
         type: "POST", /*GET会乱码*/
         url: "../../cem/taskproberel/update",
         cache: false,  //禁用缓存
-        data: ids,  //传入组装的参数
+        data: params,  //传入组装的参数
         dataType: "json",
         contentType: "application/json", /*必须要,不可少*/
         success: function (result) {
@@ -158,12 +168,8 @@ function delete_ajax() {   //取消项目，更改数据库状态信息
             toastr.success("测试任务取消成功!");
 
             probetable.currReset();
+            test = [];
 
-            if(idArray[4]==1){
-                idArray[4]=0;
-            }else {
-                idArray[4]=1;
-            }
             /*更改status的信息*/
             delete_data.close_modal();
             /*关闭模态框*/
@@ -171,16 +177,32 @@ function delete_ajax() {   //取消项目，更改数据库状态信息
     });
 }
 function delete_this(obj) {
+    var localrow = obj.parentNode.parentNode;
+    console.log(localrow.cells[4].innerHTML.toString().replace(/<td>/,"").replace(/<\td>/,""));
     delete_data.show_deleteModal();
     delete_data.id = parseInt(obj.id);
-    /*获取当前行探针数据id*/
+    delete_data.taskId = parseInt(localrow.cells[3].innerHTML.toString().replace(/<td>/,"").replace(/<\td>/,""));
+    delete_data.probeId = parseInt(localrow.cells[4].innerHTML.toString().replace(/<td>/,"").replace(/<\td>/,""));
+    delete_data.port = localrow.cells[5].innerHTML.toString().replace(/<td>/,"").replace(/<\td>/,"");
+    delete_data.statuses = parseInt("0");
+    delete_data.remark = localrow.cells[7].innerHTML.toString().replace(/<td>/,"").replace(/<\td>/,"");
+
+
+
     console.log(delete_data.id);
+    console.log(delete_data.taskId);
 }
 
 var delete_data = new Vue({
     el: '#myModal_delete',
     data: {
-        id: null
+ //       test:[{"id":null},{"taskId":null},{"probeId":null},{"port":null},{"status":null},{"remark":null}],
+        id:null,
+        taskId:null,
+        probeId:null,
+        port:null,
+        statuses:null,
+        remark:null,
     },
     methods: {
         show_deleteModal: function () {
@@ -195,14 +217,12 @@ var delete_data = new Vue({
 
         },
         delete_data: function () {
-            if(idArray[4]==1){
-                idArray[4]=0;
-            }else {
-                idArray[4]=1;
-            }
             /*更改status的信息*/
-            idArray[0] = this.id;
+            test={id:this.id,taskId:this.taskId,probeId:this.probeId,port:this.port,status:this.statuses,remark:this.remark};
+
+
             delete_ajax();
+
             /*ajax传输*/
 
         }
@@ -358,11 +378,13 @@ var probetable = new Vue({
         headers: [
             {title: ''},
             {title: '<div class="checkbox"> <label> <input type="checkbox" id="checkAll"></label> </div>'},
-            {title: '<div style="display:none">id</div>'},
+ //           {title: '<div style="display:none">id</div>'},
+            {title: '<div style="width:67px">id</div>'},
             {title: '<div style="width:142px">任务id</div>'},
             {title: '<div style="width:142px">探针id</div>'},
             {title: '<div style="width:112px">探针端口</div>'},
             {title: '<div style="width:67px">状态</div>'},
+            {title: '<div style="width:67px">备注</div>'},
             {title: '<div style="width:67px">编辑</div>'},
             {title: '<div style="width:67px">取消</div>'}
         ],
@@ -457,6 +479,8 @@ var probetable = new Vue({
                         let rows = [];
                         var i = param.start+1;
                         result.page.list.forEach(function (item) {
+                            var status_word;
+                            if(item.status==1){status_word="正在执行";}else{status_word="已取消";}
                             let row = [];
                             row.push(i++);
                             row.push('<div class="checkbox"> <label> <input type="checkbox" name="selectFlag"></label> </div>');
@@ -464,7 +488,9 @@ var probetable = new Vue({
                             row.push(item.taskId);
                             row.push(item.probeId);
                             row.push(item.port);
-                            row.push(item.status);
+                            row.push(status_word);
+                            //row.push(item.status);
+                            row.push(item.remark);
                             row.push('<a class="fontcolor" onclick="edit_this(this)" id='+item.id+'>编辑</a>');
                             row.push('<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>取消</a>');
                             rows.push(row);
