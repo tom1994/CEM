@@ -28,6 +28,7 @@ body {
     vertical-align: middle;
 }
 
+
 /*表格部分*/
 .fontcolor {
     color: black;
@@ -57,6 +58,10 @@ a:link {
     white-space: nowrap; /*//规定段落中的文本不进行换行*/
 }
 
+#group_table td {
+    white-space: nowrap; /*//规定段落中的文本不进行换行*/
+}
+
 .modal-body {
     padding: 0px 30px 0px 30px
 }
@@ -64,10 +69,18 @@ a:link {
 #probeform_data .row {
     border-bottom: 1px solid #e4e4e4;
     border-top: 1px solid #e4e4e4;
+}
 
+#groupform_data .row {
+    border-bottom: 1px solid #e4e4e4;
+    border-top: 1px solid #e4e4e4;
 }
 
 #probeform_data .row input { /*设置外边距*/
+    margin: 4px 0 4px 0;
+}
+
+#groupform_data .row input { /*设置外边距*/
     margin: 4px 0 4px 0;
 }
 
@@ -75,7 +88,16 @@ a:link {
     margin: 4px 0 4px 0;
 }
 
+#groupform_data .row select { /*设置外边距*/
+    margin: 4px 0 4px 0;
+}
+
 #probeform_data .form-group {
+    margin-bottom: 0px;
+!important;
+}
+
+#groupform_data .form-group {
     margin-bottom: 0px;
 !important;
 }
@@ -87,13 +109,15 @@ a:link {
     text-align: center !important;
 }
 
-#probeform_title {
+.probeform_title {
     margin: 10px 0 0 0 !important;
     background-color: #dddddd;
     font-size: 14px;
     font-weight: bold;
     height: 30px;
 }
+
+
 #probetesttarget_title{
     margin: 10px 0 0 0 !important;
     background-color: #dddddd;
@@ -104,16 +128,20 @@ a:link {
 
 .probeformtitle_border {
     margin: 7px 0 0 0;
+}
 
+.groupformtitle_border {
+    margin: 7px 0 0 0;
 }
 
 .modal-header {
     background-color: #1cb395;
 }
 
-#myModalLabel {
+.myModalLabel {
     color: #ffffff;
 }
+
 
 /******测试任务组相关样式*****/
 .testtargetbutton{

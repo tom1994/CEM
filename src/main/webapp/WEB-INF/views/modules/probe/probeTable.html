@@ -14,7 +14,7 @@
         <div class="col-lg-8 col-md-8 col-sm-8">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5 class="fontcolor">探针管理</h5>
+                    <h3 class="fontcolor">探针管理</h3>
                 </div>
                 <div class="ibox-content" style="padding-bottom: 0">
                     <div class="row">
@@ -29,7 +29,7 @@
                                 <span class="searchname" title="地市">地市：</span>
                                 <select class="form-control" name="city_man" style="width: 110px">
                                     <option value="">---请选择---</option>
-                                    <option v-for="item in city_mans">{{ item.message }}</option>
+                                    <option v-for="item in citys">{{ item.message }}</option>
                                 </select>
                             </div>
 
@@ -57,7 +57,7 @@
         <div class="col-lg-4 col-md-4 col-sm-4">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5 class="fontcolor">探针组管理</h5>
+                    <h3 class="fontcolor">探针组管理</h3>
                 </div>
                 <div class="ibox-content" style="padding-bottom: 0">
                     <div class="row">
@@ -73,8 +73,8 @@
             </div>
         </div>
     </div>
-    <div class="row" id="probe_table">
-        <div class="col-lg-8 col-md-8 col-sm-8">
+    <div class="row">
+        <div class="col-lg-8 col-md-8 col-sm-8" id="probe_table">
             <div class="ibox float-e-margins">
                 <div class="ibox-title fontcolor" id="probehandle" style="padding-bottom: 0px !important;">
                     <button type="button" class="btn btn-default " v-on:click="probeadd"><span
@@ -111,7 +111,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-4 col-md-4 col-sm-4">
+        <div class="col-lg-4 col-md-4 col-sm-4" id="group_table">
             <div class="ibox float-e-margins">
                 <div class="ibox-title fontcolor" id="grouphandle" style="padding-bottom: 0px !important;">
                     <button type="button" class="btn btn-default " v-on:click="groupadd"><span
@@ -150,9 +150,9 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">{{modaltitle}}</h4>
+                    <h4 class="modal-title myModalLabel">{{modaltitle}}</h4>
                 </div>
-                <div class="row" id="probeform_title">
+                <div class="row probeform_title">
                     <div class="col-lg-3 col-md-2 col-sm-3">
                         <h4 class="fontcolor probeformtitle_border">表单信息管理</h4>
                     </div>
@@ -167,18 +167,24 @@
                                     <input type="text" class="form-control" id="id" name="id"
                                            placeholder="请输入id">
                                 </div>
+                                <label for="serial_number"
+                                       class="col-lg-3 col-md-3 col-sm-3 control-label form_border">序列号:</label>
+                                <div class="col-lg-3 col-md-3 col-sm-3 form_border" >
+                                    <input type="text" class="form-control" id="serial_number" name="serial_number"
+                                           placeholder="请输入序列号">
+                                </div>
                                 <label for="name"
                                        class="col-lg-3 col-md-3 col-sm-3 control-label form_border">探针名:</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3 form_border">
                                     <input type="text" class="form-control" id="name" name="name"
                                            placeholder="请输入探针名">
                                 </div>
-                                <label for="ip"
-                                       class="col-lg-3 col-md-3 col-sm-3 control-label form_border">IP地址:</label>
-                                <div class="col-lg-3 col-md-3 col-sm-3 form_border">
-                                    <input type="text" class="form-control" id="ip" name="ip"
-                                           placeholder="请输入IP地址">
-                                </div>
+                                <!--<label for="ip"-->
+                                       <!--class="col-lg-3 col-md-3 col-sm-3 control-label form_border">IP地址:</label>-->
+                                <!--<div class="col-lg-3 col-md-3 col-sm-3 form_border">-->
+                                    <!--<input type="text" class="form-control" id="ip" name="ip"-->
+                                           <!--placeholder="请输入IP地址">-->
+                                <!--</div>-->
                             </div>
                             <div class="form-group row">
                                 <label for="bandwidth"
@@ -191,7 +197,7 @@
                                        class="col-lg-3 col-md-3 col-sm-3 control-label form_border">地市:</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3 form_border">
                                     <select id="city" class="form-control" name="city">  <!--VUE列表渲染-->
-                                        <option v-for="item in city_mans">
+                                        <option v-for="item in citys">
                                             {{ item.message }}
                                         </option>
                                     </select>
@@ -256,9 +262,52 @@
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                     <button type="button" class="btn btn-primary" v-on:click="submit">确定</button>
                 </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal -->
+            </div>
+        </div>
     </div>
+
+    <div class="modal fade" id="groupModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="width: 768px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title myModalLabel">{{modaltitle}}</h4>
+                </div>
+                <div class="row probeform_title">
+                    <div class="col-lg-3 col-md-3 col-sm-3">
+                        <h4 class="fontcolor probeformtitle_border">表单信息管理</h4>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <form class="form-horizontal" id="groupform_data" role="form">
+                            <div class="form-group row">
+                                <label for="groupname"
+                                       class="col-lg-3 col-md-3 col-sm-3 control-label form_border">探针组名:</label>
+                                <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                    <input type="text" class="form-control" id="groupname" name="name"
+                                           placeholder="请输入探针组名">
+                                </div>
+                                <label for="remark"
+                                       class="col-lg-3 col-md-3 col-sm-3 control-label form_border">备注:</label>
+                                <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                    <input type="text" class="form-control" id="remark" name="remark"
+                                           placeholder="请输入探针组备注">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" v-on:click="submit">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
     <!-- 删除确认模态框（Modal） -->
     <div class="modal fade" id="myModal_delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
@@ -279,6 +328,29 @@
                     <button type="button" class="btn btn-default" data-dismiss="modal" v-on:click="cancel_delete">取消
                     </button>
                     <button type="button" class="btn btn-primary" v-on:click="delete_data">确定</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    <div class="modal fade" id="myModal_groupdelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" style="width: 200px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel_groupdelete">
+                        确认
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <b>确定删除吗?</b>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" v-on:click="cancel_delete">取消
+                    </button>
+                    <button type="button" class="btn btn-primary" v-on:click="deletegroup_data">确定</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal -->
