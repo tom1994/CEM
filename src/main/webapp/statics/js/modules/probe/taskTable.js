@@ -8,7 +8,7 @@ var probedata_handle = new Vue({
     mounted(){         /*动态加载测试任务组数据*/
         $.ajax({
             type: "POST",   /*GET会乱码*/
-            url: "../testgroup/list",
+            url: "../../cem/taskproberel/list",
             cache: false,  //禁用缓存
             dataType: "json",
             /* contentType:"application/json",  /!*必须要,不可少*!/*/
@@ -39,7 +39,7 @@ var probedata_handle = new Vue({
             $('#myModal').modal('show');
 
         },
-        testagentupdate: function () {     /*监听编辑触发事件*/
+        taskupdate: function () {     /*监听编辑触发事件*/
             status = 1;
             /*状态1表示编辑*/
             var trs = $('#probe_table tbody').find('tr:has(:checked)');
@@ -77,7 +77,7 @@ var probedata_handle = new Vue({
                 toastr.warning('请选择一条记录再编辑！');
             }
         },
-        testagentdelBatch: function () {   /*批量删除监听事件*/
+        taskdelBatch: function () {   /*批量删除监听事件*/
             status = 2;
             /*状态2表示删除*/
             var trs = $('#probe_table tbody').find('tr:has(:checked)');
@@ -97,7 +97,7 @@ var probedata_handle = new Vue({
             /*find被选中的行*/
 
         },
-        testagentview: function () {     /*查看监听事件*/
+        taskview: function () {     /*查看监听事件*/
             var trs = $('#probe_table tbody').find('tr:has(:checked)');
             /*find被选中的行*/
             var forms = $('#probeform_data .form-control');
@@ -126,7 +126,7 @@ var probedata_handle = new Vue({
                 toastr.warning('请选择一条记录再查看！');
             }
         },
-        testagentListsearch: function () {   /*查询监听事件*/
+        taskListsearch: function () {   /*查询监听事件*/
             var data = getFormJson($('#searchcolums'));
             /*得到查询条件*/
             /*获取表单元素的值*/
@@ -142,25 +142,29 @@ var probedata_handle = new Vue({
 
     }
 });
-function delete_ajax() {
+function delete_ajax() {   //取消项目，更改数据库状态信息
     var ids = JSON.stringify(idArray);
     /*对象数组字符串*/
 
     $.ajax({
         type: "POST", /*GET会乱码*/
-        url: "../testagent/delete",
+        url: "../../cem/taskproberel/update",
         cache: false,  //禁用缓存
         data: ids,  //传入组装的参数
         dataType: "json",
         contentType: "application/json", /*必须要,不可少*/
         success: function (result) {
 
-            toastr.success("业务信息删除成功!");
+            toastr.success("测试任务取消成功!");
 
             probetable.currReset();
 
-            idArray = [];
-            /*清空id数组*/
+            if(idArray[4]==1){
+                idArray[4]=0;
+            }else {
+                idArray[4]=1;
+            }
+            /*更改status的信息*/
             delete_data.close_modal();
             /*关闭模态框*/
         }
@@ -191,8 +195,12 @@ var delete_data = new Vue({
 
         },
         delete_data: function () {
-            idArray = [];
-            /*清空id数组*/
+            if(idArray[4]==1){
+                idArray[4]=0;
+            }else {
+                idArray[4]=1;
+            }
+            /*更改status的信息*/
             idArray[0] = this.id;
             delete_ajax();
             /*ajax传输*/
@@ -204,21 +212,10 @@ var delete_data = new Vue({
 var probeform_data = new Vue({
     el: '#myModal',
     data: {
-        modaltitle: "测试机管理录入", /*定义模态框标题*/
+        modaltitle: "测试任务录入", /*定义模态框标题*/
         countys: [
             {message: '新城区'},
-            {message: '碑林区'},
-            {message: '莲湖区'},
-            {message: '雁塔区'},
-            {message: '未央区'},
-            {message: '灞桥区'},
-            {message: '长安区'},
-            {message: '阎良区'},
-            {message: '临潼区'},
-            {message: '蓝田县'},
-            {message: '周至县'},
-            {message: '户县'},
-            {message: '高陵县'}
+            {message: '碑林区'}
         ],
         city_mans: [
             {message: '西安市'}
@@ -362,24 +359,12 @@ var probetable = new Vue({
             {title: ''},
             {title: '<div class="checkbox"> <label> <input type="checkbox" id="checkAll"></label> </div>'},
             {title: '<div style="display:none">id</div>'},
-            {title: '<div style="width:142px">测试机名</div>'},
-            {title: '<div style="width:142px">IP地址</div>'},
-            {title: '<div style="width:112px">带宽</div>'},
-            {title: '<div style="width:67px">地市</div>'},
-            {title: '<div style="width:67px">区县</div>'},
-            {title: '<div style="width:92px">软件标识</div>'},
-            {title: '<div style="width:112px">硬件编码</div>'},
-            {title: '<div style="width:112px">测试任务组</div>'},
-            {title: '<div style="width:52px">在线状态</div>'},
-            {title: '<div style="width:112px">在线时间</div>'},
-            {title: '<div style="width:112px">探针类型</div>'},
-            {title: '<div style="width:112px">版本号</div>'},
-            {title: '<div style="width:67px">任务间隔</div>'},
-            {title: '<div style="width:167px">装机地址</div>'},
-            {title: '<div style="width:142px">BRAS名称</div>'},
-            {title: '<div style="width:112px">BRAS_IP</div>'},
-            {title: '<div style="width:112px">BRAS端口</div>'},
-            {title: '<div style="width:52px">操作</div>'}
+            {title: '<div style="width:142px">任务id</div>'},
+            {title: '<div style="width:142px">探针id</div>'},
+            {title: '<div style="width:112px">探针端口</div>'},
+            {title: '<div style="width:67px">状态</div>'},
+            {title: '<div style="width:67px">编辑</div>'},
+            {title: '<div style="width:67px">取消</div>'}
         ],
         rows: [],
         dtHandle: null,
@@ -455,7 +440,7 @@ var probetable = new Vue({
                 //ajax请求数据
                 $.ajax({
                     type: "POST", /*GET会乱码*/
-                    url: "../testagent/list",
+                    url: "../../cem/taskproberel/list",
                     cache: false,  //禁用缓存
                     data: param,  //传入组装的参数
                     dataType: "json",
@@ -476,24 +461,12 @@ var probetable = new Vue({
                             row.push(i++);
                             row.push('<div class="checkbox"> <label> <input type="checkbox" name="selectFlag"></label> </div>');
                             row.push('<div class="probe_id">'+item.id+'</div>');
-                            row.push(item.name);
-                            row.push(item.ip);
-                            row.push(item.bandwidth);
-                            row.push(item.cityMan);
-                            row.push(item.county);
-                            row.push(item.useruid);
-                            row.push(item.sysuuid);
-                            row.push(item.testgroupName);
-                            row.push(item.onlinestatus);
-                            row.push(item.onlineTime);
-                            row.push(item.model);
-                            row.push(item.version);
-                            row.push(item.runInterval);
-                            row.push(item.address);
-                            row.push(item.brasname);
-                            row.push(item.brasip);
-                            row.push(item.brasport);
-                            row.push('<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>');
+                            row.push(item.taskId);
+                            row.push(item.probeId);
+                            row.push(item.port);
+                            row.push(item.status);
+                            row.push('<a class="fontcolor" onclick="edit_this(this)" id='+item.id+'>编辑</a>');
+                            row.push('<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>取消</a>');
                             rows.push(row);
                         });
                         returnData.data = rows;
@@ -505,7 +478,7 @@ var probetable = new Vue({
                 });
             }
         });
-        new AjaxUpload('#excel_import', {
+      /*   new AjaxUpload('#excel_import', {
             action: '../sys/upload/upload/testagent',
             name: 'file',
             autoSubmit: true,
@@ -523,7 +496,7 @@ var probetable = new Vue({
                     alert(r.msg);
                 }
             }
-        });
+        });   */
     }
 });
 

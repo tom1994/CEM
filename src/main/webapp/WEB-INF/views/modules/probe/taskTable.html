@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,14 +16,14 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-title fontcolor" id="handle" style="padding-bottom: 0px !important;">
 
-                    <button type="button" class="btn btn-default " v-on:click="testagentdelBatch"><span
+                    <button type="button" class="btn btn-default " v-on:click="taskdelBatch"><span
                             class="glyphicon glyphicon-remove"></span>批量取消
                     </button>
 
                 </div>
                 <div class="ibox-content">
                     <div class="row " style="overflow-x: scroll">     <!--表格 verflow-x: scroll超出滚动-->
-                        <table class="table table-bordered " id="task_table"></table>
+                        <table class="table table-bordered " id="probedata_table"></table>
                     </div>
                 </div>
             </div>
@@ -97,10 +97,35 @@
         </div><!-- /.modal -->
     </div>
 
+    <!-- 取消确认模态框（Modal） -->
+    <div class="modal fade" id="myModal_delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" style="width: 200px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel_delet">
+                        确认
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <b>确定取消任务吗?</b>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" v-on:click="cancel_delete">取消
+                    </button>
+                    <button type="button" class="btn btn-primary" v-on:click="delete_data">确定</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+
 
 </div>
 
-<script type="text/javascript" src="${rc.contextPath}/js/modules/probe/taskTable.js?_${date.systemTime}"></script>
+<script type="text/javascript" src="${rc.contextPath}/statics/js/modules/probe/taskTable.js?_${date.systemTime}"></script>
 
 </body>
 </html>
