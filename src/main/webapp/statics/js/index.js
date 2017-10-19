@@ -21,9 +21,9 @@ var menuItemM1 = Vue.extend({
     name: 'menu-item-m-1',
     props:{item:{}},
     template:[
-    	'<ul class="page-sidebar-menu  page-header-fixed " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" style="padding-top: 20px">',
+    	'<ul class="page-sidebar-menu  page-header-fixed " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" style="">',
         '<li class="heading">',
-        '	<h3 v-if="item.type === 0" class="uppercase">{{item.name}}</h3>',
+        '	<h3 v-if="item.type === 0" class="uppercase" style="font-size: 18px; font-weight: 800">{{item.name}}</h3>',
         '</li>',
         '<menu-item-m-2 :item="item" v-for="item in item.list"></menu-item-m-2>',
         '</ul>'
@@ -45,7 +45,7 @@ var menuItemM2 = Vue.extend({
         '	</ul>',
         '	<a v-if="item.type === 1" :href="\'#\'+item.url" class="nav-link ">',
         '		<i v-if="item.icon != null" :class="item.icon"></i>',
-        '		<span class="title">{{item.name}}</span>',
+        '		<span class="title" style="font-weight: 400">{{item.name}}</span>',
         '	</a>',
         '</li>'
     ].join(''),

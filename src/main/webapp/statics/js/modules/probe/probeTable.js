@@ -171,11 +171,11 @@ var probegroup_handle = new Vue({
             dataType: "json",
             /* contentType:"application/json",  /!*必须要,不可少*!/*/
             success: function (result) {
-                // for(var i=0;i<result.page.list.length;i++){
-                //     testGroupNames[i] = {message: result.page.list[i]}
-                // }
-                // probeform_data.testgroup_names = testGroupNames;    /*注意,这个js执行放在probeform_data和search_data之前才行*/
-                // search_data.testgroup_names = testGroupNames;
+                for(var i=0;i<result.page.list.length;i++){
+                    testGroupNames[i] = {message: result.page.list[i]}
+                }
+                probeform_data.testgroup_names = testGroupNames;    /*注意,这个js执行放在probeform_data和search_data之前才行*/
+                search_data.testgroup_names = testGroupNames;
             }
         });
 

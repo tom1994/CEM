@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>调度策略管理</title>
+    #parse("cemHeader.html")  <!--导入CSS和js文件-->
+    <link href="${rc.contextPath}/statics/css/probe.css" rel="stylesheet">  <!--自定义CSS-->
+</head>
+<body>
+
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5 class="fontcolor">调度策略表</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" id="schedulepolicy_table">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title fontcolor" id="handle" style="padding-bottom: 0px !important;">
+                <button type="button" class="btn btn-default " v-on:click="schedulepolicyadd"><span
+                        class="glyphicon glyphicon-plus"></span>新增调度策略
+                </button>
+            </div>
+            <div class="ibox-content">
+                <div class="row " style="overflow-x: scroll">     <!--表格 verflow-x: scroll超出滚动-->
+                    <table class="table table-bordered " id="schedulepolicydata_table"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal_schedulepolicy" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width: 768px"> <!--修改bootstrap modal模态框的宽度-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">{{modaltitle}}</h4>
+            </div>
+            <div class="row" id="schedulepolicyform_title">
+                <div class="col-lg-3 col-md-2 col-sm-3">
+                    <h4 class="fontcolor schedulepolicyformtitle_border">调度策略信息</h4>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <form class="form-horizontal" id="schedulepolicyform_data" role="form">
+                        <div class="form-group row">
+                            <label for="schedulepolicyName"
+                                   class="col-lg-3 col-md-3 col-sm-3 control-label form_border">策略名称:</label>
+                            <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                <input type="text" class="form-control" id="schedulepolicyName" name="schedulepolicyName"
+                                       placeholder="请输入策略名称">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="cron"
+                                   class="col-lg-3 col-md-3 col-sm-3 control-label form_border">任务描述:</label>
+                            <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                <input type="text" class="form-control" id="cron" name="cron"
+                                       placeholder="请输入cron表达式">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="remark"
+                                   class="col-lg-3 col-md-3 col-sm-3 control-label form_border">备注:</label>
+                            <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                <input type="text" class="form-control" id="remark" name="remark"
+                                       placeholder="请输入备注">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" v-on:click="submit">确定</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<div class="modal fade" id="myModal_delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" style="width: 200px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel_delete">
+                    确认
+                </h4>
+            </div>
+            <div class="modal-body">
+                <b>确定删除吗?</b>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" v-on:click="cancel_delete">取消
+                </button>
+                <button type="button" class="btn btn-primary" v-on:click="delete_data">确定</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<script type="text/javascript" src="${rc.contextPath}/statics/js/modules/probe/schedulePolicy.js?_${date.systemTime}"></script>
+
+</body>
+</html>

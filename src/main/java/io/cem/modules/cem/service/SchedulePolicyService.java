@@ -19,6 +19,8 @@ public interface SchedulePolicyService {
 	List<SchedulePolicyEntity> queryList(Map<String, Object> map);
 	
 	int queryTotal(Map<String, Object> map);
+
+	void add(SchedulePolicyEntity schedulePolicy);
 	
 	void save(SchedulePolicyEntity schedulePolicy);
 	

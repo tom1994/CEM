@@ -1,8 +1,12 @@
 package io.cem.modules.cem.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.alibaba.fastjson.JSONObject;
+import io.cem.common.exception.RRException;
+import io.cem.common.utils.JSONUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,7 +30,7 @@ import io.cem.common.utils.R;
  * @date 2017-10-12 17:12:46
  */
 @RestController
-@RequestMapping("schedulepolicy")
+@RequestMapping("/cem/schedulepolicy")
 public class SchedulePolicyController {
 	@Autowired
 	private SchedulePolicyService schedulePolicyService;
@@ -36,7 +40,7 @@ public class SchedulePolicyController {
 	 */
 	@RequestMapping("/list")
 	@RequiresPermissions("schedulepolicy:list")
-	public R list(@RequestParam Map<String, Object> params){
+	/*public R list(@RequestParam Map<String, Object> params){
 		//查询列表数据
         Query query = new Query(params);
 
@@ -45,6 +49,21 @@ public class SchedulePolicyController {
 		
 		PageUtils pageUtil = new PageUtils(schedulePolicyList, total, query.getLimit(), query.getPage());
 		
+		return R.ok().put("page", pageUtil);
+	}*/
+	public R list(String schedulepolicydata, Integer page, Integer limit) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		map.put("offset", (page - 1) * limit);
+		map.put("limit", limit);
+		JSONObject schedulepolicydata_jsonobject = JSONObject.parseObject(schedulepolicydata);
+		try {
+			map.putAll(JSONUtils.jsonToMap(schedulepolicydata_jsonobject));
+		} catch (RuntimeException e) {
+			throw new RRException("内部参数错误，请重试！");
+		}
+		List<SchedulePolicyEntity> schedulePolicyList = schedulePolicyService.queryList(map);
+		int total = schedulePolicyService.queryTotal(map);
+		PageUtils pageUtil = new PageUtils(schedulePolicyList, total, limit, page);
 		return R.ok().put("page", pageUtil);
 	}
 	
@@ -58,6 +77,17 @@ public class SchedulePolicyController {
 		SchedulePolicyEntity schedulePolicy = schedulePolicyService.queryObject(id);
 		
 		return R.ok().put("schedulePolicy", schedulePolicy);
+	}
+
+	/**
+	 * 新增
+	 */
+	@RequestMapping("/add")
+	@RequiresPermissions("schedulepolicy:add")
+	public R add(@RequestBody SchedulePolicyEntity schedulePolicy){
+		schedulePolicyService.add(schedulePolicy);
+
+		return R.ok();
 	}
 	
 	/**

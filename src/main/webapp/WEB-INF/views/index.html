@@ -16,6 +16,7 @@
     <!--<link rel="stylesheet" href="${rc.contextPath}/statics/css/main.css">-->
     <!--<link rel="stylesheet" href="../../statics/css/all-skins.min.css">-->
     <link rel="stylesheet" href="../../statics/css/main.css">
+    <link rel="stylesheet" href="../../statics/css/index.css">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 
@@ -317,7 +318,7 @@
                 <!-- END PAGE TITLE-->
                 <!-- Main content -->
                 <section class="content" style="background:#fff;">
-                    <iframe scrolling="yes" frameborder="0"
+                    <iframe scrolling="no" frameborder="0"
                             style="width:100%;min-height:200px;overflow:visible;background:#fff;" :src="main"></iframe>
                 </section>
                 <!-- /.content -->
@@ -352,6 +353,17 @@
             var element = document.createElement("script");
             element.src = "../../statics/assets/layouts/layout/scripts/layout.min.js";
             document.body.appendChild(element);
+            $("a.nav-link").not(".nav-toggle").click(function(){ //当点击标签的时候,使用animate在200毫秒的时间内,滚到顶部
+                $("html,body").animate({scrollTop:"0px"}, 500);
+                $("li.nav-item").each(function () {
+                    $(this).removeClass("active open");
+                });
+                $(this).parent("li.nav-item").addClass("active open");
+                if ($(this).parent("li.nav-item").parent("ul.sub-menu")){
+//                    $(this).parent("li.nav-item").parent("ul.sub-menu").parent("li.nav-item").addClass("active open");
+                    $(this).closest("ul.sub-menu").parent("li.nav-item").addClass("active open");
+                }
+            });
             flag = false;
         }
     }
