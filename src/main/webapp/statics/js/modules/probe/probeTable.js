@@ -204,7 +204,7 @@ var probegroup_handle = new Vue({
             var trs = $('#group_table tbody').find('tr:has(:checked)');
             /*find被选中的行*/
             var forms = $('#groupform_data .form-control');
-            var id = trs.find("td").eq(2).text();
+            var id = trs.find("td").eq(2).text();//parseInt(obj.id)
             console.log(trs.length + "表单对象:" + forms.length);
 
             $('#groupform_data input[type=text]').prop("readonly", false);

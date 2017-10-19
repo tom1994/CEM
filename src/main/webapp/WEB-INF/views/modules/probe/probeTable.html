@@ -45,7 +45,7 @@
                                 <span class="searchname" title="探针组">探针组：</span>
                                 <select class="form-control" name="probegroup_name" style="width: 110px">
                                     <option value="">---请选择---</option>                       <!--vue 绑定value属性    重要！！！！-->
-                                    <option v-for="item in testgroup_names" v-bind:value="item.message.name">{{ item.message.name }}</option>
+                                    <option v-for="item in probegroup_names" v-bind:value="item.message.name">{{ item.message.name }}</option>
                                 </select>
                             </div>
                         </form>
@@ -92,7 +92,7 @@
                     </button>
                     <button type="button" class="btn btn-default "><a href="../sys/upload/download/testagent"
                                                                       class="fontcolor"><span
-                            class="glyphicon glyphicon-open"></span>Excel导出</a>
+                            class="glyphicon glyphicon-open"></span>导出</a>
                     </button>
                     <div class="btn-group pull-right">
                         <button type="button" class="btn btn-default " style="margin-right: 5px"
@@ -123,10 +123,6 @@
                     <button type="button" class="btn btn-default "
                             v-on:click="groupview"><span
                             class="glyphicon glyphicon-zoom-in"></span>查看
-                    </button>
-                    <button type="button" class="btn btn-default "><a href="../sys/upload/download/testagent"
-                                                                      class="fontcolor"><span
-                            class="glyphicon glyphicon-open"></span>Excel导出</a>
                     </button>
                     <div class="btn-group pull-right">
                         <button type="button" class="btn btn-default " style="margin-right: 5px"
