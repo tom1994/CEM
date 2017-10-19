@@ -37,17 +37,6 @@ public class ProbeController {
 	 */
 	@RequestMapping("/list")
 	@RequiresPermissions("probe:list")
-//	public R list(@RequestParam Map<String, Object> params){
-//		//查询列表数据
-//        Query query = new Query(params);
-//
-//		List<ProbeEntity> probeList = probeService.queryList(query);
-//		int total = probeService.queryTotal(query);
-//
-//		PageUtils pageUtil = new PageUtils(probeList, total, query.getLimit(), query.getPage());
-//
-//		return R.ok().put("page", pageUtil);
-//	}
 	public R list(String probedata, Integer page, Integer limit) throws Exception {
 		Map<String, Object> map = new HashMap<>();
 		map.put("offset", (page - 1) * limit);

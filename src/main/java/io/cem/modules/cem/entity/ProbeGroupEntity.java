@@ -8,8 +8,7 @@ import java.util.Date;
 /**
  * 
  * 
- * @author chenshun
- * @email sunlightcs@gmail.com
+ * @author Miao
  * @date 2017-10-12 17:12:46
  */
 public class ProbeGroupEntity implements Serializable {
