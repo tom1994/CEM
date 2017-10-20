@@ -336,6 +336,47 @@ var search_data = new Vue({
 
     }
 });
+
+
+/*选中表格事件*/
+//$(document).ready(function () {
+//    $('#probe_table tbody').on('click', 'tr', function () {   /*表格某一行选中状态*/
+//        if ($(this).hasClass('selected')) {
+//            $(this).removeClass('selected');
+//            $(this).find("input:checkbox").prop("checked", false);
+//            console.log("yijingxuanzhong");
+//            /*prop可以,attr会出错*/
+//        }
+//        else {
+//            /*vm.dtHandle.$('tr.selected').removeClass('selected');*/
+//            /*只能选中一行*/
+//            $(this).addClass('selected');
+//            $(this).find("input:checkbox").prop("checked", true);
+//            console.log("yijingxuanzhong1");
+//        }
+//    });
+
+//    $('#checkAll').on('click', function () {
+//        if (this.checked) {
+//            $("input[name='selectFlag']:checkbox").each(function () { //遍历所有的name为selectFlag的 checkbox
+//                $(this).prop("checked", true);
+//                $(this).closest('tr').addClass('selected');
+//                console.log("yijingxuanzhong2");
+//                /*取得最近的tr元素*/
+//            })
+//        } else {   //反之 取消全选
+//            $("input[name='selectFlag']:checkbox").each(function () { //遍历所有的name为selectFlag的 checkbox
+//                $(this).prop("checked", false);
+//                $(this).closest('tr').removeClass('selected');
+//                console.log("yijingxuanzhong3");
+//                /*取得最近的tr元素*/
+
+//            })
+//        }
+//    })
+
+//});
+
 /*选中表格事件*/
 $(document).ready(function () {
     $('#probe_table tbody').on('click', 'tr', function () {   /*表格某一行选中状态*/
@@ -371,6 +412,42 @@ $(document).ready(function () {
 
 });
 
+/*选中探针组表格事件*/
+$(document).ready(function () {
+    $('#probe_table tbody').on('click', 'tr', function () {   /*表格某一行选中状态*/
+        if ($(this).hasClass('selected')) {
+            $(this).removeClass('selected');
+            $(this).find("input:checkbox").prop("checked", false);
+            /*prop可以,attr会出错*/
+        }
+        else {
+            $(this).addClass('selected');
+            console.log('success');
+            $(this).find("input:checkbox").prop("checked", true);
+        }
+    });
+
+    $('#checkAllGroup').on('click', function () {
+        if (this.checked) {
+            $("input[name='groupselectFlag']:checkbox").each(function () { //遍历所有的name为selectFlag的 checkbox
+                $(this).prop("checked", true);
+                $(this).closest('tr').addClass('selected');
+                /*取得最近的tr元素*/
+            })
+        } else {   //反之 取消全选
+            $("input[name='groupselectFlag']:checkbox").each(function () { //遍历所有的name为selectFlag的 checkbox
+                $(this).prop("checked", false);
+                $(this).closest('tr').removeClass('selected');
+                /*取得最近的tr元素*/
+
+            })
+        }
+    })
+
+});
+
+
+
 // 注册
 var probetable = new Vue({
     el: '#probedata_table',
@@ -393,12 +470,6 @@ var probetable = new Vue({
         probedata: {}
 
     },
-    /*watch: {
-     users(val, oldVal) {
-
-
-     }
-     },*/
     methods: {
         reset: function () {
             let vm = this;
@@ -483,7 +554,7 @@ var probetable = new Vue({
                             if(item.status==1){status_word="正在执行";}else{status_word="已取消";}
                             let row = [];
                             row.push(i++);
-                            row.push('<div class="checkbox"> <label> <input type="checkbox" name="selectFlag"></label> </div>');
+                            row.push('<div class="checkbox"> <label> <input type="checkbox" id="checkAll" name="selectFlag"></label> </div>');
                             row.push('<div class="probe_id">'+item.id+'</div>');
                             row.push(item.taskId);
                             row.push(item.probeId);
