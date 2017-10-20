@@ -11,6 +11,12 @@ import java.util.Map;
  * @date 2016年9月18日 上午9:31:36
  */
 public interface BaseDao<T> {
+
+	void add(T t);
+
+	void add(Map<String, Object> map);
+
+	void addBatch(List<T> list);
 	
 	void save(T t);
 	

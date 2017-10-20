@@ -25,6 +25,8 @@ public class SchedulePolicyEntity implements Serializable {
 	private String remark;
 	//创建时间
 	private Date createTime;
+	//操作
+	//private String operation;
 
 	/**
 	 * 设置：调度策略ID
@@ -86,4 +88,16 @@ public class SchedulePolicyEntity implements Serializable {
 	public Date getCreateTime() {
 		return createTime;
 	}
+	/**
+	 * 设置：操作
+	 *//*
+	public void setOperation(Date operation) {
+		this.operation = operation;
+	}
+	*//**
+	 * 获取：操作
+	 *//*
+	public Date getOperation() {
+		return operation;
+	}*/
 }
