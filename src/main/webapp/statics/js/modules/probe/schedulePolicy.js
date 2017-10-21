@@ -3,7 +3,7 @@
  */
 var status;
 var idArray = new Array();
-var schedulepolicyNames = new Array();
+var names = new Array();
 
 var schedulepolicydata_handle = new Vue({
     el: '#handle',
@@ -15,107 +15,103 @@ var schedulepolicydata_handle = new Vue({
         schedulepolicyadd: function () {   /*监听新增触发事件*/
             status = 0;
             /*状态0,表示新增*/
-            var forms = $('#schedulepolicy_data .form-control');
+            var forms = $('#schedulepolicyform_data .form-control');
 
-            $('#schedulepolicy_data input[type=text]').prop("readonly", false);
+            $('#schedulepolicyform_data input[type=text]').prop("readonly", false);
             /*去除只读状态*/
-            $('#schedulepolicy_data select').prop("disabled", false);
+            $('#schedulepolicyform_data select').prop("disabled", false);
 
             for (var i = 0; i < 3; i++) {
                 forms[i].value = ""
             }
-            schedulepolicy_data.modaltitle = "新增调度策略";
+            schedulepolicyform_data.modaltitle = "新增调度策略";
             /*修改模态框标题*/
             $('#myModal_schedulepolicy').modal('show');
         }
     }
 });
 
-function update_ajax() {
+/*function update_ajax() {
     var ids = JSON.stringify(idArray);
-    /*对象数组字符串*/
+    /!*对象数组字符串*!/
 
     $.ajax({
-        type: "POST", /*GET会乱码*/
+        type: "POST", /!*GET会乱码*!/
         url: "../../cem/schedulepolicy/update",
         cache: false,  //禁用缓存
         data: ids,  //传入组装的参数
         dataType: "json",
-        contentType: "application/json", /*必须要,不可少*/
+        contentType: "application/json", /!*必须要,不可少*!/
         success: function (result) {
+            forms[0].value = result.schedulepolicy.name;
+            forms[1].value = result.schedulepolicy.cron;
+            forms[2].value = result.schedulepolicy.remark;
 
             toastr.success("调度策略修改成功!");
 
             schedulepolicytable.currReset();
 
-            idArray = [];
-            /*清空id数组*/
             update_data.close_modal();
-            /*关闭模态框*/
+            /!*关闭模态框*!/
         }
     });
-}
+}*/
 
 function update_this (obj) {     /*监听修改触发事件*/
-    update_data.show_schedulepolicyModal();
-    update_data.id = parseInt(obj.id);
+    //update_data.show_schedulepolicyModal();
+    update_data_id = parseInt(obj.id);
     /*获取当前行探针数据id*/
-    console.log(update_data.id);
-    status = 1;
-    /*状态1表示修改*/
-    //var trs = $('#schedulepolicy_table tbody').find('tr:has(:checked)');
+    console.log(update_data_id);
+    status = 1;      /*状态1表示修改*/
     /*find被选中的行*/
-    var forms = $('#schedulepolicy_data .form-control');
-    console.log(trs.length + "表单对象:" + forms.length);
-
-    $('#schedulepolicy_data input[type=text]').prop("readonly", false);
+    var forms = $('#schedulepolicyform_data .form-control');
     /*去除只读状态*/
-    $('#schedulepolicy_data select').prop("disabled", false);
+    $('#schedulepolicyform_data input[type=text]').prop("readonly", false);
 
-    /*if (trs.length == 0) {
-        toastr.warning('请选择修改策略！');
-    } else if (trs.length == 1) {*/
-        var tds = update_data.id;
-        for (var i = 0; i < 3; i++) {                /*tds.eq(0).text()取得td的值,注意tds[0].text()取不到*/
-            console.log(tds.eq(i).text());
-            forms[i].value = tds.eq(i + 2).text()
-
-        forms[2].value = tds.eq(10).text();
-        /*修改测试任务组*/
-        console.log(tds.eq(10).text());
-        for (var j = 0; j < 4; j++) {                /*tds.eq(0).text()取得td的值,注意tds[0].text()取不到*/
-            console.log(tds.eq(j + 15).text());
-            forms[j + 7].value = tds.eq(j + 15).text()
+    $.ajax({
+        type: "POST", /*GET会乱码*/
+        url: "../../cem/schedulepolicy/info/"+update_data_id,
+        cache: false,  //禁用缓存
+        //data: update_data_ids,  //传入组装的参数
+        dataType: "json",
+        contentType: "application/json", /*必须要,不可少*/
+        success: function (result) {
+            forms[0].value = result.schedulePolicy.id;
+            forms[1].value = result.schedulePolicy.name;
+            forms[2].value = result.schedulePolicy.cron;
+            forms[3].value = result.schedulePolicy.remark;
         }
-        schedulepolicy_data.modaltitle = "策略修改";
-        /*修改模态框标题*/
-        $('#myModal_schedulepolicy').modal('show');
-    }
+    });
+    schedulepolicyform_data.modaltitle = "修改调度策略";
+    /*修改模态框标题*/
+    $('#myModal_schedulepolicy').modal('show');
 }
 
-var update_data = new Vue({
+/*var update_data = new Vue({
     el: '#myModal_schedulepolicy',
     data: {
         id: null
     },
     methods: {
         show_schedulepolicyModal: function () {
+            update_ajax();
             $(this.$el).modal('show');
-            /*弹出确认模态框*/
+            /!*弹出确认模态框*!/
         },
         close_modal: function (obj) {
             $(this.$el).modal('hide');
 
-        },
-        update_data: function () {
+        }
+        /!*update_data: function () {
             idArray = [];
-            /*清空id数组*/
+            /!*清空id数组*!/
             idArray[0] = this.id;
             update_ajax();
-            /*ajax传输*/
-        }
+            /!*ajax传输*!/
+        }*!/
     }
-});
+});*/
+
 
 function delete_ajax() {
     var ids = JSON.stringify(idArray);
@@ -140,6 +136,7 @@ function delete_ajax() {
         }
     });
 }
+
 function delete_this(obj) {
     delete_data.show_deleteModal();
     delete_data.id = parseInt(obj.id);
@@ -177,16 +174,16 @@ var delete_data = new Vue({
 var schedulepolicyform_data = new Vue({
     el: '#myModal_schedulepolicy',
     data: {
-        modaltitle: "调度策略信息", /*定义模态框标题*/
-        schedulepolicyName: [],
+        modaltitle: "", /*定义模态框标题*/
+        /*name: [],
         cron: [],
-        remark: []
+        remark: []*/
     },
     // 在 `methods` 对象中定义方法
     methods: {
         submit: function () {
             var schedulepolicyJson = getFormJson($('#schedulepolicyform_data'));
-            if (typeof(schedulepolicyJson["schedulepolicyName"]) == "undefined") {                  /*3个select必选*/
+            if (typeof(schedulepolicyJson["name"]) == "undefined") {                  /*3个select必选*/
                 toastr.warning("请添加策略名称");
             } else if (typeof(schedulepolicyJson["cron"]) == "undefined") {
                 toastr.warning("请添加任务描述!");
@@ -205,7 +202,7 @@ var schedulepolicyform_data = new Vue({
                 }
                 $.ajax({
                     type: "POST", /*GET会乱码*/
-                    url: "../schedulepolicy/" + mapstr,
+                    url: "../../cem/schedulepolicy/" + mapstr,
                     cache: false,  //禁用缓存
                     data: schedulepolicy,  //传入组装的参数
                     dataType: "json",
@@ -218,6 +215,7 @@ var schedulepolicyform_data = new Vue({
                             switch (code) {
                                 case 0:
                                     toastr.success("策略新增成功!");
+                                    $('#myModal_schedulepolicy').modal('hide');    //jQuery选定
                                     break;
                                 case 403:
                                     toastr.error(msg);
@@ -230,6 +228,7 @@ var schedulepolicyform_data = new Vue({
                             switch (code) {
                                 case 0:
                                     toastr.success("策略修改成功!");
+                                    $('#myModal_schedulepolicy').modal('hide');
                                     break;
                                 case 403:
                                     toastr.error(msg);
@@ -244,8 +243,6 @@ var schedulepolicyform_data = new Vue({
                     }
                 });
             }
-
-
         }
     }
 });
@@ -266,7 +263,7 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
     return o;
 }
 
-var search_data = new Vue({
+/*var search_data = new Vue({
 
     el:'#searchcolums',
     data:{
@@ -274,7 +271,7 @@ var search_data = new Vue({
         schedulepolicy_names:[]
 
     }
-});
+});*/
 
 /*选中表格事件*/
 $(document).ready(function () {
@@ -316,8 +313,6 @@ var schedulepolicytable = new Vue({
     data: {
         headers: [
             {title: ''},
-            // {title: '<div class="checkbox"> <label> <input type="checkbox" id="checkAll"></label> </div>'},
-            //{title: '<div style="display:none">id</div>'},
             {title: '<div style="width:67px">策略ID</div>'},
             {title: '<div style="width:142px">策略名称</div>'},
             {title: '<div style="width:142px">任务描述</div>'},
@@ -328,7 +323,6 @@ var schedulepolicytable = new Vue({
         rows: [],
         dtHandle: null,
         schedulepolicydata: {}
-
     },
 
     methods: {
@@ -360,8 +354,6 @@ var schedulepolicytable = new Vue({
         let vm = this;
         // Instantiate the datatable and store the reference to the instance in our dtHandle element.
         vm.dtHandle = $(this.$el).DataTable({
-
-
             // Specify whatever options you want, at a minimum these:
             columns: vm.headers,
             data: vm.rows,
@@ -413,8 +405,6 @@ var schedulepolicytable = new Vue({
                         result.page.list.forEach(function (item) {
                             let row = [];
                             row.push(i++);
-                            // row.push('<div class="checkbox"> <label> <input type="checkbox" name="selectFlag"></label> </div>');
-                            //row.push('<div class="schedulepolicy_id">'+item.id+'</div>');
                             row.push(item.id);
                             row.push(item.name);
                             row.push(item.cron);
