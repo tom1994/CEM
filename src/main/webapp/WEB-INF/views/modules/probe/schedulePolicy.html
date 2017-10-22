@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>调度策略管理</title>
     #parse("cemHeader.html")  <!--导入CSS和js文件-->
-    <link href="${rc.contextPath}/statics/css/probe.css" rel="stylesheet">  <!--自定义CSS-->
+    <link href="${rc.contextPath}/statics/css/formStyle.css" rel="stylesheet">  <!--自定义CSS-->
 </head>
 <body>
 
@@ -24,13 +24,14 @@
     <div class="col-lg-12 col-md-12 col-sm-12">
         <div class="ibox float-e-margins">
             <div class="ibox-title fontcolor" id="handle" style="padding-bottom: 0px !important;">
-                <button type="button" class="btn btn-default " v-on:click="schedulepolicyadd"><span
+                <!--<button type="button" class="btn btn-default ui-button" v-on:click="schedulepolicyadd"><span-->
+                <button type="button" class="btn btn-default ui-button" v-on:click="schedulepolicyadd"><span
                         class="glyphicon glyphicon-plus"></span>新增调度策略
                 </button>
             </div>
             <div class="ibox-content">
                 <div class="row " style="overflow-x: scroll">     <!--表格 verflow-x: scroll超出滚动-->
-                    <table class="table table-bordered " id="schedulepolicydata_table"></table>
+                    <table class="table table-bordered formStyle" id="schedulepolicydata_table"></table>
                 </div>
             </div>
         </div>
@@ -45,10 +46,14 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title" id="myModalLabel">{{modaltitle}}</h4>
             </div>
-            <div class="row probe_title">
-                <div class="col-lg-3 col-md-3 col-sm-3">
-                    <h4 class="fontcolor schedulepolicyformtitle_border"></h4>
-                </div>
+            <!--<div class="row">-->
+                <!--<div class="col-lg-3 col-md-3 col-sm-3">-->
+                    <!--&lt;!&ndash;<h4 class="<fontcolor formtitle_border">表单信息</h4>&ndash;&gt;-->
+                    <!--<br>-->
+                <!--</div>-->
+            <!--</div>-->
+            <div>
+                <br>
             </div>
             <div class="modal-body">
                 <div class="row">

@@ -36,6 +36,17 @@ body {
     font-family: "Microsoft Yahei", Arial;
 }
 
+#handle .ui-button:hover {
+    color:#8bb4e7;
+}
+
+#handle .ui-button:visited {
+    color:#8bb4e7;
+}
+
+#handle .ui-button:link {
+    color:#8bb4e7;
+}
 
 a:hover a:visited a:link {
     color: black;
@@ -60,11 +71,7 @@ a:link {
     background-color: #cce6ff; /*定义选中状态颜色*/
 }
 
-#probe_table td {
-    white-space: nowrap; /*//规定段落中的文本不进行换行*/
-}
-
-#group_table td {
+#td {
     white-space: nowrap; /*//规定段落中的文本不进行换行*/
 }
 
@@ -72,58 +79,22 @@ a:link {
     padding: 0px 30px 0px 30px
 }
 
-#probeform_data .row {
+.row {
     border-bottom: 1px solid #e4e4e4;
     border-top: 1px solid #e4e4e4;
 }
 
-#schedulepolicyform_data .row {
-    border-bottom: 1px solid #e4e4e4;
-    border-top: 1px solid #e4e4e4;
-}
-
-#groupform_data .row {
-    border-bottom: 1px solid #e4e4e4;
-    border-top: 1px solid #e4e4e4;
-
-}
-
-#probeform_data .row input { /*设置外边距*/
+.row input { /*设置外边距*/
     margin: 4px 0 4px 0;
 }
 
-#groupform_data .row input { /*设置外边距*/
+.row select { /*设置外边距*/
     margin: 4px 0 4px 0;
 }
 
-#schedulepolicyform_data .row input { /*设置外边距*/
-    margin: 4px 0 4px 0;
-}
-
-#probeform_data .row input { /*设置外边距*/
-    margin: 4px 0 4px 0;
-}
-
-#probeform_data .row input { /*设置外边距*/
-    margin: 4px 0 4px 0;
-}
-#groupform_data .row select { /*设置外边距*/
-    margin: 4px 0 4px 0;
-}
-
-#probeform_data .form-group {
+.form-group {
     margin-bottom: 0px;
-!important;
-}
-
-#groupform_data .form-group {
-    margin-bottom: 0px;
-!important;
-}
-
-#schedulepolicyform_data .form-group {
-    margin-bottom: 0px;
-!important;
+    !important;
 }
 
 .form_border {
@@ -133,7 +104,7 @@ a:link {
     text-align: center !important;
 }
 
-.probeform_title {
+.form_title {
     margin: 10px 0 0 0 !important;
     background-color: #dddddd;
     font-size: 14px;
@@ -142,30 +113,7 @@ a:link {
     height: 30px;
 }
 
-.schedulepolicyform_title {
-    margin: 10px 0 0 0 !important;
-    background-color: #dddddd;
-    font-size: 14px;
-    font-weight: bold;
-    font-family: "Microsoft Yahei", Arial;
-    height: 30px;
-}
-
-
-#probetesttarget_title{
-    margin: 10px 0 0 0 !important;
-    background-color: #dddddd;
-    font-size: 14px;
-    font-weight: bold;
-    font-family: "Microsoft Yahei", Arial;
-    height: 30px;
- }
-
-.probeformtitle_border {
-    margin: 7px 0 0 0;
-}
-
-.groupformtitle_border {
+.formtitle_border {
     margin: 7px 0 0 0;
 }
 
@@ -177,7 +125,6 @@ a:link {
     color: #ffffff;
 }
 
-
 /******测试任务组相关样式*****/
 .testtargetbutton{
     margin: 0 10px 10px 20px ;
@@ -187,3 +134,26 @@ a:link {
     background-color: #dddddd;
 }
 
+.ui-button {
+    height: 30px;
+    font-size: 12px;
+    line-height: 30px;
+    text-align: center;
+    color: white;
+    background-color: #337ab7;
+    border-color: #2e6da4;
+    font-family: "Microsoft Yahei", 微软雅黑, Tahoma, Arial, Helvetica, STHeiti;
+    user-select: none;
+    zoom: 1;
+    cursor: pointer;
+    box-sizing: content-box;
+    border-width: initial;
+    border-style: none;
+    border-image: initial;
+    outline: none;
+    padding: 0px 12px;
+    overflow: hidden;
+    border-radius: 4px;
+    transition: all 0.3s;
+    !important;
+}

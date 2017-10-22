@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>探针列表</title>
     #parse("cemHeader.html")  <!--导入CSS和js文件-->
-    <link href="${rc.contextPath}/statics/css/probe.css" rel="stylesheet">  <!--自定义CSS-->
+    <link href="${rc.contextPath}/statics/css/formStyle.css" rel="stylesheet">  <!--自定义CSS-->
 </head>
 <body>
 
@@ -77,29 +77,29 @@
         <div class="col-lg-8 col-md-8 col-sm-8" id="probe_table">
             <div class="ibox float-e-margins">
                 <div class="ibox-title fontcolor" id="probehandle" style="padding-bottom: 0px !important;">
-                    <button type="button" class="btn btn-default " v-on:click="probeadd"><span
+                    <button type="button" class="btn btn-default ui-button" v-on:click="probeadd"><span
                             class="glyphicon glyphicon-plus"></span>录入
                     </button>
-                    <button type="button" class="btn btn-default " v-on:click="probeupdate"><span
+                    <button type="button" class="btn btn-default ui-button" v-on:click="probeupdate"><span
                             class="glyphicon glyphicon-pencil"></span>编辑
                     </button>
-                    <button type="button" class="btn btn-default " v-on:click="probedelBatch"><span
+                    <button type="button" class="btn btn-default ui-button" v-on:click="probedelBatch"><span
                             class="glyphicon glyphicon-trash"></span>批量删除
                     </button>
-                    <button type="button" class="btn btn-default "
+                    <button type="button" class="btn btn-default ui-button"
                             v-on:click="probeview"><span
                             class="glyphicon glyphicon-zoom-in"></span>查看
                     </button>
-                    <button type="button" class="btn btn-default "><a href="../sys/upload/download/testagent"
-                                                                      class="fontcolor"><span
-                            class="glyphicon glyphicon-open"></span>导出</a>
-                    </button>
+                    <a href="../sys/upload/download/testagent"
+                       class="fontcolor"><button type="button" class="btn btn-default ui-button"><span
+                            class="glyphicon glyphicon-open"></span>导出
+                    </button></a>
                     <div class="btn-group pull-right">
-                        <button type="button" class="btn btn-default " style="margin-right: 5px"
+                        <button type="button" class="btn btn-default ui-button" style="margin-right: 5px"
                                 v-on:click="probesearch"><span
                                 class="glyphicon glyphicon-zoom-in"></span>查询
                         </button>
-                        <button type="button" class="btn btn-default " v-on:click="reset"><span
+                        <button type="button" class="btn btn-default ui-button" v-on:click="reset"><span
                                 class="glyphicon glyphicon-refresh"></span>重置
                         </button>
                     </div>
@@ -114,18 +114,18 @@
         <div class="col-lg-4 col-md-4 col-sm-4" id="group_table">
             <div class="ibox float-e-margins">
                 <div class="ibox-title fontcolor" id="grouphandle" style="padding-bottom: 0px !important;">
-                    <button type="button" class="btn btn-default " v-on:click="groupadd"><span
+                    <button type="button" class="btn btn-default ui-button" v-on:click="groupadd"><span
                             class="glyphicon glyphicon-plus"></span>录入
                     </button>
-                    <button type="button" class="btn btn-default " v-on:click="groupupdate"><span
+                    <button type="button" class="btn btn-default ui-button" v-on:click="groupupdate"><span
                             class="glyphicon glyphicon-pencil"></span>编辑
                     </button>
-                    <button type="button" class="btn btn-default "
+                    <button type="button" class="btn btn-default ui-button"
                             v-on:click="groupview"><span
                             class="glyphicon glyphicon-zoom-in"></span>查看
                     </button>
                     <div class="btn-group pull-right">
-                        <button type="button" class="btn btn-default " style="margin-right: 5px"
+                        <button type="button" class="btn btn-default ui-button" style="margin-right: 5px"
                                 v-on:click="groupsearch"><span
                                 class="glyphicon glyphicon-zoom-in"></span>查询
                         </button>
@@ -146,9 +146,9 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title myModalLabel">{{modaltitle}}</h4>
+                    <h4 class="modal-title  myModalLabel">{{modaltitle}}</h4>
                 </div>
-                <div class="row probeform_title">
+                <div class="row form_title">
                     <div class="col-lg-3 col-md-2 col-sm-3">
                         <h4 class="fontcolor probeformtitle_border">表单信息管理</h4>
                     </div>
