@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>测试任务列表</title>
     #parse("cemHeader.html")  <!--导入CSS和js文件-->
-    <link href="${rc.contextPath}/statics/css/probe.css" rel="stylesheet">  <!--自定义CSS-->
+    <link href="${rc.contextPath}/statics/css/formStyle.css" rel="stylesheet">  <!--自定义CSS-->
 </head>
 
 <body>
@@ -16,7 +16,7 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-title fontcolor" id="handle" style="padding-bottom: 0px !important;">
 
-                <button type="button" class="btn btn-default " v-on:click="taskdelBatch"><span
+                <button type="button" class="btn btn-default ui-button" v-on:click="taskdelBatch"><span
                             class="glyphicon glyphicon-remove"></span>批量取消
                     </button>
 
@@ -42,7 +42,7 @@
 
                 <div class="row" id="probeform_title">
                     <div class="col-lg-3 col-md-2 col-sm-3">
-                        <h4 class="fontcolor probeformtitle_border">表单信息管理</h4>
+                        <h4 class="fontcolor formtitle_border">表单信息管理</h4>
                     </div>probetesttarget_title
                 </div>
 

@@ -168,6 +168,11 @@ a:link {
     border-top: 1px solid #e4e4e4;
 }
 
+#schedulepolicyform_data .row {
+    border-bottom: 1px solid #e4e4e4;
+    border-top: 1px solid #e4e4e4;
+}
+
 #groupform_data .row {
     border-bottom: 1px solid #e4e4e4;
     border-top: 1px solid #e4e4e4;
@@ -182,10 +187,17 @@ a:link {
     margin: 4px 0 4px 0;
 }
 
-#probeform_data .row select { /*设置外边距*/
+#schedulepolicyform_data .row input { /*设置外边距*/
     margin: 4px 0 4px 0;
 }
 
+#probeform_data .row input { /*设置外边距*/
+    margin: 4px 0 4px 0;
+}
+
+#probeform_data .row input { /*设置外边距*/
+    margin: 4px 0 4px 0;
+}
 #groupform_data .row select { /*设置外边距*/
     margin: 4px 0 4px 0;
 }
@@ -200,6 +212,11 @@ a:link {
 !important;
 }
 
+#schedulepolicyform_data .form-group {
+    margin-bottom: 0px;
+!important;
+}
+
 .form_border {
     border-left: 2px solid #e4e4e4;
     line-height: 36px;
@@ -208,6 +225,15 @@ a:link {
 }
 
 .probeform_title {
+    margin: 10px 0 0 0 !important;
+    background-color: #dddddd;
+    font-size: 14px;
+    font-weight: bold;
+    font-family: "Microsoft Yahei", Arial;
+    height: 30px;
+}
+
+.schedulepolicyform_title {
     margin: 10px 0 0 0 !important;
     background-color: #dddddd;
     font-size: 14px;

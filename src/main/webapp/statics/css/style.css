@@ -3654,7 +3654,7 @@ code {
 }
 .ibox {
   clear: both;
-  margin-bottom: 25px;
+  margin-bottom: 0;
   margin-top: 0;
   padding: 0;
 }
@@ -3683,6 +3683,7 @@ code {
   border-width: 3px 0 0;
   color: inherit;
   margin-bottom: 0;
+  margin-top: 8px;
   padding: 14px 15px 7px;
   min-height: 48px;
 }
@@ -3693,7 +3694,7 @@ code {
   border-color: #e7eaec;
   border-image: none;
   border-style: solid solid none;
-  border-width: 1px 0;
+  border-width: 0;
 }
 .ibox-footer {
   color: inherit;
