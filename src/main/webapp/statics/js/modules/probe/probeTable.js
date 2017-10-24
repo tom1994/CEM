@@ -8,7 +8,7 @@ var probeGroupNames = new Array();
 var probedata_handle = new Vue({
     el: '#probehandle',
     data: {},
-    mounted(){         /*动态加载测试任务组数据*/
+    mounted: function(){         /*动态加载测试任务组数据*/
         $.ajax({
             type: "POST",   /*GET会乱码*/
             url: "../../cem/probe/list",//Todo:改成测试任务组的list方法
@@ -163,7 +163,7 @@ var probedata_handle = new Vue({
 var probegroup_handle = new Vue({
     el: '#grouphandle',
     data: {},
-    mounted(){         /*动态加载测试任务组数据*/
+    mounted: function(){         /*动态加载测试任务组数据*/
         $.ajax({
             type: "POST",   /*GET会乱码*/
             url: "../../cem/probegroup/list",//Todo:改成测试任务组的list方法
@@ -604,6 +604,12 @@ $(document).ready(function () {
         }
     });
 
+    // var LouLanQiHeight = $(window).height(); //得到浏览器的高度
+    // var LouLanQiWidth = $(window).width(); //得到浏览器的宽度
+    // $('iframe').attr('height', LouLanQiHeight); //将iframe的高度设置为浏览器的高度
+    // $('iframe').attr('width', LouLanQiWidth);
+    // onResize()
+
     $('#checkAll').on('click', function () {
         if (this.checked) {
             $("input[name='selectFlag']:checkbox").each(function () { //遍历所有的name为selectFlag的 checkbox
@@ -701,7 +707,7 @@ var probetable = new Vue({
             /*重绘*/
         }
     },
-    mounted() {
+    mounted: function() {
         let vm = this;
         // Instantiate the datatable and store the reference to the instance in our dtHandle element.
         vm.dtHandle = $(this.$el).DataTable({
@@ -788,7 +794,7 @@ var grouptable = new Vue({
             {title: ''},
             {title: '<div class="checkbox"> <label> <input type="checkbox" id="checkAllGroup""></label> </div>'},
             {title: '<div style="display:none">id</div>'},
-            {title: '<div style="width:142px">探针组名</div>'},
+            {title: '<div style="width:200px">探针组名</div>'},
             {title: '<div style="width:52px">操作</div>'}
         ],
         rows: [],
@@ -821,7 +827,7 @@ var grouptable = new Vue({
             /*重绘*/
         }
     },
-    mounted() {
+    mounted: function() {
         let vm = this;
         vm.dtHandle = $(this.$el).DataTable({
             columns: vm.headers,

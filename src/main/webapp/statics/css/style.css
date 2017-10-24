@@ -1836,7 +1836,9 @@ div.dt-button-info {
   border-radius: 1px;
   color: inherit;
   display: block;
-  padding: 6px 12px;
+  padding: 4px 4px;
+  margin-left: 4px !important;
+  margin-right: 6px !important;
   transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
   width: 100%;
   font-size: 14px;
@@ -3348,7 +3350,7 @@ video {
   padding: 20px 30px 30px 30px;
 }
 .inmodal .modal-body {
-  background: #f8fafb;
+ background: #f8fafb;
 }
 .inmodal .modal-header {
   padding: 30px 15px;
@@ -3500,7 +3502,7 @@ body.body-small .footer.fixed {
 .table > tbody > tr > td,
 .table > tfoot > tr > td {
   border-top: 1px solid #e7eaec;
-  padding: 8px;
+  padding: 5px;
   line-height: 1.42857143;
   vertical-align: top;
 }
@@ -3535,7 +3537,7 @@ body.body-small .footer.fixed {
 .nav-tabs > li > a {
   color: #A7B1C2;
   font-weight: 600;
-  padding: 10px 12px 10px 15px;
+  padding: 5px 12px 5px 15px;
 }
 .nav-tabs > li > a:hover,
 .nav-tabs > li > a:focus {
@@ -3654,7 +3656,7 @@ code {
 }
 .ibox {
   clear: both;
-  margin-bottom: 25px;
+  margin-bottom: 0;
   margin-top: 0;
   padding: 0;
 }
@@ -3683,17 +3685,18 @@ code {
   border-width: 3px 0 0;
   color: inherit;
   margin-bottom: 0;
-  padding: 14px 15px 7px;
+  margin-top: 0px;
+  padding: 7px 15px 7px;
   min-height: 48px;
 }
 .ibox-content {
   background-color: #ffffff;
   color: inherit;
-  padding: 15px 20px 20px 20px;
+  padding: 0px 20px 20px 20px;
   border-color: #e7eaec;
   border-image: none;
   border-style: solid solid none;
-  border-width: 1px 0;
+  border-width: 0;
 }
 .ibox-footer {
   color: inherit;

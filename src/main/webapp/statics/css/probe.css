@@ -15,8 +15,8 @@ body {
 .searchname {
     line-height: 34px; /*span垂直居中*/
     vertical-align: middle;
-    width: 100px;
-    text-align: right;
+    width: 40px;
+    text-align: left;
     text-overflow: ellipsis;
     -o-text-overflow: ellipsis;
     overflow: hidden;
@@ -28,7 +28,98 @@ body {
     vertical-align: middle;
 }
 
+.demo{
+    height: 100px;
+    background: #fff;
+    padding: 2em 0;
+}
+a:hover,a:focus{
+    outline: none;
+    text-decoration: none;
+}
+.tab{ text-align: left; }
 
+.tab .nav-tabs{
+    display: inline-block;
+    position: relative;
+    border-bottom: none;
+}
+.tab .nav-tabs li{
+    margin: 0;
+}
+.tab .nav-tabs li a{
+    display: block;
+    padding: 80px 20px 10px;
+    background: #fff;
+    font-size: 17px;
+    font-weight: 700;
+    color: #999;
+    text-transform: uppercase;
+    text-align: center;
+    border-radius: 0;
+    border: none;
+    border-bottom: 2px solid #fff;
+    margin-right: 0;
+    overflow: hidden;
+    z-index: 1;
+    position: relative;
+    transition: all 0.3s ease 0s;
+}
+.tab .nav-tabs li a span{
+    display: block;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    background: #f2f2f2;
+    margin: auto;
+    font-size: 22px;
+    color: #999;
+    border-radius: 5px;
+    position: absolute;
+    top: 10px;
+    left: 0;
+    right: 0;
+    transform: rotate(45deg);
+}
+.tab .nav-tabs li.active a span{
+    background: #29335c;
+    color: #fff;
+}
+.tab .nav-tabs li a span i{
+    transform: rotate(-45deg);
+}
+.tab .nav-tabs li.active a,
+.tab .nav-tabs li a:hover{
+    color: #999;
+    border: none;
+    border-bottom: 2px solid #fff;
+}
+.tab .nav-tabs li.active a{
+    border-bottom: 2px solid #29335c;
+}
+.tab .tab-content{
+    padding-top: 0px;
+    margin-top: -5px;
+    font-size: 15px;
+    color: #757575;
+    line-height: 15px;
+    text-align: left;
+    border-top: 1px solid #e5e5e5;
+}
+.tab .tab-content h3{
+    font-size: 15px;
+    margin-top: 0;
+}
+@media only screen and (max-width: 479px){
+    .tab .nav-tabs li{
+        width: 100%;
+        text-align: center;
+        margin-bottom: 5px;
+    }
+    .tab .nav-tabs li:last-child{
+        margin-bottom: 0;
+    }
+}
 /*表格部分*/
 .fontcolor {
     /*color: black;*/
@@ -77,6 +168,11 @@ a:link {
     border-top: 1px solid #e4e4e4;
 }
 
+#schedulepolicyform_data .row {
+    border-bottom: 1px solid #e4e4e4;
+    border-top: 1px solid #e4e4e4;
+}
+
 #groupform_data .row {
     border-bottom: 1px solid #e4e4e4;
     border-top: 1px solid #e4e4e4;
@@ -91,7 +187,11 @@ a:link {
     margin: 4px 0 4px 0;
 }
 
-#probeform_data .row select { /*设置外边距*/
+#schedulepolicyform_data .row input { /*设置外边距*/
+    margin: 4px 0 4px 0;
+}
+
+#probeform_data .row input { /*设置外边距*/
     margin: 4px 0 4px 0;
 }
 
@@ -109,6 +209,11 @@ a:link {
 !important;
 }
 
+#schedulepolicyform_data .form-group {
+    margin-bottom: 0px;
+!important;
+}
+
 .form_border {
     border-left: 2px solid #e4e4e4;
     line-height: 36px;
@@ -117,6 +222,15 @@ a:link {
 }
 
 .probeform_title {
+    margin: 10px 0 0 0 !important;
+    background-color: #dddddd;
+    font-size: 14px;
+    font-weight: bold;
+    font-family: "Microsoft Yahei", Arial;
+    height: 30px;
+}
+
+.schedulepolicyform_title {
     margin: 10px 0 0 0 !important;
     background-color: #dddddd;
     font-size: 14px;

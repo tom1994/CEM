@@ -36,18 +36,6 @@ public class TaskProbeRelController {
 	 */
 	@RequestMapping("/list")
 	@RequiresPermissions("taskproberel:list")
-//	public R list(@RequestParam Map<String, Object> params){
-		//查询列表数据
-//        Query query = new Query(params);
-
-//		List<TaskProbeRelEntity> taskProbeRelList = taskProbeRelService.queryList(query);
-//		int total = taskProbeRelService.queryTotal(query);
-		
-//		PageUtils pageUtil = new PageUtils(taskProbeRelList, total, query.getLimit(), query.getPage());
-		
-//		return R.ok().put("page", pageUtil);
-//	}
-
 	public R list(String taskdata, Integer page, Integer limit) throws Exception {
 		Map<String, Object> map = new HashMap<>();
 		map.put("offset", (page - 1) * limit);

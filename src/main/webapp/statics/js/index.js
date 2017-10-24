@@ -1,21 +1,21 @@
 //生成菜单
-// var menuItem = Vue.extend({
-// 	name: 'menu-item',
-// 	props:{item:{}},
-// 	template:[
-// 		'<li>',
-// 		'	<a v-if="item.type === 0" href="javascript:;">',
-// 		'		<i v-if="item.icon != null" :class="item.icon"></i>',
-// 		'		<span>{{item.name}}</span>',
-// 		'		<i class="fa fa-angle-left pull-right"></i>',
-// 		'	</a>',
-// 		'	<ul v-if="item.type === 0" class="treeview-menu">',
-// 		'		<menu-item :item="item" v-for="item in item.list"></menu-item>',
-// 		'	</ul>',
-// 		'	<a v-if="item.type === 1" :href="\'#\'+item.url"><i v-if="item.icon != null" :class="item.icon"></i><i v-else class="fa fa-circle-o"></i> {{item.name}}</a>',
-// 		'</li>'
-// 	].join('')
-// });
+var menuItem = Vue.extend({
+	name: 'menu-item',
+	props:{item:{}},
+	template:[
+		'<li>',
+		'	<a v-if="item.type === 0" href="javascript:;">',
+		'		<i v-if="item.icon != null" :class="item.icon"></i>',
+		'		<span>{{item.name}}</span>',
+		'		<i class="fa fa-angle-left pull-right"></i>',
+		'	</a>',
+		'	<ul v-if="item.type === 0" class="treeview-menu">',
+		'		<menu-item :item="item" v-for="item in item.list"></menu-item>',
+		'	</ul>',
+		'	<a v-if="item.type === 1" :href="\'#\'+item.url"><i v-if="item.icon != null" :class="item.icon"></i><i v-else class="fa fa-circle-o"></i> {{item.name}}</a>',
+		'</li>'
+	].join('')
+});
 // 使用Vue生成Metronic菜单：一级
 var menuItemM1 = Vue.extend({
     name: 'menu-item-m-1',
@@ -67,6 +67,10 @@ $(window).on('resize', function() {
 	$content.find('iframe').each(function() {
 		$(this).height($content.height());
 	});
+    // var LouLanQiHeight = $(window).height(); //得到浏览器的高度
+    // var LouLanQiWidth = $(window).width(); //得到浏览器的宽度
+    // $('iframe').attr('height', LouLanQiHeight); //将iframe的高度设置为浏览器的高度
+    // $('iframe').attr('width', LouLanQiWidth);
 }).resize();
 
 //注册菜单组件
@@ -126,16 +130,6 @@ var vm = new Vue({
 	            }
 			});
 		},
-        donate: function () {
-            layer.open({
-                type: 2,
-                title: false,
-                area: ['806px', '467px'],
-                closeBtn: 1,
-                shadeClose: false,
-                content: ['http://cdn.cem.io/donate.jpg', 'no']
-            });
-        }
 	},
 	created: function(){
 		this.getMenuList();
@@ -148,7 +142,7 @@ var vm = new Vue({
 		router.start();
 	},
 	mounted: function () {
-
+		
     }
 });
 

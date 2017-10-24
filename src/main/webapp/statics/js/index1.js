@@ -1,6 +1,6 @@
 layui.config({
-    base: 'statics/js/'
-}).use(['navtab'], function () {
+    base:'statics/js/'
+}).use(['navtab'],function(){
     window.jQuery = window.$ = layui.jquery;
     window.layer = layui.layer;
     var element = layui.element(),
@@ -9,22 +9,22 @@ layui.config({
         });
 
     //iframe自适应
-    $(window).on('resize', function () {
+    $(window).on('resize', function() {
         var $content = $('#larry-tab .layui-tab-content');
         $content.height($(this).height() - 140);
-        $content.find('iframe').each(function () {
+        $content.find('iframe').each(function() {
             $(this).height($content.height());
         });
     }).resize();
 
-    $(function () {
-        $('#larry-nav-side').click(function () {
-            if ($(this).attr('lay-filter') !== undefined) {
-                $(this).children('ul').find('li').each(function () {
+    $(function(){
+        $('#larry-nav-side').click(function(){
+            if($(this).attr('lay-filter')!== undefined){
+                $(this).children('ul').find('li').each(function(){
                     var $this = $(this);
-                    if ($this.find('dl').length > 0) {
-                        var $dd = $this.find('dd').each(function () {
-                            $(this).on('click', function () {
+                    if($this.find('dl').length > 0){
+                        var $dd = $this.find('dd').each(function(){
+                            $(this).on('click', function() {
                                 var $a = $(this).children('a');
                                 var href = $a.data('url');
                                 var icon = $a.children('i:first').data('icon');
@@ -33,12 +33,12 @@ layui.config({
                                     href: href,
                                     icon: icon,
                                     title: title
-                                };
+                                }
                                 navtab.tabAdd(data);
                             });
                         });
-                    } else {
-                        $this.on('click', function () {
+                    }else{
+                        $this.on('click', function() {
                             var $a = $(this).children('a');
                             var href = $a.data('url');
                             var icon = $a.children('i:first').data('icon');
@@ -47,7 +47,7 @@ layui.config({
                                 href: href,
                                 icon: icon,
                                 title: title
-                            };
+                            }
                             navtab.tabAdd(data);
                         });
                     }
@@ -58,15 +58,15 @@ layui.config({
 });
 
 
-layui.use(['jquery', 'layer', 'element'], function () {
+layui.use(['jquery','layer','element'],function(){
     window.jQuery = window.$ = layui.jquery;
     window.layer = layui.layer;
     var element = layui.element();
 
     // larry-side-menu向左折叠
-    $('.larry-side-menu').click(function () {
+    $('.larry-side-menu').click(function() {
         var sideWidth = $('#larry-side').width();
-        if (sideWidth === 200) {
+        if(sideWidth === 200) {
             $('#larry-body').animate({
                 left: '0'
             });
@@ -91,52 +91,52 @@ layui.use(['jquery', 'layer', 'element'], function () {
 });
 
 
+
 //生成菜单
 var menuItem = Vue.extend({
     name: 'menu-item',
-    props: {item: {}},
-    template: [
-        '<dd class="layui-nav-item">',
+    props:{item:{}},
+    template:[
+        '<li class="layui-nav-item">',
         '<a v-if="item.type === 0" href="javascript:;">',
         '<i v-if="item.icon != null" :class="item.icon"></i>',
         '<span>{{item.name}}</span>',
         '<em class="layui-nav-more"></em>',
         '</a>',
-        '<dl v-if="item.type === 0" class="layui-nav layui-nav-tree">',
-        // '<dd v-for="item in item.list">',
-        // '<a v-if="item.type === 1" href="javascript:;" :data-url="item.url"><i v-if="item.icon != null" :class="item.icon" :data-icon="item.icon"></i> <span>{{item.name}}</span></a>',
-        '<menu-item :item="item" v-for="item in item.list"></menu-item>',
-        // '</dd>',
+        '<dl v-if="item.type === 0" class="layui-nav-child">',
+        '<dd v-for="item in item.list">',
+        '<a v-if="item.type === 1" href="javascript:;" :data-url="item.url"><i v-if="item.icon != null" :class="item.icon" :data-icon="item.icon"></i> <span>{{item.name}}</span></a>',
+        '</dd>',
         '</dl>',
         '<a v-if="item.type === 1" href="javascript:;" :data-url="item.url"><i v-if="item.icon != null" :class="item.icon" :data-icon="item.icon"></i> <span>{{item.name}}</span></a>',
-        '</dd>'
+        '</li>'
     ].join('')
 });
 
 //注册菜单组件
-Vue.component('menuItem', menuItem);
+Vue.component('menuItem',menuItem);
 
 var vm = new Vue({
-    el: '#layui_layout',
-    data: {
-        user: {},
-        menuList: {},
-        password: '',
-        newPassword: '',
-        navTitle: "控制台"
+    el:'#layui_layout',
+    data:{
+        user:{},
+        menuList:{},
+        password:'',
+        newPassword:'',
+        navTitle:"控制台"
     },
     methods: {
         getMenuList: function () {
-            $.getJSON("sys/menu/nav?_" + $.now(), function (r) {
+            $.getJSON("sys/menu/nav?_"+$.now(), function(r){
                 vm.menuList = r.menuList;
             });
         },
-        getUser: function () {
-            $.getJSON("sys/user/info?_" + $.now(), function (r) {
+        getUser: function(){
+            $.getJSON("sys/user/info?_"+$.now(), function(r){
                 vm.user = r.user;
             });
         },
-        updatePassword: function () {
+        updatePassword: function(){
             layer.open({
                 type: 1,
                 skin: 'layui-layer-molv',
@@ -144,21 +144,21 @@ var vm = new Vue({
                 area: ['550px', '270px'],
                 shadeClose: false,
                 content: jQuery("#passwordLayer"),
-                btn: ['修改', '取消'],
+                btn: ['修改','取消'],
                 btn1: function (index) {
-                    var data = "password=" + vm.password + "&newPassword=" + vm.newPassword;
+                    var data = "password="+vm.password+"&newPassword="+vm.newPassword;
                     $.ajax({
                         type: "POST",
                         url: "sys/user/password",
                         data: data,
                         dataType: "json",
-                        success: function (result) {
-                            if (result.code == 0) {
+                        success: function(result){
+                            if(result.code == 0){
                                 layer.close(index);
-                                layer.alert('修改成功', function (index) {
+                                layer.alert('修改成功', function(index){
                                     location.reload();
                                 });
-                            } else {
+                            }else{
                                 layer.alert(result.msg);
                             }
                         }
@@ -177,7 +177,7 @@ var vm = new Vue({
             });
         }
     },
-    created: function () {
+    created: function(){
         this.getMenuList();
         this.getUser();
     }
