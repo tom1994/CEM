@@ -15,8 +15,8 @@ body {
 .searchname {
     line-height: 34px; /*span垂直居中*/
     vertical-align: middle;
-    width: 100px;
-    text-align: right;
+    margin-top: 4px;
+    text-align: left;
     text-overflow: ellipsis;
     -o-text-overflow: ellipsis;
     overflow: hidden;
@@ -144,7 +144,7 @@ a:link {
     border-color: #2e6da4;
     font-family: "Microsoft Yahei", 微软雅黑, Tahoma, Arial, Helvetica, STHeiti;
     user-select: none;
-    zoom: 1;
+    /*zoom: 1;*/
     cursor: pointer;
     box-sizing: content-box;
     border-width: initial;
@@ -154,29 +154,6 @@ a:link {
     padding: 0px 12px;
     overflow: hidden;
     border-radius: 4px;
-    transition: all 0.3s;
+    /*transition: all 0.3s;*/
     !important;
-}
-.ui-button.a {
-    height: 30px;
-    font-size: 12px;
-    line-height: 30px;
-    text-align: center;
-    color: white;
-    background-color: #337ab7;
-    border-color: #2e6da4;
-    font-family: "Microsoft Yahei", 微软雅黑, Tahoma, Arial, Helvetica, STHeiti;
-    user-select: none;
-    zoom: 1;
-    cursor: pointer;
-    box-sizing: content-box;
-    border-width: initial;
-    border-style: none;
-    border-image: initial;
-    outline: none;
-    padding: 0px 12px;
-    overflow: hidden;
-    border-radius: 4px;
-    transition: all 0.3s;
-!important;
 }
