@@ -4,7 +4,7 @@ var test = new Array();
 var testGroupNames = new Array();
 
 var probedata_handle = new Vue({
-    el: '#handle',
+    el: '#probehandle',
     data: {},
     mounted(){         /*动态加载测试任务组数据*/
         $.ajax({
@@ -40,10 +40,10 @@ var probedata_handle = new Vue({
             $('#myModal').modal('show');
 
         },
-        taskupdate: function () {     /*监听编辑触发事件*/
+        testagentupdate: function () {     /*监听编辑触发事件*/
             status = 1;
             /*状态1表示编辑*/
-            var trs = $('#probe_table tbody').find('tr:has(:checked)');
+            var trs = $('#probedata_table tbody').find('tr:has(:checked)');
             /*find被选中的行*/
             var forms = $('#probeform_data .form-control');
             console.log(trs.length + "表单对象:" + forms.length);
@@ -78,36 +78,29 @@ var probedata_handle = new Vue({
                 toastr.warning('请选择一条记录再编辑！');
             }
         },
-        taskdelBatch: function () {   /*批量取消监听事件*/
+        testagentdelBatch: function () {   /*批量取消监听事件*/
             status = 2;
             /*状态2表示取消*/
-            var trs = $('#probe_table tbody').find('tr:has(:checked)');
+            var trs = $('#probedata_table tbody').find('tr:has(:checked)');
             if (trs.length == 0) {
                 toastr.warning('请需要取消的项目！');
+
             } else {
+                console.log("changdu:"+trs.length);
                 for (var i = 0; i < trs.length; i++) {
                     var tds = trs.eq(i).find("td");
                     var statuses = parseInt("0")
                     test={id:tds.eq(2).text(),taskId:tds.eq(3).text(),probeId:tds.eq(4).text(),port:tds.eq(5).text(),status:statuses,remark:tds.eq(7).text()};
-                    console.log("piliangquxiao:"+test);
+                    delete_ajax();
+                    /*ajax传输*/
 
                 }
-             //   for (var i = 0; i < trs.length; i++) {       /*取得选中行的id*/
-             //       var tds = trs.eq(i).find("td");
-             //       idArray[i] = parseInt(tds.eq(2).text());
-              //      /*将id加入数组中*/
-              //      console.log(tds.eq(2).text())
-
-             //   }
-                delete_ajax();
-                /*ajax传输*/
-
             }
             /*find被选中的行*/
 
         },
-        taskview: function () {     /*查看监听事件*/
-            var trs = $('#probe_table tbody').find('tr:has(:checked)');
+        testagentview: function () {     /*查看监听事件*/
+            var trs = $('#probedata_table tbody').find('tr:has(:checked)');
             /*find被选中的行*/
             var forms = $('#probeform_data .form-control');
             if (trs.length == 0) {
@@ -135,7 +128,7 @@ var probedata_handle = new Vue({
                 toastr.warning('请选择一条记录再查看！');
             }
         },
-      taskListsearch: function () {   /*查询监听事件*/
+      testagentListsearch: function () {   /*查询监听事件*/
             var data = getFormJson($('#searchcolums'));
             /*得到查询条件*/
             /*获取表单元素的值*/
@@ -186,17 +179,57 @@ function delete_this(obj) {
     delete_data.port = localrow.cells[5].innerHTML.toString().replace(/<td>/,"").replace(/<\td>/,"");
     delete_data.statuses = parseInt("0");
     delete_data.remark = localrow.cells[7].innerHTML.toString().replace(/<td>/,"").replace(/<\td>/,"");
-
-
-
     console.log(delete_data.id);
-    console.log(delete_data.taskId);
 }
+
+function edit_this(obj){
+    var localrow = obj.parentNode.parentNode;
+    console.log(localrow.cells[4].innerHTML.toString().replace(/<td>/,"").replace(/<\td>/,""));
+    edit_data.show_editModal();
+    edit_data.id = parseInt(obj.id);
+    edit_data.taskId = parseInt(localrow.cells[3].innerHTML.toString().replace(/<td>/,"").replace(/<\td>/,""));
+    edit_data.probeId = parseInt(localrow.cells[4].innerHTML.toString().replace(/<td>/,"").replace(/<\td>/,""));
+    edit_data.port = localrow.cells[5].innerHTML.toString().replace(/<td>/,"").replace(/<\td>/,"");
+    edit_data.statuses = parseInt("0");
+    edit_data.remark = localrow.cells[7].innerHTML.toString().replace(/<td>/,"").replace(/<\td>/,"");
+}
+
+var edit_data = new Vue({
+    el: '#myModal_edit',
+    data: {
+        id:null,
+        taskId:null,
+        probeId:null,
+        port:null,
+        statuses:null,
+        remark:null,
+    },
+    methods: {
+        show_editModal: function () {
+            $(this.$el).modal('show');
+            /*弹出确认模态框*/
+        },
+        close_modal: function (obj) {
+            $(this.$el).modal('hide');
+
+        },
+        cancel_delete: function () {
+
+        },
+        edit_data: function () {
+            /*更改status的信息*/
+            test={id:this.id,taskId:this.taskId,probeId:this.probeId,port:this.port,status:this.statuses,remark:this.remark};
+            console.log("bianji:"+test);
+          //  delete_ajax();
+            /*ajax传输*/
+
+        }
+    }
+});
 
 var delete_data = new Vue({
     el: '#myModal_delete',
     data: {
- //       test:[{"id":null},{"taskId":null},{"probeId":null},{"port":null},{"status":null},{"remark":null}],
         id:null,
         taskId:null,
         probeId:null,
@@ -219,10 +252,7 @@ var delete_data = new Vue({
         delete_data: function () {
             /*更改status的信息*/
             test={id:this.id,taskId:this.taskId,probeId:this.probeId,port:this.port,status:this.statuses,remark:this.remark};
-
-
             delete_ajax();
-
             /*ajax传输*/
 
         }
@@ -265,7 +295,7 @@ var probeform_data = new Vue({
                 }
                 $.ajax({
                     type: "POST", /*GET会乱码*/
-                    url: "../testagent/" + mapstr,
+                    url: "../../cem/taskproberel/" + mapstr,
                     cache: false,  //禁用缓存
                     data: testagent,  //传入组装的参数
                     dataType: "json",
@@ -339,47 +369,8 @@ var search_data = new Vue({
 
 
 /*选中表格事件*/
-//$(document).ready(function () {
-//    $('#probe_table tbody').on('click', 'tr', function () {   /*表格某一行选中状态*/
-//        if ($(this).hasClass('selected')) {
-//            $(this).removeClass('selected');
-//            $(this).find("input:checkbox").prop("checked", false);
-//            console.log("yijingxuanzhong");
-//            /*prop可以,attr会出错*/
-//        }
-//        else {
-//            /*vm.dtHandle.$('tr.selected').removeClass('selected');*/
-//            /*只能选中一行*/
-//            $(this).addClass('selected');
-//            $(this).find("input:checkbox").prop("checked", true);
-//            console.log("yijingxuanzhong1");
-//        }
-//    });
-
-//    $('#checkAll').on('click', function () {
-//        if (this.checked) {
-//            $("input[name='selectFlag']:checkbox").each(function () { //遍历所有的name为selectFlag的 checkbox
-//                $(this).prop("checked", true);
-//                $(this).closest('tr').addClass('selected');
-//                console.log("yijingxuanzhong2");
-//                /*取得最近的tr元素*/
-//            })
-//        } else {   //反之 取消全选
-//            $("input[name='selectFlag']:checkbox").each(function () { //遍历所有的name为selectFlag的 checkbox
-//                $(this).prop("checked", false);
-//                $(this).closest('tr').removeClass('selected');
-//                console.log("yijingxuanzhong3");
-//                /*取得最近的tr元素*/
-
-//            })
-//        }
-//    })
-
-//});
-
-/*选中表格事件*/
 $(document).ready(function () {
-    $('#probe_table tbody').on('click', 'tr', function () {   /*表格某一行选中状态*/
+    $('#probedata_table tbody').on('click', 'tr', function () {   /*表格某一行选中状态*/
         if ($(this).hasClass('selected')) {
             $(this).removeClass('selected');
             $(this).find("input:checkbox").prop("checked", false);
@@ -412,41 +403,6 @@ $(document).ready(function () {
 
 });
 
-/*选中探针组表格事件*/
-$(document).ready(function () {
-    $('#probe_table tbody').on('click', 'tr', function () {   /*表格某一行选中状态*/
-        if ($(this).hasClass('selected')) {
-            $(this).removeClass('selected');
-            $(this).find("input:checkbox").prop("checked", false);
-            /*prop可以,attr会出错*/
-        }
-        else {
-            $(this).addClass('selected');
-            console.log('success');
-            $(this).find("input:checkbox").prop("checked", true);
-        }
-    });
-
-    $('#checkAllGroup').on('click', function () {
-        if (this.checked) {
-            $("input[name='groupselectFlag']:checkbox").each(function () { //遍历所有的name为selectFlag的 checkbox
-                $(this).prop("checked", true);
-                $(this).closest('tr').addClass('selected');
-                /*取得最近的tr元素*/
-            })
-        } else {   //反之 取消全选
-            $("input[name='groupselectFlag']:checkbox").each(function () { //遍历所有的name为selectFlag的 checkbox
-                $(this).prop("checked", false);
-                $(this).closest('tr').removeClass('selected');
-                /*取得最近的tr元素*/
-
-            })
-        }
-    })
-
-});
-
-
 
 // 注册
 var probetable = new Vue({
@@ -457,8 +413,8 @@ var probetable = new Vue({
             {title: '<div class="checkbox"> <label> <input type="checkbox" id="checkAll"></label> </div>'},
  //           {title: '<div style="display:none">id</div>'},
             {title: '<div style="width:67px">id</div>'},
-            {title: '<div style="width:142px">任务id</div>'},
-            {title: '<div style="width:142px">探针id</div>'},
+            {title: '<div style="width:142px">任务名称</div>'},
+            {title: '<div style="width:142px">探针名称</div>'},
             {title: '<div style="width:112px">探针端口</div>'},
             {title: '<div style="width:67px">状态</div>'},
             {title: '<div style="width:67px">备注</div>'},
@@ -554,7 +510,7 @@ var probetable = new Vue({
                             if(item.status==1){status_word="正在执行";}else{status_word="已取消";}
                             let row = [];
                             row.push(i++);
-                            row.push('<div class="checkbox"> <label> <input type="checkbox" id="checkAll" name="selectFlag"></label> </div>');
+                            row.push('<div class="checkbox"> <label> <input type="checkbox" name="selectFlag"></label> </div>');
                             row.push('<div class="probe_id">'+item.id+'</div>');
                             row.push(item.taskId);
                             row.push(item.probeId);
@@ -575,25 +531,6 @@ var probetable = new Vue({
                 });
             }
         });
-      /*   new AjaxUpload('#excel_import', {
-            action: '../sys/upload/upload/testagent',
-            name: 'file',
-            autoSubmit: true,
-            responseType: "json",
-            onSubmit: function (file, extension) {
-                if (!(extension && /^(xls|xlsx)$/.test(extension.toLowerCase()))) {
-                    alert('请上传xls或xlsx格式的Excel文件！');
-                    return false;
-                }
-            },
-            onComplete: function (file, r) {
-                if (r.code == 0) {
-                    alert(r.msg);
-                } else {
-                    alert(r.msg);
-                }
-            }
-        });   */
     }
 });
 

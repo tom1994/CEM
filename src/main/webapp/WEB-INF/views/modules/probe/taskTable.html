@@ -10,13 +10,25 @@
 
 <body>
 <div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5 class="fontcolor">测试任务列表</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="wrapper wrapper-content">
 
     <div class="row" id="test_table">
         <div class="col-lg-12 col-md-12 col-sm-12">
             <div class="ibox float-e-margins">
-                <div class="ibox-title fontcolor" id="handle" style="padding-bottom: 0px !important;">
+                <div class="ibox-title fontcolor" id="probehandle" style="padding-bottom: 0px !important;">
 
-                <button type="button" class="btn btn-default ui-button" v-on:click="taskdelBatch"><span
+                    <button type="button" class="btn btn-default ui-button " v-on:click="testagentdelBatch"><span
+
                             class="glyphicon glyphicon-remove"></span>批量取消
                     </button>
 
@@ -30,94 +42,66 @@
         </div>
     </div>
 
-    <!-- 模态框（Modal） -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog" style="width: 768px"> <!--修改bootstrap modal模态框的宽度-->
-            <div class="modal-content">
-
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">{{modaltitle}}</h4>
-                </div>
-
-                <div class="row" id="probeform_title">
-                    <div class="col-lg-3 col-md-2 col-sm-3">
-                        <h4 class="fontcolor formtitle_border">表单信息管理</h4>
-                    </div>probetesttarget_title
-                </div>
-
-                <div class="modal-body">
-                    <div class="row">
-                        <form class="form-horizontal" id="probeform_data" role="form">
-
-                            <div class="form-group row">
-                                <label for="name"
-                                       class="col-lg-3 col-md-3 col-sm-3 control-label form_border">测试任务名称：</label>
-                                <div class="col-lg-3 col-md-3 col-sm-3 form_border">
-                                    <input type="text" class="form-control" id="name" name="name"
-                                           placeholder="请输入名称">
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="target"
-                                       class="col-lg-3 col-md-3 col-sm-3 control-label form_border">测试对象:</label>
-                                <div class="col-lg-3 col-md-3 col-sm-3 form_border">
-                                    <input type="text" class="form-control" id="target" name="target"
-                                           placeholder="请输入测试对象">
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="testaddr"
-                                       class="col-lg-3 col-md-3 col-sm-3 control-label form_border">测试目标:</label>
-                                <div class="col-lg-3 col-md-3 col-sm-3 form_border">
-                                    <input type="text" class="form-control" id="testaddr" name="testaddr"
-                                           placeholder="请输入测试目标">
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="strategy"
-                                       class="col-lg-3 col-md-3 col-sm-3 control-label form_border">调度策略:</label>
-                                <div class="col-lg-3 col-md-3 col-sm-3 form_border">
-                                    <input type="text" class="form-control" id="strategy" name="strategy"
-                                           placeholder="请输入调度策略">
-                                </div>
-                            </div>
-
-                        </form>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary" v-on:click="submit">确定</button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal -->
-    </div>
 
     <!-- 取消确认模态框（Modal） -->
-    <div class="modal fade" id="myModal_delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" style="width: 200px">
+    <div class="modal fade" id="myModal_delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                         &times;
                     </button>
-                    <h4 class="modal-title" id="myModalLabel_delet">
+                    <h3 class="modal-title" id="myModalLabel_delet">
                         确认
-                    </h4>
+                    </h3>
+
+
                 </div>
                 <div class="modal-body">
-                    <b>确定取消任务吗?</b>
+                    <b style="font-size: medium">确定取消任务吗?</b>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal" v-on:click="cancel_delete">取消
                     </button>
-                    <button type="button" class="btn btn-primary" v-on:click="delete_data">确定</button>
+                    <button type="button" class="btn btn-success" v-on:click="delete_data">
+                        确定
+                    </button>
                 </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+
+    <!-- 信息编辑模态框（Modal） -->
+    <div class="modal fade" id="myModal_edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="width:700px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h3 class="modal-title myModalLabel">任务名称修改</h3>
+                </div>
+
+                <div class="modal-body">
+                   <div class="row">
+                        <form class="form-horizontal" id="groupform_data" role="form">
+                            <div class="form-group row">
+
+                                <label for="taskname"
+                                       class="col-lg-3 col-md-3 col-sm-3 control-label form_border" style="font-size: medium">任务名称:</label>
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <input type="text" class="form-control" id="taskname" name="name"
+                                           placeholder="请输入名称">
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+               </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-success" >确定</button>
+                </div>
+
             </div><!-- /.modal-content -->
         </div><!-- /.modal -->
     </div>

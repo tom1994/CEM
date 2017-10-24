@@ -40,52 +40,44 @@
 
 <!-- 模态框（Modal） -->
 <div class="modal fade" id="myModal_schedulepolicy" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog" style="width: 400px"> <!--修改bootstrap modal模态框的宽度-->
+
+    <div class="modal-dialog" style="width: 500px"> <!--修改bootstrap modal模态框的宽度-->
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">{{modaltitle}}</h4>
+                <h3 class="modal-title" id="myModalLabel">{{modaltitle}}</h3>
             </div>
-            <!--<div class="row">-->
-                <!--<div class="col-lg-3 col-md-3 col-sm-3">-->
-                    <!--&lt;!&ndash;<h4 class="<fontcolor formtitle_border">表单信息</h4>&ndash;&gt;-->
-                    <!--<br>-->
-                <!--</div>-->
-            <!--</div>-->
+
             <div>
                 <br>
             </div>
             <div class="modal-body">
                 <div class="row">
                     <form class="form-horizontal" id="schedulepolicyform_data" role="form">
+
                         <div class="form-group row">
-                            <label for="id"
-                                   class="col-lg-4 col-md-4 col-sm-4 control-label form_border" style="display: none">id:</label>
-                            <div class="col-lg-8 col-md-8 col-sm-8 form_border" style="display: none">
-                                <input type="text" class="form-control" id="id" name="id"
-                                       placeholder="请输入id">
-                            </div>
-                        </div>
-                        <div class="form-group row">
+
                             <label for="name"
-                                   class="col-lg-4 col-md-4 col-sm-4 control-label form_border">策略名称:</label>
-                            <div class="col-lg-8 col-md-8 col-sm-8 form_border">
+                                   class="col-lg-4 col-md-4 col-sm-4 control-label form_border" style="font-size: medium">策略名称:</label>
+                            <div class="col-lg-8 col-md-8 col-sm-8 ">
                                 <input type="text" class="form-control" id="name" name="name"
                                        placeholder="请输入策略名称">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="cron"
-                                   class="col-lg-4 col-md-4 col-sm-4 control-label form_border">任务描述:</label>
-                            <div class="col-lg-8 col-md-8 col-sm-8 form_border">
+
+                                   class="col-lg-4 col-md-4 col-sm-4 control-label form_border" style="font-size: medium">任务描述:</label>
+                            <div class="col-lg-8 col-md-8 col-sm-8 ">
+
                                 <input type="text" class="form-control" id="cron" name="cron"
                                        placeholder="请输入cron表达式">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="remark"
-                                   class="col-lg-4 col-md-4 col-sm-4 control-label form_border">备注:</label>
-                            <div class="col-lg-8 col-md-8 col-sm-8 form_border">
+                                   class="col-lg-4 col-md-4 col-sm-4 control-label form_border" style="font-size: medium">备注:</label>
+                            <div class="col-lg-8 col-md-8 col-sm-8 ">
                                 <input type="text" class="form-control" id="remark" name="remark"
                                        placeholder="请输入备注">
                             </div>
@@ -95,7 +87,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary" v-on:click="submit">确定</button>
+                <button type="button" class="btn btn-success" v-on:click="submit">确定</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
@@ -103,23 +95,23 @@
 
 <div class="modal fade" id="myModal_delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
-    <div class="modal-dialog" style="width: 200px">
+    <div class="modal-dialog" style="width: 500px">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                     &times;
                 </button>
-                <h4 class="modal-title" id="myModalLabel_delete">
+                <h3 class="modal-title" id="myModalLabel_delete">
                     确认
-                </h4>
+                </h3>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" style="font-size: medium">
                 <b>确定删除吗?</b>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal" v-on:click="cancel_delete">取消
                 </button>
-                <button type="button" class="btn btn-primary" v-on:click="delete_data">确定</button>
+                <button type="button" class="btn btn-success" v-on:click="delete_data">确定</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->

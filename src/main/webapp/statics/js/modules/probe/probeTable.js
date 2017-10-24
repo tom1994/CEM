@@ -705,14 +705,12 @@ var probetable = new Vue({
             {title: '<div style="width:42px">地市</div>'},
             {title: '<div style="width:42px">区县</div>'},
             {title: '<div style="width:42px">位置</div>'},
-            //{title: '<div style="width:142px">端口ip</div>'},
             {title: '<div style="width:72px">探针类型</div>'},
             {title: '<div style="width:112px">层级上联探针</div>'},
             {title: '<div style="width:52px">状态</div>'},
             {title: '<div style="width:112px">数据上报间隔</div>'},
             {title: '<div style="width:142px">注册时间</div>'},
             {title: '<div style="width:142px">最后心跳时间</div>'},
-            //{title: '<div style="width:142px">BRAS名称</div>'},
             {title: '<div style="width:42px">操作</div>'},
         ],
         rows: [],
@@ -815,7 +813,6 @@ var probetable = new Vue({
                                 row.push(item.registerTime);
                                 row.push(item.lastHbTime);
                                 row.push('<a class="fontcolor" onclick="update_this(this)" id='+item.id+'>编辑</a>&nbsp;<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>');
-                                //row.push('<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>');
                                 rows.push(row);
                             });
                             returnData.data = rows;
