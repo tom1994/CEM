@@ -195,6 +195,13 @@ a:link {
     margin: 4px 0 4px 0;
 }
 
+#probeform_data .row input { /*设置外边距*/
+    margin: 4px 0 4px 0;
+}
+
+#probeform_data .row input { /*设置外边距*/
+    margin: 4px 0 4px 0;
+}
 #groupform_data .row select { /*设置外边距*/
     margin: 4px 0 4px 0;
 }

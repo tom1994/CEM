@@ -1,7 +1,5 @@
 body {
-
     background-color: #ffffff; /*页面背景颜色*/
-
 }
 
 .wrapper-content {
@@ -17,7 +15,6 @@ body {
 .searchname {
     line-height: 34px; /*span垂直居中*/
     vertical-align: middle;
-
     width: 100px;
     text-align: right;
 
@@ -90,6 +87,7 @@ a:link {
 }
 */
 
+
 .row input { /*设置外边距*/
     margin: 4px 0 4px 0;
 }
@@ -103,7 +101,6 @@ a:link {
     font-family: "Microsoft Yahei", Arial;
     height: 30px;
 }
-
 
 .row select { /*设置外边距*/
     margin: 4px 0 4px 0;
@@ -146,6 +143,7 @@ a:link {
 }*/
 
 
+
 /******测试任务组相关样式*****/
 .testtargetbutton{
     margin: 0 10px 10px 20px ;
@@ -165,7 +163,9 @@ a:link {
     border-color: #2e6da4;
     font-family: "Microsoft Yahei", 微软雅黑, Tahoma, Arial, Helvetica, STHeiti;
     user-select: none;
+
     zoom: 1;
+
     cursor: pointer;
     box-sizing: content-box;
     border-width: initial;
@@ -178,4 +178,5 @@ a:link {
     transition: width 0.3s;
     !important;
 }
+
 
