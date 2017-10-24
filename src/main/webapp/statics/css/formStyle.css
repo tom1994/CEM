@@ -15,14 +15,15 @@ body {
 .searchname {
     line-height: 34px; /*span垂直居中*/
     vertical-align: middle;
-    width: 100px;
-    text-align: right;
-
+    /*width: 100px;*/
+    text-align: left;
     text-overflow: ellipsis;
     -o-text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
     float: left;
+    margin-top: 4px;
+    margin-left: 4px;
 }
 
 #searchcolums input {
