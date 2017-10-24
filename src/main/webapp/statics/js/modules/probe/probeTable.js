@@ -280,6 +280,37 @@ var probegroup_handle = new Vue({
 
     }
 });
+
+/*探针列表编辑功能*/
+function update_this (obj) {     /*监听修改触发事件*/
+    update_data_id = parseInt(obj.id);
+    /*获取当前行探针数据id*/
+    console.log(update_data_id);
+    status = 1;      /*状态1表示修改*/
+    /*find被选中的行*/
+    var forms = $('#probeform_data .form-control');
+    /*去除只读状态*/
+    $('#probeform_data input[type=text]').prop("readonly", false);
+
+    $.ajax({
+        type: "POST", /*GET会乱码*/
+        url: "../../cem/probe/info/"+update_data_id,
+        cache: false,  //禁用缓存
+        dataType: "json",
+        contentType: "application/json", /*必须要,不可少*/
+        success: function (result) {
+            forms[0].value = result.probe.id;
+            forms[1].value = result.probe.name;
+            forms[2].value = result.probe.location;
+            forms[3].value = result.probe.portIp;
+            forms[4].value = result.probe.brasName;
+        }
+    });
+    probeform_data.modaltitle = "编辑业务信息";
+    /*修改模态框标题*/
+    $('#myModal_update').modal('show');
+}
+
 //探针列表删除功能
 function delete_ajax() {
     var ids = JSON.stringify(idArray);
@@ -399,7 +430,7 @@ var deletegroup_data = new Vue({
 
 //探针录入
 var probeform_data = new Vue({
-    el: '#myModal',
+    el: '#myModal_update',
     data: {
         modaltitle: "探针录入", /*定义模态框标题*/
         countys: [
@@ -578,7 +609,6 @@ var search_data = new Vue({
 });
 
 var searchgroup_data = new Vue({
-
     el:'#searchgroup',
     data:{
         probegroup_names:[]
@@ -670,12 +700,20 @@ var probetable = new Vue({
         headers: [
             {title: ''},
             {title: '<div class="checkbox"> <label> <input type="checkbox" id="checkAll"></label> </div>'},
-            {title: '<div style=" width:0px;display:none;padding:0px">id</div>'},
-            {title: '<div style="width:142px">探针名</div>'},
-            {title: '<div style="width:142px">所属位置</div>'},
-            {title: '<div style="width:142px">端口ip</div>'},
-            {title: '<div style="width:142px">BRAS名称</div>'},
-            {title: '<div style="width:52px">操作</div>'},
+            //{title: '<div style=" width:0px;display:none;padding:0px">id</div>'},
+            {title: '<div style="width:62px">探针名</div>'},
+            {title: '<div style="width:42px">地市</div>'},
+            {title: '<div style="width:42px">区县</div>'},
+            {title: '<div style="width:42px">位置</div>'},
+            //{title: '<div style="width:142px">端口ip</div>'},
+            {title: '<div style="width:72px">探针类型</div>'},
+            {title: '<div style="width:112px">层级上联探针</div>'},
+            {title: '<div style="width:52px">状态</div>'},
+            {title: '<div style="width:112px">数据上报间隔</div>'},
+            {title: '<div style="width:142px">注册时间</div>'},
+            {title: '<div style="width:142px">最后心跳时间</div>'},
+            //{title: '<div style="width:142px">BRAS名称</div>'},
+            {title: '<div style="width:42px">操作</div>'},
         ],
         rows: [],
         dtHandle: null,
@@ -765,12 +803,19 @@ var probetable = new Vue({
                                 let row = [];
                                 row.push(i++);
                                 row.push('<div class="checkbox"> <label> <input type="checkbox" id="checkALl" name="selectFlag"></label> </div>');
-                                row.push('<div class="probe_id" style="display:none">'+item.id+'</div>');
+                                //row.push('<div class="probe_id" style="display:none">'+item.id+'</div>');
                                 row.push(item.name);
+                                row.push(item.city);
+                                row.push(item.county);
                                 row.push(item.location);
-                                row.push(item.portIp);
-                                row.push(item.brasName);
-                                row.push('<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>');
+                                row.push(item.type);
+                                row.push(item.upstream);
+                                row.push(item.status);
+                                row.push(item.reportInterval);
+                                row.push(item.registerTime);
+                                row.push(item.lastHbTime);
+                                row.push('<a class="fontcolor" onclick="update_this(this)" id='+item.id+'>编辑</a>&nbsp;<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>');
+                                //row.push('<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>');
                                 rows.push(row);
                             });
                             returnData.data = rows;

@@ -47,7 +47,7 @@
 		(
 			#{name}, 
 			#{cron}, 
-			#{remark}, 
+			#{remark},
 			#{createTime}
 		)
 	</insert>

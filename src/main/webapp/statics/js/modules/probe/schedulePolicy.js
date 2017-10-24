@@ -58,7 +58,6 @@ var schedulepolicydata_handle = new Vue({
 }*/
 
 function update_this (obj) {     /*监听修改触发事件*/
-    //update_data.show_schedulepolicyModal();
     update_data_id = parseInt(obj.id);
     /*获取当前行探针数据id*/
     console.log(update_data_id);
@@ -171,6 +170,37 @@ var delete_data = new Vue({
     }
 });
 
+//格式化日期
+Date.prototype.Format = function (fmt) {
+    var o = {
+        "y+": this.getFullYear(),
+        "M+": this.getMonth() + 1,                 //月份
+        "d+": this.getDate(),                    //日
+        "h+": this.getHours(),                   //小时
+        "m+": this.getMinutes(),                 //分
+        "s+": this.getSeconds(),                 //秒
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+        "S+": this.getMilliseconds()             //毫秒
+    };
+    for (var k in o) {
+        if (new RegExp("(" + k + ")").test(fmt)){
+            if(k == "y+"){
+                fmt = fmt.replace(RegExp.$1, ("" + o[k]).substr(4 - RegExp.$1.length));
+            }
+            else if(k=="S+"){
+                var lens = RegExp.$1.length;
+                lens = lens==1?3:lens;
+                fmt = fmt.replace(RegExp.$1, ("00" + o[k]).substr(("" + o[k]).length - 1,lens));
+            }
+            else{
+                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            }
+        }
+    }
+    return fmt;
+}
+
+
 var schedulepolicyform_data = new Vue({
     el: '#myModal_schedulepolicy',
     data: {
@@ -190,6 +220,8 @@ var schedulepolicyform_data = new Vue({
             } else if (typeof(schedulepolicyJson["remark"]) == "undefined") {
                 toastr.warning("请添加备注!");
             } else {
+                var d = new Date().Format("yyyy-MM-dd hh:mm:ss");        //获取日期与时间
+                schedulepolicyJson['createTime'] = d;
                 var schedulepolicy = JSON.stringify(schedulepolicyJson);
                 /*封装成json数组*/
                 /*获取表单元素的值*/
@@ -200,6 +232,7 @@ var schedulepolicyform_data = new Vue({
                 } else if (status == 1) {
                     mapstr = "update"
                 }
+                console.log("状态:"+status);
                 $.ajax({
                     type: "POST", /*GET会乱码*/
                     url: "../../cem/schedulepolicy/" + mapstr,
@@ -238,7 +271,6 @@ var schedulepolicyform_data = new Vue({
                                     break
                             }
                         }
-
                         schedulepolicytable.currReset();
                     }
                 });
