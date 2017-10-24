@@ -1,4 +1,8 @@
 @charset "UTF-8";
+/*.page-sidebar{*/
+    /*overflow-y: hidden !important;*/
+    /*scrolling: yes !important;*/
+/*}*/
 .page-header.navbar .menu-toggler > span, .page-sidebar .sidebar-toggler > span, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .sidebar-toggler > span {
     outline: 0 !important
 }
@@ -1366,7 +1370,8 @@
         width: 235px;
         float: left;
         position: relative;
-        margin-right: -100%
+        margin-right: -100%;
+        overflow-y: scroll !important;
     }
 
     .page-full-width .page-sidebar {
@@ -1375,7 +1380,8 @@
 
     .page-sidebar.collapse {
         display: block;
-        max-height: none !important
+        /*max-height: none !important*/
+        overflow-y: scroll !important;
     }
 
     .page-sidebar-reversed .page-sidebar {
