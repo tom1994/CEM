@@ -423,7 +423,7 @@ var probetable = new Vue({
         ],
         rows: [],
         dtHandle: null,
-        probedata: {}
+        probedata: {},
 
     },
     methods: {
@@ -464,7 +464,13 @@ var probetable = new Vue({
             paging: true,
             serverSide: true,
             info: false,
-            ordering: false, /*禁用排序功能*/
+          //  ordering: false, /*禁用排序功能*/
+            bSort:true,
+            aaSorting: [
+                [ 0, "desc" ]
+            ],
+
+
             /*bInfo: false,*/
 
             /*bLengthChange: false,*/    /*禁用Show entries*/
@@ -533,5 +539,6 @@ var probetable = new Vue({
         });
     }
 });
+
 
 

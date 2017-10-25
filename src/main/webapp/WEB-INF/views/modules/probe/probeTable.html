@@ -326,19 +326,15 @@
 
             <div class="modal fade" id="groupModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
                  aria-hidden="true">
-                <div class="modal-dialog" style="width: 768px">
+                <div class="modal-dialog" style="width: 700px">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                                 &times;
                             </button>
-                            <h4 class="modal-title myModalLabel">{{modaltitle}}</h4>
+                            <h3 class="modal-title myModalLabel">{{modaltitle}}</h3>
                         </div>
-                        <div class="row probeform_title">
-                            <div class="col-lg-3 col-md-3 col-sm-3">
-                                <h4 class="fontcolor probeformtitle_border">表单信息管理</h4>
-                            </div>
-                        </div>
+
                         <div class="modal-body">
                             <div class="row">
                                 <form class="form-horizontal" id="groupform_data" role="form">
@@ -351,15 +347,19 @@
                                             <input type="text" class="form-control" id="groupid" name="id"
                                                    placeholder="请输入id">
                                         </div>
+                                    </div>
+                                    <div class="form-group row">
                                         <label for="groupname"
-                                               class="col-lg-3 col-md-3 col-sm-3 control-label form_border">探针组名:</label>
-                                        <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                               class="col-lg-3 col-md-3 col-sm-3 control-label " style="font-size: medium">探针组名:</label>
+                                        <div class="col-lg-3 col-md-3 col-sm-3 ">
                                             <input type="text" class="form-control" id="groupname" name="name"
                                                    placeholder="请输入探针组名">
                                         </div>
+                                    </div>
+                                    <div class="form-group row">
                                         <label for="remark"
-                                               class="col-lg-3 col-md-3 col-sm-3 control-label form_border">备注:</label>
-                                        <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                               class="col-lg-3 col-md-3 col-sm-3 control-label" style="font-size: medium">备注:</label>
+                                        <div class="col-lg-3 col-md-3 col-sm-3 ">
                                             <input type="text" class="form-control" id="remark" name="remark"
                                                    placeholder="请输入探针组备注">
                                         </div>
