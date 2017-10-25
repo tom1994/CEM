@@ -61,7 +61,7 @@
 </head>
 <!-- ADD THE CLASS layout-boxed TO GET A BOXED LAYOUT -->
 <!--<body class="hold-transition skin-blue sidebar-mini">-->
-<body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white">
+<body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white" style="height: 100% !important;">
 <!-- Site wrapper -->
 <!--<div class="wrapper" id="rrapp" v-cloak>-->
 <!--<header class="main-header">-->
@@ -167,9 +167,7 @@
 <!-- ./wrapper -->
 
 <div class="page-wrapper" id="rrapp" v-cloak>
-    <!-- BEGIN HEADER -->
     <div class="page-header navbar navbar-fixed-top">
-        <!-- BEGIN HEADER INNER -->
         <div class="page-header-inner ">
             <!-- BEGIN LOGO -->
             <div class="page-logo">
@@ -181,19 +179,13 @@
                     <span></span>
                 </div>
             </div>
-            <!-- END LOGO -->
-            <!-- BEGIN RESPONSIVE MENU TOGGLER -->
             <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse"
                data-target=".navbar-collapse">
                 <span></span>
             </a>
-            <!-- END RESPONSIVE MENU TOGGLER -->
-            <!-- BEGIN TOP NAVIGATION MENU -->
             <div class="top-menu">
                 <ul class="nav navbar-nav pull-right">
-                    <!-- BEGIN USER LOGIN DROPDOWN -->
-                    <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
-                    <li class="dropdown dropdown-user">
+                     <li class="dropdown dropdown-user">
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
                            data-close-others="true">
                             <img alt="" class="img-circle"
@@ -224,10 +216,8 @@
                             </li>
                         </ul>
                     </li>
-                    <!-- END USER LOGIN DROPDOWN -->
                 </ul>
             </div>
-            <!-- END TOP NAVIGATION MENU -->
         </div>
         <!-- END HEADER INNER -->
     </div>
@@ -236,88 +226,24 @@
     <div class="clearfix"></div>
     <!-- END HEADER & CONTENT DIVIDER -->
     <!-- BEGIN CONTAINER -->
-    <div class="page-container">
+    <div class="page-container" id="page-container">
         <!-- BEGIN SIDEBAR -->
         <div class="page-sidebar-wrapper">
             <!-- BEGIN SIDEBAR -->
             <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
             <!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
-            <div class="page-sidebar navbar-collapse collapse">
-                <!-- BEGIN SIDEBAR MENU -->
-                <!-- DOC: Apply "page-sidebar-menu-light" class right after "page-sidebar-menu" to enable light sidebar menu style(without borders) -->
-                <!-- DOC: Apply "page-sidebar-menu-hover-submenu" class right after "page-sidebar-menu" to enable hoverable(hover vs accordion) sub menu mode -->
-                <!-- DOC: Apply "page-sidebar-menu-closed" class right after "page-sidebar-menu" to collapse("page-sidebar-closed" class must be applied to the body element) the sidebar sub menu mode -->
-                <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
-                <!-- DOC: Set data-keep-expand="true" to keep the submenues expanded -->
-                <!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed -->
-                <!--<ul class="page-sidebar-menu  page-header-fixed " data-keep-expanded="false" data-auto-scroll="true"-->
-                <!--data-slide-speed="200" style="padding-top: 20px">-->
+            <div class="page-sidebar navbar-collapse collapse" id="page-sidebar" style="height: 100%">
                 <!-- vue生成的菜单 -->
-                <menu-item-m-1 :item="item" v-for="item in menuList"></menu-item-m-1>
-                <!--</ul>-->
-                <!-- END SIDEBAR MENU -->
-                <!-- END SIDEBAR MENU -->
-                <!--<ul data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200"-->
-                <!--class="page-sidebar-menu  page-header-fixed " style="padding-top: 20px;">-->
-                <!--<li class="heading"><h3 class="uppercase">系统管理</h3></li>-->
-                <!--<li class="nav-item">&lt;!&ndash;&ndash;&gt; &lt;!&ndash;&ndash;&gt; <a href="#modules/sys/user.html" class="nav-link "><i-->
-                <!--class="fa fa-user"></i> <span class="title">管理员管理</span></a></li>-->
-                <!--<li class="nav-item">&lt;!&ndash;&ndash;&gt; &lt;!&ndash;&ndash;&gt; <a href="#modules/sys/dept.html" class="nav-link "><i-->
-                <!--class="fa fa-file-code-o"></i> <span class="title">部门管理</span></a></li>-->
-                <!--<li class="nav-item">&lt;!&ndash;&ndash;&gt; &lt;!&ndash;&ndash;&gt; <a href="#modules/sys/role.html" class="nav-link "><i-->
-                <!--class="fa fa-user-secret"></i> <span class="title">角色管理</span></a></li>-->
-                <!--<li class="nav-item">&lt;!&ndash;&ndash;&gt; &lt;!&ndash;&ndash;&gt; <a href="#modules/sys/menu.html" class="nav-link "><i-->
-                <!--class="fa fa-th-list"></i> <span class="title">菜单管理</span></a></li>-->
-                <!--<li class="nav-item">&lt;!&ndash;&ndash;&gt; &lt;!&ndash;&ndash;&gt; <a href="#druid/sql.html" class="nav-link "><i-->
-                <!--class="fa fa-bug"></i> <span class="title">SQL监控</span></a></li>-->
-                <!--<li class="nav-item">&lt;!&ndash;&ndash;&gt; &lt;!&ndash;&ndash;&gt; <a href="#modules/job/schedule.html" class="nav-link "><i-->
-                <!--class="fa fa-tasks"></i> <span class="title">定时任务</span></a></li>-->
-                <!--<li class="nav-item">&lt;!&ndash;&ndash;&gt; &lt;!&ndash;&ndash;&gt; <a href="#modules/sys/config.html" class="nav-link "><i-->
-                <!--class="fa fa-sun-o"></i> <span class="title">参数管理</span></a></li>-->
-                <!--<li class="nav-item">&lt;!&ndash;&ndash;&gt; &lt;!&ndash;&ndash;&gt; <a href="#modules/oss/oss.html" class="nav-link "><i-->
-                <!--class="fa fa-file-image-o"></i> <span class="title">文件上传</span></a></li>-->
-                <!--<li class="nav-item">&lt;!&ndash;&ndash;&gt; &lt;!&ndash;&ndash;&gt; <a href="#modules/sys/log.html" class="nav-link "><i-->
-                <!--class="fa fa-file-text-o"></i> <span class="title">系统日志</span></a></li>-->
-                <!--</ul>-->
-                <!--<ul data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200"-->
-                <!--class="page-sidebar-menu  page-header-fixed " style="padding-top: 20px;">-->
-                <!--<li class="heading"><h3 class="uppercase">探针</h3></li>-->
-                <!--<li class="nav-item"><a href="javascript:;" class="nav-link nav-toggle">&lt;!&ndash;&ndash;&gt; <span class="title">探针信息</span>-->
-                <!--<span class="arrow"></span></a>-->
-                <!--<ul class="sub-menu">-->
-                <!--<li class="nav-item">&lt;!&ndash;&ndash;&gt; &lt;!&ndash;&ndash;&gt; <a href="#index.html" class="nav-link ">&lt;!&ndash;&ndash;&gt; <span-->
-                <!--class="title">菜单一</span></a></li>-->
-                <!--</ul> &lt;!&ndash;&ndash;&gt;</li>-->
-                <!--</ul>-->
+                <ul class="page-sidebar-menu  page-header-fixed " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" style="">
+                <menu-item-m-2 :item="item" v-for="item in menuList"></menu-item-m-2>
+                </ul>
             </div>
             <!-- END SIDEBAR -->
         </div>
-        <!-- END SIDEBAR -->
-        <!-- BEGIN CONTENT -->
         <div class="page-content-wrapper">
             <!-- BEGIN CONTENT BODY -->
-            <div class="page-content">
-                <!-- BEGIN PAGE HEADER-->
-                <!-- BEGIN PAGE BAR -->
-                <!--<div class="page-bar">-->
-                <!--<ul class="page-breadcrumb">-->
-                <!--<li>-->
-                <!--<a href="index.html">Home</a>-->
-                <!--<i class="fa fa-circle"></i>-->
-                <!--</li>-->
-                <!--<li>-->
-                <!--<span>Dashboard</span>-->
-                <!--</li>-->
-                <!--</ul>-->
-                <!--</div>-->
-                <!-- END PAGE BAR -->
-                <!-- BEGIN PAGE TITLE-->
-                <!--<h1 class="page-title"> Admin Dashboard-->
-                <!--<small>statistics, charts, recent events and reports</small>-->
-                <!--</h1>-->
-                <!-- END PAGE TITLE-->
-                <!-- Main content -->
-                <section id="content" class="content" style="background:#fff;">
+            <div class="page-content" id="page-content">
+                <section id="content" class="content" style="background:#fff; height: 100%">
                     <iframe id="content_frame" scrolling="yes" frameborder="0"
                             style="width:100%; height:100%;overflow:auto;background:#fff;" :src="main"></iframe>
                 </section>
@@ -326,17 +252,7 @@
             </div>
             <!-- END CONTENT BODY -->
         </div>
-        <!-- END CONTENT -->
     </div>
-    <!-- END CONTAINER -->
-    <!-- BEGIN FOOTER -->
-    <div class="page-footer">
-        <div class="page-footer-inner"></div>
-        <div class="scroll-to-top">
-            <i class="icon-arrow-up"></i>
-        </div>
-    </div>
-    <!-- END FOOTER -->
 </div>
 
 <script type="text/javascript">
@@ -456,7 +372,14 @@
             $('#radio1003').attr('checked', 'checked');
         });
         $('#content_frame').height($('#content').height());
-        $('#content_frame').width($('#content').width());
+//        $('#content_frame').width($('#content').width());
+//        $('#page-content').height($('#content_frame').height());
+//        $('#page-content').min-height($('#page-content').height());
+//        $('#page-container').height($('#content_frame').height());
+//        $('#page-sidebar').height($('#content_frame').height());
+//        console.log($(page-sidebar).height());
+          $('#page-sidebar').css('max-height',$(window).height()-60);
+
     });
 </script>
 <!--END Metronic All Scripts-->

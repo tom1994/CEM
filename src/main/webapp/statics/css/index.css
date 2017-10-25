@@ -1,2 +1,11 @@
 @charset "utf-8";
 
+html,body,.page-container,.page-content,.page-sidebar-wrapper,.page-content-wrapper,.page-sidebar{
+    height: 100% !important;
+}
+.page-sidebar{
+    overflow-y: auto !important;
+}
+body{
+    overflow-y: hidden;
+}

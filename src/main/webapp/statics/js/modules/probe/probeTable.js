@@ -164,20 +164,20 @@ var probegroup_handle = new Vue({
     el: '#grouphandle',
     data: {},
     mounted: function(){         /*动态加载测试任务组数据*/
-        $.ajax({
-            type: "POST",   /*GET会乱码*/
-            url: "../../cem/probegroup/list",//Todo:改成测试任务组的list方法
-            cache: false,  //禁用缓存
-            dataType: "json",
-            /* contentType:"application/json",  /!*必须要,不可少*!/*/
-            success: function (result) {
-                for(var i=0;i<result.page.list.length;i++){
-                    testGroupNames[i] = {message: result.page.list[i]}
-                }
-                probeform_data.testgroup_names = testGroupNames;    /*注意,这个js执行放在probeform_data和search_data之前才行*/
-                search_data.testgroup_names = testGroupNames;
-            }
-        });
+        // $.ajax({
+        //     type: "POST",   /*GET会乱码*/
+        //     url: "../../cem/probegroup/list",//Todo:改成测试任务组的list方法
+        //     cache: false,  //禁用缓存
+        //     dataType: "json",
+        //     /* contentType:"application/json",  /!*必须要,不可少*!/*/
+        //     success: function (result) {
+        //         for(var i=0;i<result.page.list.length;i++){
+        //             testGroupNames[i] = {message: result.page.list[i]}
+        //         }
+        //         probeform_data.testgroup_names = testGroupNames;    /*注意,这个js执行放在probeform_data和search_data之前才行*/
+        //         search_data.testgroup_names = testGroupNames;
+        //     }
+        // });
 
     },
     methods: {
@@ -712,8 +712,6 @@ var probetable = new Vue({
         // Instantiate the datatable and store the reference to the instance in our dtHandle element.
         vm.dtHandle = $(this.$el).DataTable({
 
-
-            // Specify whatever options you want, at a minimum these:
             columns: vm.headers,
             data: vm.rows,
             searching: false,
@@ -725,6 +723,7 @@ var probetable = new Vue({
 
             /*bLengthChange: false,*/    /*禁用Show entries*/
             /*scrollY: 432,    /!*表格高度固定*!/*/
+            // scrollY: true,
             oLanguage: {
                 sLengthMenu: "每页 _MENU_ 行数据",
                 oPaginate: {
