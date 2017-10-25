@@ -181,4 +181,17 @@ a:link {
     !important;
 }
 
+.scroll-table{
+    overflow: scroll;
+    position: relative;
+    z-index: 100;
+    top:-1px;
+    left:0;
+}
+
+.fixed-th-both{
+    z-index:200;
+    position:relative;
+}
+
 
