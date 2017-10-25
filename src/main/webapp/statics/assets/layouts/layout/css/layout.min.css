@@ -1381,7 +1381,7 @@
     .page-sidebar.collapse {
         display: block;
         /*max-height: none !important*/
-        overflow-y: scroll !important;
+        overflow-y: auto !important;
     }
 
     .page-sidebar-reversed .page-sidebar {

@@ -234,42 +234,9 @@
             <!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
             <div class="page-sidebar navbar-collapse collapse" id="page-sidebar" style="height: 100%">
                 <!-- vue生成的菜单 -->
-                <menu-item-m-1 :item="item" v-for="item in menuList"></menu-item-m-1>
-                <!--</ul>-->
-                <!-- END SIDEBAR MENU -->
-                <!-- END SIDEBAR MENU -->
-                <!--<ul data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200"-->
-                <!--class="page-sidebar-menu  page-header-fixed " style="padding-top: 20px;">-->
-                <!--<li class="heading"><h3 class="uppercase">系统管理</h3></li>-->
-                <!--<li class="nav-item">&lt;!&ndash;&ndash;&gt; &lt;!&ndash;&ndash;&gt; <a href="#modules/sys/user.html" class="nav-link "><i-->
-                <!--class="fa fa-user"></i> <span class="title">管理员管理</span></a></li>-->
-                <!--<li class="nav-item">&lt;!&ndash;&ndash;&gt; &lt;!&ndash;&ndash;&gt; <a href="#modules/sys/dept.html" class="nav-link "><i-->
-                <!--class="fa fa-file-code-o"></i> <span class="title">部门管理</span></a></li>-->
-                <!--<li class="nav-item">&lt;!&ndash;&ndash;&gt; &lt;!&ndash;&ndash;&gt; <a href="#modules/sys/role.html" class="nav-link "><i-->
-                <!--class="fa fa-user-secret"></i> <span class="title">角色管理</span></a></li>-->
-                <!--<li class="nav-item">&lt;!&ndash;&ndash;&gt; &lt;!&ndash;&ndash;&gt; <a href="#modules/sys/menu.html" class="nav-link "><i-->
-                <!--class="fa fa-th-list"></i> <span class="title">菜单管理</span></a></li>-->
-                <!--<li class="nav-item">&lt;!&ndash;&ndash;&gt; &lt;!&ndash;&ndash;&gt; <a href="#druid/sql.html" class="nav-link "><i-->
-                <!--class="fa fa-bug"></i> <span class="title">SQL监控</span></a></li>-->
-                <!--<li class="nav-item">&lt;!&ndash;&ndash;&gt; &lt;!&ndash;&ndash;&gt; <a href="#modules/job/schedule.html" class="nav-link "><i-->
-                <!--class="fa fa-tasks"></i> <span class="title">定时任务</span></a></li>-->
-                <!--<li class="nav-item">&lt;!&ndash;&ndash;&gt; &lt;!&ndash;&ndash;&gt; <a href="#modules/sys/config.html" class="nav-link "><i-->
-                <!--class="fa fa-sun-o"></i> <span class="title">参数管理</span></a></li>-->
-                <!--<li class="nav-item">&lt;!&ndash;&ndash;&gt; &lt;!&ndash;&ndash;&gt; <a href="#modules/oss/oss.html" class="nav-link "><i-->
-                <!--class="fa fa-file-image-o"></i> <span class="title">文件上传</span></a></li>-->
-                <!--<li class="nav-item">&lt;!&ndash;&ndash;&gt; &lt;!&ndash;&ndash;&gt; <a href="#modules/sys/log.html" class="nav-link "><i-->
-                <!--class="fa fa-file-text-o"></i> <span class="title">系统日志</span></a></li>-->
-                <!--</ul>-->
-                <!--<ul data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200"-->
-                <!--class="page-sidebar-menu  page-header-fixed " style="padding-top: 20px;">-->
-                <!--<li class="heading"><h3 class="uppercase">探针</h3></li>-->
-                <!--<li class="nav-item"><a href="javascript:;" class="nav-link nav-toggle">&lt;!&ndash;&ndash;&gt; <span class="title">探针信息</span>-->
-                <!--<span class="arrow"></span></a>-->
-                <!--<ul class="sub-menu">-->
-                <!--<li class="nav-item">&lt;!&ndash;&ndash;&gt; &lt;!&ndash;&ndash;&gt; <a href="#index.html" class="nav-link ">&lt;!&ndash;&ndash;&gt; <span-->
-                <!--class="title">菜单一</span></a></li>-->
-                <!--</ul> &lt;!&ndash;&ndash;&gt;</li>-->
-                <!--</ul>-->
+                <ul class="page-sidebar-menu  page-header-fixed " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" style="">
+                <menu-item-m-2 :item="item" v-for="item in menuList"></menu-item-m-2>
+                </ul>
             </div>
             <!-- END SIDEBAR -->
         </div>
@@ -285,11 +252,7 @@
             </div>
             <!-- END CONTENT BODY -->
         </div>
-        <!-- END CONTENT -->
     </div>
-    <!-- END CONTAINER -->
-    <!-- BEGIN FOOTER -->
-    <!-- END FOOTER -->
 </div>
 
 <script type="text/javascript">

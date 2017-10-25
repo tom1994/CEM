@@ -4,7 +4,7 @@ html,body,.page-container,.page-content,.page-sidebar-wrapper,.page-content-wrap
     height: 100% !important;
 }
 .page-sidebar{
-    overflow-y: scroll !important;
+    overflow-y: auto !important;
 }
 body{
     overflow-y: hidden;
