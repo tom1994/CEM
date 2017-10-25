@@ -711,7 +711,6 @@ var probetable = new Vue({
         let vm = this;
         // Instantiate the datatable and store the reference to the instance in our dtHandle element.
         vm.dtHandle = $(this.$el).DataTable({
-
             columns: vm.headers,
             data: vm.rows,
             searching: false,
@@ -720,10 +719,9 @@ var probetable = new Vue({
             info: false,
             ordering: false, /*禁用排序功能*/
             /*bInfo: false,*/
-
             /*bLengthChange: false,*/    /*禁用Show entries*/
             /*scrollY: 432,    /!*表格高度固定*!/*/
-            // scrollY: true,
+            scrollY: true,
             oLanguage: {
                 sLengthMenu: "每页 _MENU_ 行数据",
                 oPaginate: {
