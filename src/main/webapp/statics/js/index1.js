@@ -105,7 +105,7 @@ var menuItem = Vue.extend({
         '</a>',
         '<dl v-if="item.type === 0" class="layui-nav-child">',
         '<dd v-for="item in item.list">',
-        '<a v-if="item.type === 1" href="javascript:;" :data-url="item.url"><i v-if="item.icon != null" :class="item.icon" :data-icon="item.icon"></i> <span>{{item.name}}</span></a>',
+        '<a v-if="item.type === 1" href="javascript:;" :data-url="\item.url"><i v-if="item.icon != null" :class="item.icon" :data-icon="item.icon"></i> <span>{{item.name}}</span></a>',
         '</dd>',
         '</dl>',
         '<a v-if="item.type === 1" href="javascript:;" :data-url="item.url"><i v-if="item.icon != null" :class="item.icon" :data-icon="item.icon"></i> <span>{{item.name}}</span></a>',

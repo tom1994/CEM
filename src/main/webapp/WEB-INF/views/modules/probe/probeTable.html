@@ -92,7 +92,7 @@
                                             v-on:click="probedelBatch"><span
                                             class="glyphicon glyphicon-trash"></span>批量删除
                                     </button>
-                                    <a href="../sys/upload/download/testagent"><button type="button" class="btn btn-default ui-button"><span
+                                    <a href="../../cem/probe/download"><button type="button" class="btn btn-default ui-button"><span
                                             class="glyphicon glyphicon-open"></span>导出
                                     </button></a>
                                     <!--<div class="btn-group pull-right">-->
@@ -280,17 +280,22 @@
             </div>
             <div role="tabpanel" class="tab-pane fade" id="Section2">
                 <div class="row">
-                    <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-8 col-md-8 col-sm-8">
                         <div class="ibox float-e-margins">
                             <div class="ibox-content" style="padding-bottom: 0">
                                 <div class="row">
                                     <form class="form-horizontal" id="groupsearch" role="form">
-                                        <div class="input-group searchspan">
+                                        <div class=" col-lg-5 col-md-5 col-sm-5 searchspan">
                                             <span class="searchname" title="探针组名">探针组名：</span>
                                             <input type="text" class="form-control" name="name" style="width: 110px"
                                                    value="">
                                         </div>
-
+                                        <div class="btn-group pull-left">
+                                            <button type="button" class="btn btn-default ui-button" style="margin-right: 5px; margin-top: 5px"
+                                                    v-on:click="groupsearch"><span
+                                                    class="glyphicon glyphicon-zoom-in"></span>查询
+                                            </button>
+                                        </div>
                                     </form>
                                 </div>
                             </div>
@@ -308,16 +313,6 @@
                                 <button type="button" class="btn btn-default ui-button" v-on:click="groupupdate"><span
                                         class="glyphicon glyphicon-pencil"></span>编辑
                                 </button>
-                                <!--<button type="button" class="btn btn-default "-->
-                                <!--v-on:click="groupview"><span-->
-                                <!--class="glyphicon glyphicon-zoom-in"></span>查看-->
-                                <!--</button>-->
-                                <div class="btn-group pull-right">
-                                    <button type="button" class="btn btn-default ui-button" style="margin-right: 5px"
-                                            v-on:click="groupsearch"><span
-                                            class="glyphicon glyphicon-zoom-in"></span>查询
-                                    </button>
-                                </div>
                             </div>
                             <div class="ibox-content col-lg-8 col-md-8 col-sm-8">
                                 <div class="row " style="">     <!--表格 verflow-x: scroll超出滚动-->
@@ -374,36 +369,36 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                            <button type="button" class="btn btn-primary" v-on:click="submit">确定</button>
+                            <button type="button" class="btn btn-success" v-on:click="submit">确定</button>
                         </div>
                     </div>
                 </div>
-                <div class="modal fade" id="myModal_groupdelete" tabindex="-1" role="dialog"
-                     aria-labelledby="myModalLabel"
-                     aria-hidden="true">
-                    <div class="modal-dialog" style="width: 200px">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                                    &times;
-                                </button>
-                                <h4 class="modal-title" id="myModalLabel_groupdelete">
-                                    确认
-                                </h4>
-                            </div>
-                            <div class="modal-body">
-                                <b>确定删除吗?</b>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal"
-                                        v-on:click="cancel_delete">取消
-                                </button>
-                                <button type="button" class="btn btn-primary" v-on:click="deletegroup_data">确定
-                                </button>
-                            </div>
-                        </div><!-- /.modal-content -->
-                    </div><!-- /.modal -->
-                </div>
+            </div>
+            <div class="modal fade" id="myModal_groupdelete" tabindex="-1" role="dialog"
+                 aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog" style="width: 500px">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                &times;
+                            </button>
+                            <h3 class="modal-title" id="myModalLabel_groupdelete">
+                                确认
+                            </h3>
+                        </div>
+                        <div class="modal-body" style="font-size: medium">
+                            <b>确定删除吗?</b>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal"
+                                    v-on:click="cancel_delete">取消
+                            </button>
+                            <button type="button" class="btn btn-success" v-on:click="deletegroup_data">确定
+                            </button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
             </div>
         </div>
     </div>
