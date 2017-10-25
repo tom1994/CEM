@@ -110,6 +110,15 @@
 </div>
 
 <script type="text/javascript" src="${rc.contextPath}/statics/js/modules/probe/taskTable.js?_${date.systemTime}"></script>
+<script>
+    $(function(){
+        $("probedata_table").resizableColumns({
+            store: window.store
+        });
+    });
+
+    console.log("resizable");
+</script>
 
 </body>
 </html>
