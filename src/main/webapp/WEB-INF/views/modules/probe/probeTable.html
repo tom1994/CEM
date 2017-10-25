@@ -10,13 +10,20 @@
 <body>
 <div class="htmleaf-container">
     <div class="tab" role="tabpanel">
-        <!--&lt;!&ndash; Nav tabs &ndash;&gt;<span><i class="fa fa-globe"></i></span><span><i class="fa fa-rocket"></i></span>-->
         <ul class="nav nav-tabs" role="tablist">
+<<<<<<< HEAD
             <li role="presentation" class="active"><a href="#Section1" aria-controls="home" role="tab" data-toggle="tab">探针管理</a></li>
             <li role="presentation"><a href="#Section2" aria-controls="profile" role="tab" data-toggle="tab">探针组管理</a> </li>
             <!--<li role="presentation"><a href="#Section3" aria-controls="messages" role="tab" data-toggle="tab"><span><i-->
             <!--class="fa fa-briefcase"></i></span> Section 3</a></li>-->
+=======
+            <li role="presentation" class="active"><a href="#Section1" aria-controls="home" role="tab"
+                                                      data-toggle="tab">探针管理</a></li>
+            <li role="presentation"><a href="#Section2" aria-controls="profile" role="tab" data-toggle="tab">探针组管理</a>
+            </li>
+>>>>>>> 8f9ccf40da5e6e6bdf7870d0d8ed9f7ae3732335
         </ul>
+
         <!-- Tab panes -->
         <div class="tab-content tabs">
             <div role="tabpanel" class="tab-pane fade in active" id="Section1">
@@ -24,12 +31,10 @@
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12">
                             <div class="ibox float-e-margins">
-                                <!--<div class="ibox-title">-->
-                                <!--<h3 class="fontcolor">探针管理</h3>-->
-                                <!--</div>-->
                                 <div class="ibox-content" style="padding-bottom: 0 !important;">
-                                    <div class="row" style="border: none !important;">
-                                        <form class="col-lg-10 col-md-10 col-sm-10 form-horizontal" id="probesearch" role="form">
+                                    <div class="row" id="searchbox" style="border: none !important;">
+                                        <form class="col-lg-10 col-md-10 col-sm-10 form-horizontal" id="probesearch"
+                                              role="form">
                                             <div class="input-group searchspan">
                                                 <span class="searchname" title="探针名">探针名</span>
                                                 <input type="text" class="form-control" name="name" style="width: 110px"
@@ -64,14 +69,13 @@
                                             </div>
 
                                         </form>
-
-                                        <div class="col-lg-2 col-md-2 col-sm-2 btn-group" style="margin-top: 4px;">
+                                        <div class="col-lg-2 col-md-2 col-sm-2 pull-left" style="margin-top: 4px;">
                                             <button type="button" class="btn btn-default ui-button" style="margin-right: 5px"
                                                     v-on:click="groupsearch"><span
                                                     class="glyphicon glyphicon-zoom-in"></span>查询
                                             </button>
                                             <button type="button" class="btn btn-default ui-button" v-on:click="reset"><span
-                                                    class="glyphicon glyphicon-zoom-in"></span>重置
+                                                    class="glyphicon glyphicon-refresh"></span>重置
                                             </button>
                                         </div>
                                     </div>
@@ -95,15 +99,7 @@
                                     <a href="../../cem/probe/download"><button type="button" class="btn btn-default ui-button"><span
                                             class="glyphicon glyphicon-open"></span>导出
                                     </button></a>
-                                    <!--<div class="btn-group pull-right">-->
-                                    <!--<button type="button" class="btn btn-default " style="margin-right: 5px"-->
-                                    <!--v-on:click="probesearch"><span-->
-                                    <!--class="glyphicon glyphicon-zoom-in"></span>查询-->
-                                    <!--</button>-->
-                                    <!--<button type="button" class="btn btn-default " v-on:click="reset"><span-->
-                                    <!--class="glyphicon glyphicon-refresh"></span>重置-->
-                                    <!--</button>-->
-                                    <!--</div>-->
+                                    <button id="flip" type="button" class="btn btn-default ui-button">搜索框</button>
                                 </div>
                                 <div class="ibox-content">
                                     <div class="row " style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
@@ -392,19 +388,15 @@
 
             <div class="modal fade" id="groupModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
                  aria-hidden="true">
-                <div class="modal-dialog" style="width: 768px">
+                <div class="modal-dialog" style="width: 700px">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                                 &times;
                             </button>
-                            <h4 class="modal-title myModalLabel">{{modaltitle}}</h4>
+                            <h3 class="modal-title myModalLabel">{{modaltitle}}</h3>
                         </div>
-                        <div class="row probeform_title">
-                            <div class="col-lg-3 col-md-3 col-sm-3">
-                                <h4 class="fontcolor probeformtitle_border">表单信息管理</h4>
-                            </div>
-                        </div>
+
                         <div class="modal-body">
                             <div class="row">
                                 <form class="form-horizontal" id="groupform_data" role="form">
@@ -417,15 +409,19 @@
                                             <input type="text" class="form-control" id="groupid" name="id"
                                                    placeholder="请输入id">
                                         </div>
+                                    </div>
+                                    <div class="form-group row">
                                         <label for="groupname"
-                                               class="col-lg-3 col-md-3 col-sm-3 control-label form_border">探针组名:</label>
-                                        <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                               class="col-lg-3 col-md-3 col-sm-3 control-label " style="font-size: medium">探针组名:</label>
+                                        <div class="col-lg-3 col-md-3 col-sm-3 ">
                                             <input type="text" class="form-control" id="groupname" name="name"
                                                    placeholder="请输入探针组名">
                                         </div>
+                                    </div>
+                                    <div class="form-group row">
                                         <label for="remark"
-                                               class="col-lg-3 col-md-3 col-sm-3 control-label form_border">备注:</label>
-                                        <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                               class="col-lg-3 col-md-3 col-sm-3 control-label" style="font-size: medium">备注:</label>
+                                        <div class="col-lg-3 col-md-3 col-sm-3 ">
                                             <input type="text" class="form-control" id="remark" name="remark"
                                                    placeholder="请输入探针组备注">
                                         </div>
@@ -474,6 +470,14 @@
 <script>window.jQuery || document.write('<script src="${rc.contextPath}/statics/js/plugins/jquery/jquery-2.0.3.js"><\/script>')</script>
 <script type="text/javascript" src="${rc.contextPath}/statics/js/modules/probe/probeTable.js?_${date.systemTime}"></script>
 <script type="text/javascript" src="${rc.contextPath}/statics/js/index.js"></script>
+<script>
+    $(document).ready(function(){
+        $("#flip").click(function(){
+            $("#searchbox").slideToggle("fast");
+        });
+    });
+</script>
+
 </body>
 
 </html>
