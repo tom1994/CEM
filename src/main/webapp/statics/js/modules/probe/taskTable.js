@@ -409,13 +409,13 @@ var probetable = new Vue({
     el: '#probedata_table',
     data: {
         headers: [
-            {title: ''},
-            {title: '<div class="checkbox"> <label> <input type="checkbox" id="checkAll"></label> </div>'},
+            {title: '<div style="width:67px"></div>'},
+            {title: '<div class="checkbox" style="width:67px"> <label> <input type="checkbox" id="checkAll"></label> </div>'},
  //           {title: '<div style="display:none">id</div>'},
             {title: '<div style="width:67px">id</div>'},
-            {title: '<div style="width:142px">任务名称</div>'},
-            {title: '<div style="width:142px">探针名称</div>'},
-            {title: '<div style="width:112px">探针端口</div>'},
+            {title: '<div style="width:67px">任务名称</div>'},
+            {title: '<div style="width:67px">探针名称</div>'},
+            {title: '<div style="width:67px">探针端口</div>'},
             {title: '<div style="width:67px">状态</div>'},
             {title: '<div style="width:67px">备注</div>'},
             {title: '<div style="width:67px">编辑</div>'},
@@ -464,11 +464,7 @@ var probetable = new Vue({
             paging: true,
             serverSide: true,
             info: false,
-          //  ordering: false, /*禁用排序功能*/
-            bSort:true,
-            aaSorting: [
-                [ 0, "desc" ]
-            ],
+            ordering: false, /*禁用排序功能*/
 
 
             /*bInfo: false,*/
@@ -483,6 +479,8 @@ var probetable = new Vue({
                 }
             },
             sDom: 'Rfrtlip', /*显示在左下角*/
+
+            
             ajax: function (data, callback, settings) {
                 //封装请求参数
                 let param = {};
