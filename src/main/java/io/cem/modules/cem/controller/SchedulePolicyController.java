@@ -97,7 +97,7 @@ public class SchedulePolicyController {
 	@RequiresPermissions("schedulepolicy:save")
 	public R save(@RequestBody SchedulePolicyEntity schedulePolicy){
 		schedulePolicyService.save(schedulePolicy);
-		
+		System.out.print(schedulePolicy);
 		return R.ok();
 	}
 	
