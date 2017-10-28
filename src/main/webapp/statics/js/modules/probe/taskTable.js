@@ -418,8 +418,7 @@ var probetable = new Vue({
             {title: '<div style="width:67px">探针端口</div>'},
             {title: '<div style="width:67px">状态</div>'},
             {title: '<div style="width:67px">备注</div>'},
-            {title: '<div style="width:67px">编辑</div>'},
-            {title: '<div style="width:67px">取消</div>'}
+            {title: '<div style="width:67px">操作</div>'}
         ],
         rows: [],
         dtHandle: null,
@@ -522,8 +521,7 @@ var probetable = new Vue({
                             row.push(status_word);
                             //row.push(item.status);
                             row.push(item.remark);
-                            row.push('<a class="fontcolor" onclick="edit_this(this)" id='+item.id+'>编辑</a>');
-                            row.push('<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>取消</a>');
+                            row.push('<a class="fontcolor" onclick="edit_this(this)" id='+item.id+'>编辑</a>&nbsp;<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>取消</a>');
                             rows.push(row);
                         });
                         returnData.data = rows;

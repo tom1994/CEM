@@ -87,6 +87,9 @@
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12" id="probe_table">
                             <div class="ibox float-e-margins">
+                                <div class="flip-btn" style="text-align: center">
+                                    <button id="flip" type="button" class="glyphicon glyphicon-menu-up" ></button>
+                                </div>
                                 <div class="ibox-title fontcolor" id="probehandle"
                                      style="padding-bottom: 0px !important;">
                                     <!--<button type="button" class="btn btn-default " v-on:click="probeupdate"><span-->
@@ -99,7 +102,7 @@
                                     <a href="../../cem/probe/download"><button type="button" class="btn btn-default ui-button"><span
                                             class="glyphicon glyphicon-open"></span>导出
                                     </button></a>
-                                    <button id="flip" type="button" class="btn btn-default ui-button">搜索框</button>
+                                  <!--  <button id="flip" type="button" class="glyphicon glyphicon-chevron-up" style="align-self: center"></button> -->
                                 </div>
                                 <div class="ibox-content">
                                     <div class="row " style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
@@ -190,9 +193,9 @@
                                         <form class="form-horizontal" id="probeform_data" role="form">
                                             <div class="form-group row">
                                                 <label for="id"
-                                                       class="col-lg-3 col-md-3 col-sm-3 control-label form_border"
+                                                       class="col-lg-3 col-md-3 col-sm-3 control-label "
                                                        style="display: none">id:</label>
-                                                <div class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                                <div class="col-lg-3 col-md-3 col-sm-3 "
                                                      style="display: none">
                                                     <input type="text" class="form-control" id="id" name="id"
                                                            placeholder="请输入id">
@@ -200,22 +203,22 @@
                                             </div>
                                             <div class="form-group row">
                                                 <label for="probename"
-                                                       class="col-lg-3 col-md-3 col-sm-3 control-label form_border">探针名:</label>
-                                                <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                                       class="col-lg-3 col-md-3 col-sm-3 control-label">探针名:</label>
+                                                <div class="col-lg-3 col-md-3 col-sm-3 ">
                                                     <input type="text" class="form-control" id="probename" name="name"
                                                            placeholder="请输入探针名">
                                                 </div>
                                                 <label for="serialNumber"
-                                                       class="col-lg-3 col-md-3 col-sm-3 control-label form_border">序列号:</label>
-                                                <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                                       class="col-lg-3 col-md-3 col-sm-3 control-label">序列号:</label>
+                                                <div class="col-lg-3 col-md-3 col-sm-3 ">
                                                     <input type="text" class="form-control" id="serialNumber" name="serialNumber"
                                                            placeholder="请输入序列号">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label for="city"
-                                                       class="col-lg-3 col-md-3 col-sm-3 control-label form_border">所属地市:</label>
-                                                <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                                       class="col-lg-3 col-md-3 col-sm-3 control-label ">所属地市:</label>
+                                                <div class="col-lg-3 col-md-3 col-sm-3 ">
                                                     <select id="city" class="form-control" name="city">  <!--VUE列表渲染-->
                                                         <option v-for="item in citys">
                                                             {{ item.message }}
@@ -223,8 +226,8 @@
                                                     </select>
                                                 </div>
                                                 <label for="county"
-                                                       class="col-lg-3 col-md-3 col-sm-3 control-label form_border">所属区县:</label>
-                                                <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                                       class="col-lg-3 col-md-3 col-sm-3 control-label ">所属区县:</label>
+                                                <div class="col-lg-3 col-md-3 col-sm-3 ">
                                                     <select id="county" class="form-control" name="county">
                                                         <!--VUE列表渲染-->
                                                         <option v-for="item in countys">
@@ -236,15 +239,15 @@
                                             <div class="form-group row">
 
                                                 <label for="location"
-                                                       class="col-lg-3 col-md-3 col-sm-3 control-label form_border">所属位置:</label>
-                                                <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                                       class="col-lg-3 col-md-3 col-sm-3 control-label ">所属位置:</label>
+                                                <div class="col-lg-3 col-md-3 col-sm-3 ">
                                                     <input type="text" class="form-control" id="location"
                                                            name="location"
                                                            placeholder="请输入所属位置">
                                                 </div>
                                                 <label for="type"
-                                                       class="col-lg-3 col-md-3 col-sm-3 control-label form_border">探针类型:</label>
-                                                <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                                       class="col-lg-3 col-md-3 col-sm-3 control-label ">探针类型:</label>
+                                                <div class="col-lg-3 col-md-3 col-sm-3 ">
                                                     <select id="type" class="form-control" name="type">  <!--VUE列表渲染-->
                                                         <option v-for="item in types">
                                                             {{ item.message }}
@@ -255,37 +258,37 @@
                                             <div class="form-group row">
 
                                                 <label for="upstream"
-                                                       class="col-lg-3 col-md-3 col-sm-3 control-label form_border">层级上联探针:</label>
-                                                <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                                       class="col-lg-3 col-md-3 col-sm-3 control-label">层级上联探针:</label>
+                                                <div class="col-lg-3 col-md-3 col-sm-3 ">
                                                     <input id="upstream" class="form-control" name="upstream">
                                                     </input>
                                                 </div>
                                                 <label for="status"
-                                                       class="col-lg-3 col-md-3 col-sm-3 control-label form_border">状态:</label>
-                                                <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                                       class="col-lg-3 col-md-3 col-sm-3 control-label ">状态:</label>
+                                                <div class="col-lg-3 col-md-3 col-sm-3 ">
                                                     <input type="text" class="form-control" id="status" name="status"
                                                            placeholder="请输入状态">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label for="reportInterval"
-                                                       class="col-lg-3 col-md-3 col-sm-3 control-label form_border">上报间隔:</label>
-                                                <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                                       class="col-lg-3 col-md-3 col-sm-3 control-label ">上报间隔:</label>
+                                                <div class="col-lg-3 col-md-3 col-sm-3 ">
                                                     <input type="text" class="form-control" id="reportInterval"
                                                            name="reportInterval"
                                                            placeholder="请输入上报间隔">
                                                 </div>
                                                 <label for="registerTime"
-                                                       class="col-lg-3 col-md-3 col-sm-3 control-label form_border">注册时间:</label>
-                                                <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                                       class="col-lg-3 col-md-3 col-sm-3 control-label ">注册时间:</label>
+                                                <div class="col-lg-3 col-md-3 col-sm-3 ">
                                                     <input type="text" class="form-control" id="registerTime" name="registerTime"
                                                            placeholder="请输入注册时间">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label for="lastHbtime"
-                                                       class="col-lg-3 col-md-3 col-sm-3 control-label form_border">最后心跳时间:</label>
-                                                <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                                       class="col-lg-3 col-md-3 col-sm-3 control-label">最后心跳时间:</label>
+                                                <div class="col-lg-3 col-md-3 col-sm-3 ">
                                                     <input type="text" class="form-control" id="lastHbtime"
                                                            name="lastHbtime"
                                                            placeholder="请输入最后心跳时间">
@@ -295,11 +298,12 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                    <button type="button" class="btn btn-primary" v-on:click="submit">保存修改</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                    <button type="button" class="btn btn-success" v-on:click="submit">保存</button>
                                 </div>
                             </div>
                         </div>
+
                     </div>
 
 
@@ -332,6 +336,8 @@
 
                 </div>
             </div>
+
+
             <div role="tabpanel" class="tab-pane fade" id="Section2">
                 <div class="row">
                     <div class="col-lg-8 col-md-8 col-sm-8">
@@ -371,6 +377,7 @@
                             <div class="ibox-content col-lg-8 col-md-8 col-sm-8">
                                 <div class="row " style="">     <!--表格 verflow-x: scroll超出滚动-->
                                     <table class="table table-bordered " id="probegroup_table"></table>
+
                                 </div>
                             </div>
                         </div>
@@ -422,8 +429,8 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                            <button type="button" class="btn btn-success" v-on:click="submit">确定</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            <button type="button" class="btn btn-success" v-on:click="submit">保存</button>
                         </div>
                     </div>
                 </div>
@@ -466,10 +473,83 @@
     $(document).ready(function(){
         $("#flip").click(function(){
             $("#searchbox").slideToggle("fast");
+
         });
     });
 </script>
 
+
+
+
 </body>
+
+<script>
+
+    /** 拖拽模态框*/
+    var dragModal={
+        mouseStartPoint:{"left":0,"top":  0},
+        mouseEndPoint : {"left":0,"top":  0},
+        mouseDragDown : false,
+        basePoint : {"left":0,"top":  0},
+        moveTarget:null,
+        topleng:0
+    }
+    $(document).on("mousedown",".modal-header",function(e){
+        //webkit内核和火狐禁止文字被选中
+        $('body').addClass('select')
+        //ie浏览器禁止文字选中
+        document.body.onselectstart=document.body.ondrag=function(){
+            return false;
+        }
+        if($(e.target).hasClass("close"))//点关闭按钮不能移动对话框
+            return;
+        dragModal.mouseDragDown = true;
+        dragModal.moveTarget = $(this).parent().parent();
+        dragModal.mouseStartPoint = {"left":e.clientX,"top":  e.pageY};
+        dragModal.basePoint = dragModal.moveTarget.offset();
+        dragModal.topLeng=e.pageY-e.clientY;
+    });
+    $(document).on("mouseup",function(e){
+        dragModal.mouseDragDown = false;
+        dragModal.moveTarget = undefined;
+        dragModal.mouseStartPoint = {"left":0,"top":  0};
+        dragModal.basePoint = {"left":0,"top":  0};
+    });
+    $(document).on("mousemove",function(e){
+        if(!dragModal.mouseDragDown || dragModal.moveTarget == undefined)return;
+        var mousX = e.clientX;
+        var mousY = e.pageY;
+        if(mousX < 0)mousX = 0;
+        if(mousY < 0)mousY = 25;
+        dragModal.mouseEndPoint = {"left":mousX,"top": mousY};
+        var width = dragModal.moveTarget.width();
+        var height = dragModal.moveTarget.height();
+        var clientWidth=document.body.clientWidth
+        var clientHeight=document.body.clientHeight;
+        if(dragModal.mouseEndPoint.left<dragModal.mouseStartPoint.left - dragModal.basePoint.left){
+            dragModal.mouseEndPoint.left=0;
+        }
+        else if(dragModal.mouseEndPoint.left>=clientWidth-width+dragModal.mouseStartPoint.left - dragModal.basePoint.left){
+            dragModal.mouseEndPoint.left=clientWidth-width-38;
+        }else{
+            dragModal.mouseEndPoint.left =dragModal.mouseEndPoint.left-(dragModal.mouseStartPoint.left - dragModal.basePoint.left);//移动修正，更平滑
+
+        }
+        if(dragModal.mouseEndPoint.top-(dragModal.mouseStartPoint.top - dragModal.basePoint.top)<dragModal.topLeng){
+            dragModal.mouseEndPoint.top=dragModal.topLeng;
+        }else if(dragModal.mouseEndPoint.top-dragModal.topLeng>clientHeight-height+dragModal.mouseStartPoint.top - dragModal.basePoint.top){
+            dragModal.mouseEndPoint.top=clientHeight-height-38+dragModal.topLeng;
+        }
+        else{
+            dragModal.mouseEndPoint.top = dragModal.mouseEndPoint.top - (dragModal.mouseStartPoint.top - dragModal.basePoint.top);
+        }
+        dragModal.moveTarget.offset(dragModal.mouseEndPoint);
+    });
+    $(document).on('hidden.bs.modal','.modal',function(e){
+        $('.modal-dialog').css({'top': '0px','left': '0px'})
+        $('body').removeClass('select')
+        document.body.onselectstart=document.body.ondrag=null;
+    })
+</script>
 
 </html>
