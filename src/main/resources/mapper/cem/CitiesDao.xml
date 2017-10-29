@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.cem.modules.cem.dao.CitiesDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.cem.modules.cem.entity.CitiesEntity" id="citiesMap">
+        <result property="id" column="id"/>
+        <result property="cityid" column="cityid"/>
+        <result property="city" column="city"/>
+        <result property="provinceid" column="provinceid"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="io.cem.modules.cem.entity.CitiesEntity">
+		select * from cities where id = #{value}
+	</select>
+
+	<select id="queryList" resultType="io.cem.modules.cem.entity.CitiesEntity">
+		select * from cities
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from cities 
+	</select>
+	 
+	<insert id="save" parameterType="io.cem.modules.cem.entity.CitiesEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into cities
+		(
+			`cityid`, 
+			`city`, 
+			`provinceid`
+		)
+		values
+		(
+			#{cityid}, 
+			#{city}, 
+			#{provinceid}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="io.cem.modules.cem.entity.CitiesEntity">
+		update cities 
+		<set>
+			<if test="cityid != null">`cityid` = #{cityid}, </if>
+			<if test="city != null">`city` = #{city}, </if>
+			<if test="provinceid != null">`provinceid` = #{provinceid}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from cities where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from cities where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

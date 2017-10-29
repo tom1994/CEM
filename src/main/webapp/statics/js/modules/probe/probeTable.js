@@ -4,6 +4,8 @@
 var status;
 var idArray = new Array();
 var probeGroupNames = new Array();
+var cityNames = new Array();
+var areaNames = new Array();
 
 var probedata_handle = new Vue({
     el: '#probehandle',
@@ -69,8 +71,8 @@ var probedata_handle = new Vue({
                         forms[1].value = result.probe.serialNumber;
                         forms[2].value = result.probe.name;
                         forms[3].value = result.probe.type;
-                        forms[4].value = result.probe.city;
-                        forms[5].value = result.probe.county;
+                        forms[4].value = result.probe.cityName;
+                        forms[5].value = result.probe.areaName;
                         forms[6].value = result.probe.location;
                         forms[7].value = result.probe.ipType;
                         forms[8].value = result.probe.portIp;
@@ -737,14 +739,14 @@ var probetable = new Vue({
             {title: ''},
             {title: '<div class="checkbox"> <label> <input type="checkbox" id="checkAll"></label> </div>'},
             //{title: '<div style=" width:0px;display:none;padding:0px">id</div>'},
-            {title: '<div style="width:65px">探针名</div>'},
+            {title: '<div style="width:70px">探针名</div>'},
             {title: '<div style="width:42px">地市</div>'},
             {title: '<div style="width:42px">区县</div>'},
             {title: '<div style="width:95px">位置</div>'},
             {title: '<div style="width:58px">探针类型</div>'},
             {title: '<div style="width:90px">层级上联探针</div>'},
             {title: '<div style="width:58px">状态</div>'},
-            {title: '<div style="width:112px">数据上报间隔</div>'},
+            {title: '<div style="width:80px">数据上报间隔</div>'},
             {title: '<div style="width:112px">注册时间</div>'},
             {title: '<div style="width:112px">最后心跳时间</div>'},
             {title: '<div style="width:42px">操作</div>'},
@@ -836,8 +838,8 @@ var probetable = new Vue({
                                 row.push('<div class="checkbox"> <label> <input type="checkbox" id="checkALl" name="selectFlag"></label> </div>');
                                 //row.push('<div class="probe_id" style="display:none">'+item.id+'</div>');
                                 row.push('<a onclick="update_this(this)" id='+item.id+'><span style="color: black">'+item.name+'</span></a>');
-                                row.push(item.city);
-                                row.push(item.county);
+                                row.push(item.cityName);
+                                row.push(item.areaName);
                                 row.push(item.location);
                                 row.push(item.type);
                                 row.push(item.upstream);

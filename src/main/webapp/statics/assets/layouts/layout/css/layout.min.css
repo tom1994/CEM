@@ -1382,6 +1382,7 @@
         display: block;
         /*max-height: none !important*/
         overflow-y: auto !important;
+        overflow-x: hidden !important;
     }
 
     .page-sidebar-reversed .page-sidebar {

@@ -35,10 +35,22 @@
         <result property="lastUpdateTime" column="last_update_time"/>
         <result property="remark" column="remark"/>
         <result property="createTime" column="create_time"/>
+		<result property="cityName" column="city_name"/>
+		<result property="areaName" column="area_name"/>
     </resultMap>
 
-	<select id="queryObject" resultType="io.cem.modules.cem.entity.ProbeEntity">
-		select * from probe where id = #{value}
+	<select id="queryObject" resultMap="probeMap">
+		SELECT probe.*,
+		cities.cityid,
+		cities.city AS city_name,
+		areas.areaid,
+		areas.area AS area_name
+		FROM probe
+		LEFT JOIN cities
+		ON probe.city = cities.cityid
+		LEFT JOIN areas
+		ON probe.county = areas.areaid
+		WHERE probe.id = #{value}
 	</select>
 
 	<select id="queryList" resultType="io.cem.modules.cem.entity.ProbeEntity">
@@ -59,7 +71,31 @@
  	<select id="queryTotal" resultType="int">
 		select count(*) from probe 
 	</select>
-	 
+
+	<select id="queryProbeList" resultMap="probeMap">
+		SELECT probe.*,
+		cities.cityid,
+		cities.city AS city_name,
+		areas.areaid,
+		areas.area AS area_name
+		FROM probe
+		LEFT JOIN cities
+		ON probe.city = cities.cityid
+		LEFT JOIN areas
+		ON probe.county = areas.areaid
+		<choose>
+			<when test="sidx != null and sidx.trim() != ''">
+				order by ${sidx} ${order}
+			</when>
+			<otherwise>
+				order by id desc
+			</otherwise>
+		</choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
 	<insert id="save" parameterType="io.cem.modules.cem.entity.ProbeEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into probe
 		(

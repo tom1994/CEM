@@ -6,18 +6,16 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 
- * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2017-10-12 17:12:46
+ * @author Miao
  */
 public interface ProbeService {
 	
 	ProbeEntity queryObject(Integer id);
 	
 	List<ProbeEntity> queryList(Map<String, Object> map);
-	
+
+	List<ProbeEntity> queryProbeList(Map<String, Object> map);
+
 	int queryTotal(Map<String, Object> map);
 	
 	void save(ProbeEntity probe);
