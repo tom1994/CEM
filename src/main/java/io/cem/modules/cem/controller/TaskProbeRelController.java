@@ -7,7 +7,6 @@ import java.util.Map;
 import com.alibaba.fastjson.JSONObject;
 import io.cem.common.exception.RRException;
 import io.cem.common.utils.JSONUtils;
-import io.cem.modules.cem.entity.ProbeEntity;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import io.cem.modules.cem.entity.TaskProbeRelEntity;
 import io.cem.modules.cem.service.TaskProbeRelService;
 import io.cem.common.utils.PageUtils;
-import io.cem.common.utils.Query;
 import io.cem.common.utils.R;
 
 
@@ -50,8 +48,10 @@ public class TaskProbeRelController {
 		int total = taskProbeRelService.queryTotal(map);
 		PageUtils pageUtil = new PageUtils(taskProbeRelList, total, limit, page);
 		return R.ok().put("page", pageUtil);
+
+
 	}
-	
+
 	
 	/**
 	 * 信息
