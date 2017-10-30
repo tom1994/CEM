@@ -26,41 +26,76 @@
                             <div class="ibox float-e-margins">
                                 <div class="ibox-content" style="padding-bottom: 0 !important;">
                                     <div class="row" id="searchbox" style="border: none !important;">
-                                        <form class="col-lg-10 col-md-10 col-sm-10 form-horizontal" id="probesearch"
-                                              role="form">
-                                            <div class="input-group searchspan">
-                                                <span class="searchname" title="探针名">探针名</span>
-                                                <input type="text" class="form-control" name="name" style="width: 110px"
-                                                       value="">
-                                            </div>
-                                            <div class="input-group searchspan">
-                                                <span class="searchname" title="地市">地市</span>
-                                                <select id="selectcity" class="form-control" name="city" v-on:change="citychange()" style="width: 110px">
-                                                    <option value="">---请选择---</option>
-                                                    <option v-for="item in cities" v-bind:value="item.message.cityid">{{ item.message.city }}</option>
-                                                    <!--<option v-for="pitem in parray" v-bind:value="pitem.Id">{{ pitem.Name }}-->
-                                                </select>
+                                        <form class="col-lg-10 col-md-10 col-sm-10 form-horizontal" id="probesearch" role="form">
+                                            <div class="form-group row">
+                                                <div class="input-group searchspan">
+                                                    <span class="searchname" title="探针名">探针名</span>
+                                                    <input type="text" class="form-control" name="name" style="width: 110px"
+                                                           value="">
+                                                </div>
+                                                <div class="input-group searchspan">
+                                                    <span class="searchname" title="地市">地市</span>
+                                                    <select id="selectcity" class="form-control" name="city" v-on:change="citychange()" style="width: 110px">
+                                                        <option value="">---请选择---</option>
+                                                        <option v-for="item in cities" v-bind:value="item.message.cityid">{{ item.message.city }}</option>
+                                                        <!--<option v-for="pitem in parray" v-bind:value="pitem.Id">{{ pitem.Name }}-->
+                                                    </select>
+                                                </div>
+
+                                                <div class="input-group searchspan">
+                                                    <span class="searchname" title="区县">区县</span>
+                                                    <select class="form-control " name="area" style="width: 110px">
+                                                        <option value="">---请选择---</option>
+                                                        <option v-for="item in areas">{{ item.message.area }}</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="input-group searchspan">
+                                                    <span class="searchname" title="探针组">探针组</span>
+                                                    <select class="form-control" name="probegroup_name"
+                                                            style="width: 130px;">
+                                                        <option value="">---请选择---</option><!--vue 绑定value属性    重要！！！！-->
+                                                        <option v-for="item in probegroup_names"
+                                                                v-bind:value="item.message.name">{{ item.message.name }}
+                                                        </option>
+                                                    </select>
+                                                </div>
                                             </div>
 
-                                            <div class="input-group searchspan">
-                                                <span class="searchname" title="区县">区县</span>
-                                                <select class="form-control " name="area" style="width: 110px">
-                                                    <option value="">---请选择---</option>
-                                                    <option v-for="item in areas">{{ item.message.area }}</option>
-                                                </select>
-                                            </div>
+                                            <div class="form-group row">
+                                                <div class="input-group searchspan">
+                                                    <span class="searchname" title="位置">位置</span>
+                                                    <input type="text" class="form-control" name="location" style="width: 110px"
+                                                           value="">
+                                                </div>
 
-                                            <div class="input-group searchspan">
-                                                <span class="searchname" title="探针组">探针组</span>
-                                                <select class="form-control" name="probegroup_name"
-                                                        style="width: 130px;">
-                                                    <option value="">---请选择---</option><!--vue 绑定value属性    重要！！！！-->
-                                                    <option v-for="item in probegroup_names"
-                                                            v-bind:value="item.message.name">{{ item.message.name }}
-                                                    </option>
-                                                </select>
+                                                <div class="input-group searchspan">
+                                                    <span class="searchname" title="层级">层级</span>
+                                                    <select class="form-control" name="accessLayer" style="width: 110px">
+                                                        <option value="">---请选择---</option>
+                                                        <option v-for="item in accessLayers">{{ item.message }}</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="input-group searchspan">
+                                                    <span class="searchname" title="类型">类型</span>
+                                                    <input type="text" class="form-control" name="type" style="width: 110px"
+                                                           value="">
+                                                </div>
+
+                                                <div class="input-group searchspan">
+                                                    <span class="searchname" title="状态">状态</span>
+                                                    <select class="form-control" name="status"
+                                                            style="width: 130px;">
+                                                        <option value="">---请选择---</option><!--vue 绑定value属性    重要！！！！-->
+                                                        <option v-for="item in status"
+                                                                v-bind:value="item.message.name">{{ item.message.name }}
+                                                        </option>
+                                                    </select>
+                                                </div>
                                             </div>
                                         </form>
+
                                         <div class="col-lg-2 col-md-2 col-sm-2 pull-left" style="margin-top: 4px;">
                                             <button type="button" class="btn btn-default ui-button"
                                                     style="margin-right: 5px"
@@ -86,9 +121,6 @@
                                 </div>
                                 <div class="ibox-title fontcolor" id="probehandle"
                                      style="padding-bottom: 0px !important;">
-                                    <!--<button type="button" class="btn btn-default " v-on:click="probeupdate"><span-->
-                                    <!--class="glyphicon glyphicon-pencil"></span>编辑-->
-                                    <!--</button>-->
                                     <button type="button" class="btn btn-default ui-button"
                                             v-on:click="probedelBatch"><span
                                             class="glyphicon glyphicon-trash"></span>批量删除
@@ -109,73 +141,8 @@
                         </div>
                     </div>
 
-
-                    <!--                    &lt;!&ndash; 探针编辑模态框（Modal） &ndash;&gt;
-                                        <div class="modal fade" id="myModal_update" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                                             aria-hidden="true">
-                                            <div class="modal-dialog" style="width: 768px"> &lt;!&ndash;修改bootstrap modal模态框的宽度&ndash;&gt;
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                                                            &times;
-                                                        </button>
-                                                        <h4 class="modal-title myModalLabel">{{modaltitle}}</h4>
-                                                    </div>
-                                                    <div class="row probeform_title">
-                                                        <br>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <div class="row">
-                                                            <form class="form-horizontal" id="probeform_data" role="form">
-                                                                <div class="form-group row">
-                                                                    <label for="id"
-                                                                           class="col-lg-3 col-md-3 col-sm-3 control-label form_border"
-                                                                           style="display: none">id:</label>
-                                                                    <div class="col-lg-3 col-md-3 col-sm-3 form_border"
-                                                                         style="display: none">
-                                                                        <input type="text" class="form-control" id="id" name="id"
-                                                                               placeholder="请输入id">
-                                                                    </div>
-                                                                    <label for="probename"
-                                                                           class="col-lg-3 col-md-3 col-sm-3 control-label form_border">探针名:</label>
-                                                                    <div class="col-lg-3 col-md-3 col-sm-3 form_border">
-                                                                        <input type="text" class="form-control" id="probename" name="name"
-                                                                               placeholder="请输入探针名">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group row">
-                                                                    <label for="location"
-                                                                           class="col-lg-3 col-md-3 col-sm-3 control-label form_border">所属位置:</label>
-                                                                    <div class="col-lg-3 col-md-3 col-sm-3 form_border">
-                                                                        <input type="text" class="form-control" id="location"
-                                                                               name="location"
-                                                                               placeholder="请输入所属位置">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group row">
-                                                                    <label for="portIP"
-                                                                           class="col-lg-3 col-md-3 col-sm-3 control-label form_border">端口及IP:</label>
-                                                                    <div class="col-lg-3 col-md-3 col-sm-3 form_border">
-                                                                        <input type="text" class="form-control" id="portIP" name="portIP"
-                                                                               placeholder="请输入端口及IP">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group row">
-                                                                    <label for="brasName"
-                                                                           class="col-lg-3 col-md-3 col-sm-3 control-label form_border">BRAS名称:</label>
-                                                                    <div class="col-lg-3 col-md-3 col-sm-3 form_border">
-                                                                        <input type="text" class="form-control" id="brasName"
-                                                                               name="brasName"
-                                                                               placeholder="请输入BRAS名称">
-                                                                    </div>
-                                                                </div>
-                                                            </form>
-                                                        </div>
-                                                    </div>-->
-
-                    <!-- 模态框（Modal） -->
-                    <div class="modal fade" id="myModal_update" tabindex="-1" role="dialog"
-                         aria-labelledby="myModalLabel"
+                   <!-- 详情模态框（Modal） -->
+                    <div class="modal fade" id="myModal_update" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
                          aria-hidden="true">
                         <div class="modal-dialog" style="width: 768px"> <!--修改bootstrap modal模态框的宽度-->
                             <div class="modal-content">
@@ -188,64 +155,34 @@
                                 <div class="modal-body">
                                     <div class="row">
                                         <form class="form-horizontal" id="probeform_data" role="form">
+
                                             <div class="form-group row">
                                                 <label for="id"
-                                                       class="col-lg-3 col-md-3 col-sm-3 control-label "
+                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border"
                                                        style="display: none">id:</label>
-                                                <div class="col-lg-3 col-md-3 col-sm-3 "
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border"
                                                      style="display: none">
                                                     <input type="text" class="form-control" id="id" name="id"
                                                            placeholder="请输入id">
                                                 </div>
                                             </div>
+
                                             <div class="form-group row">
                                                 <label for="probename"
-                                                       class="col-lg-3 col-md-3 col-sm-3 control-label">探针名:</label>
-                                                <div class="col-lg-3 col-md-3 col-sm-3 ">
+                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">探针名:</label>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                                     <input type="text" class="form-control" id="probename" name="name"
-                                                           placeholder="请输入探针名">
+                                                           placeholder="请输入">
                                                 </div>
                                                 <label for="serialNumber"
-                                                       class="col-lg-3 col-md-3 col-sm-3 control-label">序列号:</label>
-                                                <div class="col-lg-3 col-md-3 col-sm-3 ">
-                                                    <input type="text" class="form-control" id="serialNumber"
-                                                           name="serialNumber"
-                                                           placeholder="请输入序列号">
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label for="city"
-                                                       class="col-lg-3 col-md-3 col-sm-3 control-label ">所属地市:</label>
-                                                <div class="col-lg-3 col-md-3 col-sm-3 ">
-                                                    <select id="city" class="form-control" name="city">  <!--VUE列表渲染-->
-                                                        <option v-for="item in citys">
-                                                            {{ item.message }}
-                                                        </option>
-                                                    </select>
-                                                </div>
-                                                <label for="county"
-                                                       class="col-lg-3 col-md-3 col-sm-3 control-label ">所属区县:</label>
-                                                <div class="col-lg-3 col-md-3 col-sm-3 ">
-                                                    <select id="county" class="form-control" name="county">
-                                                        <!--VUE列表渲染-->
-                                                        <option v-for="item in countys">
-                                                            {{ item.message }}
-                                                        </option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-
-                                                <label for="location"
-                                                       class="col-lg-3 col-md-3 col-sm-3 control-label ">所属位置:</label>
-                                                <div class="col-lg-3 col-md-3 col-sm-3 ">
-                                                    <input type="text" class="form-control" id="location"
-                                                           name="location"
-                                                           placeholder="请输入所属位置">
+                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">序列号:</label>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
+                                                    <input type="text" class="form-control" id="serialNumber" name="serialNumber"
+                                                           readonly="readonly">
                                                 </div>
                                                 <label for="type"
-                                                       class="col-lg-3 col-md-3 col-sm-3 control-label ">探针类型:</label>
-                                                <div class="col-lg-3 col-md-3 col-sm-3 ">
+                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">探针类型:</label>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                                     <select id="type" class="form-control" name="type">  <!--VUE列表渲染-->
                                                         <option v-for="item in types">
                                                             {{ item.message }}
@@ -253,52 +190,206 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="form-group row">
 
+                                            <div class="form-group row">
+                                                <label for="city"
+                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">所属地市:</label>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
+                                                    <select id="city" class="form-control" name="city">  <!--VUE列表渲染-->
+                                                        <option v-for="item in citys">
+                                                            {{ item.message }}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <label for="county"
+                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">所属区县:</label>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
+                                                    <select id="county" class="form-control" name="county">
+                                                        <!--VUE列表渲染-->
+                                                        <option v-for="item in countys">
+                                                            {{ item.message }}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <label for="location"
+                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">所属位置:</label>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
+                                                    <input type="text" class="form-control" id="location"
+                                                           name="location"
+                                                           placeholder="请输入">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="brasName"
+                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">BRAS名称:</label>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
+                                                    <input type="text" class="form-control" id="brasName"
+                                                           name="brasName"
+                                                           placeholder="请输入">
+                                                </div>
+                                                <label for="brasIp"
+                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">BRAS IP:</label>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
+                                                    <input type="text" class="form-control" id="brasIp"
+                                                           name="brasIp"
+                                                           placeholder="请输入">
+                                                </div>
+                                                <label for="brasPort"
+                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">BRAS端口:</label>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
+                                                    <input type="text" class="form-control" id="brasPort"
+                                                           name="brasPort"
+                                                           placeholder="请输入">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="accessLayer"
+                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">接入层级:</label>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
+                                                    <input id="accessLayer" class="form-control" name="accessLayer">
+                                                    </input>
+                                                </div>
                                                 <label for="upstream"
-                                                       class="col-lg-3 col-md-3 col-sm-3 control-label">层级上联探针:</label>
-                                                <div class="col-lg-3 col-md-3 col-sm-3 ">
+                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">上联探针:</label>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                                     <input id="upstream" class="form-control" name="upstream">
                                                     </input>
                                                 </div>
                                                 <label for="status"
-                                                       class="col-lg-3 col-md-3 col-sm-3 control-label ">状态:</label>
-                                                <div class="col-lg-3 col-md-3 col-sm-3 ">
-                                                    <input type="text" class="form-control" id="status" name="status"
-                                                           placeholder="请输入状态">
+                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">状态:</label>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
+                                                    <input id="status" class="form-control" name="status" readonly="readonly">
+                                                    </input>
                                                 </div>
                                             </div>
+
                                             <div class="form-group row">
+                                                <label for="device"
+                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">设备型号:</label>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
+                                                    <input type="text" class="form-control" id="device" name="device"
+                                                           readonly="readonly">
+                                                </div>
+                                                <label for="version"
+                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">软件版本:</label>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
+                                                    <input type="text" class="form-control" id="version" name="version"
+                                                           readonly="readonly">
+                                                </div>
+                                                <label for="concurrentTask"
+                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">最大任务数:</label>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
+                                                    <input type="text" class="form-control" id="concurrentTask" name="concurrentTask"
+                                                           readonly="readonly">
+                                                </div>
+
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="groupId"
+                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">所属探针组:</label>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
+                                                    <input type="text" class="form-control" id="groupId"
+                                                           name="groupId"
+                                                           placeholder="请输入">
+                                                </div>
+                                                <label for="ipType"
+                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">IP类型:</label>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
+                                                    <input type="text" class="form-control" id="ipType"
+                                                           name="ipType" readonly="readonly">
+                                                </div>
+                                                <label for="isp"
+                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">接入运营商:</label>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
+                                                    <input type="text" class="form-control" id="isp"
+                                                           name="isp"
+                                                           placeholder="请输入">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="hbInterval"
+                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">心跳间隔(秒):</label>
+                                                <div class="col-lg-1 col-md-1 col-sm-1 form_border">
+                                                    <input type="text" class="form-control" id="hbInterval"
+                                                           name="hbInterval"
+                                                           placeholder="30">
+                                                </div>
+                                                <label for="taskInterval" style="padding-left:0 !important;padding-right: 0 !important; "
+                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">获取任务间隔(分钟):</label>
+                                                <div class="col-lg-1 col-md-1 col-sm-1 form_border">
+                                                    <input type="text" class="form-control" id="taskInterval"
+                                                           name="taskInterval"
+                                                           placeholder="30">
+                                                </div>
                                                 <label for="reportInterval"
-                                                       class="col-lg-3 col-md-3 col-sm-3 control-label ">上报间隔:</label>
-                                                <div class="col-lg-3 col-md-3 col-sm-3 ">
+                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">上报间隔(分钟):</label>
+                                                <div class="col-lg-1 col-md-1 col-sm-1 form_border">
                                                     <input type="text" class="form-control" id="reportInterval"
                                                            name="reportInterval"
-                                                           placeholder="请输入上报间隔">
+                                                           placeholder="15">
                                                 </div>
-                                                <label for="registerTime"
-                                                       class="col-lg-3 col-md-3 col-sm-3 control-label ">注册时间:</label>
-                                                <div class="col-lg-3 col-md-3 col-sm-3 ">
-                                                    <input type="text" class="form-control" id="registerTime"
-                                                           name="registerTime"
-                                                           placeholder="请输入注册时间">
+                                                <label for="updateInterval" style="padding-left:0 !important;padding-right: 0 !important; "
+                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">升级检测间隔(小时):</label>
+                                                <div class="col-lg-1 col-md-1 col-sm-1 form_border">
+                                                    <input type="text" class="form-control" id="updateInterval"
+                                                           name="updateInterval"
+                                                           placeholder="24">
                                                 </div>
                                             </div>
+
                                             <div class="form-group row">
-                                                <label for="lastHbtime"
-                                                       class="col-lg-3 col-md-3 col-sm-3 control-label">最后心跳时间:</label>
-                                                <div class="col-lg-3 col-md-3 col-sm-3 ">
-                                                    <input type="text" class="form-control" id="lastHbtime"
-                                                           name="lastHbtime"
-                                                           placeholder="请输入最后心跳时间">
+                                                <label for="lastHbtime" style="text-align: left !important;padding-left:15px !important;
+                                                        margin-left: 9px;margin-right: -10px;"
+                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">最后心跳时间:</label>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 form_border">
+                                                    <input type="text" class="form-control" id="lastHbtime" name="lastHbtime" readonly="readonly">
+                                                </div>
+                                                <label for="registerTime" style="text-align: left !important"
+                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">注册时间:</label>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 form_border">
+                                                    <input type="text" class="form-control" id="registerTime" name="registerTime"
+                                                           readonly="readonly">
                                                 </div>
                                             </div>
+
+                                            <div class="form-group row">
+                                                <label for="lastReportTime" style="text-align: left !important;padding-left:15px !important;
+                                                margin-left: 9px;margin-right: -10px;"
+                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">最后上报时间:</label>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 form_border">
+                                                    <input type="text" class="form-control" id="lastReportTime"
+                                                           name="lastReportTime" readonly="readonly">
+                                                </div>
+                                                <label for="lastUpdateTime" style="text-align: left !important"
+                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">最后升级时间:</label>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 form_border">
+                                                    <input type="text" class="form-control" id="lastUpdateTime"
+                                                           name="lastUpdateTime" readonly="readonly">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="portIp" style="text-align: left !important;padding-left:15px !important;
+                                                        margin-left: 9px;margin-right: -10px;"
+                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">端口及IP:</label>
+                                                <div class="col-lg-10 col-md-10 col-sm-10 form_border">
+                                                    <input type="text" class="form-control" id="portIp"
+                                                           name="portIp" readonly="readonly">
+                                                </div>
+                                            </div>
+
                                         </form>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                                    <button type="button" class="btn btn-success" v-on:click="submit">保存</button>
+                                    <button type="button" class="btn btn-primary ui-button" v-on:click="submit">保存</button>
+                                    <!--<button type="button" class="btn btn-success" v-on:click="submit">保存</button>-->
+
                                 </div>
                             </div>
                         </div>
@@ -370,9 +461,6 @@
                                 <button type="button" class="btn btn-default ui-button" v-on:click="groupadd"><span
                                         class="glyphicon glyphicon-plus"></span>录入
                                 </button>
-                                <!--<button type="button" class="btn btn-default ui-button" v-on:click="groupupdate"><span
-                                        class="glyphicon glyphicon-pencil"></span>编辑
-                                </button>-->
                             </div>
                             <div class="ibox-content col-lg-8 col-md-8 col-sm-8">
                                 <div class="row " style="">     <!--表格 overflow-x: scroll超出滚动-->
