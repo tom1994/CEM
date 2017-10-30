@@ -4,6 +4,8 @@
 var status;
 var idArray = new Array();
 var probeGroupNames = new Array();
+var cityNames = new Array();
+var areaNames = new Array();
 
 var probedata_handle = new Vue({
     el: '#probehandle',
@@ -11,16 +13,15 @@ var probedata_handle = new Vue({
     mounted: function(){         /*动态加载测试任务组数据*/
         $.ajax({
             type: "POST",   /*GET会乱码*/
-            url: "../../cem/probe/list",//Todo:改成测试任务组的list方法
+            url: "../../cem/cities/list",//Todo:改成测试任务组的list方法
             cache: false,  //禁用缓存
             dataType: "json",
             /* contentType:"application/json",  /!*必须要,不可少*!/*/
             success: function (result) {
-                // for(var i=0;i<result.page.list.length;i++){
-                //     testGroupNames[i] = {message: result.page.list[i]}
-                // }
-                // probeform_data.testgroup_names = testGroupNames;    /*注意,这个js执行放在probeform_data和search_data之前才行*/
-                // search_data.testgroup_names = testGroupNames;
+                for(var i=0;i<result.page.list.length;i++){
+                    cityNames[i] = {message: result.page.list[i]}
+                }
+                search_data.cities = cityNames;
             }
         });
     },
@@ -69,14 +70,15 @@ var probedata_handle = new Vue({
                         forms[1].value = result.probe.serialNumber;
                         forms[2].value = result.probe.name;
                         forms[3].value = result.probe.type;
-                        forms[4].value = result.probe.city;
-                        forms[5].value = result.probe.county;
+                        forms[4].value = result.probe.cityName;
+                        forms[5].value = result.probe.areaName;
                         forms[6].value = result.probe.location;
                         forms[7].value = result.probe.ipType;
                         forms[8].value = result.probe.portIp;
                         forms[9].value = result.probe.brasName;
                         forms[10].value = result.probe.brasIp;
                         forms[11].value = result.probe.brasPort;
+                        console.log(result.probe);
                     }
                 });
                 probeform_data.modaltitle = "探针编辑";
@@ -143,7 +145,7 @@ var probedata_handle = new Vue({
             }
         },*/
         probesearch: function () {   /*查询监听事件*/
-            var data = getFormJson($('#searchprobe'));
+            var data = getFormJson($('#probesearch'));
             /*得到查询条件*/
             /*获取表单元素的值*/
             console.log(data);
@@ -175,7 +177,6 @@ var probegroup_handle = new Vue({
         //         search_data.testgroup_names = testGroupNames;
         //     }
         // });
-
     },
     methods: {
         groupadd: function () {   /*监听录入触发事件*/
@@ -649,25 +650,43 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
     return o;
 }
 
-var search_data = new Vue({
 
-    el:'#searchprobe',
+var search_data = new Vue({
+    el:'#probesearch',
     data:{
-        countys:probeform_data.countys,
-        citys:probeform_data.citys,
-        testgroup_names:[]
+        areas:[],
+        cities:[],
+        probegroup_names:[],
+    },
+    methods:{
+        citychange: function () {
+            this.areas = getArea($("#selectcity").val());
+        }
     }
 });
+
+var getArea = function (cityid) {
+    $.ajax({
+        url: "../../cem/areas/info/"+cityid,
+        type: "POST",
+        cache: false,  //禁用缓存
+        dataType: "json",
+        contentType: "application/json",
+        success: function (result) {
+            for(var i=0;i<result.areas.length;i++){
+                areaNames[i] = {message: result.areas[i]}
+            }
+            search_data.areas = areaNames;
+        }
+    });
+}
 
 var searchgroup_data = new Vue({
     el:'#searchgroup',
     data:{
-        probegroup_names:[]
+        probegroup_names:[ ]
     }
 });
-
-
-
 
 /*选中表格事件*/
 $(document).ready(function () {
@@ -749,8 +768,8 @@ var probetable = new Vue({
         el: '#probedata_table',
     data: {
         headers: [
-            {title: ''},
-            {title: '<div class="checkbox"> <label> <input type="checkbox" id="checkAll"></label> </div>'},
+            {title: '<div style="width:67px"></div>'},
+            {title: '<div class="checkbox" style="width:67px"> <label> <input type="checkbox" id="checkAll"></label> </div>'},
             //{title: '<div style=" width:0px;display:none;padding:0px">id</div>'},
             {title: '<div style="width:65px">探针名</div>'},
             {title: '<div style="width:42px">地市</div>'},
@@ -852,8 +871,8 @@ var probetable = new Vue({
                                 row.push('<div class="checkbox"> <label> <input type="checkbox" id="checkALl" name="selectFlag"></label> </div>');
                                 //row.push('<div class="probe_id" style="display:none">'+item.id+'</div>');
                                 row.push('<a onclick="update_this(this)" id='+item.id+'><span style="color: black">'+item.name+'</span></a>');
-                                row.push(item.city);
-                                row.push(item.county);
+                                row.push(item.cityName);
+                                row.push(item.areaName);
                                 row.push(item.location);
                                 row.push(item.accessLayer);
                                 row.push(item.upstream);
@@ -887,7 +906,7 @@ var grouptable = new Vue({
     el: '#probegroup_table',
     data: {
         headers: [
-            {title: ''},
+            {title: '<div style="width:67px"></div>'},
             //{title: '<div class="checkbox"> <label> <input type="checkbox" id="checkAllGroup""></label> </div>'},
             //{title: '<div style="display:none">id</div>'},
             {title: '<div style="width:58px">探针组ID</div>'},
