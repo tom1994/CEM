@@ -87,14 +87,15 @@
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12" id="probe_table">
                             <div class="ibox float-e-margins">
-                                <div class="flip-btn" style="text-align: center">
+                         <!--       <div class="flip-btn" style="text-align: center">
                                     <button id="flip" type="button" class="glyphicon glyphicon-menu-up" ></button>
-                                </div>
+                                </div>   -->
                                 <div class="ibox-title fontcolor" id="probehandle"
                                      style="padding-bottom: 0px !important;">
                                     <!--<button type="button" class="btn btn-default " v-on:click="probeupdate"><span-->
                                     <!--class="glyphicon glyphicon-pencil"></span>编辑-->
                                     <!--</button>-->
+
                                     <button type="button" class="btn btn-default ui-button"
                                             v-on:click="probedelBatch"><span
                                             class="glyphicon glyphicon-trash"></span>批量删除
@@ -102,6 +103,9 @@
                                     <a href="../../cem/probe/download"><button type="button" class="btn btn-default ui-button"><span
                                             class="glyphicon glyphicon-open"></span>导出
                                     </button></a>
+
+                                    <p id="flip" type="button" style="text-align: center" class="glyphicon glyphicon-menu-up" ></p>
+
                                   <!--  <button id="flip" type="button" class="glyphicon glyphicon-chevron-up" style="align-self: center"></button> -->
                                 </div>
                                 <div class="ibox-content">
@@ -376,7 +380,7 @@
                             </div>
                             <div class="ibox-content col-lg-8 col-md-8 col-sm-8">
                                 <div class="row " style="">     <!--表格 verflow-x: scroll超出滚动-->
-                                    <table class="table table-bordered " id="probegroup_table"></table>
+                                    <table class="table_group table-bordered " id="probegroup_table"></table>
 
                                 </div>
                             </div>
@@ -481,6 +485,7 @@
 
 
 
+
 </body>
 
 <script>
@@ -519,8 +524,8 @@
         if(!dragModal.mouseDragDown || dragModal.moveTarget == undefined)return;
         var mousX = e.clientX;
         var mousY = e.pageY;
-        if(mousX < 0)mousX = 0;
-        if(mousY < 0)mousY = 25;
+       // if(mousX < 0)mousX = 0;
+        //if(mousY < 0)mousY = 25;
         dragModal.mouseEndPoint = {"left":mousX,"top": mousY};
         var width = dragModal.moveTarget.width();
         var height = dragModal.moveTarget.height();
@@ -551,5 +556,15 @@
         document.body.onselectstart=document.body.ondrag=null;
     })
 </script>
+
+<script type="text/javascript">
+    $(function() {
+        $(".ibox-content").colResizable();
+    })
+</script>
+
+
+
+
 
 </html>

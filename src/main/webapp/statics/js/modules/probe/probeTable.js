@@ -866,13 +866,13 @@ var grouptable = new Vue({
     el: '#probegroup_table',
     data: {
         headers: [
-            {title: '<div style="width:67px"></div>'},
+            {title: '<div style="width:97px"></div>'},
             //{title: '<div class="checkbox"> <label> <input type="checkbox" id="checkAllGroup""></label> </div>'},
             //{title: '<div style="display:none">id</div>'},
-            {title: '<div style="width:67px">探针组ID</div>'},
-            {title: '<div style="width:67px">探针组名</div>'},
-            {title: '<div style="width:67px">备注</div>'},
-            {title: '<div style="width:67px">操作</div>'}
+            {title: '<div style="width:97px">探针组ID</div>'},
+            {title: '<div style="width:97px">探针组名</div>'},
+            {title: '<div style="width:97px">备注</div>'},
+            {title: '<div style="width:97px">操作</div>'}
         ],
         rows: [],
         dtHandle: null,
