@@ -77,6 +77,7 @@
                                                     </select>
                                                 </div>
 
+
                                                 <div class="input-group searchspan">
                                                     <span class="searchname" title="类型">类型</span>
                                                     <input type="text" class="form-control" name="type" style="width: 110px"
@@ -84,6 +85,7 @@
                                                 </div>
 
                                                 <div class="input-group searchspan">
+
                                                     <span class="searchname" title="状态">状态</span>
                                                     <select class="form-control" name="status"
                                                             style="width: 130px;">
@@ -117,6 +119,7 @@
                         <div class="col-lg-12 col-md-12 col-sm-12" id="probe_table">
                             <div class="ibox float-e-margins">
 
+
                          <!--       <div class="flip-btn" style="text-align: center">
                                     <button id="flip" type="button" class="glyphicon glyphicon-menu-up" ></button>
                                 </div>   -->
@@ -126,10 +129,12 @@
                                     <!--class="glyphicon glyphicon-pencil"></span>编辑-->
                                     <!--</button>-->
 
+
                                     <button type="button" class="btn btn-default ui-button"
                                             v-on:click="probedelBatch"><span
                                             class="glyphicon glyphicon-trash"></span>批量删除
                                     </button>
+
                                     <a href="../../cem/probe/download"><button type="button" class="btn btn-default ui-button"><span
                                             class="glyphicon glyphicon-open"></span>导出
                                     </button></a>
@@ -137,6 +142,7 @@
                                     <p id="flip" type="button" style="text-align: center" class="glyphicon glyphicon-menu-up" ></p>
 
                                   <!--  <button id="flip" type="button" class="glyphicon glyphicon-chevron-up" style="align-self: center"></button> -->
+
 
                                 </div>
                                 <div class="ibox-content">
@@ -165,9 +171,11 @@
 
                                             <div class="form-group row">
                                                 <label for="id"
+
                                                        class="col-lg-2 col-md-2 col-sm-2 control-label "
                                                        style="display: none">id:</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 "
+
                                                      style="display: none">
                                                     <input type="text" class="form-control" id="id" name="id"
                                                            placeholder="请输入id">
@@ -176,20 +184,26 @@
 
                                             <div class="form-group row">
                                                 <label for="probename"
+
                                                        class="col-lg-2 col-md-2 col-sm-2 control-label ">探针名:</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 ">
+
                                                     <input type="text" class="form-control" id="probename" name="name"
                                                            placeholder="请输入">
                                                 </div>
                                                 <label for="serialNumber"
+
                                                        class="col-lg-2 col-md-2 col-sm-2 control-label ">序列号:</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 ">
+
                                                     <input type="text" class="form-control" id="serialNumber" name="serialNumber"
                                                            readonly="readonly">
                                                 </div>
                                                 <label for="type"
+
                                                        class="col-lg-2 col-md-2 col-sm-2 control-label ">探针类型:</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 ">
+
                                                     <select id="type" class="form-control" name="type">  <!--VUE列表渲染-->
                                                         <option v-for="item in types">
                                                             {{ item.message }}
@@ -200,8 +214,10 @@
 
                                             <div class="form-group row">
                                                 <label for="city"
+
                                                        class="col-lg-2 col-md-2 col-sm-2 control-label ">所属地市:</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 ">
+
                                                     <select id="city" class="form-control" name="city">  <!--VUE列表渲染-->
                                                         <option v-for="item in citys">
                                                             {{ item.message }}
@@ -209,8 +225,10 @@
                                                     </select>
                                                 </div>
                                                 <label for="county"
+
                                                        class="col-lg-2 col-md-2 col-sm-2 control-label ">所属区县:</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 ">
+
                                                     <select id="county" class="form-control" name="county">
                                                         <!--VUE列表渲染-->
                                                         <option v-for="item in countys">
@@ -221,6 +239,7 @@
                                                 <label for="location"
                                                        class="col-lg-2 col-md-2 col-sm-2 control-label ">所属位置:</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 ">
+
                                                     <input type="text" class="form-control" id="location"
                                                            name="location"
                                                            placeholder="请输入">
@@ -231,6 +250,7 @@
                                                 <label for="brasName"
                                                        class="col-lg-2 col-md-2 col-sm-2 control-label ">BRAS名称:</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 ">
+
                                                     <input type="text" class="form-control" id="brasName"
                                                            name="brasName"
                                                            placeholder="请输入">
@@ -617,7 +637,6 @@
         if (!dragModal.mouseDragDown || dragModal.moveTarget == undefined) return;
         var mousX = e.clientX;
         var mousY = e.pageY;
-
         if (mousX < 0) mousX = 0;
         if (mousY < 0) mousY = 25;
         dragModal.mouseEndPoint = {"left": mousX, "top": mousY};
@@ -648,6 +667,7 @@
         $('.modal-dialog').css({'top': '0px', 'left': '0px'})
         $('body').removeClass('select')
         document.body.onselectstart = document.body.ondrag = null;
+
     })
 </script>
 

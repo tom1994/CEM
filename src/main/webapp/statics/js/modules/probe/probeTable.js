@@ -915,7 +915,6 @@ var grouptable = new Vue({
             {title: '<div style="width:100px">探针组名</div>'},
             {title: '<div style="width:100px">备注</div>'},
             {title: '<div style="width:52px">操作</div>'}
-
         ],
         rows: [],
         dtHandle: null,
