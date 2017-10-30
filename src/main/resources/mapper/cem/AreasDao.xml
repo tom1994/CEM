@@ -15,19 +15,9 @@
 		select * from areas where id = #{value}
 	</select>
 
-	<select id="queryList" resultType="io.cem.modules.cem.entity.AreasEntity">
-		select * from areas
-        <choose>
-            <when test="sidx != null and sidx.trim() != ''">
-                order by ${sidx} ${order}
-            </when>
-			<otherwise>
-                order by id desc
-			</otherwise>
-        </choose>
-		<if test="offset != null and limit != null">
-			limit #{offset}, #{limit}
-		</if>
+	<select id="queryAreaList" resultType="io.cem.modules.cem.entity.AreasEntity">
+		select * from areas where cityid = #{value}
+        order by id desc
 	</select>
 	
  	<select id="queryTotal" resultType="int">

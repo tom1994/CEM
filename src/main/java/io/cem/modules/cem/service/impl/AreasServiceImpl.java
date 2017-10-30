@@ -26,6 +26,11 @@ public class AreasServiceImpl implements AreasService {
 	public List<AreasEntity> queryList(Map<String, Object> map){
 		return areasDao.queryList(map);
 	}
+
+	@Override
+	public List<AreasEntity> queryAreaList(Integer id){
+		return areasDao.queryAreaList(id);
+	}
 	
 	@Override
 	public int queryTotal(Map<String, Object> map){

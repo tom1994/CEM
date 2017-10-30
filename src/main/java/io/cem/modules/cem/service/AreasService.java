@@ -17,6 +17,8 @@ public interface AreasService {
 	AreasEntity queryObject(Integer id);
 	
 	List<AreasEntity> queryList(Map<String, Object> map);
+
+	List<AreasEntity> queryAreaList(Integer id);
 	
 	int queryTotal(Map<String, Object> map);
 	

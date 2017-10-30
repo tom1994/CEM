@@ -13,16 +13,15 @@ var probedata_handle = new Vue({
     mounted: function(){         /*动态加载测试任务组数据*/
         $.ajax({
             type: "POST",   /*GET会乱码*/
-            url: "../../cem/probe/list",//Todo:改成测试任务组的list方法
+            url: "../../cem/cities/list",//Todo:改成测试任务组的list方法
             cache: false,  //禁用缓存
             dataType: "json",
             /* contentType:"application/json",  /!*必须要,不可少*!/*/
             success: function (result) {
-                // for(var i=0;i<result.page.list.length;i++){
-                //     testGroupNames[i] = {message: result.page.list[i]}
-                // }
-                // probeform_data.testgroup_names = testGroupNames;    /*注意,这个js执行放在probeform_data和search_data之前才行*/
-                // search_data.testgroup_names = testGroupNames;
+                for(var i=0;i<result.page.list.length;i++){
+                    cityNames[i] = {message: result.page.list[i]}
+                }
+                search_data.cities = cityNames;
             }
         });
     },
@@ -79,6 +78,7 @@ var probedata_handle = new Vue({
                         forms[9].value = result.probe.brasName;
                         forms[10].value = result.probe.brasIp;
                         forms[11].value = result.probe.brasPort;
+                        console.log(result.probe);
                     }
                 });
                 probeform_data.modaltitle = "探针编辑";
@@ -146,7 +146,7 @@ var probedata_handle = new Vue({
             }
         },
         probesearch: function () {   /*查询监听事件*/
-            var data = getFormJson($('#searchprobe'));
+            var data = getFormJson($('#probesearch'));
             /*得到查询条件*/
             /*获取表单元素的值*/
             console.log(data);
@@ -180,7 +180,6 @@ var probegroup_handle = new Vue({
         //         search_data.testgroup_names = testGroupNames;
         //     }
         // });
-
     },
     methods: {
         groupadd: function () {   /*监听录入触发事件*/
@@ -313,6 +312,7 @@ function update_this (obj) {     /*监听修改触发事件*/
             forms[9].value = result.probe.reportInterval;
             forms[10].value = result.probe.registerTime;
             forms[11].value = result.probe.lastHbtime;
+            console.log(result.probe);
         }
     });
     probeform_data.modaltitle = "编辑业务信息";
@@ -636,25 +636,43 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
     return o;
 }
 
-var search_data = new Vue({
 
-    el:'#searchprobe',
+var search_data = new Vue({
+    el:'#probesearch',
     data:{
-        countys:probeform_data.countys,
-        citys:probeform_data.citys,
-        testgroup_names:[]
+        areas:[],
+        cities:[],
+        probegroup_names:[],
+    },
+    methods:{
+        citychange: function () {
+            this.areas = getArea($("#selectcity").val());
+        }
     }
 });
+
+var getArea = function (cityid) {
+    $.ajax({
+        url: "../../cem/areas/info/"+cityid,
+        type: "POST",
+        cache: false,  //禁用缓存
+        dataType: "json",
+        contentType: "application/json",
+        success: function (result) {
+            for(var i=0;i<result.areas.length;i++){
+                areaNames[i] = {message: result.areas[i]}
+            }
+            search_data.areas = areaNames;
+        }
+    });
+}
 
 var searchgroup_data = new Vue({
     el:'#searchgroup',
     data:{
-        probegroup_names:[]
+        probegroup_names:[ ]
     }
 });
-
-
-
 
 /*选中表格事件*/
 $(document).ready(function () {

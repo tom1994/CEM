@@ -33,20 +33,20 @@
                                                 <input type="text" class="form-control" name="name" style="width: 110px"
                                                        value="">
                                             </div>
-
                                             <div class="input-group searchspan">
                                                 <span class="searchname" title="地市">地市</span>
-                                                <select class="form-control" name="city_man" style="width: 110px">
+                                                <select id="selectcity" class="form-control" name="city" v-on:change="citychange()" style="width: 110px">
                                                     <option value="">---请选择---</option>
-                                                    <option v-for="item in citys">{{ item.message }}</option>
+                                                    <option v-for="item in cities" v-bind:value="item.message.cityid">{{ item.message.city }}</option>
+                                                    <!--<option v-for="pitem in parray" v-bind:value="pitem.Id">{{ pitem.Name }}-->
                                                 </select>
                                             </div>
 
                                             <div class="input-group searchspan">
                                                 <span class="searchname" title="区县">区县</span>
-                                                <select class="form-control " name="county" style="width: 110px">
+                                                <select class="form-control " name="area" style="width: 110px">
                                                     <option value="">---请选择---</option>
-                                                    <option v-for="item in countys">{{ item.message }}</option>
+                                                    <option v-for="item in areas">{{ item.message.area }}</option>
                                                 </select>
                                             </div>
 
@@ -60,14 +60,15 @@
                                                     </option>
                                                 </select>
                                             </div>
-
                                         </form>
                                         <div class="col-lg-2 col-md-2 col-sm-2 pull-left" style="margin-top: 4px;">
-                                            <button type="button" class="btn btn-default ui-button" style="margin-right: 5px"
+                                            <button type="button" class="btn btn-default ui-button"
+                                                    style="margin-right: 5px"
                                                     v-on:click="groupsearch"><span
                                                     class="glyphicon glyphicon-zoom-in"></span>查询
                                             </button>
-                                            <button type="button" class="btn btn-default ui-button" v-on:click="reset"><span
+                                            <button type="button" class="btn btn-default ui-button"
+                                                    v-on:click="reset"><span
                                                     class="glyphicon glyphicon-refresh"></span>重置
                                             </button>
                                         </div>
@@ -81,7 +82,7 @@
                         <div class="col-lg-12 col-md-12 col-sm-12" id="probe_table">
                             <div class="ibox float-e-margins">
                                 <div class="flip-btn" style="text-align: center">
-                                    <button id="flip" type="button" class="glyphicon glyphicon-menu-up" ></button>
+                                    <button id="flip" type="button" class="glyphicon glyphicon-menu-up"></button>
                                 </div>
                                 <div class="ibox-title fontcolor" id="probehandle"
                                      style="padding-bottom: 0px !important;">
@@ -92,10 +93,12 @@
                                             v-on:click="probedelBatch"><span
                                             class="glyphicon glyphicon-trash"></span>批量删除
                                     </button>
-                                    <a href="../../cem/probe/download"><button type="button" class="btn btn-default ui-button"><span
-                                            class="glyphicon glyphicon-open"></span>导出
-                                    </button></a>
-                                  <!--  <button id="flip" type="button" class="glyphicon glyphicon-chevron-up" style="align-self: center"></button> -->
+                                    <a href="../../cem/probe/download">
+                                        <button type="button" class="btn btn-default ui-button"><span
+                                                class="glyphicon glyphicon-open"></span>导出
+                                        </button>
+                                    </a>
+                                    <!--  <button id="flip" type="button" class="glyphicon glyphicon-chevron-up" style="align-self: center"></button> -->
                                 </div>
                                 <div class="ibox-content">
                                     <div class="row " style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
@@ -107,71 +110,72 @@
                     </div>
 
 
-<!--                    &lt;!&ndash; 探针编辑模态框（Modal） &ndash;&gt;
-                    <div class="modal fade" id="myModal_update" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                         aria-hidden="true">
-                        <div class="modal-dialog" style="width: 768px"> &lt;!&ndash;修改bootstrap modal模态框的宽度&ndash;&gt;
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                                        &times;
-                                    </button>
-                                    <h4 class="modal-title myModalLabel">{{modaltitle}}</h4>
-                                </div>
-                                <div class="row probeform_title">
-                                    <br>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="row">
-                                        <form class="form-horizontal" id="probeform_data" role="form">
-                                            <div class="form-group row">
-                                                <label for="id"
-                                                       class="col-lg-3 col-md-3 col-sm-3 control-label form_border"
-                                                       style="display: none">id:</label>
-                                                <div class="col-lg-3 col-md-3 col-sm-3 form_border"
-                                                     style="display: none">
-                                                    <input type="text" class="form-control" id="id" name="id"
-                                                           placeholder="请输入id">
-                                                </div>
-                                                <label for="probename"
-                                                       class="col-lg-3 col-md-3 col-sm-3 control-label form_border">探针名:</label>
-                                                <div class="col-lg-3 col-md-3 col-sm-3 form_border">
-                                                    <input type="text" class="form-control" id="probename" name="name"
-                                                           placeholder="请输入探针名">
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label for="location"
-                                                       class="col-lg-3 col-md-3 col-sm-3 control-label form_border">所属位置:</label>
-                                                <div class="col-lg-3 col-md-3 col-sm-3 form_border">
-                                                    <input type="text" class="form-control" id="location"
-                                                           name="location"
-                                                           placeholder="请输入所属位置">
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label for="portIP"
-                                                       class="col-lg-3 col-md-3 col-sm-3 control-label form_border">端口及IP:</label>
-                                                <div class="col-lg-3 col-md-3 col-sm-3 form_border">
-                                                    <input type="text" class="form-control" id="portIP" name="portIP"
-                                                           placeholder="请输入端口及IP">
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label for="brasName"
-                                                       class="col-lg-3 col-md-3 col-sm-3 control-label form_border">BRAS名称:</label>
-                                                <div class="col-lg-3 col-md-3 col-sm-3 form_border">
-                                                    <input type="text" class="form-control" id="brasName"
-                                                           name="brasName"
-                                                           placeholder="请输入BRAS名称">
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>-->
+                    <!--                    &lt;!&ndash; 探针编辑模态框（Modal） &ndash;&gt;
+                                        <div class="modal fade" id="myModal_update" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                                             aria-hidden="true">
+                                            <div class="modal-dialog" style="width: 768px"> &lt;!&ndash;修改bootstrap modal模态框的宽度&ndash;&gt;
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                                            &times;
+                                                        </button>
+                                                        <h4 class="modal-title myModalLabel">{{modaltitle}}</h4>
+                                                    </div>
+                                                    <div class="row probeform_title">
+                                                        <br>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="row">
+                                                            <form class="form-horizontal" id="probeform_data" role="form">
+                                                                <div class="form-group row">
+                                                                    <label for="id"
+                                                                           class="col-lg-3 col-md-3 col-sm-3 control-label form_border"
+                                                                           style="display: none">id:</label>
+                                                                    <div class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                                                         style="display: none">
+                                                                        <input type="text" class="form-control" id="id" name="id"
+                                                                               placeholder="请输入id">
+                                                                    </div>
+                                                                    <label for="probename"
+                                                                           class="col-lg-3 col-md-3 col-sm-3 control-label form_border">探针名:</label>
+                                                                    <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                                                        <input type="text" class="form-control" id="probename" name="name"
+                                                                               placeholder="请输入探针名">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <label for="location"
+                                                                           class="col-lg-3 col-md-3 col-sm-3 control-label form_border">所属位置:</label>
+                                                                    <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                                                        <input type="text" class="form-control" id="location"
+                                                                               name="location"
+                                                                               placeholder="请输入所属位置">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <label for="portIP"
+                                                                           class="col-lg-3 col-md-3 col-sm-3 control-label form_border">端口及IP:</label>
+                                                                    <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                                                        <input type="text" class="form-control" id="portIP" name="portIP"
+                                                                               placeholder="请输入端口及IP">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <label for="brasName"
+                                                                           class="col-lg-3 col-md-3 col-sm-3 control-label form_border">BRAS名称:</label>
+                                                                    <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                                                        <input type="text" class="form-control" id="brasName"
+                                                                               name="brasName"
+                                                                               placeholder="请输入BRAS名称">
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>-->
 
-                   <!-- 模态框（Modal） -->
-                    <div class="modal fade" id="myModal_update" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                    <!-- 模态框（Modal） -->
+                    <div class="modal fade" id="myModal_update" tabindex="-1" role="dialog"
+                         aria-labelledby="myModalLabel"
                          aria-hidden="true">
                         <div class="modal-dialog" style="width: 768px"> <!--修改bootstrap modal模态框的宽度-->
                             <div class="modal-content">
@@ -204,7 +208,8 @@
                                                 <label for="serialNumber"
                                                        class="col-lg-3 col-md-3 col-sm-3 control-label">序列号:</label>
                                                 <div class="col-lg-3 col-md-3 col-sm-3 ">
-                                                    <input type="text" class="form-control" id="serialNumber" name="serialNumber"
+                                                    <input type="text" class="form-control" id="serialNumber"
+                                                           name="serialNumber"
                                                            placeholder="请输入序列号">
                                                 </div>
                                             </div>
@@ -274,7 +279,8 @@
                                                 <label for="registerTime"
                                                        class="col-lg-3 col-md-3 col-sm-3 control-label ">注册时间:</label>
                                                 <div class="col-lg-3 col-md-3 col-sm-3 ">
-                                                    <input type="text" class="form-control" id="registerTime" name="registerTime"
+                                                    <input type="text" class="form-control" id="registerTime"
+                                                           name="registerTime"
                                                            placeholder="请输入注册时间">
                                                 </div>
                                             </div>
@@ -344,7 +350,8 @@
                                                    value="">
                                         </div>
                                         <div class="btn-group pull-left">
-                                            <button type="button" class="btn btn-default ui-button" style="margin-right: 5px; margin-top: 5px"
+                                            <button type="button" class="btn btn-default ui-button"
+                                                    style="margin-right: 5px; margin-top: 5px"
                                                     v-on:click="groupsearch"><span
                                                     class="glyphicon glyphicon-zoom-in"></span>查询
                                             </button>
@@ -404,7 +411,8 @@
                                     </div>
                                     <div class="form-group row">
                                         <label for="groupname"
-                                               class="col-lg-3 col-md-3 col-sm-3 control-label " style="font-size: medium">探针组名:</label>
+                                               class="col-lg-3 col-md-3 col-sm-3 control-label "
+                                               style="font-size: medium">探针组名:</label>
                                         <div class="col-lg-3 col-md-3 col-sm-3 ">
                                             <input type="text" class="form-control" id="groupname" name="name"
                                                    placeholder="请输入探针组名">
@@ -412,7 +420,8 @@
                                     </div>
                                     <div class="form-group row">
                                         <label for="remark"
-                                               class="col-lg-3 col-md-3 col-sm-3 control-label" style="font-size: medium">备注:</label>
+                                               class="col-lg-3 col-md-3 col-sm-3 control-label"
+                                               style="font-size: medium">备注:</label>
                                         <div class="col-lg-3 col-md-3 col-sm-3 ">
                                             <input type="text" class="form-control" id="remark" name="remark"
                                                    placeholder="请输入探针组备注">
@@ -460,11 +469,12 @@
 
 
 <script>window.jQuery || document.write('<script src="${rc.contextPath}/statics/js/plugins/jquery/jquery-2.0.3.js"><\/script>')</script>
-<script type="text/javascript" src="${rc.contextPath}/statics/js/modules/probe/probeTable.js?_${date.systemTime}"></script>
+<script type="text/javascript"
+        src="${rc.contextPath}/statics/js/modules/probe/probeTable.js?_${date.systemTime}"></script>
 <script type="text/javascript" src="${rc.contextPath}/statics/js/index.js"></script>
 <script>
-    $(document).ready(function(){
-        $("#flip").click(function(){
+    $(document).ready(function () {
+        $("#flip").click(function () {
             $("#searchbox").slideToggle("fast");
 
         });
@@ -472,76 +482,74 @@
 </script>
 
 
-
-
 </body>
 
 <script>
 
     /** 拖拽模态框*/
-    var dragModal={
-        mouseStartPoint:{"left":0,"top":  0},
-        mouseEndPoint : {"left":0,"top":  0},
-        mouseDragDown : false,
-        basePoint : {"left":0,"top":  0},
-        moveTarget:null,
-        topleng:0
+    var dragModal = {
+        mouseStartPoint: {"left": 0, "top": 0},
+        mouseEndPoint: {"left": 0, "top": 0},
+        mouseDragDown: false,
+        basePoint: {"left": 0, "top": 0},
+        moveTarget: null,
+        topleng: 0
     }
-    $(document).on("mousedown",".modal-header",function(e){
+    $(document).on("mousedown", ".modal-header", function (e) {
         //webkit内核和火狐禁止文字被选中
         $('body').addClass('select')
         //ie浏览器禁止文字选中
-        document.body.onselectstart=document.body.ondrag=function(){
+        document.body.onselectstart = document.body.ondrag = function () {
             return false;
         }
-        if($(e.target).hasClass("close"))//点关闭按钮不能移动对话框
+        if ($(e.target).hasClass("close"))//点关闭按钮不能移动对话框
             return;
         dragModal.mouseDragDown = true;
         dragModal.moveTarget = $(this).parent().parent();
-        dragModal.mouseStartPoint = {"left":e.clientX,"top":  e.pageY};
+        dragModal.mouseStartPoint = {"left": e.clientX, "top": e.pageY};
         dragModal.basePoint = dragModal.moveTarget.offset();
-        dragModal.topLeng=e.pageY-e.clientY;
+        dragModal.topLeng = e.pageY - e.clientY;
     });
-    $(document).on("mouseup",function(e){
+    $(document).on("mouseup", function (e) {
         dragModal.mouseDragDown = false;
         dragModal.moveTarget = undefined;
-        dragModal.mouseStartPoint = {"left":0,"top":  0};
-        dragModal.basePoint = {"left":0,"top":  0};
+        dragModal.mouseStartPoint = {"left": 0, "top": 0};
+        dragModal.basePoint = {"left": 0, "top": 0};
     });
-    $(document).on("mousemove",function(e){
-        if(!dragModal.mouseDragDown || dragModal.moveTarget == undefined)return;
+    $(document).on("mousemove", function (e) {
+        if (!dragModal.mouseDragDown || dragModal.moveTarget == undefined) return;
         var mousX = e.clientX;
         var mousY = e.pageY;
-        if(mousX < 0)mousX = 0;
-        if(mousY < 0)mousY = 25;
-        dragModal.mouseEndPoint = {"left":mousX,"top": mousY};
+        if (mousX < 0) mousX = 0;
+        if (mousY < 0) mousY = 25;
+        dragModal.mouseEndPoint = {"left": mousX, "top": mousY};
         var width = dragModal.moveTarget.width();
         var height = dragModal.moveTarget.height();
-        var clientWidth=document.body.clientWidth
-        var clientHeight=document.body.clientHeight;
-        if(dragModal.mouseEndPoint.left<dragModal.mouseStartPoint.left - dragModal.basePoint.left){
-            dragModal.mouseEndPoint.left=0;
+        var clientWidth = document.body.clientWidth
+        var clientHeight = document.body.clientHeight;
+        if (dragModal.mouseEndPoint.left < dragModal.mouseStartPoint.left - dragModal.basePoint.left) {
+            dragModal.mouseEndPoint.left = 0;
         }
-        else if(dragModal.mouseEndPoint.left>=clientWidth-width+dragModal.mouseStartPoint.left - dragModal.basePoint.left){
-            dragModal.mouseEndPoint.left=clientWidth-width-38;
-        }else{
-            dragModal.mouseEndPoint.left =dragModal.mouseEndPoint.left-(dragModal.mouseStartPoint.left - dragModal.basePoint.left);//移动修正，更平滑
+        else if (dragModal.mouseEndPoint.left >= clientWidth - width + dragModal.mouseStartPoint.left - dragModal.basePoint.left) {
+            dragModal.mouseEndPoint.left = clientWidth - width - 38;
+        } else {
+            dragModal.mouseEndPoint.left = dragModal.mouseEndPoint.left - (dragModal.mouseStartPoint.left - dragModal.basePoint.left);//移动修正，更平滑
 
         }
-        if(dragModal.mouseEndPoint.top-(dragModal.mouseStartPoint.top - dragModal.basePoint.top)<dragModal.topLeng){
-            dragModal.mouseEndPoint.top=dragModal.topLeng;
-        }else if(dragModal.mouseEndPoint.top-dragModal.topLeng>clientHeight-height+dragModal.mouseStartPoint.top - dragModal.basePoint.top){
-            dragModal.mouseEndPoint.top=clientHeight-height-38+dragModal.topLeng;
+        if (dragModal.mouseEndPoint.top - (dragModal.mouseStartPoint.top - dragModal.basePoint.top) < dragModal.topLeng) {
+            dragModal.mouseEndPoint.top = dragModal.topLeng;
+        } else if (dragModal.mouseEndPoint.top - dragModal.topLeng > clientHeight - height + dragModal.mouseStartPoint.top - dragModal.basePoint.top) {
+            dragModal.mouseEndPoint.top = clientHeight - height - 38 + dragModal.topLeng;
         }
-        else{
+        else {
             dragModal.mouseEndPoint.top = dragModal.mouseEndPoint.top - (dragModal.mouseStartPoint.top - dragModal.basePoint.top);
         }
         dragModal.moveTarget.offset(dragModal.mouseEndPoint);
     });
-    $(document).on('hidden.bs.modal','.modal',function(e){
-        $('.modal-dialog').css({'top': '0px','left': '0px'})
+    $(document).on('hidden.bs.modal', '.modal', function (e) {
+        $('.modal-dialog').css({'top': '0px', 'left': '0px'})
         $('body').removeClass('select')
-        document.body.onselectstart=document.body.ondrag=null;
+        document.body.onselectstart = document.body.ondrag = null;
     })
 </script>
 

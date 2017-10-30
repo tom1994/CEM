@@ -1,5 +1,6 @@
 package io.cem.modules.cem.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,7 +27,7 @@ import io.cem.common.utils.R;
  * @date 2017-10-27 16:11:01
  */
 @RestController
-@RequestMapping("areas")
+@RequestMapping("/cem/areas")
 public class AreasController {
 	@Autowired
 	private AreasService areasService;
@@ -34,19 +35,19 @@ public class AreasController {
 	/**
 	 * 列表
 	 */
-	@RequestMapping("/list")
-	@RequiresPermissions("areas:list")
-	public R list(@RequestParam Map<String, Object> params){
-		//查询列表数据
-        Query query = new Query(params);
-
-		List<AreasEntity> areasList = areasService.queryList(query);
-		int total = areasService.queryTotal(query);
-		
-		PageUtils pageUtil = new PageUtils(areasList, total, query.getLimit(), query.getPage());
-		
-		return R.ok().put("page", pageUtil);
-	}
+//	@RequestMapping("/list")
+//	@RequiresPermissions("areas:list")
+//	public R list(@RequestParam Map<String, Object> params){
+//		//查询列表数据
+//        Query query = new Query(params);
+//
+//		List<AreasEntity> areasList = areasService.queryList(query);
+//		int total = areasService.queryTotal(query);
+//
+//		PageUtils pageUtil = new PageUtils(areasList, total, query.getLimit(), query.getPage());
+//
+//		return R.ok().put("page", pageUtil);
+//	}
 	
 	
 	/**
@@ -55,9 +56,8 @@ public class AreasController {
 	@RequestMapping("/info/{id}")
 	@RequiresPermissions("areas:info")
 	public R info(@PathVariable("id") Integer id){
-		AreasEntity areas = areasService.queryObject(id);
-		
-		return R.ok().put("areas", areas);
+		List<AreasEntity> areasList = areasService.queryAreaList(id);
+		return R.ok().put("areas", areasList);
 	}
 	
 	/**
