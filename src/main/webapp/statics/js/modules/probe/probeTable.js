@@ -500,7 +500,8 @@ var probeform_data = new Vue({
             {message:'ip类型1'},
             {message:'ip类型2'}
         ],
-        probegroup_names: []
+        probegroup_names: [],
+        accessLayers:[]
     },
     // 在 `methods` 对象中定义方法
     methods: {
@@ -657,6 +658,7 @@ var search_data = new Vue({
         areas:[],
         cities:[],
         probegroup_names:[],
+        accessLayers:[]
     },
     methods:{
         citychange: function () {
