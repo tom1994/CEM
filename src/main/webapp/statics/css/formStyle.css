@@ -114,7 +114,7 @@ a:link {
 }
 
 .form_border {
-    border-left: 2px solid #e4e4e4;
+    border-left: 0;
     line-height: 36px;
     min-height: 36px;
     text-align: center !important;
