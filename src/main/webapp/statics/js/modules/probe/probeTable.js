@@ -690,12 +690,6 @@ $(document).ready(function () {
         }
     });
 
-    // var LouLanQiHeight = $(window).height(); //得到浏览器的高度
-    // var LouLanQiWidth = $(window).width(); //得到浏览器的宽度
-    // $('iframe').attr('height', LouLanQiHeight); //将iframe的高度设置为浏览器的高度
-    // $('iframe').attr('width', LouLanQiWidth);
-    // onResize()
-
     $('#checkAll').on('click', function () {
         if (this.checked) {
             $("input[name='selectFlag']:checkbox").each(function () { //遍历所有的name为selectFlag的 checkbox
