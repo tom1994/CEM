@@ -54,7 +54,8 @@ public class ProbeController {
 		} catch (RuntimeException e) {
 			throw new RRException("内部参数错误，请重试！");
 		}
-		List<ProbeEntity> probeList = probeService.queryList(map);
+//		List<ProbeEntity> probeList = probeService.queryList(map);
+		List<ProbeEntity> probeList = probeService.queryProbeList(map);
 		int total = probeService.queryTotal(map);
 		PageUtils pageUtil = new PageUtils(probeList, total, limit, page);
 		return R.ok().put("page", pageUtil);

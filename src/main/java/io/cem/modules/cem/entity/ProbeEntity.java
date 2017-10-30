@@ -6,11 +6,7 @@ import java.util.Date;
 
 
 /**
- * 
- * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2017-10-12 17:12:46
+ * @author Miao
  */
 public class ProbeEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -75,6 +71,10 @@ public class ProbeEntity implements Serializable {
 	private String remark;
 	//创建时间
 	private Date createTime;
+	//地市名称
+	private String cityName;
+	//区县名称
+	private String areaName;
 
 	/**
 	 * 设置：探针ID
@@ -435,5 +435,22 @@ public class ProbeEntity implements Serializable {
 	 */
 	public Date getCreateTime() {
 		return createTime;
+	}
+
+
+	public String getCityName() {
+		return cityName;
+	}
+
+	public void setCityName(String cityName) {
+		this.cityName = cityName;
+	}
+
+	public String getAreaName() {
+		return areaName;
+	}
+
+	public void setAreaName(String areaName) {
+		this.areaName = areaName;
 	}
 }
