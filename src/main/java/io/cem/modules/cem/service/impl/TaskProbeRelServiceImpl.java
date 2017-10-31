@@ -26,6 +26,7 @@ public class TaskProbeRelServiceImpl implements TaskProbeRelService {
 	public List<TaskProbeRelEntity> queryList(Map<String, Object> map){
 		return taskProbeRelDao.queryList(map);
 	}
+
 	
 	@Override
 	public int queryTotal(Map<String, Object> map){

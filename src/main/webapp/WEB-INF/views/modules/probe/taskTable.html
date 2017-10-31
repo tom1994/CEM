@@ -34,7 +34,7 @@
 
                 </div>
                 <div class="ibox-content">
-                    <div class="row " style="overflow-x: scroll">     <!--表格 verflow-x: scroll超出滚动-->
+                    <div class="row " id="task_table" style="overflow-x: scroll">     <!--表格 verflow-x: scroll超出滚动-->
                         <table class="table table-bordered " id="probedata_table"></table>
                     </div>
                 </div>
@@ -108,9 +108,12 @@
 
 
 </div>
+
 <script type="text/javascript">
     $(function() {
-        $("table").colResizable();
+        $("table").colResizable({
+            minWidth:80,
+        });
     })
 </script>
 

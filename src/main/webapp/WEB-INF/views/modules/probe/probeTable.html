@@ -6,10 +6,11 @@
     <title>探针列表</title>
     #parse("cemHeader.html")  <!--导入CSS和js文件-->
     <link href="${rc.contextPath}/statics/css/formStyle.css" rel="stylesheet">  <!--自定义CSS-->
+
 </head>
 <body>
 <div class="htmleaf-container">
-    <div class="tab" role="tabpanel">
+   <div class="tab" role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active"><a href="#Section1" aria-controls="home" role="tab"
                                                       data-toggle="tab">探针管理</a></li>
@@ -139,15 +140,13 @@
                                             class="glyphicon glyphicon-open"></span>导出
                                     </button></a>
 
-                                    <p id="flip" type="button" style="text-align: center" class="glyphicon glyphicon-menu-up" ></p>
-
-                                  <!--  <button id="flip" type="button" class="glyphicon glyphicon-chevron-up" style="align-self: center"></button> -->
-
-
+                                    <button type="button" id="flip" class="btn btn-sm btn-success" style="position:relative; left:35%;"><span
+                                            class="glyphicon glyphicon-menu-up"></span>
+                                    </button>
                                 </div>
                                 <div class="ibox-content">
                                     <div class="row " style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
-                                        <table class="table table-bordered " id="probedata_table"></table>
+                                        <table  class="table table-bordered " id="probedata_table" ></table>
                                     </div>
                                 </div>
                             </div>
@@ -455,7 +454,7 @@
             </div>
 
 
-            <div role="tabpanel" class="tab-pane fade" id="Section2">
+          <div role="tabpanel" class="tab-pane fade" id="Section2">
                 <div class="row">
                     <div class="col-lg-8 col-md-8 col-sm-8">
                         <div class="ibox float-e-margins">
@@ -492,8 +491,7 @@
                             <div class="ibox-content col-lg-8 col-md-8 col-sm-8">
 
                                 <div class="row " style="">     <!--表格 overflow-x: scroll超出滚动-->
-                                    <table class="table table-bordered " id="probegroup_table"></table>
-
+                                 <table class="table table-bordered " width=152% id="probegroup_table"></table>
                                 </div>
                             </div>
                         </div>
@@ -501,6 +499,7 @@
                 </div>
             </div>
 
+            <!--模态框-->
             <div class="modal fade" id="groupModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
                  aria-hidden="true">
                 <div class="modal-dialog" style="width: 700px">
@@ -584,6 +583,14 @@
 </div>
 
 
+</div>
+
+<script type="text/javascript">
+    $(function() {
+        $("table").colResizable();
+    })
+</script>
+
 <script>window.jQuery || document.write('<script src="${rc.contextPath}/statics/js/plugins/jquery/jquery-2.0.3.js"><\/script>')</script>
 <script type="text/javascript"
         src="${rc.contextPath}/statics/js/modules/probe/probeTable.js?_${date.systemTime}"></script>
@@ -597,12 +604,9 @@
     });
 </script>
 
-
-
 </body>
 
 <script>
-
     /** 拖拽模态框*/
     var dragModal = {
         mouseStartPoint: {"left": 0, "top": 0},
@@ -670,13 +674,6 @@
 
     })
 </script>
-
-<script type="text/javascript">
-    $(function() {
-        $(".ibox-content").colResizable();
-    })
-</script>
-
 
 
 

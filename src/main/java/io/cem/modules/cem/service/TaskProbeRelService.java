@@ -17,6 +17,7 @@ public interface TaskProbeRelService {
 	TaskProbeRelEntity queryObject(Integer id);
 	
 	List<TaskProbeRelEntity> queryList(Map<String, Object> map);
+
 	
 	int queryTotal(Map<String, Object> map);
 	
