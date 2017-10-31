@@ -75,6 +75,8 @@ public class ProbeEntity implements Serializable {
 	private String cityName;
 	//区县名称
 	private String areaName;
+	//探针类型
+	private String typeName;
 
 	/**
 	 * 设置：探针ID

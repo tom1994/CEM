@@ -78,11 +78,15 @@
 		cities.city AS city_name,
 		areas.areaid,
 		areas.area AS area_name
+		dicType.id,
+		dicType.dic_name AS type_name
 		FROM probe
 		LEFT JOIN cities
 		ON probe.city = cities.cityid
 		LEFT JOIN areas
 		ON probe.county = areas.areaid
+		LEFT JOIN dicType
+		ON probe.type = dicType.id
 		<choose>
 			<when test="sidx != null and sidx.trim() != ''">
 				order by ${sidx} ${order}

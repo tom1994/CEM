@@ -91,7 +91,7 @@ a:link {
 
 
 .row input { /*设置外边距*/
-    margin: 4px 0 4px 0;
+    margin: 2px 0 2px 0;
 }
 
 
@@ -105,7 +105,7 @@ a:link {
 }
 
 .row select { /*设置外边距*/
-    margin: 4px 0 4px 0;
+    margin: 2px 0 2px 0;
 }
 
 .form-group {
@@ -144,7 +144,10 @@ a:link {
 
 }*/
 
-
+.input-label {
+    padding-top: 0px;
+    !important;
+}
 
 /******测试任务组相关样式*****/
 .testtargetbutton{

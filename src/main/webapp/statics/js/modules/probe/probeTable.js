@@ -6,6 +6,7 @@ var idArray = new Array();
 var probeGroupNames = new Array();
 var cityNames = new Array();
 var areaNames = new Array();
+var typeNames = new Array();
 
 var probedata_handle = new Vue({
     el: '#probehandle',
@@ -658,7 +659,8 @@ var search_data = new Vue({
         areas:[],
         cities:[],
         probegroup_names:[],
-        accessLayers:[]
+        accessLayers:[],
+        types:[]
     },
     methods:{
         citychange: function () {
@@ -770,21 +772,21 @@ var probetable = new Vue({
         el: '#probedata_table',
     data: {
         headers: [
-            {title: '<div style="width:67px"></div>'},
-            {title: '<div class="checkbox" style="width:67px"> <label> <input type="checkbox" id="checkAll"></label> </div>'},
+            {title: '<div style="width:16px"></div>'},
+            {title: '<div class="checkbox" style="width:16px"> <label> <input type="checkbox" id="checkAll"></label> </div>'},
             //{title: '<div style=" width:0px;display:none;padding:0px">id</div>'},
-            {title: '<div style="width:65px">探针名</div>'},
+            {title: '<div style="width:70px">探针名</div>'},
             {title: '<div style="width:42px">地市</div>'},
             {title: '<div style="width:42px">区县</div>'},
             {title: '<div style="width:95px">位置</div>'},
             {title: '<div style="width:40px">层级</div>'},
             {title: '<div style="width:65px">上联探针</div>'},
             {title: '<div style="width:50px">状态</div>'},
-            {title: '<div style="width:58px">类型</div>'},
-            {title: '<div style="width:112px">注册时间</div>'},
-            {title: '<div style="width:112px">最后心跳时间</div>'},
-            {title: '<div style="width:112px">最后上报时间</div>'},
-            {title: '<div style="width:65px">操作</div>'},
+            {title: '<div style="width:50px">类型</div>'},
+            {title: '<div style="width:130px">注册时间</div>'},
+            {title: '<div style="width:130px">最后心跳时间</div>'},
+            {title: '<div style="width:130px">最后上报时间</div>'},
+            {title: '<div style="width:60px">操作</div>'},
         ],
         rows: [],
         dtHandle: null,
@@ -868,6 +870,7 @@ var probetable = new Vue({
                             let rows = [];
                             var i = param.start+1;
                             result.page.list.forEach(function (item) {
+
                                 let row = [];
                                 row.push(i++);
                                 row.push('<div class="checkbox"> <label> <input type="checkbox" id="checkALl" name="selectFlag"></label> </div>');
@@ -879,7 +882,7 @@ var probetable = new Vue({
                                 row.push(item.accessLayer);
                                 row.push(item.upstream);
                                 row.push(item.status);
-                                row.push(item.type);
+                                row.push(item.typeName);
                                 row.push(item.registerTime);
                                 row.push(item.lastHbTime);
                                 row.push(item.lastReportTime);
@@ -889,6 +892,7 @@ var probetable = new Vue({
                                 row.push('<a class="fontcolor" onclick="update_this(this)" id='+item.id+'>详情</a>&nbsp&nbsp;' +
                                     '<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>');
                                 rows.push(row);
+                                console.log(item);
                             });
                             returnData.data = rows;
                             console.log(returnData);

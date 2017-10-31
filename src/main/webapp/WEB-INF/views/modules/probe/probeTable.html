@@ -152,13 +152,13 @@
                                     </button>
                                     <h3 class="modal-title myModalLabel">{{modaltitle}}</h3>
                                 </div>
-                                <div class="modal-body">
+                                <div class="modal-body" style="padding: 0px 30px 0px 30px !important;">
                                     <div class="row">
                                         <form class="form-horizontal" id="probeform_data" role="form">
 
                                             <div class="form-group row">
                                                 <label for="id"
-                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border"
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border"
                                                        style="display: none">id:</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border"
                                                      style="display: none">
@@ -169,19 +169,19 @@
 
                                             <div class="form-group row">
                                                 <label for="probename"
-                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">探针名:</label>
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">探针名:</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                                     <input type="text" class="form-control" id="probename" name="name"
                                                            placeholder="请输入">
                                                 </div>
                                                 <label for="serialNumber"
-                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">序列号:</label>
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">序列号:</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                                     <input type="text" class="form-control" id="serialNumber" name="serialNumber"
                                                            readonly="readonly">
                                                 </div>
                                                 <label for="type"
-                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">探针类型:</label>
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">探针类型:</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                                     <select id="type" class="form-control" name="type">  <!--VUE列表渲染-->
                                                         <option v-for="item in types">
@@ -193,7 +193,7 @@
 
                                             <div class="form-group row">
                                                 <label for="city"
-                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">所属地市:</label>
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">所属地市:</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                                     <select id="city" class="form-control" name="city">  <!--VUE列表渲染-->
                                                         <option v-for="item in citys">
@@ -202,7 +202,7 @@
                                                     </select>
                                                 </div>
                                                 <label for="county"
-                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">所属区县:</label>
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">所属区县:</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                                     <select id="county" class="form-control" name="county">
                                                         <!--VUE列表渲染-->
@@ -212,7 +212,7 @@
                                                     </select>
                                                 </div>
                                                 <label for="location"
-                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">所属位置:</label>
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">所属位置:</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                                     <input type="text" class="form-control" id="location"
                                                            name="location"
@@ -222,21 +222,21 @@
 
                                             <div class="form-group row">
                                                 <label for="brasName"
-                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">BRAS名称:</label>
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">BRAS名称:</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                                     <input type="text" class="form-control" id="brasName"
                                                            name="brasName"
                                                            placeholder="请输入">
                                                 </div>
                                                 <label for="brasIp"
-                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">BRAS IP:</label>
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">BRAS IP:</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                                     <input type="text" class="form-control" id="brasIp"
                                                            name="brasIp"
                                                            placeholder="请输入">
                                                 </div>
                                                 <label for="brasPort"
-                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">BRAS端口:</label>
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">BRAS端口:</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                                     <input type="text" class="form-control" id="brasPort"
                                                            name="brasPort"
@@ -246,19 +246,19 @@
 
                                             <div class="form-group row">
                                                 <label for="accessLayer"
-                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">接入层级:</label>
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">接入层级:</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                                     <input id="accessLayer" class="form-control" name="accessLayer">
                                                     </input>
                                                 </div>
                                                 <label for="upstream"
-                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">上联探针:</label>
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">上联探针:</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                                     <input id="upstream" class="form-control" name="upstream">
                                                     </input>
                                                 </div>
                                                 <label for="status"
-                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">状态:</label>
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">状态:</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                                     <input id="status" class="form-control" name="status" readonly="readonly">
                                                     </input>
@@ -267,19 +267,19 @@
 
                                             <div class="form-group row">
                                                 <label for="device"
-                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">设备型号:</label>
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">设备型号:</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                                     <input type="text" class="form-control" id="device" name="device"
                                                            readonly="readonly">
                                                 </div>
                                                 <label for="version"
-                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">软件版本:</label>
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">软件版本:</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                                     <input type="text" class="form-control" id="version" name="version"
                                                            readonly="readonly">
                                                 </div>
                                                 <label for="concurrentTask"
-                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">最大任务数:</label>
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">最大任务数:</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                                     <input type="text" class="form-control" id="concurrentTask" name="concurrentTask"
                                                            readonly="readonly">
@@ -289,20 +289,20 @@
 
                                             <div class="form-group row">
                                                 <label for="groupId"
-                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">所属探针组:</label>
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">所属探针组:</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                                     <input type="text" class="form-control" id="groupId"
                                                            name="groupId"
                                                            placeholder="请输入">
                                                 </div>
                                                 <label for="ipType"
-                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">IP类型:</label>
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">IP类型:</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                                     <input type="text" class="form-control" id="ipType"
                                                            name="ipType" readonly="readonly">
                                                 </div>
                                                 <label for="isp"
-                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">接入运营商:</label>
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">接入运营商:</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                                     <input type="text" class="form-control" id="isp"
                                                            name="isp"
@@ -312,28 +312,28 @@
 
                                             <div class="form-group row">
                                                 <label for="hbInterval"
-                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">心跳间隔(秒):</label>
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">心跳间隔(秒):</label>
                                                 <div class="col-lg-1 col-md-1 col-sm-1 form_border">
                                                     <input type="text" class="form-control" id="hbInterval"
                                                            name="hbInterval"
                                                            placeholder="30">
                                                 </div>
                                                 <label for="taskInterval" style="padding-left:0 !important;padding-right: 0 !important; "
-                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">获取任务间隔(分钟):</label>
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">获取任务间隔(分钟):</label>
                                                 <div class="col-lg-1 col-md-1 col-sm-1 form_border">
                                                     <input type="text" class="form-control" id="taskInterval"
                                                            name="taskInterval"
                                                            placeholder="30">
                                                 </div>
                                                 <label for="reportInterval"
-                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">上报间隔(分钟):</label>
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">上报间隔(分钟):</label>
                                                 <div class="col-lg-1 col-md-1 col-sm-1 form_border">
                                                     <input type="text" class="form-control" id="reportInterval"
                                                            name="reportInterval"
                                                            placeholder="15">
                                                 </div>
                                                 <label for="updateInterval" style="padding-left:0 !important;padding-right: 0 !important; "
-                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">升级检测间隔(小时):</label>
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">升级检测间隔(小时):</label>
                                                 <div class="col-lg-1 col-md-1 col-sm-1 form_border">
                                                     <input type="text" class="form-control" id="updateInterval"
                                                            name="updateInterval"
@@ -344,12 +344,12 @@
                                             <div class="form-group row">
                                                 <label for="lastHbtime" style="text-align: left !important;padding-left:15px !important;
                                                         margin-left: 9px;margin-right: -10px;"
-                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">最后心跳时间:</label>
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">最后心跳时间:</label>
                                                 <div class="col-lg-4 col-md-4 col-sm-4 form_border">
                                                     <input type="text" class="form-control" id="lastHbtime" name="lastHbtime" readonly="readonly">
                                                 </div>
                                                 <label for="registerTime" style="text-align: left !important"
-                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">注册时间:</label>
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">注册时间:</label>
                                                 <div class="col-lg-4 col-md-4 col-sm-4 form_border">
                                                     <input type="text" class="form-control" id="registerTime" name="registerTime"
                                                            readonly="readonly">
@@ -359,13 +359,13 @@
                                             <div class="form-group row">
                                                 <label for="lastReportTime" style="text-align: left !important;padding-left:15px !important;
                                                 margin-left: 9px;margin-right: -10px;"
-                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">最后上报时间:</label>
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">最后上报时间:</label>
                                                 <div class="col-lg-4 col-md-4 col-sm-4 form_border">
                                                     <input type="text" class="form-control" id="lastReportTime"
                                                            name="lastReportTime" readonly="readonly">
                                                 </div>
                                                 <label for="lastUpdateTime" style="text-align: left !important"
-                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">最后升级时间:</label>
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">最后升级时间:</label>
                                                 <div class="col-lg-4 col-md-4 col-sm-4 form_border">
                                                     <input type="text" class="form-control" id="lastUpdateTime"
                                                            name="lastUpdateTime" readonly="readonly">
@@ -375,7 +375,7 @@
                                             <div class="form-group row">
                                                 <label for="portIp" style="text-align: left !important;padding-left:15px !important;
                                                         margin-left: 9px;margin-right: -10px;"
-                                                       class="col-lg-2 col-md-2 col-sm-2 control-label form_border">端口及IP:</label>
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">端口及IP:</label>
                                                 <div class="col-lg-10 col-md-10 col-sm-10 form_border">
                                                     <input type="text" class="form-control" id="portIp"
                                                            name="portIp" readonly="readonly">
@@ -387,8 +387,8 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                                    <button type="button" class="btn btn-primary ui-button" v-on:click="submit">保存</button>
-                                    <!--<button type="button" class="btn btn-success" v-on:click="submit">保存</button>-->
+                                    <!--<button type="button" class="btn btn-primary ui-button" v-on:click="submit">保存</button>-->
+                                    <button type="button" class="btn btn-success" v-on:click="submit">保存</button>
 
                                 </div>
                             </div>
@@ -488,18 +488,18 @@
                             <div class="row">
                                 <form class="form-horizontal" id="groupform_data" role="form">
                                     <div class="form-group row">
-                                        <label for="groupid"
-                                               class="col-lg-3 col-md-3 col-sm-3 control-label form_border"
+                                        <label for="probegroupid"
+                                               class="col-lg-3 col-md-3 col-sm-3 input-label form_border"
                                                style="display: none">id:</label>
                                         <div class="col-lg-3 col-md-3 col-sm-3 form_border"
                                              style="display: none">
-                                            <input type="text" class="form-control" id="groupid" name="id"
+                                            <input type="text" class="form-control" id="probegroupid" name="id"
                                                    placeholder="请输入id">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="groupname"
-                                               class="col-lg-3 col-md-3 col-sm-3 control-label "
+                                               class="col-lg-3 col-md-3 col-sm-3 input-label "
                                                style="font-size: medium">探针组名:</label>
                                         <div class="col-lg-3 col-md-3 col-sm-3 ">
                                             <input type="text" class="form-control" id="groupname" name="name"
@@ -508,7 +508,7 @@
                                     </div>
                                     <div class="form-group row">
                                         <label for="remark"
-                                               class="col-lg-3 col-md-3 col-sm-3 control-label"
+                                               class="col-lg-3 col-md-3 col-sm-3 input-label"
                                                style="font-size: medium">备注:</label>
                                         <div class="col-lg-3 col-md-3 col-sm-3 ">
                                             <input type="text" class="form-control" id="remark" name="remark"
