@@ -41,15 +41,15 @@
 
 	<select id="queryObject" resultMap="probeMap">
 		SELECT probe.*,
-		cities.cityid,
+		cities.city_id,
 		cities.city AS city_name,
-		areas.areaid,
+		areas.area_id,
 		areas.area AS area_name
 		FROM probe
 		LEFT JOIN cities
-		ON probe.city = cities.cityid
+		ON probe.city = cities.city_id
 		LEFT JOIN areas
-		ON probe.county = areas.areaid
+		ON probe.county = areas.area_id
 		WHERE probe.id = #{value}
 	</select>
 
@@ -74,15 +74,15 @@
 
 	<select id="queryProbeList" resultMap="probeMap">
 		SELECT probe.*,
-		cities.cityid,
+		cities.city_id,
 		cities.city AS city_name,
-		areas.areaid,
+		areas.area_id,
 		areas.area AS area_name
 		FROM probe
 		LEFT JOIN cities
-		ON probe.city = cities.cityid
+		ON probe.city = cities.city_id
 		LEFT JOIN areas
-		ON probe.county = areas.areaid
+		ON probe.county = areas.area_id
 		<choose>
 			<when test="sidx != null and sidx.trim() != ''">
 				order by ${sidx} ${order}
