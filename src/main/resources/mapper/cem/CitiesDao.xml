@@ -6,9 +6,9 @@
 	<!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="io.cem.modules.cem.entity.CitiesEntity" id="citiesMap">
         <result property="id" column="id"/>
-        <result property="cityid" column="cityid"/>
+        <result property="city_id" column="city_id"/>
         <result property="city" column="city"/>
-        <result property="provinceid" column="provinceid"/>
+        <result property="province_id" column="province_id"/>
     </resultMap>
 
 	<select id="queryObject" resultType="io.cem.modules.cem.entity.CitiesEntity">
@@ -22,7 +22,7 @@
                 order by ${sidx} ${order}
             </when>
 			<otherwise>
-                order by id desc
+                order by id
 			</otherwise>
         </choose>
 		<if test="offset != null and limit != null">
@@ -37,24 +37,24 @@
 	<insert id="save" parameterType="io.cem.modules.cem.entity.CitiesEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into cities
 		(
-			`cityid`, 
+			`city_id`, 
 			`city`, 
-			`provinceid`
+			`province_id`
 		)
 		values
 		(
-			#{cityid}, 
+			#{city_id}, 
 			#{city}, 
-			#{provinceid}
+			#{province_id}
 		)
 	</insert>
 	 
 	<update id="update" parameterType="io.cem.modules.cem.entity.CitiesEntity">
 		update cities 
 		<set>
-			<if test="cityid != null">`cityid` = #{cityid}, </if>
+			<if test="city_id != null">`city_id` = #{city_id}, </if>
 			<if test="city != null">`city` = #{city}, </if>
-			<if test="provinceid != null">`provinceid` = #{provinceid}</if>
+			<if test="province_id != null">`province_id` = #{province_id}</if>
 		</set>
 		where id = #{id}
 	</update>

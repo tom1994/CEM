@@ -708,12 +708,6 @@ $(document).ready(function () {
         }
     });
 
-    // var LouLanQiHeight = $(window).height(); //得到浏览器的高度
-    // var LouLanQiWidth = $(window).width(); //得到浏览器的宽度
-    // $('iframe').attr('height', LouLanQiHeight); //将iframe的高度设置为浏览器的高度
-    // $('iframe').attr('width', LouLanQiWidth);
-    // onResize()
-
     $('#checkAll').on('click', function () {
         if (this.checked) {
             $("input[name='selectFlag']:checkbox").each(function () { //遍历所有的name为selectFlag的 checkbox
@@ -831,8 +825,7 @@ var probetable = new Vue({
             ordering: false, /*禁用排序功能*/
             /*bInfo: false,*/
             /*bLengthChange: false,*/    /*禁用Show entries*/
-            /*scrollY: 432,    /!*表格高度固定*!/*/
-            scrollY: true,
+            scroll: false,
             oLanguage: {
                 sLengthMenu: "每页 _MENU_ 行数据",
                 oPaginate: {
@@ -912,7 +905,7 @@ var grouptable = new Vue({
     el: '#probegroup_table',
     data: {
         headers: [
-            {title: '<div style="width:67px"></div>'},
+            {title: '<div style="width:97px"></div>'},
             //{title: '<div class="checkbox"> <label> <input type="checkbox" id="checkAllGroup""></label> </div>'},
             //{title: '<div style="display:none">id</div>'},
             {title: '<div style="width:58px">探针组ID</div>'},
