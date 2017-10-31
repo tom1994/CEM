@@ -6,9 +6,9 @@
 	<!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="io.cem.modules.cem.entity.AreasEntity" id="areasMap">
         <result property="id" column="id"/>
-        <result property="areaid" column="areaid"/>
+        <result property="area_id" column="area_id"/>
         <result property="area" column="area"/>
-        <result property="cityid" column="cityid"/>
+        <result property="city_id" column="city_id"/>
     </resultMap>
 
 	<select id="queryObject" resultType="io.cem.modules.cem.entity.AreasEntity">
@@ -16,8 +16,8 @@
 	</select>
 
 	<select id="queryAreaList" resultType="io.cem.modules.cem.entity.AreasEntity">
-		select * from areas where cityid = #{value}
-        order by id desc
+		select * from areas where city_id = #{value}
+        order by id
 	</select>
 	
  	<select id="queryTotal" resultType="int">
@@ -27,24 +27,24 @@
 	<insert id="save" parameterType="io.cem.modules.cem.entity.AreasEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into areas
 		(
-			`areaid`, 
+			`area_id`, 
 			`area`, 
-			`cityid`
+			`city_id`
 		)
 		values
 		(
-			#{areaid}, 
+			#{area_id}, 
 			#{area}, 
-			#{cityid}
+			#{city_id}
 		)
 	</insert>
 	 
 	<update id="update" parameterType="io.cem.modules.cem.entity.AreasEntity">
 		update areas 
 		<set>
-			<if test="areaid != null">`areaid` = #{areaid}, </if>
+			<if test="area_id != null">`area_id` = #{area_id}, </if>
 			<if test="area != null">`area` = #{area}, </if>
-			<if test="cityid != null">`cityid` = #{cityid}</if>
+			<if test="city_id != null">`city_id` = #{city_id}</if>
 		</set>
 		where id = #{id}
 	</update>
