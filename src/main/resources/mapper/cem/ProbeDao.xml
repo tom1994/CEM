@@ -37,6 +37,7 @@
         <result property="createTime" column="create_time"/>
 		<result property="cityName" column="city_name"/>
 		<result property="areaName" column="area_name"/>
+		<result property="typeName" column="type_name"/>
     </resultMap>
 
 	<select id="queryObject" resultMap="probeMap">
@@ -44,12 +45,16 @@
 		cities.city_id,
 		cities.city AS city_name,
 		areas.area_id,
-		areas.area AS area_name
+		areas.area AS area_name,
+		dic_type.id,
+		dic_type.dic_name AS type_name
 		FROM probe
 		LEFT JOIN cities
 		ON probe.city = cities.city_id
 		LEFT JOIN areas
 		ON probe.county = areas.area_id
+		LEFT JOIN dic_type
+		ON probe.dic_name = dic_type.id
 		WHERE probe.id = #{value}
 	</select>
 
@@ -78,15 +83,15 @@
 		cities.city AS city_name,
 		areas.area_id,
 		areas.area AS area_name
-		dicType.id,
-		dicType.dic_name AS type_name
+		dic_type.id,
+		dic_type.dic_name AS type_name
 		FROM probe
 		LEFT JOIN cities
 		ON probe.city = cities.city_id
 		LEFT JOIN areas
 		ON probe.county = areas.area_id
-		LEFT JOIN dicType
-		ON probe.type = dicType.id
+		LEFT JOIN dic_type
+		ON probe.type = dic_type.id
 
 		<choose>
 			<when test="sidx != null and sidx.trim() != ''">
