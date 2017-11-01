@@ -146,7 +146,7 @@ var probedata_handle = new Vue({
             }
         },*/
         probesearch: function () {   /*查询监听事件*/
-            var data = getFormJson($('#searchcolums'));
+            var data = getFormJson($('#searchcolumns'));
             /*得到查询条件*/
             /*获取表单元素的值*/
             console.log(data);
@@ -487,19 +487,19 @@ var probeform_data = new Vue({
     data: {
         modaltitle: "探针详情", /*定义模态框标题*/
         countyNames: [
-            /*{message: '海淀区'},
-            {message: '朝阳区'},*/
+            {message: '海淀区'},
+            {message: '朝阳区'},
         ],
         cityNames: [
-           // {message: '北京市'}
+            {message: '北京市'}
         ],
         typeNames: [
-            /*{message: '类型1'},
-            {message: '类型2'}*/
+            {message: '类型1'},
+            {message: '类型2'}
         ],
         ipTypes: [
-           /* {message:'ip类型1'},
-            {message:'ip类型2'}*/
+            {message:'ip类型1'},
+            {message:'ip类型2'}
         ],
         probegroup_names: [
             {message:'探针组1'},
@@ -660,13 +660,14 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
 
 
 var search_data = new Vue({
-    el:'#searchcolums',
+    el:'#searchcolumns',
     data:{
         areas:[],
         cities:[],
         probegroup_names:[],
         accessLayers:[],
-        types:[]
+        types:[],
+        status:[]
     },
     methods:{
         citychange: function () {
@@ -769,7 +770,7 @@ $(document).ready(function () {
 
 // 探针列表
 var probetable = new Vue({
-        el: '#probedata_table',
+    el: '#probedata_table',
     data: {
         headers: [
             //{title: '<div style="width:16px"></div>'},

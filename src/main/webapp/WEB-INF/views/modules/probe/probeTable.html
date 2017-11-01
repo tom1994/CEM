@@ -89,9 +89,14 @@
 
                                                 <div class="input-group searchspan">
                                                     <span class="searchname" title="类型" style="width: 40px">类型</span>
-                                                    <input type="text" class="form-control" name="type"
-                                                           style="width: 110px"
-                                                           value="">
+                                                    <select class="form-control" name="type"
+                                                            style="width: 110px;">
+                                                        <option value="">---请选择---</option>
+                                                        <!--vue 绑定value属性    重要！！！！-->
+                                                        <option v-for="item in types"
+                                                                v-bind:value="item.message.name">{{ item.message.name }}
+                                                        </option>
+                                                    </select>
                                                 </div>
 
                                                 <div class="input-group searchspan">
