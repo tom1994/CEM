@@ -772,8 +772,10 @@ var probetable = new Vue({
         el: '#probedata_table',
     data: {
         headers: [
-            {title: '<div style="width:16px"></div>'},
-            {title: '<div class="checkbox" style="width:16px"> <label> <input type="checkbox" id="checkAll"></label> </div>'},
+            //{title: '<div style="width:16px"></div>'},
+            //{title: '<div class="checkbox" style="width:16px"> <label> <input type="checkbox" id="checkAll"></label> </div>'},
+            {title: '<div style="width:10px"></div>'},
+            {title: '<div class="checkbox" style="width:100%; align: center"> <label> <input type="checkbox" id="checkAll"></label> </div>'},
             //{title: '<div style=" width:0px;display:none;padding:0px">id</div>'},
             {title: '<div style="width:70px">探针名</div>'},
             {title: '<div style="width:42px">地市</div>'},
@@ -898,6 +900,13 @@ var probetable = new Vue({
                             //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                             //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                             callback(returnData);
+                            $("#probedata_table").colResizable({
+                        });
+                        // $('td').closest('table').find('th').eq(1).attr('style', 'text-align: center;');
+                        // $('#probe_table tbody').find('td').eq(1).attr('style', 'text-align: center;');
+                        // var trs = $('#probe_table tbody').find('tr');
+                        // trs.find("td").eq(1).attr('style', 'text-align: center;');
+
                     }
                 });
             }
@@ -999,7 +1008,7 @@ var grouptable = new Vue({
                             let row = [];
                             row.push(i++);
                             //row.push('<div class="checkbox"> <label> <input type="checkbox"  id="checkALlGroup" name="groupselectFlag"></label> </div>');
-                            row.push('<div class="probe_id">'+item.id+'</div>');
+                            // row.push('<div class="probe_id">'+item.id+'</div>');
                             row.push(item.name);
                             row.push(item.remark);
                             row.push('<a class="fontcolor" onclick="updategroup_this(this)" id='+item.id+'>编辑</a>&nbsp&nbsp;<a class="fontcolor" onclick="deletegroup_this(this)" id='+item.id+'>删除</a>');

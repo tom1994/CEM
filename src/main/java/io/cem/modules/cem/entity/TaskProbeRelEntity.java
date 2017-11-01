@@ -25,6 +25,10 @@ public class TaskProbeRelEntity implements Serializable {
 	private Integer status;
 	//备注
 	private String remark;
+	//任务名称
+	private String taskName;
+	//探针名称
+	private String probeName;
 
 	/**
 	 * 设置：任务探针关系ID
@@ -97,5 +101,29 @@ public class TaskProbeRelEntity implements Serializable {
 	 */
 	public String getRemark() {
 		return remark;
+	}
+	/**
+	 * 设置：探针名称
+	 */
+	public void setProbeName(String probeName) {
+		this.probeName = probeName;
+	}
+	/**
+	 * 获取：探针名称
+	 */
+	public String getProbeName() {
+		return probeName;
+	}
+	/**
+	 * 设置：任务名称
+	 */
+	public void setTaskName(String taskName) {
+		this.taskName = taskName;
+	}
+	/**
+	 * 获取：任务名称
+	 */
+	public String getTaskName() {
+		return taskName;
 	}
 }

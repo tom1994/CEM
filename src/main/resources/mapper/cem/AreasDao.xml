@@ -12,20 +12,20 @@
     </resultMap>
 
 	<select id="queryObject" resultType="io.cem.modules.cem.entity.AreasEntity">
-		select * from areas where id = #{value}
+		select * from county where id = #{value}
 	</select>
 
 	<select id="queryAreaList" resultType="io.cem.modules.cem.entity.AreasEntity">
-		select * from areas where city_id = #{value}
+		select * from county where city_id = #{value}
         order by id
 	</select>
 	
  	<select id="queryTotal" resultType="int">
-		select count(*) from areas 
+		select count(*) from county
 	</select>
 	 
 	<insert id="save" parameterType="io.cem.modules.cem.entity.AreasEntity" useGeneratedKeys="true" keyProperty="id">
-		insert into areas
+		insert into county
 		(
 			`area_id`, 
 			`area`, 
@@ -40,7 +40,7 @@
 	</insert>
 	 
 	<update id="update" parameterType="io.cem.modules.cem.entity.AreasEntity">
-		update areas 
+		update county
 		<set>
 			<if test="area_id != null">`area_id` = #{area_id}, </if>
 			<if test="area != null">`area` = #{area}, </if>
@@ -50,11 +50,11 @@
 	</update>
 	
 	<delete id="delete">
-		delete from areas where id = #{value}
+		delete from county where id = #{value}
 	</delete>
 	
 	<delete id="deleteBatch">
-		delete from areas where id in 
+		delete from county where id in
 		<foreach item="id" collection="array" open="(" separator="," close=")">
 			#{id}
 		</foreach>

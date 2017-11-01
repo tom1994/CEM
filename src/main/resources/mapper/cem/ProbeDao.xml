@@ -42,18 +42,18 @@
 
 	<select id="queryObject" resultMap="probeMap">
 		SELECT probe.*,
-		cities.city_id,
-		cities.city AS city_name,
-		areas.area_id,
-		areas.area AS area_name,
+		city.city_id,
+		city.city AS city_name,
+		county.area_id,
+		county.area AS area_name,
 		a.data_id,
 		a.dic_type_id,
 		a.data_name AS type_name
 		FROM probe
-		LEFT JOIN cities
-		ON probe.city = cities.city_id
-		LEFT JOIN areas
-		ON probe.county = areas.area_id
+		LEFT JOIN city
+		ON probe.city = city.city_id
+		LEFT JOIN county
+		ON probe.county = county.area_id
 		LEFT JOIN dic_data a
 		ON probe.type = a.data_id AND a.dic_type_id = 1
 		WHERE probe.id = #{value}
@@ -80,21 +80,20 @@
 
 	<select id="queryProbeList" resultMap="probeMap">
 		SELECT probe.*,
-		cities.city_id,
-		cities.city AS city_name,
-		areas.area_id,
-		areas.area AS area_name,
+		city.city_id,
+		city.city AS city_name,
+		county.area_id,
+		county.area AS area_name,
 		a.data_id,
 		a.dic_type_id,
 		a.data_name AS type_name
 		FROM probe
-		LEFT JOIN cities
-		ON probe.city = cities.city_id
-		LEFT JOIN areas
-		ON probe.county = areas.area_id
+		LEFT JOIN city
+		ON probe.city = city.city_id
+		LEFT JOIN county
+		ON probe.county = county.area_id
 		LEFT JOIN dic_data a
 		ON probe.type = a.data_id AND a.dic_type_id = 1
-
 		<choose>
 			<when test="sidx != null and sidx.trim() != ''">
 				order by ${sidx} ${order}

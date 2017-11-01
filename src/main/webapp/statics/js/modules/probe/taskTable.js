@@ -454,8 +454,6 @@ var probetable = new Vue({
         let vm = this;
         // Instantiate the datatable and store the reference to the instance in our dtHandle element.
         vm.dtHandle = $(this.$el).DataTable({
-
-
             // Specify whatever options you want, at a minimum these:
             columns: vm.headers,
             data: vm.rows,
@@ -465,11 +463,6 @@ var probetable = new Vue({
             info: false,
             ordering: false, /*禁用排序功能*/
 
-
-            /*bInfo: false,*/
-
-            /*bLengthChange: false,*/    /*禁用Show entries*/
-            /*scrollY: 432,    /!*表格高度固定*!/*/
             oLanguage: {
                 sLengthMenu: "每页 _MENU_ 行数据",
                 oPaginate: {
@@ -516,7 +509,7 @@ var probetable = new Vue({
                             row.push('<div class="checkbox"> <label> <input type="checkbox" name="selectFlag"></label> </div>');
                             row.push('<div class="probe_id">'+item.id+'</div>');
                             row.push(item.taskId);
-                            row.push(item.probeId);
+                            row.push(item.probeName);
                             row.push(item.port);
                             row.push(status_word);
                             //row.push(item.status);

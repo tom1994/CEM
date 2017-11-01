@@ -12,11 +12,11 @@
     </resultMap>
 
 	<select id="queryObject" resultType="io.cem.modules.cem.entity.CitiesEntity">
-		select * from cities where id = #{value}
+		select * from city where id = #{value}
 	</select>
 
 	<select id="queryList" resultType="io.cem.modules.cem.entity.CitiesEntity">
-		select * from cities
+		select * from city
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
                 order by ${sidx} ${order}
@@ -31,11 +31,11 @@
 	</select>
 	
  	<select id="queryTotal" resultType="int">
-		select count(*) from cities 
+		select count(*) from city
 	</select>
 	 
 	<insert id="save" parameterType="io.cem.modules.cem.entity.CitiesEntity" useGeneratedKeys="true" keyProperty="id">
-		insert into cities
+		insert into city
 		(
 			`city_id`, 
 			`city`, 
@@ -50,7 +50,7 @@
 	</insert>
 	 
 	<update id="update" parameterType="io.cem.modules.cem.entity.CitiesEntity">
-		update cities 
+		update city
 		<set>
 			<if test="city_id != null">`city_id` = #{city_id}, </if>
 			<if test="city != null">`city` = #{city}, </if>
@@ -60,11 +60,11 @@
 	</update>
 	
 	<delete id="delete">
-		delete from cities where id = #{value}
+		delete from city where id = #{value}
 	</delete>
 	
 	<delete id="deleteBatch">
-		delete from cities where id in 
+		delete from city where id in
 		<foreach item="id" collection="array" open="(" separator="," close=")">
 			#{id}
 		</foreach>
