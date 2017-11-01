@@ -523,6 +523,7 @@ var probetable = new Vue({
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);
                         $("#probedata_table").colResizable({
+                            minWidth:40,
                         });
                     }
                 });
