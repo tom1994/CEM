@@ -56,6 +56,7 @@ function update_this (obj) {     /*监听修改触发事件*/
     $('#myModal_schedulepolicy').modal('show');
 }
 
+<<<<<<< HEAD
 /*var update_data = new Vue({
     el: '#myModal_schedulepolicy',
     data: {
@@ -81,6 +82,8 @@ function update_this (obj) {     /*监听修改触发事件*/
     }
 });*/
 
+=======
+>>>>>>> 45129d4f791010cb5412b1686d3660978499d2e7
 
 function delete_ajax() {
     var ids = JSON.stringify(idArray);
@@ -183,6 +186,7 @@ var taskform_data = new Vue({
     methods: {
         submit: function () {
             var schedulepolicyJson = getFormJson($('#taskform_data'));
+<<<<<<< HEAD
             if (typeof(schedulepolicyJson["name"]) == "undefined") {                  /*3个select必选*/
                 toastr.warning("请添加策略名称");
             } else if (typeof(schedulepolicyJson["cron"]) == "undefined") {
@@ -190,6 +194,15 @@ var taskform_data = new Vue({
             } else if (typeof(schedulepolicyJson["remark"]) == "undefined") {
                 toastr.warning("请添加备注!");
             } else {
+=======
+            // if (typeof(schedulepolicyJson["name"]) == "undefined") {                  /*3个select必选*/
+            //     toastr.warning("请添加策略名称");
+            // } else if (typeof(schedulepolicyJson["cron"]) == "undefined") {
+            //     toastr.warning("请添加任务描述!");
+            // } else if (typeof(schedulepolicyJson["remark"]) == "undefined") {
+            //     toastr.warning("请添加备注!");
+            // } else {
+>>>>>>> 45129d4f791010cb5412b1686d3660978499d2e7
                 var d = new Date().Format("yyyy-MM-dd hh:mm:ss");        //获取日期与时间
                 schedulepolicyJson['createTime'] = d;
                 var schedulepolicy = JSON.stringify(schedulepolicyJson);
