@@ -89,7 +89,7 @@ var probedata_handle = new Vue({
                 console.log("changdu:"+trs.length);
                 for (var i = 0; i < trs.length; i++) {
                     var tds = trs.eq(i).find("td");
-                    var statuses = parseInt("0")
+                    var statuses = parseInt("0");
                     test={id:tds.eq(2).text(),taskId:tds.eq(3).text(),probeId:tds.eq(4).text(),port:tds.eq(5).text(),status:statuses,remark:tds.eq(7).text()};
                     delete_ajax();
                     /*ajax传输*/
@@ -506,8 +506,8 @@ var probetable = new Vue({
                             if(item.status==1){status_word="正在执行";}else{status_word="已取消";}
                             let row = [];
                             row.push(i++);
-                            row.push('<div class="checkbox"> <label> <input type="checkbox" name="selectFlag"></label> </div>');
-                            row.push('<div class="probe_id">'+item.id+'</div>');
+                            row.push('<div class="checkbox"> <label> <input type="checkbox" name="selectFlag" id='+item.id+'></label> </div>');
+                            row.push('<div class="probe_id" >'+item.id+'</div>');
                             row.push(item.taskId);
                             row.push(item.probeName);
                             row.push(item.port);
