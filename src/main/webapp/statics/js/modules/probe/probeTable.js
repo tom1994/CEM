@@ -493,22 +493,21 @@ var probeform_data = new Vue({
         cityNames: [
             {message: '北京市'}
         ],
-        typeNames: [
-            {message: '类型1'},
-            {message: '类型2'}
-        ],
+        types: [],
         ipTypes: [
             {message:'ip类型1'},
             {message:'ip类型2'}
         ],
         probegroup_names: [
-            {message:'探针组1'},
+           /* {message:'探针组1'},
             {message:'探针组2'},
             {message:'探针组3'},
             {message:'探针组4'},
-            {message:'探针组5'}
+            {message:'探针组5'}*/
         ],
-        accessLayers:[]
+        accessLayers:[],
+        citys:[],
+        countys:[]
     },
     // 在 `methods` 对象中定义方法
     methods: {
@@ -789,7 +788,7 @@ var probetable = new Vue({
             {title: '<div style="width:130px">注册时间</div>'},
             {title: '<div style="width:130px">最后心跳时间</div>'},
             {title: '<div style="width:130px">最后上报时间</div>'},
-            {title: '<div style="width:60px">操作</div>'},
+            {title: '<div style="width:60px">操作</div>'}
         ],
         rows: [],
         dtHandle: null,
