@@ -56,31 +56,6 @@ function update_this (obj) {     /*监听修改触发事件*/
     $('#myModal_schedulepolicy').modal('show');
 }
 
-/*var update_data = new Vue({
-    el: '#myModal_schedulepolicy',
-    data: {
-        id: null
-    },
-    methods: {
-        show_schedulepolicyModal: function () {
-            update_ajax();
-            $(this.$el).modal('show');
-            /!*弹出确认模态框*!/
-        },
-        close_modal: function (obj) {
-            $(this.$el).modal('hide');
-
-        }
-        /!*update_data: function () {
-            idArray = [];
-            /!*清空id数组*!/
-            idArray[0] = this.id;
-            update_ajax();
-            /!*ajax传输*!/
-        }*!/
-    }
-});*/
-
 
 function delete_ajax() {
     var ids = JSON.stringify(idArray);
@@ -183,13 +158,13 @@ var taskform_data = new Vue({
     methods: {
         submit: function () {
             var schedulepolicyJson = getFormJson($('#taskform_data'));
-            if (typeof(schedulepolicyJson["name"]) == "undefined") {                  /*3个select必选*/
-                toastr.warning("请添加策略名称");
-            } else if (typeof(schedulepolicyJson["cron"]) == "undefined") {
-                toastr.warning("请添加任务描述!");
-            } else if (typeof(schedulepolicyJson["remark"]) == "undefined") {
-                toastr.warning("请添加备注!");
-            } else {
+            // if (typeof(schedulepolicyJson["name"]) == "undefined") {                  /*3个select必选*/
+            //     toastr.warning("请添加策略名称");
+            // } else if (typeof(schedulepolicyJson["cron"]) == "undefined") {
+            //     toastr.warning("请添加任务描述!");
+            // } else if (typeof(schedulepolicyJson["remark"]) == "undefined") {
+            //     toastr.warning("请添加备注!");
+            // } else {
                 var d = new Date().Format("yyyy-MM-dd hh:mm:ss");        //获取日期与时间
                 schedulepolicyJson['createTime'] = d;
                 var schedulepolicy = JSON.stringify(schedulepolicyJson);
