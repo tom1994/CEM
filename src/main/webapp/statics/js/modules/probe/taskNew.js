@@ -1,61 +1,32 @@
-/**
- * Created by yuanbaby on 2017/4/14.
- */
+
 var status;
 var idArray = new Array();
 var names = new Array();
 
-var schedulepolicydata_handle = new Vue({
-    el: '#handle',
+var task_handle = new Vue({
+    el: '#task_handle',
     data: {},
     mounted(){
-
     },
     methods: {
         schedulepolicyadd: function () {   /*监听新增触发事件*/
             status = 0;
             /*状态0,表示新增*/
-            var forms = $('#schedulepolicyform_data .form-control');
+            var forms = $('#taskform_data .form-control');
 
-            $('#schedulepolicyform_data input[type=text]').prop("readonly", false);
+            $('#taskform_data input[type=text]').prop("readonly", false);
             /*去除只读状态*/
-            $('#schedulepolicyform_data select').prop("disabled", false);
+            $('#taskform_data select').prop("disabled", false);
 
             for (var i = 0; i < 3; i++) {
                 forms[i].value = ""
             }
-            schedulepolicyform_data.modaltitle = "新增调度策略";
+            taskform_data.modaltitle = "新增调度策略";
             /*修改模态框标题*/
             $('#myModal_schedulepolicy').modal('show');
         }
     }
 });
-
-/*function update_ajax() {
-    var ids = JSON.stringify(idArray);
-    /!*对象数组字符串*!/
-
-    $.ajax({
-        type: "POST", /!*GET会乱码*!/
-        url: "../../cem/schedulepolicy/update",
-        cache: false,  //禁用缓存
-        data: ids,  //传入组装的参数
-        dataType: "json",
-        contentType: "application/json", /!*必须要,不可少*!/
-        success: function (result) {
-            forms[0].value = result.schedulepolicy.name;
-            forms[1].value = result.schedulepolicy.cron;
-            forms[2].value = result.schedulepolicy.remark;
-
-            toastr.success("调度策略修改成功!");
-
-            schedulepolicytable.currReset();
-
-            update_data.close_modal();
-            /!*关闭模态框*!/
-        }
-    });
-}*/
 
 function update_this (obj) {     /*监听修改触发事件*/
     update_data_id = parseInt(obj.id);
@@ -63,13 +34,12 @@ function update_this (obj) {     /*监听修改触发事件*/
     console.log(update_data_id);
     status = 1;      /*状态1表示修改*/
     /*find被选中的行*/
-    var forms = $('#schedulepolicyform_data .form-control');
+    var forms = $('#taskform_data .form-control');
     /*去除只读状态*/
-    $('#schedulepolicyform_data input[type=text]').prop("readonly", false);
-
+    $('#taskform_data input[type=text]').prop("readonly", false);
     $.ajax({
         type: "POST", /*GET会乱码*/
-        url: "../../cem/schedulepolicy/info/"+update_data_id,
+        url: "../../cem/task/info/"+update_data_id,
         cache: false,  //禁用缓存
         //data: update_data_ids,  //传入组装的参数
         dataType: "json",
@@ -81,7 +51,7 @@ function update_this (obj) {     /*监听修改触发事件*/
             forms[3].value = result.schedulePolicy.remark;
         }
     });
-    schedulepolicyform_data.modaltitle = "修改调度策略";
+    taskform_data.modaltitle = "修改调度策略";
     /*修改模态框标题*/
     $('#myModal_schedulepolicy').modal('show');
 }
@@ -201,7 +171,7 @@ Date.prototype.Format = function (fmt) {
 }
 
 
-var schedulepolicyform_data = new Vue({
+var taskform_data = new Vue({
     el: '#myModal_schedulepolicy',
     data: {
         modaltitle: "", /*定义模态框标题*/
@@ -212,7 +182,7 @@ var schedulepolicyform_data = new Vue({
     // 在 `methods` 对象中定义方法
     methods: {
         submit: function () {
-            var schedulepolicyJson = getFormJson($('#schedulepolicyform_data'));
+            var schedulepolicyJson = getFormJson($('#taskform_data'));
             if (typeof(schedulepolicyJson["name"]) == "undefined") {                  /*3个select必选*/
                 toastr.warning("请添加策略名称");
             } else if (typeof(schedulepolicyJson["cron"]) == "undefined") {

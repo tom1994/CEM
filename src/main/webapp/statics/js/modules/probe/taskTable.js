@@ -409,16 +409,16 @@ var probetable = new Vue({
     el: '#probedata_table',
     data: {
         headers: [
-            {title: '<div style="width:67px"></div>'},
-            {title: '<div class="checkbox" style="width:67px"> <label> <input type="checkbox" id="checkAll"></label> </div>'},
+            {title: '<div style="width:10px"></div>'},
+            {title: '<div class="checkbox" style="width:10px"> <label> <input type="checkbox" id="checkAll"></label> </div>'},
  //           {title: '<div style="display:none">id</div>'},
-            {title: '<div style="width:67px">id</div>'},
-            {title: '<div style="width:67px">任务名称</div>'},
-            {title: '<div style="width:67px">探针名称</div>'},
-            {title: '<div style="width:67px">探针端口</div>'},
-            {title: '<div style="width:67px">状态</div>'},
-            {title: '<div style="width:67px">备注</div>'},
-            {title: '<div style="width:67px">操作</div>'}
+            {title: '<div style="width:10px">id</div>'},
+            {title: '<div style="width:142px">任务名称</div>'},
+            {title: '<div style="width:142px">探针名称</div>'},
+            {title: '<div style="width:80px">探针端口</div>'},
+            {title: '<div style="width:80px">状态</div>'},
+            {title: '<div style="width:100px">备注</div>'},
+            {title: '<div style="width:80px">操作</div>'}
         ],
         rows: [],
         dtHandle: null,
@@ -522,6 +522,8 @@ var probetable = new Vue({
                         //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);
+                        $("#probedata_table").colResizable({
+                        });
                     }
                 });
             }

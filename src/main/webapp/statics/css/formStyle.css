@@ -202,6 +202,32 @@ a:link {
     position:relative;
 }
 
+/*任务创建界面样式*/
+.module{
+    border-style: solid;
+    border-color:#8bb4e7;
+    border-width: 2px;
+    border-radius: 10px
+
+}
+
+.wrapper-module{
+    padding:18px;
+}
+
+.left{
+    float:left;
+    width:49%;
+ /*   border-style:solid;*/
+}
+
+.right{
+    float:right;
+    width:49%;
+   /* border-style:solid;*/
+}
+
+
 
 
 

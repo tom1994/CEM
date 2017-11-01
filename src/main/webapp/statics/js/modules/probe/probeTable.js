@@ -764,8 +764,8 @@ var probetable = new Vue({
         el: '#probedata_table',
     data: {
         headers: [
-          /*  {title: '<div style="width:67px"></div>'},
-            {title: '<div class="checkbox" style="width:67px"> <label> <input type="checkbox" id="checkAll"></label> </div>'},
+            {title: '<div style="width:10px"></div>'},
+            {title: '<div class="checkbox" style="width:100%; align: center"> <label> <input type="checkbox" id="checkAll"></label> </div>'},
             //{title: '<div style=" width:0px;display:none;padding:0px">id</div>'},
             {title: '<div style="width:65px">探针名</div>'},
             {title: '<div style="width:42px">地市</div>'},
@@ -775,25 +775,10 @@ var probetable = new Vue({
             {title: '<div style="width:65px">上联探针</div>'},
             {title: '<div style="width:50px">状态</div>'},
             {title: '<div style="width:58px">类型</div>'},
-            {title: '<div style="width:112px">注册时间</div>'},
-            {title: '<div style="width:112px">最后心跳时间</div>'},
-            {title: '<div style="width:112px">最后上报时间</div>'},
-            {title: '<div style="width:65px">操作</div>'},*/
-            {title: '<div style="width:67px"></div>'},
-            {title: '<div class="checkbox" style="width:67px"> <label> <input type="checkbox" id="checkAll"></label> </div>'},
-            //{title: '<div style=" width:0px;display:none;padding:0px">id</div>'},
-            {title: '<div style="width:67px">探针名</div>'},
-            {title: '<div style="width:67px">地市</div>'},
-            {title: '<div style="width:67px">区县</div>'},
-            {title: '<div style="width:67px">位置</div>'},
-            {title: '<div style="width:67px">层级</div>'},
-            {title: '<div style="width:67px">上联探针</div>'},
-            {title: '<div style="width:67px">状态</div>'},
-            {title: '<div style="width:67px">类型</div>'},
-            {title: '<div style="width:67px">注册时间</div>'},
-            {title: '<div style="width:67px">最后心跳时间</div>'},
-            {title: '<div style="width:67px">最后上报时间</div>'},
-            {title: '<div style="width:67px">操作</div>'},
+            {title: '<div style="width:120px">注册时间</div>'},
+            {title: '<div style="width:120px">最后心跳时间</div>'},
+            {title: '<div style="width:120px">最后上报时间</div>'},
+            {title: '<div style="width:65px">操作</div>'},
         ],
         rows: [],
         dtHandle: null,
@@ -903,6 +888,13 @@ var probetable = new Vue({
                             //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                             //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                             callback(returnData);
+                            $("#probedata_table").colResizable({
+                        });
+                        // $('td').closest('table').find('th').eq(1).attr('style', 'text-align: center;');
+                        // $('#probe_table tbody').find('td').eq(1).attr('style', 'text-align: center;');
+                        // var trs = $('#probe_table tbody').find('tr');
+                        // trs.find("td").eq(1).attr('style', 'text-align: center;');
+
                     }
                 });
             }
@@ -916,13 +908,11 @@ var grouptable = new Vue({
     el: '#probegroup_table',
     data: {
         headers: [
-            {title: '<div style="width:97px"></div>'},
-            //{title: '<div class="checkbox"> <label> <input type="checkbox" id="checkAllGroup""></label> </div>'},
-            //{title: '<div style="display:none">id</div>'},
-            {title: '<div style="width:58px">探针组ID</div>'},
-            {title: '<div style="width:100px">探针组名</div>'},
-            {title: '<div style="width:100px">备注</div>'},
-            {title: '<div style="width:52px">操作</div>'}
+            {title: '<div style="width:67px"></div>'},
+            // {title: '<div style="width:58px">探针组ID</div>'},
+            {title: '<div style="width:67px">探针组名</div>'},
+            {title: '<div style="width:67px">备注</div>'},
+            {title: '<div style="width:67px">操作</div>'}
         ],
         rows: [],
         dtHandle: null,
@@ -1004,7 +994,7 @@ var grouptable = new Vue({
                             let row = [];
                             row.push(i++);
                             //row.push('<div class="checkbox"> <label> <input type="checkbox"  id="checkALlGroup" name="groupselectFlag"></label> </div>');
-                            row.push('<div class="probe_id">'+item.id+'</div>');
+                            // row.push('<div class="probe_id">'+item.id+'</div>');
                             row.push(item.name);
                             row.push(item.remark);
                             row.push('<a class="fontcolor" onclick="updategroup_this(this)" id='+item.id+'>编辑</a>&nbsp&nbsp;<a class="fontcolor" onclick="deletegroup_this(this)" id='+item.id+'>删除</a>');
