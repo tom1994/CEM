@@ -46,15 +46,16 @@
 		cities.city AS city_name,
 		areas.area_id,
 		areas.area AS area_name,
-		dic_type.id,
-		dic_type.dic_name AS type_name
+		a.data_id,
+		a.dic_type_id,
+		a.data_name AS type_name
 		FROM probe
 		LEFT JOIN cities
 		ON probe.city = cities.city_id
 		LEFT JOIN areas
 		ON probe.county = areas.area_id
-		LEFT JOIN dic_type
-		ON probe.dic_name = dic_type.id
+		LEFT JOIN dic_data a
+		ON probe.type = a.data_id AND a.dic_type_id = 1
 		WHERE probe.id = #{value}
 	</select>
 
@@ -82,16 +83,17 @@
 		cities.city_id,
 		cities.city AS city_name,
 		areas.area_id,
-		areas.area AS area_name
-		dic_type.id,
-		dic_type.dic_name AS type_name
+		areas.area AS area_name,
+		a.data_id,
+		a.dic_type_id,
+		a.data_name AS type_name
 		FROM probe
 		LEFT JOIN cities
 		ON probe.city = cities.city_id
 		LEFT JOIN areas
 		ON probe.county = areas.area_id
-		LEFT JOIN dic_type
-		ON probe.type = dic_type.id
+		LEFT JOIN dic_data a
+		ON probe.type = a.data_id AND a.dic_type_id = 1
 
 		<choose>
 			<when test="sidx != null and sidx.trim() != ''">

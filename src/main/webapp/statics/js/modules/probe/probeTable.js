@@ -146,7 +146,7 @@ var probedata_handle = new Vue({
             }
         },*/
         probesearch: function () {   /*查询监听事件*/
-            var data = getFormJson($('#probesearch'));
+            var data = getFormJson($('#searchcolums'));
             /*得到查询条件*/
             /*获取表单元素的值*/
             console.log(data);
@@ -486,22 +486,28 @@ var probeform_data = new Vue({
     el: '#myModal_update',
     data: {
         modaltitle: "探针详情", /*定义模态框标题*/
-        countys: [
-            {message: '海淀区'},
-            {message: '朝阳区'},
+        countyNames: [
+            /*{message: '海淀区'},
+            {message: '朝阳区'},*/
         ],
-        citys: [
-            {message: '北京市'}
+        cityNames: [
+           // {message: '北京市'}
         ],
-        types: [
-            {message: '类型1'},
-            {message: '类型2'}
+        typeNames: [
+            /*{message: '类型1'},
+            {message: '类型2'}*/
         ],
         ipTypes: [
-            {message:'ip类型1'},
-            {message:'ip类型2'}
+           /* {message:'ip类型1'},
+            {message:'ip类型2'}*/
         ],
-        probegroup_names: [],
+        probegroup_names: [
+            {message:'探针组1'},
+            {message:'探针组2'},
+            {message:'探针组3'},
+            {message:'探针组4'},
+            {message:'探针组5'}
+        ],
         accessLayers:[]
     },
     // 在 `methods` 对象中定义方法
@@ -654,7 +660,7 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
 
 
 var search_data = new Vue({
-    el:'#probesearch',
+    el:'#searchcolums',
     data:{
         areas:[],
         cities:[],
@@ -772,11 +778,11 @@ var probetable = new Vue({
             {title: '<div style="width:70px">探针名</div>'},
             {title: '<div style="width:42px">地市</div>'},
             {title: '<div style="width:42px">区县</div>'},
-            {title: '<div style="width:95px">位置</div>'},
+            {title: '<div style="width:90px">位置</div>'},
             {title: '<div style="width:40px">层级</div>'},
             {title: '<div style="width:65px">上联探针</div>'},
             {title: '<div style="width:50px">状态</div>'},
-            {title: '<div style="width:50px">类型</div>'},
+            {title: '<div style="width:55px">类型</div>'},
             {title: '<div style="width:130px">注册时间</div>'},
             {title: '<div style="width:130px">最后心跳时间</div>'},
             {title: '<div style="width:130px">最后上报时间</div>'},
@@ -905,7 +911,7 @@ var grouptable = new Vue({
     el: '#probegroup_table',
     data: {
         headers: [
-            {title: '<div style="width:97px"></div>'},
+            {title: '<div style="width:16px"></div>'},
             //{title: '<div class="checkbox"> <label> <input type="checkbox" id="checkAllGroup""></label> </div>'},
             //{title: '<div style="display:none">id</div>'},
             {title: '<div style="width:58px">探针组ID</div>'},
