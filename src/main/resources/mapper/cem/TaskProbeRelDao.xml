@@ -38,6 +38,30 @@
 		select count(*) from task_probe_rel 
 	</select>
 
+	<select id="queryTaskList" resultMap="taskProbeRelMap">
+		SELECT task_probe_rel.*,
+		task.id,
+		task.name AS task_name,
+		probe.id,
+		probe.name AS probe_name
+		FROM task_probe_rel
+		LEFT JOIN task
+		ON task_probe_rel.task_id = task.id
+		LEFT JOIN probe
+		ON task_probe_rel.probe_id = probe.id
+		<choose>
+			<when test="sidx != null and sidx.trim() != ''">
+				order by ${sidx} ${order}
+			</when>
+			<otherwise>
+				order by task_probe_rel.id desc
+			</otherwise>
+		</choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
 	 
 	<insert id="save" parameterType="io.cem.modules.cem.entity.TaskProbeRelEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into task_probe_rel

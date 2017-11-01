@@ -509,7 +509,7 @@ var probetable = new Vue({
                             row.push('<div class="checkbox"> <label> <input type="checkbox" name="selectFlag"></label> </div>');
                             row.push('<div class="probe_id">'+item.id+'</div>');
                             row.push(item.taskId);
-                            row.push(item.probeId);
+                            row.push(item.probeName);
                             row.push(item.port);
                             row.push(status_word);
                             //row.push(item.status);

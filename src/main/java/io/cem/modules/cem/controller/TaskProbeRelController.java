@@ -44,8 +44,8 @@ public class TaskProbeRelController {
 		} catch (RuntimeException e) {
 			throw new RRException("内部参数错误，请重试！");
 		}
-       List<TaskProbeRelEntity> taskProbeRelList = taskProbeRelService.queryList(map);
-	//	List<TaskProbeRelEntity> taskProbeRelList = taskProbeRelService.queryTaskList(map);
+       //List<TaskProbeRelEntity> taskProbeRelList = taskProbeRelService.queryList(map);
+		List<TaskProbeRelEntity> taskProbeRelList = taskProbeRelService.queryTaskList(map);
 		int total = taskProbeRelService.queryTotal(map);
 		PageUtils pageUtil = new PageUtils(taskProbeRelList, total, limit, page);
 		return R.ok().put("page", pageUtil);

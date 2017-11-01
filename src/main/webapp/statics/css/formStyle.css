@@ -69,6 +69,14 @@ a:link {
     color: #010407;
 
 }
+.ibox-title-upper {
+    /*background-color: #EEEEEE;*/
+    background-color: #f5f8fd;
+    border-color: #f5f8fd;
+   /* border-color: #8bb4e7;*/
+    color: #010407;
+
+}
 
 .selected {
     background-color: #cce6ff; /*定义选中状态颜色*/

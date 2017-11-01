@@ -14,6 +14,6 @@ import java.util.Map;
  * @date 2017-10-12 17:12:45
  */
 public interface TaskProbeRelDao extends BaseDao<TaskProbeRelEntity> {
-
+    List<TaskProbeRelEntity> queryTaskList(Map<String,Object> map);
 	
 }
