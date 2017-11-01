@@ -24,14 +24,14 @@
                         <div class="col-lg-12 col-md-12 col-sm-12">
                             <div class="ibox float-e-margins">
                                 <div class="ibox-title fontcolor" id="task_handle"
-                                     style="padding-bottom: 0px !important;">
+                                     style="padding-bottom: 0px !important; border-style: none">
                                     <button type="button" class="btn btn-default ui-button "
                                             v-on:click="delBatch"><span
                                             class="glyphicon glyphicon-remove"></span>批量删除
                                     </button>
                                 </div>
                                 <div class="ibox-content">
-                                    <div class="row " style="overflow-x: scroll">     <!--表格 verflow-x: scroll超出滚动-->
+                                    <div class="row " style="overflow-x: auto">     <!--表格 verflow-x: scroll超出滚动-->
                                         <table class="table table-bordered " id="task_table"></table>
                                     </div>
                                 </div>
@@ -39,7 +39,7 @@
                         </div>
                     </div>
 
-                    <!-- 取消确认模态框（Modal） -->
+                    <!-- 删除确认模态框（Modal） -->
                     <div class="modal fade" id="myModal_delete" tabindex="-1" role="dialog"
                          aria-labelledby="myModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
@@ -51,7 +51,6 @@
                                     <h3 class="modal-title" id="myModalLabel_delet">
                                         确认
                                     </h3>
-
 
                                 </div>
                                 <div class="modal-body">
@@ -85,7 +84,6 @@
                                     <div class="row">
                                         <form class="form-horizontal" id="groupform_data" role="form">
                                             <div class="form-group row">
-
                                                 <label for="taskname"
                                                        class="col-lg-3 col-md-3 col-sm-3 control-label form_border"
                                                        style="font-size: medium">任务名称:</label>
@@ -108,18 +106,19 @@
                         </div><!-- /.modal -->
                     </div>
                 </div>
-                <div role="tabpanel" class="tab-pane fade" id="Section2">
-                    <div class="wrapper wrapper-content">
-                        <h3>我是section2</h3>
-                    </div>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="Section2">
+                <div class="wrapper wrapper-content">
+                    <h3>我是section2</h3>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <script>window.jQuery || document.write('<script src="${rc.contextPath}/statics/js/plugins/jquery/jquery-2.0.3.js"><\/script>')</script>
-    <!--<script type="text/javascript"-->
-    <!--src="${rc.contextPath}/statics/js/modules/probe/probeTable.js?_${date.systemTime}"></script>-->
-    <script type="text/javascript" src="${rc.contextPath}/statics/js/index.js"></script>
+<script>window.jQuery || document.write('<script src="${rc.contextPath}/statics/js/plugins/jquery/jquery-2.0.3.js"><\/script>')</script>
+<!--<script type="text/javascript"-->
+<!--src="${rc.contextPath}/statics/js/modules/probe/probeTable.js?_${date.systemTime}"></script>-->
+<script type="text/javascript" src="${rc.contextPath}/statics/js/index.js"></script>
 </body>
 </html>

@@ -3483,6 +3483,13 @@ body.body-small .footer.fixed {
   background-color: #F5F5F6;
   border-bottom-width: 1px;
 }
+.table-bordered > thead > tr > th.checkbox,
+.table-bordered > thead > tr > td.checkbox {
+  background-color: #F5F5F6;
+  border-bottom-width: 1px;
+  text-align: center !important;
+}
+
 .table-bordered > thead > tr > th,
 .table-bordered > tbody > tr > th,
 .table-bordered > tfoot > tr > th,

@@ -344,7 +344,7 @@ var schedulepolicytable = new Vue({
     el: '#schedulepolicydata_table',
     data: {
         headers: [
-            {title: '<div style="width:67px"></div'},
+            {title: '<div style="width:67px"></div>'},
             {title: '<div style="width:67px">策略ID</div>'},
             {title: '<div style="width:67px">策略名称</div>'},
             {title: '<div style="width:67px">任务描述</div>'},
