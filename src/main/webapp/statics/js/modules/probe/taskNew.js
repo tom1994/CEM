@@ -387,7 +387,7 @@ var tasktemplate_table = new Vue({
                             row.push(item.name);
                             row.push(item.serviceType);
                             row.push(item.schPolicyId);
-                            row.push('<a class="fontcolor" onclick="task_assign(this)" id=\'+item.id+\'>修改</a>');
+                            row.push('<a class="fontcolor" onclick="task_assign(this)" id=\'+item.id+\'>下发任务</a>');
                             row.push('<a class="fontcolor" onclick="update_this(this)" id='+item.id+'>修改</a>&nbsp;<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>');
                             rows.push(row);
                         });
