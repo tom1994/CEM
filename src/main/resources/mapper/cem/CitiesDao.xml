@@ -4,12 +4,12 @@
 <mapper namespace="io.cem.modules.cem.dao.CitiesDao">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="io.cem.modules.cem.entity.CitiesEntity" id="citiesMap">
-        <result property="id" column="id"/>
-        <result property="city_id" column="city_id"/>
-        <result property="city" column="city"/>
-        <result property="province_id" column="province_id"/>
-    </resultMap>
+	<resultMap type="io.cem.modules.cem.entity.CitiesEntity" id="citiesMap">
+		<result property="id" column="id"/>
+		<result property="city_id" column="city_id"/>
+		<result property="city" column="city"/>
+		<result property="province_id" column="province_id"/>
+	</resultMap>
 
 	<select id="queryObject" resultType="io.cem.modules.cem.entity.CitiesEntity">
 		select * from city where id = #{value}
@@ -17,38 +17,38 @@
 
 	<select id="queryList" resultType="io.cem.modules.cem.entity.CitiesEntity">
 		select * from city
-        <choose>
-            <when test="sidx != null and sidx.trim() != ''">
-                order by ${sidx} ${order}
-            </when>
+		<choose>
+			<when test="sidx != null and sidx.trim() != ''">
+				order by ${sidx} ${order}
+			</when>
 			<otherwise>
-                order by id
+				order by id
 			</otherwise>
-        </choose>
+		</choose>
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
 	</select>
-	
- 	<select id="queryTotal" resultType="int">
+
+	<select id="queryTotal" resultType="int">
 		select count(*) from city
 	</select>
-	 
+
 	<insert id="save" parameterType="io.cem.modules.cem.entity.CitiesEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into city
 		(
-			`city_id`, 
-			`city`, 
+			`city_id`,
+			`city`,
 			`province_id`
 		)
 		values
 		(
-			#{city_id}, 
-			#{city}, 
+			#{city_id},
+			#{city},
 			#{province_id}
 		)
 	</insert>
-	 
+
 	<update id="update" parameterType="io.cem.modules.cem.entity.CitiesEntity">
 		update city
 		<set>
@@ -58,11 +58,11 @@
 		</set>
 		where id = #{id}
 	</update>
-	
+
 	<delete id="delete">
 		delete from city where id = #{value}
 	</delete>
-	
+
 	<delete id="deleteBatch">
 		delete from city where id in
 		<foreach item="id" collection="array" open="(" separator="," close=")">

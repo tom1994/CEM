@@ -1,5 +1,6 @@
 package io.cem.modules.cem.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,9 +29,18 @@ import io.cem.common.utils.R;
 @RestController
 @RequestMapping("dictype")
 public class DicTypeController {
+
 	@Autowired
 	private DicTypeService dicTypeService;
-	
+
+	@RequestMapping("/diclist")
+	@RequiresPermissions("dictype:diclist")
+	public R getType(Integer id){
+		DicTypeEntity dicTypeEntity =  dicTypeService.queryObject(id);
+
+		System.out.print(dicTypeEntity.getDicName());
+		return R.ok();
+	}
 	/**
 	 * 列表
 	 */
@@ -47,6 +57,24 @@ public class DicTypeController {
 		
 		return R.ok().put("page", pageUtil);
 	}
+
+	/*public R list(String dictypedata, Integer page, Integer limit) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		int total = 0;
+		if(page==null) {              *//*没有传入page,则取全部值*//*
+			map.put("offset", null);
+			map.put("limit", null);
+			page = 0;
+			limit = 0;
+		}else {
+			map.put("offset", (page - 1) * limit);
+			map.put("limit", limit);
+			total = dicTypeService.queryTotal(map);
+		}
+		List<DicTypeEntity> dicTypeList = dicTypeService.queryList(map);
+		PageUtils pageUtil = new PageUtils(dicTypeList, total, limit, page);
+		return R.ok().put("page", pageUtil);
+	}*/
 	
 	
 	/**

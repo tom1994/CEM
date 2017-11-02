@@ -57,6 +57,7 @@ function update_this (obj) {     /*监听修改触发事件*/
 }
 
 
+
 function delete_ajax() {
     var ids = JSON.stringify(idArray);
     /*对象数组字符串*/
@@ -158,6 +159,7 @@ var taskform_data = new Vue({
     methods: {
         submit: function () {
             var schedulepolicyJson = getFormJson($('#taskform_data'));
+
             // if (typeof(schedulepolicyJson["name"]) == "undefined") {                  /*3个select必选*/
             //     toastr.warning("请添加策略名称");
             // } else if (typeof(schedulepolicyJson["cron"]) == "undefined") {

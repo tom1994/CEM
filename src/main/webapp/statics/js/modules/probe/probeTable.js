@@ -6,6 +6,7 @@ var idArray = new Array();
 var probeGroupNames = new Array();
 var cityNames = new Array();
 var areaNames = new Array();
+var typeNames = new Array();
 
 var probedata_handle = new Vue({
     el: '#probehandle',
@@ -145,7 +146,7 @@ var probedata_handle = new Vue({
             }
         },*/
         probesearch: function () {   /*查询监听事件*/
-            var data = getFormJson($('#probesearch'));
+            var data = getFormJson($('#searchcolumns'));
             /*得到查询条件*/
             /*获取表单元素的值*/
             console.log(data);
@@ -485,23 +486,28 @@ var probeform_data = new Vue({
     el: '#myModal_update',
     data: {
         modaltitle: "探针详情", /*定义模态框标题*/
-        countys: [
+        countyNames: [
             {message: '海淀区'},
             {message: '朝阳区'},
         ],
-        citys: [
+        cityNames: [
             {message: '北京市'}
         ],
-        types: [
-            {message: '类型1'},
-            {message: '类型2'}
-        ],
+        types: [],
         ipTypes: [
             {message:'ip类型1'},
             {message:'ip类型2'}
         ],
-        probegroup_names: [],
-        accessLayers:[]
+        probegroup_names: [
+           /* {message:'探针组1'},
+            {message:'探针组2'},
+            {message:'探针组3'},
+            {message:'探针组4'},
+            {message:'探针组5'}*/
+        ],
+        accessLayers:[],
+        citys:[],
+        countys:[]
     },
     // 在 `methods` 对象中定义方法
     methods: {
@@ -653,12 +659,14 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
 
 
 var search_data = new Vue({
-    el:'#probesearch',
+    el:'#searchcolumns',
     data:{
         areas:[],
         cities:[],
         probegroup_names:[],
-        accessLayers:[]
+        accessLayers:[],
+        types:[],
+        status:[]
     },
     methods:{
         citychange: function () {
@@ -761,24 +769,26 @@ $(document).ready(function () {
 
 // 探针列表
 var probetable = new Vue({
-        el: '#probedata_table',
+    el: '#probedata_table',
     data: {
         headers: [
+            //{title: '<div style="width:16px"></div>'},
+            //{title: '<div class="checkbox" style="width:16px"> <label> <input type="checkbox" id="checkAll"></label> </div>'},
             {title: '<div style="width:10px"></div>'},
             {title: '<div class="checkbox" style="width:100%; align: center"> <label> <input type="checkbox" id="checkAll"></label> </div>'},
             //{title: '<div style=" width:0px;display:none;padding:0px">id</div>'},
-            {title: '<div style="width:65px">探针名</div>'},
+            {title: '<div style="width:70px">探针名</div>'},
             {title: '<div style="width:42px">地市</div>'},
             {title: '<div style="width:42px">区县</div>'},
-            {title: '<div style="width:95px">位置</div>'},
+            {title: '<div style="width:90px">位置</div>'},
             {title: '<div style="width:40px">层级</div>'},
             {title: '<div style="width:65px">上联探针</div>'},
             {title: '<div style="width:50px">状态</div>'},
-            {title: '<div style="width:58px">类型</div>'},
-            {title: '<div style="width:120px">注册时间</div>'},
-            {title: '<div style="width:120px">最后心跳时间</div>'},
-            {title: '<div style="width:120px">最后上报时间</div>'},
-            {title: '<div style="width:65px">操作</div>'},
+            {title: '<div style="width:55px">类型</div>'},
+            {title: '<div style="width:130px">注册时间</div>'},
+            {title: '<div style="width:130px">最后心跳时间</div>'},
+            {title: '<div style="width:130px">最后上报时间</div>'},
+            {title: '<div style="width:60px">操作</div>'}
         ],
         rows: [],
         dtHandle: null,
@@ -861,6 +871,7 @@ var probetable = new Vue({
                             let rows = [];
                             var i = param.start+1;
                             result.page.list.forEach(function (item) {
+
                                 let row = [];
                                 row.push(i++);
                                 row.push('<div class="checkbox"> <label> <input type="checkbox" id="checkALl" name="selectFlag"></label> </div>');
@@ -872,7 +883,7 @@ var probetable = new Vue({
                                 row.push(item.accessLayer);
                                 row.push(item.upstream);
                                 row.push(item.status);
-                                row.push(item.type);
+                                row.push(item.typeName);
                                 row.push(item.registerTime);
                                 row.push(item.lastHbTime);
                                 row.push(item.lastReportTime);
@@ -882,6 +893,7 @@ var probetable = new Vue({
                                 row.push('<a class="fontcolor" onclick="update_this(this)" id='+item.id+'>详情</a>&nbsp&nbsp;' +
                                     '<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>');
                                 rows.push(row);
+                                console.log(item);
                             });
                             returnData.data = rows;
                             console.log(returnData);
@@ -889,6 +901,7 @@ var probetable = new Vue({
                             //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                             callback(returnData);
                             $("#probedata_table").colResizable({
+                                minWidth:40,
                         });
                         // $('td').closest('table').find('th').eq(1).attr('style', 'text-align: center;');
                         // $('#probe_table tbody').find('td').eq(1).attr('style', 'text-align: center;');
@@ -908,11 +921,13 @@ var grouptable = new Vue({
     el: '#probegroup_table',
     data: {
         headers: [
-            {title: '<div style="width:67px"></div>'},
-            // {title: '<div style="width:58px">探针组ID</div>'},
-            {title: '<div style="width:67px">探针组名</div>'},
-            {title: '<div style="width:67px">备注</div>'},
-            {title: '<div style="width:67px">操作</div>'}
+            {title: '<div style="width:16px"></div>'},
+            //{title: '<div class="checkbox"> <label> <input type="checkbox" id="checkAllGroup""></label> </div>'},
+            //{title: '<div style="display:none">id</div>'},
+            {title: '<div style="width:58px">探针组ID</div>'},
+            {title: '<div style="width:100px">探针组名</div>'},
+            {title: '<div style="width:100px">备注</div>'},
+            {title: '<div style="width:52px">操作</div>'}
         ],
         rows: [],
         dtHandle: null,

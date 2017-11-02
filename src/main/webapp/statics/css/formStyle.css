@@ -99,7 +99,7 @@ a:link {
 
 
 .row input { /*设置外边距*/
-    margin: 4px 0 4px 0;
+    margin: 2px 0 2px 0;
 }
 
 
@@ -113,7 +113,7 @@ a:link {
 }
 
 .row select { /*设置外边距*/
-    margin: 4px 0 4px 0;
+    margin: 2px 0 2px 0;
 }
 
 .form-group {
@@ -152,7 +152,10 @@ a:link {
 
 }*/
 
-
+.input-label {
+    padding-top: 0px;
+    !important;
+}
 
 /******测试任务组相关样式*****/
 .testtargetbutton{
@@ -201,6 +204,60 @@ a:link {
     z-index:200;
     position:relative;
 }
+
+/*任务创建界面样式*/
+.module{
+    border-style: solid;
+    border-color:#8bb4e7;
+    border-width: 2px;
+    border-radius: 10px
+
+}
+
+.wrapper-module{
+   /* padding:18px 18px 18px 18px;*/
+    margin:18px !important;
+}
+.wrapper-module-new{
+    /* padding:18px 18px 18px 18px;*/
+    margin:18px !important;
+}
+
+.wrapper-block{
+    padding:5px;
+}
+
+.left-up{
+    float:left;
+    width:49%;
+ /*   border-style:solid;*/
+}
+
+.left-medium{
+    float:left;
+    width:49%;
+    /*   border-style:solid;*/
+}
+
+.left-down{
+    float:left;
+    width:49%;
+    height:33%;
+    /*   border-style:solid;*/
+}
+
+.right{
+    float:right;
+    width:49%;
+   /* border-style:solid;*/
+}
+
+.task_border {
+    border-bottom: 1px solid #e1e5ec;
+    line-height: 30px;
+    min-height: 30px;
+}
+
 
 
 

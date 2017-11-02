@@ -4,13 +4,13 @@
 <mapper namespace="io.cem.modules.cem.dao.SchedulePolicyDao">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="io.cem.modules.cem.entity.SchedulePolicyEntity" id="schedulePolicyMap">
-        <result property="id" column="id"/>
-        <result property="name" column="name"/>
-        <result property="cron" column="cron"/>
-        <result property="remark" column="remark"/>
-        <result property="createTime" column="create_time"/>
-    </resultMap>
+	<resultMap type="io.cem.modules.cem.entity.SchedulePolicyEntity" id="schedulePolicyMap">
+		<result property="id" column="id"/>
+		<result property="name" column="name"/>
+		<result property="cron" column="cron"/>
+		<result property="remark" column="remark"/>
+		<result property="createTime" column="create_time"/>
+	</resultMap>
 
 	<select id="queryObject" resultType="io.cem.modules.cem.entity.SchedulePolicyEntity">
 		select * from schedule_policy where id = #{value}
@@ -18,23 +18,23 @@
 
 	<select id="queryList" resultType="io.cem.modules.cem.entity.SchedulePolicyEntity">
 		select * from schedule_policy
-        <choose>
-            <when test="sidx != null and sidx.trim() != ''">
-                order by ${sidx} ${order}
-            </when>
+		<choose>
+			<when test="sidx != null and sidx.trim() != ''">
+				order by ${sidx} ${order}
+			</when>
 			<otherwise>
-                order by id desc
+				order by id desc
 			</otherwise>
-        </choose>
+		</choose>
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
 	</select>
-	
- 	<select id="queryTotal" resultType="int">
+
+	<select id="queryTotal" resultType="int">
 		select count(*) from schedule_policy 
 	</select>
-	 
+
 	<insert id="save" parameterType="io.cem.modules.cem.entity.SchedulePolicyEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into schedule_policy
 		(
@@ -51,9 +51,9 @@
 			#{createTime}
 		)
 	</insert>
-	 
+
 	<update id="update" parameterType="io.cem.modules.cem.entity.SchedulePolicyEntity">
-		update schedule_policy 
+		update schedule_policy
 		<set>
 			<if test="name != null">`name` = #{name}, </if>
 			<if test="cron != null">`cron` = #{cron}, </if>
@@ -62,13 +62,13 @@
 		</set>
 		where id = #{id}
 	</update>
-	
+
 	<delete id="delete">
 		delete from schedule_policy where id = #{value}
 	</delete>
-	
+
 	<delete id="deleteBatch">
-		delete from schedule_policy where id in 
+		delete from schedule_policy where id in
 		<foreach item="id" collection="array" open="(" separator="," close=")">
 			#{id}
 		</foreach>
