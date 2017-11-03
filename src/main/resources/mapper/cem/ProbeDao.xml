@@ -37,6 +37,7 @@
         <result property="createTime" column="create_time"/>
 		<result property="cityName" column="city_name"/>
 		<result property="areaName" column="area_name"/>
+		<result property="typeName" column="type_name"/>
     </resultMap>
 
 	<select id="queryObject" resultMap="probeMap">
@@ -44,12 +45,17 @@
 		city.city_id,
 		city.city AS city_name,
 		county.area_id,
-		county.area AS area_name
+		county.area AS area_name,
+		a.data_id,
+		a.dic_type_id,
+		a.data_name AS type_name
 		FROM probe
 		LEFT JOIN city
 		ON probe.city = city.city_id
 		LEFT JOIN county
 		ON probe.county = county.area_id
+		LEFT JOIN dic_data a
+		ON probe.type = a.data_id AND a.dic_type_id = 1
 		WHERE probe.id = #{value}
 	</select>
 
@@ -77,12 +83,17 @@
 		city.city_id,
 		city.city AS city_name,
 		county.area_id,
-		county.area AS area_name
+		county.area AS area_name,
+		a.data_id,
+		a.dic_type_id,
+		a.data_name AS type_name
 		FROM probe
 		LEFT JOIN city
 		ON probe.city = city.city_id
 		LEFT JOIN county
 		ON probe.county = county.area_id
+		LEFT JOIN dic_data a
+		ON probe.type = a.data_id AND a.dic_type_id = 1
 		<choose>
 			<when test="sidx != null and sidx.trim() != ''">
 				order by ${sidx} ${order}

@@ -6,6 +6,7 @@ var idArray = new Array();
 var probeGroupNames = new Array();
 var cityNames = new Array();
 var areaNames = new Array();
+var typeNames = new Array();
 
 var probedata_handle = new Vue({
     el: '#probehandle',
@@ -26,68 +27,6 @@ var probedata_handle = new Vue({
         });
     },
     methods: {
-        /*probeadd: function () {   /!*监听录入触发事件*!/
-            status = 0;
-            /!*状态0,表示录入*!/
-            var forms = $('#probeform_data .form-control');
-
-            $('#probeform_data input[type=text]').prop("readonly", false);
-            /!*去除只读状态*!/
-            $('#probeform_data select').prop("disabled", false);
-
-            for (var i = 0; i < 11; i++) {
-                forms[i].value = ""
-            }
-            probeform_data.modaltitle = "探针录入";
-            /!*修改模态框标题*!/
-            $('#myModal').modal('show');
-
-        },*/
-        /*probeupdate: function () {     /!*监听编辑触发事件*!/
-            status = 1;
-            /!*状态1表示编辑*!/
-            var trs = $('#probe_table tbody').find('tr:has(:checked)');
-            /!*find被选中的行*!/
-            var forms = $('#probeform_data .form-control');
-            var id = trs.find("td").eq(2).text();
-            console.log(trs.length + "表单对象:" + forms.length);
-
-            $('#probeform_data input[type=text]').prop("readonly", false);
-            /!*去除只读状态*!/
-            $('#probeform_data select').prop("disabled", false);
-
-            if (trs.length == 0) {
-                toastr.warning('请选择编辑项目！');
-            } else if (trs.length == 1) {
-                $.ajax({
-                    type: "POST",   /!*GET会乱码*!/
-                    url: "../../cem/probe/info/"+id,
-                    cache: false,  //禁用缓存
-                    dataType: "json",
-                    /!* contentType:"application/json",  /!*必须要,不可少*!/!*!/
-                    success: function (result) {
-                        forms[0].value = result.probe.id;
-                        forms[1].value = result.probe.serialNumber;
-                        forms[2].value = result.probe.name;
-                        forms[3].value = result.probe.type;
-                        forms[4].value = result.probe.cityName;
-                        forms[5].value = result.probe.areaName;
-                        forms[6].value = result.probe.location;
-                        forms[7].value = result.probe.ipType;
-                        forms[8].value = result.probe.portIp;
-                        forms[9].value = result.probe.brasName;
-                        forms[10].value = result.probe.brasIp;
-                        forms[11].value = result.probe.brasPort;
-                        console.log(result.probe);
-                    }
-                });
-                probeform_data.modaltitle = "探针编辑";
-                /!*修改模态框标题*!/
-                $('#myModal').modal('show');
-            } else {
-                toastr.warning('请选择一条记录再编辑！');
-            }
-        },*/
         probedelBatch: function () {   /*批量删除监听事件*/
             status = 2;
             /*状态2表示删除*/
@@ -145,7 +84,7 @@ var probedata_handle = new Vue({
             }
         },*/
         probesearch: function () {   /*查询监听事件*/
-            var data = getFormJson($('#probesearch'));
+            var data = getFormJson($('#searchprobe'));
             /*得到查询条件*/
             /*获取表单元素的值*/
             console.log(data);
@@ -231,37 +170,6 @@ var probegroup_handle = new Vue({
                 toastr.warning('请选择一条记录再编辑！');
             }
         },
-        groupview: function () {     /*查看监听事件*/
-            var trs = $('#group_table tbody').find('tr:has(:checked)');
-            /*find被选中的行*/
-            console.log(trs.length);
-            var id = trs.find("td").eq(2).text();
-            var forms = $('#groupform_data .form-control');
-            console.log(id);
-            if (trs.length == 0) {
-                toastr.warning('请选择查看项目！');
-            } else if (trs.length == 1) {
-                $.ajax({
-                    type: "POST",   /*GET会乱码*/
-                    url: "../../cem/probegroup/info/"+id,
-                    cache: false,  //禁用缓存
-                    dataType: "json",
-                    /* contentType:"application/json",  /!*必须要,不可少*!/*/
-                    success: function (result) {
-                        forms[0].value = result.probeGroup.id;
-                        forms[1].value = result.probeGroup.name;
-                        forms[2].value = result.probeGroup.remark;
-                    }
-                });
-                $('#groupform_data input[type=text]').prop("readonly", true);//将input元素设置为readonly
-                $('#groupform_data select').prop("disabled", true);//将select元素设置为不可变
-                groupform_data.modaltitle = "查看";
-                /*修改模态框标题*/
-                $('#groupModal').modal('show');
-            } else {
-                toastr.warning('请选择一条记录再查看！');
-            }
-        },
         groupsearch: function () {   /*查询监听事件*/
             var data = getFormJson($('#searchgroup'));
             /*得到查询条件*/
@@ -273,7 +181,6 @@ var probegroup_handle = new Vue({
         },
         reset: function () {    /*重置*/
             grouptable.reset();
-
         }
 
     }
@@ -422,7 +329,6 @@ var delete_data = new Vue({
         }
     }
 });
-
 //探针组删除功能
 function deletegroup_ajax() {
     var ids = JSON.stringify(idArray);
@@ -485,23 +391,28 @@ var probeform_data = new Vue({
     el: '#myModal_update',
     data: {
         modaltitle: "探针详情", /*定义模态框标题*/
-        countys: [
+        countyNames: [
             {message: '海淀区'},
             {message: '朝阳区'},
         ],
-        citys: [
+        cityNames: [
             {message: '北京市'}
         ],
-        types: [
-            {message: '类型1'},
-            {message: '类型2'}
-        ],
+        types: [],
         ipTypes: [
             {message:'ip类型1'},
             {message:'ip类型2'}
         ],
-        probegroup_names: [],
-        accessLayers:[]
+        probegroup_names: [
+           /* {message:'探针组1'},
+            {message:'探针组2'},
+            {message:'探针组3'},
+            {message:'探针组4'},
+            {message:'探针组5'}*/
+        ],
+        accessLayers:[],
+        citys:[],
+        countys:[]
     },
     // 在 `methods` 对象中定义方法
     methods: {
@@ -658,11 +569,14 @@ var search_data = new Vue({
         areas:[],
         cities:[],
         probegroup_names:[],
-        accessLayers:[]
+        accessLayers:[],
+        types:[],
+        status:[]
     },
     methods:{
         citychange: function () {
             this.areas = getArea($("#selectcity").val());
+            console.log()
         }
     }
 });
@@ -763,24 +677,26 @@ $(document).ready(function () {
 
 // 探针列表
 var probetable = new Vue({
-        el: '#probedata_table',
+    el: '#probedata_table',
     data: {
         headers: [
+            //{title: '<div style="width:16px"></div>'},
+            //{title: '<div class="checkbox" style="width:16px"> <label> <input type="checkbox" id="checkAll"></label> </div>'},
             {title: '<div style="width:10px"></div>'},
             {title: '<div class="checkbox" style="width:100%; align: center"> <label> <input type="checkbox" id="checkAll"></label> </div>'},
             //{title: '<div style=" width:0px;display:none;padding:0px">id</div>'},
-            {title: '<div style="width:65px">探针名</div>'},
+            {title: '<div style="width:70px">探针名</div>'},
             {title: '<div style="width:42px">地市</div>'},
             {title: '<div style="width:42px">区县</div>'},
-            {title: '<div style="width:95px">位置</div>'},
+            {title: '<div style="width:90px">位置</div>'},
             {title: '<div style="width:40px">层级</div>'},
             {title: '<div style="width:65px">上联探针</div>'},
             {title: '<div style="width:50px">状态</div>'},
-            {title: '<div style="width:58px">类型</div>'},
-            {title: '<div style="width:120px">注册时间</div>'},
-            {title: '<div style="width:120px">最后心跳时间</div>'},
-            {title: '<div style="width:120px">最后上报时间</div>'},
-            {title: '<div style="width:65px">操作</div>'},
+            {title: '<div style="width:55px">类型</div>'},
+            {title: '<div style="width:130px">注册时间</div>'},
+            {title: '<div style="width:130px">最后心跳时间</div>'},
+            {title: '<div style="width:130px">最后上报时间</div>'},
+            {title: '<div style="width:60px">操作</div>'}
         ],
         rows: [],
         dtHandle: null,
@@ -852,13 +768,12 @@ var probetable = new Vue({
                     dataType: "json",
                     success: function (result) {
                         console.log(result);
-
                             //封装返回数据
                             let returnData = {};
                             returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
                             returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
                             returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
-                            // returnData.data = result.page.list;//返回的数据列表
+                            returnData.data = result.page.list;//返回的数据列表
                             // 重新整理返回数据以匹配表格
                             let rows = [];
                             var i = param.start+1;
@@ -874,7 +789,7 @@ var probetable = new Vue({
                                 row.push(item.accessLayer);
                                 row.push(item.upstream);
                                 row.push(item.status);
-                                row.push(item.type);
+                                row.push(item.typeName);
                                 row.push(item.registerTime);
                                 row.push('<span title="'+item.lastHbTime+'" style="white-space: nowrap">' + (item.lastHbTime).substr(0, 10) + '</span>');
                                // row.push(item.lastHbTime);
@@ -886,6 +801,7 @@ var probetable = new Vue({
                                 row.push('<a class="fontcolor" onclick="update_this(this)" id='+item.id+'>详情</a>&nbsp&nbsp;' +
                                     '<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>');
                                 rows.push(row);
+                                console.log(item);
                             });
                             returnData.data = rows;
                             console.log(returnData);
@@ -916,11 +832,13 @@ var grouptable = new Vue({
     el: '#probegroup_table',
     data: {
         headers: [
-            {title: '<div style="width:67px"></div>'},
+            {title: '<div style="width:16px"></div>'},
+            //{title: '<div class="checkbox"> <label> <input type="checkbox" id="checkAllGroup""></label> </div>'},
+            //{title: '<div style="display:none">id</div>'},
             // {title: '<div style="width:58px">探针组ID</div>'},
-            {title: '<div style="width:67px">探针组名</div>'},
-            {title: '<div style="width:67px">备注</div>'},
-            {title: '<div style="width:67px">操作</div>'}
+            {title: '<div style="width:100px">探针组名</div>'},
+            {title: '<div style="width:100px">备注</div>'},
+            {title: '<div style="width:52px">操作</div>'}
         ],
         rows: [],
         dtHandle: null,
@@ -1013,6 +931,9 @@ var grouptable = new Vue({
                         //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);
+                        $("#probegroup_table").colResizable({
+                            minWidth:40,
+                        });
                     }
                 });
             }

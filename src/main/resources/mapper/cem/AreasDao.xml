@@ -4,12 +4,12 @@
 <mapper namespace="io.cem.modules.cem.dao.AreasDao">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="io.cem.modules.cem.entity.AreasEntity" id="areasMap">
-        <result property="id" column="id"/>
-        <result property="area_id" column="area_id"/>
-        <result property="area" column="area"/>
-        <result property="city_id" column="city_id"/>
-    </resultMap>
+	<resultMap type="io.cem.modules.cem.entity.AreasEntity" id="areasMap">
+		<result property="id" column="id"/>
+		<result property="area_id" column="area_id"/>
+		<result property="area" column="area"/>
+		<result property="city_id" column="city_id"/>
+	</resultMap>
 
 	<select id="queryObject" resultType="io.cem.modules.cem.entity.AreasEntity">
 		select * from county where id = #{value}
@@ -19,11 +19,11 @@
 		select * from county where city_id = #{value}
         order by id
 	</select>
-	
- 	<select id="queryTotal" resultType="int">
+
+	<select id="queryTotal" resultType="int">
 		select count(*) from county
 	</select>
-	 
+
 	<insert id="save" parameterType="io.cem.modules.cem.entity.AreasEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into county
 		(
@@ -38,7 +38,7 @@
 			#{city_id}
 		)
 	</insert>
-	 
+
 	<update id="update" parameterType="io.cem.modules.cem.entity.AreasEntity">
 		update county
 		<set>
@@ -48,11 +48,11 @@
 		</set>
 		where id = #{id}
 	</update>
-	
+
 	<delete id="delete">
 		delete from county where id = #{value}
 	</delete>
-	
+
 	<delete id="deleteBatch">
 		delete from county where id in
 		<foreach item="id" collection="array" open="(" separator="," close=")">
