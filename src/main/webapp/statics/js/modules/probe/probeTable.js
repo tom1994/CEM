@@ -7,6 +7,7 @@ var probeGroupNames = new Array();
 var cityNames = new Array();
 var areaNames = new Array();
 var typeNames = new Array();
+var statusNames = new Array();
 
 var probedata_handle = new Vue({
     el: '#probehandle',
@@ -146,7 +147,7 @@ var probedata_handle = new Vue({
             }
         },*/
         probesearch: function () {   /*查询监听事件*/
-            var data = getFormJson($('#searchcolumns'));
+            var data = getFormJson($('#probesearch'));
             /*得到查询条件*/
             /*获取表单元素的值*/
             console.log(data);
@@ -301,16 +302,16 @@ function update_this (obj) {     /*监听修改触发事件*/
             forms[0].value = result.probe.id;
             forms[1].value = result.probe.name;
             forms[2].value = result.probe.serialNumber;
-            // forms[3].value = result.probe.type;
-            // forms[4].value = result.probe.city;
-            // forms[5].value = result.probe.county;
+            forms[3].value = result.probe.typeName;
+            forms[4].value = result.probe.cityName;
+            forms[5].value = result.probe.countyName;
             forms[6].value = result.probe.location;
             forms[7].value = result.probe.brasName;
             forms[8].value = result.probe.brasIp;
             forms[9].value = result.probe.brasPort;
             forms[10].value = result.probe.accessLayer;
             forms[11].value = result.probe.upstream;
-            forms[12].value = result.probe.status;
+            forms[12].value = result.probe.statusName;
             forms[13].value = result.probe.device;
             forms[14].value = result.probe.version;
             forms[15].value = result.probe.concurrentTask;
@@ -485,7 +486,7 @@ var deletegroup_data = new Vue({
 var probeform_data = new Vue({
     el: '#myModal_update',
     data: {
-        modaltitle: "探针详情", /*定义模态框标题*/
+        modaltitle: "", /*定义模态框标题*/
         countyNames: [
             {message: '海淀区'},
             {message: '朝阳区'},
@@ -493,18 +494,16 @@ var probeform_data = new Vue({
         cityNames: [
             {message: '北京市'}
         ],
-        types: [],
+        typeNames:[],
+        statusNames:[],
         ipTypes: [
             {message:'ip类型1'},
             {message:'ip类型2'}
         ],
         probegroup_names: [
-           /* {message:'探针组1'},
-            {message:'探针组2'},
-            {message:'探针组3'},
-            {message:'探针组4'},
-            {message:'探针组5'}*/
         ],
+        types: [],
+        status:[],
         accessLayers:[],
         citys:[],
         countys:[]
@@ -659,7 +658,7 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
 
 
 var search_data = new Vue({
-    el:'#searchcolumns',
+    el:'#probesearch',
     data:{
         areas:[],
         cities:[],
@@ -882,7 +881,7 @@ var probetable = new Vue({
                                 row.push(item.location);
                                 row.push(item.accessLayer);
                                 row.push(item.upstream);
-                                row.push(item.status);
+                                row.push(item.statusName);
                                 row.push(item.typeName);
                                 row.push(item.registerTime);
                                 row.push(item.lastHbTime);
@@ -924,7 +923,6 @@ var grouptable = new Vue({
             {title: '<div style="width:16px"></div>'},
             //{title: '<div class="checkbox"> <label> <input type="checkbox" id="checkAllGroup""></label> </div>'},
             //{title: '<div style="display:none">id</div>'},
-            {title: '<div style="width:58px">探针组ID</div>'},
             {title: '<div style="width:100px">探针组名</div>'},
             {title: '<div style="width:100px">备注</div>'},
             {title: '<div style="width:52px">操作</div>'}
