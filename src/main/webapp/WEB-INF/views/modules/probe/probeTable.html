@@ -111,12 +111,12 @@
                                         </form>
 
                                         <div class="col-lg-2 col-md-2 col-sm-2 pull-left" style="margin-top: 4px;">
-                                            <button type="button" class="btn btn-default ui-button"
+                                            <button type="button" class="btn btn-sm btn-success"
                                                     style="margin-right: 5px"
                                                     v-on:click="groupsearch"><span
                                                     class="glyphicon glyphicon-zoom-in"></span>查询
                                             </button>
-                                            <button type="button" class="btn btn-default ui-button"
+                                            <button type="button" class="btn btn-sm btn-success"
                                                     v-on:click="reset"><span
                                                     class="glyphicon glyphicon-refresh"></span>重置
                                             </button>
@@ -142,20 +142,21 @@
                                     <!--</button>-->
 
 
-                                    <button type="button" class="btn btn-default ui-button"
+                                    <button type="button" class="btn btn-sm btn-success"
                                             v-on:click="probedelBatch"><span
                                             class="glyphicon glyphicon-trash"></span>批量删除
                                     </button>
 
                                     <a href="../../cem/probe/download">
-                                        <button type="button" class="btn btn-default ui-button"><span
+                                        <button type="button" class="btn btn-sm btn-success"><span
                                                 class="glyphicon glyphicon-open"></span>导出
                                         </button>
                                     </a>
-                                    <button type="button" id="flip" class="btn btn-sm btn-success"
-                                            style="position:relative; left:35%;"><span
+                                 <!--   <button type="button" id="flip" class="btn btn-sm btn-success"
+                                            style="position:relative; left:35%;" onClick="toggle1('searchbox')"><span
                                             class="glyphicon glyphicon-menu-up"></span>
-                                    </button>
+                                    </button>-->
+                                    <p id="flip" style="position:relative; left:35%;" class="glyphicon glyphicon-menu-up" onClick="toggle1('searchbox')"></p>
                                 </div>
                                 <div class="ibox-content">
                                     <div class="row " style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
@@ -170,7 +171,7 @@
                     <div class="modal fade" id="myModal_update" tabindex="-1" role="dialog"
                          aria-labelledby="myModalLabel"
                          aria-hidden="true">
-                        <div class="modal-dialog" style="width: 768px"> <!--修改bootstrap modal模态框的宽度-->
+                        <div class="modal-dialog" style="width: 950px"> <!--修改bootstrap modal模态框的宽度-->
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
@@ -433,7 +434,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                                    <button type="button" class="btn btn-primary ui-button" v-on:click="submit">保存
+                                    <button type="button" class="btn btn-success " v-on:click="submit">保存
                                     </button>
                                     <!--<button type="button" class="btn btn-success" v-on:click="submit">保存</button>-->
 
@@ -487,7 +488,7 @@
                                                        value="">
                                             </div>
                                             <div class="btn-group pull-left">
-                                                <button type="button" class="btn btn-default ui-button"
+                                                <button type="button" class="btn btn-sm btn-success"
                                                         style="margin-right: 5px; margin-top: 5px"
                                                         v-on:click="groupsearch"><span
                                                         class="glyphicon glyphicon-zoom-in"></span>查询
@@ -504,7 +505,7 @@
                             <div class="ibox float-e-margins">
                                 <div class="ibox-title fontcolor" id="grouphandle"
                                      style="padding-bottom: 0px !important;">
-                                    <button type="button" class="btn btn-default ui-button" v-on:click="groupadd"><span
+                                    <button type="button" class="btn btn-sm btn-success" v-on:click="groupadd"><span
                                             class="glyphicon glyphicon-plus"></span>录入
                                     </button>
                                 </div>
@@ -606,26 +607,33 @@
 
 </div>
 
-<script type="text/javascript">
-
-//    $(function() {
-//        $("#probegroup_table").colResizable({
-//            minWidth:60,
-//        });
-//    })
-</script>
 
 <script>window.jQuery || document.write('<script src="${rc.contextPath}/statics/js/plugins/jquery/jquery-2.0.3.js"><\/script>')</script>
 <script type="text/javascript"
         src="${rc.contextPath}/statics/js/modules/probe/probeTable.js?_${date.systemTime}"></script>
 <script type="text/javascript" src="${rc.contextPath}/statics/js/index.js"></script>
 <script>
-    $(document).ready(function () {
-        $("#flip").click(function () {
-            $("#searchbox").slideToggle("fast");
+   // $(document).ready(function () {
+     //   $("#flip").click(function () {
+       //     $("#searchbox").slideToggle("fast");
 
-        });
-    });
+        //});
+    //});
+</script>
+
+<script type="text/javascript">
+    //参数para1：希望隐藏元素的id值
+    function toggle1(param){
+        if ($("#flip").attr("class")=="glyphicon glyphicon-menu-up")
+        {
+            $("#flip").attr("class","glyphicon glyphicon-menu-down");
+        }
+        else
+        {
+            $("#flip").attr("class","glyphicon glyphicon-menu-up");
+        }
+        $("#"+param).toggle();
+    }
 </script>
 
 </body>

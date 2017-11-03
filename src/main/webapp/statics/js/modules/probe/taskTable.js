@@ -91,6 +91,7 @@ var probedata_handle = new Vue({
                     var tds = trs.eq(i).find("td");
                     var statuses = parseInt("0");
                     test={id:tds.eq(2).text(),taskId:tds.eq(3).text(),probeId:tds.eq(4).text(),port:tds.eq(5).text(),status:statuses,remark:tds.eq(7).text()};
+                    console.log("test!!!!!!!"+tds.eq(1).text());
                     delete_ajax();
                     /*ajax传输*/
 
@@ -370,7 +371,8 @@ var search_data = new Vue({
 
 /*选中表格事件*/
 $(document).ready(function () {
-    $('#probedata_table tbody').on('click', 'tr', function () {   /*表格某一行选中状态*/
+    $(".list td").slice(9).each(function(){   //操作列取消选中状态
+    $('#probedata_table tbody').slice(9).on('click', 'tr', function () {   /*表格某一行选中状态*/
         if ($(this).hasClass('selected')) {
             $(this).removeClass('selected');
             $(this).find("input:checkbox").prop("checked", false);
@@ -382,6 +384,7 @@ $(document).ready(function () {
             $(this).addClass('selected');
             $(this).find("input:checkbox").prop("checked", true);
         }
+    });
     });
 
     $('#checkAll').on('click', function () {
@@ -506,7 +509,7 @@ var probetable = new Vue({
                             if(item.status==1){status_word="正在执行";}else{status_word="已取消";}
                             let row = [];
                             row.push(i++);
-                            row.push('<div class="checkbox"> <label> <input type="checkbox" name="selectFlag" id='+item.id+'></label> </div>');
+                            row.push('<div class="checkbox"> <label> <input type="checkbox" name="selectFlag" ><div style="display: none">'+item.id+'</div></label> </div>');
                             row.push('<div class="probe_id" >'+item.id+'</div>');
                             row.push(item.taskId);
                             row.push(item.probeName);
@@ -514,7 +517,7 @@ var probetable = new Vue({
                             row.push(status_word);
                             //row.push(item.status);
                             row.push(item.remark);
-                            row.push('<a class="fontcolor" onclick="edit_this(this)" id='+item.id+'>编辑</a>&nbsp;<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>取消</a>');
+                            row.push('<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>取消</a>');
                             rows.push(row);
                         });
                         returnData.data = rows;
@@ -523,7 +526,10 @@ var probetable = new Vue({
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);
                         $("#probedata_table").colResizable({
-                            minWidth:40,
+                            liveDrag:true,
+                            gripInnerHtml:"<div class='grip'></div>",
+                            draggingClass:"dragging",
+                            resizeMode:'overflow',
                         });
                     }
                 });

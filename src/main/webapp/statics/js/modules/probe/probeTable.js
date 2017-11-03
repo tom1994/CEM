@@ -692,7 +692,8 @@ var searchgroup_data = new Vue({
 
 /*选中表格事件*/
 $(document).ready(function () {
-    $('#probe_table tbody').on('click', 'tr', function () {   /*表格某一行选中状态*/
+    $(".list td").slice(14).each(function(){    //操作列取消选中状态
+    $('#probe_table tbody').slice(14).on('click', 'tr', function () {   /*表格某一行选中状态*/
         if ($(this).hasClass('selected')) {
             $(this).removeClass('selected');
             $(this).find("input:checkbox").prop("checked", false);
@@ -704,6 +705,7 @@ $(document).ready(function () {
             $(this).addClass('selected');
             $(this).find("input:checkbox").prop("checked", true);
         }
+        });
     });
 
     $('#checkAll').on('click', function () {
@@ -726,38 +728,38 @@ $(document).ready(function () {
 });
 
 /*选中探针组表格事件*/
-$(document).ready(function () {
-    $('#group_table tbody').on('click', 'tr', function () {   /*表格某一行选中状态*/
-        if ($(this).hasClass('selected')) {
-            $(this).removeClass('selected');
-            $(this).find("input:checkbox").prop("checked", false);
-            /*prop可以,attr会出错*/
-        }
-        else {
-            $(this).addClass('selected');
-            console.log('success');
-            $(this).find("input:checkbox").prop("checked", true);
-        }
-    });
+//$(document).ready(function () {
+  //  $('#group_table tbody').on('click', 'tr', function () {   /*表格某一行选中状态*/
+    //    if ($(this).hasClass('selected')) {
+ //           $(this).removeClass('selected');
+  //          $(this).find("input:checkbox").prop("checked", false);
+  //          /*prop可以,attr会出错*/
+  //      }
+   //     else {
+   //         $(this).addClass('selected');
+   //         console.log('success');
+   //         $(this).find("input:checkbox").prop("checked", true);
+   //     }
+  //  });
 
-    $('#checkAllGroup').on('click', function () {
-        if (this.checked) {
-            $("input[name='groupselectFlag']:checkbox").each(function () { //遍历所有的name为selectFlag的 checkbox
-                $(this).prop("checked", true);
-                $(this).closest('tr').addClass('selected');
-                /*取得最近的tr元素*/
-            })
-        } else {   //反之 取消全选
-            $("input[name='groupselectFlag']:checkbox").each(function () { //遍历所有的name为selectFlag的 checkbox
-                $(this).prop("checked", false);
-                $(this).closest('tr').removeClass('selected');
-                /*取得最近的tr元素*/
+  //  $('#checkAllGroup').on('click', function () {
+  //      if (this.checked) {
+  //          $("input[name='groupselectFlag']:checkbox").each(function () { //遍历所有的name为selectFlag的 checkbox
+  //              $(this).prop("checked", true);
+  //              $(this).closest('tr').addClass('selected');
+  //              /*取得最近的tr元素*/
+  //          })
+  //      } else {   //反之 取消全选
+  //          $("input[name='groupselectFlag']:checkbox").each(function () { //遍历所有的name为selectFlag的 checkbox
+  //              $(this).prop("checked", false);
+ //               $(this).closest('tr').removeClass('selected');
+ //               /*取得最近的tr元素*/
 
-            })
-        }
-    })
+ //           })
+ //       }
+ //   })
 
-});
+//});
 
 // 探针列表
 var probetable = new Vue({
@@ -863,9 +865,9 @@ var probetable = new Vue({
                             result.page.list.forEach(function (item) {
                                 let row = [];
                                 row.push(i++);
-                                row.push('<div class="checkbox"> <label> <input type="checkbox" id="checkALl" name="selectFlag"></label> </div>');
+                                row.push('<div class="checkbox"> <label> <input type="checkbox" id="checkALl" name="selectFlag"><div style="display: none">'+item.id+'</div></label> </div>');
                                 //row.push('<div class="probe_id" style="display:none">'+item.id+'</div>');
-                                row.push('<a onclick="update_this(this)" id='+item.id+'><span style="color: black">'+item.name+'</span></a>');
+                                row.push('<a onclick="update_this(this)" id='+item.id+'><span style="color: black;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">'+item.name+'</span></a>');
                                 row.push(item.cityName);
                                 row.push(item.areaName);
                                 row.push(item.location);
@@ -874,8 +876,10 @@ var probetable = new Vue({
                                 row.push(item.status);
                                 row.push(item.type);
                                 row.push(item.registerTime);
-                                row.push(item.lastHbTime);
-                                row.push(item.lastReportTime);
+                                row.push('<span title="'+item.lastHbTime+'" style="white-space: nowrap">' + (item.lastHbTime).substr(0, 10) + '</span>');
+                               // row.push(item.lastHbTime);
+                                row.push('<span title="'+item.lastReportTime+'" style="white-space: nowrap">' + (item.lastReportTime).substr(0, 10) + '</span>');
+                               // row.push(item.lastReportTime);
                                 /*row.push('<a class="fontcolor" onclick="update_this(this)" id='+item.id+'>详情</a>&nbsp&nbsp;' +
                                     '<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>&nbsp&nbsp;'
                                     +'<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>查看任务</a>');*/
@@ -889,7 +893,10 @@ var probetable = new Vue({
                             //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                             callback(returnData);
                             $("#probedata_table").colResizable({
-                                minWidth:40,
+                                liveDrag:true,
+                                gripInnerHtml:"<div class='grip'></div>",
+                                draggingClass:"dragging",
+                                resizeMode:'overflow',
                         });
                         // $('td').closest('table').find('th').eq(1).attr('style', 'text-align: center;');
                         // $('#probe_table tbody').find('td').eq(1).attr('style', 'text-align: center;');

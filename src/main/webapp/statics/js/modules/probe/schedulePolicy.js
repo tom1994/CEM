@@ -307,18 +307,20 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
 
 /*选中表格事件*/
 $(document).ready(function () {
-    $('#schedulepolicy_table tbody').on('click', 'tr', function () {   /*表格某一行选中状态*/
-        if ($(this).hasClass('selected')) {
-            $(this).removeClass('selected');
-            $(this).find("input:checkbox").prop("checked", false);
-            /*prop可以,attr会出错*/
-        }
-        else {
-            /*vm.dtHandle.$('tr.selected').removeClass('selected');*/
-            /*只能选中一行*/
-            $(this).addClass('selected');
-            $(this).find("input:checkbox").prop("checked", true);
-        }
+    $(".list td").slice(7).each(function(){  //操作列取消选中状态
+        $('#schedulepolicy_table tbody').slice(7).on('click', 'tr', function () {   /*表格某一行选中状态*/
+            if ($(this).hasClass('selected')) {
+                $(this).removeClass('selected');
+                $(this).find("input:checkbox").prop("checked", false);
+                /*prop可以,attr会出错*/
+            }
+            else {
+                /*vm.dtHandle.$('tr.selected').removeClass('selected');*/
+                /*只能选中一行*/
+                $(this).addClass('selected');
+                $(this).find("input:checkbox").prop("checked", true);
+            }
+        });
     });
 
     $('#checkAll').on('click', function () {
@@ -344,12 +346,12 @@ var schedulepolicytable = new Vue({
     el: '#schedulepolicydata_table',
     data: {
         headers: [
-            {title: '<div style="width:67px"></div>'},
-            {title: '<div style="width:67px">策略ID</div>'},
-            {title: '<div style="width:67px">策略名称</div>'},
-            {title: '<div style="width:67px">任务描述</div>'},
-            {title: '<div style="width:67px">备注</div>'},
-            {title: '<div style="width:67px">创建时间</div>'},
+            {title: '<div style="width:15px"></div>'},
+            {title: '<div style="width:100px">策略ID</div>'},
+            {title: '<div style="width:142px">策略名称</div>'},
+            {title: '<div style="width:160px">任务描述</div>'},
+            {title: '<div style="width:142px">备注</div>'},
+            {title: '<div style="width:100px">创建时间</div>'},
             {title: '<div style="width:67px">操作</div>'}
         ],
         rows: [],
@@ -447,9 +449,16 @@ var schedulepolicytable = new Vue({
                         });
                         returnData.data = rows;
                         console.log(returnData);
+
                         //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);
+                        $("#schedulepolicydata_table").colResizable({
+                            liveDrag:true,
+                            gripInnerHtml:"<div class='grip'></div>",
+                            draggingClass:"dragging",
+                            resizeMode:'overflow',
+                        });
                     }
                 });
             }
