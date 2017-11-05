@@ -3,7 +3,7 @@
 
 <mapper namespace="io.cem.modules.sys.dao.SysUserDao">
 	<select id="queryObject" resultType="io.cem.modules.sys.entity.SysUserEntity">
-		select * from sys_user where user_id = #{value}
+		select * from sys_user where id = #{value}
 	</select>
 	
 	<select id="queryList" resultType="io.cem.modules.sys.entity.SysUserEntity">
@@ -21,7 +21,7 @@
 				order by u.${sidx} ${order}
 			</when>
 			<otherwise>
-				order by u.user_id desc
+				order by u.id desc
 			</otherwise>
 		</choose>
 		<if test="offset != null and limit != null">
@@ -63,7 +63,7 @@
 	<insert id="save" parameterType="io.cem.modules.sys.entity.SysUserEntity" useGeneratedKeys="true" keyProperty="userId">
 		insert into sys_user
 		(
-			`user_id`, 
+			id,
 			`username`, 
 			`password`,
 			`salt`,
@@ -97,21 +97,21 @@
 			<if test="status != null">`status` = #{status}, </if>
 			<if test="deptId != null">`dept_id` = #{deptId}, </if>
 		</set>
-		where user_id = #{userId}
+		where id = #{userId}
 	</update>
 	
 	<update id="updatePassword" parameterType="map">
 		update sys_user set `password` = #{newPassword} 
-			where user_id = #{userId} and password = #{password}
+			where id = #{userId} and password = #{password}
 	</update>
 	
 	<delete id="deleteBatch">
-		delete from sys_user where user_id in 
+		delete from sys_user where id in
 		<foreach item="userId" collection="array" open="(" separator="," close=")">
 			#{userId}
 		</foreach>
 		;
-		delete from sys_user_role where user_id in 
+		delete from sys_user_role where user_id in
 		<foreach item="userId" collection="array" open="(" separator="," close=")">
 			#{userId}
 		</foreach>
