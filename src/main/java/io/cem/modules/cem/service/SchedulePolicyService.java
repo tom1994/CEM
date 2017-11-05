@@ -8,9 +8,9 @@ import java.util.Map;
 /**
  * 
  * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2017-10-12 17:12:46
+ * @author ${author}
+ * @email ${email}
+ * @date 2017-11-05 21:13:27
  */
 public interface SchedulePolicyService {
 	
@@ -19,8 +19,6 @@ public interface SchedulePolicyService {
 	List<SchedulePolicyEntity> queryList(Map<String, Object> map);
 	
 	int queryTotal(Map<String, Object> map);
-
-	void add(SchedulePolicyEntity schedulePolicy);
 	
 	void save(SchedulePolicyEntity schedulePolicy);
 	

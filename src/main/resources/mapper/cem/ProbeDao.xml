@@ -43,9 +43,9 @@
 	<select id="queryObject" resultMap="probeMap">
 		SELECT probe.*,
 		city.city_id,
-		city.city AS city_name,
-		county.area_id,
-		county.area AS area_name,
+		city.city_name AS city_name,
+		county.county_id,
+		county.county_name AS area_name,
 		a.data_id,
 		a.dic_type_id,
 		a.data_name AS type_name
@@ -53,7 +53,7 @@
 		LEFT JOIN city
 		ON probe.city_id = city.city_id
 		LEFT JOIN county
-		ON probe.county_id = county.area_id
+		ON probe.county_id = county.county_id
 		LEFT JOIN dic_data a
 		ON probe.type = a.data_id AND a.dic_type_id = 1
 		WHERE probe.id = #{value}
@@ -81,9 +81,9 @@
 	<select id="queryProbeList" resultMap="probeMap">
 		SELECT probe.*,
 		city.city_id,
-		city.city AS city_name,
-		county.area_id,
-		county.area AS area_name,
+		city.city_name AS city_name,
+		county.county_id,
+		county.county_name AS area_name,
 		a.data_id,
 		a.dic_type_id,
 		a.data_name AS type_name
@@ -91,7 +91,7 @@
 		LEFT JOIN city
 		ON probe.city_id = city.city_id
 		LEFT JOIN county
-		ON probe.county_id = county.area_id
+		ON probe.county_id = county.county_id
 		LEFT JOIN dic_data a
 		ON probe.type = a.data_id AND a.dic_type_id = 1
 		<choose>

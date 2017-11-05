@@ -42,7 +42,7 @@
                                                             v-on:change="citychange()" style="width: 110px">
                                                         <option value="">---请选择---</option>
                                                         <option v-for="item in cities"
-                                                                v-bind:value="item.message.cityid">{{ item.message.city }}
+                                                                v-bind:value="item.message.cityId">{{ item.message.cityName }}
                                                         </option>
                                                         <!--<option v-for="pitem in parray" v-bind:value="pitem.Id">{{ pitem.Name }}-->
                                                     </select>
@@ -52,7 +52,7 @@
                                                     <span class="searchname" title="区县" style="width: 40px">区县</span>
                                                     <select class="form-control " name="area" style="width: 110px">
                                                         <option value="">---请选择---</option>
-                                                        <option v-for="item in areas">{{ item.message.area }}</option>
+                                                        <option v-for="item in areas">{{ item.message.countyName }}</option>
                                                     </select>
                                                 </div>
 

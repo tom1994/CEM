@@ -31,11 +31,6 @@ public class SchedulePolicyServiceImpl implements SchedulePolicyService {
 	public int queryTotal(Map<String, Object> map){
 		return schedulePolicyDao.queryTotal(map);
 	}
-
-	@Override
-	public void add(SchedulePolicyEntity schedulePolicy){
-		schedulePolicyDao.add(schedulePolicy);
-	}
 	
 	@Override
 	public void save(SchedulePolicyEntity schedulePolicy){

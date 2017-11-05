@@ -1,6 +1,6 @@
 package io.cem.modules.cem.dao;
 
-import io.cem.modules.cem.entity.CitiesEntity;
+import io.cem.modules.cem.entity.CityEntity;
 import io.cem.modules.sys.dao.BaseDao;
 
 /**
@@ -8,8 +8,8 @@ import io.cem.modules.sys.dao.BaseDao;
  * 
  * @author ${author}
  * @email ${email}
- * @date 2017-10-27 16:11:02
+ * @date 2017-11-05 20:56:26
  */
-public interface CitiesDao extends BaseDao<CitiesEntity> {
+public interface CityDao extends BaseDao<CityEntity> {
 	
 }

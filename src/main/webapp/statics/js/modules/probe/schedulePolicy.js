@@ -44,7 +44,7 @@ var schedulepolicydata_handle = new Vue({
         contentType: "application/json", /!*必须要,不可少*!/
         success: function (result) {
             forms[0].value = result.schedulepolicy.name;
-            forms[1].value = result.schedulepolicy.cron;
+            forms[1].value = result.schedulepolicy.scheduler;
             forms[2].value = result.schedulepolicy.remark;
 
             toastr.success("调度策略修改成功!");
@@ -76,8 +76,8 @@ function update_this (obj) {     /*监听修改触发事件*/
         contentType: "application/json", /*必须要,不可少*/
         success: function (result) {
             forms[0].value = result.schedulePolicy.id;
-            forms[1].value = result.schedulePolicy.name;
-            forms[2].value = result.schedulePolicy.cron;
+            forms[1].value = result.schedulePolicy.spName;
+            forms[2].value = result.schedulePolicy.scheduler;
             forms[3].value = result.schedulePolicy.remark;
         }
     });
@@ -206,22 +206,22 @@ var schedulepolicyform_data = new Vue({
     data: {
         modaltitle: "", /*定义模态框标题*/
         /*name: [],
-        cron: [],
+        scheduler: [],
         remark: []*/
     },
     // 在 `methods` 对象中定义方法
     methods: {
         submit: function () {
             var schedulepolicyJson = getFormJson($('#schedulepolicyform_data'));
-            if (typeof(schedulepolicyJson["name"]) == "undefined") {                  /*3个select必选*/
+            if (typeof(schedulepolicyJson["spName"]) == "undefined") {                  /*3个select必选*/
                 toastr.warning("请添加策略名称");
-            } else if (typeof(schedulepolicyJson["cron"]) == "undefined") {
+            } else if (typeof(schedulepolicyJson["scheduler"]) == "undefined") {
                 toastr.warning("请添加任务描述!");
             } else if (typeof(schedulepolicyJson["remark"]) == "undefined") {
                 toastr.warning("请添加备注!");
             } else {
                 var d = new Date().Format("yyyy-MM-dd hh:mm:ss");        //获取日期与时间
-                schedulepolicyJson['createTime'] = d;
+                schedulepolicyJson['startDate'] = d;
                 var schedulepolicy = JSON.stringify(schedulepolicyJson);
                 /*封装成json数组*/
                 /*获取表单元素的值*/
@@ -440,10 +440,10 @@ var schedulepolicytable = new Vue({
                             let row = [];
                             row.push(i++);
                             row.push(item.id);
-                            row.push(item.name);
-                            row.push(item.cron);
+                            row.push(item.spName);
+                            row.push(item.scheduler);
                             row.push(item.remark);
-                            row.push(item.createTime);
+                            row.push(item.startDate);
                             row.push('<a class="fontcolor" onclick="update_this(this)" id='+item.id+'>修改</a>&nbsp;<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>');
                             rows.push(row);
                         });
