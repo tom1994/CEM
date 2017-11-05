@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+    #parse("cemHeader.html")  <!--导入CSS和js文件-->
+    <link href="${rc.contextPath}/statics/css/formStyle.css" rel="stylesheet">  <!--自定义CSS-->
+</head>
+<body>
+    <div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="wrapper-module">
+                    <form id="task_form">
+                        <div class="module left-up">
+                            <div class="wrapper-block task_border">
+                                <label><input type="checkbox" id="networkconnection"> <span>网络连通性测试业务</span> </label>
+                                <div class="wrapper-block task_border">
+                                    <label><input type="checkbox" class="networkconnection" id="PING_ICMP" v-on:click="PING_ICMP">
+                                        <span>PING(ICMP)测试</span> </label>
+                                    <label><input type="checkbox" class="networkconnection" id="PING_TCP" v-on:click="PING_TCP">
+                                        <span>PING(TCP)测试</span> </label>
+                                    <label><input type="checkbox" class="networkconnection" id="PING_UDP" v-on:click="PING_UDP">
+                                        <span>PING(UDP)测试</span> </label>
+                                    <label><input type="checkbox" class="networkconnection" id="TraceRoute_ICMP" v-on:click="TraceRoute_ICMP">
+                                        <span>TraceRoute(ICMP)测试</span> </label>
+                                    <label><input type="checkbox" class="networkconnection" id="TraceRoute_TCP" v-on:click="TraceRoute_TCP">
+                                        <span>TraceRoute(TCP)测试</span> </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="module right">
+                            <div class="wrapper-block task_border">
+                                <label><input type="checkbox" id="netlayerquality"> <span>网络层质量测试业务</span> </label>
+                                <div class="wrapper-block task_border">
+                                    <label><input type="checkbox" class="netlayerquality" id="SLA" v-on:click="SLA">
+                                        <span>SLA(TCP/UDP)测试</span> </label>
+                                    <label><input type="checkbox" class="netlayerquality" id="DNS" v-on:click="DNS">
+                                        <span>DNS测试</span> </label>
+                                    <label><input type="checkbox" class="netlayerquality" id="DHCP" v-on:click="DHCP">
+                                        <span>DHCP测试</span> </label>
+                                    <label><input type="checkbox" class="netlayerquality" id="ADSL" v-on:click="ADSL">
+                                        <span>ADSL接入测试</span> </label>
+                                    <label><input type="checkbox" class="netlayerquality" id="Radius" v-on:click="Radius">
+                                        <span>Radius认证测试</span> </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="module left-up">
+                            <div class="wrapper-block task_border">
+                                <label><input type="checkbox" id="webbrowse"> <span>网页浏览类业务</span> </label>
+                                <div class="wrapper-block task_border">
+                                    <label><input type="checkbox" class="webbrowse" id="pageaccess" v-on:click="pageaccess">
+                                        <span>WEB页面访问测试</span> </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="module right">
+                            <div class="wrapper-block task_border">
+                                <label><input type="checkbox" id="filedownloadtask"> <span>文件下载类业务</span> </label>
+                                <div class="wrapper-block task_border">
+                                    <label><input type="checkbox" class="filedownload" id="ftp" v-on:click="ftp">
+                                        <span>FTP上传/下载测试</span> </label>
+                                    <label><input type="checkbox" class="filedownload" id="web" v-on:click="web">
+                                        <span>WEB下载测试</span> </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="module left-up">
+                            <div class="wrapper-block task_border">
+                                <label><input type="checkbox" id="onlinevideo"> <span>在线视频类业务</span> </label>
+                                <div class="wrapper-block task_border">
+                                    <label><input type="checkbox" class="onlinevideo" id="video" v-on:click="video">
+                                        <span>在线视频测试</span> </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="module right">
+                            <div class="wrapper-block task_border">
+                                <label><input type="checkbox" id="onlinegame"> <span>网络游戏类业务</span> </label>
+                                <div class="wrapper-block task_border">
+                                    <label><input type="checkbox" class="onlinegame" id="game" v-on:click="game">
+                                        <span>网络游戏测试</span> </label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!--        <div class="row col-lg-3 col-md-3 col-sm-3 input-label">
+            <label><input type="checkbox" id="networkquality"> <span>网络层质量测试业务</span> </label>
+        </div>
+        <div class="row col-lg-3 col-md-3 col-sm-3 input-label">
+            <label><input type="checkbox" id="webbrowse"> <span>网页浏览类业务</span> </label>
+        </div>
+        <div class="row col-lg-3 col-md-3 col-sm-3 input-label">
+            <label><input type="checkbox" id="filedownload"> <span>文件下载类业务</span> </label>
+        </div>
+        <div class="row col-lg-3 col-md-3 col-sm-3 input-label">
+            <label><input type="checkbox" id="onlinevideo"> <span>在线视频类业务</span> </label>
+        </div>
+        <div class="row col-lg-3 col-md-3 col-sm-3 input-label">
+            <label><input type="checkbox" id="onlinegame"> <span>网络游戏类业务</span> </label>
+        </div>
+        </div>
+        <div class="module right">
+        <div class="col-lg-9 col-md-9 col-sm-9 input-label pull-left">
+            <label><input type="checkbox" v-on:click="ping_task"> <span>PING(ICMP/UDP/TCP)</span> </label>
+            <label><input type="checkbox" v-on:click="traceroute_task"> <span>Trace Route (ICMP/UDP)</span> </label>
+        </div>
+        </div>
+    </form>-->
+</body>
+</html>
+
+<script>window.jQuery || document.write('<script src="${rc.contextPath}/statics/js/plugins/jquery/jquery-2.0.3.js"><\/script>')</script>
+<script type="text/javascript"
+        src="${rc.contextPath}/statics/js/modules/probe/template.js?_${date.systemTime}"></script>
+<script type="text/javascript" src="${rc.contextPath}/statics/js/index.js"></script>
