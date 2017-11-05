@@ -1,10 +1,26 @@
 $(document).ready(function () {
-    $('#networkconnection').click(function () {   /*表格某一行选中状态*/
+    $('#networkconnection').click(function () {
         var select=$(this).prop("checked");
-        var selectall=$(".networkconnection").prop("checked",networkconnection);
+        var selectall=$(".networkconnection").prop("checked",this);
     });
-    $('#netlayerquality').click(function () {   /*表格某一行选中状态*/
+    $('#netlayerquality').click(function () {
         var select=$(this).prop("checked");
-        var selectall=$(".netlayerquality").prop("checked",netlayerquality);
+        var selectall=$(".netlayerquality").prop("checked",this);
+    });
+    $('#webbrowse').click(function () {
+        var select=$(this).prop("checked");
+        var selectall=$(".webbrowse").prop("checked",this);
+    });
+    $('#filedownloadtask').click(function () {
+        var select=$(this).prop("checked");
+        var selectall=$(".filedownloadtask").prop("checked",this);
+    });
+    $('#onlinevideo').click(function () {
+        var select=$(this).prop("checked");
+        var selectall=$(".onlinevideo").prop("checked",this);
+    });
+    $('#onlinegame').click(function () {
+        var select=$(this).prop("checked");
+        var selectall=$(".onlinegame").prop("checked",this);
     });
 });
