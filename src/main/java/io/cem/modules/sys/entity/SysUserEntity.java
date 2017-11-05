@@ -24,7 +24,7 @@ public class SysUserEntity implements Serializable {
 	/**
 	 * 用户ID
 	 */
-	private Long Id;
+	private Long userId;
 
 	/**
 	 * 用户名
@@ -68,7 +68,7 @@ public class SysUserEntity implements Serializable {
 	/**
 	 * 创建者ID
 	 */
-	private Long createId;
+	private Long createUserId;
 
 	/**
 	 * 创建时间
@@ -88,10 +88,10 @@ public class SysUserEntity implements Serializable {
 
 	/**
 	 * 设置：
-	 * @param Id
+	 * @param userId
 	 */
-	public void setUserId(Long Id) {
-		this.Id = Id;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
 	/**
@@ -99,7 +99,7 @@ public class SysUserEntity implements Serializable {
 	 * @return Long
 	 */
 	public Long getUserId() {
-		return Id;
+		return userId;
 	}
 	
 	/**
@@ -207,11 +207,11 @@ public class SysUserEntity implements Serializable {
 	}
 
 	public Long getCreateUserId() {
-		return createId;
+		return createUserId;
 	}
 
-	public void setCreateUserId(Long createId) {
-		this.createId = createId;
+	public void setCreateUserId(Long createUserId) {
+		this.createUserId = createUserId;
 	}
 
 	public String getSalt() {

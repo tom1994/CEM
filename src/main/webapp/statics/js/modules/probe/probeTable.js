@@ -15,7 +15,7 @@ var probedata_handle = new Vue({
     mounted: function(){         /*动态加载测试任务组数据*/
         $.ajax({
             type: "POST",   /*GET会乱码*/
-            url: "../../cem/cities/list",//Todo:改成测试任务组的list方法
+            url: "../../cem/city/list",//Todo:改成测试任务组的list方法
             cache: false,  //禁用缓存
             dataType: "json",
             /* contentType:"application/json",  /!*必须要,不可少*!/*/
@@ -575,21 +575,21 @@ var search_data = new Vue({
     methods:{
         citychange: function () {
             this.areas = getArea($("#selectcity").val());
-            console.log()
+            console.log($("#selectcity").val());
         }
     }
 });
 
 var getArea = function (cityid) {
     $.ajax({
-        url: "../../cem/areas/info/"+cityid,
+        url: "../../cem/county/info/"+cityid,
         type: "POST",
         cache: false,  //禁用缓存
         dataType: "json",
         contentType: "application/json",
         success: function (result) {
-            for(var i=0;i<result.areas.length;i++){
-                areaNames[i] = {message: result.areas[i]}
+            for(var i=0;i<result.county.length;i++){
+                areaNames[i] = {message: result.county[i]}
             }
             search_data.areas = areaNames;
         }

@@ -6,7 +6,7 @@
 	<!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="io.cem.modules.cem.entity.TargetEntity" id="targetMap">
         <result property="id" column="id"/>
-        <result property="name" column="name"/>
+        <result property="targetName" column="target_name"/>
         <result property="value" column="value"/>
         <result property="serviceType" column="service_type"/>
         <result property="groupId" column="group_id"/>
@@ -40,7 +40,7 @@
 	<insert id="save" parameterType="io.cem.modules.cem.entity.TargetEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into target
 		(
-			`name`, 
+			`target_name`, 
 			`value`, 
 			`service_type`, 
 			`group_id`, 
@@ -49,7 +49,7 @@
 		)
 		values
 		(
-			#{name}, 
+			#{targetName}, 
 			#{value}, 
 			#{serviceType}, 
 			#{groupId}, 
@@ -61,7 +61,7 @@
 	<update id="update" parameterType="io.cem.modules.cem.entity.TargetEntity">
 		update target 
 		<set>
-			<if test="name != null">`name` = #{name}, </if>
+			<if test="targetName != null">`target_name` = #{targetName}, </if>
 			<if test="value != null">`value` = #{value}, </if>
 			<if test="serviceType != null">`service_type` = #{serviceType}, </if>
 			<if test="groupId != null">`group_id` = #{groupId}, </if>

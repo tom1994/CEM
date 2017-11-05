@@ -8,9 +8,9 @@ import java.util.Date;
 /**
  * 
  * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2017-10-12 17:12:46
+ * @author ${author}
+ * @email ${email}
+ * @date 2017-11-05 20:56:26
  */
 public class AlarmTemplateEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -18,7 +18,7 @@ public class AlarmTemplateEntity implements Serializable {
 	//告警模板ID
 	private Integer id;
 	//名称
-	private String name;
+	private String atName;
 	//子业务类型
 	private Integer serviceType;
 	//阈值取值
@@ -43,14 +43,14 @@ public class AlarmTemplateEntity implements Serializable {
 	/**
 	 * 设置：名称
 	 */
-	public void setName(String name) {
-		this.name = name;
+	public void setAtName(String atName) {
+		this.atName = atName;
 	}
 	/**
 	 * 获取：名称
 	 */
-	public String getName() {
-		return name;
+	public String getAtName() {
+		return atName;
 	}
 	/**
 	 * 设置：子业务类型

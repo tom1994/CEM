@@ -8,9 +8,9 @@ import java.util.Date;
 /**
  * 
  * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2017-10-12 17:12:45
+ * @author ${author}
+ * @email ${email}
+ * @date 2017-11-05 20:39:28
  */
 public class TargetEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -18,7 +18,7 @@ public class TargetEntity implements Serializable {
 	//测试目标ID
 	private Integer id;
 	//名称
-	private String name;
+	private String targetName;
 	//测试目标取值
 	private String value;
 	//子业务类型
@@ -45,14 +45,14 @@ public class TargetEntity implements Serializable {
 	/**
 	 * 设置：名称
 	 */
-	public void setName(String name) {
-		this.name = name;
+	public void setTargetName(String targetName) {
+		this.targetName = targetName;
 	}
 	/**
 	 * 获取：名称
 	 */
-	public String getName() {
-		return name;
+	public String getTargetName() {
+		return targetName;
 	}
 	/**
 	 * 设置：测试目标取值

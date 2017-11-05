@@ -1,6 +1,6 @@
 package io.cem.modules.cem.service;
 
-import io.cem.modules.cem.entity.CitiesEntity;
+import io.cem.modules.cem.entity.CityEntity;
 
 import java.util.List;
 import java.util.Map;
@@ -10,19 +10,19 @@ import java.util.Map;
  * 
  * @author ${author}
  * @email ${email}
- * @date 2017-10-27 16:11:02
+ * @date 2017-11-05 20:56:26
  */
-public interface CitiesService {
+public interface CityService {
 	
-	CitiesEntity queryObject(Integer id);
+	CityEntity queryObject(Integer id);
 	
-	List<CitiesEntity> queryList(Map<String, Object> map);
+	List<CityEntity> queryList(Map<String, Object> map);
 	
 	int queryTotal(Map<String, Object> map);
 	
-	void save(CitiesEntity cities);
+	void save(CityEntity city);
 	
-	void update(CitiesEntity cities);
+	void update(CityEntity city);
 	
 	void delete(Integer id);
 	

@@ -8,9 +8,9 @@ import java.util.Date;
 /**
  * 
  * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2017-10-12 17:12:46
+ * @author ${author}
+ * @email ${email}
+ * @date 2017-11-05 21:13:27
  */
 public class SchedulePolicyEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -18,15 +18,15 @@ public class SchedulePolicyEntity implements Serializable {
 	//调度策略ID
 	private Integer id;
 	//名称
-	private String name;
+	private String spName;
 	//Cron表达式
-	private String cron;
+	private String scheduler;
 	//备注
 	private String remark;
 	//创建时间
-	private Date createTime;
-	//操作
-	//private String operation;
+	private Date startDate;
+	//
+	private Date endDate;
 
 	/**
 	 * 设置：调度策略ID
@@ -43,26 +43,26 @@ public class SchedulePolicyEntity implements Serializable {
 	/**
 	 * 设置：名称
 	 */
-	public void setName(String name) {
-		this.name = name;
+	public void setSpName(String spName) {
+		this.spName = spName;
 	}
 	/**
 	 * 获取：名称
 	 */
-	public String getName() {
-		return name;
+	public String getSpName() {
+		return spName;
 	}
 	/**
 	 * 设置：Cron表达式
 	 */
-	public void setCron(String cron) {
-		this.cron = cron;
+	public void setScheduler(String scheduler) {
+		this.scheduler = scheduler;
 	}
 	/**
 	 * 获取：Cron表达式
 	 */
-	public String getCron() {
-		return cron;
+	public String getScheduler() {
+		return scheduler;
 	}
 	/**
 	 * 设置：备注
@@ -79,25 +79,25 @@ public class SchedulePolicyEntity implements Serializable {
 	/**
 	 * 设置：创建时间
 	 */
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
 	}
 	/**
 	 * 获取：创建时间
 	 */
-	public Date getCreateTime() {
-		return createTime;
+	public Date getStartDate() {
+		return startDate;
 	}
 	/**
-	 * 设置：操作
-	 *//*
-	public void setOperation(Date operation) {
-		this.operation = operation;
+	 * 设置：
+	 */
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
-	*//**
-	 * 获取：操作
-	 *//*
-	public Date getOperation() {
-		return operation;
-	}*/
+	/**
+	 * 获取：
+	 */
+	public Date getEndDate() {
+		return endDate;
+	}
 }

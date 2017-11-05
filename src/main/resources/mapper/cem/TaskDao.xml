@@ -6,7 +6,7 @@
 	<!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="io.cem.modules.cem.entity.TaskEntity" id="taskMap">
         <result property="id" column="id"/>
-        <result property="name" column="name"/>
+        <result property="name" column="task_name"/>
         <result property="serviceType" column="service_type"/>
         <result property="type" column="type"/>
         <result property="testNumber" column="test_number"/>
@@ -18,11 +18,11 @@
         <result property="createTime" column="create_time"/>
     </resultMap>
 
-	<select id="queryObject" resultType="io.cem.modules.cem.entity.TaskEntity">
+	<select id="queryObject" resultMap="taskMap">
 		select * from task where id = #{value}
 	</select>
 
-	<select id="queryList" resultType="io.cem.modules.cem.entity.TaskEntity">
+	<select id="queryList" resultMap="taskMap">
 		select * from task
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
@@ -44,7 +44,7 @@
 	<insert id="save" parameterType="io.cem.modules.cem.entity.TaskEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into task
 		(
-			`name`, 
+			`task_name`,
 			`service_type`, 
 			`type`, 
 			`test_number`, 
@@ -73,7 +73,7 @@
 	<update id="update" parameterType="io.cem.modules.cem.entity.TaskEntity">
 		update task 
 		<set>
-			<if test="name != null">`name` = #{name}, </if>
+			<if test="name != null">`task_name` = #{name}, </if>
 			<if test="serviceType != null">`service_type` = #{serviceType}, </if>
 			<if test="type != null">`type` = #{type}, </if>
 			<if test="testNumber != null">`test_number` = #{testNumber}, </if>

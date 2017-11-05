@@ -41,9 +41,9 @@
 	<select id="queryTaskList" resultMap="taskProbeRelMap">
 		SELECT task_probe_rel.*,
 		task.id,
-		task.name AS task_name,
+		task.task_name AS task_name,
 		probe.id,
-		probe.name AS probe_name
+		probe.probe_name AS probe_name
 		FROM task_probe_rel
 		LEFT JOIN task
 		ON task_probe_rel.task_id = task.id

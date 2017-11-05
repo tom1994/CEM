@@ -21,12 +21,12 @@ import io.cem.common.utils.R;
 /**
  * 
  * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2017-10-12 17:12:46
+ * @author ${author}
+ * @email ${email}
+ * @date 2017-11-05 20:56:26
  */
 @RestController
-@RequestMapping("alarmtemplate")
+@RequestMapping("/cem/alarmtemplate")
 public class AlarmTemplateController {
 	@Autowired
 	private AlarmTemplateService alarmTemplateService;

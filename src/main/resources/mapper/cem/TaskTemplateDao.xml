@@ -6,7 +6,7 @@
 	<!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="io.cem.modules.cem.entity.TaskTemplateEntity" id="taskTemplateMap">
         <result property="id" column="id"/>
-        <result property="name" column="name"/>
+        <result property="name" column="tt_name"/>
         <result property="serviceType" column="service_type"/>
         <result property="schPolicyId" column="sch_policy_id"/>
         <result property="templateParam" column="template_param"/>
@@ -14,11 +14,11 @@
         <result property="remark" column="remark"/>
     </resultMap>
 
-	<select id="queryObject" resultType="io.cem.modules.cem.entity.TaskTemplateEntity">
+	<select id="queryObject" resultMap="taskTemplateMap">
 		select * from task_template where id = #{value}
 	</select>
 
-	<select id="queryList" resultType="io.cem.modules.cem.entity.TaskTemplateEntity">
+	<select id="queryList" resultMap="taskTemplateMap">
 		select * from task_template
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
@@ -40,7 +40,7 @@
 	<insert id="save" parameterType="io.cem.modules.cem.entity.TaskTemplateEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into task_template
 		(
-			`name`, 
+			`tt_name`,
 			`service_type`, 
 			`sch_policy_id`, 
 			`template_param`, 
@@ -61,7 +61,7 @@
 	<update id="update" parameterType="io.cem.modules.cem.entity.TaskTemplateEntity">
 		update task_template 
 		<set>
-			<if test="name != null">`name` = #{name}, </if>
+			<if test="name != null">`tt_name` = #{name}, </if>
 			<if test="serviceType != null">`service_type` = #{serviceType}, </if>
 			<if test="schPolicyId != null">`sch_policy_id` = #{schPolicyId}, </if>
 			<if test="templateParam != null">`template_param` = #{templateParam}, </if>

@@ -8,9 +8,9 @@ import java.util.Map;
 /**
  * 
  * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2017-10-12 17:12:45
+ * @author ${author}
+ * @email ${email}
+ * @date 2017-11-05 20:39:28
  */
 public interface TargetGroupService {
 	

@@ -6,7 +6,7 @@ import java.util.Map;
 
 import com.alibaba.fastjson.JSONObject;
 import io.cem.common.exception.RRException;
-import io.cem.common.utils.JSONUtils;
+import io.cem.common.utils.JSONUtils;;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.cem.modules.cem.entity.CitiesEntity;
-import io.cem.modules.cem.service.CitiesService;
+import io.cem.modules.cem.entity.CityEntity;
+import io.cem.modules.cem.service.CityService;
 import io.cem.common.utils.PageUtils;
 import io.cem.common.utils.Query;
 import io.cem.common.utils.R;
@@ -27,20 +27,20 @@ import io.cem.common.utils.R;
  * 
  * @author ${author}
  * @email ${email}
- * @date 2017-10-27 16:11:02
+ * @date 2017-11-05 20:56:26
  */
 @RestController
-@RequestMapping("/cem/cities")
-public class CitiesController {
+@RequestMapping("/cem/city")
+public class CityController {
 	@Autowired
-	private CitiesService citiesService;
+	private CityService cityService;
 	
 	/**
 	 * 列表
 	 */
 	@RequestMapping("/list")
-	@RequiresPermissions("cities:list")
-	public R list(String citiesdata, Integer page, Integer limit) throws Exception {
+	@RequiresPermissions("city:list")
+	public R list(String citydata, Integer page, Integer limit) throws Exception {
 		Map<String, Object> map = new HashMap<>();
 		int total = 0;
 		if(page==null) {              /*没有传入page,则取全部值*/
@@ -51,10 +51,10 @@ public class CitiesController {
 		}else {
 			map.put("offset", (page - 1) * limit);
 			map.put("limit", limit);
-		    total = citiesService.queryTotal(map);
+			total = cityService.queryTotal(map);
 		}
-		List<CitiesEntity> citiesList = citiesService.queryList(map);
-		PageUtils pageUtil = new PageUtils(citiesList, total, limit, page);
+		List<CityEntity> cityList = cityService.queryList(map);
+		PageUtils pageUtil = new PageUtils(cityList, total, limit, page);
 		return R.ok().put("page", pageUtil);
 	}
 	
@@ -63,20 +63,20 @@ public class CitiesController {
 	 * 信息
 	 */
 	@RequestMapping("/info/{id}")
-	@RequiresPermissions("cities:info")
+	@RequiresPermissions("city:info")
 	public R info(@PathVariable("id") Integer id){
-		CitiesEntity cities = citiesService.queryObject(id);
+		CityEntity city = cityService.queryObject(id);
 		
-		return R.ok().put("cities", cities);
+		return R.ok().put("city", city);
 	}
 	
 	/**
 	 * 保存
 	 */
 	@RequestMapping("/save")
-	@RequiresPermissions("cities:save")
-	public R save(@RequestBody CitiesEntity cities){
-		citiesService.save(cities);
+	@RequiresPermissions("city:save")
+	public R save(@RequestBody CityEntity city){
+		cityService.save(city);
 		
 		return R.ok();
 	}
@@ -85,9 +85,9 @@ public class CitiesController {
 	 * 修改
 	 */
 	@RequestMapping("/update")
-	@RequiresPermissions("cities:update")
-	public R update(@RequestBody CitiesEntity cities){
-		citiesService.update(cities);
+	@RequiresPermissions("city:update")
+	public R update(@RequestBody CityEntity city){
+		cityService.update(city);
 		
 		return R.ok();
 	}
@@ -96,9 +96,9 @@ public class CitiesController {
 	 * 删除
 	 */
 	@RequestMapping("/delete")
-	@RequiresPermissions("cities:delete")
+	@RequiresPermissions("city:delete")
 	public R delete(@RequestBody Integer[] ids){
-		citiesService.deleteBatch(ids);
+		cityService.deleteBatch(ids);
 		
 		return R.ok();
 	}

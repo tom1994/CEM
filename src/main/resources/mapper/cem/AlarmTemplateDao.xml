@@ -6,7 +6,7 @@
 	<!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="io.cem.modules.cem.entity.AlarmTemplateEntity" id="alarmTemplateMap">
         <result property="id" column="id"/>
-        <result property="name" column="name"/>
+        <result property="atName" column="at_name"/>
         <result property="serviceType" column="service_type"/>
         <result property="value" column="value"/>
         <result property="remark" column="remark"/>
@@ -39,7 +39,7 @@
 	<insert id="save" parameterType="io.cem.modules.cem.entity.AlarmTemplateEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into alarm_template
 		(
-			`name`, 
+			`at_name`, 
 			`service_type`, 
 			`value`, 
 			`remark`, 
@@ -47,7 +47,7 @@
 		)
 		values
 		(
-			#{name}, 
+			#{atName}, 
 			#{serviceType}, 
 			#{value}, 
 			#{remark}, 
@@ -58,7 +58,7 @@
 	<update id="update" parameterType="io.cem.modules.cem.entity.AlarmTemplateEntity">
 		update alarm_template 
 		<set>
-			<if test="name != null">`name` = #{name}, </if>
+			<if test="atName != null">`at_name` = #{atName}, </if>
 			<if test="serviceType != null">`service_type` = #{serviceType}, </if>
 			<if test="value != null">`value` = #{value}, </if>
 			<if test="remark != null">`remark` = #{remark}, </if>

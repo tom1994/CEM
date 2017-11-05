@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.cem.modules.cem.dao.CountyDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.cem.modules.cem.entity.CountyEntity" id="countyMap">
+        <result property="id" column="id"/>
+        <result property="countyId" column="county_id"/>
+        <result property="countyName" column="county_name"/>
+        <result property="cityId" column="city_id"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="io.cem.modules.cem.entity.CountyEntity">
+		select * from county where id = #{value}
+	</select>
+
+	<select id="queryList" resultType="io.cem.modules.cem.entity.CountyEntity">
+		select * from county
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+	<select id="queryCountyList" resultType="io.cem.modules.cem.entity.CountyEntity">
+		select * from county
+		WHERE city_id = #{value}
+		order by id
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from county 
+	</select>
+	 
+	<insert id="save" parameterType="io.cem.modules.cem.entity.CountyEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into county
+		(
+			`county_id`, 
+			`county_name`, 
+			`city_id`
+		)
+		values
+		(
+			#{countyId}, 
+			#{countyName}, 
+			#{cityId}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="io.cem.modules.cem.entity.CountyEntity">
+		update county 
+		<set>
+			<if test="countyId != null">`county_id` = #{countyId}, </if>
+			<if test="countyName != null">`county_name` = #{countyName}, </if>
+			<if test="cityId != null">`city_id` = #{cityId}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from county where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from county where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

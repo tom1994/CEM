@@ -7,16 +7,16 @@
     <resultMap type="io.cem.modules.cem.entity.ProbeEntity" id="probeMap">
         <result property="id" column="id"/>
         <result property="serialNumber" column="serial_number"/>
-        <result property="name" column="name"/>
+        <result property="name" column="probe_name"/>
         <result property="groupId" column="group_id"/>
         <result property="type" column="type"/>
         <result property="accessLayer" column="access_layer"/>
         <result property="ipType" column="ip_type"/>
         <result property="portIp" column="port_ip"/>
-        <result property="city" column="city"/>
-        <result property="county" column="county"/>
+        <result property="city" column="city_id"/>
+        <result property="county" column="county_id"/>
         <result property="location" column="location"/>
-        <result property="upstream" column="upstream"/>
+        <result property="upstream" column="upstream_id"/>
         <result property="brasName" column="bras_name"/>
         <result property="brasIp" column="bras_ip"/>
         <result property="brasPort" column="bras_port"/>
@@ -43,19 +43,36 @@
 
 	<select id="queryObject" resultMap="probeMap">
 	  	SELECT probe.*,
-		city.city AS city_name,
-		county.area AS area_name,
+		city.city_name AS city_name,
+		county.county_name AS area_name,
 		a.data_name AS type_name,
 		b.data_name AS status_name
 		FROM probe
 		LEFT JOIN city
-		ON probe.city = city.city_id
+		ON probe.city_id = city.city_id
 	    LEFT JOIN county
-		ON probe.county = county.area_id
+		ON probe.county_id = county.county_id
 	    LEFT JOIN dic_data a
 		ON (probe.type = a.data_id AND a.dic_type_id = 1 )
 	    LEFT JOIN dic_data b
 		ON (probe.status = b.data_id AND b.dic_type_id = 3)
+/*=======
+		SELECT probe.*,
+		city.city_id,
+		city.city_name AS city_name,
+		county.county_id,
+		county.county_name AS area_name,
+		a.data_id,
+		a.dic_type_id,
+		a.data_name AS type_name
+		FROM probe
+		LEFT JOIN city
+		ON probe.city_id = city.city_id
+		LEFT JOIN county
+		ON probe.county_id = county.county_id
+		LEFT JOIN dic_data a
+		ON probe.type = a.data_id AND a.dic_type_id = 1
+>>>>>>> 2d4e45aa5d08af3ee7f8aec9119ecc566eb673fe*/
 		WHERE probe.id = #{value}
 	</select>
 
@@ -80,15 +97,24 @@
 
 	<select id="queryProbeList" resultMap="probeMap">
 		SELECT probe.*,
-		city.city AS city_name,
-		county.area AS area_name,
+		city.city_name AS city_name,
+		county.county_name AS area_name,
 		a.data_name AS type_name,
 		b.data_name AS status_name
+/*=======
+		city.city_id,
+		city.city_name AS city_name,
+		county.county_id,
+		county.county_name AS area_name,
+		a.data_id,
+		a.dic_type_id,
+		a.data_name AS type_name
+>>>>>>> 2d4e45aa5d08af3ee7f8aec9119ecc566eb673fe*/
 		FROM probe
 		LEFT JOIN city
-		ON probe.city = city.city_id
+		ON probe.city_id = city.city_id
 		LEFT JOIN county
-		ON probe.county = county.area_id
+		ON probe.county_id = county.county_id
 		LEFT JOIN dic_data a
 		ON (probe.type = a.data_id AND a.dic_type_id = 1 )
 		LEFT JOIN dic_data b
@@ -110,16 +136,16 @@
 		insert into probe
 		(
 			`serial_number`, 
-			`name`, 
+			`probe_name`,
 			`group_id`, 
 			`type`, 
 			`access_layer`, 
 			`ip_type`, 
 			`port_ip`, 
-			`city`, 
-			`county`, 
+			city_id,
+			county_id,
 			`location`, 
-			`upstream`, 
+			upstream_id,
 			`bras_name`, 
 			`bras_ip`, 
 			`bras_port`, 
@@ -177,16 +203,16 @@
 		update probe 
 		<set>
 			<if test="serialNumber != null">`serial_number` = #{serialNumber}, </if>
-			<if test="name != null">`name` = #{name}, </if>
+			<if test="name != null">`probe_name` = #{name}, </if>
 			<if test="groupId != null">`group_id` = #{groupId}, </if>
 			<if test="type != null">`type` = #{type}, </if>
 			<if test="accessLayer != null">`access_layer` = #{accessLayer}, </if>
 			<if test="ipType != null">`ip_type` = #{ipType}, </if>
 			<if test="portIp != null">`port_ip` = #{portIp}, </if>
-			<if test="city != null">`city` = #{city}, </if>
-			<if test="county != null">`county` = #{county}, </if>
+			<if test="city != null">`city_id` = #{city}, </if>
+			<if test="county != null">`county_id` = #{county}, </if>
 			<if test="location != null">`location` = #{location}, </if>
-			<if test="upstream != null">`upstream` = #{upstream}, </if>
+			<if test="upstream != null">`upstream_id` = #{upstream}, </if>
 			<if test="brasName != null">`bras_name` = #{brasName}, </if>
 			<if test="brasIp != null">`bras_ip` = #{brasIp}, </if>
 			<if test="brasPort != null">`bras_port` = #{brasPort}, </if>

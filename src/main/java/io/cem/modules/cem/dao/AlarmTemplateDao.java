@@ -6,9 +6,9 @@ import io.cem.modules.sys.dao.BaseDao;
 /**
  * 
  * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2017-10-12 17:12:46
+ * @author ${author}
+ * @email ${email}
+ * @date 2017-11-05 20:56:26
  */
 public interface AlarmTemplateDao extends BaseDao<AlarmTemplateEntity> {
 	

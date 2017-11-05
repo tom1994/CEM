@@ -6,9 +6,9 @@ import io.cem.modules.sys.dao.BaseDao;
 /**
  * 
  * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2017-10-12 17:12:46
+ * @author ${author}
+ * @email ${email}
+ * @date 2017-11-05 21:13:27
  */
 public interface SchedulePolicyDao extends BaseDao<SchedulePolicyEntity> {
 	

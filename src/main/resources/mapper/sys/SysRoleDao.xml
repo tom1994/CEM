@@ -3,11 +3,19 @@
 
 <mapper namespace="io.cem.modules.sys.dao.SysRoleDao">
 
-	<select id="queryObject" resultType="io.cem.modules.sys.entity.SysRoleEntity">
-		select * from sys_role where role_id = #{value}
+	<resultMap type="io.cem.modules.sys.entity.SysRoleEntity" id="resultMap">
+		<result property="roleId" column="id"/>
+		<result property="roleName" column="role_name"/>
+		<result property="remark" column="remark"/>
+		<result property="deptId" column="dept_id"/>
+		<result property="createTime" column="create_time"/>
+	</resultMap>
+
+	<select id="queryObject" resultMap="resultMap">
+		select * from sys_role where id = #{value}
 	</select>
 	
-	<select id="queryList" resultType="io.cem.modules.sys.entity.SysRoleEntity">
+	<select id="queryList" resultMap="resultMap">
 		select r.*, (select d.name from sys_dept d where d.dept_id = r.dept_id) deptName from sys_role r
 		<where>
 			<if test="roleName != null and roleName.trim() != ''">
@@ -22,7 +30,7 @@
 				order by r.${sidx} ${order}
 			</when>
 			<otherwise>
-				order by r.role_id asc
+				order by r.id asc
 			</otherwise>
 		</choose>
 		<if test="offset != null and limit != null">
@@ -45,7 +53,7 @@
 	<insert id="save" parameterType="io.cem.modules.sys.entity.SysRoleEntity" useGeneratedKeys="true" keyProperty="roleId">
 		insert into sys_role
 		(
-			`role_id`, 
+			id,
 			`role_name`, 
 			`remark`,
 			`dept_id`,
@@ -68,11 +76,11 @@
 			<if test="remark != null">`remark` = #{remark},</if>
 			<if test="deptId != null">`dept_id` = #{deptId}, </if>
 		</set>
-		where role_id = #{roleId}
+		where id = #{roleId}
 	</update>
 	
 	<delete id="deleteBatch">
-		delete from sys_role where role_id in 
+		delete from sys_role where id in
 		<foreach item="roleId" collection="array" open="(" separator="," close=")">
 			#{roleId}
 		</foreach>

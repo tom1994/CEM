@@ -25,9 +25,9 @@ import io.cem.common.utils.R;
 /**
  * 
  * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2017-10-12 17:12:46
+ * @author ${author}
+ * @email ${email}
+ * @date 2017-11-05 21:13:27
  */
 @RestController
 @RequestMapping("/cem/schedulepolicy")
@@ -40,17 +40,6 @@ public class SchedulePolicyController {
 	 */
 	@RequestMapping("/list")
 	@RequiresPermissions("schedulepolicy:list")
-	/*public R list(@RequestParam Map<String, Object> params){
-		//查询列表数据
-        Query query = new Query(params);
-
-		List<SchedulePolicyEntity> schedulePolicyList = schedulePolicyService.queryList(query);
-		int total = schedulePolicyService.queryTotal(query);
-		
-		PageUtils pageUtil = new PageUtils(schedulePolicyList, total, query.getLimit(), query.getPage());
-		
-		return R.ok().put("page", pageUtil);
-	}*/
 	public R list(String schedulepolicydata, Integer page, Integer limit) throws Exception {
 		Map<String, Object> map = new HashMap<>();
 		map.put("offset", (page - 1) * limit);
@@ -78,17 +67,6 @@ public class SchedulePolicyController {
 		
 		return R.ok().put("schedulePolicy", schedulePolicy);
 	}
-
-	/**
-	 * 新增
-	 */
-	@RequestMapping("/add")
-	@RequiresPermissions("schedulepolicy:add")
-	public R add(@RequestBody SchedulePolicyEntity schedulePolicy){
-		schedulePolicyService.add(schedulePolicy);
-
-		return R.ok();
-	}
 	
 	/**
 	 * 保存
@@ -97,7 +75,7 @@ public class SchedulePolicyController {
 	@RequiresPermissions("schedulepolicy:save")
 	public R save(@RequestBody SchedulePolicyEntity schedulePolicy){
 		schedulePolicyService.save(schedulePolicy);
-		System.out.print(schedulePolicy);
+		
 		return R.ok();
 	}
 	
