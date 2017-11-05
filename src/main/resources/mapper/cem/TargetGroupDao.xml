@@ -6,7 +6,7 @@
 	<!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="io.cem.modules.cem.entity.TargetGroupEntity" id="targetGroupMap">
         <result property="id" column="id"/>
-        <result property="name" column="name"/>
+        <result property="tgName" column="tg_name"/>
         <result property="remark" column="remark"/>
         <result property="createTime" column="create_time"/>
     </resultMap>
@@ -37,13 +37,13 @@
 	<insert id="save" parameterType="io.cem.modules.cem.entity.TargetGroupEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into target_group
 		(
-			`name`, 
+			`tg_name`, 
 			`remark`, 
 			`create_time`
 		)
 		values
 		(
-			#{name}, 
+			#{tgName}, 
 			#{remark}, 
 			#{createTime}
 		)
@@ -52,7 +52,7 @@
 	<update id="update" parameterType="io.cem.modules.cem.entity.TargetGroupEntity">
 		update target_group 
 		<set>
-			<if test="name != null">`name` = #{name}, </if>
+			<if test="tgName != null">`tg_name` = #{tgName}, </if>
 			<if test="remark != null">`remark` = #{remark}, </if>
 			<if test="createTime != null">`create_time` = #{createTime}</if>
 		</set>

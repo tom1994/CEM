@@ -6,16 +6,16 @@
 	<!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="io.cem.modules.cem.entity.ProbeGroupEntity" id="probeGroupMap">
         <result property="id" column="id"/>
-        <result property="name" column="name"/>
+        <result property="name" column="pg_name"/>
         <result property="remark" column="remark"/>
         <result property="createTime" column="create_time"/>
     </resultMap>
 
-	<select id="queryObject" resultType="io.cem.modules.cem.entity.ProbeGroupEntity">
+	<select id="queryObject" resultMap="probeGroupMap">
 		select * from probe_group where id = #{value}
 	</select>
 
-	<select id="queryList" resultType="io.cem.modules.cem.entity.ProbeGroupEntity">
+	<select id="queryList" resultMap="probeGroupMap">
 		select * from probe_group
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
@@ -37,7 +37,7 @@
 	<insert id="save" parameterType="io.cem.modules.cem.entity.ProbeGroupEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into probe_group
 		(
-			`name`, 
+			`pg_name`,
 			`remark`, 
 			`create_time`
 		)
@@ -52,7 +52,7 @@
 	<update id="update" parameterType="io.cem.modules.cem.entity.ProbeGroupEntity">
 		update probe_group 
 		<set>
-			<if test="name != null">`name` = #{name}, </if>
+			<if test="name != null">`pg_name` = #{name}, </if>
 			<if test="remark != null">`remark` = #{remark}, </if>
 			<if test="createTime != null">`create_time` = #{createTime}</if>
 		</set>
