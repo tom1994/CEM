@@ -25,7 +25,7 @@
         <div class="ibox float-e-margins">
             <div class="ibox-title fontcolor" id="handle" style="padding-bottom: 0px !important;">
                 <!--<button type="button" class="btn btn-default ui-button" v-on:click="schedulepolicyadd"><span-->
-                <button type="button" class="btn btn-default ui-button" v-on:click="schedulepolicyadd"><span
+                <button type="button" class="btn btn-sm btn-success" v-on:click="schedulepolicyadd"><span
                         class="glyphicon glyphicon-plus"></span>新增调度策略
                 </button>
             </div>
@@ -127,11 +127,6 @@
     </div><!-- /.modal -->
 </div>
 
-<script type="text/javascript">
-    $(function() {
-        $("table").colResizable();
-    })
-</script>
 
 <script type="text/javascript" src="${rc.contextPath}/statics/js/modules/probe/schedulePolicy.js?_${date.systemTime}"></script>
 
