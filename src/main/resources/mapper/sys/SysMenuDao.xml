@@ -3,16 +3,27 @@
 
 <mapper namespace="io.cem.modules.sys.dao.SysMenuDao">
 
-	<select id="queryObject" resultType="io.cem.modules.sys.entity.SysMenuEntity">
-		select * from sys_menu where menu_id = #{value}
+	<resultMap type="io.cem.modules.sys.entity.SysMenuEntity" id="resultMap">
+		<result property="menuId" column="id"/>
+		<result property="parentId" column="parent_id"/>
+		<result property="name" column="menu_name"/>
+		<result property="url" column="url"/>
+		<result property="perms" column="perms"/>
+		<result property="type" column="type"/>
+		<result property="icon" column="icon"/>
+		<result property="orderNum" column="order_num"/>
+	</resultMap>
+
+	<select id="queryObject" resultMap="resultMap">
+		select * from sys_menu where id = #{value}
 	</select>
 	
 	<insert id="save" parameterType="io.cem.modules.sys.entity.SysMenuEntity">
 		insert into sys_menu
 		(
-			`menu_id`, 
+			id,
 			`parent_id`, 
-			`name`, 
+			`menu_name`,
 			`url`, 
 			`perms`, 
 			`type`, 
@@ -32,16 +43,16 @@
 		)
 	</insert>
 	
-	<select id="queryListParentId" resultType="io.cem.modules.sys.entity.SysMenuEntity">
+	<select id="queryListParentId" resultMap="resultMap">
 		select * from sys_menu where parent_id = #{parentId} order by order_num asc 
 	</select>
 	
-	<select id="queryNotButtonList" resultType="io.cem.modules.sys.entity.SysMenuEntity">
+	<select id="queryNotButtonList" resultMap="resultMap">
 		select * from sys_menu where type != 2 order by order_num asc 
 	</select>
 	
-	<select id="queryList" resultType="io.cem.modules.sys.entity.SysMenuEntity">
-		select m.*,(select p.name from sys_menu p where p.menu_id = m.parent_id) as parentName 
+	<select id="queryList" resultMap="resultMap">
+		select m.*,(select p.menu_name from sys_menu p where p.id = m.parent_id) as parentName
 			from sys_menu m
 		<choose>
 			<when test="sidx != null and sidx.trim() != ''">
@@ -57,11 +68,11 @@
 	</select>
 	
 	<!-- 查询用户的权限列表 --> 
-	<select id="queryUserList" resultType="io.cem.modules.sys.entity.SysMenuEntity">
-		select distinct m.*,(select p.name from sys_menu p where p.menu_id = m.parent_id) as parentName
+	<select id="queryUserList" resultMap="resultMap">
+		select distinct m.*,(select p.menu_name from sys_menu p where p.id = m.parent_id) as parentName
 			from sys_user_role ur 
 			LEFT JOIN sys_role_menu rm on ur.role_id = rm.role_id 
-			LEFT JOIN sys_menu m on rm.menu_id = m.menu_id 
+			LEFT JOIN sys_menu m on rm.id = m.id
 		where ur.user_id = #{userId} order by m.order_num asc
 	</select>
 	
@@ -73,18 +84,18 @@
 		update sys_menu 
 		<set> 
 			<if test="parentId != null">`parent_id` = #{parentId}, </if>
-			<if test="name != null">`name` = #{name}, </if>
+			<if test="name != null">`menu_name` = #{name}, </if>
 			<if test="url != null">`url` = #{url}, </if>
 			<if test="perms != null">`perms` = #{perms}, </if>
 			<if test="type != null">`type` = #{type}, </if>
 			<if test="icon != null">`icon` = #{icon}, </if>
 			<if test="orderNum != null">`order_num` = #{orderNum}</if>
 		</set>
-		where menu_id = #{menuId}
+		where id = #{menuId}
 	</update>
 	
 	<delete id="deleteBatch">
-		delete from sys_menu where menu_id in 
+		delete from sys_menu where id in
 		<foreach item="menuId" collection="array" open="(" separator="," close=")">
 			#{menuId}
 		</foreach>
