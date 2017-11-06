@@ -9,7 +9,7 @@
     <link href="${rc.contextPath}/statics/css/formStyle.css" rel="stylesheet">  <!--自定义CSS-->
 </head>
 <body>
-<div class="htmleaf-container">
+<!--<div class="htmleaf-container">
     <div class="tab" role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active"><a href="#Section1" aria-controls="home" role="tab"
@@ -24,13 +24,29 @@
                         <div class="col-lg-12 col-md-12 col-sm-12">
                             <div class="ibox float-e-margins">
                                 <div class="ibox-content">
-                                    <div class="row " style="overflow-x: auto">     <!--表格 verflow-x: scroll超出滚动-->
+                                    <div class="row " style="overflow-x: auto">     &lt;!&ndash;表格 verflow-x: scroll超出滚动&ndash;&gt;
                                         <table class="table table-bordered " id="tasktemplate_table"></table>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>-->
+<div class="wrapper wrapper-content">
+    <div class="row" id="template_table">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title fontcolor" id="handle" style="padding-bottom: 0px !important;">
+                    <a href="templateNew.html">新建模板</a>
+                </div>
+                <div class="ibox-content">
+                    <div class="row " style="overflow-x: auto">     <!--表格 verflow-x: scroll超出滚动-->
+                        <table class="table table-bordered " id="tasktemplate_table"></table>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
                     <!-- 删除确认模态框（Modal） -->
                     <div class="modal fade" id="myModal_delete" tabindex="-1" role="dialog"
@@ -70,7 +86,7 @@
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                                         &times;
                                     </button>
-                                    <h3 class="modal-title myModalLabel">任务名称修改</h3>
+                                    <h3 class="modal-title myModalLabel">任务详情</h3>
                                 </div>
 
                                 <div class="modal-body">
@@ -126,16 +142,15 @@
                             </div>
                         </div>
                     </div><!-- /.modal-content -->
-                </div><!-- /.modal -->
-            </div>
-            <div role="tabpanel" class="tab-pane fade" id="Section2">
+
+       <!--     <div role="tabpanel" class="tab-pane fade" id="Section2">
                 <div class="wrapper wrapper-content">
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12">
                             <div class="ibox float-e-margins">
 
                                 <!--标题栏-->
-                                <div class="ibox-title">
+<!--                                <div class="ibox-title">
                                     <p  style="font-size: small;color:#525e64;display:inline-block">常见任务组模版</p>
                                     <button type="button" class="btn btn-sm btn-success"
                                             style="position:relative; left:5%;">任务组一模版</span>
@@ -151,7 +166,7 @@
                                     </button>
                                 </div>
 
-                                <!--最上一层-->
+                                &lt;!&ndash;最上一层&ndash;&gt;
                                 <div class="wrapper-module">
                                     <div class="module left-up">
                                         <div class="wrapper-block task_border">
@@ -230,7 +245,7 @@
                                     </div>
                                 </div>
 
-                                <!--中间一层-->
+                                &lt;!&ndash;中间一层&ndash;&gt;
                                 <div class="wrapper-module">
                                     <div class="module left-up">
                                         <div class="wrapper-block task_border">
@@ -285,7 +300,7 @@
                                     </div>
                                 </div>
 
-                                <!--最后一层-->
+                                &lt;!&ndash;最后一层&ndash;&gt;
                                 <div class="wrapper-module">
                                     <div class="module left-up">
                                         <div class="wrapper-block task_border">
@@ -335,15 +350,9 @@
                                             </button>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<<<<<<< HEAD
+                                </div>-->
+
 <script>window.jQuery || document.write('<script src="${rc.contextPath}/statics/js/plugins/jquery/jquery-2.0.3.js"><\/script>')</script>
 <script type="text/javascript"
         src="${rc.contextPath}/statics/js/modules/probe/taskNew.js?_${date.systemTime}"></script>

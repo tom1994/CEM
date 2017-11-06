@@ -210,7 +210,7 @@
                                                        class="col-lg-2 col-md-2 col-sm-2 input-label form_border">探针类型:</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                                     <select id="type" class="form-control" name="type">  <!--VUE列表渲染-->
-                                                        <option v-for="item in types">
+                                                        <option v-for="item in typeNames">
                                                             {{ item.message }}
                                                         </option>
                                                     </select>
@@ -222,7 +222,7 @@
                                                        class="col-lg-2 col-md-2 col-sm-2 input-label form_border">所属地市:</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                                     <select id="city" class="form-control" name="city">  <!--VUE列表渲染-->
-                                                        <option v-for="item in citys">
+                                                        <option v-for="item in cityNames">
                                                             {{ item.message }}
                                                         </option>
                                                     </select>
@@ -232,7 +232,7 @@
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                                     <select id="county" class="form-control" name="county">
                                                         <!--VUE列表渲染-->
-                                                        <option v-for="item in countys">
+                                                        <option v-for="item in countyNames">
                                                             {{ item.message }}
                                                         </option>
                                                     </select>
@@ -461,7 +461,7 @@
                             <div class="ibox float-e-margins">
                                 <div class="ibox-content" style="padding-bottom: 0">
                                     <div class="row">
-                                        <form class="form-horizontal" id="groupsearch" role="form">
+                                        <form class="form-horizontal" id="grouptosearch" role="form">
                                             <div class=" col-lg-5 col-md-5 col-sm-5 searchspan">
                                                 <span class="searchname" title="探针组名">探针组名：</span>
                                                 <input type="text" class="form-control" name="name" style="width: 110px"
