@@ -21,9 +21,9 @@ import io.cem.common.utils.R;
 /**
  * 
  * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2017-10-12 17:12:45
+ * @author ${author}
+ * @email ${email}
+ * @date 2017-11-13 11:01:11
  */
 @RestController
 @RequestMapping("task")
