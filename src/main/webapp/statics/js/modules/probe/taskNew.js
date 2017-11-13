@@ -51,12 +51,8 @@ function update_this (obj) {     /*监听修改触发事件*/
             forms[3].value = result.taskTemplate.remark;
         }
     });
-    tasktemplate_data.modaltitle = "修改调度策略";
-    /*修改模态框标题*/
     $('#myModal_edit').modal('show');
 }
-
-
 
 function delete_ajax() {
     var ids = JSON.stringify(idArray);
@@ -146,85 +142,70 @@ Date.prototype.Format = function (fmt) {
     return fmt;
 }
 
-
 var taskform_data = new Vue({
     el: '#myModal_edit',
     data: {
         modaltitle: "", /*定义模态框标题*/
-        /*name: [],
-        cron: [],
-        remark: []*/
     },
     // 在 `methods` 对象中定义方法
     methods: {
         submit: function () {
-            var schedulepolicyJson = getFormJson($('#taskform_data'));
-
-            // if (typeof(schedulepolicyJson["name"]) == "undefined") {                  /*3个select必选*/
-            //     toastr.warning("请添加策略名称");
-            // } else if (typeof(schedulepolicyJson["cron"]) == "undefined") {
-            //     toastr.warning("请添加任务描述!");
-            // } else if (typeof(schedulepolicyJson["remark"]) == "undefined") {
-            //     toastr.warning("请添加备注!");
-            // } else {
-            //     var d = new Date().Format("yyyy-MM-dd hh:mm:ss");        //获取日期与时间
-            //     schedulepolicyJson['createTime'] = d;
-                var tasktemplate = JSON.stringify(schedulepolicyJson);
-                /*封装成json数组*/
-                /*获取表单元素的值*/
-                console.log(tasktemplate);
-                var mapstr;
-                if (status == 0) {
-                    mapstr = "save";
-                } else if (status == 1) {
-                    mapstr = "update"
-                }
-                console.log("状态:"+status);
-                $.ajax({
-                    type: "POST", /*GET会乱码*/
-                    url: "../../cem/tasktemplate/" + mapstr,
-                    cache: false,  //禁用缓存
-                    data: tasktemplate,  //传入组装的参数
-                    dataType: "json",
-                    contentType: "application/json", /*必须要,不可少*/
-                    success: function (result) {
-                        let code = result.code;
-                        let msg = result.msg;
-                        console.log(result);
-                        if (status == 0) {
-                            switch (code) {
-                                case 0:
-                                    toastr.success("策略新增成功!");
-                                    $('#myModal_edit').modal('hide');    //jQuery选定
-                                    break;
-                                case 403:
-                                    toastr.error(msg);
-                                    break;
-                                default:
-                                    toastr.error("未知错误");
-                                    break
-                            }
-                        } else if (status == 1) {
-                            switch (code) {
-                                case 0:
-                                    toastr.success("策略修改成功!");
-                                    $('#myModal_edit').modal('hide');
-                                    break;
-                                case 403:
-                                    toastr.error(msg);
-                                    break;
-                                default:
-                                    toastr.error("未知错误");
-                                    break
-                            }
-                        }
-                        tasktemplate_table.currReset();
-                    }
-                });
-            }
+             var schedulepolicyJson = getFormJson($('#taskform_data'));
+             var tasktemplate = JSON.stringify(schedulepolicyJson);
+             /*封装成json数组*/
+             /*获取表单元素的值*/
+             console.log(tasktemplate);
+             var mapstr;
+             if (status == 0) {
+                 mapstr = "save";
+             } else if (status == 1) {
+                 mapstr = "update"
+             }
+             console.log("状态:"+status);
+             $.ajax({
+                 type: "POST", /*GET会乱码*/
+                 url: "../../cem/tasktemplate/" + mapstr,
+                 cache: false,  //禁用缓存
+                 data: tasktemplate,  //传入组装的参数
+                 dataType: "json",
+                 contentType: "application/json", /*必须要,不可少*/
+                 success: function (result) {
+                     let code = result.code;
+                     let msg = result.msg;
+                     console.log(result);
+                     if (status == 0) {
+                         switch (code) {
+                             case 0:
+                                 toastr.success("新增成功!");
+                                 $('#myModal_edit').modal('hide');    //jQuery选定
+                                 break;
+                             case 403:
+                                 toastr.error(msg);
+                                 break;
+                             default:
+                                 toastr.error("未知错误");
+                                 break
+                         }
+                     } else if (status == 1) {
+                         switch (code) {
+                             case 0:
+                                 toastr.success("修改成功!");
+                                 $('#myModal_edit').modal('hide');
+                                 break;
+                             case 403:
+                                 toastr.error(msg);
+                                 break;
+                             default:
+                                 toastr.error("未知错误");
+                                 break
+                         }
+                     }
+                     tasktemplate_table.currReset();
+                 }
+             });
         }
     }
-);
+});
 
 function getFormJson(form) {      /*将表单对象变为json对象*/
     var o = {};
@@ -242,19 +223,10 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
     return o;
 }
 
-/*var search_data = new Vue({
-
-    el:'#searchcolums',
-    data:{
-
-        schedulepolicy_names:[]
-
-    }
-});*/
-
 /*选中表格事件*/
 $(document).ready(function () {
-    $('#tasktemplate_table tbody').on('click', 'tr', function () {   /*表格某一行选中状态*/
+    $(".list td").slice(5).each(function(){
+    $('#tasktemplate_table tbody').slice(5).on('click', 'tr', function () {   /*表格某一行选中状态*/
         if ($(this).hasClass('selected')) {
             $(this).removeClass('selected');
             $(this).find("input:checkbox").prop("checked", false);
@@ -266,6 +238,7 @@ $(document).ready(function () {
             $(this).addClass('selected');
             $(this).find("input:checkbox").prop("checked", true);
         }
+    });
     });
 
     $('#checkAll').on('click', function () {
@@ -295,8 +268,8 @@ var tasktemplate_table = new Vue({
             {title: '<div style="width:47px">模板ID</div>'},
             {title: '<div style="width:97px">任务模板名称</div>'},
             {title: '<div style="width:77px">子业务类型</div>'},
-            {title: '<div style="width:67px">调度策略</div>'},
-            {title: '<div style="width:67px">下发任务</div>'},
+            //{title: '<div style="width:67px">调度策略</div>'},
+            //{title: '<div style="width:67px">下发任务</div>'},
             {title: '<div style="width:67px">操作</div>'}
         ],
         rows: [],
@@ -369,8 +342,6 @@ var tasktemplate_table = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                        console.log(result);
-
                         //封装返回数据
                         let returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -386,9 +357,11 @@ var tasktemplate_table = new Vue({
                             row.push(item.id);
                             row.push(item.name);
                             row.push(item.serviceType);
-                            row.push(item.schPolicyId);
-                            row.push('<a class="fontcolor" onclick="task_assign(this)" id=\'+item.id+\'>下发任务</a>');
-                            row.push('<a class="fontcolor" onclick="update_this(this)" id='+item.id+'>修改</a>&nbsp;<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>');
+                            //row.push(item.schPolicyId);
+                            //row.push('<a class="fontcolor" onclick="task_assign(this)" id=\'+item.id+\'>下发任务</a>');
+                            row.push('<a class="fontcolor" onclick="task_assign(this)" id='+item.id+'>下发任务</a>&nbsp;' +
+                                '<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>&nbsp;' +
+                                '<a class="fontcolor" onclick="update_this(this)" id='+item.id+'>详情</a>');
                             rows.push(row);
                         });
                         returnData.data = rows;
@@ -397,6 +370,10 @@ var tasktemplate_table = new Vue({
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);
                         $("#tasktemplate_table").colResizable({
+                            liveDrag:true,
+                            gripInnerHtml:"<div class='grip'></div>",
+                            draggingClass:"dragging",
+                            resizeMode:'overflow',
                         });
                     }
                 });

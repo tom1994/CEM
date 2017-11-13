@@ -38,9 +38,25 @@
 		<result property="cityName" column="city_name"/>
 		<result property="areaName" column="area_name"/>
 		<result property="typeName" column="type_name"/>
+		<result property="statusName" column="status_name"/>
     </resultMap>
 
 	<select id="queryObject" resultMap="probeMap">
+	  	SELECT probe.*,
+		city.city_name AS city_name,
+		county.county_name AS area_name,
+		a.data_name AS type_name,
+		b.data_name AS status_name
+		FROM probe
+		LEFT JOIN city
+		ON probe.city_id = city.city_id
+	    LEFT JOIN county
+		ON probe.county_id = county.county_id
+	    LEFT JOIN dic_data a
+		ON (probe.type = a.data_id AND a.dic_type_id = 1 )
+	    LEFT JOIN dic_data b
+		ON (probe.status = b.data_id AND b.dic_type_id = 3)
+<!--=======
 		SELECT probe.*,
 		city.city_id,
 		city.city_name AS city_name,
@@ -56,6 +72,7 @@
 		ON probe.county_id = county.county_id
 		LEFT JOIN dic_data a
 		ON probe.type = a.data_id AND a.dic_type_id = 1
+>>>>>>> 2d4e45aa5d08af3ee7f8aec9119ecc566eb673fe-->
 		WHERE probe.id = #{value}
 	</select>
 
@@ -80,6 +97,11 @@
 
 	<select id="queryProbeList" resultMap="probeMap">
 		SELECT probe.*,
+		city.city_name AS city_name,
+		county.county_name AS area_name,
+		a.data_name AS type_name,
+		b.data_name AS status_name
+<!--=======
 		city.city_id,
 		city.city_name AS city_name,
 		county.county_id,
@@ -87,13 +109,16 @@
 		a.data_id,
 		a.dic_type_id,
 		a.data_name AS type_name
+>>>>>>> 2d4e45aa5d08af3ee7f8aec9119ecc566eb673fe-->
 		FROM probe
 		LEFT JOIN city
 		ON probe.city_id = city.city_id
 		LEFT JOIN county
 		ON probe.county_id = county.county_id
 		LEFT JOIN dic_data a
-		ON probe.type = a.data_id AND a.dic_type_id = 1
+		ON (probe.type = a.data_id AND a.dic_type_id = 1 )
+		LEFT JOIN dic_data b
+		ON (probe.status = b.data_id AND b.dic_type_id = 3)
 		<choose>
 			<when test="sidx != null and sidx.trim() != ''">
 				order by ${sidx} ${order}
