@@ -225,7 +225,8 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
 
 /*选中表格事件*/
 $(document).ready(function () {
-    $('#tasktemplate_table tbody').on('click', 'tr', function () {   /*表格某一行选中状态*/
+    $(".list td").slice(5).each(function(){
+    $('#tasktemplate_table tbody').slice(5).on('click', 'tr', function () {   /*表格某一行选中状态*/
         if ($(this).hasClass('selected')) {
             $(this).removeClass('selected');
             $(this).find("input:checkbox").prop("checked", false);
@@ -237,6 +238,7 @@ $(document).ready(function () {
             $(this).addClass('selected');
             $(this).find("input:checkbox").prop("checked", true);
         }
+    });
     });
 
     $('#checkAll').on('click', function () {
@@ -368,6 +370,10 @@ var tasktemplate_table = new Vue({
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);
                         $("#tasktemplate_table").colResizable({
+                            liveDrag:true,
+                            gripInnerHtml:"<div class='grip'></div>",
+                            draggingClass:"dragging",
+                            resizeMode:'overflow',
                         });
                     }
                 });

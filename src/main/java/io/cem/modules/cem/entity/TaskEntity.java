@@ -8,9 +8,9 @@ import java.util.Date;
 /**
  * 
  * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2017-10-12 17:12:45
+ * @author ${author}
+ * @email ${email}
+ * @date 2017-11-13 11:01:11
  */
 public class TaskEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -18,21 +18,17 @@ public class TaskEntity implements Serializable {
 	//任务ID
 	private Integer id;
 	//名称
-	private String name;
+	private String taskName;
 	//子业务类型
 	private Integer serviceType;
-	//任务类型
-	private Integer type;
-	//测试次数
-	private Integer testNumber;
-	//测试间隔
-	private Integer testInterval;
 	//调度策略ID
 	private Integer schPolicyId;
 	//参数
 	private String parameter;
 	//告警模板ID
 	private Integer alarmTemplateId;
+	//标记删除
+	private Integer isDeleted;
 	//备注
 	private String remark;
 	//创建时间
@@ -53,14 +49,14 @@ public class TaskEntity implements Serializable {
 	/**
 	 * 设置：名称
 	 */
-	public void setName(String name) {
-		this.name = name;
+	public void setTaskName(String taskName) {
+		this.taskName = taskName;
 	}
 	/**
 	 * 获取：名称
 	 */
-	public String getName() {
-		return name;
+	public String getTaskName() {
+		return taskName;
 	}
 	/**
 	 * 设置：子业务类型
@@ -73,42 +69,6 @@ public class TaskEntity implements Serializable {
 	 */
 	public Integer getServiceType() {
 		return serviceType;
-	}
-	/**
-	 * 设置：任务类型
-	 */
-	public void setType(Integer type) {
-		this.type = type;
-	}
-	/**
-	 * 获取：任务类型
-	 */
-	public Integer getType() {
-		return type;
-	}
-	/**
-	 * 设置：测试次数
-	 */
-	public void setTestNumber(Integer testNumber) {
-		this.testNumber = testNumber;
-	}
-	/**
-	 * 获取：测试次数
-	 */
-	public Integer getTestNumber() {
-		return testNumber;
-	}
-	/**
-	 * 设置：测试间隔
-	 */
-	public void setTestInterval(Integer testInterval) {
-		this.testInterval = testInterval;
-	}
-	/**
-	 * 获取：测试间隔
-	 */
-	public Integer getTestInterval() {
-		return testInterval;
 	}
 	/**
 	 * 设置：调度策略ID
@@ -145,6 +105,18 @@ public class TaskEntity implements Serializable {
 	 */
 	public Integer getAlarmTemplateId() {
 		return alarmTemplateId;
+	}
+	/**
+	 * 设置：标记删除
+	 */
+	public void setIsDeleted(Integer isDeleted) {
+		this.isDeleted = isDeleted;
+	}
+	/**
+	 * 获取：标记删除
+	 */
+	public Integer getIsDeleted() {
+		return isDeleted;
 	}
 	/**
 	 * 设置：备注

@@ -511,7 +511,7 @@ var probetable = new Vue({
                             row.push(i++);
                             row.push('<div class="checkbox"> <label> <input type="checkbox" name="selectFlag" ><div style="display: none">'+item.id+'</div></label> </div>');
                             row.push('<div class="probe_id" >'+item.id+'</div>');
-                            row.push(item.taskId);
+                            row.push(item.taskName);
                             row.push(item.probeName);
                             row.push(item.port);
                             row.push(status_word);
