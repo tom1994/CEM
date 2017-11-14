@@ -1,11 +1,123 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <h>总体评分</h>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>质量评分</title>
+    #parse("cemHeader.html")  <!--导入CSS和js文件-->
+    <link href="${rc.contextPath}/statics/css/formStyle.css" rel="stylesheet">  <!--自定义CSS-->
 </head>
 <body>
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title-upper">
+                    <p class="fontcolor" style="font-size: large">质量评分</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content" style="padding-bottom: 0 !important;">
+                    <div class="row" id="searchbox" style="border: none !important;">
+                        <form class="col-lg-9 col-md-19 col-sm-9 form-horizontal" id="probesearch"
+                              role="form">
+                            <div class="form-group row">
+                                <div class="input-group searchspan">
+                                    <span class="searchname" title="选择探针" style="width: 80px">选择探针：</span>
+                                </div>
+                                <div class="input-group searchspan">
+                                    <span class="searchname" title="地市" style="width: 40px">地市</span>
+                                    <select id="selectcity" class="form-control" name="city"
+                                            v-on:change="citychange()" style="width: 110px">
+                                        <option value="">---请选择---</option>
+                                        <option v-for="item in cities"
+                                                v-bind:value="item.message.cityId">{{ item.message.cityName }}
+                                        </option>
+                                        <!--<option v-for="pitem in parray" v-bind:value="pitem.Id">{{ pitem.Name }}-->
+                                    </select>
+                                </div>
+
+                                <div class="input-group searchspan">
+                                    <span class="searchname" title="区县" style="width: 40px">区县</span>
+                                    <select class="form-control " name="area" style="width: 110px">
+                                        <option value="">---请选择---</option>
+                                        <option v-for="item in areas">{{ item.message.countyName }}</option>
+                                    </select>
+                                </div>
+
+                                <div class="input-group searchspan">
+                                    <span class="searchname" title="探针组" style="width: 40px">探针组</span>
+                                    <select class="form-control" name="probegroup_name"
+                                            style="width: 110px;">
+                                        <option value="">---请选择---</option>
+                                        <!--vue 绑定value属性    重要！！！！-->
+                                        <option v-for="item in probegroup_names"
+                                                v-bind:value="item.message.name">{{ item.message.name }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="input-group searchspan">
+                                    <span class="searchname" title="位置" style="width: 80px">选择时间：</span>
+                                </div>
+
+
+
+
+
+
+
+                            </div>
+                        </form>
+
+
+                        <div class="col-lg-2 col-md-2 col-sm-2 pull-left" style="margin-top: 4px;">
+                            <button type="button" class="btn btn-sm btn-success"
+                                    style="margin-right: 5px"
+                                    v-on:click="searchprobe"><span
+                                    class="glyphicon glyphicon-zoom-in"></span>查询
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" id="test_table">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title fontcolor" id="probehandle" style="padding-bottom: 0px !important;">
+                    <button type="button" class="btn btn-sm btn-success " v-on:click="testagentdelBatch"><span
+
+                            class="glyphicon glyphicon glyphicon-open"></span>导出
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
 
 </body>
 </html>
