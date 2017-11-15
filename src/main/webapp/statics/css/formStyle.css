@@ -135,7 +135,8 @@ a:link {
     background-color: #dddddd;
     font-size: 14px;
     font-weight: bold;
-    font-family: "Microsoft Yahei", Arial;
+    /*font-family: "Microsoft Yahei", Arial;*/
+    font-family:'PingFang SC','Microsoft YaHei','SimHei','Arial','SimSun';
     height: 30px;
 }
 
@@ -143,7 +144,17 @@ a:link {
     margin: 7px 0 0 0;
 }
 
+/*评价模型设置模态框*/
+.modal-header1 {
+    padding: 5px;
+    border-bottom: 1px solid #e5e5e5;
+}
 
+.modal-footer {
+    padding: 5px;
+    text-align: right;
+    border-top: 1px solid #e5e5e5;
+}
 /*.modal-header {
 
     background-color: #1cb395;
@@ -274,6 +285,11 @@ a:link {
     -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
     -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
     transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+.index-font{
+    font-weight: bold;
+    font-size: 14px;
 }
 
 
