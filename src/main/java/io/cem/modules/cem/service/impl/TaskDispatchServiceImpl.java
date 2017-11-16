@@ -26,6 +26,11 @@ public class TaskDispatchServiceImpl implements TaskDispatchService {
 	public List<TaskDispatchEntity> queryList(Map<String, Object> map){
 		return taskDispatchDao.queryList(map);
 	}
+
+	@Override
+	public List<TaskDispatchEntity> queryDispatchList(Integer id){
+		return taskDispatchDao.queryDispatchList(id);
+	}
 	
 	@Override
 	public int queryTotal(Map<String, Object> map){

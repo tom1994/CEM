@@ -1,5 +1,6 @@
 package io.cem.modules.cem.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,7 +27,7 @@ import io.cem.common.utils.R;
  * @date 2017-11-13 11:01:11
  */
 @RestController
-@RequestMapping("taskdispatch")
+@RequestMapping("/cem/taskdispatch")
 public class TaskDispatchController {
 	@Autowired
 	private TaskDispatchService taskDispatchService;
@@ -54,10 +55,15 @@ public class TaskDispatchController {
 	 */
 	@RequestMapping("/info/{id}")
 	@RequiresPermissions("taskdispatch:info")
-	public R info(@PathVariable("id") Integer id){
-		TaskDispatchEntity taskDispatch = taskDispatchService.queryObject(id);
-		
-		return R.ok().put("taskDispatch", taskDispatch);
+	public R info(@PathVariable("id") Integer id, Integer page, Integer limit)throws Exception{
+		Map<String, Object> map = new HashMap<>();
+		map.put("offset", (page - 1) * limit);
+		map.put("limit", limit);
+		List<TaskDispatchEntity> dispatchList = taskDispatchService.queryDispatchList(id);
+		int total = taskDispatchService.queryTotal(map);
+		PageUtils pageUtil = new PageUtils(dispatchList,total,limit,page);
+		System.out.println(page);
+		return R.ok().put("page", pageUtil);
 	}
 	
 	/**

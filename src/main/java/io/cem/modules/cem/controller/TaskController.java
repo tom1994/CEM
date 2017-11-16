@@ -1,8 +1,12 @@
 package io.cem.modules.cem.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.alibaba.fastjson.JSONObject;
+import io.cem.common.exception.RRException;
+import io.cem.common.utils.JSONUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,14 +23,12 @@ import io.cem.common.utils.R;
 
 
 /**
- * 
- * 
  * @author ${author}
  * @email ${email}
  * @date 2017-11-13 11:01:11
  */
 @RestController
-@RequestMapping("task")
+@RequestMapping("/cem/task")
 public class TaskController {
 	@Autowired
 	private TaskService taskService;
@@ -36,15 +38,19 @@ public class TaskController {
 	 */
 	@RequestMapping("/list")
 	@RequiresPermissions("task:list")
-	public R list(@RequestParam Map<String, Object> params){
-		//查询列表数据
-        Query query = new Query(params);
-
-		List<TaskEntity> taskList = taskService.queryList(query);
-		int total = taskService.queryTotal(query);
-		
-		PageUtils pageUtil = new PageUtils(taskList, total, query.getLimit(), query.getPage());
-		
+	public R list(String taskdata, Integer page, Integer limit) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		map.put("offset", (page - 1) * limit);
+		map.put("limit", limit);
+		JSONObject taskdata_jsonobject = JSONObject.parseObject(taskdata);
+		try {
+			map.putAll(JSONUtils.jsonToMap(taskdata_jsonobject));
+		} catch (RuntimeException e) {
+			throw new RRException("内部参数错误，请重试！");
+		}
+		List<TaskEntity> taskList = taskService.queryTaskList(map);
+		int total = taskService.queryTotal(map);
+		PageUtils pageUtil = new PageUtils(taskList, total, limit, page);
 		return R.ok().put("page", pageUtil);
 	}
 	

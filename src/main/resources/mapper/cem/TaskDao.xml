@@ -14,6 +14,9 @@
         <result property="isDeleted" column="is_deleted"/>
         <result property="remark" column="remark"/>
         <result property="createTime" column="create_time"/>
+		<result property="atName" column="at_name"/>
+		<result property="spName" column="sp_name"/>
+		<result property="countDispatch" column="count_dispatch"/>
     </resultMap>
 
 	<select id="queryObject" resultType="io.cem.modules.cem.entity.TaskEntity">
@@ -21,15 +24,40 @@
 	</select>
 
 	<select id="queryList" resultType="io.cem.modules.cem.entity.TaskEntity">
-		select * from task
-        <choose>
-            <when test="sidx != null and sidx.trim() != ''">
-                order by ${sidx} ${order}
-            </when>
+	select * from task
+	<choose>
+		<when test="sidx != null and sidx.trim() != ''">
+			order by ${sidx} ${order}
+		</when>
+		<otherwise>
+			order by id desc
+		</otherwise>
+	</choose>
+	<if test="offset != null and limit != null">
+		limit #{offset}, #{limit}
+	</if>
+</select>
+
+	<select id="queryTaskList" resultMap="taskMap">
+		select task.*,
+		schedule_policy.sp_name,
+		alarm_template.at_name,
+		count(DISTINCT task_dispatch.id) AS count_dispatch
+		FROM task
+		LEFT JOIN alarm_template
+		ON task.alarm_template_id = alarm_template.id
+		LEFT JOIN schedule_policy
+		ON task.sch_policy_id = schedule_policy.id
+		LEFT JOIN task_dispatch
+		ON task.id = task_dispatch.task_id
+		<choose>
+			<when test="sidx != null and sidx.trim() != ''">
+				order by ${sidx} ${order}
+			</when>
 			<otherwise>
-                order by id desc
+				order by id
 			</otherwise>
-        </choose>
+		</choose>
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>

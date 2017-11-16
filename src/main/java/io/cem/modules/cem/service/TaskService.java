@@ -17,7 +17,9 @@ public interface TaskService {
 	TaskEntity queryObject(Integer id);
 	
 	List<TaskEntity> queryList(Map<String, Object> map);
-	
+
+	List<TaskEntity> queryTaskList(Map<String, Object> map);
+
 	int queryTotal(Map<String, Object> map);
 	
 	void save(TaskEntity task);

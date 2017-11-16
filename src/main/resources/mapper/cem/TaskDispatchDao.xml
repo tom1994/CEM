@@ -16,6 +16,9 @@
         <result property="testInterval" column="test_interval"/>
         <result property="status" column="status"/>
         <result property="remark" column="remark"/>
+		<result property="probeName" column="probe_name"/>
+		<result property="accessLayer" column="access_layer"/>
+		<result property="location" column="location"/>
     </resultMap>
 
 	<select id="queryObject" resultType="io.cem.modules.cem.entity.TaskDispatchEntity">
@@ -35,6 +38,18 @@
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
+	</select>
+
+	<select id="queryDispatchList" resultMap="taskDispatchMap">
+		select task_dispatch.*,
+		probe.probe_name,
+		probe.access_layer,
+		probe.location
+		from task_dispatch
+		INNER JOIN probe
+		ON task_dispatch.probe_id = probe.id
+		WHERE task_id = #{value}
+		order by id desc
 	</select>
 	
  	<select id="queryTotal" resultType="int">
