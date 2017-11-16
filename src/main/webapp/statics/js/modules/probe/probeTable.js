@@ -836,7 +836,6 @@ var grouptable = new Vue({
             {title: '<div style="width:16px"></div>'},
             //{title: '<div class="checkbox"> <label> <input type="checkbox" id="checkAllGroup""></label> </div>'},
             //{title: '<div style="display:none">id</div>'},
-
             // {title: '<div style="width:58px">探针组ID</div>'},
             {title: '<div style="width:100px">探针组名</div>'},
             {title: '<div style="width:100px">备注</div>'},
