@@ -2,10 +2,42 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Title</title>
-    <h>测试目标列表</h>
+    #parse("cemHeader.html")  <!--导入CSS和js文件-->
+    <link href="${rc.contextPath}/statics/css/formStyle.css" rel="stylesheet">  <!--自定义CSS-->
 </head>
 <body>
-
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5 class="fontcolor">测试目标列表</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12" id="target_table">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title fontcolor" id="targethandle"
+                 style="padding-bottom: 0px !important;">
+                <button type="button" class="btn btn-sm btn-success" onclick="targetadd"><span
+                        class="glyphicon glyphicon-plus"></span>新增
+                </button>
+                <button type="button" class="btn btn-sm btn-success" onclick="targetimport"><span
+                        class="glyphicon glyphicon-plus"></span>导入
+                </button>
+            </div>
+            <div class="ibox-content">
+                <div class="row " style="overflow: scroll;">     <!--表格 overflow-x: scroll超出滚动-->
+                    <table class="table table-bordered " style="width: 100%" id="probegroup_table"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

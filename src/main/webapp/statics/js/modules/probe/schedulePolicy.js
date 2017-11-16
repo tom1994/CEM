@@ -8,9 +8,7 @@ var names = new Array();
 var schedulepolicydata_handle = new Vue({
     el: '#handle',
     data: {},
-    mounted(){
-
-    },
+    mounted() {},
     methods: {
         schedulepolicyadd: function () {   /*监听新增触发事件*/
             status = 0;
@@ -31,31 +29,17 @@ var schedulepolicydata_handle = new Vue({
     }
 });
 
-/*function update_ajax() {
-    var ids = JSON.stringify(idArray);
-    /!*对象数组字符串*!/
-
-    $.ajax({
-        type: "POST", /!*GET会乱码*!/
-        url: "../../cem/schedulepolicy/update",
-        cache: false,  //禁用缓存
-        data: ids,  //传入组装的参数
-        dataType: "json",
-        contentType: "application/json", /!*必须要,不可少*!/
-        success: function (result) {
-            forms[0].value = result.schedulepolicy.name;
-            forms[1].value = result.schedulepolicy.scheduler;
-            forms[2].value = result.schedulepolicy.remark;
-
-            toastr.success("调度策略修改成功!");
-
-            schedulepolicytable.currReset();
-
-            update_data.close_modal();
-            /!*关闭模态框*!/
+var scheduler_handle = new Vue({
+    el: 'scheduler',
+    data: {},
+    methods:{
+        cron_generate:function() {
+            var forms = $('#schedulerform_data .form-control');
+            forms[0].value = "";
+            $('#myModal_scheduler').modal('show');
         }
-    });
-}*/
+    }
+});
 
 function update_this (obj) {     /*监听修改触发事件*/
     update_data_id = parseInt(obj.id);
@@ -85,32 +69,6 @@ function update_this (obj) {     /*监听修改触发事件*/
     /*修改模态框标题*/
     $('#myModal_schedulepolicy').modal('show');
 }
-
-/*var update_data = new Vue({
-    el: '#myModal_schedulepolicy',
-    data: {
-        id: null
-    },
-    methods: {
-        show_schedulepolicyModal: function () {
-            update_ajax();
-            $(this.$el).modal('show');
-            /!*弹出确认模态框*!/
-        },
-        close_modal: function (obj) {
-            $(this.$el).modal('hide');
-
-        }
-        /!*update_data: function () {
-            idArray = [];
-            /!*清空id数组*!/
-            idArray[0] = this.id;
-            update_ajax();
-            /!*ajax传输*!/
-        }*!/
-    }
-});*/
-
 
 function delete_ajax() {
     var ids = JSON.stringify(idArray);
@@ -294,16 +252,6 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
     });
     return o;
 }
-
-/*var search_data = new Vue({
-
-    el:'#searchcolums',
-    data:{
-
-        schedulepolicy_names:[]
-
-    }
-});*/
 
 /*选中表格事件*/
 $(document).ready(function () {
