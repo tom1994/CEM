@@ -14,7 +14,7 @@ import java.util.Date;
  */
 public class TaskEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	//任务ID
 	private Integer id;
 	//名称
@@ -33,6 +33,12 @@ public class TaskEntity implements Serializable {
 	private String remark;
 	//创建时间
 	private Date createTime;
+
+	private String atName;
+
+	private String spName;
+
+	private String countDispatch;
 
 	/**
 	 * 设置：任务ID
@@ -141,5 +147,29 @@ public class TaskEntity implements Serializable {
 	 */
 	public Date getCreateTime() {
 		return createTime;
+	}
+
+	public String getAtName() {
+		return atName;
+	}
+
+	public void setAtName(String atName) {
+		this.atName = atName;
+	}
+
+	public String getSpName() {
+		return spName;
+	}
+
+	public void setSpName(String spName) {
+		this.spName = spName;
+	}
+
+	public String getCountDispatch() {
+		return countDispatch;
+	}
+
+	public void setCountDispatch(String countDispatch) {
+		this.countDispatch = countDispatch;
 	}
 }

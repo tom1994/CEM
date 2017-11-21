@@ -443,6 +443,7 @@ var probeform_data = new Vue({
                             switch (code) {
                                 case 0:
                                     toastr.success("业务信息录入成功!");
+                                    $('#myModal_update').modal('hide');
                                     break;
                                 case 403:
                                     toastr.error(msg);
@@ -455,6 +456,7 @@ var probeform_data = new Vue({
                             switch (code) {
                                 case 0:
                                     toastr.success("业务信息更新成功!");
+                                    $('#myModal_update').modal('hide');
                                     break;
                                 case 403:
                                     toastr.error(msg);
@@ -834,7 +836,6 @@ var grouptable = new Vue({
             {title: '<div style="width:16px"></div>'},
             //{title: '<div class="checkbox"> <label> <input type="checkbox" id="checkAllGroup""></label> </div>'},
             //{title: '<div style="display:none">id</div>'},
-
             // {title: '<div style="width:58px">探针组ID</div>'},
             {title: '<div style="width:100px">探针组名</div>'},
             {title: '<div style="width:100px">备注</div>'},

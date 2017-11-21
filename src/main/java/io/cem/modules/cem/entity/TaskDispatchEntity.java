@@ -38,6 +38,12 @@ public class TaskDispatchEntity implements Serializable {
 	//备注
 	private String remark;
 
+	private String probeName;
+
+	private String location;
+
+	private String accessLayer;
+
 	/**
 	 * 设置：
 	 */
@@ -169,5 +175,29 @@ public class TaskDispatchEntity implements Serializable {
 	 */
 	public String getRemark() {
 		return remark;
+	}
+
+	public String getProbeName() {
+		return probeName;
+	}
+
+	public void setProbeName(String probeName) {
+		this.probeName = probeName;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public String getAccessLayer() {
+		return accessLayer;
+	}
+
+	public void setAccessLayer(String accessLayer) {
+		this.accessLayer = accessLayer;
 	}
 }

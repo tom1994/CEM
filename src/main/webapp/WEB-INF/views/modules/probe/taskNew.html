@@ -29,21 +29,49 @@
                             class="glyphicon glyphicon-plus"></span>新建任务
                     </button>
                     <!--<button type="button" class="btn btn-sm btn-success " v-on:click="testagentdelBatch"><span-->
-                            <!--class="glyphicon glyphicon-remove"></span>批量取消-->
+                    <!--class="glyphicon glyphicon-remove"></span>批量取消-->
                     <!--</button>-->
                 </div>
                 <div class="ibox-content">
                     <div class="row " style="overflow-x: auto">     <!--表格 verflow-x: scroll超出滚动-->
-                        <table class="table table-bordered " id="tasktemplate_table"></table>
+                        <table class="table table-bordered " id="task_table"></table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
+   <!--任务分配数查询模态框-->
+    <div class="modal fade" id="myModal_dispatch" tabindex="-1" role="dialog"
+    aria-labelledby="myModalLabel" aria-hidden=""true>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h3 class="modal-title">
+                        已分配数量
+                    </h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row " style="overflow-x: auto">     <!--表格 verflow-x: scroll超出滚动-->
+                        <table class="table table-bordered " id="dispatch_table"></table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default"
+                            v-on:click="close_modal">取消
+                    </button>
+                    <button type="button" class="btn btn-success" v-on:click="">
+                        确定
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
     <!-- 删除确认模态框（Modal） -->
     <div class="modal fade" id="myModal_delete" tabindex="-1" role="dialog"
-         aria-labelledby="myModalLabel" aria-hidden="true">
+         aria-labelledby="myModalLabel" aria-hidden=""true>
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -68,7 +96,6 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal -->
     </div>
-
     <!-- 信息编辑模态框（Modal） -->
     <div class="modal fade" id="myModal_edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
@@ -78,217 +105,10 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                         &times;
                     </button>
-                    <h3 class="modal-title myModalLabel">任务名称修改</h3>
+                    <h3 class="modal-title myModalLabel">任务详情</h3>
                 </div>
-
                 <div class="modal-body">
                     <div class="row">
-<!--<<<<<<< HEAD
-                        <div class="col-lg-12 col-md-12 col-sm-12">
-                            <div class="ibox float-e-margins">
-
-                                &lt;!&ndash;标题栏&ndash;&gt;
-&lt;!&ndash;                                <div class="ibox-title">
-                                    <p  style="font-size: small;color:#525e64;display:inline-block">常见任务组模版</p>
-                                    <button type="button" class="btn btn-sm btn-success"
-                                            style="position:relative; left:5%;">任务组一模版</span>
-                                    </button>
-                                    <button type="button" class="btn btn-sm btn-success"
-                                            style="position:relative; left:20%;">任务组二模版</span>
-                                    </button>
-                                    <button type="button" class="btn btn-sm btn-success"
-                                            style="position:relative; left:35%;">任务组三模版</span>
-                                    </button>
-                                    <button type="button" class="btn btn-sm btn-success"
-                                            style="position:relative; left:50%;">任务组四模版</span>
-                                    </button>
-                                </div>
-
-                                &lt;!&ndash;最上一层&ndash;&gt;
-                                <div class="wrapper-module">
-                                    <div class="module left-up">
-                                        <div class="wrapper-block task_border">
-                                            <p style="font-size: medium">网络连通性业务</p>
-                                        </div>
-                                        <div class="wrapper-block">
-                                            <p style="font-size: small;color:#525e64;display:inline-block">常用任务模版</p>
-                                            <button type="button" class="btn btn-sm btn-success"
-                                                    style="position:relative; left:5%;">任务一模版</span>
-                                            </button>
-                                            <button type="button" class="btn btn-sm btn-success"
-                                                    style="position:relative; left:10%;">任务二模版</span>
-                                            </button>
-                                            <button type="button" class="btn btn-sm btn-success"
-                                                    style="position:relative; left:15%;">任务三模版</span>
-                                            </button>
-                                        </div>
-                                        <div class="wrapper-block">
-                                            <p style="font-size: small;color:#525e64;display:inline-block">单项业务模版</p>
-                                            <button type="button" class="btn btn-sm btn-warning"
-                                                    style="position:relative; left:5%;">TraceRoute(ICMP)测试</span>
-                                            </button>
-                                            <button type="button" class="btn btn-sm btn-warning"
-                                                    style="position:relative; left:12%;">TraceRoute(TCP)测试</span>
-                                            </button>
-                                        </div>
-                                        <div class="wrapper-block">
-                                            <button type="button" class="btn btn-sm btn-warning"
-                                                    style="position:relative; left:5%;">PING(ICMP)测试</span>
-                                            </button>
-                                            <button type="button" class="btn btn-sm btn-warning"
-                                                    style="position:relative; left:13%;">PING(TCP)测试</span>
-                                            </button>
-                                            <button type="button" class="btn btn-sm btn-warning"
-                                                    style="position:relative; left:21%;">PING(UDP)测试</span>
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                    <div class="module right">
-                                        <div class="wrapper-block task_border">
-                                            <p style="font-size: medium">网络层质量业务</p>
-                                        </div>
-                                        <div class="wrapper-block">
-                                            <p style="font-size: small;color:#525e64;display:inline-block">常用任务模版</p>
-                                            <button type="button" class="btn btn-sm btn-success"
-                                                    style="position:relative; left:5%;">任务一模版</span>
-                                            </button>
-                                            <button type="button" class="btn btn-sm btn-success"
-                                                    style="position:relative; left:10%;">任务二模版</span>
-                                            </button>
-                                            <button type="button" class="btn btn-sm btn-success"
-                                                    style="position:relative; left:15%;">任务三模版</span>
-                                            </button>
-                                        </div>
-                                        <div class="wrapper-block">
-                                            <p style="font-size: small;color:#525e64;display:inline-block">单项业务模版</p>
-                                            <button type="button" class="btn btn-sm btn-warning"
-                                                    style="position:relative; left:5%;">SLA(TCP/UDP)测试</span>
-                                            </button>
-                                            <button type="button" class="btn btn-sm btn-warning"
-                                                    style="position:relative; left:12%;">DNS测试</span>
-                                            </button>
-                                        </div>
-                                        <div class="wrapper-block">
-                                            <button type="button" class="btn btn-sm btn-warning"
-                                                    style="position:relative; left:5%;">DHCP测试</span>
-                                            </button>
-                                            <button type="button" class="btn btn-sm btn-warning"
-                                                    style="position:relative; left:13%;">ADSL接入测试</span>
-                                            </button>
-                                            <button type="button" class="btn btn-sm btn-warning"
-                                                    style="position:relative; left:21%;">Radius认证测试</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                &lt;!&ndash;中间一层&ndash;&gt;
-                                <div class="wrapper-module">
-                                    <div class="module left-up">
-                                        <div class="wrapper-block task_border">
-                                            <p style="font-size: medium">网页浏览业务</p>
-                                        </div>
-                                        <div class="wrapper-block">
-                                            <p style="font-size: small;color:#525e64;display:inline-block">常用任务模版</p>
-                                            <button type="button" class="btn btn-sm btn-success"
-                                                    style="position:relative; left:5%;">任务一模版</span>
-                                            </button>
-                                            <button type="button" class="btn btn-sm btn-success"
-                                                    style="position:relative; left:10%;">任务二模版</span>
-                                            </button>
-                                            <button type="button" class="btn btn-sm btn-success"
-                                                    style="position:relative; left:15%;">任务三模版</span>
-                                            </button>
-                                        </div>
-                                        <div class="wrapper-block">
-                                            <p style="font-size: small;color:#525e64;display:inline-block">单项业务模版</p>
-                                            <button type="button" class="btn btn-sm btn-warning"
-                                                    style="position:relative; left:5%;">WEB页面访问测试</span>
-                                            </button>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="module right">
-                                        <div class="wrapper-block task_border">
-                                            <p style="font-size: medium">文件下载业务</p>
-                                        </div>
-                                        <div class="wrapper-block">
-                                            <p style="font-size: small;color:#525e64;display:inline-block">常用任务模版</p>
-                                            <button type="button" class="btn btn-sm btn-success"
-                                                    style="position:relative; left:5%;">任务一模版</span>
-                                            </button>
-                                            <button type="button" class="btn btn-sm btn-success"
-                                                    style="position:relative; left:10%;">任务二模版</span>
-                                            </button>
-                                            <button type="button" class="btn btn-sm btn-success"
-                                                    style="position:relative; left:15%;">任务三模版</span>
-                                            </button>
-                                        </div>
-                                        <div class="wrapper-block">
-                                            <p style="font-size: small;color:#525e64;display:inline-block">单项业务模版</p>
-                                            <button type="button" class="btn btn-sm btn-warning"
-                                                    style="position:relative; left:5%;">FTP上传／下载测试</span>
-                                            </button>
-                                            <button type="button" class="btn btn-sm btn-warning"
-                                                    style="position:relative; left:12%;">WEB下载测试</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                &lt;!&ndash;最后一层&ndash;&gt;
-                                <div class="wrapper-module">
-                                    <div class="module left-up">
-                                        <div class="wrapper-block task_border">
-                                            <p style="font-size: medium">在线视频业务</p>
-                                        </div>
-                                        <div class="wrapper-block">
-                                            <p style="font-size: small;color:#525e64;display:inline-block">常用任务模版</p>
-                                            <button type="button" class="btn btn-sm btn-success"
-                                                    style="position:relative; left:5%;">任务一模版</span>
-                                            </button>
-                                            <button type="button" class="btn btn-sm btn-success"
-                                                    style="position:relative; left:10%;">任务二模版</span>
-                                            </button>
-                                            <button type="button" class="btn btn-sm btn-success"
-                                                    style="position:relative; left:15%;">任务三模版</span>
-                                            </button>
-                                        </div>
-                                        <div class="wrapper-block">
-                                            <p style="font-size: small;color:#525e64;display:inline-block">单项业务模版</p>
-                                            <button type="button" class="btn btn-sm btn-warning"
-                                                    style="position:relative; left:5%;">在线视频测试</span>
-                                            </button>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="module right">
-                                        <div class="wrapper-block task_border">
-                                            <p style="font-size: medium">网络游戏业务</p>
-                                        </div>
-                                        <div class="wrapper-block">
-                                            <p style="font-size: small;color:#525e64;display:inline-block">常用任务模版</p>
-                                            <button type="button" class="btn btn-sm btn-success"
-                                                    style="position:relative; left:5%;">任务一模版</span>
-                                            </button>
-                                            <button type="button" class="btn btn-sm btn-success"
-                                                    style="position:relative; left:10%;">任务二模版</span>
-                                            </button>
-                                            <button type="button" class="btn btn-sm btn-success"
-                                                    style="position:relative; left:15%;">任务三模版</span>
-                                            </button>
-                                        </div>
-                                        <div class="wrapper-block">
-                                            <p style="font-size: small;color:#525e64;display:inline-block">单项业务模版</p>
-                                            <button type="button" class="btn btn-sm btn-warning"
-                                                    style="position:relative; left:5%;">网络游戏测试</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>&ndash;&gt;-->
                         <form class="form-horizontal" id="tasktemplate_data" role="form">
                             <div class="form-group row">
                                 <div class="form-group row">
@@ -300,16 +120,47 @@
                                         <input type="text" class="form-control" id="id" name="id"
                                                placeholder="请输入id">
                                     </div>
+                                    <label for="taskname"
+                                           class="col-lg-3 col-md-3 col-sm-3 control-label form_border"
+                                           style="font-size: medium">任务模板名称:</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="taskname"
+                                               name="name"
+                                               placeholder="请输入名称">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="servicetype"
+                                           class="col-lg-3 col-md-3 col-sm-3 control-label form_border"
+                                           style="font-size: medium">子业务类型:</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="servicetype"
+                                               name="name"
+                                               placeholder="请输入名称">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="templateremark"
+                                           class="col-lg-3 col-md-3 col-sm-3 control-label form_border"
+                                           style="font-size: medium">备注:</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="templateremark"
+                                               name="name"
+                                               placeholder="请输入备注">
+                                    </div>
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-success">保存修改</button>
+                </div>
             </div>
         </div>
-    </div>
+    </div><!-- /.modal-content -->
 </div>
-
 
 <script>window.jQuery || document.write('<script src="${rc.contextPath}/statics/js/plugins/jquery/jquery-2.0.3.js"><\/script>')</script>
 <script type="text/javascript"
