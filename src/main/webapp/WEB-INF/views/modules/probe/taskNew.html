@@ -24,7 +24,7 @@
     <div class="row" id="template_table">
         <div class="col-lg-12 col-md-12 col-sm-12">
             <div class="ibox float-e-margins">
-                <div class="ibox-title fontcolor" id="probehandle" style="padding-bottom: 0px !important;">
+                <div class="ibox-title fontcolor" id="handle" style="padding-bottom: 0px !important;">
                     <button type="button" class="btn btn-sm btn-success " v-on:click="newTask"><span
                             class="glyphicon glyphicon-plus"></span>新建任务
                     </button>
@@ -40,9 +40,9 @@
             </div>
         </div>
     </div>
-   <!--任务分配数查询模态框-->
+    <!--任务分配数查询模态框-->
     <div class="modal fade" id="myModal_dispatch" tabindex="-1" role="dialog"
-    aria-labelledby="myModalLabel" aria-hidden=""true>
+         aria-labelledby="myModalLabel" aria-hidden="" true>
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -71,7 +71,7 @@
     </div>
     <!-- 删除确认模态框（Modal） -->
     <div class="modal fade" id="myModal_delete" tabindex="-1" role="dialog"
-         aria-labelledby="myModalLabel" aria-hidden=""true>
+         aria-labelledby="myModalLabel" aria-hidden="" true>
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -86,17 +86,17 @@
                     <b style="font-size: medium">确定删除任务吗?</b>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal"
+                    <button type="button" class="btn btn-default"
                             v-on:click="cancel_delete">取消
                     </button>
                     <button type="button" class="btn btn-success" v-on:click="delete_data">
                         确定
                     </button>
                 </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal -->
+            </div>
+        </div>
     </div>
-    <!-- 信息编辑模态框（Modal） -->
+    <!-- 任务新建/编辑模态框（Modal） -->
     <div class="modal fade" id="myModal_edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
         <div class="modal-dialog" style="width:800px">
@@ -109,57 +109,152 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <form class="form-horizontal" id="tasktemplate_data" role="form">
+                        <form class="form-horizontal" id="taskform_data" role="form">
                             <div class="form-group row">
+                                <label for="id"
+                                       class="col-lg-2 col-md-2 col-sm-2"
+                                       style="display: none">id:</label>
+                                <div class="col-lg-2 col-md-2 col-sm-2 "
+                                     style="display: none">
+                                    <input type="text" class="form-control" id="id" name="id"
+                                           placeholder="请输入id">
+                                </div>
+                                <label for="taskname"
+                                       class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                       style="font-size: medium">任务名称:</label>
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <input type="text" class="form-control" id="taskname"
+                                           name="name"
+                                           placeholder="请输入名称">
+                                </div>
+                                <label for="servicetype"
+                                       class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                       style="font-size: medium">任务类型:</label>
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <select id="servicetype" v-on:change="servicechange()" class="form-control"
+                                            name="servicetype">
+                                        <optgroup label="网络连通性测试">
+                                            <option value="1">PING(ICMP ECHO)</option>
+                                            <option value="2">PING(TCP ECHO)</option>
+                                            <option value="3">PING(UDP ECHO)</option>
+                                            <option value="4">Trace Route(ICMP)</option>
+                                            <option value="5">Trace Route(UDP)</option>
+                                        </optgroup>
+                                        <optgroup label="网络层质量测试">
+                                            <option value="10">SLA(TCP)</option>
+                                            <option value="11">SLA(UDP)</option>
+                                            <option value="12">ADSL接入</option>
+                                            <option value="13">DHCP</option>
+                                            <option value="14">DNS</option>
+                                            <option value="15">Radius认证</option>
+                                        </optgroup>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="service service_unselected" id="pingicmp">
                                 <div class="form-group row">
-                                    <label for="id"
-                                           class="col-lg-2 col-md-2 col-sm-2 control-label"
-                                           style="display: none">id:</label>
-                                    <div class="col-lg-2 col-md-2 col-sm-2 "
-                                         style="display: none">
-                                        <input type="text" class="form-control" id="id" name="id"
-                                               placeholder="请输入id">
-                                    </div>
-                                    <label for="taskname"
-                                           class="col-lg-3 col-md-3 col-sm-3 control-label form_border"
-                                           style="font-size: medium">任务模板名称:</label>
+                                    <label for="count"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">发包个数</label>
                                     <div class="col-lg-3 col-md-3 col-sm-3">
-                                        <input type="text" class="form-control" id="taskname"
-                                               name="name"
-                                               placeholder="请输入名称">
+                                        <input type="text" class="form-control" id="count"
+                                               value="10"
+                                               placeholder="">
+                                    </div>
+                                    <label for="interval"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">发包间隔(ms)</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="interval"
+                                               value="100"
+                                               placeholder="">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="servicetype"
-                                           class="col-lg-3 col-md-3 col-sm-3 control-label form_border"
-                                           style="font-size: medium">子业务类型:</label>
+                                    <label for="size"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">负载大小(byte)</label>
                                     <div class="col-lg-3 col-md-3 col-sm-3">
-                                        <input type="text" class="form-control" id="servicetype"
-                                               name="name"
-                                               placeholder="请输入名称">
+                                        <input type="text" class="form-control" id="size"
+                                               value="100" placeholder="">
                                     </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="templateremark"
-                                           class="col-lg-3 col-md-3 col-sm-3 control-label form_border"
-                                           style="font-size: medium">备注:</label>
+                                    <label for="payload"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">负载内容</label>
                                     <div class="col-lg-3 col-md-3 col-sm-3">
-                                        <input type="text" class="form-control" id="templateremark"
-                                               name="name"
+                                        <input type="text" class="form-control" id="payload"
+                                               value="32"
                                                placeholder="请输入备注">
                                     </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="ttl"
+                                           class="col-lg-2 col-md-2 col-sm-2 form_border"
+                                           style="font-size: medium">TTL:</label>
+                                    <div class="col-lg-2 col-md-2 col-sm-2">
+                                        <input type="text" class="form-control" id="ttl"
+                                               placeholder="请输入备注">
+                                    </div>
+                                    <label for="tos"
+                                           class="col-lg-2 col-md-2 col-sm-2 form_border"
+                                           style="font-size: medium">IP服务类型:</label>
+                                    <div class="col-lg-2 col-md-2 col-sm-2">
+                                        <input type="text" class="form-control" id="tos"
+                                               placeholder="请输入备注">
+                                    </div>
+                                    <label for="timeout"
+                                           class="col-lg-2 col-md-2 col-sm-2 form_border"
+                                           style="font-size: medium">超出时间:</label>
+                                    <div class="col-lg-2 col-md-2 col-sm-2">
+                                        <input type="text" class="form-control" id="timeout"
+                                               placeholder="请输入备注">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="service form-group row service_unselected" id="pingtcp">
+                                <label for="param2"
+                                       class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                       style="font-size: medium">param:</label>
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <input type="text" class="form-control" id="param2"
+                                           name="name"
+                                           placeholder="请输入备注">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="schpolicy"
+                                       class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                       style="font-size: medium">调度策略:</label>
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <select id="schpolicy" class="form-control">
+                                        <option value="">---请选择---</option>
+                                        <option v-for="item in schpolicies"
+                                                v-bind:value="item.message.id">{{ item.message.spName }}
+                                        </option>
+                                    </select>
+                                </div>
+                                <label for="alarmtemplate"
+                                       class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                       style="font-size: medium">告警模板:</label>
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <select id="alarmtemplate" class="form-control">
+                                        <option value="">---请选择---</option>
+                                        <option v-for="item in alarmtemplates"
+                                                v-bind:value="item.message.id">{{ item.message.atName}}
+                                        </option>
+                                    </select>
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-success">保存修改</button>
+                    <button type="button" class="btn btn-default" v-on:click="cancel">取消</button>
+                    <button type="button" class="btn btn-success">保存</button>
                 </div>
             </div>
         </div>
-    </div><!-- /.modal-content -->
+    </div>
 </div>
 
 <script>window.jQuery || document.write('<script src="${rc.contextPath}/statics/js/plugins/jquery/jquery-2.0.3.js"><\/script>')</script>

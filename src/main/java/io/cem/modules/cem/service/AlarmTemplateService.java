@@ -17,6 +17,8 @@ public interface AlarmTemplateService {
 	AlarmTemplateEntity queryObject(Integer id);
 	
 	List<AlarmTemplateEntity> queryList(Map<String, Object> map);
+
+	List<AlarmTemplateEntity> queryatList(Integer id);
 	
 	int queryTotal(Map<String, Object> map);
 	

@@ -9,6 +9,7 @@
         <result property="tgName" column="tg_name"/>
         <result property="remark" column="remark"/>
         <result property="createTime" column="create_time"/>
+        <result property="superserviceType" column="superservice_type"/>
     </resultMap>
 
 	<select id="queryObject" resultType="io.cem.modules.cem.entity.TargetGroupEntity">
@@ -39,13 +40,15 @@
 		(
 			`tg_name`, 
 			`remark`, 
-			`create_time`
+			`create_time`, 
+			`superservice_type`
 		)
 		values
 		(
 			#{tgName}, 
 			#{remark}, 
-			#{createTime}
+			#{createTime}, 
+			#{superserviceType}
 		)
 	</insert>
 	 
@@ -54,7 +57,8 @@
 		<set>
 			<if test="tgName != null">`tg_name` = #{tgName}, </if>
 			<if test="remark != null">`remark` = #{remark}, </if>
-			<if test="createTime != null">`create_time` = #{createTime}</if>
+			<if test="createTime != null">`create_time` = #{createTime}, </if>
+			<if test="superserviceType != null">`superservice_type` = #{superserviceType}</if>
 		</set>
 		where id = #{id}
 	</update>

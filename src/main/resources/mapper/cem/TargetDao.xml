@@ -8,7 +8,7 @@
         <result property="id" column="id"/>
         <result property="targetName" column="target_name"/>
         <result property="value" column="value"/>
-        <result property="serviceType" column="service_type"/>
+        <result property="serviceType" column="superservice_type"/>
         <result property="groupId" column="group_id"/>
         <result property="remark" column="remark"/>
         <result property="createTime" column="create_time"/>
@@ -42,7 +42,7 @@
 		(
 			`target_name`, 
 			`value`, 
-			`service_type`, 
+			superservice_type,
 			`group_id`, 
 			`remark`, 
 			`create_time`
@@ -63,7 +63,7 @@
 		<set>
 			<if test="targetName != null">`target_name` = #{targetName}, </if>
 			<if test="value != null">`value` = #{value}, </if>
-			<if test="serviceType != null">`service_type` = #{serviceType}, </if>
+			<if test="superserviceType != null">`superservice_type` = #{superserviceType}, </if>
 			<if test="groupId != null">`group_id` = #{groupId}, </if>
 			<if test="remark != null">`remark` = #{remark}, </if>
 			<if test="createTime != null">`create_time` = #{createTime}</if>

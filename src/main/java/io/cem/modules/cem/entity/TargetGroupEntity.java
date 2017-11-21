@@ -10,7 +10,7 @@ import java.util.Date;
  * 
  * @author ${author}
  * @email ${email}
- * @date 2017-11-05 20:39:28
+ * @date 2017-11-21 20:17:52
  */
 public class TargetGroupEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -23,6 +23,8 @@ public class TargetGroupEntity implements Serializable {
 	private String remark;
 	//创建时间
 	private Date createTime;
+	//
+	private Integer superserviceType;
 
 	/**
 	 * 设置：测试目标组ID
@@ -71,5 +73,17 @@ public class TargetGroupEntity implements Serializable {
 	 */
 	public Date getCreateTime() {
 		return createTime;
+	}
+	/**
+	 * 设置：
+	 */
+	public void setSuperserviceType(Integer superserviceType) {
+		this.superserviceType = superserviceType;
+	}
+	/**
+	 * 获取：
+	 */
+	public Integer getSuperserviceType() {
+		return superserviceType;
 	}
 }
