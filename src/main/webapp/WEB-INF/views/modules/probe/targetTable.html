@@ -1,43 +1,603 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Title</title>
+    <title>测试目标列表</title>
     #parse("cemHeader.html")  <!--导入CSS和js文件-->
     <link href="${rc.contextPath}/statics/css/formStyle.css" rel="stylesheet">  <!--自定义CSS-->
+
 </head>
 <body>
-<div class="wrapper wrapper-content">
-    <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5 class="fontcolor">测试目标列表</h5>
+<div class="htmleaf-container">
+    <div class="tab" role="tabpanel">
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#Section1" aria-controls="home" role="tab" data-toggle="tab">
+                测试目标管理</a></li>
+            <li role="presentation"><a href="#Section2" aria-controls="profile" role="tab" data-toggle="tab">
+                测试目标组管理</a></li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content tabs">
+            <div role="tabpanel" class="tab-pane fade in active" id="Section1">
+                <div class="wrapper wrapper-content">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-content" style="padding-bottom: 0 !important;">
+                                    <div class="row" id="searchbox" style="border: none !important;">
+                                        <form class="col-lg-9 col-md-9 col-sm-9 form-horizontal" id="targetsearch"
+                                              role="form">
+                                            <div class="form-group row">
+                                                <div class="input-group searchspan">
+                                                    <span class="searchname" title="测试目标名">测试目标名</span>
+                                                    <input type="text" class="form-control" name="name"
+                                                           style="width: 110px"
+                                                           value="">
+                                                </div>
+                                            </div>
+                                        </form>
+
+
+                                        <div class="col-lg-3 col-md-3 col-sm-3 pull-left">
+                                            <button type="button" class="btn btn-sm btn-success"
+                                                    style="margin-right: 5px"
+                                                    v-on:click="searchtarget"><span
+                                                    class="glyphicon glyphicon-zoom-in"></span>查询
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-success"
+                                                    v-on:click="reset"><span
+                                                    class="glyphicon glyphicon-refresh"></span>重置
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12" id="target_table">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title fontcolor" id="targethandle"
+                                     style="padding-bottom: 0px !important;">
+
+                                    <button type="button" class="btn btn-sm btn-success"
+                                            v-on:click="targetadd"><span
+                                            class="glyphicon glyphicon-plus"></span>新增
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-success"
+                                            v-on:click="probedelBatch"><span
+                                            class="glyphicon glyphicon-trash"></span>批量删除
+                                    </button>
+
+                                    <p id="flip" style="position:relative; left:35%;" class="glyphicon glyphicon-menu-up" onClick="toggle1('searchbox')"></p>
+                                </div>
+                                <div class="ibox-content">
+                                    <div class="row " style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                                        <table  class="table table-bordered " id="probedata_table" ></table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 详情模态框（Modal） -->
+                    <div class="modal fade" id="myModal_update" tabindex="-1" role="dialog"
+                         aria-labelledby="myModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog" style="width: 950px"> <!--修改bootstrap modal模态框的宽度-->
+                            <div class="modal-content">
+                                <div class="modal-header" style="">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                        &times;
+                                    </button>
+                                    <h3 class="modal-title myModalLabel">{{modaltitle}}</h3>
+                                </div>
+                                <div class="modal-body" style="padding: 0px 30px 0px 30px !important;">
+                                    <div class="row">
+                                        <form class="form-horizontal" id="probeform_data" role="form">
+                                            <div class="form-group row">
+                                                <label for="id"
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border"
+                                                       style="display: none">id:</label>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 "
+
+                                                     style="display: none">
+                                                    <input type="text" class="form-control" id="id" name="id"
+                                                           placeholder="请输入id">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="probename"
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">探针名:</label>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
+                                                    <input type="text" class="form-control" id="probename" name="name"
+                                                           placeholder="请输入">
+                                                </div>
+                                                <label for="serialNumber"
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">序列号:</label>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
+                                                    <input type="text" class="form-control" id="serialNumber" name="serialNumber"
+                                                           readonly="readonly" unselectable='on'>
+                                                </div>
+                                                <label for="type"
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">探针类型:</label>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
+                                                    <select id="type" class="form-control" name="type">  <!--VUE列表渲染-->
+                                                        <option v-for="item in typeNames">
+                                                            {{ item.message }}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="city"
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">所属地市:</label>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
+                                                    <select id="city" class="form-control" name="city">  <!--VUE列表渲染-->
+                                                        <option v-for="item in cityNames">
+                                                            {{ item.message }}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <label for="county"
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">所属区县:</label>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
+                                                    <select id="county" class="form-control" name="county">
+                                                        <!--VUE列表渲染-->
+                                                        <option v-for="item in countyNames">
+                                                            {{ item.message }}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <label for="location"
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">所属位置:</label>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
+                                                    <input type="text" class="form-control" id="location"
+                                                           name="location"
+                                                           placeholder="请输入">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="brasName"
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">BRAS名称:</label>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
+                                                    <input type="text" class="form-control" id="brasName"
+                                                           name="brasName"
+                                                           placeholder="请输入">
+                                                </div>
+                                                <label for="brasIp"
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">BRAS IP:</label>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
+                                                    <input type="text" class="form-control" id="brasIp"
+                                                           name="brasIp"
+                                                           placeholder="请输入">
+                                                </div>
+                                                <label for="brasPort"
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">BRAS端口:</label>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
+                                                    <input type="text" class="form-control" id="brasPort"
+                                                           name="brasPort"
+                                                           placeholder="请输入">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="accessLayer"
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">接入层级:</label>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
+                                                    <input id="accessLayer" class="form-control" name="accessLayer">
+                                                    </input>
+                                                </div>
+                                                <label for="upstream"
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">上联探针:</label>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
+                                                    <input id="upstream" class="form-control" name="upstream">
+                                                    </input>
+                                                </div>
+                                                <label for="status"
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">状态:</label>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
+                                                    <input id="status" class="form-control" name="status"
+                                                           readonly="readonly" unselectable='on'>
+                                                    </input>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="device"
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">设备型号:</label>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
+                                                    <input type="text" class="form-control" id="device" name="device"
+                                                           readonly="readonly" unselectable='on'>
+                                                </div>
+                                                <label for="version"
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">软件版本:</label>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
+                                                    <input type="text" class="form-control" id="version" name="version"
+                                                           readonly="readonly" unselectable='on'>
+                                                </div>
+                                                <label for="concurrentTask"
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">最大任务数:</label>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
+                                                    <input type="text" class="form-control" id="concurrentTask" name="concurrentTask"
+                                                           readonly="readonly" unselectable='on'>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="groupId"
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">所属探针组:</label>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
+                                                    <input type="text" class="form-control" id="groupId"
+                                                           name="groupId"
+                                                           placeholder="请输入">
+                                                </div>
+                                                <label for="ipType"
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">IP类型:</label>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
+                                                    <input type="text" class="form-control" id="ipType"
+                                                           name="ipType" readonly="readonly" unselectable='on'>
+                                                </div>
+                                                <label for="isp"
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">接入运营商:</label>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
+                                                    <input type="text" class="form-control" id="isp"
+                                                           name="isp"
+                                                           placeholder="请输入">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="hbInterval"
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">心跳间隔(秒):</label>
+                                                <div class="col-lg-1 col-md-1 col-sm-1 form_border">
+                                                    <input type="text" class="form-control" id="hbInterval"
+                                                           name="hbInterval"
+                                                           placeholder="30">
+                                                </div>
+                                                <label for="taskInterval" style="padding-left:0 !important;padding-right: 0 !important; "
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">获取任务间隔(分钟):</label>
+                                                <div class="col-lg-1 col-md-1 col-sm-1 form_border">
+                                                    <input type="text" class="form-control" id="taskInterval"
+                                                           name="taskInterval"
+                                                           placeholder="30">
+                                                </div>
+                                                <label for="reportInterval"
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">上报间隔(分钟):</label>
+                                                <div class="col-lg-1 col-md-1 col-sm-1 form_border">
+                                                    <input type="text" class="form-control" id="reportInterval"
+                                                           name="reportInterval"
+                                                           placeholder="15">
+                                                </div>
+                                                <label for="updateInterval" style="padding-left:0 !important;padding-right: 0 !important; "
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">升级检测间隔(小时):</label>
+                                                <div class="col-lg-1 col-md-1 col-sm-1 form_border">
+                                                    <input type="text" class="form-control" id="updateInterval"
+                                                           name="updateInterval"
+                                                           placeholder="24">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="lastHbtime" style="text-align: left !important;padding-left:15px !important;
+                                                        margin-left: 9px;margin-right: -10px;"
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">最后心跳时间:</label>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 form_border">
+                                                    <input type="text" class="form-control" id="lastHbtime"
+                                                           name="lastHbtime" readonly="readonly" unselectable='on'>
+                                                </div>
+                                                <label for="registerTime" style="text-align: left !important"
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">注册时间:</label>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 form_border">
+                                                    <input type="text" class="form-control" id="registerTime" name="registerTime"
+                                                           readonly="readonly" unselectable='on'>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="lastReportTime" style="text-align: left !important;padding-left:15px !important;
+                                                margin-left: 9px;margin-right: -10px;"
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">最后上报时间:</label>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 form_border">
+                                                    <input type="text" class="form-control" id="lastReportTime"
+                                                           name="lastReportTime" readonly="readonly" unselectable='on'>
+                                                </div>
+                                                <label for="lastUpdateTime" style="text-align: left !important"
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">最后升级时间:</label>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 form_border">
+                                                    <input type="text" class="form-control" id="lastUpdateTime"
+                                                           name="lastUpdateTime" readonly="readonly" unselectable='on'>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="portIp" style="text-align: left !important;padding-left:15px !important;
+                                                        margin-left: 9px;margin-right: -10px;"
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">端口及IP:</label>
+                                                <div class="col-lg-10 col-md-10 col-sm-10 form_border">
+                                                    <input type="text" class="form-control" id="portIp"
+                                                           name="portIp" readonly="readonly" unselectable='on'>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="modal-footer" style="">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                    <button type="button" class="btn btn-success " v-on:click="submit">保存</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <!-- 删除确认模态框（Modal） -->
+                    <div class="modal fade" id="myModal_delete" tabindex="-1" role="dialog"
+                         aria-labelledby="myModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog" style="width: 500px">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                        &times;
+                                    </button>
+                                    <h3 class="modal-title" id="myModalLabel_delet">
+                                        确认
+                                    </h3>
+                                </div>
+                                <div class="modal-body" style="font-size: medium">
+                                    <b>确定删除吗?</b>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal"
+                                            v-on:click="cancel_delete">取消
+                                    </button>
+                                    <button type="button" class="btn btn-success" v-on:click="delete_data">确定</button>
+                                </div>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal -->
+                    </div>
+
                 </div>
+            </div>
+
+            <div role="tabpanel" class="tab-pane fade" id="Section2">
+                <div class="wrapper wrapper-content">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-content" style="padding-bottom: 0">
+                                    <div class="row">
+                                        <form class="form-horizontal" id="tgsearch" role="form">
+                                            <div class=" col-lg-5 col-md-5 col-sm-5 searchspan">
+                                                <span class="searchname" title="测试目标组名">测试目标组名：</span>
+                                                <input type="text" class="form-control" name="name" style="width: 110px"
+                                                       value="">
+                                            </div>
+                                            <div class="btn-group pull-left">
+                                                <button type="button" class="btn btn-sm btn-success"
+                                                        style="margin-right: 5px;"
+                                                        v-on:click="tgsearch"><span
+                                                        class="glyphicon glyphicon-zoom-in"></span>查询
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-success"
+                                                        v-on:click="reset"><span
+                                                        class="glyphicon glyphicon-refresh"></span>重置
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12" id="tg_table">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title fontcolor" id="tghandle"
+                                     style="padding-bottom: 0px !important;">
+                                    <button type="button" class="btn btn-sm btn-success" v-on:click="groupadd"><span
+                                            class="glyphicon glyphicon-plus"></span>新增
+                                    </button>
+                                </div>
+                                <div class="ibox-content">
+                                    <div class="row " style="overflow: scroll;">     <!--表格 overflow-x: scroll超出滚动-->
+                                        <table class="table table-bordered " style="width: 100%" id="probegroup_table"></table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--模态框-->
+            <div class="modal fade" id="groupModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog" style="width: 700px">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                &times;
+                            </button>
+                            <h3 class="modal-title myModalLabel">{{modaltitle}}</h3>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="row">
+                                <form class="form-horizontal" id="groupform_data" role="form">
+                                    <div class="form-group row">
+                                        <label for="probegroupid"
+                                               class="col-lg-3 col-md-3 col-sm-3 input-label form_border"
+                                               style="display: none">id:</label>
+                                        <div class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                             style="display: none">
+                                            <input type="text" class="form-control" id="probegroupid" name="id"
+                                                   placeholder="请输入id">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="groupname"
+                                               class="col-lg-3 col-md-3 col-sm-3 input-label "
+                                               style="font-size: medium">探针组名:</label>
+                                        <div class="col-lg-3 col-md-3 col-sm-3 ">
+                                            <input type="text" class="form-control" id="groupname" name="name"
+                                                   placeholder="请输入探针组名">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="remark"
+                                               class="col-lg-3 col-md-3 col-sm-3 input-label"
+                                               style="font-size: medium">备注:</label>
+                                        <div class="col-lg-3 col-md-3 col-sm-3 ">
+                                            <input type="text" class="form-control" id="remark" name="remark"
+                                                   placeholder="请输入探针组备注">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            <button type="button" class="btn btn-success" v-on:click="submit">保存</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="myModal_groupdelete" tabindex="-1" role="dialog"
+                 aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog" style="width: 500px">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                &times;
+                            </button>
+                            <h3 class="modal-title" id="myModalLabel_groupdelete">
+                                确认
+                            </h3>
+                        </div>
+                        <div class="modal-body" style="font-size: medium">
+                            <b>确定删除吗?</b>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal"
+                                    v-on:click="cancel_delete">取消
+                            </button>
+                            <button type="button" class="btn btn-success" v-on:click="deletegroup_data">确定
+                            </button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
             </div>
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-lg-12 col-md-12 col-sm-12" id="target_table">
-        <div class="ibox float-e-margins">
-            <div class="ibox-title fontcolor" id="targethandle"
-                 style="padding-bottom: 0px !important;">
-                <button type="button" class="btn btn-sm btn-success" onclick="targetadd"><span
-                        class="glyphicon glyphicon-plus"></span>新增
-                </button>
-                <button type="button" class="btn btn-sm btn-success" onclick="targetimport"><span
-                        class="glyphicon glyphicon-plus"></span>导入
-                </button>
-            </div>
-            <div class="ibox-content">
-                <div class="row " style="overflow: scroll;">     <!--表格 overflow-x: scroll超出滚动-->
-                    <table class="table table-bordered " style="width: 100%" id="probegroup_table"></table>
-                </div>
-            </div>
-        </div>
-    </div>
+
+
 </div>
+
+<script>window.jQuery || document.write('<script src="${rc.contextPath}/statics/js/plugins/jquery/jquery-2.0.3.js"><\/script>')</script>
+<script type="text/javascript"
+        src="${rc.contextPath}/statics/js/modules/probe/probeTable.js?_${date.systemTime}"></script>
+<script type="text/javascript" src="${rc.contextPath}/statics/js/index.js"></script>
+
+
+<script type="text/javascript">
+    //参数para1：希望隐藏元素的id值
+    function toggle1(param){
+        if ($("#flip").attr("class")=="glyphicon glyphicon-menu-up")
+        {
+            $("#flip").attr("class","glyphicon glyphicon-menu-down");
+        }
+        else
+        {
+            $("#flip").attr("class","glyphicon glyphicon-menu-up");
+        }
+        $("#"+param).toggle();
+    }
+</script>
+
 </body>
+
+<script>
+    /** 拖拽模态框*/
+    var dragModal = {
+        mouseStartPoint: {"left": 0, "top": 0},
+        mouseEndPoint: {"left": 0, "top": 0},
+        mouseDragDown: false,
+        basePoint: {"left": 0, "top": 0},
+        moveTarget: null,
+        topleng: 0
+    }
+    $(document).on("mousedown", ".modal-header", function (e) {
+        //webkit内核和火狐禁止文字被选中
+        $('body').addClass('select')
+        //ie浏览器禁止文字选中
+        document.body.onselectstart = document.body.ondrag = function () {
+            return false;
+        }
+        if ($(e.target).hasClass("close"))//点关闭按钮不能移动对话框
+            return;
+        dragModal.mouseDragDown = true;
+        dragModal.moveTarget = $(this).parent().parent();
+        dragModal.mouseStartPoint = {"left": e.clientX, "top": e.pageY};
+        dragModal.basePoint = dragModal.moveTarget.offset();
+        dragModal.topLeng = e.pageY - e.clientY;
+    });
+    $(document).on("mouseup", function (e) {
+        dragModal.mouseDragDown = false;
+        dragModal.moveTarget = undefined;
+        dragModal.mouseStartPoint = {"left": 0, "top": 0};
+        dragModal.basePoint = {"left": 0, "top": 0};
+    });
+    $(document).on("mousemove", function (e) {
+        if (!dragModal.mouseDragDown || dragModal.moveTarget == undefined) return;
+        var mousX = e.clientX;
+        var mousY = e.pageY;
+        if (mousX < 0) mousX = 0;
+        if (mousY < 0) mousY = 25;
+        dragModal.mouseEndPoint = {"left": mousX, "top": mousY};
+        var width = dragModal.moveTarget.width();
+        var height = dragModal.moveTarget.height();
+        var clientWidth = document.body.clientWidth
+        var clientHeight = document.body.clientHeight;
+        if (dragModal.mouseEndPoint.left < dragModal.mouseStartPoint.left - dragModal.basePoint.left) {
+            dragModal.mouseEndPoint.left = 0;
+        }
+        else if (dragModal.mouseEndPoint.left >= clientWidth - width + dragModal.mouseStartPoint.left - dragModal.basePoint.left) {
+            dragModal.mouseEndPoint.left = clientWidth - width - 38;
+        } else {
+            dragModal.mouseEndPoint.left = dragModal.mouseEndPoint.left - (dragModal.mouseStartPoint.left - dragModal.basePoint.left);//移动修正，更平滑
+
+        }
+        if (dragModal.mouseEndPoint.top - (dragModal.mouseStartPoint.top - dragModal.basePoint.top) < dragModal.topLeng) {
+            dragModal.mouseEndPoint.top = dragModal.topLeng;
+        } else if (dragModal.mouseEndPoint.top - dragModal.topLeng > clientHeight - height + dragModal.mouseStartPoint.top - dragModal.basePoint.top) {
+            dragModal.mouseEndPoint.top = clientHeight - height - 38 + dragModal.topLeng;
+        }
+        else {
+            dragModal.mouseEndPoint.top = dragModal.mouseEndPoint.top - (dragModal.mouseStartPoint.top - dragModal.basePoint.top);
+        }
+        dragModal.moveTarget.offset(dragModal.mouseEndPoint);
+    });
+    $(document).on('hidden.bs.modal', '.modal', function (e) {
+        $('.modal-dialog').css({'top': '0px', 'left': '0px'})
+        $('body').removeClass('select')
+        document.body.onselectstart = document.body.ondrag = null;
+
+    })
+</script>
+
+
+
+
 </html>

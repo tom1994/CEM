@@ -202,7 +202,7 @@
                                                        class="col-lg-2 col-md-2 col-sm-2 input-label form_border">序列号:</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                                     <input type="text" class="form-control" id="serialNumber" name="serialNumber"
-                                                           readonly="readonly">
+                                                           readonly="readonly" unselectable='on'>
                                                 </div>
                                                 <label for="type"
                                                        class="col-lg-2 col-md-2 col-sm-2 input-label form_border">探针类型:</label>
@@ -307,7 +307,7 @@
                                                        class="col-lg-2 col-md-2 col-sm-2 input-label form_border">最大任务数:</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                                     <input type="text" class="form-control" id="concurrentTask" name="concurrentTask"
-                                                           readonly="readonly">
+                                                           readonly="readonly" unselectable='on'>
                                                 </div>
 
                                             </div>
@@ -378,7 +378,7 @@
                                                        class="col-lg-2 col-md-2 col-sm-2 input-label form_border">注册时间:</label>
                                                 <div class="col-lg-4 col-md-4 col-sm-4 form_border">
                                                     <input type="text" class="form-control" id="registerTime" name="registerTime"
-                                                           readonly="readonly">
+                                                           readonly="readonly" unselectable='on'>
                                                 </div>
                                             </div>
 
@@ -412,10 +412,7 @@
                                 </div>
                                 <div class="modal-footer" style="">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                                    <button type="button" class="btn btn-success " v-on:click="submit">保存
-                                    </button>
-                                    <!--<button type="button" class="btn btn-success" v-on:click="submit">保存</button>-->
-
+                                    <button type="button" class="btn btn-success " v-on:click="submit">保存</button>
                                 </div>
                             </div>
                         </div>
@@ -585,9 +582,10 @@
 
 </div>
 
-
 <script>window.jQuery || document.write('<script src="${rc.contextPath}/statics/js/plugins/jquery/jquery-2.0.3.js"><\/script>')</script>
-sele
+<script type="text/javascript"
+        src="${rc.contextPath}/statics/js/modules/probe/probeTable.js?_${date.systemTime}"></script>
+<script type="text/javascript" src="${rc.contextPath}/statics/js/index.js"></script>
 
 
 <script type="text/javascript">

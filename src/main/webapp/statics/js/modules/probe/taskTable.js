@@ -3,8 +3,8 @@ var idArray = new Array();
 var test = new Array();
 var testGroupNames = new Array();
 
-var probedata_handle = new Vue({
-    el: '#probehandle',
+var target_handle = new Vue({
+    el: '#targethandle',
     data: {},
     mounted(){         /*动态加载测试任务组数据*/
         $.ajax({
