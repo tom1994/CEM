@@ -42,8 +42,17 @@ public class SchedulePolicyController {
 	@RequiresPermissions("schedulepolicy:list")
 	public R list(String schedulepolicydata, Integer page, Integer limit) throws Exception {
 		Map<String, Object> map = new HashMap<>();
-		map.put("offset", (page - 1) * limit);
-		map.put("limit", limit);
+		int total = 0;
+		if(page==null) {              /*没有传入page,则取全部值*/
+			map.put("offset", null);
+			map.put("limit", null);
+			page = 0;
+			limit = 0;
+		}else {
+			map.put("offset", (page - 1) * limit);
+			map.put("limit", limit);
+			total = schedulePolicyService.queryTotal(map);
+		}
 		JSONObject schedulepolicydata_jsonobject = JSONObject.parseObject(schedulepolicydata);
 		try {
 			map.putAll(JSONUtils.jsonToMap(schedulepolicydata_jsonobject));
@@ -51,7 +60,6 @@ public class SchedulePolicyController {
 			throw new RRException("内部参数错误，请重试！");
 		}
 		List<SchedulePolicyEntity> schedulePolicyList = schedulePolicyService.queryList(map);
-		int total = schedulePolicyService.queryTotal(map);
 		PageUtils pageUtil = new PageUtils(schedulePolicyList, total, limit, page);
 		return R.ok().put("page", pageUtil);
 	}

@@ -2,6 +2,14 @@ body {
     background-color: #ffffff; /*页面背景颜色*/
 }
 
+.service_unselected{
+    display: none;
+}
+
+.service_selected{
+    display: block;
+}
+
 .wrapper-content {
     padding: 0px !important; /*wrapper-content去除内边距*/
 }

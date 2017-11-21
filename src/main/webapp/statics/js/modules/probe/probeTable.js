@@ -466,7 +466,6 @@ var probeform_data = new Vue({
                                     break
                             }
                         }
-
                         probetable.currReset();
                     }
                 });
@@ -577,7 +576,6 @@ var search_data = new Vue({
     methods:{
         citychange: function () {
             this.areas = getArea($("#selectcity").val());
-            console.log($("#selectcity").val());
         }
     }
 });
