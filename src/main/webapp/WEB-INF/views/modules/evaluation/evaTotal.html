@@ -10,6 +10,7 @@
     <title>质量评分</title>
     #parse("cemHeader.html")  <!--导入CSS和js文件-->
     <link href="${rc.contextPath}/statics/css/formStyle.css" rel="stylesheet">  <!--自定义CSS-->
+    <link href="${rc.contextPath}/statics/css/components.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="wrapper wrapper-content">
@@ -17,20 +18,23 @@
         <div class="col-lg-12 col-md-12 col-sm-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title-upper">
-                    <p class="fontcolor" style="font-size: large">质量评分</p>
+                   <h4 class="fontcolor">质量评分</h4>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
+<div class="wrapper wrapper-content">
     <div class="row" id="test_table">
         <div class="col-lg-12 col-md-12 col-sm-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title fontcolor" id="probehandle" style="padding-bottom: 0px !important;">
-                    <button type="button" class="btn btn-sm btn-success " v-on:click="testagentdelBatch"><span
-
-                            class="glyphicon glyphicon glyphicon-open"></span>导出
-                    </button>
+                    <a href="../../cem/probe/download">
+                        <button type="button" class="btn btn-sm btn-success"><span
+                                class="glyphicon glyphicon-open"></span>导出
+                        </button>
+                    </a>
                 </div>
             </div>
         </div>
@@ -41,12 +45,14 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-content" style="padding-bottom: 0 !important;">
                     <div class="row" id="searchbox" style="border: none !important;">
+
                         <form class="col-lg-9 col-md-19 col-sm-9 form-horizontal" id="probesearch"
                               role="form">
                             <div class="form-group row">
                                 <div class="input-group searchspan">
                                     <span class="searchname" title="选择探针" style="width: 80px">选择探针：</span>
                                 </div>
+
                                 <div class="input-group searchspan">
                                     <span class="searchname" title="地市" style="width: 40px">地市</span>
                                     <select id="selectcity" class="form-control" name="city"
@@ -61,132 +67,43 @@
 
                                 <div class="input-group searchspan">
                                     <span class="searchname" title="区县" style="width: 40px">区县</span>
-                                    <select class="form-control " name="area" style="width: 110px">
+                                    <select id="selectarea" class="form-control " name="area"
+                                            v-on:change="areachange()" style="width: 110px">
                                         <option value="">---请选择---</option>
-                                        <option v-for="item in areas">{{ item.message.countyName }}</option>
+                                        <option v-for="item in areas"
+                                                v-bind:value="item.message.countyId">{{ item.message.countyName }}
+                                        </option>
                                     </select>
                                 </div>
 
                                 <div class="input-group searchspan">
                                     <span class="searchname" title="探针" style="width: 40px">探针</span>
-                                    <select class="form-control" name="probe_name"
-                                            style="width: 110px;">
+                                    <select class="form-control " name="probe" style="width: 110px">
                                         <option value="">---请选择---</option>
-                                        <!--vue 绑定value属性    重要！！！！-->
-                                        <option v-for="item in probegroup_names"
-                                                v-bind:value="item.message.name">{{ item.message.name }}
-                                        </option>
+                                        <option v-for="item in probe">{{ item.message.name }}</option>
                                     </select>
                                 </div>
                             </div>
 
-                            <div class="form-group row">
-                                <div class="input-group searchspan">
-                                    <span class="searchname" title="时间" style="width: 80px">选择时间：</span>
+                                <div class="form-group row">
+                                    <div class="input-group searchspan">
+                                        <span class="searchname" title="时间" style="width: 80px">选择时间：</span>
+                                    </div>
+
+                                    <div class="input-group searchspan">
+                                        <span class="searchname" title="日期" style="width: 40px">起始</span>
+                                        <input type="text" id="start_date" class="form-control" name="date"
+                                               style="width: 140px"
+                                               value="">
+                                    </div>
+
+                                    <div class="input-group searchspan">
+                                        <span class="searchname" title="日期" style="width: 40px">结束</span>
+                                        <input type="text" id="terminal_date" class="form-control" name="date"
+                                               style="width: 140px"
+                                               value="">
+                                    </div>
                                 </div>
-
-                                <div class="input-group searchspan">
-                                    <span class="searchname" title="日期" style="width: 40px">起始</span>
-                                    <input type="text" id="start_date" class="form-control" name="date"
-                                           style="width: 180px"
-                                           value="">
-                                </div>
-
-                                <div class="input-group searchspan">
-                                    <span class="searchname" title="日期" style="width: 40px">结束</span>
-                                    <input type="text" id="terminal_date" class="form-control" name="date"
-                                           style="width: 180px"
-                                           value="">
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <div class="input-group searchspan">
-                                    <span class="searchname" title="时间" style="width: 80px">选择时间：</span>
-                                </div>
-
-                                <div class="input-group searchspan">
-                                    <span class="searchname" title="日期" style="width: 80px">起始日期</span>
-                                    <input type="text" id="start_date_late" class="form-control" name="date"
-                                           style="width: 120px"
-                                           value="">
-                                </div>
-
-                                <div class="input-group searchspan">
-                                    <span class="searchname" title="起始时间" style="width: 80px" >起始时间</span>
-                                    <select id="start_time" class="form-control" name="city"
-                                            v-on:change="timechange()" style="width: 110px"  >
-                                        <option value="">00:00</option>
-                                        <option value="">01:00</option>
-                                        <option value="">02:00</option>
-                                        <option value="">03:00</option>
-                                        <option value="">04:00</option>
-                                        <option value="">05:00</option>
-                                        <option value="">06:00</option>
-                                        <option value="">07:00</option>
-                                        <option value="">08:00</option>
-                                        <option value="">09:00</option>
-                                        <option value="">10:00</option>
-                                        <option value="">11:00</option>
-                                        <option value="">12:00</option>
-                                        <option value="">13:00</option>
-                                        <option value="">14:00</option>
-                                        <option value="">15:00</option>
-                                        <option value="">16:00</option>
-                                        <option value="">17:00</option>
-                                        <option value="">18:00</option>
-                                        <option value="">19:00</option>
-                                        <option value="">20:00</option>
-                                        <option value="">21:00</option>
-                                        <option value="">22:00</option>
-                                        <option value="">23:00</option>
-                                        <option value="">24:00</option>
-                                    </select>
-                                </div>
-
-                                <div class="input-group searchspan">
-                                    <span class="searchname" title="日期" style="width: 80px">结束日期</span>
-                                    <input type="text" id="terminal_date_late" class="form-control" name="date"
-                                           style="width: 120px"
-                                           value="">
-                                </div>
-                                <div class="input-group searchspan">
-                                    <span class="searchname" title="起始时间" style="width: 80px" >结束时间</span>
-                                    <select id="terminal_time" class="form-control" name="city"
-                                            v-on:change="timechange()" style="width: 110px"  >
-                                        <option value="">00:00</option>
-                                        <option value="">01:00</option>
-                                        <option value="">02:00</option>
-                                        <option value="">03:00</option>
-                                        <option value="">04:00</option>
-                                        <option value="">05:00</option>
-                                        <option value="">06:00</option>
-                                        <option value="">07:00</option>
-                                        <option value="">08:00</option>
-                                        <option value="">09:00</option>
-                                        <option value="">10:00</option>
-                                        <option value="">11:00</option>
-                                        <option value="">12:00</option>
-                                        <option value="">13:00</option>
-                                        <option value="">14:00</option>
-                                        <option value="">15:00</option>
-                                        <option value="">16:00</option>
-                                        <option value="">17:00</option>
-                                        <option value="">18:00</option>
-                                        <option value="">19:00</option>
-                                        <option value="">20:00</option>
-                                        <option value="">21:00</option>
-                                        <option value="">22:00</option>
-                                        <option value="">23:00</option>
-                                        <option value="">24:00</option>
-                                    </select>
-                                </div>
-
-                            </div>
-
-
-
-
 
                         </form>
 
@@ -194,7 +111,7 @@
                         <div class="col-lg-2 col-md-2 col-sm-2 pull-left" style="margin-top: 4px;">
                             <button type="button" class="btn btn-sm btn-success"
                                     style="margin-right: 5px"
-                                    v-on:click="searchprobe"><span
+                                    v-on:click="testagentListsearch"><span
                                     class="glyphicon glyphicon-zoom-in"></span>查询
                             </button>
                         </div>
@@ -203,10 +120,147 @@
             </div>
         </div>
     </div>
-
-
 </div>
+
 <hr/>
+
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+
+            <!--最上面一层-->
+            <div class="wrapper-module">
+                    <div class=" left-up">
+                        <div class="portlet box blue">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <i class="fa fa-map-signs"></i>网络连通性测试业务
+                                </div>
+                                <div class="tools">
+                                    <a style="color:white"><span class="glyphicon glyphicon-search"></span>查看详情</a>
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                <div class="tabbable-custom nav-justified">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="right">
+                        <div class="portlet box blue">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <i class="fa fa-gift"></i>网络层质量测试业务
+                                </div>
+                                <div class="tools">
+                                    <a style="color:white"><span class="glyphicon glyphicon-search"></span>查看详情</a>
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                <div class="tabbable-custom nav-justified">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+
+            <!--中间一层-->
+            <div class="wrapper-module">
+                <div class=" left-up">
+                    <div class="portlet box blue">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <i class="fa fa-tachometer"></i>网页浏览类业务
+                            </div>
+                            <div class="tools">
+                                <a style="color:white"><span class="glyphicon glyphicon-search"></span>查看详情</a>
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <div class="tabbable-custom nav-justified">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="right">
+                    <div class="portlet box blue">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <i class="fa fa-university"></i>文件下载类业务
+                            </div>
+                            <div class="tools">
+                                <a style="color:white"><span class="glyphicon glyphicon-search"></span>查看详情</a>
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <div class="tabbable-custom nav-justified">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+            <!--最下面一层-->
+            <div class="wrapper-module">
+                <div class=" left-up">
+                    <div class="portlet box blue">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <i class="fa fa-music"></i>在线视频类业务
+                            </div>
+                            <div class="tools">
+                                <a style="color:white"><span class="glyphicon glyphicon-search"></span>查看详情</a>
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <div class="tabbable-custom nav-justified">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="right">
+                    <div class="portlet box blue">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <i class="fa fa-puzzle-piece"></i>网络游戏类业务
+                            </div>
+                            <div class="tools">
+                                <a style="color:white"><span class="glyphicon glyphicon-search"></span>查看详情</a>
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <div class="tabbable-custom nav-justified">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -215,63 +269,19 @@
         src="${rc.contextPath}/statics/js/modules/evaluation/evaTotal.js?_${date.systemTime}"></script>
 
 
-
 <script>
-    laydate.render({
-        elem: '#start_date'
-        ,type:'datetime'
-        ,theme: '#578ebe'
+    $('#start_date').appendDtpicker({
+
     });
-
-    laydate.render({
-        elem: '#terminal_date'
-        ,type:'datetime'
-        ,theme: '#578ebe'
-    });
-
-    laydate.render({
-        elem: '#start_date_late'
-        ,format: 'yyyy年MM月dd日'
-        ,theme: '#578ebe'
-    });
-
-    laydate.render({
-        elem: '#terminal_date_late'
-        ,format: 'yyyy年MM月dd日'
-        ,theme: '#578ebe'
-    });
-</script>
-
-<script language="javascript">
-    var overTimes = new Array();
-    function timechange() {
-        var myselect = document.getElementById("start_time");
-        var index = myselect.selectedIndex;
-        myselect.options[index].value;
-        var a = myselect.options[index].text;
-        var timeNum = a.substr(0,2);
-        console.log("!!!!!!!!!" + parseInt(timeNum));
-
-
-      //  for(var i=parseInt(timeNum);i<=24;i++){
-        //    overTimes[i] =
-        //}
-        //search_data.areas = overTimes;
-
-
-
-    }
-
 </script>
 
 <script>
-    var myselect = document.getElementById("start_time");
-    var index = myselect.selectedIndex;
-    myselect.options[index].value;
-    var a = myselect.options[index].text;
-    var timeNum = a.substr(0,2);
-    console.log("!!!!!!!!!" + timeNum);
+    $('#terminal_date').appendDtpicker({
+
+    });
 </script>
+
+
 
 
 

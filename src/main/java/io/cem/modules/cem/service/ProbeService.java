@@ -16,6 +16,8 @@ public interface ProbeService {
 
 	List<ProbeEntity> queryProbeList(Map<String, Object> map);
 
+	List<ProbeEntity> queryProbe(Integer id);
+
 	int queryTotal(Map<String, Object> map);
 	
 	void save(ProbeEntity probe);
