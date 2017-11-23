@@ -1,8 +1,13 @@
 package io.cem.modules.cem.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.alibaba.fastjson.JSONObject;
+import io.cem.common.exception.RRException;
+import io.cem.common.utils.JSONUtils;
+import io.cem.modules.cem.entity.ProbeEntity;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,15 +41,22 @@ public class TargetController {
 	 */
 	@RequestMapping("/list")
 	@RequiresPermissions("target:list")
-	public R list(@RequestParam Map<String, Object> params){
+	public R list(String targetdata, Integer page, Integer limit) throws Exception {
 		//查询列表数据
-        Query query = new Query(params);
 
-		List<TargetEntity> targetList = targetService.queryList(query);
-		int total = targetService.queryTotal(query);
-		
-		PageUtils pageUtil = new PageUtils(targetList, total, query.getLimit(), query.getPage());
-		
+		Map<String, Object> map = new HashMap<>();
+		map.put("offset", (page - 1) * limit);
+		map.put("limit", limit);
+		JSONObject targetdata_jsonobject = JSONObject.parseObject(targetdata);
+		try {
+			map.putAll(JSONUtils.jsonToMap(targetdata_jsonobject));
+		} catch (RuntimeException e) {
+			throw new RRException("内部参数错误，请重试！");
+		}
+		List<TargetEntity> targetList = targetService.queryList(map);
+		//List<ProbeEntity> probeList = targetService.queryProbeList(map);
+		int total = targetService.queryTotal(map);
+		PageUtils pageUtil = new PageUtils(targetList, total, limit, page);
 		return R.ok().put("page", pageUtil);
 	}
 	
@@ -92,5 +104,5 @@ public class TargetController {
 		
 		return R.ok();
 	}
-	
+
 }

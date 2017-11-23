@@ -32,14 +32,6 @@ var weightSet = new Vue({
     }
 })
 
-var sum = 0;
-function getSum(array){
-    for (var i = 0; i < array.length; i++){
-        sum += parseInt(array[i]);
-    }
-    return sum;
-}
-
 var weightHandle = new Vue ({
     el:'#weight_handle',
     data:{},
