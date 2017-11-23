@@ -6,8 +6,11 @@ body {
     display: none;
 }
 
+div.service_unselected input{
+    disabled: disabled;
+}
+
 .service_selected{
-    display: block;
 }
 
 .wrapper-content {

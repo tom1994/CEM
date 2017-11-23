@@ -102,10 +102,12 @@ public class ProbeController {
 	@RequestMapping("/info/{id}")
 	@RequiresPermissions("probe:info")
 	public R info(@PathVariable("id") Integer id){
-		ProbeEntity probe = probeService.queryObject(id);
-		
-		return R.ok().put("probe", probe);
+		List<ProbeEntity> probeList = probeService.queryProbe(id);
+		System.out.println(probeList);
+		return R.ok().put("probe", probeList);
 	}
+
+
 	
 	/**
 	 * 保存

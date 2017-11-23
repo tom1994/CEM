@@ -31,10 +31,15 @@ public class TaskDispatchServiceImpl implements TaskDispatchService {
 	public List<TaskDispatchEntity> queryDispatchList(Integer id){
 		return taskDispatchDao.queryDispatchList(id);
 	}
-	
+
 	@Override
 	public int queryTotal(Map<String, Object> map){
 		return taskDispatchDao.queryTotal(map);
+	}
+
+	@Override
+	public int queryDispatchTotal(Integer id){
+		return taskDispatchDao.queryDispatchTotal(id);
 	}
 	
 	@Override
