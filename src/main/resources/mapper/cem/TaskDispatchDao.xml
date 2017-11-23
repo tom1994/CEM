@@ -55,7 +55,12 @@
  	<select id="queryTotal" resultType="int">
 		select count(*) from task_dispatch 
 	</select>
-	 
+
+	<select id="queryDispatchTotal" resultType="int">
+		select count(*) from task_dispatch
+		WHERE task_id = #{value}
+	</select>
+
 	<insert id="save" parameterType="io.cem.modules.cem.entity.TaskDispatchEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into task_dispatch
 		(

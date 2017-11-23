@@ -51,7 +51,7 @@
 		(
 			#{targetName}, 
 			#{value}, 
-			#{serviceType}, 
+			#{superserviceType},
 			#{groupId}, 
 			#{remark}, 
 			#{createTime}

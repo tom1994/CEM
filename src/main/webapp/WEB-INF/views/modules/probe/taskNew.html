@@ -124,7 +124,7 @@
                                        style="font-size: medium">任务名称:</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <input type="text" class="form-control" id="taskname"
-                                           name="name"
+                                           name="taskName"
                                            placeholder="请输入名称">
                                 </div>
                                 <label for="servicetype"
@@ -132,7 +132,7 @@
                                        style="font-size: medium">任务类型:</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <select id="servicetype" v-on:change="servicechange()" class="form-control"
-                                            name="servicetype">
+                                            name="serviceType">
                                         <optgroup label="网络连通性测试">
                                             <option value="1">PING(ICMP ECHO)</option>
                                             <option value="2">PING(TCP ECHO)</option>
@@ -151,82 +151,12 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="service service_unselected" id="pingicmp">
-                                <div class="form-group row">
-                                    <label for="count"
-                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
-                                           style="font-size: medium">发包个数</label>
-                                    <div class="col-lg-3 col-md-3 col-sm-3">
-                                        <input type="text" class="form-control" id="count"
-                                               value="10"
-                                               placeholder="">
-                                    </div>
-                                    <label for="interval"
-                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
-                                           style="font-size: medium">发包间隔(ms)</label>
-                                    <div class="col-lg-3 col-md-3 col-sm-3">
-                                        <input type="text" class="form-control" id="interval"
-                                               value="100"
-                                               placeholder="">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="size"
-                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
-                                           style="font-size: medium">负载大小(byte)</label>
-                                    <div class="col-lg-3 col-md-3 col-sm-3">
-                                        <input type="text" class="form-control" id="size"
-                                               value="100" placeholder="">
-                                    </div>
-                                    <label for="payload"
-                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
-                                           style="font-size: medium">负载内容</label>
-                                    <div class="col-lg-3 col-md-3 col-sm-3">
-                                        <input type="text" class="form-control" id="payload"
-                                               value="32"
-                                               placeholder="请输入备注">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="ttl"
-                                           class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                           style="font-size: medium">TTL:</label>
-                                    <div class="col-lg-2 col-md-2 col-sm-2">
-                                        <input type="text" class="form-control" id="ttl"
-                                               placeholder="请输入备注">
-                                    </div>
-                                    <label for="tos"
-                                           class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                           style="font-size: medium">IP服务类型:</label>
-                                    <div class="col-lg-2 col-md-2 col-sm-2">
-                                        <input type="text" class="form-control" id="tos"
-                                               placeholder="请输入备注">
-                                    </div>
-                                    <label for="timeout"
-                                           class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                           style="font-size: medium">超出时间:</label>
-                                    <div class="col-lg-2 col-md-2 col-sm-2">
-                                        <input type="text" class="form-control" id="timeout"
-                                               placeholder="请输入备注">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="service form-group row service_unselected" id="pingtcp">
-                                <label for="param2"
-                                       class="col-lg-3 col-md-3 col-sm-3 form_border"
-                                       style="font-size: medium">param:</label>
-                                <div class="col-lg-3 col-md-3 col-sm-3">
-                                    <input type="text" class="form-control" id="param2"
-                                           name="name"
-                                           placeholder="请输入备注">
-                                </div>
-                            </div>
                             <div class="form-group row">
                                 <label for="schpolicy"
                                        class="col-lg-3 col-md-3 col-sm-3 form_border"
                                        style="font-size: medium">调度策略:</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
-                                    <select id="schpolicy" class="form-control">
+                                    <select id="schpolicy" class="form-control" name="schPolicyId">
                                         <option value="">---请选择---</option>
                                         <option v-for="item in schpolicies"
                                                 v-bind:value="item.message.id">{{ item.message.spName }}
@@ -237,7 +167,7 @@
                                        class="col-lg-3 col-md-3 col-sm-3 form_border"
                                        style="font-size: medium">告警模板:</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
-                                    <select id="alarmtemplate" class="form-control">
+                                    <select id="alarmtemplate" class="form-control" name="alarmTemplateId">
                                         <option value="">---请选择---</option>
                                         <option v-for="item in alarmtemplates"
                                                 v-bind:value="item.message.id">{{ item.message.atName}}
@@ -246,11 +176,91 @@
                                 </div>
                             </div>
                         </form>
+                        <form class="form-horizontal" id="taskform_param" role="form">
+                            <div class="service service_unselected" id="pingicmp">
+                                <div class="form-group row">
+                                    <label for="count"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">发包个数</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="count"
+                                                value="10" disabled="disabled" name="count"
+                                               placeholder="">
+                                    </div>
+                                    <label for="interval"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">发包间隔(ms)</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="interval"
+                                               value="100" disabled="disabled" name="interval"
+                                               placeholder="">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="size"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">负载大小(byte)</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="size"
+                                               value="100" disabled="disabled" name="size" placeholder="">
+                                    </div>
+                                    <label for="payload"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">负载内容</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="payload"
+                                               value="32" disabled="disabled" name="payload"
+                                               placeholder="请输入备注">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="ttl"
+                                           class="col-lg-2 col-md-2 col-sm-2 form_border"
+                                           style="font-size: medium">TTL:</label>
+                                    <div class="col-lg-2 col-md-2 col-sm-2">
+                                        <input type="text" class="form-control" id="ttl"
+                                               name="ttl" disabled="disabled" value="255" placeholder="请输入备注">
+                                    </div>
+                                    <label for="tos"
+                                           class="col-lg-2 col-md-2 col-sm-2 form_border"
+                                           style="font-size: medium">IP服务类型:</label>
+                                    <div class="col-lg-2 col-md-2 col-sm-2">
+                                        <select name="tos" disabled="disabled" id="tos" class="form-control">
+                                            <option value="000">普通</option>
+                                            <option value="001">优先</option>
+                                            <option value="010">快速</option>
+                                            <option value="011">闪速</option>
+                                            <option value="100">疾速</option>
+                                            <option value="101">关键</option>
+                                            <option value="110">网间控制</option>
+                                            <option value="111">网络控制</option>
+                                        </select>
+                                    </div>
+                                    <label for="timeout"
+                                           class="col-lg-2 col-md-2 col-sm-2 form_border"
+                                           style="font-size: medium">超出时间:</label>
+                                    <div class="col-lg-2 col-md-2 col-sm-2">
+                                        <input type="text" class="form-control" id="timeout"
+                                               name="timeout" disabled="disabled" value="5" placeholder="请输入备注">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="service form-group row service_unselected" id="pingtcp">
+                                <label for="param2"
+                                       class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                       style="font-size: medium">param:</label>
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <input type="text" class="form-control" id="param2"
+                                           name="param2" disabled="disabled"
+                                           placeholder="请输入备注">
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" v-on:click="cancel">取消</button>
-                    <button type="button" class="btn btn-success">保存</button>
+                    <button type="button" class="btn btn-success" v-on:click="submit">保存</button>
                 </div>
             </div>
         </div>

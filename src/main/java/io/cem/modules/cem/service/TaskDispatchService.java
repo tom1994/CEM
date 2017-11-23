@@ -21,6 +21,8 @@ public interface TaskDispatchService {
 	List<TaskDispatchEntity> queryDispatchList(Integer id);
 	
 	int queryTotal(Map<String, Object> map);
+
+	int queryDispatchTotal(Integer id);
 	
 	void save(TaskDispatchEntity taskDispatch);
 	

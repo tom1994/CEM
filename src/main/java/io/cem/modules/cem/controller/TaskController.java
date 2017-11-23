@@ -73,7 +73,6 @@ public class TaskController {
 	@RequiresPermissions("task:save")
 	public R save(@RequestBody TaskEntity task){
 		taskService.save(task);
-		
 		return R.ok();
 	}
 	
