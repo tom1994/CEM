@@ -1,43 +1,511 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Title</title>
+    <title>测试目标列表</title>
     #parse("cemHeader.html")  <!--导入CSS和js文件-->
     <link href="${rc.contextPath}/statics/css/formStyle.css" rel="stylesheet">  <!--自定义CSS-->
+
 </head>
 <body>
-<div class="wrapper wrapper-content">
-    <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5 class="fontcolor">测试目标列表</h5>
+<div class="htmleaf-container">
+    <div class="tab" role="tabpanel">
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#Section1" aria-controls="home" role="tab" data-toggle="tab">
+                测试目标管理</a></li>
+            <li role="presentation"><a href="#Section2" aria-controls="profile" role="tab" data-toggle="tab">
+                测试目标组管理</a></li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content tabs">
+            <div role="tabpanel" class="tab-pane fade in active" id="Section1">
+                <div class="wrapper wrapper-content">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-content" style="padding-bottom: 0 !important;">
+                                    <div class="row" id="searchbox" style="border: none !important;">
+                                        <form class="col-lg-10 col-md-10 col-sm-10 form-horizontal" id="targetsearch"
+                                              role="form">
+                                            <div class=" form-group row">
+                                                <div class="col-lg-3 col-md-3 col-sm-3 input-group searchspan">
+                                                    <span class="searchname" title="测试目标名" style="width: auto">测试目标名</span>
+                                                    <input type="text" class="form-control" name="targetname" style="width: 120px"
+                                                           value="">
+                                                </div>
+
+                                                <div class="col-lg-3 col-md-3 col-sm-3 input-group searchspan">
+                                                    <span class="searchname" title="测试目标组名" style="width: auto">测试目标组名</span>
+                                                    <select class="form-control " name="groupid" style="width: 130px;text-align: center">
+                                                        <option value="0">-----请选择-----</option>
+                                                        <option v-for="item in groupIds">{{ item.message.groupId }}</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-lg-4 col-md-4 col-sm-4 input-group searchspan">
+                                                    <span class="searchname" title="业务类型" style="width: auto">业务类型</span>
+                                                    <select class="form-control " name="superservicetype" style="width: 150px;text-align: center">
+                                                        <option value="0">-----请选择-----</option>
+                                                        <option value="1">网络连通性测试业务</option>
+                                                        <option value="2">网络层质量测试业务</option>
+                                                        <option value="3">文件下载类业务</option>
+                                                        <option value="4">网页浏览类业务</option>
+                                                        <option value="5">在线视频类业务</option>
+                                                        <option value="6">网络游戏类业务</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </form>
+
+                                        <div class="col-lg-2 col-md-2 col-sm-2 " id="search">
+                                            <button type="button" class="btn btn-sm btn-success"
+                                                    style="margin-right: 5px;margin-top: 5px"
+                                                    v-on:click="target_search"><span
+                                                    class="glyphicon glyphicon-zoom-in"></span>查询
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-success"
+                                                    style="margin-top: 5px"
+                                                    v-on:click="reset"><span
+                                                    class="glyphicon glyphicon-refresh"></span>重置
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12" id="targettable">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title fontcolor" id="targethandle"
+                                     style="padding-bottom: 0px !important;">
+
+                                    <button type="button" class="btn btn-sm btn-success"
+                                            v-on:click="targetadd"><span
+                                            class="glyphicon glyphicon-plus"></span>新增
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-success"
+                                            v-on:click="targetdelBatch"><span
+                                            class="glyphicon glyphicon-trash"></span>批量删除
+                                    </button>
+
+                                    <p id="flip" style="position:relative; left:35%;" class="glyphicon glyphicon-menu-up" onClick="toggle1('searchbox')"></p>
+                                </div>
+                                <div class="ibox-content">
+                                    <div class="row " style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                                        <table  class="table table-bordered " id="target_table" ></table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 详情模态框（Modal） -->
+                    <div class="modal fade" id="myModal_update" tabindex="-1" role="dialog"
+                         aria-labelledby="myModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog" style="width: 700px"> <!--修改bootstrap modal模态框的宽度-->
+                            <div class="modal-content">
+                                <div class="modal-header" style="">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                        &times;
+                                    </button>
+                                    <h3 class="modal-title myModalLabel">{{modaltitle}}</h3>
+                                </div>
+                                <div class="modal-body" style="padding: 0px 30px 0px 30px !important;">
+                                    <div class="row">
+                                        <form class="form-horizontal" id="targetform_data" role="form">
+                                            <div class="form-group row">
+                                                <label for="id"
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border"
+                                                       style="display: none">id:</label>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 "
+                                                     style="display: none">
+                                                    <input type="text" class="form-control" id="id" name="id"
+                                                           style="width: 100%" placeholder="请输入">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="targetname"
+                                                       class="col-lg-3 col-md-3 col-sm-3 input-label form_border">测试目标名:</label>
+                                                <div class="form_border col-lg-4 col-md-4 col-sm-4">
+                                                    <input type="text" class="form-control" id="targetname" name="targetname"
+                                                           style="width: 100%" placeholder="请输入">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="value"
+                                                       class="col-lg-3 col-md-3 col-sm-3 input-label form_border">测试目标地址:</label>
+                                                <div class="form_border col-lg-4 col-md-4 col-sm-4">
+                                                    <input type="text" class="form-control" id="value" name="value" style="width: 100%"
+                                                           placeholder="请输入">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="superserviecetype"
+                                                       class="col-lg-3 col-md-3 col-sm-3 input-label form_border">业务类型:</label>
+                                                <div class="form_border col-lg-4 col-md-4 col-sm-4">
+                                                    <select id="superserviecetype" class="form-control" name="superserviecetype" style="width: 100%">  <!--VUE列表渲染-->
+                                                        <option value="0"></option>
+                                                        <option value="1">网络连通性测试业务</option>
+                                                        <option value="2">网络层质量测试业务</option>
+                                                        <option value="3">文件下载类业务</option>
+                                                        <option value="4">网页浏览类业务</option>
+                                                        <option value="5">在线视频类业务</option>
+                                                        <option value="6">网络游戏类业务</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="groupid"
+                                                       class="col-lg-3 col-md-3 col-sm-3 input-label form_border">测试目标组:</label>
+                                                <div class="form_border col-lg-4 col-md-4 col-sm-4">
+                                                    <select id="groupid" class="form-control" name="groupid" style="width: 100%">  <!--VUE列表渲染-->
+                                                        <option v-for="item in groupIds">
+                                                            {{ item.groupId }}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="remark"
+                                                       class="col-lg-3 col-md-3 col-sm-3 input-label form_border">备注:</label>
+                                                <div class="form_border col-lg-4 col-md-4 col-sm-4">
+                                                    <input type="text" class="form-control" id="remark"
+                                                           name="remark" style="width: 100%"
+                                                           placeholder="请输入">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="createtime"
+                                                       class="col-lg-3 col-md-3 col-sm-3 input-label form_border">创建时间:</label>
+                                                <div class="form_border col-lg-4 col-md-4 col-sm-4">
+                                                    <input type="text" class="form-control" id="createtime"
+                                                           name="createtime" style="width: 100%"
+                                                           placeholder="请输入" readonly="readonly">
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="modal-footer" style="">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                    <button type="button" class="btn btn-success " v-on:click="submit">保存</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <!-- 删除确认模态框（Modal） -->
+                    <div class="modal fade" id="myModal_delete" tabindex="-1" role="dialog"
+                         aria-labelledby="myModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog" style="width: 500px">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                        &times;
+                                    </button>
+                                    <h3 class="modal-title" id="myModalLabel_delet">
+                                        确认
+                                    </h3>
+                                </div>
+                                <div class="modal-body" style="font-size: medium">
+                                    <b>确定删除吗?</b>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal"
+                                            v-on:click="cancel_delete">取消
+                                    </button>
+                                    <button type="button" class="btn btn-success" v-on:click="delete_data">确定</button>
+                                </div>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal -->
+                    </div>
+
                 </div>
+            </div>
+
+            <div role="tabpanel" class="tab-pane fade" id="Section2">
+                <div class="wrapper wrapper-content">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-content" id="groupsearchbox" style="padding-bottom: 0">
+                                    <div class="row">
+                                        <form class="form-horizontal" id="tgsearch" role="form">
+                                            <div class=" col-lg-5 col-md-5 col-sm-5 searchspan">
+                                                <span class="searchname" title="测试目标组名">测试目标组名：</span>
+                                                <input type="text" class="form-control" name="tgName" style="width: 110px"
+                                                       value="">
+                                            </div>
+                                        </form>
+                                        <div class="col-lg-2 col-md-2 col-sm-2 " id="groupsearch">
+                                            <button type="button" class="btn btn-sm btn-success"
+                                                    style="margin-right: 5px;margin-top: 5px"
+                                                    v-on:click="tg_search"><span
+                                                    class="glyphicon glyphicon-zoom-in"></span>查询
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-success"
+                                                    style="margin-top: 5px"
+                                                    v-on:click="tg_reset"><span
+                                                    class="glyphicon glyphicon-refresh"></span>重置
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12" id="tgtable">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title fontcolor" id="tghandle"
+                                     style="padding-bottom: 0px !important;">
+                                    <button type="button" class="btn btn-sm btn-success" v-on:click="tgadd"><span
+                                            class="glyphicon glyphicon-plus"></span>新增
+                                    </button>
+
+                                    <p id="flip2" style="position:relative; left:35%;" class="glyphicon glyphicon-menu-up" onClick="toggle2('groupsearchbox')"></p>
+                                </div>
+
+                                <div class="ibox-content">
+                                    <div class="row " style="overflow: scroll;">     <!--表格 overflow-x: scroll超出滚动-->
+                                        <table class="table table-bordered " style="width: 100%; text-align: center" id="tg_table"></table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--模态框-->
+            <div class="modal fade" id="myModal_tgupdate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog" style="width: 700px">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                &times;
+                            </button>
+                            <h3 class="modal-title myModalLabel">{{modaltitle}}</h3>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="row">
+                                <form class="form-horizontal" id="tgform_data" role="form">
+                                    <div class="form-group row">
+                                        <label for="id"
+                                               class="col-lg-2 col-md-2 col-sm-2 input-label form_border"
+                                               style="display: none">id:</label>
+                                        <div class="col-lg-2 col-md-2 col-sm-2 "
+                                             style="display: none">
+                                            <input type="text" class="form-control" id="tg_id" name="tg_id"
+                                                   style="width: 100%" placeholder="请输入">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="tgName"
+                                               class="col-lg-3 col-md-3 col-sm-3 input-label form_border">测试目标组名:</label>
+                                        <div class="form_border col-lg-4 col-md-4 col-sm-4">
+                                            <input type="text" class="form-control" id="tgName" name="tgName"
+                                                   style="width: 100%" placeholder="请输入">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="tgsuperserviecetype"
+                                               class="col-lg-3 col-md-3 col-sm-3 input-label form_border">业务类型:</label>
+                                        <div class="form_border col-lg-4 col-md-4 col-sm-4">
+                                            <select id="tgsuperserviecetype" class="form-control" name="tgsuperserviecetype" style="width: 100%">  <!--VUE列表渲染-->
+                                                <option value="0"></option>
+                                                <option value="1">网络连通性测试业务</option>
+                                                <option value="2">网络层质量测试业务</option>
+                                                <option value="3">文件下载类业务</option>
+                                                <option value="4">网页浏览类业务</option>
+                                                <option value="5">在线视频类业务</option>
+                                                <option value="6">网络游戏类业务</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="tgremark"
+                                               class="col-lg-3 col-md-3 col-sm-3 input-label form_border">备注:</label>
+                                        <div class="form_border col-lg-4 col-md-4 col-sm-4">
+                                            <input type="text" class="form-control" id="tgremark"
+                                                   name="tgremark" style="width: 100%"
+                                                   placeholder="请输入">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="tgcreatetime"
+                                               class="col-lg-3 col-md-3 col-sm-3 input-label form_border">创建时间:</label>
+                                        <div class="form_border col-lg-4 col-md-4 col-sm-4">
+                                            <input type="text" class="form-control" id="tgcreatetime"
+                                                   name="tgcreatetime" style="width: 100%"
+                                                   placeholder="请输入" readonly="readonly">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            <button type="button" class="btn btn-success" v-on:click="submit">保存</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="myModal_tgdelete" tabindex="-1" role="dialog"
+                 aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog" style="width: 500px">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                &times;
+                            </button>
+                            <h3 class="modal-title" id="myModalLabel_tgdelete">
+                                确认
+                            </h3>
+                        </div>
+                        <div class="modal-body" style="font-size: medium">
+                            <b>确定删除吗?</b>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal"
+                                    v-on:click="cancel_delete">取消
+                            </button>
+                            <button type="button" class="btn btn-success" v-on:click="tgdelete_data">确定
+                            </button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
             </div>
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-lg-12 col-md-12 col-sm-12" id="target_table">
-        <div class="ibox float-e-margins">
-            <div class="ibox-title fontcolor" id="targethandle"
-                 style="padding-bottom: 0px !important;">
-                <button type="button" class="btn btn-sm btn-success" onclick="targetadd"><span
-                        class="glyphicon glyphicon-plus"></span>新增
-                </button>
-                <button type="button" class="btn btn-sm btn-success" onclick="targetimport"><span
-                        class="glyphicon glyphicon-plus"></span>导入
-                </button>
-            </div>
-            <div class="ibox-content">
-                <div class="row " style="overflow: scroll;">     <!--表格 overflow-x: scroll超出滚动-->
-                    <table class="table table-bordered " style="width: 100%" id="probegroup_table"></table>
-                </div>
-            </div>
-        </div>
-    </div>
+
+
 </div>
+
+<script>window.jQuery || document.write('<script src="${rc.contextPath}/statics/js/plugins/jquery/jquery-2.0.3.js"><\/script>')</script>
+<script type="text/javascript"
+        src="${rc.contextPath}/statics/js/modules/probe/targetTable.js?_${date.systemTime}"></script>
+<script type="text/javascript" src="${rc.contextPath}/statics/js/index.js"></script>
+
+
+<script type="text/javascript">
+    //参数para1：希望隐藏元素的id值
+    function toggle1(param){
+        if ($("#flip").attr("class")=="glyphicon glyphicon-menu-up")
+        {
+            $("#flip").attr("class","glyphicon glyphicon-menu-down");
+        }
+        else
+        {
+            $("#flip").attr("class","glyphicon glyphicon-menu-up");
+        }
+        $("#"+param).toggle();
+    }
+
+    function toggle2(param){
+        if ($("#flip2").attr("class")=="glyphicon glyphicon-menu-up")
+        {
+            $("#flip2").attr("class","glyphicon glyphicon-menu-down");
+        }
+        else
+        {
+            $("#flip2").attr("class","glyphicon glyphicon-menu-up");
+        }
+        $("#"+param).toggle();
+    }
+</script>
+
 </body>
+
+<script>
+    /** 拖拽模态框*/
+    var dragModal = {
+        mouseStartPoint: {"left": 0, "top": 0},
+        mouseEndPoint: {"left": 0, "top": 0},
+        mouseDragDown: false,
+        basePoint: {"left": 0, "top": 0},
+        moveTarget: null,
+        topleng: 0
+    }
+    $(document).on("mousedown", ".modal-header", function (e) {
+        //webkit内核和火狐禁止文字被选中
+        $('body').addClass('select')
+        //ie浏览器禁止文字选中
+        document.body.onselectstart = document.body.ondrag = function () {
+            return false;
+        }
+        if ($(e.target).hasClass("close"))//点关闭按钮不能移动对话框
+            return;
+        dragModal.mouseDragDown = true;
+        dragModal.moveTarget = $(this).parent().parent();
+        dragModal.mouseStartPoint = {"left": e.clientX, "top": e.pageY};
+        dragModal.basePoint = dragModal.moveTarget.offset();
+        dragModal.topLeng = e.pageY - e.clientY;
+    });
+    $(document).on("mouseup", function (e) {
+        dragModal.mouseDragDown = false;
+        dragModal.moveTarget = undefined;
+        dragModal.mouseStartPoint = {"left": 0, "top": 0};
+        dragModal.basePoint = {"left": 0, "top": 0};
+    });
+    $(document).on("mousemove", function (e) {
+        if (!dragModal.mouseDragDown || dragModal.moveTarget == undefined) return;
+        var mousX = e.clientX;
+        var mousY = e.pageY;
+        if (mousX < 0) mousX = 0;
+        if (mousY < 0) mousY = 25;
+        dragModal.mouseEndPoint = {"left": mousX, "top": mousY};
+        var width = dragModal.moveTarget.width();
+        var height = dragModal.moveTarget.height();
+        var clientWidth = document.body.clientWidth
+        var clientHeight = document.body.clientHeight;
+        if (dragModal.mouseEndPoint.left < dragModal.mouseStartPoint.left - dragModal.basePoint.left) {
+            dragModal.mouseEndPoint.left = 0;
+        }
+        else if (dragModal.mouseEndPoint.left >= clientWidth - width + dragModal.mouseStartPoint.left - dragModal.basePoint.left) {
+            dragModal.mouseEndPoint.left = clientWidth - width - 38;
+        } else {
+            dragModal.mouseEndPoint.left = dragModal.mouseEndPoint.left - (dragModal.mouseStartPoint.left - dragModal.basePoint.left);//移动修正，更平滑
+
+        }
+        if (dragModal.mouseEndPoint.top - (dragModal.mouseStartPoint.top - dragModal.basePoint.top) < dragModal.topLeng) {
+            dragModal.mouseEndPoint.top = dragModal.topLeng;
+        } else if (dragModal.mouseEndPoint.top - dragModal.topLeng > clientHeight - height + dragModal.mouseStartPoint.top - dragModal.basePoint.top) {
+            dragModal.mouseEndPoint.top = clientHeight - height - 38 + dragModal.topLeng;
+        }
+        else {
+            dragModal.mouseEndPoint.top = dragModal.mouseEndPoint.top - (dragModal.mouseStartPoint.top - dragModal.basePoint.top);
+        }
+        dragModal.moveTarget.offset(dragModal.mouseEndPoint);
+    });
+    $(document).on('hidden.bs.modal', '.modal', function (e) {
+        $('.modal-dialog').css({'top': '0px', 'left': '0px'})
+        $('body').removeClass('select')
+        document.body.onselectstart = document.body.ondrag = null;
+
+    })
+</script>
+
 </html>

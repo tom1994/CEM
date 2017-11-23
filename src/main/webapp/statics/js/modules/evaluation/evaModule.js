@@ -1,3 +1,21 @@
+/*将表单对象变为json对象*/
+function getFormJson(form) {
+    var o = {};
+    var a = $(form).serializeArray();
+    $.each(a, function () {
+        if (o[this.name] !== undefined) {       //表单中可能有多个相同标签，比如有多个label，那么你在json即o中插入第一个label后，
+                                                //还要继续插入，那么这时候o[label]在o中就已经存在，所以你要把o[label]做嵌套数组处理
+            if (!o[this.name].push) {          //如果o[label]不是嵌套在数组
+                o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || ''); //将值插入o[label]
+        } else {
+            o[this.name] = this.value || '';     //第一次在o中插入o[label]
+        }
+    });
+    return o;
+}
+
 var weightSet = new Vue({
     el:'#weightset',
     data:{},
@@ -14,46 +32,76 @@ var weightSet = new Vue({
     }
 })
 
-/*表格，用户单击某个单元格后，可以直接修改单元格文本。
-在编辑状态下，用户可按回车键确认修改，按ESC键撤销修改。*/
-$(function(){
-    $("td").click(function(event){
-        //td中已经有了input,则不需要响应点击事件
-        if($(this).children("input").length > 0)
-            return false;
-        var tdObj = $(this);
-        var preText = tdObj.html();
-        //得到当前文本内容
-        var inputObj = $("<input type='text' />");
-        //创建一个文本框元素
-        tdObj.html(""); //清空td中的所有元素
-        inputObj
-            .width(tdObj.width())
-            //设置文本框宽度与td相同
-            .height(tdObj.height())
-            .css({border:"0px",fontSize:"17px",font:"宋体"})
-            .val(preText)
-            .appendTo(tdObj)
-            //把创建的文本框插入到tdObj子节点的最后
-            .trigger("focus")
-            //用trigger方法触发事件
-            .trigger("select");
-        inputObj.keyup(function(event){
-            if(13 == event.which)
-            //用户按下回车
-            {
-                var text = $(this).val();
-                tdObj.html(text);
+var weightHandle = new Vue ({
+    el:'#weight_handle',
+    data:{},
+    methods:{
+        submit: function () {
+            var weightJson = getFormJson($('#weight_form'));
+            console.log(weightJson);
+            var totalweight = parseFloat(weightJson["connectionweight"])+parseFloat(weightJson["qualityweight"])+parseFloat(weightJson["browseweight"])+parseFloat(weightJson["downloadweight"])+parseFloat(weightJson["videoweight"])+parseFloat(weightJson["gameweight"]);
+            console.log(totalweight);
+            if (typeof(weightJson["connectionweight"]) == "undefined") {
+                toastr.warning("请设置网络连通性测试业务的权重!");
+            } else if (typeof(weightJson["qualityweight"]) == "undefined") {
+                toastr.warning("请设置网络层质量测试业务的权重!");
+            } else if (typeof(weightJson["browseweight"]) == "undefined") {
+                toastr.warning("请设置网页浏览类业务的权重!");
+            } else if (typeof(weightJson["downloadweight"]) == "undefined") {
+                toastr.warning("请设置文件下载类业务的权重!");
+            } else if (typeof(weightJson["videoweight"]) == "undefined") {
+                toastr.warning("请设置在线视频类业务的权重!");
+            } else if (typeof(weightJson["gameweight"]) == "undefined") {
+                toastr.warning("请设置网络游戏类业务的权重!");
+            } else if (totalweight != 1) {
+                toastr.warning("权重设置有误，请重新输入!");
+            } else {
+                var weight_new = JSON.stringify(weightJson);
+                /*封装成json数组*/
+                /*获取表单元素的值*/
+                console.log(weight_new);
+                $.ajax({
+                    type: "POST", /*GET会乱码*/
+                    url: "../../cem/weight/set",
+                    cache: false,  //禁用缓存
+                    data: {"weight_new":weight_new},
+                    dataType: "json",
+                    success: function (result) {
+                        let code = result.code;
+                        let msg = result.msg;
+                        console.log(result);
+                        switch (code) {
+                            case 0:
+                                toastr.success("权重设置成功!");
+                                break;
+                            case 403:
+                                toastr.error(msg);
+                                break;
+                            default:
+                                toastr.error("未知错误");
+                                break
+                        }
+                    }
+                });
             }
-           /* else if(27 == event.which)
-            //ESC键
-            {
-                tdObj.html(preText);
-            }*/
-        });
-        //已进入编辑状态后，不再处理click事件
-        inputObj.click(function(){
-            return false;
-        });
-    });
-});
+
+        },
+        reset:function(){
+            $.ajax({
+                type: "POST", /*GET会乱码*/
+                url: "../../cem/weight/reset",
+                cache: false,  //禁用缓存
+                dataType: "json",
+                contentType: "application/json", /*必须要,不可少*/
+                success: function (result) {
+                    $('#connectionweight').val(result.weightdefault[0]);
+                    $('#qualityweight').val(result.weightdefault[1]);
+                    $('#browseweight').val(result.weightdefault[2]);
+                    $('#downloadweight').val(result.weightdefault[3]);
+                    $('#videoweight').val(result.weightdefault[4]);
+                    $('#gameweight').val(result.weightdefault[5]);
+                }
+            });
+        }
+    }
+})

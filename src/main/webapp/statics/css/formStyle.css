@@ -6,8 +6,11 @@ body {
     display: none;
 }
 
+div.service_unselected input{
+    disabled: disabled;
+}
+
 .service_selected{
-    display: block;
 }
 
 .wrapper-content {
@@ -44,6 +47,14 @@ body {
     /*color: black;*/
     color:#8bb4e7;
     font-family: "Microsoft Yahei", Arial;
+}
+
+/*评价模型设置*/
+.modulefont {
+    color:#8bb4e7;
+    font-family: "Microsoft Yahei", Arial;
+    font-weight: bold;
+    font-size: large;!important;
 }
 
 #handle .ui-button:hover {
@@ -163,6 +174,7 @@ a:link {
     text-align: right;
     border-top: 1px solid #e5e5e5;
 }
+
 /*.modal-header {
 
     background-color: #1cb395;

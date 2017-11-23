@@ -33,11 +33,11 @@ var scheduler_handle = new Vue({
     el: 'scheduler',
     data: {},
     methods:{
-        cron_generate:function() {
+        /*cron_generate:function() {
             var forms = $('#schedulerform_data .form-control');
             forms[0].value = "";
             $('#myModal_scheduler').modal('show');
-        }
+        }*/
     }
 });
 

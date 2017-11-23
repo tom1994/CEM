@@ -14,4 +14,5 @@ import java.util.List;
  */
 public interface TaskDispatchDao extends BaseDao<TaskDispatchEntity> {
     List<TaskDispatchEntity> queryDispatchList(Integer id);
+    int queryDispatchTotal(Integer id);
 }
