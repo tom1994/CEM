@@ -52,8 +52,32 @@ public class ProbeGroupController {
 		PageUtils pageUtil = new PageUtils(groupList, total, limit, page);
 		return R.ok().put("page", pageUtil);
 	}
-	
-	
+
+	/**
+	 * 查询列表
+	 */
+	@RequestMapping("/searchlist")
+	@RequiresPermissions("probegroup:searchlist")
+	public R searchlist(String groupdata, Integer page, Integer limit) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		int total = 0;
+		if(page==null) {              /*没有传入page,则取全部值*/
+			map.put("offset", null);
+			map.put("limit", null);
+			page = 0;
+			limit = 0;
+		}else {
+			map.put("offset", (page - 1) * limit);
+			map.put("limit", limit);
+			total = ProbeGroupService.queryTotal(map);
+		}
+		List<ProbeGroupEntity> probeGroupList = ProbeGroupService.queryList(map);
+		PageUtils pageUtil = new PageUtils(probeGroupList, total, limit, page);
+		return R.ok().put("page", pageUtil);
+	}
+
+
+
 	/**
 	 * 信息
 	 */

@@ -4,6 +4,7 @@
 var status;
 var idArray = new Array();
 var probeGroupNames = new Array();
+var probeLayer = new Array();
 var cityNames = new Array();
 var areaNames = new Array();
 var typeNames = new Array();
@@ -98,6 +99,62 @@ var probedata_handle = new Vue({
         }
     }
 });
+
+
+var probegroupdata_handle = new Vue({
+    el: '#probehandle',
+    data: {},
+    mounted: function(){         /*动态加载测试任务组数据*/
+        $.ajax({
+            type: "POST",   /*GET会乱码*/
+            url: "../../cem/probegroup/searchlist",//Todo:改成测试任务组的list方法
+            cache: false,  //禁用缓存
+            dataType: "json",
+            /* contentType:"application/json",  /!*必须要,不可少*!/*/
+            success: function (result) {
+                for(var i=0;i<result.page.list.length;i++){
+                    probeGroupNames[i] = {message: result.page.list[i]}
+                }
+                search_data.probegroup_names = probeGroupNames;
+            }
+        });
+    },
+    methods: {
+
+
+
+    }
+});
+
+
+
+var layer_handle = new Vue({
+    el: '#probehandle',
+    data: {},
+    mounted: function(){         /*动态加载测试任务组数据*/
+        $.ajax({
+            type: "POST",   /*GET会乱码*/
+            url: "../../cem/layer/searchlist",//Todo:改成测试任务组的list方法
+            cache: false,  //禁用缓存
+            dataType: "json",
+            /* contentType:"application/json",  /!*必须要,不可少*!/*/
+            success: function (result) {
+                for(var i=0;i<result.page.list.length;i++){
+                    probeLayer[i] = {message: result.page.list[i]}
+                }
+                search_data.accessLayers = probeLayer;
+            }
+        });
+    },
+    methods: {
+
+
+
+    }
+});
+
+
+
 
 var probegroup_handle = new Vue({
     el: '#grouphandle',
@@ -693,8 +750,8 @@ var probetable = new Vue({
             {title: '<div style="width:50px">状态</div>'},
             {title: '<div style="width:55px">类型</div>'},
             {title: '<div style="width:130px">注册时间</div>'},
-            {title: '<div style="width:130px">最后心跳时间</div>'},
-            {title: '<div style="width:130px">最后上报时间</div>'},
+            {title: '<div style="width:80px">最后心跳时间</div>'},
+            {title: '<div style="width:80px">最后上报时间</div>'},
             {title: '<div style="width:60px">操作</div>'}
         ],
         rows: [],
@@ -800,7 +857,6 @@ var probetable = new Vue({
                                 row.push('<a class="fontcolor" onclick="update_this(this)" id='+item.id+'>详情</a>&nbsp&nbsp;' +
                                     '<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>');
                                 rows.push(row);
-                                console.log(item);
                             });
                             returnData.data = rows;
                             console.log(returnData);
@@ -904,7 +960,6 @@ var grouptable = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                        console.log(result);
 
                         //封装返回数据
                         let returnData = {};
@@ -926,7 +981,6 @@ var grouptable = new Vue({
                             rows.push(row);
                         });
                         returnData.data = rows;
-                        console.log(returnData);
                         //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);

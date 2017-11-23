@@ -52,7 +52,8 @@
                                                     <span class="searchname" title="区县" style="width: 40px">区县</span>
                                                     <select class="form-control " name="area" style="width: 110px">
                                                         <option value="">---请选择---</option>
-                                                        <option v-for="item in areas">{{ item.message.countyName }}</option>
+                                                        <option v-for="item in areas"
+                                                                v-bind:value="item.message.countyId">{{ item.message.countyName }}</option>
                                                     </select>
                                                 </div>
 
@@ -63,8 +64,7 @@
                                                         <option value="">---请选择---</option>
                                                         <!--vue 绑定value属性    重要！！！！-->
                                                         <option v-for="item in probegroup_names"
-                                                                v-bind:value="item.message.name">{{ item.message.name }}
-                                                        </option>
+                                                                v-bind:value="item.message.id">{{ item.message.name }}</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -82,7 +82,8 @@
                                                     <select class="form-control" name="accessLayer"
                                                             style="width: 110px">
                                                         <option value="">---请选择---</option>
-                                                        <option v-for="item in accessLayers">{{ item.message }}</option>
+                                                        <option v-for="item in accessLayers"
+                                                                v-bind:value="item.message.id">{{ item.message.layerName }}</option>
                                                     </select>
                                                 </div>
 
@@ -93,9 +94,11 @@
                                                             style="width: 110px;">
                                                         <option value="">---请选择---</option>
                                                         <!--vue 绑定value属性    重要！！！！-->
-                                                        <option v-for="item in types"
-                                                                v-bind:value="item.message.name">{{ item.message.name }}
-                                                        </option>
+                                                        <option>机架探针</option>
+                                                        <option>盒式探针</option>
+                                                        <option>家庭网关软探针</option>
+                                                        <option>ONU软探针</option>
+                                                        <option>OLT软探针</option>
                                                     </select>
                                                 </div>
 
@@ -105,9 +108,8 @@
                                                             style="width: 110px;">
                                                         <option value="">---请选择---</option>
                                                         <!--vue 绑定value属性    重要！！！！-->
-                                                        <option v-for="item in status"
-                                                                v-bind:value="item.message.name">{{ item.message.name }}
-                                                        </option>
+                                                        <option>在线</option>
+                                                        <option>离线</option>
                                                     </select>
                                                 </div>
                                             </div>
