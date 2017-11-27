@@ -14,7 +14,7 @@
 		select * from layer where id = #{value}
 	</select>
 
-	<select id="queryList" resultType="io.cem.modules.cem.entity.LayerEntity">
+	<select id="queryList" resultMap="layerMap">
 		select * from layer
         <choose>
             <when test="sidx != null and sidx.trim() != ''">

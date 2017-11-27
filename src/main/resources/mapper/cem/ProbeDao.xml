@@ -75,7 +75,32 @@
 	</select>
 	
  	<select id="queryTotal" resultType="int">
-		select count(*) from probe 
+		select count(*) from probe
+		WHERE id IS NOT NULL
+		<if test="probe_name != null and probe_name != ''">
+			AND probe.probe_name LIKE concat('%',#{probe_name},'%')
+		</if>
+		<if test="location != null and location != ''">
+			AND probe.location LIKE concat('%',#{location},'%')
+		</if>
+		<if test="city_id != null and city_id != ''">
+			AND city_id = #{city_id}
+		</if>
+		<if test="county_id != null and county_id != ''">
+			AND probe.county_id = #{county_id}
+		</if>
+		<if test="group_id != null and group_id != ''">
+			AND probe.group_id = #{group_id}
+		</if>
+		<if test="access_layer != null and access_layer != ''">
+			AND probe.access_layer = #{access_layer}
+		</if>
+		<if test="type != null and type != ''">
+			AND probe.type = #{type}
+		</if>
+		<if test="status != null and status != ''">
+			AND probe.status = #{status}
+		</if>
 	</select>
 
 	<select id="queryProbeList" resultMap="probeMap">
@@ -93,17 +118,35 @@
 		ON (probe.type = a.data_id AND a.dic_type_id = 1 )
 		LEFT JOIN dic_data b
 		ON (probe.status = b.data_id AND b.dic_type_id = 3)
-		<choose>
-			<when test="sidx != null and sidx.trim() != ''">
-				order by ${sidx} ${order}
-			</when>
-			<otherwise>
-				order by id desc
-			</otherwise>
-		</choose>
-		<if test="offset != null and limit != null">
-			limit #{offset}, #{limit}
+
+		WHERE probe.id IS NOT NULL
+		<if test="probe_name != null and probe_name != ''">
+		    AND probe.probe_name LIKE concat('%',#{probe_name},'%')
 		</if>
+		<if test="location != null and location != ''">
+			AND probe.location LIKE concat('%',#{location},'%')
+		</if>
+		<if test="city_id != null and city_id != ''">
+			AND probe.city_id = #{city_id}
+		</if>
+		<if test="county_id != null and county_id != ''">
+			AND probe.county_id = #{county_id}
+		</if>
+		<if test="group_id != null and group_id != ''">
+			AND probe.group_id = #{group_id}
+		</if>
+		<if test="access_layer != null and access_layer != ''">
+			AND probe.access_layer = #{access_layer}
+		</if>
+		<if test="type != null and type != ''">
+			AND probe.type = #{type}
+		</if>
+		<if test="status != null and status != ''">
+			AND probe.status = #{status}
+		</if>
+
+
+
 	</select>
 
 	<insert id="save" parameterType="io.cem.modules.cem.entity.ProbeEntity" useGeneratedKeys="true" keyProperty="id">

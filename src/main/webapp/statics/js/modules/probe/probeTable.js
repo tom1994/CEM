@@ -85,8 +85,8 @@ var probedata_handle = new Vue({
                 toastr.warning('请选择一条记录再查看！');
             }
         },*/
-        probesearch: function () {   /*查询监听事件*/
-            var data = getFormJson($('#searchprobe'));
+        testagentListsearch: function () {   /*查询监听事件*/
+            var data = getFormJson($('#probesearch'));
             /*得到查询条件*/
             /*获取表单元素的值*/
             console.log(data);
@@ -99,6 +99,69 @@ var probedata_handle = new Vue({
         }
     }
 });
+
+var layer_handle = new Vue({
+    el: '#probehandle',
+    data: {},
+    mounted: function(){         /*动态加载测试任务组数据*/
+        $.ajax({
+            type: "POST",   /*GET会乱码*/
+            url: "../../cem/layer/searchlist",//Todo:改成测试任务组的list方法
+            cache: false,  //禁用缓存
+            dataType: "json",
+            /* contentType:"application/json",  /!*必须要,不可少*!/*/
+            success: function (result) {
+                for(var i=0;i<result.page.list.length;i++){
+                    probeLayer[i] = {message: result.page.list[i]}
+                }
+                search_data.accessLayers = probeLayer;
+            }
+        });
+    },
+    methods: {
+
+
+
+    }
+});
+
+
+var search_list = new Vue({
+    el: '#search',
+    data: {},
+    mounted: function(){         /*动态加载测试任务组数据*/
+        $.ajax({
+            type: "POST",   /*GET会乱码*/
+            url: "../../cem/probe/list",//Todo:改成测试任务组的list方法
+            cache: false,  //禁用缓存
+            dataType: "json",
+            /* contentType:"application/json",  /!*必须要,不可少*!/*/
+            success: function (result) {
+
+            }
+        });
+    },
+    methods: {
+        testagentListsearch: function () {   /*查询监听事件*/
+            var data = getFormJson($('#probesearch'));
+            /*得到查询条件*/
+            /*获取表单元素的值*/
+            console.log(data);
+            probetable.probedata = data;
+            probetable.redraw();
+            /*根据查询条件重绘*/
+        },
+        reset: function () {    /*重置*/
+            probetable.reset();
+        }
+
+
+
+    }
+});
+
+
+
 
 
 var probegroupdata_handle = new Vue({
@@ -126,32 +189,6 @@ var probegroupdata_handle = new Vue({
     }
 });
 
-
-
-var layer_handle = new Vue({
-    el: '#probehandle',
-    data: {},
-    mounted: function(){         /*动态加载测试任务组数据*/
-        $.ajax({
-            type: "POST",   /*GET会乱码*/
-            url: "../../cem/layer/searchlist",//Todo:改成测试任务组的list方法
-            cache: false,  //禁用缓存
-            dataType: "json",
-            /* contentType:"application/json",  /!*必须要,不可少*!/*/
-            success: function (result) {
-                for(var i=0;i<result.page.list.length;i++){
-                    probeLayer[i] = {message: result.page.list[i]}
-                }
-                search_data.accessLayers = probeLayer;
-            }
-        });
-    },
-    methods: {
-
-
-
-    }
-});
 
 
 
@@ -855,7 +892,8 @@ var probetable = new Vue({
                                     '<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>&nbsp&nbsp;'
                                     +'<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>查看任务</a>');*/
                                 row.push('<a class="fontcolor" onclick="update_this(this)" id='+item.id+'>详情</a>&nbsp&nbsp;' +
-                                    '<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>');
+                                    '<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>'+
+                                    '<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>查看任务</a>');
                                 rows.push(row);
                             });
                             returnData.data = rows;

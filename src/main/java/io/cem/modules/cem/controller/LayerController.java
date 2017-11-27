@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
+import com.alibaba.fastjson.JSONObject;
+import io.cem.common.exception.RRException;
+import io.cem.common.utils.JSONUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,7 +29,7 @@ import io.cem.common.utils.R;
  * @date 2017-11-23 11:22:22
  */
 @RestController
-@RequestMapping("layer")
+@RequestMapping("/cem/layer")
 public class LayerController {
 	@Autowired
 	private LayerService layerService;
@@ -38,13 +41,14 @@ public class LayerController {
 	@RequiresPermissions("layer:list")
 	public R list(@RequestParam Map<String, Object> params){
 		//查询列表数据
+
         Query query = new Query(params);
 
 		List<LayerEntity> layerList = layerService.queryList(query);
 		int total = layerService.queryTotal(query);
-		
+
 		PageUtils pageUtil = new PageUtils(layerList, total, query.getLimit(), query.getPage());
-		
+
 		return R.ok().put("page", pageUtil);
 	}
 
@@ -71,7 +75,7 @@ public class LayerController {
 		PageUtils pageUtil = new PageUtils(layerList, total, limit, page);
 		return R.ok().put("page", pageUtil);
 	}
-	
+
 	
 	/**
 	 * 信息
