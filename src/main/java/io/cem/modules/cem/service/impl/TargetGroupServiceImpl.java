@@ -9,7 +9,7 @@ import java.util.Map;
 import io.cem.modules.cem.dao.TargetGroupDao;
 import io.cem.modules.cem.entity.TargetGroupEntity;
 import io.cem.modules.cem.service.TargetGroupService;
-
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service("targetGroupService")
@@ -36,7 +36,8 @@ public class TargetGroupServiceImpl implements TargetGroupService {
 	public void save(TargetGroupEntity targetGroup){
 		targetGroupDao.save(targetGroup);
 	}
-	
+
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void update(TargetGroupEntity targetGroup){
 		targetGroupDao.update(targetGroup);
@@ -46,7 +47,8 @@ public class TargetGroupServiceImpl implements TargetGroupService {
 	public void delete(Integer id){
 		targetGroupDao.delete(id);
 	}
-	
+
+
 	@Override
 	public void deleteBatch(Integer[] ids){
 		targetGroupDao.deleteBatch(ids);

@@ -80,7 +80,7 @@
 	<delete id="delete">
 		delete from target where id = #{value}
 	</delete>
-	
+	#{param1} #{param2.id} #{param.name}
 	<delete id="deleteBatch">
 		delete from target where id in 
 		<foreach item="id" collection="array" open="(" separator="," close=")">
@@ -88,4 +88,10 @@
 		</foreach>
 	</delete>
 
+	<delete id="deleteBatch">
+		delete from target where id in
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			 #{param2.id} #{param.name}
+		</foreach>
+	</delete>
 </mapper>

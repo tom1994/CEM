@@ -187,11 +187,10 @@ function dispatch_info(obj) {
 function task_assign(obj) {
     $("#selectprobe").find("option").remove();
     $("#selecttarget").find("option").remove();
-    var probeSelected;
-    var targetSelected;
+    var probetoSelect;
+    var targettoSelect;
     var taskid = parseInt(obj.id);
     var servicetype = parseInt(obj.name);
-    console.log(taskid);
     var sp_service = spst.get(servicetype);
     console.log(sp_service);
     // 多选列表的数据传入格式
@@ -204,13 +203,13 @@ function task_assign(obj) {
         dataType: "json",
         contentType: "application/json", /*必须要,不可少*/
         success: function (result) {
-            probeSelected = result.page.list;
+            probetoSelect = result.page.list;
             var selectprobe = $('#selectprobe').doublebox({
                 nonSelectedListLabel: '待选探针',
                 selectedListLabel: '已选探针',
                 preserveSelectionOnMove: 'moved',
                 moveOnSelect: false,
-                nonSelectedList: probeSelected,
+                nonSelectedList: probetoSelect,
                 selectedList: [],
                 optionValue: "id",
                 optionText: "name",
@@ -226,15 +225,13 @@ function task_assign(obj) {
         dataType: "json",
         contentType: "application/json", /*必须要,不可少*/
         success: function (result) {
-            console.log(result);
-            targetSelected = result.target;
-            console.log(targetSelected);
+            targettoSelect = result.target;
             var selecttarget = $('#selecttarget').doublebox({
                 nonSelectedListLabel: '待选测试目标',
                 selectedListLabel: '已选测试目标',
                 preserveSelectionOnMove: 'moved',
                 moveOnSelect: false,
-                nonSelectedList: targetSelected,
+                nonSelectedList: targettoSelect,
                 selectedList: [],
                 optionValue: "id",
                 optionText: "targetName",
@@ -247,8 +244,35 @@ function task_assign(obj) {
 }
 
 function submit_dispatch() {
-    var newJson = getFormJson($('#dispatch_form'));
-    console.log(newJson);
+    var dispatch_data = new Object();
+    var probeId = getFormJson($('#dispatch_probe')).probeId;
+    dispatch_data.targetId = getFormJson($('#dispatch_target')).targetId;
+    dispatch_data.isOndemand = 0;
+    dispatch_data.testNumber = probeId.length;
+    console.log(dispatch_data);
+    $.ajax({
+        type: "POST", /*GET会乱码*/
+        url: "../../target/infoList/saveAll",
+        cache: false,  //禁用缓存
+        data: "dispatch_data="+dispatch_data+"&probeId="+probeId,  //传入组装的参数
+        dataType: "json",
+        contentType: "application/json", /*必须要,不可少*/
+        success: function (result) {
+            targettoSelect = result.target;
+            var selecttarget = $('#selecttarget').doublebox({
+                nonSelectedListLabel: '待选测试目标',
+                selectedListLabel: '已选测试目标',
+                preserveSelectionOnMove: 'moved',
+                moveOnSelect: false,
+                nonSelectedList: targettoSelect,
+                selectedList: [],
+                optionValue: "id",
+                optionText: "targetName",
+                doubleMove: true,
+            });
+            $('#task_dispatch').modal('show');
+        }
+    });
 }
 
 
