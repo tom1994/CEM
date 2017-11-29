@@ -71,6 +71,13 @@ public class TargetController {
 		
 		return R.ok().put("target", target);
 	}
+
+	@RequestMapping("/infoList/{spid}")
+	@RequiresPermissions("target:info")
+	public R infoList(@PathVariable("spid") Integer spId){
+		List<TargetEntity> target = targetService.queryTargetList(spId);
+		return R.ok().put("target", target);
+	}
 	
 	/**
 	 * 保存

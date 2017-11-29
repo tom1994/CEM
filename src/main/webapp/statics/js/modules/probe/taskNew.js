@@ -6,8 +6,7 @@ var alarmtemplates = new Array();
 
 var st = new Map([[1, "PING(ICMP Echo)"], [2, "PING(TCP Echo)"]]);//servicetype字典，可通过get方法查对应字符串。
 var stid = new Map([[1, "pingicmp"], [2, "pingtcp"]]);//新建或编辑servicetype参数的id字典，用于根据select的业务类型变更来改变展示的参数。
-// servicetype.set("01","PING(ICMP Echo)")
-
+var spst = new Map([[1,1],[2,1],[3,1],[4,1],[5,1],[6,1],[11,2],[12,2],[13,2],[14,2],[15,2],[16,2]])
 var task_handle = new Vue({
     el: '#handle',
     data: {},
@@ -27,63 +26,100 @@ var task_handle = new Vue({
         });
     },
     methods: {
-        // schedulepolicyadd: function () {   /*监听新增触发事件*/
-        //     status = 0;
-        //     /*状态0,表示新增*/
-        //     var forms = $('#taskform_data .form-control');
-        //
-        //     $('#taskform_data input[type=text]').prop("readonly", false);
-        //     /*去除只读状态*/
-        //     $('#taskform_data select').prop("disabled", false);
-        //
-        //     for (var i = 0; i < 3; i++) {
-        //         forms[i].value = ""
-        //     }
-        //     taskform_data.modaltitle = "新增调度策略";
-        //     /*修改模态框标题*/
-        //     $('#myModal_edit').modal('show');
-        // }
         newTask: function () {
-            status = 0;
+            status = 1;
             var forms = $('#taskform_data .form-control');
+            taskform_data.alarmtemplates = [];
+            $('#taskform_data input[type=text]').prop("disabled", false);
+            $('#taskform_data select').prop("disabled", false);
             $('#taskform_data input[type=text]').prop("readonly", false);
             $('#taskform_data input[type=text]').prop("unselectable", 'off');
-            $('#taskform_data select').prop("disabled", false);
             taskform_data.modaltitle = "新建任务";
             /*修改模态框标题*/
-            for (var i = 0;i < 3;i++) {
+            for (var i = 0; i < 3; i++) {
                 forms[i].value = ""
             }
             $(".service").addClass("service_unselected");
+            taskform_data.alarmtemplates = [];
+            $('#viewfooter').attr('style', 'display:none');
+            $('#newfooter').removeAttr('style', 'display:none');
             $('#myModal_edit').modal('show');
         },
+
     }
 });
 
-function update_this(obj) {     /*监听修改触发事件*/
-    var update_data_id = parseInt(obj.id);
-    /*获取当前行探针数据id*/
-    console.log(update_data_id);
-    status = 1;
-    /*状态1表示修改*/
-    /*find被选中的行*/
-    var forms = $('#tasktemplate_data .form-control');
-    /*去除只读状态*/
-    $('#tasktemplate_data input[type=text]').prop("readonly", false);
+function getalarm() {
     $.ajax({
-        type: "POST", /*GET会乱码*/
-        url: "../../cem/tasktemplate/info/" + update_data_id,
+        url: "../../cem/alarmtemplate/list",
+        type: "POST",
         cache: false,  //禁用缓存
-        //data: update_data_ids,  //传入组装的参数
         dataType: "json",
-        contentType: "application/json", /*必须要,不可少*/
+        contentType: "application/json",
         success: function (result) {
-            forms[0].value = result.taskTemplate.id;
-            forms[1].value = result.taskTemplate.name;
-            forms[2].value = result.taskTemplate.service_type;
-            forms[3].value = result.taskTemplate.remark;
+            for (var i = 0; i < result.page.list.length; i++) {
+                alarmtemplates[i] = {message: result.page.list[i]}
+            }
+            taskform_data.alarmtemplates = alarmtemplates;
         }
     });
+}
+
+function view_this(obj) {     /*监听详情触发事件*/
+    var update_data_id = parseInt(obj.id);
+    /*获取当前行探针数据id*/
+    status = 0;
+    /*状态1表示修改*/
+    /*find被选中的行*/
+    getalarm();
+    $.ajax({
+        url: "../../cem/alarmtemplate/list",
+        type: "POST",
+        cache: false,  //禁用缓存
+        dataType: "json",
+        contentType: "application/json",
+        success: function (result) {
+            for (var i = 0; i < result.page.list.length; i++) {
+                alarmtemplates[i] = {message: result.page.list[i]}
+            }
+            taskform_data.alarmtemplates = alarmtemplates;
+            var taskforms = $('#taskform_data .form-control');
+            var paramforms = $('#taskform_param .form-control');
+            var servicetypeid = 0;
+            $.ajax({
+                type: "POST", /*GET会乱码*/
+                url: "../../cem/task/info/" + update_data_id,
+                cache: false,  //禁用缓存
+                //data: update_data_ids,  //传入组装的参数
+                dataType: "json",
+                async: false,
+                contentType: "application/json", /*必须要,不可少*/
+                success: function (result) {
+                    var param = JSON.parse(result.task.parameter);
+                    servicetypeid = result.task.serviceType;
+                    taskforms[0].value = result.task.id;
+                    taskforms[1].value = result.task.taskName;
+                    taskforms[2].value = result.task.serviceType;
+                    taskforms[3].value = result.task.schPolicyId;
+                    taskforms[4].value = result.task.alarmTemplateId;
+                    paramforms[0].value = param.count;
+                    paramforms[1].value = param.interval;
+                    paramforms[2].value = param.size;
+                    paramforms[3].value = param.payload;
+                    paramforms[4].value = param.ttl;
+                    paramforms[5].value = param.tos;
+                    paramforms[6].value = param.timeout;
+                    $("#" + stid.get(servicetypeid)).removeClass("service_unselected");
+                }
+            });
+        }
+    });
+    $('#newfooter').attr('style', 'display:none');
+    $('#viewfooter').removeAttr('style', 'display:none');
+    $("#taskform_data input[type=text]").attr('disabled', 'disabled');
+    $("#taskform_data select").attr('disabled', 'disabled');
+    $(".service input[type=text]").attr('disabled', 'disabled');
+    $(".service select").attr('disabled', 'disabled');
     $('#myModal_edit').modal('show');
 }
 
@@ -92,19 +128,17 @@ function delete_ajax() {
     /*对象数组字符串*/
     $.ajax({
         type: "POST", /*GET会乱码*/
-        url: "../../cem/schedulepolicy/delete",
+        url: "../../cem/task/delete",
         cache: false,  //禁用缓存
         data: ids,  //传入组装的参数
         dataType: "json",
         contentType: "application/json", /*必须要,不可少*/
         success: function (result) {
-
-            toastr.success("删除成功!");
-            schedulepolicytable.currReset();
+            toastr.success("任务删除成功!");
+            task_table.currReset();
             idArray = [];
             /*清空id数组*/
             delete_data.close_modal();
-            /*关闭模态框*/
         }
     });
 }
@@ -114,20 +148,6 @@ function delete_this(obj) {
     delete_data.id = parseInt(obj.id);
     /*获取当前行探针数据id*/
     console.log(delete_data.id);
-    $.ajax({
-        type: "POST", /*GET会乱码*/
-        url: "../../cem/tasktemplate/info/" + update_data_id,
-        cache: false,  //禁用缓存
-        //data: update_data_ids,  //传入组装的参数
-        dataType: "json",
-        contentType: "application/json", /*必须要,不可少*/
-        success: function (result) {
-            forms[0].value = result.taskTemplate.id;
-            forms[1].value = result.taskTemplate.name;
-            forms[2].value = result.taskTemplate.service_type;
-            forms[3].value = result.taskTemplate.remark;
-        }
-    });
 }
 
 var delete_data = new Vue({
@@ -142,12 +162,11 @@ var delete_data = new Vue({
         },
         close_modal: function (obj) {
             $(this.$el).modal('hide');
-
         },
         cancel_delete: function () {
             $(this.$el).modal('hide');
         },
-        delete_data: function () {
+        delete_task: function () {
             idArray = [];
             /*清空id数组*/
             idArray[0] = this.id;
@@ -164,6 +183,100 @@ function dispatch_info(obj) {
     dispatch_table.redraw();
     $('#myModal_dispatch').modal('show');
 }
+
+function task_assign(obj) {
+    $("#selectprobe").find("option").remove();
+    $("#selecttarget").find("option").remove();
+    var probeSelected;
+    var targetSelected;
+    var taskid = parseInt(obj.id);
+    var servicetype = parseInt(obj.name);
+    console.log(taskid);
+    var sp_service = spst.get(servicetype);
+    console.log(sp_service);
+    // 多选列表的数据传入格式
+    // var s = [{roleId:"1",roleName:"zhangsan"},{roleId:"2","roleName":"lisi"},{"roleId":"3","roleName":"wangwu"}];
+    $.ajax({
+        type: "POST", /*GET会乱码*/
+        url: "../../cem/probe/list",
+        cache: false,  //禁用缓存
+        // data: ids,  //传入组装的参数
+        dataType: "json",
+        contentType: "application/json", /*必须要,不可少*/
+        success: function (result) {
+            probeSelected = result.page.list;
+            var selectprobe = $('#selectprobe').doublebox({
+                nonSelectedListLabel: '待选探针',
+                selectedListLabel: '已选探针',
+                preserveSelectionOnMove: 'moved',
+                moveOnSelect: false,
+                nonSelectedList: probeSelected,
+                selectedList: [],
+                optionValue: "id",
+                optionText: "name",
+                doubleMove: true,
+            });
+        }
+    });
+    $.ajax({
+        type: "POST", /*GET会乱码*/
+        url: "../../target/infoList/"+sp_service,
+        cache: false,  //禁用缓存
+        // data: ids,  //传入组装的参数
+        dataType: "json",
+        contentType: "application/json", /*必须要,不可少*/
+        success: function (result) {
+            console.log(result);
+            targetSelected = result.target;
+            console.log(targetSelected);
+            var selecttarget = $('#selecttarget').doublebox({
+                nonSelectedListLabel: '待选测试目标',
+                selectedListLabel: '已选测试目标',
+                preserveSelectionOnMove: 'moved',
+                moveOnSelect: false,
+                nonSelectedList: targetSelected,
+                selectedList: [],
+                optionValue: "id",
+                optionText: "targetName",
+                doubleMove: true,
+            });
+            $('#task_dispatch').modal('show');
+        }
+    });
+
+}
+
+function submit_dispatch() {
+    var newJson = getFormJson($('#dispatch_form'));
+    console.log(newJson);
+}
+
+
+var task_dispatch = new Vue({
+    el: '#myModal_dispatch',
+    data: {
+        id: null,
+        probeids: [],
+        targetids: []
+    },
+    methods: {
+        show_Modal: function () {
+            $(this.$el).modal('show');
+        },
+        close_modal: function (obj) {
+            $(this.$el).modal('hide');
+        },
+        cancel: function () {
+            $(this.$el).modal('hide');
+        },
+        dispatch: function () {
+            idArray = [];
+            idArray[0] = this.id;
+            delete_ajax();
+            /*ajax传输*/
+        }
+    }
+});
 
 //格式化日期
 Date.prototype.Format = function (fmt) {
@@ -272,7 +385,8 @@ var taskform_data = new Vue({
         cancel: function () {
             $(this.$el).modal('hide');
             $(".service").addClass("service_unselected");
-            taskform_data.alarmtemplates = [];
+            $(".service").attr('disabled', 'disabled');
+
         },
         servicechange: function () {
             $(".service").addClass("service_unselected");
@@ -464,19 +578,18 @@ var task_table = new Vue({
                             let row = [];
                             row.push(i++);
                             // row.push(item.id);
-                            row.push('<a onclick="update_this(this)" id=' + item.id + '><span style="color: black;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">' + item.taskName + '</span></a>');
+                            row.push('<a onclick="view_this(this)" id=' + item.id + '><span style="color: black;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">' + item.taskName + '</span></a>');
                             row.push(st.get(item.serviceType));
                             row.push(item.spName);
                             row.push(item.atName);
                             row.push('<a class="fontcolor" onclick="dispatch_info(this)" id=' + item.id + '>' + getDispatch(item.id) + '</a>&nbsp;');
                             // row.push('<a class="fontcolor" onclick="task_assign(this)" id=\'+item.id+\'>下发任务</a>');
-                            row.push('<a class="fontcolor" onclick="task_assign(this)" id=' + item.id + '>下发任务</a>&nbsp;' +
+                            row.push('<a class="fontcolor" onclick="task_assign(this)" id=' + item.id+ ' name='+item.serviceType+'>下发任务</a>&nbsp;' +
                                 '<a class="fontcolor" onclick="delete_this(this)" id=' + item.id + '>删除</a>&nbsp;' +
-                                '<a class="fontcolor" onclick="update_this(this)" id=' + item.id + '>详情</a>');
+                                '<a class="fontcolor" onclick="view_this(this)" id=' + item.id + '>详情</a>');
                             rows.push(row);
                         });
                         returnData.data = rows;
-                        console.log(result);
                         //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);
@@ -498,9 +611,10 @@ var myModal_dispatch = new Vue({
     methods: {
         close_modal: function () {
             $('#myModal_dispatch').modal('hide');
+            console.log('success');
         }
     }
-})
+});
 
 var dispatch_table = new Vue({
     el: '#dispatch_table',
@@ -547,9 +661,6 @@ var dispatch_table = new Vue({
         show_modal: function () {
             $('#myModal_dispatch').modal('show');
             /*弹出确认模态框*/
-        },
-        close_modal: function () {
-            $('#myModal_dispatch').modal('hide');
         },
     },
     mounted() {
@@ -603,7 +714,8 @@ var dispatch_table = new Vue({
                             let row = [];
                             row.push(i++);
                             // row.push(item.id);
-                            row.push('<a onclick="update_this(this)" id=' + item.id + '><span style="color: black;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">' + item.probeName + '</span></a>');
+                            // row.push('<a onclick="view_this(this)" id=' + item.id + '><span style="color: black;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">' + item.probeName + '</span></a>');
+                            row.push(item.probeName);
                             row.push(item.location);
                             row.push(item.accessLayer);
                             row.push(item.target);
@@ -611,12 +723,10 @@ var dispatch_table = new Vue({
                             // row.push('<a class="fontcolor" onclick="task_assign(this)" id=\'+item.id+\'>下发任务</a>');
                             // row.push('<a class="fontcolor" onclick="task_assign(this)" id='+item.id+'>下发任务</a>&nbsp;' +
                             //     '<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>&nbsp;' +
-                            //     '<a class="fontcolor" onclick="update_this(this)" id='+item.id+'>详情</a>');
+                            //     '<a class="fontcolor" onclick="view_this(this)" id='+item.id+'>详情</a>');
                             rows.push(row);
                         });
                         returnData.data = rows;
-                        console.log(result);
-                        console.log(servicetype);
                         //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);

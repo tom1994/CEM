@@ -46,17 +46,25 @@ public class ProbeController {
 	@RequiresPermissions("probe:list")
 	public R list(String probedata, Integer page, Integer limit) throws Exception {
 		Map<String, Object> map = new HashMap<>();
-		map.put("offset", (page - 1) * limit);
-		map.put("limit", limit);
 		JSONObject probedata_jsonobject = JSONObject.parseObject(probedata);
 		try {
 			map.putAll(JSONUtils.jsonToMap(probedata_jsonobject));
 		} catch (RuntimeException e) {
 			throw new RRException("内部参数错误，请重试！");
 		}
+		int total = 0;
+		if(page==null) {              /*没有传入page,则取全部值*/
+			map.put("offset", null);
+			map.put("limit", null);
+			page = 0;
+			limit = 0;
+		}else {
+			map.put("offset", (page - 1) * limit);
+			map.put("limit", limit);
+			total = probeService.queryTotal(map);
+		}
 //		List<ProbeEntity> probeList = probeService.queryList(map);
 		List<ProbeEntity> probeList = probeService.queryProbeList(map);
-		int total = probeService.queryTotal(map);
 		PageUtils pageUtil = new PageUtils(probeList, total, limit, page);
 		return R.ok().put("page", pageUtil);
 	}
