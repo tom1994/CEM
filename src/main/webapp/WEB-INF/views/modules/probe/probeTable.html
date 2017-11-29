@@ -32,13 +32,13 @@
                                             <div class="form-group row">
                                                 <div class="input-group searchspan">
                                                     <span class="searchname" title="探针名" style="width: 40px">探针名</span>
-                                                    <input type="text" class="form-control" name="name"
+                                                    <input type="text" class="form-control" name="probe_name"
                                                            style="width: 110px"
                                                            value="">
                                                 </div>
                                                 <div class="input-group searchspan">
                                                     <span class="searchname" title="地市" style="width: 40px">地市</span>
-                                                    <select id="selectcity" class="form-control" name="city"
+                                                    <select id="selectcity" class="form-control" name="city_id"
                                                             v-on:change="citychange()" style="width: 110px">
                                                         <option value="">---请选择---</option>
                                                         <option v-for="item in cities"
@@ -50,21 +50,21 @@
 
                                                 <div class="input-group searchspan">
                                                     <span class="searchname" title="区县" style="width: 40px">区县</span>
-                                                    <select class="form-control " name="area" style="width: 110px">
+                                                    <select class="form-control " name="county_id" style="width: 110px">
                                                         <option value="">---请选择---</option>
-                                                        <option v-for="item in areas">{{ item.message.countyName }}</option>
+                                                        <option v-for="item in areas"
+                                                                v-bind:value="item.message.countyId">{{ item.message.countyName }}</option>
                                                     </select>
                                                 </div>
 
                                                 <div class="input-group searchspan">
                                                     <span class="searchname" title="探针组" style="width: 40px">探针组</span>
-                                                    <select class="form-control" name="probegroup_name"
+                                                    <select class="form-control" name="group_id"
                                                             style="width: 110px;">
                                                         <option value="">---请选择---</option>
                                                         <!--vue 绑定value属性    重要！！！！-->
                                                         <option v-for="item in probegroup_names"
-                                                                v-bind:value="item.message.name">{{ item.message.name }}
-                                                        </option>
+                                                                v-bind:value="item.message.id">{{ item.message.name }}</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -79,10 +79,11 @@
 
                                                 <div class="input-group searchspan">
                                                     <span class="searchname" title="层级" style="width: 40px">层级</span>
-                                                    <select class="form-control" name="accessLayer"
+                                                    <select class="form-control" name="access_layer"
                                                             style="width: 110px">
                                                         <option value="">---请选择---</option>
-                                                        <option v-for="item in accessLayers">{{ item.message }}</option>
+                                                        <option v-for="item in accessLayers"
+                                                                v-bind:value="item.message.id">{{ item.message.layerName }}</option>
                                                     </select>
                                                 </div>
 
@@ -93,9 +94,11 @@
                                                             style="width: 110px;">
                                                         <option value="">---请选择---</option>
                                                         <!--vue 绑定value属性    重要！！！！-->
-                                                        <option v-for="item in types"
-                                                                v-bind:value="item.message.name">{{ item.message.name }}
-                                                        </option>
+                                                        <option value="10">机架探针</option>
+                                                        <option value="20">盒式探针</option>
+                                                        <option value="30">家庭网关软探针</option>
+                                                        <option value="31">ONU软探针</option>
+                                                        <option value="32">OLT软探针</option>
                                                     </select>
                                                 </div>
 
@@ -105,9 +108,8 @@
                                                             style="width: 110px;">
                                                         <option value="">---请选择---</option>
                                                         <!--vue 绑定value属性    重要！！！！-->
-                                                        <option v-for="item in status"
-                                                                v-bind:value="item.message.name">{{ item.message.name }}
-                                                        </option>
+                                                        <option value="1">在线</option>
+                                                        <option value="0">离线</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -115,10 +117,10 @@
 
 
                                         <div class="col-lg-3 col-md-3 col-sm-3 pull-left"
-                                             style="text-align:center;height:50px;position: relative;" >
+                                             style="text-align:center;height:50px;position: relative;" id="search" >
                                             <button type="button" class="btn btn-sm btn-success"
                                                     style="margin-right: 5px;position: relative;top: 50%;"
-                                                    v-on:click="searchprobe"><span
+                                                    v-on:click="testagentListsearch"><span
                                                     class="glyphicon glyphicon-zoom-in"></span>查询
                                             </button>
                                             <button type="button" class="btn btn-sm btn-success"

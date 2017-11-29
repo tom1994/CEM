@@ -60,11 +60,11 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default"
-                            v-on:click="close_modal">取消
+                            data-dismiss="modal">返回
                     </button>
-                    <button type="button" class="btn btn-success" v-on:click="">
-                        确定
-                    </button>
+                    <!--<button type="button" class="btn btn-success" v-on:click="">-->
+                    <!--确定-->
+                    <!--</button>-->
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal -->
@@ -89,13 +89,67 @@
                     <button type="button" class="btn btn-default"
                             v-on:click="cancel_delete">取消
                     </button>
-                    <button type="button" class="btn btn-success" v-on:click="delete_data">
+                    <button type="button" class="btn btn-success" v-on:click="delete_task">
                         确定
                     </button>
                 </div>
             </div>
         </div>
     </div>
+    <!-- 任务下发模态框（Modal） -->
+    <div class="modal fade" id="task_dispatch" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" style="width:800px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h3 class="modal-title myModalLabel">任务下发</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div>
+                            <label>
+                                <input type="radio" name="chooseprobe" checked value="1"><i></i>选择探针
+                            </label>
+                            <label>
+                                <input type="radio" name="chooseprobe" value="0"><i></i>选择探针组
+                            </label>
+                        </div>
+                    </div>
+                    <form class="form-horizontal" id="dispatch_probe" role="form">
+                        <div class="row">
+                            <div class="ue-container">
+                                <select multiple="multiple" size="10" id="selectprobe" name="id">
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="row">
+                        <div style="/*border-top: 1px solid #e5e5e5;*/ padding-top: 2%;">
+                            <label>
+                                <input type="radio" name="choosetarget" checked value="1"><i></i>选择测试目标
+                            </label>
+                            <label>
+                                <input type="radio" name="choosetarget" value="0">选择测试目标组
+                            </label>
+                        </div>
+                    </div>
+                    <form class="form-horizontal" id="dispatch_target" role="form">
+                        <div class="row">
+                            <div class="ue-container">
+                                <select multiple="multiple" size="10" name="" id="selecttarget">
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                    <button type="button" class="btn btn-success" onclick="submit_dispatch()">下发</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- 任务新建/编辑模态框（Modal） -->
     <div class="modal fade" id="myModal_edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
@@ -117,21 +171,22 @@
                                 <div class="col-lg-2 col-md-2 col-sm-2 "
                                      style="display: none">
                                     <input type="text" class="form-control" id="id" name="id"
-                                           placeholder="请输入id">
+                                           readonly="readonly" unselectable="on" placeholder="请输入id">
                                 </div>
                                 <label for="taskname"
                                        class="col-lg-3 col-md-3 col-sm-3 form_border"
                                        style="font-size: medium">任务名称:</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <input type="text" class="form-control" id="taskname"
-                                           name="taskName"
+                                           name="taskName" readonly="readonly" unselectable="on"
                                            placeholder="请输入名称">
                                 </div>
                                 <label for="servicetype"
                                        class="col-lg-3 col-md-3 col-sm-3 form_border"
                                        style="font-size: medium">任务类型:</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
-                                    <select id="servicetype" v-on:change="servicechange()" class="form-control"
+                                    <select id="servicetype" disabled="disabled" v-on:change="servicechange()"
+                                            class="form-control"
                                             name="serviceType">
                                         <optgroup label="网络连通性测试">
                                             <option value="1">PING(ICMP ECHO)</option>
@@ -156,7 +211,7 @@
                                        class="col-lg-3 col-md-3 col-sm-3 form_border"
                                        style="font-size: medium">调度策略:</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
-                                    <select id="schpolicy" class="form-control" name="schPolicyId">
+                                    <select id="schpolicy" class="form-control" disabled="disabled" name="schPolicyId">
                                         <option value="">---请选择---</option>
                                         <option v-for="item in schpolicies"
                                                 v-bind:value="item.message.id">{{ item.message.spName }}
@@ -167,7 +222,8 @@
                                        class="col-lg-3 col-md-3 col-sm-3 form_border"
                                        style="font-size: medium">告警模板:</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
-                                    <select id="alarmtemplate" class="form-control" name="alarmTemplateId">
+                                    <select id="alarmtemplate" disabled="disabled" class="form-control"
+                                            name="alarmTemplateId">
                                         <option value="">---请选择---</option>
                                         <option v-for="item in alarmtemplates"
                                                 v-bind:value="item.message.id">{{ item.message.atName}}
@@ -184,7 +240,7 @@
                                            style="font-size: medium">发包个数</label>
                                     <div class="col-lg-3 col-md-3 col-sm-3">
                                         <input type="text" class="form-control" id="count"
-                                                value="10" disabled="disabled" name="count"
+                                               value="10" disabled="disabled" name="count"
                                                placeholder="">
                                     </div>
                                     <label for="interval"
@@ -258,9 +314,12 @@
                         </form>
                     </div>
                 </div>
-                <div class="modal-footer">
+                <div id="newfooter" class="modal-footer">
                     <button type="button" class="btn btn-default" v-on:click="cancel">取消</button>
                     <button type="button" class="btn btn-success" v-on:click="submit">保存</button>
+                </div>
+                <div id="viewfooter" class="modal-footer" style="display: none">
+                    <button type="button" class="btn btn-default" v-on:click="cancel">返回</button>
                 </div>
             </div>
         </div>
@@ -271,5 +330,26 @@
 <script type="text/javascript"
         src="${rc.contextPath}/statics/js/modules/probe/taskNew.js?_${date.systemTime}"></script>
 <script type="text/javascript" src="${rc.contextPath}/statics/js/index.js"></script>
+<script type="text/javascript" src="${rc.contextPath}/statics/js/doublebox-bootstrap.js"></script>
+<script>
+    $(function(){
+        var chooseprobeValue = $('input[name="chooseprobe"]:checked ').val();
+        if(chooseprobeValue == 1){
+            $("#validityPeriodTime").hide();
+        }
+        if(chooseprobeValue == 0){
+            $("#validityPeriodTime").show();
+        }
+        $(".merchantzc_radio").click(function(){
+            var chooseprobeValue = $('input[name="chooseprobe"]:checked ').val();
+            if(chooseprobeValue == 1){
+                $("#validityPeriodTime").hide();
+            }
+            if(chooseprobeValue == 0){
+                $("#validityPeriodTime").show();
+            }
+        })
+    })
+</script>
 </body>
 </html>

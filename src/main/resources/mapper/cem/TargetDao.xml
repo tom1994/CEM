@@ -38,12 +38,18 @@
 			limit #{offset}, #{limit}
 		</if>
 	</select>
+
+	<select id="queryTargetList" resultType="io.cem.modules.cem.entity.TargetEntity">
+		select * from target
+		WHERE superservice_type = #{value}
+		order by id desc
+	</select>
 	
  	<select id="queryTotal" resultType="int">
 		select count(*) from target 
 	</select>
 
-	<select id="queryTargetList" resultMap="targetMap">
+	<select id="queryTgByTList" resultMap="targetMap">
 		SELECT target.*,
 		target_group.tg_name AS group_name
 		FROM target
