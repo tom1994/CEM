@@ -21,10 +21,19 @@ public class TargetServiceImpl implements TargetService {
 	public TargetEntity queryObject(Integer id){
 		return targetDao.queryObject(id);
 	}
+
+	@Override
+	public List<TargetEntity> infoBatch(Integer serviceId){
+		return targetDao.infoBatch(serviceId); }
 	
 	@Override
 	public List<TargetEntity> queryList(Map<String, Object> map){
 		return targetDao.queryList(map);
+	}
+
+	@Override
+	public List<TargetEntity> queryTgByTList(Map<String, Object> map) {
+		return targetDao.queryTgByTList(map);
 	}
 
 	@Override

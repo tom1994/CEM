@@ -1,11 +1,449 @@
+<!--
+* Created by Fern on 2017/11/28.
+-->
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>title</title>
-    <h>质量排名</h>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>质量排名</title>
+    #parse("cemHeader.html")  <!--导入CSS和js文件-->
+    <link href="${rc.contextPath}/statics/css/formStyle.css" rel="stylesheet">  <!--自定义CSS-->
+    <!-- <link href="${rc.contextPath}/statics/css/components.min.css" rel="stylesheet">  -->
 </head>
 <body>
+<div class="htmleaf-container">
+    <div class="tab" role="tabpanel">
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#Section1" aria-controls="home" role="tab"
+                                                      data-toggle="tab">探针排名</a></li>
+            <li role="presentation"><a href="#Section2" aria-controls="profile" role="tab" data-toggle="tab">区域排名</a>
+            </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content tabs">
+            <div role="tabpanel" class="tab-pane fade in active" id="Section1">
+                <div class="wrapper wrapper-content">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-content" style="padding-bottom: 0 !important;">
+                                    <div class="row" id="searchbox" style="border: none !important;">
+
+                                        <form class="col-lg-9 col-md-19 col-sm-9 form-horizontal" id="probesearch"
+                                              role="form">
+                                            <div class="form-group row">
+                                                <div class="input-group searchspan">
+                                                    <span class="searchname" title="选择探针"
+                                                          style="width: 80px">选择探针：</span>
+                                                </div>
+
+                                                <div class="input-group searchspan">
+                                                    <span class="searchname" title="地市" style="width: 40px">地市</span>
+                                                    <select id="selectcity" class="form-control" name="city"
+                                                            v-on:change="citychange()" style="width: 110px">
+                                                        <option value="1">所有地市</option>
+                                                        <option v-for="item in cities"
+                                                                v-bind:value="item.message.cityId">{{
+                                                            item.message.cityName }}
+                                                        </option>
+                                                        <!--<option v-for="pitem in parray" v-bind:value="pitem.Id">{{ pitem.Name }}-->
+                                                    </select>
+                                                </div>
+
+                                                <div class="input-group searchspan">
+                                                    <span class="searchname" title="区县" style="width: 40px">区县</span>
+                                                    <select id="selectarea" class="form-control " name="area"
+                                                            style="width: 110px">
+                                                        <option value="1">所有区县</option>
+                                                        <option v-for="item in areas"
+                                                                v-bind:value="item.message.countyId">{{
+                                                            item.message.countyName
+                                                            }}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group row">
+                                                <div class="input-group searchspan">
+                                                    <span class="searchname" title="选择业务"
+                                                          style="width: 80px">选择业务：</span>
+                                                </div>
+
+                                                <div class="input-group searchspan">
+                                                    <span class="searchname" title="业务类型"
+                                                          style="width: 80px">业务类型</span>
+                                                    <select id="selectservice" class="form-control" name="target"
+                                                            v-on:change="servicechange()" style="width: 110px">
+                                                        <option value="0">综合业务</option>
+                                                        <option value="1">网络连通性业务</option>
+                                                        <option value="2">网络层质量业务</option>
+                                                        <option value="3">网页浏览业务</option>
+                                                        <option value="4">文件下载业务</option>
+                                                        <option value="5">在线视频业务</option>
+                                                        <option value="6">网络游戏业务</option>
+                                                        <!--<option v-for="pitem in parray" v-bind:value="pitem.Id">{{ pitem.Name }}-->
+                                                    </select>
+                                                </div>
+
+                                                <div class="input-group searchspan">
+                                                    <span class="searchname" title="目标地址"
+                                                          style="width: 80px">目标地址</span>
+                                                    <select id="select_target" class="form-control " name="target"
+                                                            style="width: 110px">
+                                                        <option value="1">所有目标地址</option>
+                                                        <option v-for="item in target"
+                                                                v-bind:value="item.message.targetId">{{ item.message.targetName}}</option>
+                                                    </select>
+                                                </div>
+
+                                            </div>
+
+
+                                            <div class="form-group row">
+                                                <div class="input-group searchspan">
+                                                    <span class="searchname" title="时间" style="width: 80px">选择时间：</span>
+                                                </div>
+
+                                                <div class="input-group searchspan">
+                                                    <span class="searchname" title="日期" style="width: 40px">起始</span>
+                                                    <input type="text" id="start_date" class="form-control"
+                                                           name="startDate"
+                                                           style="width: 140px"
+                                                           value="">
+                                                </div>
+
+                                                <div class="input-group searchspan">
+                                                    <span class="searchname" title="日期" style="width: 40px">结束</span>
+                                                    <input type="text" id="terminal_date" class="form-control"
+                                                           name="terminalDate"
+                                                           style="width: 140px"
+                                                           value="">
+                                                </div>
+                                            </div>
+
+                                        </form>
+
+
+                                        <div class="col-lg-3 col-md-3 col-sm-3 pull-left"
+                                             style="text-align:center;height:50px;position: relative;" id="search">
+                                            <button type="button" class="btn btn-sm btn-success"
+                                                    style="margin-right: 5px;position: relative;top: 50%;"
+                                                    v-on:click="testagentListsearch"><span
+                                                    class="glyphicon glyphicon-zoom-in"></span>查询
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row" id="test_table">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title fontcolor" id="probehandle" style="padding-bottom: 0px !important;">
+                                <a href="../../cem/probe/download">
+                                    <button type="button" class="btn btn-sm btn-success"><span
+                                            class="glyphicon glyphicon-open"></span>导出
+                                    </button>
+                                </a>
+                                <p id="flip" style="position:relative; left:45%;" class="glyphicon glyphicon-menu-up" onClick="toggle1('searchbox')"></p>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+                </div>
+            </div>
+
+
+
+
+            <div role="tabpanel" class="tab-pane fade" id="Section2">
+                <div class="wrapper wrapper-content">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-content" style="padding-bottom: 0 !important;">
+                                    <div class="row" id="area_searchbox" style="border: none !important;">
+
+                                        <form class="col-lg-9 col-md-19 col-sm-9 form-horizontal" id="areasearch"
+                                              role="form">
+                                            <div class="form-group row">
+                                                <div class="input-group searchspan">
+                                                    <span class="searchname" title="选择探针"
+                                                          style="width: 80px">选择探针：</span>
+                                                </div>
+
+                                                <div class="input-group searchspan">
+                                                    <span class="searchname" title="地市" style="width: 40px">地市</span>
+                                                    <select id="area_city" class="form-control" name="city" style="width: 110px">
+                                                        <option value="1">所有地市</option>
+                                                        <option v-for="item in cities"
+                                                                v-bind:value="item.message.cityId">{{ item.message.cityName }}
+                                                        </option>
+                                                        <!--<option v-for="pitem in parray" v-bind:value="pitem.Id">{{ pitem.Name }}-->
+                                                    </select>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group row">
+                                                <div class="input-group searchspan">
+                                                    <span class="searchname" title="选择业务"
+                                                          style="width: 80px">选择业务：</span>
+                                                </div>
+
+                                                <div class="input-group searchspan">
+                                                    <span class="searchname" title="业务类型"
+                                                          style="width: 80px">业务类型</span>
+                                                    <select id="area_service" class="form-control" name="servicetype"
+                                                            style="width: 110px">
+                                                        <option value="1">综合业务</option>
+                                                        <option value="2">网络连通性业务</option>
+                                                        <option value="3">网络层质量业务</option>
+                                                        <option value="4">网页浏览业务</option>
+                                                        <option value="5">文件下载业务</option>
+                                                        <option value="6">在线视频业务</option>
+                                                        <option value="7">网络游戏业务</option>
+                                                        <!--<option v-for="pitem in parray" v-bind:value="pitem.Id">{{ pitem.Name }}-->
+                                                    </select>
+                                                </div>
+
+                                                <div class="input-group searchspan">
+                                                    <span class="searchname" title="目标地址"
+                                                          style="width: 80px">目标地址</span>
+                                                    <select id="area_target" class="form-control " name="target"
+                                                            style="width: 110px">
+                                                        <option value="1">所有目标地址</option>
+                                                        <option></option>
+                                                    </select>
+                                                </div>
+
+                                            </div>
+
+
+                                            <div class="form-group row">
+                                                <div class="input-group searchspan">
+                                                    <span class="searchname" title="时间" style="width: 80px">选择时间：</span>
+                                                </div>
+
+                                                <div class="input-group searchspan">
+                                                    <span class="searchname" title="日期" style="width: 40px">起始</span>
+                                                    <input type="text" id="areastart_date" class="form-control"
+                                                           name="startDate"
+                                                           style="width: 140px"
+                                                           value="">
+                                                </div>
+
+                                                <div class="input-group searchspan">
+                                                    <span class="searchname" title="日期" style="width: 40px">结束</span>
+                                                    <input type="text" id="areaterminal_date" class="form-control"
+                                                           name="terminalDate"
+                                                           style="width: 140px"
+                                                           value="">
+                                                </div>
+                                            </div>
+
+                                        </form>
+
+
+                                        <div class="col-lg-3 col-md-3 col-sm-3 pull-left"
+                                             style="text-align:center;height:50px;position: relative;" id="area_search">
+                                            <button type="button" class="btn btn-sm btn-success"
+                                                    style="margin-right: 5px;position: relative;top: 50%;"
+                                                    v-on:click="testagentListsearch"><span
+                                                    class="glyphicon glyphicon-zoom-in"></span>查询
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row" id="areatest_table">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title fontcolor" id="areahandle" style="padding-bottom: 0px !important;">
+                                <a href="../../cem/probe/download">
+                                    <button type="button" class="btn btn-sm btn-success"><span
+                                            class="glyphicon glyphicon-open"></span>导出
+                                    </button>
+                                    <p id="area_flip" style="position:relative; left:35%;" class="glyphicon glyphicon-menu-up" onClick="toggle1('area_searchbox')"></p>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+
+
+                </div>
+            </div>
+
+
+
+
+
+
+
+        </div>
+    </div>
+
+
+</div>
+
+
+<!-- 无效时间提醒模态框（Modal） -->
+<div class="modal fade" id="nonavailable_time" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+    <div class="modal-dialog" style="width: 500px"> <!--修改bootstrap modal模态框的宽度-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h3 class="modal-title" id="myModalLabel">提醒</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <form class="form-horizontal" id="schedulepolicyform_data" role="form">
+                        <div class="form-group row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 form_border">
+                                <p style="font-size: medium;text-align: left">您输入的起止时间无效，请核查后重新输入！</p>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">确定</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+
+
+<script type="text/javascript"
+        src="${rc.contextPath}/statics/js/modules/evaluation/qualityRank.js?_${date.systemTime}"></script>
+
+
+<script>
+    $('#start_date').appendDtpicker({
+
+    });
+</script>
+
+<script>
+    $('#terminal_date').appendDtpicker({
+
+    });
+</script>
+
+<script type="text/javascript">
+    //参数para1：希望隐藏元素的id值
+    function toggle1(param){
+        if ($("#flip").attr("class")=="glyphicon glyphicon-menu-up")
+        {
+            $("#flip").attr("class","glyphicon glyphicon-menu-down");
+        }
+        else
+        {
+            $("#flip").attr("class","glyphicon glyphicon-menu-up");
+        }
+        $("#"+param).toggle();
+    }
+</script>
+
+
+
 
 </body>
+
+<script>
+    /** 拖拽模态框*/
+    var dragModal = {
+        mouseStartPoint: {"left": 0, "top": 0},
+        mouseEndPoint: {"left": 0, "top": 0},
+        mouseDragDown: false,
+        basePoint: {"left": 0, "top": 0},
+        moveTarget: null,
+        topleng: 0
+    }
+    $(document).on("mousedown", ".modal-header", function (e) {
+        //webkit内核和火狐禁止文字被选中
+        $('body').addClass('select')
+        //ie浏览器禁止文字选中
+        document.body.onselectstart = document.body.ondrag = function () {
+            return false;
+        }
+        if ($(e.target).hasClass("close"))//点关闭按钮不能移动对话框
+            return;
+        dragModal.mouseDragDown = true;
+        dragModal.moveTarget = $(this).parent().parent();
+        dragModal.mouseStartPoint = {"left": e.clientX, "top": e.pageY};
+        dragModal.basePoint = dragModal.moveTarget.offset();
+        dragModal.topLeng = e.pageY - e.clientY;
+    });
+    $(document).on("mouseup", function (e) {
+        dragModal.mouseDragDown = false;
+        dragModal.moveTarget = undefined;
+        dragModal.mouseStartPoint = {"left": 0, "top": 0};
+        dragModal.basePoint = {"left": 0, "top": 0};
+    });
+    $(document).on("mousemove", function (e) {
+        if (!dragModal.mouseDragDown || dragModal.moveTarget == undefined) return;
+        var mousX = e.clientX;
+        var mousY = e.pageY;
+        if (mousX < 0) mousX = 0;
+        if (mousY < 0) mousY = 25;
+        dragModal.mouseEndPoint = {"left": mousX, "top": mousY};
+        var width = dragModal.moveTarget.width();
+        var height = dragModal.moveTarget.height();
+        var clientWidth = document.body.clientWidth
+        var clientHeight = document.body.clientHeight;
+        if (dragModal.mouseEndPoint.left < dragModal.mouseStartPoint.left - dragModal.basePoint.left) {
+            dragModal.mouseEndPoint.left = 0;
+        }
+        else if (dragModal.mouseEndPoint.left >= clientWidth - width + dragModal.mouseStartPoint.left - dragModal.basePoint.left) {
+            dragModal.mouseEndPoint.left = clientWidth - width - 38;
+        } else {
+            dragModal.mouseEndPoint.left = dragModal.mouseEndPoint.left - (dragModal.mouseStartPoint.left - dragModal.basePoint.left);//移动修正，更平滑
+
+        }
+        if (dragModal.mouseEndPoint.top - (dragModal.mouseStartPoint.top - dragModal.basePoint.top) < dragModal.topLeng) {
+            dragModal.mouseEndPoint.top = dragModal.topLeng;
+        } else if (dragModal.mouseEndPoint.top - dragModal.topLeng > clientHeight - height + dragModal.mouseStartPoint.top - dragModal.basePoint.top) {
+            dragModal.mouseEndPoint.top = clientHeight - height - 38 + dragModal.topLeng;
+        }
+        else {
+            dragModal.mouseEndPoint.top = dragModal.mouseEndPoint.top - (dragModal.mouseStartPoint.top - dragModal.basePoint.top);
+        }
+        dragModal.moveTarget.offset(dragModal.mouseEndPoint);
+    });
+    $(document).on('hidden.bs.modal', '.modal', function (e) {
+        $('.modal-dialog').css({'top': '0px', 'left': '0px'})
+        $('body').removeClass('select')
+        document.body.onselectstart = document.body.ondrag = null;
+
+    })
+</script>
 </html>

@@ -5,30 +5,31 @@ var status;
 var idArray = new Array();
 var names = new Array();
 
-var schedulepolicydata_handle = new Vue({
+var spdata_handle = new Vue({
     el: '#handle',
     data: {},
     mounted() {},
     methods: {
-        schedulepolicyadd: function () {   /*监听新增触发事件*/
+        spadd: function () {   /*监听新增触发事件*/
             status = 0;
             /*状态0,表示新增*/
-            var forms = $('#schedulepolicyform_data .form-control');
+            var forms = $('#spform_data .form-control');
 
-            $('#schedulepolicyform_data input[type=text]').prop("readonly", false);
+            $('#spform_data input[type=text]').prop("readonly", false);
             /*去除只读状态*/
-            $('#schedulepolicyform_data select').prop("disabled", false);
+            $('#spform_data select').prop("disabled", false);
 
-            for (var i = 0; i < 3; i++) {
+            for (var i = 0; i < 4; i++) {
                 forms[i].value = ""
             }
-            schedulepolicyform_data.modaltitle = "新增调度策略";
+            spform_data.modaltitle = "新增调度策略";
             /*修改模态框标题*/
-            $('#myModal_schedulepolicy').modal('show');
+            $('#myModal_sp').modal('show');
         }
     }
 });
 
+/*调度策略的输入*/
 var scheduler_handle = new Vue({
     el: 'scheduler',
     data: {},
@@ -47,15 +48,15 @@ function update_this (obj) {     /*监听修改触发事件*/
     console.log(update_data_id);
     status = 1;      /*状态1表示修改*/
     /*find被选中的行*/
-    var forms = $('#schedulepolicyform_data .form-control');
+    var forms = $('#spform_data .form-control');
     /*去除只读状态*/
-    $('#schedulepolicyform_data input[type=text]').prop("readonly", false);
+    $('#spform_data input[type=text]').prop("readonly", false);
 
     $.ajax({
         type: "POST", /*GET会乱码*/
         url: "../../cem/schedulepolicy/info/"+update_data_id,
         cache: false,  //禁用缓存
-        //data: update_data_ids,  //传入组装的参数
+        //data: ,  //传入组装的参数
         dataType: "json",
         contentType: "application/json", /*必须要,不可少*/
         success: function (result) {
@@ -65,9 +66,9 @@ function update_this (obj) {     /*监听修改触发事件*/
             forms[3].value = result.schedulePolicy.remark;
         }
     });
-    schedulepolicyform_data.modaltitle = "修改调度策略";
+    spform_data.modaltitle = "修改调度策略";
     /*修改模态框标题*/
-    $('#myModal_schedulepolicy').modal('show');
+    $('#myModal_sp').modal('show');
 }
 
 function delete_ajax() {
@@ -84,7 +85,7 @@ function delete_ajax() {
 
             toastr.success("调度策略删除成功!");
 
-            schedulepolicytable.currReset();
+            sptable.currReset();
 
             idArray = [];
             /*清空id数组*/
@@ -159,8 +160,8 @@ Date.prototype.Format = function (fmt) {
 }
 
 
-var schedulepolicyform_data = new Vue({
-    el: '#myModal_schedulepolicy',
+var spform_data = new Vue({
+    el: '#myModal_sp',
     data: {
         modaltitle: "", /*定义模态框标题*/
         /*name: [],
@@ -170,20 +171,21 @@ var schedulepolicyform_data = new Vue({
     // 在 `methods` 对象中定义方法
     methods: {
         submit: function () {
-            var schedulepolicyJson = getFormJson($('#schedulepolicyform_data'));
-            if (typeof(schedulepolicyJson["spName"]) == "undefined") {                  /*3个select必选*/
+            var spJson = getFormJson($('#spform_data'));
+            console.log(spJson);
+            if (typeof(spJson["spName"]) == "undefined") {                  /*3个select必选*/
                 toastr.warning("请添加策略名称");
-            } else if (typeof(schedulepolicyJson["scheduler"]) == "undefined") {
+            } else if (typeof(spJson["scheduler"]) == "undefined") {
                 toastr.warning("请添加任务描述!");
-            } else if (typeof(schedulepolicyJson["remark"]) == "undefined") {
+            } else if (typeof(spJson["remark"]) == "undefined") {
                 toastr.warning("请添加备注!");
             } else {
                 var d = new Date().Format("yyyy-MM-dd hh:mm:ss");        //获取日期与时间
-                schedulepolicyJson['startDate'] = d;
-                var schedulepolicy = JSON.stringify(schedulepolicyJson);
+                spJson['startDate'] = d;
+                var sp = JSON.stringify(spJson);
                 /*封装成json数组*/
                 /*获取表单元素的值*/
-                console.log(schedulepolicy);
+                console.log(sp);
                 var mapstr;
                 if (status == 0) {
                     mapstr = "save";
@@ -195,7 +197,7 @@ var schedulepolicyform_data = new Vue({
                     type: "POST", /*GET会乱码*/
                     url: "../../cem/schedulepolicy/" + mapstr,
                     cache: false,  //禁用缓存
-                    data: schedulepolicy,  //传入组装的参数
+                    data: sp,  //传入组装的参数
                     dataType: "json",
                     contentType: "application/json", /*必须要,不可少*/
                     success: function (result) {
@@ -206,7 +208,7 @@ var schedulepolicyform_data = new Vue({
                             switch (code) {
                                 case 0:
                                     toastr.success("策略新增成功!");
-                                    $('#myModal_schedulepolicy').modal('hide');    //jQuery选定
+                                    $('#myModal_sp').modal('hide');    //jQuery选定
                                     break;
                                 case 403:
                                     toastr.error(msg);
@@ -219,7 +221,7 @@ var schedulepolicyform_data = new Vue({
                             switch (code) {
                                 case 0:
                                     toastr.success("策略修改成功!");
-                                    $('#myModal_schedulepolicy').modal('hide');
+                                    $('#myModal_sp').modal('hide');
                                     break;
                                 case 403:
                                     toastr.error(msg);
@@ -229,7 +231,7 @@ var schedulepolicyform_data = new Vue({
                                     break
                             }
                         }
-                        schedulepolicytable.currReset();
+                        sptable.currReset();
                     }
                 });
             }
@@ -256,7 +258,7 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
 /*选中表格事件*/
 $(document).ready(function () {
     $(".list td").slice(7).each(function(){  //操作列取消选中状态
-        $('#schedulepolicy_table tbody').slice(7).on('click', 'tr', function () {   /*表格某一行选中状态*/
+        $('#sp_table tbody').slice(7).on('click', 'tr', function () {   /*表格某一行选中状态*/
             if ($(this).hasClass('selected')) {
                 $(this).removeClass('selected');
                 $(this).find("input:checkbox").prop("checked", false);
@@ -290,8 +292,8 @@ $(document).ready(function () {
 
 });
 
-var schedulepolicytable = new Vue({
-    el: '#schedulepolicydata_table',
+var sptable = new Vue({
+    el: '#spdata_table',
     data: {
         headers: [
             {title: '<div style="width:15px"></div>'},
@@ -304,14 +306,14 @@ var schedulepolicytable = new Vue({
         ],
         rows: [],
         dtHandle: null,
-        schedulepolicydata: {}
+        spdata: {}
     },
 
     methods: {
         reset: function () {
             let vm = this;
-            vm.schedulepolicydata = {};
-            /*清空schedulepolicydata*/
+            vm.spdata = {};
+            /*清空spdata*/
             vm.dtHandle.clear();
             console.log("重置");
             vm.dtHandle.draw();
@@ -362,8 +364,8 @@ var schedulepolicytable = new Vue({
                 param.limit = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
                 param.start = data.start;//开始的记录序号
                 param.page = (data.start / data.length) + 1;//当前页码
-                param.schedulepolicydata = JSON.stringify(vm.schedulepolicydata);
-                /*用于查询schedulepolicy数据*/
+                param.spdata = JSON.stringify(vm.spdata);
+                /*用于查询sp数据*/
                 console.log(param);
                 //ajax请求数据
                 $.ajax({
@@ -392,7 +394,7 @@ var schedulepolicytable = new Vue({
                             row.push(item.scheduler);
                             row.push(item.remark);
                             row.push(item.startDate);
-                            row.push('<a class="fontcolor" onclick="update_this(this)" id='+item.id+'>修改</a>&nbsp;<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>');
+                            row.push('<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>');
                             rows.push(row);
                         });
                         returnData.data = rows;
@@ -401,7 +403,7 @@ var schedulepolicytable = new Vue({
                         //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);
-                        $("#schedulepolicydata_table").colResizable({
+                        $("#spdata_table").colResizable({
                             liveDrag:true,
                             gripInnerHtml:"<div class='grip'></div>",
                             draggingClass:"dragging",
