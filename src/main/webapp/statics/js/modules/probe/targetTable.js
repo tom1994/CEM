@@ -6,12 +6,12 @@ var idArray = new Array();
 var tgidArray = new Array();
 /*创建业务类型字典表*/
 var sst = new Map();
-sst.set(0, "网络连通性测试业务");
-sst.set(1, "网络层质量测试业务");
-sst.set(2, "文件下载类业务");
-sst.set(3, "网页浏览类业务");
-sst.set(4, "在线视频类业务");
-sst.set(5, "网络游戏类业务");
+sst.set(1, "网络连通性测试业务");
+sst.set(2, "网络层质量测试业务");
+sst.set(3, "文件下载类业务");
+sst.set(4, "网页浏览类业务");
+sst.set(5, "在线视频类业务");
+sst.set(6, "网络游戏类业务");
 
 var target_search = new Vue({
     el:'#searchbox',
@@ -675,7 +675,6 @@ var target_table = new Vue({
                             row.push('<a class="fontcolor" onclick="update_this(this)" id='+item.id+'>详情</a>&nbsp&nbsp;' +
                                 '<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>');
                             rows.push(row);
-                            console.log(item);
                         });
                         returnData.data = rows;
                         console.log(returnData);
@@ -820,7 +819,7 @@ var tg_table = new Vue({
                             row.push('<a class="fontcolor" onclick="tgupdate_this(this)" id='+item.id+'>详情</a>&nbsp&nbsp;' +
                                 '<a class="fontcolor" onclick="tgdelete_this(this)" id='+item.id+'>删除</a>');
                             rows.push(row);
-                            console.log(item);
+                            // console.log(item);
                         });
                         returnData.data = rows;
                         console.log(returnData);
