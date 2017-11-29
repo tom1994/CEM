@@ -29,19 +29,6 @@ var spdata_handle = new Vue({
     }
 });
 
-/*调度策略的输入*/
-var scheduler_handle = new Vue({
-    el: 'scheduler',
-    data: {},
-    methods:{
-        /*cron_generate:function() {
-            var forms = $('#schedulerform_data .form-control');
-            forms[0].value = "";
-            $('#myModal_scheduler').modal('show');
-        }*/
-    }
-});
-
 function update_this (obj) {     /*监听修改触发事件*/
     update_data_id = parseInt(obj.id);
     /*获取当前行探针数据id*/
