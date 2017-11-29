@@ -1,4 +1,4 @@
-/*将表单对象变为json对象*/
+
 function getFormJson(form) {
     var o = {};
     var a = $(form).serializeArray();
@@ -24,7 +24,10 @@ var weightSet = new Vue({
             $('#Modal_connectionweightset').modal('show');
             console.log('success');
         },
-        qualityWeightSet:function (){},
+        qualityWeightSet:function (){
+            $('#Modal_qualityweightset').modal('show');
+            console.log('success');
+        },
         browseWeightSet:function(){},
         downloadWeightSet:function(){},
         videoWeightSet:function(){},

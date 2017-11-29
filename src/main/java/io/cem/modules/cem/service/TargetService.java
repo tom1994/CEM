@@ -17,6 +17,8 @@ public interface TargetService {
 	TargetEntity queryObject(Integer id);
 	
 	List<TargetEntity> queryList(Map<String, Object> map);
+
+	List<TargetEntity> queryTargetList(Map<String, Object> map);
 	
 	int queryTotal(Map<String, Object> map);
 	

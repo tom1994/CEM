@@ -8,14 +8,20 @@
         <result property="id" column="id"/>
         <result property="targetName" column="target_name"/>
         <result property="value" column="value"/>
-        <result property="serviceType" column="superservice_type"/>
+        <result property="superserviceType" column="superservice_type"/>
         <result property="groupId" column="group_id"/>
         <result property="remark" column="remark"/>
         <result property="createTime" column="create_time"/>
+		<result property="groupName" column="group_name"/>
     </resultMap>
 
-	<select id="queryObject" resultType="io.cem.modules.cem.entity.TargetEntity">
-		select * from target where id = #{value}
+	<select id="queryObject" resultMap="targetMap">
+		SELECT target.*,
+		target_group.tg_name AS group_name
+		FROM target
+		LEFT JOIN target_group
+		ON target.group_id = target_group.id
+		WHERE target.id = #{value}         <!--value是前端点击查看详情时传入的id-->
 	</select>
 
 	<select id="queryList" resultType="io.cem.modules.cem.entity.TargetEntity">
@@ -36,13 +42,32 @@
  	<select id="queryTotal" resultType="int">
 		select count(*) from target 
 	</select>
-	 
+
+	<select id="queryTargetList" resultMap="targetMap">
+		SELECT target.*,
+		target_group.tg_name AS group_name
+		FROM target
+		LEFT JOIN target_group
+		ON target.group_id = target_group.id
+		<choose>
+			<when test="sidx != null and sidx.trim() != ''">
+				order by ${sidx} ${order}
+			</when>
+			<otherwise>
+				order by id desc
+			</otherwise>
+		</choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
 	<insert id="save" parameterType="io.cem.modules.cem.entity.TargetEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into target
 		(
 			`target_name`, 
 			`value`, 
-			superservice_type,
+			`superservice_type`,
 			`group_id`, 
 			`remark`, 
 			`create_time`

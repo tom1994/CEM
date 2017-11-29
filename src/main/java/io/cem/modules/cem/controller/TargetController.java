@@ -53,8 +53,7 @@ public class TargetController {
 		} catch (RuntimeException e) {
 			throw new RRException("内部参数错误，请重试！");
 		}
-		List<TargetEntity> targetList = targetService.queryList(map);
-		//List<ProbeEntity> probeList = targetService.queryProbeList(map);
+		List<TargetEntity> targetList = targetService.queryTargetList(map);
 		int total = targetService.queryTotal(map);
 		PageUtils pageUtil = new PageUtils(targetList, total, limit, page);
 		return R.ok().put("page", pageUtil);
