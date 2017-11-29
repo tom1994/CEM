@@ -287,7 +287,7 @@ function update_this (obj) {     /*监听修改触发事件*/
     /*获取当前行探针数据id*/
     console.log(update_data_id);
     status = 1;      /*状态1表示修改*/
-    var forms = $('#probeform_data .form-control');
+    var forms = $('#probeform_data.form-control');
     /*去除只读状态*/
     //$('#probeform_data input[type=text]').prop("readonly", false);
 
@@ -891,8 +891,8 @@ var probetable = new Vue({
                                 /*row.push('<a class="fontcolor" onclick="update_this(this)" id='+item.id+'>详情</a>&nbsp&nbsp;' +
                                     '<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>&nbsp&nbsp;'
                                     +'<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>查看任务</a>');*/
-                                row.push('<a class="fontcolor" onclick="update_this(this)" id='+item.id+'>详情</a>&nbsp&nbsp;' +
-                                    '<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>'+
+                                row.push('<a class="fontcolor" onclick="update_this(this)" id='+item.id+'>详情</a>&nbsp;' +
+                                    '<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>&nbsp;'+
                                     '<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>查看任务</a>');
                                 rows.push(row);
                             });

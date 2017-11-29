@@ -15,6 +15,8 @@ import java.util.Map;
 public interface TargetService {
 	
 	TargetEntity queryObject(Integer id);
+
+	List<TargetEntity> infoBatch(Integer serviceId);
 	
 	List<TargetEntity> queryList(Map<String, Object> map);
 	

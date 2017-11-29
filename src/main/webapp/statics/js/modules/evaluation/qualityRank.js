@@ -1,0 +1,97 @@
+/**
+ * Created by Fern on 2017/11/28.
+ */
+var status;
+var idArray = new Array();
+var probeGroupNames = new Array();
+var cityNames = new Array();
+var areaNames = new Array();
+var serviceArray = new Array();
+var targetNames = new Array();
+var probeNames = new Array();
+var typeNames = new Array();
+var statusNames = new Array();
+
+var probedata_handle = new Vue({
+    el: '#probehandle',
+    data: {},
+    mounted: function(){         /*动态加载测试任务组数据*/
+        $.ajax({
+            type: "POST",   /*GET会乱码*/
+            url: "../../cem/city/list",//Todo:改成测试任务组的list方法
+            cache: false,  //禁用缓存
+            dataType: "json",
+            /* contentType:"application/json",  /!*必须要,不可少*!/*/
+            success: function (result) {
+                for(var i=0;i<result.page.list.length;i++){
+                    cityNames[i] = {message: result.page.list[i]}
+                }
+                search_data.cities = cityNames;
+            }
+        });
+    },
+    methods: {
+
+    }
+});
+
+var search_data = new Vue({
+    el:'#probesearch',
+    data:{
+        areas:[],
+        cities:[],
+        probe:[],
+        probegroup_names:[],
+        accessLayers:[],
+        types:[],
+        status:[],
+        target:[],
+    },
+    methods:{
+        citychange: function () {
+            this.areas = getArea($("#selectcity").val());
+            console.log($("#selectcity").val());
+        },
+        servicechange: function () {
+            this.target = getService($("#selectservice").val());
+            console.log($("#selectservice").val())
+        }
+    }
+});
+
+var getArea = function (cityid) {
+    $.ajax({
+        url: "../../cem/county/info/"+cityid,
+        type: "POST",
+        cache: false,  //禁用缓存
+        dataType: "json",
+        contentType: "application/json",
+        success: function (result) {
+            search_data.areas = [];
+            areaNames = [];
+            for(var i=0;i<result.county.length;i++){
+                areaNames[i] = {message: result.county[i]}
+            }
+            search_data.areas = areaNames;
+        }
+    });
+}
+
+var getService = function (serviceId) {
+    console.log("I'm here!!!!"+serviceId);
+    $.ajax({
+        url: "../../cem/target/infobat/"+serviceId,
+        type: "POST", /*GET会乱码*/
+        cache: false,  //禁用缓存
+        dataType: "json",
+        contentType: "application/json", /*必须要,不可少*/
+        success: function (result) {
+            search_data.target = [];
+            targetNames = [];
+            for(var i=0;i<result.target.length;i++){
+                targetNames[i] = {message: result.target[i]}
+            }
+            search_data.target = targetNames;
+        }
+    });
+}

@@ -22,7 +22,7 @@ public class TargetEntity implements Serializable {
 	//测试目标取值
 	private String value;
 	//子业务类型
-	private Integer superserviceType;
+	private Integer serviceType;
 	//所属测试目标组
 	private Integer groupId;
 	//备注
@@ -69,12 +69,12 @@ public class TargetEntity implements Serializable {
 	/**
 	 * 设置：业务类型
 	 */
-	public Integer getSuperserviceType() {
-		return superserviceType;
+	public Integer getServiceType() {
+		return serviceType;
 	}
 
-	public void setSuperserviceType(Integer superserviceType) {
-		this.superserviceType = superserviceType;
+	public void setServiceType(Integer serviceType) {
+		this.serviceType = serviceType;
 	}
 
 	/**
