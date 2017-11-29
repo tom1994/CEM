@@ -310,6 +310,38 @@
 </div>
 
 
+<!-- 无效时间提醒模态框（Modal） -->
+<div class="modal fade" id="nonavailable_time" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+    <div class="modal-dialog" style="width: 500px"> <!--修改bootstrap modal模态框的宽度-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h3 class="modal-title" id="myModalLabel">提醒</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <form class="form-horizontal" id="schedulepolicyform_data" role="form">
+                        <div class="form-group row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 form_border">
+                                <p style="font-size: medium;text-align: left">您输入的起止时间无效，请核查后重新输入！</p>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">确定</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+
+
 <script type="text/javascript"
         src="${rc.contextPath}/statics/js/modules/evaluation/qualityRank.js?_${date.systemTime}"></script>
 
