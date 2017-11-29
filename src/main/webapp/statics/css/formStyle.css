@@ -13,6 +13,19 @@ div.service_unselected input{
 .service_selected{
 }
 
+.ue-container {
+    /*width: 60%;*/
+    margin-top: 3%;
+    margin-bottom: 20px;
+    /*padding: 20px 20px;*/
+    /*border: 1px solid #ddd;*/
+    background: #fff;
+}
+
+.btn-box{
+    padding-top: 8%;
+}
+
 .wrapper-content {
     padding: 0px !important; /*wrapper-content去除内边距*/
 }
@@ -51,10 +64,11 @@ div.service_unselected input{
 
 /*评价模型设置*/
 .modulefont {
-    color:#8bb4e7;
     font-family: "Microsoft Yahei", Arial;
     font-weight: bold;
     font-size: large;!important;
+    color: white;
+    padding:12px;
 }
 
 #handle .ui-button:hover {
@@ -165,12 +179,12 @@ a:link {
 
 /*评价模型设置模态框*/
 .modal-header1 {
-    padding: 5px;
+    padding: 5px 10px;
     border-bottom: 1px solid #e5e5e5;
 }
 
 .modal-footer {
-    padding: 5px;
+    padding: 5px 10px;
     text-align: right;
     border-top: 1px solid #e5e5e5;
 }
@@ -257,7 +271,7 @@ a:link {
 
 
 .wrapper-block{
-    padding:5px;
+    padding:5px 20px;
 }
 
 .left-up{
@@ -311,6 +325,21 @@ a:link {
     font-weight: bold;
     font-size: 14px;
 }
+
+/*权重设置的卡片样式*/
+.tools {
+    float:right;
+    display: inline-block;
+    padding: 0 8px;
+}
+.inputset {
+    line-height: 2px !important;
+    border:0;
+    border-bottom: #676a6c 1px solid;
+    outline: none;
+}
+
+
 
 
 

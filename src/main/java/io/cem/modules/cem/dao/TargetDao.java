@@ -7,13 +7,12 @@ import java.util.Map;
 import java.util.List;
 
 /**
- * 
- * 
  * @author ${author}
  * @email ${email}
  * @date 2017-11-05 20:39:28
  */
 public interface TargetDao extends BaseDao<TargetEntity> {
     List<TargetEntity> infoBatch(Integer serviceId);
-	
+    List<TargetEntity> queryTgByTList(Map<String,Object> map);
+    List<TargetEntity> queryTargetList(Integer id);
 }

@@ -29,6 +29,8 @@ public class TargetEntity implements Serializable {
 	private String remark;
 	//创建时间
 	private Date createTime;
+	//所属测试目标组字符串
+	private String groupName;
 
 	/**
 	 * 设置：测试目标ID
@@ -112,5 +114,17 @@ public class TargetEntity implements Serializable {
 	 */
 	public Date getCreateTime() {
 		return createTime;
+	}
+	/**
+	 * 设置：测试目标组
+	 */
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
+	}
+	/**
+	 * 获取：测试目标组
+	 */
+	public String getGroupName() {
+		return groupName;
 	}
 }

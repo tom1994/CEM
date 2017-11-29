@@ -19,6 +19,10 @@ public interface TargetService {
 	List<TargetEntity> infoBatch(Integer serviceId);
 	
 	List<TargetEntity> queryList(Map<String, Object> map);
+
+	List<TargetEntity> queryTgByTList(Map<String, Object> map);
+
+	List<TargetEntity> queryTargetList(Integer spId);
 	
 	int queryTotal(Map<String, Object> map);
 	

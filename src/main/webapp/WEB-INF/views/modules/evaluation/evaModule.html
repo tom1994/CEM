@@ -10,75 +10,335 @@
     <title>感知评价模型设置</title>
     #parse("cemHeader.html")  <!--导入CSS和js文件-->
     <link href="${rc.contextPath}/statics/css/formStyle.css" rel="stylesheet">  <!--自定义CSS-->
-    <link href="${rc.contextPath}/statics/css/components.min.css" rel="stylesheet">
 </head>
 <body onload="prepare()">
 <!--六大业务权重设置表单-->
 <form id="weight_form">
     <div class="wrapper wrapper-content">
         <div class="row">
-            <div class="col-lg-8 col-md-8 col-sm-8">
-            <!--<div class="col-lg-8 col-md-8 col-sm-8">
-                <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-4 portlet box blue">
-                    <div class="portlet-title">-->
+            <div class="col-lg-12 col-md-12 col-sm-12" style="padding-right: 30px;padding-left: 30px;">
                 <div class="wrapper-module">
                     <div id="weightset">
-                        <div class="module left-up">
-                            <div class="wrapper-block task_border">
-                                <a class="modulefont" v-on:click="connectionWeightSet">网络连通性测试业务</a>
+                        <div class="left-up">
+                            <div class="wrapper-block task_border" style="padding: 0!important; border-radius:10px!important;border: 2px solid #1c84c6;">
+                                <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
+                                    <span class="modulefont">网络层质量测试业务</span>
+                                    <div class="tools">
+                                        <label for="qualityweight" style="font-size:15px;color: white">权重：</label>
+                                        <input type="text" id="qualityweight" name="qualityweight" size="3"
+                                               style="color: white;background-color: #1c84c6; border:none; line-height: 1px!important;">
+                                               <!--onkeyup="if(! /^d*(?:.d{0,2})?$/.test(this.value)) {this.value='';}"-->
+                                    </div>
+                                </div>
+
+                                <div class="wrapper-block" style="font-size:15px !important;">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <a style="color: #676a6c;font-weight: 700" v-on:click="qualityWeightSet">SLA(TCP Echo):</a>
+                                            <input class="inputset" type="text" id="sla_tcp" name="sla_tcp" size="3">
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <label for="sla_udp">SLA(UDP)：</label>
+                                            <input class="inputset" type="text" id="sla_udp" name="sla_udp" size="3">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <label for="dns">DNS：</label>
+                                            <input class="inputset" type="text" id="dns" name="dns" size="3">
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <label for="dhcp">DHCP：</label>
+                                            <input class="inputset" type="text" id="dhcp" name="dhcp" size="3">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <label for="adsl">ADSL接入：</label>
+                                            <input class="inputset" type="text" id="adsl" name="adsl" size="3">
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <label for="radius">Radius认证：</label>
+                                            <input class="inputset" type="text" id="radius" name="radius" size="3">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--<div class="left-up">
+                            <div class="wrapper-block task_border" style="padding: 0!important; border-radius:10px!important;border: 2px solid #1c84c6;">
+                                <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
+                                <a class="modulefont" style="color: white" v-on:click="connectionWeightSet">网络连通性测试业务</a>
+                                </div>
                                 <div class="wrapper-block">
-                        <!--<div class="portlet-body">-->
                                     <label for="connectionweight">权重：</label>
                                         <input type="text" id="connectionweight" name="connectionweight" size="3">
                                 </div>
                             </div>
-                        </div>
-                        <div class="module right">
-                            <div class="wrapper-block task_border">
-                    <!--<div class="col-lg-4 col-md-4 col-sm-4 portlet box blue">
-                        <div class="portlet-title">-->
-                                <a class="modulefont" v-on:click="qualityWeightSet">网络层质量测试业务</a>
-                                <div class="wrapper-block">
-                            <!--<div class="portlet-body">-->
-                                    <label for="qualityweight">权重：</label>
-                                    <input type="text" id="qualityweight" name="qualityweight" size="3">
+                        </div>-->
+                        <div class="right">
+                            <div class="wrapper-block task_border" style="padding: 0!important; border-radius:10px!important;border: 2px solid #1c84c6;">
+                                <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
+                                    <span class="modulefont">网络层质量测试业务</span>
+                                    <div class="tools">
+                                        <label for="qualityweight" style="font-size:15px;color: white">权重：</label>
+                                        <input type="text" id="qualityweight" name="qualityweight" size="3"
+                                               style="color: white;background-color: #1c84c6; border:none; line-height: 1px!important;">
+                                               <!--onkeyup="if(! /^d*(?:.d{0,2})?$/.test(this.value)) {this.value=this.value.replace(/[^\d]+/g,'');}"-->     <!--只能输入数字,小数点后保留两位-->
+                                    </div>
+                                </div>
+
+                                <div class="wrapper-block" style="font-size:15px !important;">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <a style="color: #676a6c;font-weight: 700" v-on:click="qualityWeightSet">SLA(TCP Echo):</a>
+                                            <input class="inputset" type="text" id="sla_tcp" name="sla_tcp" size="3">
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <label for="sla_udp">SLA(UDP)：</label>
+                                            <input class="inputset" type="text" id="sla_udp" name="sla_udp" size="3">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <label for="dns">DNS：</label>
+                                            <input class="inputset" type="text" id="dns" name="dns" size="3">
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <label for="dhcp">DHCP：</label>
+                                            <input class="inputset" type="text" id="dhcp" name="dhcp" size="3">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <label for="adsl">ADSL接入：</label>
+                                            <input class="inputset" type="text" id="adsl" name="adsl" size="3">
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <label for="radius">Radius认证：</label>
+                                            <input class="inputset" type="text" id="radius" name="radius" size="3">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="module left-up">
-                            <div class="wrapper-block task_border">
-                                <a class="modulefont" v-on:click="browseWeightSet">网页浏览类业务</a>
+                        <!--<div class="left-up">
+                            <div class="wrapper-block task_border" style="padding: 0!important; border-radius:10px!important;border: 2px solid #1c84c6;">
+                                <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
+                                <a class="modulefont" style="color: white" v-on:click="browseWeightSet">网页浏览类业务</a>
+                                </div>
                                 <div class="wrapper-block">
                                     <label for="browseweight">权重：</label>
                                     <input type="text" id="browseweight" name="browseweight" size="3">
                                 </div>
                             </div>
+                        </div>-->
+                        <div class="left-up">
+                            <div class="wrapper-block task_border" style="padding: 0!important; border-radius:10px!important;border: 2px solid #1c84c6;">
+                                <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
+                                    <span class="modulefont">网络层质量测试业务</span>
+                                    <div class="tools">
+                                        <label for="qualityweight" style="font-size:15px;color: white">权重：</label>
+                                        <input type="text" id="qualityweight" name="qualityweight" size="3" style="color: white;background-color: #1c84c6; border:none; line-height: 1px!important;">
+                                    </div>
+                                </div>
+
+                                <div class="wrapper-block" style="font-size:15px !important;">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <a style="color: #676a6c;font-weight: 700" v-on:click="qualityWeightSet">SLA(TCP Echo):</a>
+                                            <input class="inputset" type="text" id="sla_tcp" name="sla_tcp" size="3">
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <label for="sla_udp">SLA(UDP)：</label>
+                                            <input class="inputset" type="text" id="sla_udp" name="sla_udp" size="3">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <label for="dns">DNS：</label>
+                                            <input class="inputset" type="text" id="dns" name="dns" size="3">
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <label for="dhcp">DHCP：</label>
+                                            <input class="inputset" type="text" id="dhcp" name="dhcp" size="3">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <label for="adsl">ADSL接入：</label>
+                                            <input class="inputset" type="text" id="adsl" name="adsl" size="3">
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <label for="radius">Radius认证：</label>
+                                            <input class="inputset" type="text" id="radius" name="radius" size="3">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="module right">
-                            <div class="wrapper-block task_border">
-                                <a class="modulefont" v-on:click="downloadWeightSet">文件下载类业务</a>
+                        <!--<div class="right">
+                            <div class="wrapper-block task_border" style="padding: 0!important; border-radius:10px!important;border: 2px solid #1c84c6;">
+                                <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
+                                <a class="modulefont" style="color: white" v-on:click="downloadWeightSet">文件下载类业务</a>
+                                </div>
                                 <div class="wrapper-block">
                                     <label for="downloadweight">权重：</label>
                                     <input type="text" id="downloadweight" name="downloadweight" size="3">
                                 </div>
                             </div>
+                        </div>-->
+                        <div class="right">
+                            <div class="wrapper-block task_border" style="padding: 0!important; border-radius:10px!important;border: 2px solid #1c84c6;">
+                                <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
+                                    <span class="modulefont">网络层质量测试业务</span>
+                                    <div class="tools">
+                                        <label for="qualityweight" style="font-size:15px;color: white">权重：</label>
+                                        <input type="text" id="qualityweight" name="qualityweight" size="3" style="color: white;background-color: #1c84c6; border:none; line-height: 1px!important;">
+                                    </div>
+                                </div>
+
+                                <div class="wrapper-block" style="font-size:15px !important;">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <a style="color: #676a6c;font-weight: 700" v-on:click="qualityWeightSet">SLA(TCP Echo):</a>
+                                            <input class="inputset" type="text" id="sla_tcp" name="sla_tcp" size="3">
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <label for="sla_udp">SLA(UDP)：</label>
+                                            <input class="inputset" type="text" id="sla_udp" name="sla_udp" size="3">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <label for="dns">DNS：</label>
+                                            <input class="inputset" type="text" id="dns" name="dns" size="3">
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <label for="dhcp">DHCP：</label>
+                                            <input class="inputset" type="text" id="dhcp" name="dhcp" size="3">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <label for="adsl">ADSL接入：</label>
+                                            <input class="inputset" type="text" id="adsl" name="adsl" size="3">
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <label for="radius">Radius认证：</label>
+                                            <input class="inputset" type="text" id="radius" name="radius" size="3">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="module left-up">
-                            <div class="wrapper-block task_border">
-                                <a class="modulefont" v-on:click="videoWeightSet">在线视频类业务</a>
+                        <!--<div class="left-up">
+                            <div class="wrapper-block task_border" style="padding: 0!important; border-radius:10px!important;border: 2px solid #1c84c6;">
+                                <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
+                                <a class="modulefont" style="color: white" v-on:click="videoWeightSet">在线视频类业务</a>
+                                </div>
                                 <div class="wrapper-block">
                                     <label for="videoweight">权重：</label>
                                     <input type="text" id="videoweight" name="videoweight" size="3">
                                 </div>
                             </div>
+                        </div>-->
+                        <div class="left-up">
+                            <div class="wrapper-block task_border" style="padding: 0!important; border-radius:10px!important;border: 2px solid #1c84c6;">
+                                <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
+                                    <span class="modulefont">网络层质量测试业务</span>
+                                    <div class="tools">
+                                        <label for="qualityweight" style="font-size:15px;color: white">权重：</label>
+                                        <input type="text" id="qualityweight" name="qualityweight" size="3" style="color: white;background-color: #1c84c6; border:none; line-height: 1px!important;">
+                                    </div>
+                                </div>
+
+                                <div class="wrapper-block" style="font-size:15px !important;">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <a style="color: #676a6c;font-weight: 700" v-on:click="qualityWeightSet">SLA(TCP Echo):</a>
+                                            <input class="inputset" type="text" id="sla_tcp" name="sla_tcp" size="3">
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <label for="sla_udp">SLA(UDP)：</label>
+                                            <input class="inputset" type="text" id="sla_udp" name="sla_udp" size="3">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <label for="dns">DNS：</label>
+                                            <input class="inputset" type="text" id="dns" name="dns" size="3">
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <label for="dhcp">DHCP：</label>
+                                            <input class="inputset" type="text" id="dhcp" name="dhcp" size="3">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <label for="adsl">ADSL接入：</label>
+                                            <input class="inputset" type="text" id="adsl" name="adsl" size="3">
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <label for="radius">Radius认证：</label>
+                                            <input class="inputset" type="text" id="radius" name="radius" size="3">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="module right">
-                            <div class="wrapper-block task_border">
-                                <a class="modulefont" v-on:click="gameWeightSet">网络游戏类业务</a>
+                        <!--<div class="right">
+                            <div class="wrapper-block task_border" style="padding: 0!important; border-radius:10px!important;border: 2px solid #1c84c6;">
+                                <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
+                                <a class="modulefont" style="color: white" v-on:click="gameWeightSet">网络游戏类业务</a>
+                                </div>
                                 <div class="wrapper-block">
                                     <label for="gameweight">权重：</label>
                                     <input type="text" id="gameweight" name="gameweight" size="3">
+                                </div>
+                            </div>
+                        </div>-->
+                        <div class="right">
+                            <div class="wrapper-block task_border" style="padding: 0!important; border-radius:10px!important;border: 2px solid #1c84c6;">
+                                <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
+                                    <span class="modulefont">网络层质量测试业务</span>
+                                    <div class="tools">
+                                        <label for="qualityweight" style="font-size:15px;color: white">权重：</label>
+                                        <input type="text" id="qualityweight" name="qualityweight" size="3" style="color: white;background-color: #1c84c6; border:none; line-height: 1px!important;">
+                                    </div>
+                                </div>
+
+                                <div class="wrapper-block" style="font-size:15px !important;">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <a style="color: #676a6c;font-weight: 700" v-on:click="qualityWeightSet">SLA(TCP Echo):</a>
+                                            <input class="inputset" type="text" id="sla_tcp" name="sla_tcp" size="3">
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <label for="sla_udp">SLA(UDP)：</label>
+                                            <input class="inputset" type="text" id="sla_udp" name="sla_udp" size="3">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <label for="dns">DNS：</label>
+                                            <input class="inputset" type="text" id="dns" name="dns" size="3">
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <label for="dhcp">DHCP：</label>
+                                            <input class="inputset" type="text" id="dhcp" name="dhcp" size="3">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <label for="adsl">ADSL接入：</label>
+                                            <input class="inputset" type="text" id="adsl" name="adsl" size="3">
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <label for="radius">Radius认证：</label>
+                                            <input class="inputset" type="text" id="radius" name="radius" size="3">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -101,10 +361,10 @@
     </div>
 </form>
 
-<!--子业务及各项指标设置模态框-->
+<!--网络连通性子业务及各项指标设置模态框-->
 <div class="modal fade" id="Modal_connectionweightset" tabindex="-1" role="dialog"
-     aria-labelledby="myModalLabel"
-     aria-hidden="true">
+           aria-labelledby="myModalLabel"
+           aria-hidden="true">
     <div class="modal-dialog" style="width: 850px"> <!--修改bootstrap modal模态框的宽度-->
         <div class="modal-content">
 
@@ -264,38 +524,6 @@
                     </div>
                     <div id="pingudpindex" style="display:none">
                         <div class="form-group row">
-                            <!--<table align="center" id="connectionindex">
-                            <tr>
-                                <td>指标</td>
-                                <td>权重</td>
-                                <td>100分</td>
-                                <td>80分</td>
-                                <td>60分</td>
-                                <td>40分</td>
-                                <td>20分</td>
-                                <td>0分</td>
-                            </tr>
-                            <tr>
-                                <td>DNS解析时延(ms)</td>
-                                <td>0.15</td>
-                                <td>0.15</td>
-                                <td>0.15</td>
-                                <td>0.15</td>
-                                <td>0.15</td>
-                                <td>0.15</td>
-                                <td>0.15</td>
-                            </tr>
-                            <tr>
-                                <td>往返时延</td>
-                                <td>0.15</td>
-                                <td>0.15</td>
-                                <td>0.15</td>
-                                <td>0.15</td>
-                                <td>0.15</td>
-                                <td>0.15</td>
-                                <td>0.15</td>
-                            </tr>
-                        </table>-->
                             <div class="col-lg-3 col-md-3 col-sm-3"><span></span></div>
                             <div class="col-lg-1 col-md-1 col-sm-1 form_border"><span>权重</span></div>
                             <div class="col-lg-1 col-md-1 col-sm-1 form_border"><span>100分</span></div>
@@ -427,38 +655,6 @@
                     </div>
                     <div id="pingtcpindex" style="display:none">
                         <div class="form-group row">
-                            <!--<table align="center" id="connectionindex">
-                            <tr>
-                                <td>指标</td>
-                                <td>权重</td>
-                                <td>100分</td>
-                                <td>80分</td>
-                                <td>60分</td>
-                                <td>40分</td>
-                                <td>20分</td>
-                                <td>0分</td>
-                            </tr>
-                            <tr>
-                                <td>DNS解析时延(ms)</td>
-                                <td>0.15</td>
-                                <td>0.15</td>
-                                <td>0.15</td>
-                                <td>0.15</td>
-                                <td>0.15</td>
-                                <td>0.15</td>
-                                <td>0.15</td>
-                            </tr>
-                            <tr>
-                                <td>往返时延</td>
-                                <td>0.15</td>
-                                <td>0.15</td>
-                                <td>0.15</td>
-                                <td>0.15</td>
-                                <td>0.15</td>
-                                <td>0.15</td>
-                                <td>0.15</td>
-                            </tr>
-                        </table>-->
                             <div class="col-lg-3 col-md-3 col-sm-3"><span></span></div>
                             <div class="col-lg-1 col-md-1 col-sm-1 form_border"><span>权重</span></div>
                             <div class="col-lg-1 col-md-1 col-sm-1 form_border"><span>100分</span></div>
@@ -590,38 +786,6 @@
                     </div>
                     <div id="tricmpindex" style="display:none">
                         <div class="form-group row">
-                            <!--<table align="center" id="connectionindex">
-                            <tr>
-                                <td>指标</td>
-                                <td>权重</td>
-                                <td>100分</td>
-                                <td>80分</td>
-                                <td>60分</td>
-                                <td>40分</td>
-                                <td>20分</td>
-                                <td>0分</td>
-                            </tr>
-                            <tr>
-                                <td>DNS解析时延(ms)</td>
-                                <td>0.15</td>
-                                <td>0.15</td>
-                                <td>0.15</td>
-                                <td>0.15</td>
-                                <td>0.15</td>
-                                <td>0.15</td>
-                                <td>0.15</td>
-                            </tr>
-                            <tr>
-                                <td>往返时延</td>
-                                <td>0.15</td>
-                                <td>0.15</td>
-                                <td>0.15</td>
-                                <td>0.15</td>
-                                <td>0.15</td>
-                                <td>0.15</td>
-                                <td>0.15</td>
-                            </tr>
-                        </table>-->
                             <div class="col-lg-3 col-md-3 col-sm-3"><span></span></div>
                             <div class="col-lg-1 col-md-1 col-sm-1 form_border"><span>权重</span></div>
                             <div class="col-lg-1 col-md-1 col-sm-1 form_border"><span>100分</span></div>
@@ -753,38 +917,6 @@
                     </div>
                     <div id="trudpindex" style="display:none">
                         <div class="form-group row">
-                            <!--<table align="center" id="connectionindex">
-                            <tr>
-                                <td>指标</td>
-                                <td>权重</td>
-                                <td>100分</td>
-                                <td>80分</td>
-                                <td>60分</td>
-                                <td>40分</td>
-                                <td>20分</td>
-                                <td>0分</td>
-                            </tr>
-                            <tr>
-                                <td>DNS解析时延(ms)</td>
-                                <td>0.15</td>
-                                <td>0.15</td>
-                                <td>0.15</td>
-                                <td>0.15</td>
-                                <td>0.15</td>
-                                <td>0.15</td>
-                                <td>0.15</td>
-                            </tr>
-                            <tr>
-                                <td>往返时延</td>
-                                <td>0.15</td>
-                                <td>0.15</td>
-                                <td>0.15</td>
-                                <td>0.15</td>
-                                <td>0.15</td>
-                                <td>0.15</td>
-                                <td>0.15</td>
-                            </tr>
-                        </table>-->
                             <div class="col-lg-3 col-md-3 col-sm-3"><span></span></div>
                             <div class="col-lg-1 col-md-1 col-sm-1 form_border"><span>权重</span></div>
                             <div class="col-lg-1 col-md-1 col-sm-1 form_border"><span>100分</span></div>
@@ -910,6 +1042,292 @@
     </div>
 </div>
 
+<!--网络层质量子业务及各项指标设置模态框-->
+<div class="modal fade" id="Modal_qualityweightset" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" style="width: 850px"> <!--修改bootstrap modal模态框的宽度-->
+        <div class="modal-content">
+
+            <div class="modal-header1">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h3 class="modal-title myModalLabel">SLA(TCP Echo)权重设置</h3>
+            </div>
+
+            <div class="modal-body" style="padding: 0px 30px 0px 30px !important;">
+                <!--SLA(TCP Echo)表单-->
+                <form class="form-horizontal" id="slatcpform" role="form">
+                    <!--各项指标的权重设置-->
+                    <div class="form-group row">
+                        <div class="col-lg-3 col-md-3 col-sm-3"><span></span></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1 form_border"><span>权重</span></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1 form_border"><span>100分</span></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1 form_border"><span>80分</span></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1 form_border"><span>60分</span></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1 form_border"><span>40分</span></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1 form_border"><span>20分</span></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1 form_border"><span>0分</span></div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+                            <span>解析时延(ms)</span>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1">
+                            <input type="text" style="width:100%" value="0.15"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.1"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.2"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.3"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.4"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.5"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="1"></div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+                            <span>往向时延(ms)</span>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1">
+                            <input type="text" style="width:100%" value="0.15"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.1"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.2"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.3"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.4"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.5"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="1"></div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+                            <span>返向时延(ms)</span>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1">
+                            <input type="text" style="width:100%" value="0.15"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.1"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.2"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.3"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.4"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.5"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="1"></div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+                            <span>时延标准差(ms)</span>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1">
+                            <input type="text" style="width:100%" value="0.15"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.1"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.2"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.3"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.4"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.5"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="1"></div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+                            <span>往向时延标准差(ms)</span>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1">
+                            <input type="text" style="width:100%" value="0.15"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.1"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.2"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.3"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.4"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.5"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="1"></div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+                            <span>返向时延标准差(ms)</span>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1">
+                            <input type="text" style="width:100%" value="0.15"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.1"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.2"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.3"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.4"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.5"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="1"></div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+                            <span>时延方差(ms)</span>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1">
+                            <input type="text" style="width:100%" value="0.15"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.1"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.2"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.3"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.4"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.5"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="1"></div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+                            <span>往向时延方差(ms)</span>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1">
+                            <input type="text" style="width:100%" value="0.15"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.1"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.2"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.3"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.4"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.5"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="1"></div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+                            <span>返向时延方差(ms)</span>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1">
+                            <input type="text" style="width:100%" value="0.15"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.1"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.2"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.3"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.4"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.5"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="1"></div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+                            <span>抖动(ms)</span>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1">
+                            <input type="text" style="width:100%" value="0.15"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.1"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.2"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.3"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.4"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.5"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="1"></div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+                            <span>往向抖动(ms)</span>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1">
+                            <input type="text" style="width:100%" value="0.15"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.1"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.2"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.3"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.4"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.5"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="1"></div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+                            <span>返向抖动(ms)</span>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1">
+                            <input type="text" style="width:100%" value="0.15"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.1"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.2"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.3"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.4"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.5"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="1"></div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+                            <span>抖动标准差(ms)</span>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1">
+                            <input type="text" style="width:100%" value="0.15"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.1"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.2"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.3"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.4"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.5"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="1"></div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+                            <span>往向抖动标准差(ms)</span>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1">
+                            <input type="text" style="width:100%" value="0.15"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.1"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.2"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.3"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.4"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.5"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="1"></div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+                            <span>返向抖动标准差(ms)</span>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1">
+                            <input type="text" style="width:100%" value="0.15"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.1"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.2"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.3"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.4"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.5"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="1"></div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+                            <span>抖动方差(ms)</span>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1">
+                            <input type="text" style="width:100%" value="0.05"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.1"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.2"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.3"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.4"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.5"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="1"></div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+                            <span>往向抖动方差(ms)</span>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1">
+                            <input type="text" style="width:100%" value="0.05"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.1"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.2"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.3"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.4"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.5"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="1"></div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+                            <span>返向抖动方差(ms)</span>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1">
+                            <input type="text" style="width:100%" value="0.05"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.1"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.2"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.3"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.4"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.5"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="1"></div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+                            <span>丢包率(%)</span>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1">
+                            <input type="text" style="width:100%" value="0.05"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.1"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.2"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.3"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.4"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="0.5"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" style="width:100%" value="1"></div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-success" v-on:click="submit">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>window.jQuery || document.write('<script src="${rc.contextPath}/statics/js/plugins/jquery/jquery-2.0.3.js"><\/script>')</script>
 <script type="text/javascript"
         src="${rc.contextPath}/statics/js/modules/evaluation/evaModule.js?_${date.systemTime}"></script>
@@ -924,7 +1342,7 @@
         else {
             $("#flip1").attr("class", "glyphicon glyphicon-menu-down");
         }
-        $("#" + param).toggle("normal");
+        $("#" + param).toggle();
     }
     function toggle2(param){
         if ($("#flip2").attr("class")=="glyphicon glyphicon-menu-down")
@@ -935,7 +1353,7 @@
         {
             $("#flip2").attr("class","glyphicon glyphicon-menu-down");
         }
-        $("#"+param).toggle("normal");
+        $("#"+param).toggle();
     }
     function toggle3(param) {
         if ($("#flip3").attr("class") == "glyphicon glyphicon-menu-down") {
@@ -944,7 +1362,7 @@
         else {
             $("#flip3").attr("class", "glyphicon glyphicon-menu-down");
         }
-        $("#" + param).toggle("normal");
+        $("#" + param).toggle();
     }
     function toggle4(param) {
         if ($("#flip4").attr("class") == "glyphicon glyphicon-menu-down") {
@@ -953,7 +1371,7 @@
         else {
             $("#flip4").attr("class", "glyphicon glyphicon-menu-down");
         }
-        $("#" + param).toggle("normal");
+        $("#" + param).toggle();
     }
     function toggle5(param) {
         if ($("#flip5").attr("class") == "glyphicon glyphicon-menu-down") {
@@ -962,7 +1380,7 @@
         else {
             $("#flip5").attr("class", "glyphicon glyphicon-menu-down");
         }
-        $("#" + param).toggle("normal");
+        $("#" + param).toggle();
     }
 
 </script>

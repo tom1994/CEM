@@ -4,6 +4,14 @@
 var status;
 var idArray = new Array();
 var tgidArray = new Array();
+/*创建业务类型字典表*/
+var sst = new Map();
+sst.set(0, "网络连通性测试业务");
+sst.set(1, "网络层质量测试业务");
+sst.set(2, "文件下载类业务");
+sst.set(3, "网页浏览类业务");
+sst.set(4, "在线视频类业务");
+sst.set(5, "网络游戏类业务");
 
 var target_search = new Vue({
     el:'#searchbox',
@@ -12,16 +20,48 @@ var target_search = new Vue({
     },
     methods:{
         target_search:function() {   /*查询监听事件*/
-            var data = getFormJson($('#targetsearch'));
-            /*得到查询条件*/
-            /*获取表单元素的值*/
-            console.log(data);
-            target_table.targetdata = data;
-            target_table.redraw();
-            /*根据查询条件重绘*/
+            var target = $('#target').val();
+            /*检测是否为文字*/
+            var cctest=new RegExp(/^[\u4E00-\u9FA5]+$/);
+            /*检测是否为IP地址*/
+            var iptest =new RegExp("25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)\.(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)\.(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)\.(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d");
+            if(iptest.test(target)||cctest.test(target)){
+                alert("请输入正确的名称或IP地址！");
+                $("#target").focus();
+                return false;
+            }else {
+                var data = getFormJson($('#targetsearch'));
+                /*得到查询条件*/
+                /*获取表单元素的值*/
+                console.log(data);
+                target_table.targetdata = data;
+                target_table.redraw();
+                /*根据查询条件重绘*/
+            }
         },
         reset: function () {    /*重置*/
             target_table.reset();
+        }
+    }
+})
+
+var tg_search = new Vue({
+    el:'#groupsearchbox',
+    data:{
+        groupIds:[]
+    },
+    methods:{
+        tg_search:function() {   /*查询监听事件*/
+            var data = getFormJson($('#tgsearch'));
+            /*得到查询条件*/
+            /*获取表单元素的值*/
+            console.log(data);
+            tg_table.tgdata = data;
+            tg_table.redraw();
+            /*根据查询条件重绘*/
+        },
+        tg_reset: function () {    /*重置*/
+            tg_table.reset();
         }
     }
 })
@@ -129,8 +169,6 @@ function tgupdate_this (obj) {     /*监听修改触发事件*/
     status = 1;      /*状态1表示修改*/
     /*find被选中的行*/
     var forms = $('#tgform_data .form-control');
-    /*去除只读状态*/
-    $('#tgform_data input[type=text]').prop("readonly", false);
 
     $.ajax({
         type: "POST", /*GET会乱码*/
@@ -282,6 +320,8 @@ var targetform_data = new Vue({
             if (typeof(targetJson["targetname"]) == "undefined") {
                 toastr.warning("请录入测试目标名!");
             } else {
+                var d = new Date().Format("yyyy-MM-dd hh:mm:ss");        //获取日期与时间
+                targetJson["createTime"] = d;
                 var target = JSON.stringify(targetJson);
                 console.log(target);
                 var mapstr;
@@ -350,8 +390,10 @@ var tgform_data = new Vue({
             var tgJson = getFormJson($('#tgform_data'));
             console.log(tgJson);
             if (typeof(tgJson["tgName"]) == "undefined") {                  /*3个select必选*/
-                toastr.warning("测试目标名不能为空！");
+                toastr.warning("测试目标组名不能为空！");
             } else {
+                var dd = new Date().Format("yyyy-MM-dd hh:mm:ss");        //获取日期与时间
+                tgJson["createTime"] = dd;
                 var tg = JSON.stringify(tgJson);
                 /*封装成json数组*/
                 /*获取表单元素的值*/
@@ -403,8 +445,6 @@ var tgform_data = new Vue({
                     }
                 });
             }
-
-
         }
     }
 });
@@ -423,6 +463,36 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
         }
     });
     return o;
+}
+
+//格式化日期
+Date.prototype.Format = function (fmt) {
+    var o = {
+        "y+": this.getFullYear(),
+        "M+": this.getMonth() + 1,                 //月份
+        "d+": this.getDate(),                    //日
+        "h+": this.getHours(),                   //小时
+        "m+": this.getMinutes(),                 //分
+        "s+": this.getSeconds(),                 //秒
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+        "S+": this.getMilliseconds()             //毫秒
+    };
+    for (var k in o) {
+        if (new RegExp("(" + k + ")").test(fmt)){
+            if(k == "y+"){
+                fmt = fmt.replace(RegExp.$1, ("" + o[k]).substr(4 - RegExp.$1.length));
+            }
+            else if(k=="S+"){
+                var lens = RegExp.$1.length;
+                lens = lens==1?3:lens;
+                fmt = fmt.replace(RegExp.$1, ("00" + o[k]).substr(("" + o[k]).length - 1,lens));
+            }
+            else{
+                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            }
+        }
+    }
+    return fmt;
 }
 
 var search_data = new Vue({
@@ -572,13 +642,34 @@ var target_table = new Vue({
                         var i = param.start+1;
                         result.page.list.forEach(function (item) {
                             let row = [];
+                            /*let superserviceType = item.superserviceType;
+                            switch (superserviceType) {
+                                case 0:
+                                    superserviceType = "网络连通性测试业务";
+                                    break;
+                                case 1:
+                                    superserviceType = "网络层质量测试业务";
+                                    break;
+                                case 2:
+                                    superserviceType = "文件下载类业务";
+                                    break;
+                                case 3:
+                                    superserviceType = "网页浏览类业务";
+                                    break;
+                                case 4:
+                                    superserviceType = "在线视频类业务";
+                                    break;
+                                case 5:
+                                    superserviceType = "网络游戏类业务";
+                                    break;
+                            }*/
                             row.push(i++);
                             row.push('<div class="checkbox"> <label> <input type="checkbox" id="checkALl" name="selectFlag"><div style="display: none">'+item.id+'</div></label> </div>');
                             row.push('<div class="id" style="display:none">'+item.id+'</div>');
                             row.push('<a onclick="update_this(this)" id='+item.id+'><span style="color: black;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">'+item.targetName+'</span></a>');
                             row.push(item.value);
-                            row.push(item.superserviceType);
-                            row.push(item.groupId);
+                            row.push(sst.get(item.superserviceType));
+                            row.push(item.groupName);
                             row.push(item.remark);
                             row.push(item.createTime);
                             row.push('<a class="fontcolor" onclick="update_this(this)" id='+item.id+'>详情</a>&nbsp&nbsp;' +
@@ -604,7 +695,6 @@ var target_table = new Vue({
     }
 });
 
-
 // 测试目标组列表
 var tg_table = new Vue({
     el: '#tg_table',
@@ -627,7 +717,7 @@ var tg_table = new Vue({
         reset: function () {
             let vm = this;
             vm.tgdata = {};
-            /*清空targetdata*/
+            /*清空tgdata*/
             vm.dtHandle.clear();
             console.log("重置");
             vm.dtHandle.draw();
@@ -677,7 +767,7 @@ var tg_table = new Vue({
                 param.start = data.start;//开始的记录序号
                 param.page = (data.start / data.length) + 1;//当前页码
                 param.tgdata = JSON.stringify(vm.tgdata);
-                /*用于查询target数据*/
+                /*用于查询数据*/
                 console.log(param);
                 //ajax请求数据
                 $.ajax({
@@ -699,11 +789,32 @@ var tg_table = new Vue({
                         var i = param.start+1;
                         result.page.list.forEach(function (item) {
                             let row = [];
+                            /*let superserviceType = item.superserviceType;
+                            switch (superserviceType) {
+                                case 0:
+                                    superserviceType = "网络连通性测试业务";
+                                    break;
+                                case 1:
+                                    superserviceType = "网络层质量测试业务";
+                                    break;
+                                case 2:
+                                    superserviceType = "文件下载类业务";
+                                    break;
+                                case 3:
+                                    superserviceType = "网页浏览类业务";
+                                    break;
+                                case 4:
+                                    superserviceType = "在线视频类业务";
+                                    break;
+                                case 5:
+                                    superserviceType = "网络游戏类业务";
+                                    break;
+                            }*/
                             row.push(i++);
                             row.push('<div class="checkbox"> <label> <input type="checkbox" id="checkALl" name="selectFlag"><div style="display: none">'+item.id+'</div></label> </div>');
                             row.push('<div class="id" style="display:none">'+item.id+'</div>');
-                            row.push('<a onclick="update_this(this)" id='+item.id+'><span style="color: black;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">'+item.tgName+'</span></a>');
-                            row.push(item.superserviceType);
+                            row.push('<a onclick="tgupdate_this(this)" id='+item.id+'><span style="color: black;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">'+item.tgName+'</span></a>');
+                            row.push(sst.get(item.superserviceType));
                             row.push(item.remark);
                             row.push(item.createTime);
                             row.push('<a class="fontcolor" onclick="tgupdate_this(this)" id='+item.id+'>详情</a>&nbsp&nbsp;' +

@@ -54,7 +54,6 @@ public class TargetGroupController {
 			throw new RRException("内部参数错误，请重试！");
 		}
 		List<TargetGroupEntity> tgList = targetGroupService.queryList(map);
-		//List<ProbeEntity> probeList = tgService.queryProbeList(map);
 		int total = targetGroupService.queryTotal(map);
 		PageUtils pageUtil = new PageUtils(tgList, total, limit, page);
 		return R.ok().put("page", pageUtil);

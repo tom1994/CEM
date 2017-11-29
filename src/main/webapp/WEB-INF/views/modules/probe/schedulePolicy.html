@@ -20,18 +20,18 @@
         </div>
     </div>
 </div>
-<div class="row" id="schedulepolicy_table">
+<div class="row" id="sp_table">
     <div class="col-lg-12 col-md-12 col-sm-12">
         <div class="ibox float-e-margins">
             <div class="ibox-title fontcolor" id="handle" style="padding-bottom: 0px !important;">
                 <!--<button type="button" class="btn btn-default ui-button" v-on:click="schedulepolicyadd"><span-->
-                <button type="button" class="btn btn-sm btn-success" v-on:click="schedulepolicyadd"><span
+                <button type="button" class="btn btn-sm btn-success" v-on:click="spadd"><span
                         class="glyphicon glyphicon-plus"></span>新增调度策略
                 </button>
             </div>
             <div class="ibox-content">
                 <div class="row " style="overflow-x: scroll">     <!--表格 verflow-x: scroll超出滚动-->
-                    <table class="table table-bordered formStyle" id="schedulepolicydata_table"></table>
+                    <table class="table table-bordered formStyle" id="spdata_table"></table>
                 </div>
             </div>
         </div>
@@ -39,7 +39,7 @@
 </div>
 
 <!-- 模态框（Modal） -->
-<div class="modal fade" id="myModal_schedulepolicy" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="myModal_sp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 
     <div class="modal-dialog" style="width: 500px"> <!--修改bootstrap modal模态框的宽度-->
         <div class="modal-content">
@@ -49,7 +49,7 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <form class="form-horizontal" id="schedulepolicyform_data" role="form">
+                    <form class="form-horizontal" id="spform_data" role="form">
                         <div class="form-group row">
                             <label for="id"
                                    class="col-lg-3 col-md-3 col-sm-3 control-label form_border"
@@ -61,10 +61,17 @@
                             </div>
                         </div>
                         <div class="form-group row">
+<<<<<<< HEAD
                             <label for="name"
                                    class="col-lg-3 col-md-3 col-sm-3 control-label form_border" style="font-size: medium;font-weight: bold">策略名称:</label>
                             <div class="col-lg-9 col-md-9 col-sm-9 ">
                                 <input type="text" class="form-control" id="name" name="name"
+=======
+                            <label for="spName"
+                                   class="col-lg-4 col-md-4 col-sm-4 control-label form_border" style="font-size: medium">策略名称:</label>
+                            <div class="col-lg-8 col-md-8 col-sm-8 ">
+                                <input type="text" class="form-control" id="spName" name="spName"
+>>>>>>> fb5f0676e102c25de1ccd11d5abcaea0a870eb4c
                                        placeholder="请输入策略名称">
                             </div>
                         </div>
@@ -86,36 +93,6 @@
                             <div class="col-lg-9 col-md-9 col-sm-9 ">
                                 <input type="text" class="form-control" id="remark" name="remark"
                                        placeholder="请输入时间间隔"><!--Todo:时间间隔只能允许输入15分钟到24小时-->
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-success" v-on:click="submit">确定</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal -->
-</div>
-
-<!-- 调度策略模态框（Modal） -->
-<div class="modal fade" id="myModal_scheduler" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-
-    <div class="modal-dialog" style="width: 500px"> <!--修改bootstrap modal模态框的宽度-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <form class="form-horizontal" id="schedulerform_data" role="form">
-                        <div class="form-group row">
-                            <label for="interval"
-                                   class="col-lg-4 col-md-4 col-sm-4 control-label form_border">计划</label>
-                            <div class="col-lg-8 col-md-8 col-sm-8 ">
-                                <input type="radio" id="interval" value="everyday" v-model="picked">
-                                <span>每天</span>
                             </div>
                         </div>
                     </form>

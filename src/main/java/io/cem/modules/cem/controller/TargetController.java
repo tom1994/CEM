@@ -54,8 +54,7 @@ public class TargetController {
 		} catch (RuntimeException e) {
 			throw new RRException("内部参数错误，请重试！");
 		}
-		List<TargetEntity> targetList = targetService.queryList(map);
-		//List<ProbeEntity> probeList = targetService.queryProbeList(map);
+		List<TargetEntity> targetList = targetService.queryTgByTList(map);
 		int total = targetService.queryTotal(map);
 		PageUtils pageUtil = new PageUtils(targetList, total, limit, page);
 		return R.ok().put("page", pageUtil);
@@ -86,6 +85,13 @@ public class TargetController {
 		//return R.ok();
 	}
 
+
+	@RequestMapping("/infoList/{spid}")
+	@RequiresPermissions("target:info")
+	public R infoList(@PathVariable("spid") Integer spId){
+		List<TargetEntity> target = targetService.queryTargetList(spId);
+		return R.ok().put("target", target);
+	}
 
 	/**
 	 * 保存
