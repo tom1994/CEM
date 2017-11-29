@@ -8,6 +8,7 @@ import com.alibaba.fastjson.JSONObject;
 import io.cem.common.exception.RRException;
 import io.cem.common.utils.JSONUtils;
 import io.cem.modules.cem.entity.ProbeEntity;
+import org.apache.ibatis.annotations.Param;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,7 +32,7 @@ import io.cem.common.utils.R;
  * @date 2017-11-05 20:39:28
  */
 @RestController
-@RequestMapping("target")
+@RequestMapping("/cem/target")
 public class TargetController {
 	@Autowired
 	private TargetService targetService;
@@ -71,13 +72,27 @@ public class TargetController {
 		return R.ok().put("target", target);
 	}
 
+	/**
+	 * 按条件显示目标地址
+	 */
+	@RequestMapping("/infobat/{id}")
+	@RequiresPermissions("target:infobat")
+	public R infobat(@PathVariable("id") Integer serviceId){
+		List<TargetEntity> target = targetService.infoBatch(serviceId);
+		System.out.println(target);
+		return R.ok().put("target", target);
+
+		//return R.ok();
+	}
+
+
 	@RequestMapping("/infoList/{spid}")
 	@RequiresPermissions("target:info")
 	public R infoList(@PathVariable("spid") Integer spId){
 		List<TargetEntity> target = targetService.queryTargetList(spId);
 		return R.ok().put("target", target);
 	}
-	
+
 	/**
 	 * 保存
 	 */
@@ -110,5 +125,7 @@ public class TargetController {
 		
 		return R.ok();
 	}
+
+
 
 }

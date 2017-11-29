@@ -24,6 +24,12 @@
 		WHERE target.id = #{value}         <!--value是前端点击查看详情时传入的id-->
 	</select>
 
+	<select id="infoBatch" resultMap="targetMap">
+		select * from target
+		where superservice_type = #{value}
+		order by id
+	</select>
+
 	<select id="queryList" resultType="io.cem.modules.cem.entity.TargetEntity">
 		select * from target
         <choose>
@@ -112,5 +118,6 @@
 			#{id}
 		</foreach>
 	</delete>
+
 
 </mapper>

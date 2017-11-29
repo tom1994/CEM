@@ -1,11 +1,13 @@
 /**
- * Created by Fern on 2017/11/15.
+ * Created by Fern on 2017/11/28.
  */
 var status;
 var idArray = new Array();
 var probeGroupNames = new Array();
 var cityNames = new Array();
 var areaNames = new Array();
+var serviceArray = new Array();
+var targetNames = new Array();
 var probeNames = new Array();
 var typeNames = new Array();
 var statusNames = new Array();
@@ -32,6 +34,67 @@ var probedata_handle = new Vue({
 
     }
 });
+
+var search_data = new Vue({
+    el:'#probesearch',
+    data:{
+        areas:[],
+        cities:[],
+        probe:[],
+        probegroup_names:[],
+        accessLayers:[],
+        types:[],
+        status:[],
+        target:[],
+    },
+    methods:{
+        citychange: function () {
+            this.areas = getArea($("#selectcity").val());
+            console.log($("#selectcity").val());
+        },
+        servicechange: function () {
+            this.target = getService($("#selectservice").val());
+            console.log($("#selectservice").val())
+        }
+    }
+});
+
+var getArea = function (cityid) {
+    $.ajax({
+        url: "../../cem/county/info/"+cityid,
+        type: "POST",
+        cache: false,  //禁用缓存
+        dataType: "json",
+        contentType: "application/json",
+        success: function (result) {
+            search_data.areas = [];
+            areaNames = [];
+            for(var i=0;i<result.county.length;i++){
+                areaNames[i] = {message: result.county[i]}
+            }
+            search_data.areas = areaNames;
+        }
+    });
+}
+
+var getService = function (serviceId) {
+    console.log("I'm here!!!!"+serviceId);
+    $.ajax({
+        url: "../../cem/target/infobat/"+serviceId,
+        type: "POST", /*GET会乱码*/
+        cache: false,  //禁用缓存
+        dataType: "json",
+        contentType: "application/json", /*必须要,不可少*/
+        success: function (result) {
+            search_data.target = [];
+            targetNames = [];
+            for(var i=0;i<result.target.length;i++){
+                targetNames[i] = {message: result.target[i]}
+            }
+            search_data.target = targetNames;
+        }
+    });
+}
 
 var search_service = new Vue({
     el: '#search',
@@ -110,62 +173,3 @@ Date.prototype.Format = function (fmt) {
     }
     return fmt;
 }
-
-
-var search_data = new Vue({
-    el:'#probesearch',
-    data:{
-        areas:[],
-        cities:[],
-        probe:[],
-        probegroup_names:[],
-        accessLayers:[],
-        types:[],
-        status:[]
-    },
-    methods:{
-        citychange: function () {
-            this.areas = getArea($("#selectcity").val());
-            console.log($("#selectcity").val());
-        },
-        areachange: function () {
-            this.probe = getProbe($("#selectarea").val());
-            console.log($("#selectarea").val());
-        }
-    }
-});
-
-var getArea = function (cityid) {
-    $.ajax({
-        url: "../../cem/county/info/"+cityid,
-        type: "POST",
-        cache: false,  //禁用缓存
-        dataType: "json",
-        contentType: "application/json",
-        success: function (result) {
-            search_data.areas = [];
-            for(var i=0;i<result.county.length;i++){
-                areaNames[i] = {message: result.county[i]}
-            }
-            search_data.areas = areaNames;
-        }
-    });
-}
-
-var getProbe = function (countyid) {
-    $.ajax({
-        url: "../../cem/probe/info/"+countyid,
-        type: "POST",
-        cache: false,  //禁用缓存
-        dataType: "json",
-        contentType: "application/json",
-        success: function (result) {
-            search_data.probe = [];
-            for(var i=0;i<result.probe.length;i++){
-                probeNames[i] = {message: result.probe[i]}
-            }
-            search_data.probe = probeNames;
-        }
-    });
-}
-

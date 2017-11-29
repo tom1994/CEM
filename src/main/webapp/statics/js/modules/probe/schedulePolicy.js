@@ -394,7 +394,7 @@ var sptable = new Vue({
                             row.push(item.scheduler);
                             row.push(item.remark);
                             row.push(item.startDate);
-                            row.push('<a class="fontcolor" onclick="update_this(this)" id='+item.id+'>修改</a>&nbsp;<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>');
+                            row.push('<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>');
                             rows.push(row);
                         });
                         returnData.data = rows;
