@@ -287,22 +287,22 @@ function update_this (obj) {     /*监听修改触发事件*/
     /*获取当前行探针数据id*/
     console.log(update_data_id);
     status = 1;      /*状态1表示修改*/
-    var forms = $('#probeform_data.form-control');
+    var forms = $('#probeform_data  .form-control');
     /*去除只读状态*/
     //$('#probeform_data input[type=text]').prop("readonly", false);
 
     $.ajax({
         type: "POST", /*GET会乱码*/
-        url: "../../cem/probe/info/"+update_data_id,
+        url: "../../cem/probe/detail/"+update_data_id,
         cache: false,  //禁用缓存
         dataType: "json",
         contentType: "application/json", /*必须要,不可少*/
         success: function (result) {
-            console.log(result);
+            console.log("I'm here!!!!"+result.probe.type);
             forms[0].value = result.probe.id;
             forms[1].value = result.probe.name;
             forms[2].value = result.probe.serialNumber;
-            forms[3].value = result.probe.typeName;
+            forms[3].value = result.probe.type;
             forms[4].value = result.probe.cityName;
             forms[5].value = result.probe.countyName;
             forms[6].value = result.probe.location;
