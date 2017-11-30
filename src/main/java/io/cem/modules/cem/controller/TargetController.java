@@ -32,7 +32,7 @@ import io.cem.common.utils.R;
  * @date 2017-11-05 20:39:28
  */
 @RestController
-@RequestMapping("/cem/target")
+@RequestMapping("target")
 public class TargetController {
 	@Autowired
 	private TargetService targetService;

@@ -52,7 +52,17 @@
 	</select>
 	
  	<select id="queryTotal" resultType="int">
-		select count(*) from target 
+		select count(*) from target
+		<!--WHERE id IS NOT NULL
+		<if test="target_name != null and target_name != ''">
+			AND target.target_name LIKE concat('%',#{target_name},'%')
+		</if>
+		<if test="group_id != null and group_id != ''">
+			AND target.group_id LIKE concat('%',#{group_id},'%')
+		</if>
+		<if test="superservice_type != null and superservice_type != ''">
+			AND superservice_type = #{superservice_type}
+		</if>-->
 	</select>
 
 	<select id="queryTgByTList" resultMap="targetMap">
@@ -69,9 +79,20 @@
 				order by id desc
 			</otherwise>
 		</choose>
+
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
+		<!--WHERE target.id IS NOT NULL
+		<if test="target_name != null and target_name != ''">
+			AND target.target_name LIKE concat('%',#{target_name},'%')
+		</if>
+		<if test="group_id != null and group_id != ''">
+			AND target.group_id LIKE concat('%',#{group_id},'%')
+		</if>
+		<if test="superservice_type != null and superservice_type != ''">
+			AND superservice_type = #{superservice_type}
+		</if>-->
 	</select>
 
 	<insert id="save" parameterType="io.cem.modules.cem.entity.TargetEntity" useGeneratedKeys="true" keyProperty="id">
