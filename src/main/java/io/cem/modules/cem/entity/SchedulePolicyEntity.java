@@ -23,10 +23,14 @@ public class SchedulePolicyEntity implements Serializable {
 	private String scheduler;
 	//备注
 	private String remark;
-	//创建时间
+	//开始日期
 	private Date startDate;
-	//
+	//结束日期
 	private Date endDate;
+	//时间间隔
+	private Integer interval;
+	//创建时间
+	private Date createTime;
 
 	/**
 	 * 设置：调度策略ID
@@ -89,15 +93,40 @@ public class SchedulePolicyEntity implements Serializable {
 		return startDate;
 	}
 	/**
-	 * 设置：
+	 * 设置：结束日期
 	 */
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
 	/**
-	 * 获取：
+	 * 获取：结束日期
 	 */
 	public Date getEndDate() {
 		return endDate;
 	}
+	/**
+	 * 设置：创建时间
+	 */
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+	/**
+	 * 获取：创建时间
+	 */
+	public Date getCreateTime() {
+		return createTime;
+	}
+	/**
+	 * 设置：时间间隔
+	 */
+	public void setInterval(Integer interval) {
+		this.interval = interval;
+	}
+	/**
+	 * 获取：时间间隔
+	 */
+	public Integer getInterval() {
+		return interval;
+	}
+
 }

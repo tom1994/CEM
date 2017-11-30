@@ -287,7 +287,7 @@ function update_this (obj) {     /*监听修改触发事件*/
     /*获取当前行探针数据id*/
     console.log(update_data_id);
     status = 1;      /*状态1表示修改*/
-    var forms = $('#probeform_data.form-control');
+    var forms = $('#probeform_data .form-control');
     /*去除只读状态*/
     //$('#probeform_data input[type=text]').prop("readonly", false);
 

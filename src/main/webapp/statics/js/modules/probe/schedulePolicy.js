@@ -284,12 +284,14 @@ var sptable = new Vue({
     data: {
         headers: [
             {title: '<div style="width:15px"></div>'},
-            {title: '<div style="width:100px">策略ID</div>'},
+            {title: '<div style="width:15px">ID</div>'},
             {title: '<div style="width:142px">策略名称</div>'},
-            {title: '<div style="width:160px">任务描述</div>'},
+            {title: '<div style="width:100px">开始日期</div>'},
+            {title: '<div style="width:100px">结束日期</div>'},
+            {title: '<div style="width:160px">时间间隔(分钟)</div>'},
             {title: '<div style="width:142px">备注</div>'},
             {title: '<div style="width:100px">创建时间</div>'},
-            {title: '<div style="width:67px">操作</div>'}
+            {title: '<div style="width:40px">操作</div>'}
         ],
         rows: [],
         dtHandle: null,
@@ -378,9 +380,11 @@ var sptable = new Vue({
                             row.push(i++);
                             row.push(item.id);
                             row.push(item.spName);
-                            row.push(item.scheduler);
+                            row.push((item.startDate).substr(0,10));
+                            row.push((item.endDate).substr(0,10));
+                            row.push(item.interval);
                             row.push(item.remark);
-                            row.push(item.startDate);
+                            row.push(item.createTime);
                             row.push('<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>');
                             rows.push(row);
                         });
