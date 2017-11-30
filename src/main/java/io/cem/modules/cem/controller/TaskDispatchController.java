@@ -1,5 +1,6 @@
 package io.cem.modules.cem.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -82,6 +83,24 @@ public class TaskDispatchController {
         return R.ok();
     }
 
+    @RequestMapping("/saveAll")
+    @RequiresPermissions("taskdispatch:save")
+    public R saveAll(@RequestBody TaskDispatchEntity taskDispatch/*, String[] probeIds*/) {
+//        taskDispatchService.save(taskDispatch);
+        System.out.println(taskDispatch.getTarget());
+        String[] probeIdsList = taskDispatch.getProbeIds().split(",");
+        ArrayList<TaskDispatchEntity> taskDispatchEntityList = new ArrayList<TaskDispatchEntity>();
+        for(int i=0; i<probeIdsList.length; i++){
+//            System.out.println(probeIdsList[i].split("\"")[1]);
+            TaskDispatchEntity taskDispatchEntity = taskDispatch;
+            taskDispatchEntity.setProbeId(Integer.parseInt(probeIdsList[i].split("\"")[1]));
+            taskDispatchEntityList.add(taskDispatchEntity);
+        }
+        taskDispatchService.saveAll(taskDispatchEntityList);
+        System.out.println(taskDispatch.getProbeIds());
+        return R.ok();
+    }
+
     /**
      * 修改
      */
@@ -89,7 +108,6 @@ public class TaskDispatchController {
     @RequiresPermissions("taskdispatch:update")
     public R update(@RequestBody TaskDispatchEntity taskDispatch) {
         taskDispatchService.update(taskDispatch);
-
         return R.ok();
     }
 

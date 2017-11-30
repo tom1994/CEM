@@ -118,4 +118,41 @@
 		</foreach>
 	</delete>
 
+	<insert id="saveAll" parameterType="io.cem.modules.cem.entity.TaskDispatchEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into task_dispatch
+		(
+		`task_id`,
+		`probe_id`,
+		`probe_port`,
+		`target`,
+		`target_group`,
+		`is_ondemand`,
+		`test_number`,
+		`test_interval`,
+		`status`,
+		`remark`
+		)
+		values
+		<foreach collection="list" item="item" index="index" separator=",">
+			(
+			#{item.taskId},
+			#{item.probeId},
+			#{item.probePort},
+			#{item.target},
+			#{item.targetGroup},
+			#{item.isOndemand},
+			#{item.testNumber},
+			#{item.testInterval},
+			#{item.status},
+			#{item.remark}
+			)
+		</foreach>
+	</insert>
+
+	<!--<delete id="deleteBatch">-->
+		<!--delete from target where id in-->
+		<!--<foreach item="id" collection="array" open="(" separator="," close=")">-->
+			<!--#{param2.id} #{param.name} #{param1} #{param2.id} #{param.name}-->
+		<!--</foreach>-->
+	<!--</delete>-->
 </mapper>

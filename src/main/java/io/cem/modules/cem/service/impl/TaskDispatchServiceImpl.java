@@ -46,7 +46,12 @@ public class TaskDispatchServiceImpl implements TaskDispatchService {
 	public void save(TaskDispatchEntity taskDispatch){
 		taskDispatchDao.save(taskDispatch);
 	}
-	
+
+	@Override
+	public void saveAll(List<TaskDispatchEntity> taskDispatchList) {
+		taskDispatchDao.saveAll(taskDispatchList);
+	}
+
 	@Override
 	public void update(TaskDispatchEntity taskDispatch){
 		taskDispatchDao.update(taskDispatch);

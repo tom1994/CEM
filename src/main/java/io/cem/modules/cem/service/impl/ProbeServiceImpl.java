@@ -37,7 +37,6 @@ public class ProbeServiceImpl implements ProbeService {
 		return probeDao.queryProbe(id);
 	}
 
-
 	@Override
 	public int queryTotal(Map<String, Object> map){
 		return probeDao.queryTotal(map);

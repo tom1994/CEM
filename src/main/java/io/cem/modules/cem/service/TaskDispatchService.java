@@ -25,6 +25,8 @@ public interface TaskDispatchService {
 	int queryDispatchTotal(Integer id);
 	
 	void save(TaskDispatchEntity taskDispatch);
+
+	void saveAll(List<TaskDispatchEntity> taskDispatchList);
 	
 	void update(TaskDispatchEntity taskDispatch);
 	
