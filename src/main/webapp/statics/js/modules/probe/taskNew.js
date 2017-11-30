@@ -71,7 +71,7 @@ function view_this(obj) {     /*监听详情触发事件*/
     status = 0;
     /*状态1表示修改*/
     /*find被选中的行*/
-    getalarm();
+    // getalarm();
     $.ajax({
         url: "../../cem/alarmtemplate/list",
         type: "POST",
@@ -83,44 +83,52 @@ function view_this(obj) {     /*监听详情触发事件*/
                 alarmtemplates[i] = {message: result.page.list[i]}
             }
             taskform_data.alarmtemplates = alarmtemplates;
-            var taskforms = $('#taskform_data .form-control');
-            var paramforms = $('#taskform_param .form-control');
-            var servicetypeid = 0;
-            $.ajax({
-                type: "POST", /*GET会乱码*/
-                url: "../../cem/task/info/" + update_data_id,
-                cache: false,  //禁用缓存
-                //data: update_data_ids,  //传入组装的参数
-                dataType: "json",
-                async: false,
-                contentType: "application/json", /*必须要,不可少*/
-                success: function (result) {
-                    var param = JSON.parse(result.task.parameter);
-                    servicetypeid = result.task.serviceType;
-                    taskforms[0].value = result.task.id;
-                    taskforms[1].value = result.task.taskName;
-                    taskforms[2].value = result.task.serviceType;
-                    taskforms[3].value = result.task.schPolicyId;
-                    taskforms[4].value = result.task.alarmTemplateId;
-                    paramforms[0].value = param.count;
-                    paramforms[1].value = param.interval;
-                    paramforms[2].value = param.size;
-                    paramforms[3].value = param.payload;
-                    paramforms[4].value = param.ttl;
-                    paramforms[5].value = param.tos;
-                    paramforms[6].value = param.timeout;
-                    $("#" + stid.get(servicetypeid)).removeClass("service_unselected");
-                }
-            });
+            get_viewModal(update_data_id)
         }
     });
-    $('#newfooter').attr('style', 'display:none');
-    $('#viewfooter').removeAttr('style', 'display:none');
-    $("#taskform_data input[type=text]").attr('disabled', 'disabled');
-    $("#taskform_data select").attr('disabled', 'disabled');
-    $(".service input[type=text]").attr('disabled', 'disabled');
-    $(".service select").attr('disabled', 'disabled');
-    $('#myModal_edit').modal('show');
+}
+
+function get_viewModal(update_data_id) {
+    var taskforms = $('#taskform_data .form-control');
+    // $("#alarmtemplate option[value='2']").selected = true;
+    // console.log($("#alarmtemplate option:selected").val());
+    var paramforms = $('#taskform_param .form-control');
+    var servicetypeid = 0;
+    $.ajax({
+        type: "POST", /*GET会乱码*/
+        url: "../../cem/task/info/" + update_data_id,
+        cache: false,  //禁用缓存
+        //data: update_data_ids,  //传入组装的参数
+        dataType: "json",
+        async: false,
+        contentType: "application/json", /*必须要,不可少*/
+        success: function (result) {
+            var param = JSON.parse(result.task.parameter);
+            servicetypeid = result.task.serviceType;
+            taskforms[0].value = result.task.id;
+            taskforms[1].value = result.task.taskName;
+            taskforms[2].value = result.task.serviceType;
+            taskforms[3].value = result.task.schPolicyId;
+            taskforms[4].value = result.task.alarmTemplateId;
+            // console.log(taskforms[4].value);
+            // console.log(result.task.alarmTemplateId);
+            paramforms[0].value = param.count;
+            paramforms[1].value = param.interval;
+            paramforms[2].value = param.size;
+            paramforms[3].value = param.payload;
+            paramforms[4].value = param.ttl;
+            paramforms[5].value = param.tos;
+            paramforms[6].value = param.timeout;
+            $("#" + stid.get(servicetypeid)).removeClass("service_unselected");
+            $('#newfooter').attr('style', 'display:none');
+            $('#viewfooter').removeAttr('style', 'display:none');
+            $("#taskform_data input[type=text]").attr('disabled', 'disabled');
+            $("#taskform_data select").attr('disabled', 'disabled');
+            $(".service input[type=text]").attr('disabled', 'disabled');
+            $(".service select").attr('disabled', 'disabled');
+            $('#myModal_edit').modal('show');
+        }
+    });
 }
 
 function delete_ajax() {
@@ -248,7 +256,6 @@ function submit_dispatch() {
     var dispatch_data = new Object();
     var taskDispatch = new Object();
     // var probeId = getFormJson($('#dispatch_probe')).probeId;
-    taskDispatch.taskId = 1;
     taskDispatch.probePort = 1;
     taskDispatch.testNumber = 1;
     taskDispatch.status = 1;
