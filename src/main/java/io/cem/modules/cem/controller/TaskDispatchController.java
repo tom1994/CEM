@@ -20,8 +20,7 @@ import io.cem.common.utils.R;
 
 
 /**
- * @author ${author}
- * @email ${email}
+ * @author
  * @date 2017-11-13 11:01:11
  */
 @RestController
@@ -72,7 +71,7 @@ public class TaskDispatchController {
     }
 
     /**
-     * 张天阳用于显示探针界面的显示任务
+     * ZTY用于显示探针界面的显示任务
      */
     @RequestMapping("/infoTask/{id}")
     @RequiresPermissions("taskdispatch:infoTask")
