@@ -16,7 +16,7 @@
 		select * from target_group where id = #{value}
 	</select>
 
-	<select id="queryList" resultType="io.cem.modules.cem.entity.TargetGroupEntity">
+	<select id="queryList" resultMap="targetGroupMap">
 		select * from target_group
         <choose>
             <when test="sidx != null and sidx.trim() != ''">

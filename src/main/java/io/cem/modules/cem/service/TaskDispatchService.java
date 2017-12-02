@@ -19,10 +19,14 @@ public interface TaskDispatchService {
 	List<TaskDispatchEntity> queryList(Map<String, Object> map);
 
 	List<TaskDispatchEntity> queryDispatchList(Integer id);
+
+	List<TaskDispatchEntity> taskQueryDispatchList(Integer id);
 	
 	int queryTotal(Map<String, Object> map);
 
 	int queryDispatchTotal(Integer id);
+
+	int taskQueryDispatchTotal(Integer id);
 	
 	void save(TaskDispatchEntity taskDispatch);
 	

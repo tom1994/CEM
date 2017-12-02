@@ -80,7 +80,7 @@ var getArea = function (cityid) {
 var getService = function (serviceId) {
     console.log("I'm here!!!!"+serviceId);
     $.ajax({
-        url: "../../cem/target/infobat/"+serviceId,
+        url: "../../target/infobat/"+serviceId,
         type: "POST", /*GET会乱码*/
         cache: false,  //禁用缓存
         dataType: "json",

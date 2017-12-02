@@ -188,6 +188,30 @@ var probegroupdata_handle = new Vue({
 
     }
 });
+var probegroupdata_handle = new Vue({
+    el: '#probehandle',
+    data: {},
+    mounted: function(){         /*动态加载测试任务组数据*/
+        $.ajax({
+            type: "POST",   /*GET会乱码*/
+            url: "../../cem/probegroup/searchlist",//Todo:改成测试任务组的list方法
+            cache: false,  //禁用缓存
+            dataType: "json",
+            /* contentType:"application/json",  /!*必须要,不可少*!/*/
+            success: function (result) {
+                for(var i=0;i<result.page.list.length;i++){
+                    probeGroupNames[i] = {message: result.page.list[i]}
+                }
+                search_data.probegroup_names = probeGroupNames;
+            }
+        });
+    },
+    methods: {
+
+
+
+    }
+});
 
 
 
@@ -768,6 +792,10 @@ $(document).ready(function () {
 
 //});
 
+
+
+
+
 // 探针列表
 var probetable = new Vue({
     el: '#probedata_table',
@@ -893,7 +921,7 @@ var probetable = new Vue({
                                     +'<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>查看任务</a>');*/
                                 row.push('<a class="fontcolor" onclick="update_this(this)" id='+item.id+'>详情</a>&nbsp;' +
                                     '<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>&nbsp;'+
-                                    '<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>查看任务</a>');
+                                    '<a class="fontcolor" onclick="dispatch_info(this)" id='+item.id+'>查看任务</a>');
                                 rows.push(row);
                             });
                             returnData.data = rows;
@@ -1031,5 +1059,72 @@ var grouptable = new Vue({
         });
     }
 });
+
+
+var dragModal = {
+    mouseStartPoint: {"left": 0, "top": 0},
+    mouseEndPoint: {"left": 0, "top": 0},
+    mouseDragDown: false,
+    basePoint: {"left": 0, "top": 0},
+    moveTarget: null,
+    topleng: 0
+}
+$(document).on("mousedown", ".modal-header", function (e) {
+    //webkit内核和火狐禁止文字被选中
+    $('body').addClass('select')
+    //ie浏览器禁止文字选中
+    document.body.onselectstart = document.body.ondrag = function () {
+        return false;
+    }
+    if ($(e.target).hasClass("close"))//点关闭按钮不能移动对话框
+        return;
+    dragModal.mouseDragDown = true;
+    dragModal.moveTarget = $(this).parent().parent();
+    dragModal.mouseStartPoint = {"left": e.clientX, "top": e.pageY};
+    dragModal.basePoint = dragModal.moveTarget.offset();
+    dragModal.topLeng = e.pageY - e.clientY;
+});
+$(document).on("mouseup", function (e) {
+    dragModal.mouseDragDown = false;
+    dragModal.moveTarget = undefined;
+    dragModal.mouseStartPoint = {"left": 0, "top": 0};
+    dragModal.basePoint = {"left": 0, "top": 0};
+});
+$(document).on("mousemove", function (e) {
+    if (!dragModal.mouseDragDown || dragModal.moveTarget == undefined) return;
+    var mousX = e.clientX;
+    var mousY = e.pageY;
+    if (mousX < 0) mousX = 0;
+    if (mousY < 0) mousY = 25;
+    dragModal.mouseEndPoint = {"left": mousX, "top": mousY};
+    var width = dragModal.moveTarget.width();
+    var height = dragModal.moveTarget.height();
+    var clientWidth = document.body.clientWidth
+    var clientHeight = document.body.clientHeight;
+    if (dragModal.mouseEndPoint.left < dragModal.mouseStartPoint.left - dragModal.basePoint.left) {
+        dragModal.mouseEndPoint.left = 0;
+    }
+    else if (dragModal.mouseEndPoint.left >= clientWidth - width + dragModal.mouseStartPoint.left - dragModal.basePoint.left) {
+        dragModal.mouseEndPoint.left = clientWidth - width - 38;
+    } else {
+        dragModal.mouseEndPoint.left = dragModal.mouseEndPoint.left - (dragModal.mouseStartPoint.left - dragModal.basePoint.left);//移动修正，更平滑
+
+    }
+    if (dragModal.mouseEndPoint.top - (dragModal.mouseStartPoint.top - dragModal.basePoint.top) < dragModal.topLeng) {
+        dragModal.mouseEndPoint.top = dragModal.topLeng;
+    } else if (dragModal.mouseEndPoint.top - dragModal.topLeng > clientHeight - height + dragModal.mouseStartPoint.top - dragModal.basePoint.top) {
+        dragModal.mouseEndPoint.top = clientHeight - height - 38 + dragModal.topLeng;
+    }
+    else {
+        dragModal.mouseEndPoint.top = dragModal.mouseEndPoint.top - (dragModal.mouseStartPoint.top - dragModal.basePoint.top);
+    }
+    dragModal.moveTarget.offset(dragModal.mouseEndPoint);
+});
+$(document).on('hidden.bs.modal', '.modal', function (e) {
+    $('.modal-dialog').css({'top': '0px', 'left': '0px'})
+    $('body').removeClass('select')
+    document.body.onselectstart = document.body.ondrag = null;
+
+})
 
 
