@@ -268,10 +268,9 @@ a:link {
 
 }
 
-
-
 .wrapper-block{
     padding:5px 20px;
+    min-height: 100px;
 }
 
 .left-up{
@@ -326,7 +325,7 @@ a:link {
     font-size: 14px;
 }
 
-/*权重设置的卡片样式*/
+/*权重设置*/
 .tools {
     float:right;
     display: inline-block;
@@ -335,8 +334,24 @@ a:link {
 .inputset {
     line-height: 2px !important;
     border:0;
-    border-bottom: #676a6c 1px solid;
     outline: none;
+}
+.service-font {
+    color: #676a6c;
+    font-weight: 700;
+}
+.wrapper_border{
+    line-height: 30px;
+    min-height: 30px;
+    padding: 0;
+    border-radius:10px;
+    border: 2px solid #1c84c6;
+}
+.superservice-input{
+    color: white;
+    background-color: #1c84c6;
+    border:none;
+    line-height: 1px!important;
 }
 
 
