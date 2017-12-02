@@ -30,24 +30,25 @@
                                         <form class="col-lg-10 col-md-10 col-sm-10 form-horizontal" id="targetsearch"
                                               role="form">
                                             <div class=" form-group row">
-                                                <div class="col-lg-3 col-md-3 col-sm-3 input-group searchspan">
+                                                <div class="input-group searchspan">
                                                     <span class="searchname" style="width: auto">测试目标</span>
-                                                    <input type="text" class="form-control" id="target" style="width: 120px"
+                                                    <input type="text" class="form-control" name="target_name" style="width: 120px"
                                                            value="" placeholder="名称或网址">
                                                 </div>
 
-                                                <div class="col-lg-3 col-md-3 col-sm-3 input-group searchspan">
+                                                <div class="input-group searchspan">
                                                     <span class="searchname" style="width: auto">测试目标组名</span>
-                                                    <select class="form-control " name="groupid" style="width: 130px;text-align: center">
-                                                        <option value="">-----请选择-----</option>
-                                                        <option v-for="item in groupIds">{{ item.message.groupId }}</option>
+                                                    <select class="form-control " name="group_id" style="width: 130px;text-align: center">
+                                                        <option value="">---请选择---</option>
+                                                        <option v-for="item in target_names"
+                                                                v-bind:value="item.message.id">{{ item.message.tgName }}</option>
                                                     </select>
                                                 </div>
 
-                                                <div class="col-lg-4 col-md-4 col-sm-4 input-group searchspan">
+                                                <div class="input-group searchspan">
                                                     <span class="searchname" style="width: auto">业务类型</span>
-                                                    <select class="form-control " name="superservicetype" style="width: 150px;text-align: center">
-                                                        <option value="">-----请选择-----</option>
+                                                    <select class="form-control " name="superservice_type" style="width: 150px;text-align: center">
+                                                        <option value="">---请选择---</option>
                                                         <option value="1">网络连通性测试业务</option>
                                                         <option value="2">网络层质量测试业务</option>
                                                         <option value="3">文件下载类业务</option>
@@ -62,7 +63,7 @@
                                         <div class="col-lg-2 col-md-2 col-sm-2 " id="search">
                                             <button type="button" class="btn btn-sm btn-success"
                                                     style="margin-right: 5px;margin-top: 5px"
-                                                    v-on:click="target_search"><span
+                                                    v-on:click="testagentListsearch"><span
                                                     class="glyphicon glyphicon-zoom-in"></span>查询
                                             </button>
                                             <button type="button" class="btn btn-sm btn-success"
@@ -84,11 +85,11 @@
                                      style="padding-bottom: 0px !important;">
 
                                     <button type="button" class="btn btn-sm btn-success"
-                                            v-on:click="targetadd"><span
+                                            v-on:click=""><span
                                             class="glyphicon glyphicon-plus"></span>新增
                                     </button>
                                     <button type="button" class="btn btn-sm btn-success"
-                                            v-on:click="targetdelBatch"><span
+                                            v-on:click=""><span
                                             class="glyphicon glyphicon-trash"></span>批量删除
                                     </button>
 
@@ -282,7 +283,7 @@
 
                                 <div class="ibox-content">
                                     <div class="row " style="overflow:auto">     <!--表格 overflow-x: scroll超出滚动-->
-                                        <table class="table table-bordered " style="width: 100%; text-align: center" id="tg_table"></table>
+                                        <table class="table table-bordered " style="width:100%" id="tg_table"></table>
                                     </div>
                                 </div>
                             </div>

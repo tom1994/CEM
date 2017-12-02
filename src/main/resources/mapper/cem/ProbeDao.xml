@@ -261,6 +261,10 @@
 		WHERE county_id = #{value}
 		order by id
 	</select>
+
+	<select id="queryDetail" resultMap="probeMap">
+		select * from probe WHERE id = #{value}
+	</select>
 	
 	<delete id="deleteBatch">
 		delete from probe where id in 
