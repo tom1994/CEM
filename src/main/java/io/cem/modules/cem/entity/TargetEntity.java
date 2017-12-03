@@ -21,8 +21,8 @@ public class TargetEntity implements Serializable {
 	private String targetName;
 	//测试目标取值
 	private String value;
-	//子业务类型
-	private Integer serviceType;
+	//业务类型
+	private Integer superserviceType;
 	//所属测试目标组
 	private Integer groupId;
 	//备注
@@ -31,6 +31,7 @@ public class TargetEntity implements Serializable {
 	private Date createTime;
 	//所属测试目标组字符串
 	private String groupName;
+
 
 	/**
 	 * 设置：测试目标ID
@@ -71,12 +72,12 @@ public class TargetEntity implements Serializable {
 	/**
 	 * 设置：业务类型
 	 */
-	public Integer getServiceType() {
-		return serviceType;
+	public Integer getSuperserviceType() {
+		return superserviceType;
 	}
 
-	public void setServiceType(Integer serviceType) {
-		this.serviceType = serviceType;
+	public void setSuperserviceType(Integer superserviceType) {
+		this.superserviceType = superserviceType;
 	}
 
 	/**

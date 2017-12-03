@@ -6,38 +6,37 @@ var idArray = new Array();
 var tgidArray = new Array();
 /*创建业务类型字典表*/
 var sst = new Map();
-sst.set(0, "网络连通性测试业务");
-sst.set(1, "网络层质量测试业务");
-sst.set(2, "文件下载类业务");
-sst.set(3, "网页浏览类业务");
-sst.set(4, "在线视频类业务");
-sst.set(5, "网络游戏类业务");
+sst.set(1, "网络连通性测试业务");
+sst.set(2, "网络层质量测试业务");
+sst.set(3, "文件下载类业务");
+sst.set(4, "网页浏览类业务");
+sst.set(5, "在线视频类业务");
+sst.set(6, "网络游戏类业务");
 
 var target_search = new Vue({
-    el:'#searchbox',
+    el:'#search',
     data:{
         groupIds:[]
     },
     methods:{
         target_search:function() {   /*查询监听事件*/
-            var target = $('#target').val();
-            /*检测是否为文字*/
+            /*var target = $('#target').val();
+            /!*检测是否为文字*!/
             var cctest=new RegExp(/^[\u4E00-\u9FA5]+$/);
-            /*检测是否为IP地址*/
+            /!*检测是否为IP地址*!/
             var iptest =new RegExp("25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)\.(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)\.(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)\.(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d");
             if(iptest.test(target)||cctest.test(target)){
                 alert("请输入正确的名称或IP地址！");
                 $("#target").focus();
                 return false;
-            }else {
+            }else {*/
                 var data = getFormJson($('#targetsearch'));
                 /*得到查询条件*/
                 /*获取表单元素的值*/
-                console.log(data);
+                console.log("sssssss!!!!"+data);
                 target_table.targetdata = data;
                 target_table.redraw();
                 /*根据查询条件重绘*/
-            }
         },
         reset: function () {    /*重置*/
             target_table.reset();
@@ -498,7 +497,7 @@ Date.prototype.Format = function (fmt) {
 var search_data = new Vue({
     el:'#search',
     data:{
-        target_name:[]
+        target_names:[]
     },
     methods:{
     }
@@ -675,7 +674,6 @@ var target_table = new Vue({
                             row.push('<a class="fontcolor" onclick="update_this(this)" id='+item.id+'>详情</a>&nbsp&nbsp;' +
                                 '<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>');
                             rows.push(row);
-                            console.log(item);
                         });
                         returnData.data = rows;
                         console.log(returnData);
@@ -820,7 +818,7 @@ var tg_table = new Vue({
                             row.push('<a class="fontcolor" onclick="tgupdate_this(this)" id='+item.id+'>详情</a>&nbsp&nbsp;' +
                                 '<a class="fontcolor" onclick="tgdelete_this(this)" id='+item.id+'>删除</a>');
                             rows.push(row);
-                            console.log(item);
+                            // console.log(item);
                         });
                         returnData.data = rows;
                         console.log(returnData);

@@ -68,6 +68,15 @@ public class TaskDispatchController {
             total = taskDispatchService.queryDispatchTotal(id);
         }
         List<TaskDispatchEntity> dispatchList = taskDispatchService.queryDispatchList(id);
+        String[] targetList = new String[dispatchList.size()];
+//        Integer[] targetIds = new Integer[100];
+        for(int i=0; i<dispatchList.size();i++){
+            targetList[i] = dispatchList.get(i).getTarget();
+//            System.out.print(targetList[1]);
+            String targetName = taskDispatchService.queryTargetBatch(targetList[i].split(",|\""));
+            dispatchList.get(i).setTargetName(targetName);
+        }
+
         PageUtils pageUtil = new PageUtils(dispatchList, total, limit, page);
         return R.ok().put("page", pageUtil);
     }
@@ -122,4 +131,10 @@ public class TaskDispatchController {
         return R.ok();
     }
 
+    @RequestMapping("/cancel/{id}")
+    @RequiresPermissions("taskdispatch:delete")
+    public R cancel(@PathVariable("id") Integer id) {
+        taskDispatchService.cancelTask(id);
+        return R.ok();
+    }
 }

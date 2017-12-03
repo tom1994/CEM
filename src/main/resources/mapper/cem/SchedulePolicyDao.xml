@@ -11,6 +11,8 @@
         <result property="remark" column="remark"/>
         <result property="startDate" column="start_date"/>
         <result property="endDate" column="end_date"/>
+		<result property="createTime" column="create_time"/>
+		<result property="interval" column="interval"/>
     </resultMap>
 
 	<select id="queryObject" resultType="io.cem.modules.cem.entity.SchedulePolicyEntity">
@@ -43,7 +45,9 @@
 			`scheduler`, 
 			`remark`, 
 			`start_date`, 
-			`end_date`
+			`end_date`,
+			`interval`,
+			`create_time`
 		)
 		values
 		(
@@ -51,7 +55,9 @@
 			#{scheduler}, 
 			#{remark}, 
 			#{startDate}, 
-			#{endDate}
+			#{endDate},
+			#{interval},
+			#{createTime}
 		)
 	</insert>
 	 
@@ -62,7 +68,9 @@
 			<if test="scheduler != null">`scheduler` = #{scheduler}, </if>
 			<if test="remark != null">`remark` = #{remark}, </if>
 			<if test="startDate != null">`start_date` = #{startDate}, </if>
-			<if test="endDate != null">`end_date` = #{endDate}</if>
+			<if test="endDate != null">`end_date` = #{endDate},</if>
+			<if test="interval != null">`interval` = #{interval},</if>
+			<if test="createTime != null">`create_time` = #{createTime}</if>
 		</set>
 		where id = #{id}
 	</update>

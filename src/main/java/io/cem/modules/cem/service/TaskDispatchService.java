@@ -33,4 +33,8 @@ public interface TaskDispatchService {
 	void delete(Integer id);
 	
 	void deleteBatch(Integer[] ids);
+
+	void cancelTask(Integer id);
+
+	String queryTargetBatch(String[] targetIdList);
 }

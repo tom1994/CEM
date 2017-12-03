@@ -48,7 +48,7 @@
 		from task_dispatch
 		INNER JOIN probe
 		ON task_dispatch.probe_id = probe.id
-		WHERE task_id = #{value}
+		WHERE task_id = #{value} AND task_dispatch.status = 1
 		order by id desc
 	</select>
 	
@@ -89,7 +89,13 @@
 			#{remark}
 		)
 	</insert>
-	 
+
+	 <update id="cancelTask">
+		 update task_dispatch
+		 SET status = 0
+		 WHERE id = #{value}
+	 </update>
+
 	<update id="update" parameterType="io.cem.modules.cem.entity.TaskDispatchEntity">
 		update task_dispatch 
 		<set>
@@ -148,6 +154,13 @@
 			)
 		</foreach>
 	</insert>
+
+	<select id="queryTargetBatch" resultType="String">
+		select target.target_name FROM target where id in
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</select>
 
 	<!--<delete id="deleteBatch">-->
 		<!--delete from target where id in-->
