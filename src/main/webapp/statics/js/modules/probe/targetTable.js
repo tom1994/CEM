@@ -4,6 +4,7 @@
 var status;
 var idArray = new Array();
 var tgidArray = new Array();
+var targetGroupNames = new Array();
 /*创建业务类型字典表*/
 var sst = new Map();
 sst.set(1, "网络连通性测试业务");
@@ -13,27 +14,52 @@ sst.set(4, "网页浏览类业务");
 sst.set(5, "在线视频类业务");
 sst.set(6, "网络游戏类业务");
 
+var targetgroupdata_handle = new Vue({
+    el: '#targethandle',
+    data: {},
+    mounted: function(){         /*动态加载测试任务组数据*/
+        $.ajax({
+            type: "POST",   /*GET会乱码*/
+            url: "../../targetgroup/searchlist",//Todo:改成测试任务组的list方法
+            cache: false,  //禁用缓存
+            dataType: "json",
+            /* contentType:"application/json",  /!*必须要,不可少*!/*/
+            success: function (result) {
+                for(var i=0;i<result.page.list.length;i++){
+                    targetGroupNames[i] = {message: result.page.list[i]}
+                }
+                search_data.target_names = targetGroupNames;
+            }
+        });
+    },
+    methods: {
+
+
+
+    }
+});
+
 var target_search = new Vue({
     el:'#search',
-    data:{
-        groupIds:[]
+    data:{},
+    mounted: function(){         /*动态加载测试任务组数据*/
+        $.ajax({
+            type: "POST",   /*GET会乱码*/
+            url: "../../target/list",
+            cache: false,  //禁用缓存
+            dataType: "json",
+            /* contentType:"application/json",  /!*必须要,不可少*!/*/
+            success: function (result) {
+
+            }
+        });
     },
     methods:{
-        target_search:function() {   /*查询监听事件*/
-            /*var target = $('#target').val();
-            /!*检测是否为文字*!/
-            var cctest=new RegExp(/^[\u4E00-\u9FA5]+$/);
-            /!*检测是否为IP地址*!/
-            var iptest =new RegExp("25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)\.(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)\.(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)\.(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d");
-            if(iptest.test(target)||cctest.test(target)){
-                alert("请输入正确的名称或IP地址！");
-                $("#target").focus();
-                return false;
-            }else {*/
+        testagentListsearch:function() {   /*查询监听事件*/
                 var data = getFormJson($('#targetsearch'));
                 /*得到查询条件*/
                 /*获取表单元素的值*/
-                console.log("sssssss!!!!"+data);
+                console.log(data);
                 target_table.targetdata = data;
                 target_table.redraw();
                 /*根据查询条件重绘*/
@@ -64,6 +90,9 @@ var tg_search = new Vue({
         }
     }
 })
+
+
+
 
 var targetdata_handle = new Vue({
     el: '#targethandle',
@@ -495,7 +524,7 @@ Date.prototype.Format = function (fmt) {
 }
 
 var search_data = new Vue({
-    el:'#search',
+    el:'#targetsearch',
     data:{
         target_names:[]
     },
@@ -552,7 +581,6 @@ var target_table = new Vue({
         headers: [
             {title: '<div style="width:10px"></div>'},
             {title: '<div class="checkbox" style="width:100%; align: center"> <label> <input type="checkbox" id="checkAll"></label> </div>'},
-            {title: '<div style=" width:0px;display:none;padding:0px">id</div>'},
             {title: '<div style="width:70px">测试目标名</div>'},
             {title: '<div style="width:100px">测试目标地址</div>'},
             {title: '<div style="width:100px">业务类型</div>'},
@@ -641,30 +669,9 @@ var target_table = new Vue({
                         var i = param.start+1;
                         result.page.list.forEach(function (item) {
                             let row = [];
-                            /*let superserviceType = item.superserviceType;
-                            switch (superserviceType) {
-                                case 0:
-                                    superserviceType = "网络连通性测试业务";
-                                    break;
-                                case 1:
-                                    superserviceType = "网络层质量测试业务";
-                                    break;
-                                case 2:
-                                    superserviceType = "文件下载类业务";
-                                    break;
-                                case 3:
-                                    superserviceType = "网页浏览类业务";
-                                    break;
-                                case 4:
-                                    superserviceType = "在线视频类业务";
-                                    break;
-                                case 5:
-                                    superserviceType = "网络游戏类业务";
-                                    break;
-                            }*/
                             row.push(i++);
                             row.push('<div class="checkbox"> <label> <input type="checkbox" id="checkALl" name="selectFlag"><div style="display: none">'+item.id+'</div></label> </div>');
-                            row.push('<div class="id" style="display:none">'+item.id+'</div>');
+                           // row.push('<div class="id" style="display:none">'+item.id+'</div>');
                             row.push('<a onclick="update_this(this)" id='+item.id+'><span style="color: black;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">'+item.targetName+'</span></a>');
                             row.push(item.value);
                             row.push(sst.get(item.superserviceType));
@@ -699,8 +706,7 @@ var tg_table = new Vue({
     data: {
         headers: [
             {title: '<div style="width:10px"></div>'},
-            {title: '<div class="checkbox" style="width:100%; align: center"> <label> <input type="checkbox" id="checkAll"></label> </div>'},
-            {title: '<div style=" width:0px;display:none;padding:0px">id</div>'},
+           // {title: '<div class="checkbox" style="width:100%; align: center"> <label> <input type="checkbox" id="checkAll"></label> </div>'},
             {title: '<div style="width:100px;text-align: center">测试目标组名</div>'},
             {title: '<div style="width:100px;text-align: center">业务类型</div>'},
             {title: '<div style="width:100px;text-align: center">备注</div>'},
@@ -809,8 +815,8 @@ var tg_table = new Vue({
                                     break;
                             }*/
                             row.push(i++);
-                            row.push('<div class="checkbox"> <label> <input type="checkbox" id="checkALl" name="selectFlag"><div style="display: none">'+item.id+'</div></label> </div>');
-                            row.push('<div class="id" style="display:none">'+item.id+'</div>');
+                            //row.push('<div class="checkbox"> <label> <input type="checkbox" id="checkALl" name="selectFlag"><div style="display: none">'+item.id+'</div></label> </div>');
+                            //row.push('<div class="id" style="display:none">'+item.id+'</div>');
                             row.push('<a onclick="tgupdate_this(this)" id='+item.id+'><span style="color: black;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">'+item.tgName+'</span></a>');
                             row.push(sst.get(item.superserviceType));
                             row.push(item.remark);

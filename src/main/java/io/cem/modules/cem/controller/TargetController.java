@@ -46,16 +46,25 @@ public class TargetController {
 		//查询列表数据
 
 		Map<String, Object> map = new HashMap<>();
-		map.put("offset", (page - 1) * limit);
-		map.put("limit", limit);
 		JSONObject targetdata_jsonobject = JSONObject.parseObject(targetdata);
 		try {
 			map.putAll(JSONUtils.jsonToMap(targetdata_jsonobject));
 		} catch (RuntimeException e) {
 			throw new RRException("内部参数错误，请重试！");
 		}
+		int total = 0;
+		if(page==null) {              /*没有传入page,则取全部值*/
+			map.put("offset", null);
+			map.put("limit", null);
+			page = 0;
+			limit = 0;
+		}else {
+			map.put("offset", (page - 1) * limit);
+			map.put("limit", limit);
+			total = targetService.queryTotal(map);
+		}
 		List<TargetEntity> targetList = targetService.queryTgByTList(map);
-		int total = targetService.queryTotal(map);
+		//int total = targetService.queryTotal(map);
 		PageUtils pageUtil = new PageUtils(targetList, total, limit, page);
 		return R.ok().put("page", pageUtil);
 	}

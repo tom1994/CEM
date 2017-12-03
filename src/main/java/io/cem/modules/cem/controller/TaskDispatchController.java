@@ -21,8 +21,7 @@ import io.cem.common.utils.R;
 
 
 /**
- * @author ${author}
- * @email ${email}
+ * @author
  * @date 2017-11-13 11:01:11
  */
 @RestController
@@ -77,6 +76,29 @@ public class TaskDispatchController {
             dispatchList.get(i).setTargetName(targetName);
         }
 
+        PageUtils pageUtil = new PageUtils(dispatchList, total, limit, page);
+        return R.ok().put("page", pageUtil);
+    }
+
+    /**
+     * ZTY用于显示探针界面的显示任务
+     */
+    @RequestMapping("/infoTask/{id}")
+    @RequiresPermissions("taskdispatch:infoTask")
+    public R task(@PathVariable("id") Integer id, Integer page, Integer limit) throws Exception {
+        Map<String, Object> map = new HashMap<>();
+        int total = 0;
+        if (page == null) {              /*没有传入page,则取全部值*/
+            map.put("offset", null);
+            map.put("limit", null);
+            page = 0;
+            limit = 0;
+        } else {
+            map.put("offset", (page - 1) * limit);
+            map.put("limit", limit);
+            total = taskDispatchService.taskQueryDispatchTotal(id);
+        }
+        List<TaskDispatchEntity> dispatchList = taskDispatchService.taskQueryDispatchList(id);
         PageUtils pageUtil = new PageUtils(dispatchList, total, limit, page);
         return R.ok().put("page", pageUtil);
     }

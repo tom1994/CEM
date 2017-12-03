@@ -20,18 +20,87 @@ var weightSet = new Vue({
     el:'#weightset',
     data:{},
     methods:{
-        connectionWeightSet: function () {
-            $('#Modal_connectionweightset').modal('show');
+
+        /*网络连通性*/
+        ping_icmpSet: function () {
+            $('#Modal_ping_icmp').modal('show');
             console.log('success');
         },
-        qualityWeightSet:function (){
-            $('#Modal_qualityweightset').modal('show');
+        ping_tcpSet: function () {
+            $('#Modal_ping_tcp').modal('show');
             console.log('success');
         },
-        browseWeightSet:function(){},
-        downloadWeightSet:function(){},
-        videoWeightSet:function(){},
-        gameWeightSet:function(){}
+        ping_udpSet: function () {
+            $('#Modal_ping_udp').modal('show');
+            console.log('success');
+        },
+        tr_icmpSet: function () {
+            $('#Modal_tr_icmp').modal('show');
+            console.log('success');
+        },
+        tr_tcpSet: function () {
+            $('#Modal_tr_tcp').modal('show');
+            console.log('success');
+        },
+
+        /*网络层质量*/
+        sla_tcpSet:function (){
+            $('#Modal_sla_tcp').modal('show');
+            console.log('success');
+        },
+        sla_udpSet:function (){
+            $('#Modal_sla_udp').modal('show');
+            console.log('success');
+        },
+        dnsSet:function (){
+            $('#Modal_dns').modal('show');
+            console.log('success');
+        },
+        dhcpSet:function (){
+            $('#Modal_dhcp').modal('show');
+            console.log('success');
+        },
+        adslSet:function (){
+            $('#Modal_adsl').modal('show');
+            console.log('success');
+        },
+        radiusSet:function (){
+            $('#Modal_radius').modal('show');
+            console.log('success');
+        },
+
+        /*文件下载类*/
+        ftp_uploadSet:function (){
+            $('#Modal_ftp_upload').modal('show');
+            console.log('success');
+        },
+        ftp_downloadSet:function (){
+            $('#Modal_ftp_download').modal('show');
+            console.log('success');
+        },
+        web_downloadSet:function (){
+            $('#Modal_web_download').modal('show');
+            console.log('success');
+        },
+
+        /*网页浏览类*/
+        webpageSet:function (){
+            $('#Modal_webpage').modal('show');
+            console.log('success');
+        },
+
+        /*在线视频类*/
+        videoSet:function (){
+            $('#Modal_video').modal('show');
+            console.log('success');
+        },
+
+        /*网络游戏类*/
+        gameSet:function (){
+            $('#Modal_game').modal('show');
+            console.log('success');
+        }
+
     }
 })
 
@@ -65,7 +134,7 @@ var weightHandle = new Vue ({
                 console.log(weight_new);
                 $.ajax({
                     type: "POST", /*GET会乱码*/
-                    url: "../../cem/weight/set",
+                    url: "../../cem/allweight/set",
                     cache: false,  //禁用缓存
                     data: {"weight_new":weight_new},
                     dataType: "json",
@@ -92,15 +161,15 @@ var weightHandle = new Vue ({
         reset:function(){
             $.ajax({
                 type: "POST", /*GET会乱码*/
-                url: "../../cem/weight/reset",
+                url: "../../cem/allweight/reset",
                 cache: false,  //禁用缓存
                 dataType: "json",
                 contentType: "application/json", /*必须要,不可少*/
                 success: function (result) {
                     $('#connectionweight').val(result.weightdefault[0]);
                     $('#qualityweight').val(result.weightdefault[1]);
-                    $('#browseweight').val(result.weightdefault[2]);
-                    $('#downloadweight').val(result.weightdefault[3]);
+                    $('#downloadweight').val(result.weightdefault[2]);
+                    $('#browseweight').val(result.weightdefault[3]);
                     $('#videoweight').val(result.weightdefault[4]);
                     $('#gameweight').val(result.weightdefault[5]);
                 }

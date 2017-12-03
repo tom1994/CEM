@@ -22,4 +22,9 @@ public interface TaskDispatchDao extends BaseDao<TaskDispatchEntity> {
     void cancelTask(Integer id);
 
     String[] queryTargetBatch(String[] targetIdList);
+
+    List<TaskDispatchEntity> taskQueryDispatchList(Integer id);
+
+    int taskQueryDispatchTotal(Integer id);
+
 }

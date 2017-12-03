@@ -105,12 +105,23 @@ public class ProbeController {
 		}
 	}
 	/**
-	 * 信息
+	 * 按区县信息搜索探针信息
 	 */
 	@RequestMapping("/info/{id}")
 	@RequiresPermissions("probe:info")
 	public R info(@PathVariable("id") Integer id){
 		List<ProbeEntity> probeList = probeService.queryProbe(id);
+		System.out.println(probeList);
+		return R.ok().put("probe", probeList);
+	}
+
+	/**
+	 * 详细信息
+	 */
+	@RequestMapping("/detail/{id}")
+	@RequiresPermissions("probe:detail")
+	public R detail(@PathVariable("id") Integer id){
+		ProbeEntity probeList = probeService.queryDetail(id);
 		System.out.println(probeList);
 		return R.ok().put("probe", probeList);
 	}
