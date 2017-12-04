@@ -8,7 +8,7 @@ var names = new Array();
 var spdata_handle = new Vue({
     el: '#handle',
     data: {},
-    mounted() {},
+    mounted: function() {},
     methods: {
         spadd: function () {   /*监听新增触发事件*/
             status = 0;
@@ -323,7 +323,7 @@ var sptable = new Vue({
             /*重绘*/
         }
     },
-    mounted() {
+    mounted: function() {
         let vm = this;
         // Instantiate the datatable and store the reference to the instance in our dtHandle element.
         vm.dtHandle = $(this.$el).DataTable({

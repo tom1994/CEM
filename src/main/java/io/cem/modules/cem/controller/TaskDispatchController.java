@@ -1,5 +1,6 @@
 package io.cem.modules.cem.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,6 +67,15 @@ public class TaskDispatchController {
             total = taskDispatchService.queryDispatchTotal(id);
         }
         List<TaskDispatchEntity> dispatchList = taskDispatchService.queryDispatchList(id);
+        String[] targetList = new String[dispatchList.size()];
+//        Integer[] targetIds = new Integer[100];
+        for(int i=0; i<dispatchList.size();i++){
+            targetList[i] = dispatchList.get(i).getTarget();
+//            System.out.print(targetList[1]);
+            String targetName = taskDispatchService.queryTargetBatch(targetList[i].split(",|\""));
+            dispatchList.get(i).setTargetName(targetName);
+        }
+
         PageUtils pageUtil = new PageUtils(dispatchList, total, limit, page);
         return R.ok().put("page", pageUtil);
     }
@@ -104,6 +114,24 @@ public class TaskDispatchController {
         return R.ok();
     }
 
+    @RequestMapping("/saveAll")
+    @RequiresPermissions("taskdispatch:save")
+    public R saveAll(@RequestBody TaskDispatchEntity taskDispatch/*, String[] probeIds*/) {
+//        taskDispatchService.save(taskDispatch);
+        System.out.println(taskDispatch.getTarget());
+        String[] probeIdsList = taskDispatch.getProbeIds().split(",");
+        ArrayList<TaskDispatchEntity> taskDispatchEntityList = new ArrayList<TaskDispatchEntity>();
+        for(int i=0; i<probeIdsList.length; i++){
+//            System.out.println(probeIdsList[i].split("\"")[1]);
+            TaskDispatchEntity taskDispatchEntity = taskDispatch;
+            taskDispatchEntity.setProbeId(Integer.parseInt(probeIdsList[i].split("\"")[1]));
+            taskDispatchEntityList.add(taskDispatchEntity);
+        }
+        taskDispatchService.saveAll(taskDispatchEntityList);
+        System.out.println(taskDispatch.getProbeIds());
+        return R.ok();
+    }
+
     /**
      * 修改
      */
@@ -111,7 +139,6 @@ public class TaskDispatchController {
     @RequiresPermissions("taskdispatch:update")
     public R update(@RequestBody TaskDispatchEntity taskDispatch) {
         taskDispatchService.update(taskDispatch);
-
         return R.ok();
     }
 
@@ -126,4 +153,10 @@ public class TaskDispatchController {
         return R.ok();
     }
 
+    @RequestMapping("/cancel/{id}")
+    @RequiresPermissions("taskdispatch:delete")
+    public R cancel(@PathVariable("id") Integer id) {
+        taskDispatchService.cancelTask(id);
+        return R.ok();
+    }
 }

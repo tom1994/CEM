@@ -56,7 +56,12 @@ public class TaskDispatchServiceImpl implements TaskDispatchService {
 	public void save(TaskDispatchEntity taskDispatch){
 		taskDispatchDao.save(taskDispatch);
 	}
-	
+
+	@Override
+	public void saveAll(List<TaskDispatchEntity> taskDispatchList) {
+		taskDispatchDao.saveAll(taskDispatchList);
+	}
+
 	@Override
 	public void update(TaskDispatchEntity taskDispatch){
 		taskDispatchDao.update(taskDispatch);
@@ -66,10 +71,26 @@ public class TaskDispatchServiceImpl implements TaskDispatchService {
 	public void delete(Integer id){
 		taskDispatchDao.delete(id);
 	}
-	
+
+	@Override
+	public void cancelTask(Integer id){
+		taskDispatchDao.cancelTask(id);
+	}
+
 	@Override
 	public void deleteBatch(Integer[] ids){
 		taskDispatchDao.deleteBatch(ids);
 	}
-	
+
+	@Override
+	public String queryTargetBatch(String[] targetIdList) {
+		String[] targetNameList = taskDispatchDao.queryTargetBatch(targetIdList);
+		String targetName = "";
+		for(int i=0; i<targetNameList.length-1;i++){
+			targetName = targetName+targetNameList[i]+",";
+		}
+		targetName=targetName+targetNameList[targetNameList.length-1];
+		return targetName;
+	}
+
 }

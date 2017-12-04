@@ -4,13 +4,16 @@ var names = new Array();
 var schedulepolicies = new Array();
 var alarmtemplates = new Array();
 
-var st = new Map([[1, "PING(ICMP Echo)"], [2, "PING(TCP Echo)"]]);//servicetype字典，可通过get方法查对应字符串。
+var st = new Map();//servicetype字典，可通过get方法查对应字符串。
+// var st = new Map();
+st.set(1, "PING(ICMP Echo)");
+st.set(2, "PING(TCP Echo)");
 var stid = new Map([[1, "pingicmp"], [2, "pingtcp"]]);//新建或编辑servicetype参数的id字典，用于根据select的业务类型变更来改变展示的参数。
-var spst = new Map([[1,1],[2,1],[3,1],[4,1],[5,1],[6,1],[11,2],[12,2],[13,2],[14,2],[15,2],[16,2]])
+var spst = new Map([[1, 1], [2, 1], [3, 1], [4, 1], [5, 1], [6, 1], [11, 2], [12, 2], [13, 2], [14, 2], [15, 2], [16, 2]])
 var task_handle = new Vue({
     el: '#handle',
     data: {},
-    mounted() {
+    mounted: function() {
         $.ajax({
             url: "../../cem/schedulepolicy/list",
             type: "POST",
@@ -69,9 +72,7 @@ function view_this(obj) {     /*监听详情触发事件*/
     var update_data_id = parseInt(obj.id);
     /*获取当前行探针数据id*/
     status = 0;
-    /*状态1表示修改*/
-    /*find被选中的行*/
-    getalarm();
+    // getalarm();
     $.ajax({
         url: "../../cem/alarmtemplate/list",
         type: "POST",
@@ -83,44 +84,52 @@ function view_this(obj) {     /*监听详情触发事件*/
                 alarmtemplates[i] = {message: result.page.list[i]}
             }
             taskform_data.alarmtemplates = alarmtemplates;
-            var taskforms = $('#taskform_data .form-control');
-            var paramforms = $('#taskform_param .form-control');
-            var servicetypeid = 0;
-            $.ajax({
-                type: "POST", /*GET会乱码*/
-                url: "../../cem/task/info/" + update_data_id,
-                cache: false,  //禁用缓存
-                //data: update_data_ids,  //传入组装的参数
-                dataType: "json",
-                async: false,
-                contentType: "application/json", /*必须要,不可少*/
-                success: function (result) {
-                    var param = JSON.parse(result.task.parameter);
-                    servicetypeid = result.task.serviceType;
-                    taskforms[0].value = result.task.id;
-                    taskforms[1].value = result.task.taskName;
-                    taskforms[2].value = result.task.serviceType;
-                    taskforms[3].value = result.task.schPolicyId;
-                    taskforms[4].value = result.task.alarmTemplateId;
-                    paramforms[0].value = param.count;
-                    paramforms[1].value = param.interval;
-                    paramforms[2].value = param.size;
-                    paramforms[3].value = param.payload;
-                    paramforms[4].value = param.ttl;
-                    paramforms[5].value = param.tos;
-                    paramforms[6].value = param.timeout;
-                    $("#" + stid.get(servicetypeid)).removeClass("service_unselected");
-                }
-            });
+            get_viewModal(update_data_id)
         }
     });
-    $('#newfooter').attr('style', 'display:none');
-    $('#viewfooter').removeAttr('style', 'display:none');
-    $("#taskform_data input[type=text]").attr('disabled', 'disabled');
-    $("#taskform_data select").attr('disabled', 'disabled');
-    $(".service input[type=text]").attr('disabled', 'disabled');
-    $(".service select").attr('disabled', 'disabled');
-    $('#myModal_edit').modal('show');
+}
+
+function get_viewModal(update_data_id) {
+    var taskforms = $('#taskform_data .form-control');
+    // $("#alarmtemplate option[value='2']").selected = true;
+    // console.log($("#alarmtemplate option:selected").val());
+    var paramforms = $('#taskform_param .form-control');
+    var servicetypeid = 0;
+    $.ajax({
+        type: "POST", /*GET会乱码*/
+        url: "../../cem/task/info/" + update_data_id,
+        cache: false,  //禁用缓存
+        //data: update_data_ids,  //传入组装的参数
+        dataType: "json",
+        async: false,
+        contentType: "application/json", /*必须要,不可少*/
+        success: function (result) {
+            var param = JSON.parse(result.task.parameter);
+            servicetypeid = result.task.serviceType;
+            taskforms[0].value = result.task.id;
+            taskforms[1].value = result.task.taskName;
+            taskforms[2].value = result.task.serviceType;
+            taskforms[3].value = result.task.schPolicyId;
+            taskforms[4].value = result.task.alarmTemplateId;
+            // console.log(taskforms[4].value);
+            // console.log(result.task.alarmTemplateId);
+            paramforms[0].value = param.count;
+            paramforms[1].value = param.interval;
+            paramforms[2].value = param.size;
+            paramforms[3].value = param.payload;
+            paramforms[4].value = param.ttl;
+            paramforms[5].value = param.tos;
+            paramforms[6].value = param.timeout;
+            $("#" + stid.get(servicetypeid)).removeClass("service_unselected");
+            $('#newfooter').attr('style', 'display:none');
+            $('#viewfooter').removeAttr('style', 'display:none');
+            $("#taskform_data input[type=text]").attr('disabled', 'disabled');
+            $("#taskform_data select").attr('disabled', 'disabled');
+            $(".service input[type=text]").attr('disabled', 'disabled');
+            $(".service select").attr('disabled', 'disabled');
+            $('#myModal_edit').modal('show');
+        }
+    });
 }
 
 function delete_ajax() {
@@ -178,7 +187,7 @@ var delete_data = new Vue({
 
 function dispatch_info(obj) {
     dispatch_table.taskid = parseInt(obj.id);
-    console.log(dispatch_table.taskid);
+    // console.log(dispatch_table.taskid);
     /*获取当前行探针数据id*/
     dispatch_table.redraw();
     $('#myModal_dispatch').modal('show');
@@ -187,11 +196,12 @@ function dispatch_info(obj) {
 function task_assign(obj) {
     $("#selectprobe").find("option").remove();
     $("#selecttarget").find("option").remove();
-    var probeSelected;
-    var targetSelected;
-    var taskid = parseInt(obj.id);
+    var probetoSelect;
+    var targettoSelect;
+    var forms = $('#dispatch_target');
+    $('#taskId').val(parseInt(obj.id));
+    console.log($('#taskId').val());
     var servicetype = parseInt(obj.name);
-    console.log(taskid);
     var sp_service = spst.get(servicetype);
     console.log(sp_service);
     // 多选列表的数据传入格式
@@ -204,13 +214,13 @@ function task_assign(obj) {
         dataType: "json",
         contentType: "application/json", /*必须要,不可少*/
         success: function (result) {
-            probeSelected = result.page.list;
+            probetoSelect = result.page.list;
             var selectprobe = $('#selectprobe').doublebox({
                 nonSelectedListLabel: '待选探针',
                 selectedListLabel: '已选探针',
                 preserveSelectionOnMove: 'moved',
                 moveOnSelect: false,
-                nonSelectedList: probeSelected,
+                nonSelectedList: probetoSelect,
                 selectedList: [],
                 optionValue: "id",
                 optionText: "name",
@@ -220,21 +230,19 @@ function task_assign(obj) {
     });
     $.ajax({
         type: "POST", /*GET会乱码*/
-        url: "../../target/infoList/"+sp_service,
+        url: "../../target/infoList/" + sp_service,
         cache: false,  //禁用缓存
         // data: ids,  //传入组装的参数
         dataType: "json",
         contentType: "application/json", /*必须要,不可少*/
         success: function (result) {
-            console.log(result);
-            targetSelected = result.target;
-            console.log(targetSelected);
+            targettoSelect = result.target;
             var selecttarget = $('#selecttarget').doublebox({
                 nonSelectedListLabel: '待选测试目标',
                 selectedListLabel: '已选测试目标',
                 preserveSelectionOnMove: 'moved',
                 moveOnSelect: false,
-                nonSelectedList: targetSelected,
+                nonSelectedList: targettoSelect,
                 selectedList: [],
                 optionValue: "id",
                 optionText: "targetName",
@@ -247,8 +255,30 @@ function task_assign(obj) {
 }
 
 function submit_dispatch() {
-    var newJson = getFormJson($('#dispatch_form'));
-    console.log(newJson);
+    var dispatch_data = new Object();
+    var taskDispatch = new Object();
+    // var probeId = getFormJson($('#dispatch_probe')).probeId;
+    taskDispatch.probePort = 1;
+    taskDispatch.testNumber = 1;
+    taskDispatch.status = 1;
+    taskDispatch.target = getFormJson($('#dispatch_target')).targetId;
+    taskDispatch.taskId = getFormJson($('#dispatch_target')).taskId;
+    taskDispatch.isOndemand = 0;
+    taskDispatch.probeIds = getFormJson($('#dispatch_probe')).probeId;
+    console.log(taskDispatch);
+    $.ajax({
+        type: "POST", /*GET会乱码*/
+        url: "../../cem/taskdispatch/saveAll",
+        cache: false,  //禁用缓存
+        data: JSON.stringify(taskDispatch),
+        dataType: "json",
+        contentType: "application/json", /*必须要,不可少*/
+        success: function (result) {
+            toastr.success("任务下发成功!");
+            $('#task_dispatch').modal('hide');
+            task_table.currReset();
+        }
+    });
 }
 
 
@@ -316,33 +346,20 @@ var taskform_data = new Vue({
         schpolicies: [],
         alarmtemplates: []
     },
-    mounted() {
-
-    },
     // 在 `methods` 对象中定义方法
     methods: {
         submit: function () {
             var oDate = new Date();
             var tasknewJson = getFormJson($('#taskform_data'));
             var paramnewJson = getFormJson($('#taskform_param'));
-            tasknewJson.parameter = JSON.stringify(paramnewJson);
+            tasknewJson.parameter = paramnewJson;
             tasknewJson.isDeleted = 0;
             tasknewJson.createTime = oDate.getDate();
             tasknewJson.remark = "无";
             var tasknew = JSON.stringify(tasknewJson);
-            /*封装成json数组*/
-            /*获取表单元素的值*/
-            console.log(tasknew);
-            var mapstr;
-            if (status == 0) {
-                mapstr = "save";
-            } else if (status == 1) {
-                mapstr = "update"
-            }
-            console.log("状态:" + status);
             $.ajax({
                 type: "POST", /*GET会乱码*/
-                url: "../../cem/task/" + mapstr,
+                url: "../../cem/task/save",
                 cache: false,  //禁用缓存
                 data: tasknew,  //传入组装的参数
                 dataType: "json",
@@ -446,6 +463,22 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
     return o;
 }
 
+function cancel_task(obj) {
+    var taskDispatchId = parseInt(obj.id)
+    console.log(taskDispatchId);
+    $.ajax({
+        type: "POST", /*GET会乱码*/
+        url: "../../cem/taskdispatch/cancel/" + taskDispatchId,
+        cache: false,  //禁用缓存
+        dataType: "json",
+        success: function (result) {
+            dispatch_table.currReset();
+            task_table.currReset();
+            toastr.success("任务已取消!");
+        }
+    });
+}
+
 /*选中表格事件*/
 $(document).ready(function () {
     $(".list td").slice(5).each(function () {
@@ -453,11 +486,8 @@ $(document).ready(function () {
             if ($(this).hasClass('selected')) {
                 $(this).removeClass('selected');
                 $(this).find("input:checkbox").prop("checked", false);
-                /*prop可以,attr会出错*/
             }
             else {
-                /*vm.dtHandle.$('tr.selected').removeClass('selected');*/
-                /*只能选中一行*/
                 $(this).addClass('selected');
                 $(this).find("input:checkbox").prop("checked", true);
             }
@@ -492,7 +522,7 @@ var task_table = new Vue({
             {title: '<div style="width:77px">子业务类型</div>'},
             {title: '<div style="width:67px">调度策略</div>'},
             {title: '<div style="width:67px">告警模板</div>'},
-            {title: '<div style="width:27px">分配数量</div>'},
+            {title: '<div style="width:57px">分配数量</div>'},
             {title: '<div style="width:67px">操作</div>'}
         ],
         rows: [],
@@ -525,7 +555,7 @@ var task_table = new Vue({
             /*重绘*/
         }
     },
-    mounted() {
+    mounted: function() {
         let vm = this;
         // Instantiate the datatable and store the reference to the instance in our dtHandle element.
         vm.dtHandle = $(this.$el).DataTable({
@@ -556,7 +586,7 @@ var task_table = new Vue({
                 param.start = data.start;//开始的记录序号
                 param.page = (data.start / data.length) + 1;//当前页码
                 param.taskdata = JSON.stringify(vm.taskdata);
-                console.log(param);
+                // console.log(param);
                 //ajax请求数据
                 $.ajax({
                     type: "POST", /*GET会乱码*/
@@ -584,7 +614,7 @@ var task_table = new Vue({
                             row.push(item.atName);
                             row.push('<a class="fontcolor" onclick="dispatch_info(this)" id=' + item.id + '>' + getDispatch(item.id) + '</a>&nbsp;');
                             // row.push('<a class="fontcolor" onclick="task_assign(this)" id=\'+item.id+\'>下发任务</a>');
-                            row.push('<a class="fontcolor" onclick="task_assign(this)" id=' + item.id+ ' name='+item.serviceType+'>下发任务</a>&nbsp;' +
+                            row.push('<a class="fontcolor" onclick="task_assign(this)" id=' + item.id + ' name=' + item.serviceType + '>下发任务</a>&nbsp;' +
                                 '<a class="fontcolor" onclick="delete_this(this)" id=' + item.id + '>删除</a>&nbsp;' +
                                 '<a class="fontcolor" onclick="view_this(this)" id=' + item.id + '>详情</a>');
                             rows.push(row);
@@ -621,11 +651,11 @@ var dispatch_table = new Vue({
     data: {
         headers: [
             {title: '<div style="width:17px"></div>'},
-            {title: '<div style="width:97px">探针名称</div>'},
+            {title: '<div style="width:57px">探针名称</div>'},
             {title: '<div style="width:77px">位置</div>'},
-            {title: '<div style="width:67px">层级</div>'},
+            {title: '<div style="width:37px">层级</div>'},
             // {title: '<div style="width:67px">告警模板</div>'},
-            {title: '<div style="width:27px">测试目标</div>'},
+            {title: '<div style="width:97px">测试目标</div>'},
             {title: '<div style="width:67px">操作</div>'}
         ],
         rows: [],
@@ -663,9 +693,9 @@ var dispatch_table = new Vue({
             /*弹出确认模态框*/
         },
     },
-    mounted() {
+    mounted: function() {
         let vm = this;
-        console.log(this.$data.taskid);
+        // console.log(this.$data.taskid);
         vm.dtHandle = $(this.$el).DataTable({
             columns: vm.headers,
             data: vm.rows,
@@ -684,14 +714,13 @@ var dispatch_table = new Vue({
             },
             sDom: 'Rfrtlip', /*显示在左下角*/
             ajax: function (data, callback, settings) {
-                console.log('success');
                 //封装请求参数
                 let param = {};
                 param.limit = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
                 param.start = data.start;//开始的记录序号
                 param.page = (data.start / data.length) + 1;//当前页码
                 param.taskdata = JSON.stringify(vm.taskdata);
-                console.log(param);
+                // console.log(param);
                 //ajax请求数据
                 $.ajax({
                     type: "POST", /*GET会乱码*/
@@ -718,12 +747,9 @@ var dispatch_table = new Vue({
                             row.push(item.probeName);
                             row.push(item.location);
                             row.push(item.accessLayer);
-                            row.push(item.target);
-                            row.push('<a class="fontcolor" onclick="" id=' + item.id + '>取消</a>');
-                            // row.push('<a class="fontcolor" onclick="task_assign(this)" id=\'+item.id+\'>下发任务</a>');
-                            // row.push('<a class="fontcolor" onclick="task_assign(this)" id='+item.id+'>下发任务</a>&nbsp;' +
-                            //     '<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>&nbsp;' +
-                            //     '<a class="fontcolor" onclick="view_this(this)" id='+item.id+'>详情</a>');
+                            row.push('<span title="'+item.targetName+'" style="white-space: nowrap">' + (item.targetName).substr(0, 15) + '</span>');
+                            // row.push(item.targetName);
+                            row.push('<a class="fontcolor" onclick="cancel_task(this)" id=' + item.id + '>取消任务</a>');
                             rows.push(row);
                         });
                         returnData.data = rows;
