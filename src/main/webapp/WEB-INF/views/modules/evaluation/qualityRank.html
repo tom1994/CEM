@@ -43,7 +43,7 @@
 
                                                 <div class="input-group searchspan">
                                                     <span class="searchname" title="地市" style="width: 40px">地市</span>
-                                                    <select id="selectcity" class="form-control" name="city"
+                                                    <select id="selectcity" class="form-control" name="city_id"
                                                             v-on:change="citychange()" style="width: 110px">
                                                         <option value="1">所有地市</option>
                                                         <option v-for="item in cities"
@@ -56,7 +56,7 @@
 
                                                 <div class="input-group searchspan">
                                                     <span class="searchname" title="区县" style="width: 40px">区县</span>
-                                                    <select id="selectarea" class="form-control " name="area"
+                                                    <select id="selectarea" class="form-control " name="county_id"
                                                             style="width: 110px">
                                                         <option value="1">所有区县</option>
                                                         <option v-for="item in areas"
@@ -78,7 +78,7 @@
                                                 <div class="input-group searchspan">
                                                     <span class="searchname" title="业务类型"
                                                           style="width: 80px">业务类型</span>
-                                                    <select id="selectservice" class="form-control" name="target"
+                                                    <select id="selectservice" class="form-control" name="service_type"
                                                             v-on:change="servicechange()" style="width: 110px">
                                                         <option value="0">综合业务</option>
                                                         <option value="1">网络连通性业务</option>
@@ -94,7 +94,7 @@
                                                 <div class="input-group searchspan">
                                                     <span class="searchname" title="目标地址"
                                                           style="width: 80px">目标地址</span>
-                                                    <select id="select_target" class="form-control " name="target"
+                                                    <select id="select_target" class="form-control " name="target_id"
                                                             style="width: 110px">
                                                         <option value="1">所有目标地址</option>
                                                         <option v-for="item in target"

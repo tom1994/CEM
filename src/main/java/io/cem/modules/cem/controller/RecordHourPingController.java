@@ -2,7 +2,13 @@ package io.cem.modules.cem.controller;
 
 import java.util.List;
 import java.util.Map;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
 
+import com.alibaba.fastjson.JSONObject;
+import io.cem.common.exception.RRException;
+import io.cem.common.utils.*;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,9 +19,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.cem.modules.cem.entity.RecordHourPingEntity;
 import io.cem.modules.cem.service.RecordHourPingService;
+
+
 import io.cem.common.utils.PageUtils;
+import io.cem.common.utils.excel.ExcelUtils;
 import io.cem.common.utils.Query;
 import io.cem.common.utils.R;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * 
@@ -31,19 +44,32 @@ public class RecordHourPingController {
 	private RecordHourPingService recordHourPingService;
 	
 	/**
-	 * 列表
+	 * ZTY用于质量排名界面计算分
 	 */
 	@RequestMapping("/list")
 	@RequiresPermissions("recordhourping:list")
-	public R list(@RequestParam Map<String, Object> params){
+	public R list(String scoredata, Integer page, Integer limit){
 		//查询列表数据
-        Query query = new Query(params);
-
-		List<RecordHourPingEntity> recordHourPingList = recordHourPingService.queryList(query);
-		int total = recordHourPingService.queryTotal(query);
-		
-		PageUtils pageUtil = new PageUtils(recordHourPingList, total, query.getLimit(), query.getPage());
-		
+		Map<String, Object> map = new HashMap<>();
+		JSONObject probedata_jsonobject = JSONObject.parseObject(scoredata);
+		try {
+			map.putAll(JSONUtils.jsonToMap(probedata_jsonobject));
+		} catch (RuntimeException e) {
+			throw new RRException("内部参数错误，请重试！");
+		}
+		int total = 0;
+		if(page==null) {              /*没有传入page,则取全部值*/
+			map.put("offset", null);
+			map.put("limit", null);
+			page = 0;
+			limit = 0;
+		}else {
+			map.put("offset", (page - 1) * limit);
+			map.put("limit", limit);
+			total = recordHourPingService.queryTotal(map);
+		}
+		List<RecordHourPingEntity> probeList = recordHourPingService.queryList(map);
+		PageUtils pageUtil = new PageUtils(probeList, total, limit, page);
 		return R.ok().put("page", pageUtil);
 	}
 	
@@ -91,5 +117,6 @@ public class RecordHourPingController {
 		
 		return R.ok();
 	}
-	
+
+
 }
