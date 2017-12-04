@@ -44,6 +44,10 @@ public class TaskDispatchEntity implements Serializable {
 
 	private String accessLayer;
 
+	private String probeIds;
+
+	private String targetName;
+
 	/**
 	 * 设置：
 	 */
@@ -199,5 +203,22 @@ public class TaskDispatchEntity implements Serializable {
 
 	public void setAccessLayer(String accessLayer) {
 		this.accessLayer = accessLayer;
+	}
+
+
+	public String getProbeIds() {
+		return probeIds;
+	}
+
+	public void setProbeIds(String probeIds) {
+		this.probeIds = probeIds;
+	}
+
+	public String getTargetName() {
+		return targetName;
+	}
+
+	public void setTargetName(String targetName) {
+		this.targetName = targetName;
 	}
 }

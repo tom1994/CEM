@@ -122,13 +122,12 @@
 	<delete id="delete">
 		delete from target where id = #{value}
 	</delete>
-	
+
 	<delete id="deleteBatch">
 		delete from target where id in 
 		<foreach item="id" collection="array" open="(" separator="," close=")">
 			#{id}
 		</foreach>
 	</delete>
-
 
 </mapper>

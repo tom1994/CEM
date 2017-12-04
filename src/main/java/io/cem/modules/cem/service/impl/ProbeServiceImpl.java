@@ -38,7 +38,6 @@ public class ProbeServiceImpl implements ProbeService {
 	@Override
 	public ProbeEntity queryDetail(Integer id){ return probeDao.queryDetail(id); }
 
-
 	@Override
 	public int queryTotal(Map<String, Object> map){
 		return probeDao.queryTotal(map);

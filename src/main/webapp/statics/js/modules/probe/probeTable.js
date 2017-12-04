@@ -811,13 +811,13 @@ var probetable = new Vue({
             {title: '<div style="width:42px">区县</div>'},
             {title: '<div style="width:90px">位置</div>'},
             {title: '<div style="width:40px">层级</div>'},
-            {title: '<div style="width:65px">上联探针</div>'},
-            {title: '<div style="width:50px">状态</div>'},
+            {title: '<div style="width:55px">上联探针</div>'},
+            {title: '<div style="width:40px">状态</div>'},
             {title: '<div style="width:55px">类型</div>'},
             {title: '<div style="width:130px">注册时间</div>'},
             {title: '<div style="width:80px">最后心跳时间</div>'},
             {title: '<div style="width:80px">最后上报时间</div>'},
-            {title: '<div style="width:60px">操作</div>'}
+            {title: '<div style="width:80px">操作</div>'}
         ],
         rows: [],
         dtHandle: null,

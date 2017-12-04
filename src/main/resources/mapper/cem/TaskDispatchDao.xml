@@ -48,7 +48,7 @@
 		from task_dispatch
 		INNER JOIN probe
 		ON task_dispatch.probe_id = probe.id
-		WHERE task_id = #{value}
+		WHERE task_id = #{value} AND task_dispatch.status = 1
 		order by id desc
 	</select>
 
@@ -104,7 +104,13 @@
 			#{remark}
 		)
 	</insert>
-	 
+
+	 <update id="cancelTask">
+		 update task_dispatch
+		 SET status = 0
+		 WHERE id = #{value}
+	 </update>
+
 	<update id="update" parameterType="io.cem.modules.cem.entity.TaskDispatchEntity">
 		update task_dispatch 
 		<set>
@@ -133,4 +139,48 @@
 		</foreach>
 	</delete>
 
+	<insert id="saveAll" parameterType="io.cem.modules.cem.entity.TaskDispatchEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into task_dispatch
+		(
+		`task_id`,
+		`probe_id`,
+		`probe_port`,
+		`target`,
+		`target_group`,
+		`is_ondemand`,
+		`test_number`,
+		`test_interval`,
+		`status`,
+		`remark`
+		)
+		values
+		<foreach collection="list" item="item" index="index" separator=",">
+			(
+			#{item.taskId},
+			#{item.probeId},
+			#{item.probePort},
+			#{item.target},
+			#{item.targetGroup},
+			#{item.isOndemand},
+			#{item.testNumber},
+			#{item.testInterval},
+			#{item.status},
+			#{item.remark}
+			)
+		</foreach>
+	</insert>
+
+	<select id="queryTargetBatch" resultType="String">
+		select target.target_name FROM target where id in
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</select>
+
+	<!--<delete id="deleteBatch">-->
+		<!--delete from target where id in-->
+		<!--<foreach item="id" collection="array" open="(" separator="," close=")">-->
+			<!--#{param2.id} #{param.name} #{param1} #{param2.id} #{param.name}-->
+		<!--</foreach>-->
+	<!--</delete>-->
 </mapper>

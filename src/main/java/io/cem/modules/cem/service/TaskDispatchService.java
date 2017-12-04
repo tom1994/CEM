@@ -29,10 +29,16 @@ public interface TaskDispatchService {
 	int taskQueryDispatchTotal(Integer id);
 	
 	void save(TaskDispatchEntity taskDispatch);
+
+	void saveAll(List<TaskDispatchEntity> taskDispatchList);
 	
 	void update(TaskDispatchEntity taskDispatch);
 	
 	void delete(Integer id);
 	
 	void deleteBatch(Integer[] ids);
+
+	void cancelTask(Integer id);
+
+	String queryTargetBatch(String[] targetIdList);
 }
