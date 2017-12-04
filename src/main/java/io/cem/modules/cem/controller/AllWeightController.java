@@ -72,6 +72,18 @@ public class AllWeightController {
             PropertiesUtils.setValue("downloadweight",weight_new_jsonobject.get("downloadweight").toString());
             PropertiesUtils.setValue("videoweight",weight_new_jsonobject.get("videoweight").toString());
             PropertiesUtils.setValue("gameweight",weight_new_jsonobject.get("gameweight").toString());
+            PropertiesUtils.setValue("connectionweight",weight_new_jsonobject.get("connectionweight").toString());
+            PropertiesUtils.setValue("qualityweight",weight_new_jsonobject.get("qualityweight").toString());
+            PropertiesUtils.setValue("browseweight",weight_new_jsonobject.get("browseweight").toString());
+            PropertiesUtils.setValue("downloadweight",weight_new_jsonobject.get("downloadweight").toString());
+            PropertiesUtils.setValue("videoweight",weight_new_jsonobject.get("videoweight").toString());
+            PropertiesUtils.setValue("gameweight",weight_new_jsonobject.get("gameweight").toString());
+            PropertiesUtils.setValue("connectionweight",weight_new_jsonobject.get("connectionweight").toString());
+            PropertiesUtils.setValue("qualityweight",weight_new_jsonobject.get("qualityweight").toString());
+            PropertiesUtils.setValue("browseweight",weight_new_jsonobject.get("browseweight").toString());
+            PropertiesUtils.setValue("downloadweight",weight_new_jsonobject.get("downloadweight").toString());
+            PropertiesUtils.setValue("videoweight",weight_new_jsonobject.get("videoweight").toString());
+            PropertiesUtils.setValue("gameweight",weight_new_jsonobject.get("gameweight").toString());
         } catch (IOException e) {
 
         }

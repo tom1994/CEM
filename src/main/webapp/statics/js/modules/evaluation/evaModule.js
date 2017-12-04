@@ -112,6 +112,13 @@ var weightHandle = new Vue ({
             var weightJson = getFormJson($('#weight_form'));
             console.log(weightJson);
             var totalweight = parseFloat(weightJson["connectionweight"])+parseFloat(weightJson["qualityweight"])+parseFloat(weightJson["browseweight"])+parseFloat(weightJson["downloadweight"])+parseFloat(weightJson["videoweight"])+parseFloat(weightJson["gameweight"]);
+            var totalsecondweight1 = parseFloat(weightJson["ping_icmp"])+parseFloat(weightJson["ping_tcp"])+parseFloat(weightJson["ping_udp"])+parseFloat(weightJson["tr_tcp"])+parseFloat(weightJson["tr_icmp"]);
+            var totalsecondweight2 = parseFloat(weightJson["sla_tcp"])+parseFloat(weightJson["sla_udp"])+parseFloat(weightJson["dns"])+parseFloat(weightJson["dhcp"])+parseFloat(weightJson["adsl"])+parseFloat(weightJson["radius"]);
+            var totalsecondweight3 = parseFloat(weightJson["ftp_upload"])+parseFloat(weightJson["ftp_download"])+parseFloat(weightJson["web_load"]);
+            var totalsecondweight4 = parseFloat(weightJson["webpage"]);
+            var totalsecondweight5 = parseFloat(weightJson["video"]);;
+            var totalsecondweight6 = parseFloat(weightJson["game"]);;
+
             console.log(totalweight);
             if (typeof(weightJson["connectionweight"]) == "undefined") {
                 toastr.warning("请设置网络连通性测试业务的权重!");
