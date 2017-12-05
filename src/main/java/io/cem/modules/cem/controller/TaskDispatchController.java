@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import io.cem.common.utils.CloneUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -122,8 +123,7 @@ public class TaskDispatchController {
         String[] probeIdsList = taskDispatch.getProbeIds().split(",");
         ArrayList<TaskDispatchEntity> taskDispatchEntityList = new ArrayList<TaskDispatchEntity>();
         for(int i=0; i<probeIdsList.length; i++){
-//            System.out.println(probeIdsList[i].split("\"")[1]);
-            TaskDispatchEntity taskDispatchEntity = taskDispatch;
+            TaskDispatchEntity taskDispatchEntity = CloneUtils.clone(taskDispatch);
             taskDispatchEntity.setProbeId(Integer.parseInt(probeIdsList[i].split("\"")[1]));
             taskDispatchEntityList.add(taskDispatchEntity);
         }
