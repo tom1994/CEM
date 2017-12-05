@@ -26,7 +26,12 @@ public class TargetGroupServiceImpl implements TargetGroupService {
 	public List<TargetGroupEntity> queryList(Map<String, Object> map){
 		return targetGroupDao.queryList(map);
 	}
-	
+
+	@Override
+	public List<TargetGroupEntity> queryTGList(Integer id){
+		return targetGroupDao.queryTGList(id);
+	}
+
 	@Override
 	public int queryTotal(Map<String, Object> map){
 		return targetGroupDao.queryTotal(map);
@@ -37,7 +42,6 @@ public class TargetGroupServiceImpl implements TargetGroupService {
 		targetGroupDao.save(targetGroup);
 	}
 
-	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void update(TargetGroupEntity targetGroup){
 		targetGroupDao.update(targetGroup);

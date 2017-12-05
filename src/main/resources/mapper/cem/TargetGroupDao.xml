@@ -30,6 +30,12 @@
 			limit #{offset}, #{limit}
 		</if>
 	</select>
+
+	<select id="queryTGList" resultMap="targetGroupMap">
+		select * from target_group
+		WHERE superservice_type = #{value}
+		order by id
+	</select>
 	
  	<select id="queryTotal" resultType="int">
 		select count(*) from target_group 

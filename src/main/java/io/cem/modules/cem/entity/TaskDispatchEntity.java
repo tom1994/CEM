@@ -221,4 +221,5 @@ public class TaskDispatchEntity implements Serializable {
 	public void setTargetName(String targetName) {
 		this.targetName = targetName;
 	}
+
 }

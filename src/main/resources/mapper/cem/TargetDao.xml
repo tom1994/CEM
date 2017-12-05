@@ -48,7 +48,7 @@
 	<select id="queryTargetList" resultType="io.cem.modules.cem.entity.TargetEntity">
 		select * from target
 		WHERE superservice_type = #{value}
-		order by id desc
+		order by id
 	</select>
 	
  	<select id="queryTotal" resultType="int">
