@@ -353,6 +353,9 @@ a:link {
     border:none;
     line-height: 1px!important;
 }
+.form-input {
+    width:100%;
+}
 
 
 
