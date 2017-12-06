@@ -100,6 +100,12 @@ public class TaskDispatchController {
             total = taskDispatchService.taskQueryDispatchTotal(id);
         }
         List<TaskDispatchEntity> dispatchList = taskDispatchService.taskQueryDispatchList(id);
+        String[] targetList = new String[dispatchList.size()];
+        for(int i=0; i<dispatchList.size();i++){
+            targetList[i] = dispatchList.get(i).getTarget();
+            String targetName = taskDispatchService.queryTargetBatch(targetList[i].split(",|\""));
+            dispatchList.get(i).setTargetName(targetName);
+        }
         PageUtils pageUtil = new PageUtils(dispatchList, total, limit, page);
         return R.ok().put("page", pageUtil);
     }

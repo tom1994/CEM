@@ -305,6 +305,130 @@ var probegroup_handle = new Vue({
     }
 });
 
+/*查看任务*/
+function dispatch_info (obj) {
+    dispatch_table.probeid = parseInt(obj.id);
+    console.log(obj.id)
+    /*获取当前行探针数据id*/
+    dispatch_table.redraw();
+    $('#myModal_dispatch').modal('show');
+}
+
+var dispatch_table = new Vue({
+    el: '#dispatch_table',
+    data: {
+        headers: [
+            {title: '<div style="width:17px"></div>'},
+            //{title: '<div style="width:77px">探针名称</div>'},
+            //{title: '<div style="width:108px">位置</div>'},
+            //{title: '<div style="width:37px">层级</div>'},
+            {title: '<div style="width:77px">任务名称</div>'},
+            {title: '<div style="width:160px">测试目标</div>'},
+            //{title: '<div style="width:67px">操作</div>'}
+        ],
+        rows: [],
+        dtHandle: null,
+        taskdata: {},
+        //taskid: 1,
+        probeid:1,
+    },
+
+    methods: {
+        reset: function () {
+            let vm = this;
+            vm.taskdata = {};
+            /*清空taskdata*/
+            vm.dtHandle.clear();
+            console.log("重置");
+            vm.dtHandle.draw();
+            /*重置*/
+        },
+        currReset: function () {
+            let vm = this;
+            vm.dtHandle.clear();
+            console.log("当前页面重绘");
+            vm.dtHandle.draw(false);
+            /*当前页面重绘*/
+        },
+        redraw: function () {
+            let vm = this;
+            vm.dtHandle.clear();
+            console.log("页面重绘");
+            vm.dtHandle.draw();
+            /*重绘*/
+        },
+        show_modal: function () {
+            $('#myModal_dispatch').modal('show');
+            /*弹出确认模态框*/
+        },
+    },
+    mounted: function () {
+        let vm = this;
+        // console.log(this.$data.taskid);
+        vm.dtHandle = $(this.$el).DataTable({
+            columns: vm.headers,
+            data: vm.rows,
+            searching: false,
+            paging: true,
+            serverSide: true,
+            info: false,
+            ordering: false, /*禁用排序功能*/
+            scroll: false,
+            oLanguage: {
+                sLengthMenu: "每页 _MENU_ 行数据",
+                oPaginate: {
+                    sNext: '<i class="fa fa-chevron-right" ></i>', /*图标替换上一页,下一页*/
+                    sPrevious: '<i class="fa fa-chevron-left" ></i>'
+                }
+            },
+            sDom: 'Rfrtlip', /*显示在左下角*/
+            ajax: function (data, callback, settings) {
+                //封装请求参数
+                let param = {};
+                param.limit = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
+                param.start = data.start;//开始的记录序号
+                param.page = (data.start / data.length) + 1;//当前页码
+                param.taskdata = JSON.stringify(vm.taskdata);
+                // console.log(param);
+                //ajax请求数据
+                $.ajax({
+                    type: "POST", /*GET会乱码*/
+                    // var day = now.getTime();
+                    url: "../../cem/taskdispatch/infoTask/" + vm.probeid,
+                    cache: false,  //禁用缓存
+                    data: param,  //传入组装的参数
+                    dataType: "json",
+                    success: function (result) {
+                        console.log(result);
+                        //封装返回数据
+                        let returnData = {};
+                        returnData.draw = result.page.draw;//这里直接自行返回了draw计数器,应该由后台返回
+                        returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
+                        returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
+                        // returnData.data = result.page.list;//返回的数据列表
+                        // 重新整理返回数据以匹配表格
+                        let rows = [];
+                        var i = param.start + 1;
+                        result.page.list.forEach(function (item) {
+                            let row = [];
+                            row.push(i++);
+                            //row.push(item.probeName);
+                            //row.push(item.location);
+                            //row.push(item.accessLayer);
+                            row.push(item.taskName);
+                            row.push('<span title="' + item.targetName + '" style="white-space: nowrap">' + (item.targetName).substr(0, 25) + '</span>');
+                            //row.push('<a class="fontcolor" onclick="cancel_task(this)" id=' + item.id + '>取消任务</a>');
+                            rows.push(row);
+                        });
+                        returnData.data = rows;
+                        callback(returnData);
+                    }
+                });
+            }
+        });
+    }
+});
+
 /*探针列表详情功能*/
 function update_this (obj) {     /*监听修改触发事件*/
     update_data_id = parseInt(obj.id);
@@ -914,12 +1038,7 @@ var probetable = new Vue({
                                 row.push(item.typeName);
                                 row.push(item.registerTime);
                                 row.push('<span title="'+item.lastHbTime+'" style="white-space: nowrap">' + (item.lastHbTime).substr(0, 10) + '</span>');
-                               // row.push(item.lastHbTime);
                                 row.push('<span title="'+item.lastReportTime+'" style="white-space: nowrap">' + (item.lastReportTime).substr(0, 10) + '</span>');
-                               // row.push(item.lastReportTime);
-                                /*row.push('<a class="fontcolor" onclick="update_this(this)" id='+item.id+'>详情</a>&nbsp&nbsp;' +
-                                    '<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>&nbsp&nbsp;'
-                                    +'<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>查看任务</a>');*/
                                 row.push('<a class="fontcolor" onclick="update_this(this)" id='+item.id+'>详情</a>&nbsp;' +
                                     '<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>&nbsp;'+
                                     '<a class="fontcolor" onclick="dispatch_info(this)" id='+item.id+'>查看任务</a>');

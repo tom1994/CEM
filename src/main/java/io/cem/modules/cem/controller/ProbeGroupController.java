@@ -65,7 +65,7 @@ public class ProbeGroupController {
 	 * 查询列表
 	 */
 	@RequestMapping("/searchlist")
-	@RequiresPermissions("probegroup:searchlist")
+	@RequiresPermissions("probegroup:list")
 	public R searchlist(String groupdata, Integer page, Integer limit) throws Exception {
 		Map<String, Object> map = new HashMap<>();
 		int total = 0;
