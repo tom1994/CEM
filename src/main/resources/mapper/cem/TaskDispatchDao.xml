@@ -19,6 +19,7 @@
 		<result property="probeName" column="probe_name"/>
 		<result property="accessLayer" column="access_layer"/>
 		<result property="location" column="location"/>
+		<result property="taskName" column="task_name"/>
     </resultMap>
 
 	<select id="queryObject" resultType="io.cem.modules.cem.entity.TaskDispatchEntity">
@@ -54,20 +55,11 @@
 
 	<select id="taskQueryDispatchList" resultMap="taskDispatchMap">
 		select task_dispatch.*,
-		task.task_name,
+		task.task_name
 		from task_dispatch
 		INNER JOIN task
 		ON task_dispatch.task_id = task.id
 		WHERE probe_id = #{value}
-		order by id desc
-		<choose>
-			<when test="sidx != null and sidx.trim() != ''">
-				order by ${sidx} ${order}
-			</when>
-			<otherwise>
-				order by id desc
-			</otherwise>
-		</choose>
 	</select>
 	
  	<select id="queryTotal" resultType="int">

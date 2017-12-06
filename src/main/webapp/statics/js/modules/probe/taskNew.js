@@ -765,10 +765,9 @@ var dispatch_table = new Vue({
                         let rows = [];
                         var i = param.start + 1;
                         result.page.list.forEach(function (item) {
+                            console.log(item);
                             let row = [];
                             row.push(i++);
-                            // row.push(item.id);
-                            // row.push('<a onclick="view_this(this)" id=' + item.id + '><span style="color: black;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">' + item.probeName + '</span></a>');
                             row.push(item.probeName);
                             row.push(item.location);
                             row.push(item.accessLayer);
@@ -779,12 +778,6 @@ var dispatch_table = new Vue({
                         });
                         returnData.data = rows;
                         callback(returnData);
-                        // $("#dispatch_table").colResizable({
-                        //     liveDrag: true,
-                        //     gripInnerHtml: "<div class='grip'></div>",
-                        //     draggingClass: "dragging",
-                        //     resizeMode: 'overflow',
-                        // });
                     }
                 });
             }
