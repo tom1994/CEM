@@ -60,6 +60,14 @@
 		ON task_dispatch.task_id = task.id
 		WHERE probe_id = #{value}
 		order by id desc
+		<choose>
+			<when test="sidx != null and sidx.trim() != ''">
+				order by ${sidx} ${order}
+			</when>
+			<otherwise>
+				order by id desc
+			</otherwise>
+		</choose>
 	</select>
 	
  	<select id="queryTotal" resultType="int">

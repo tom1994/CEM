@@ -13,7 +13,7 @@ import java.io.IOException;
 @RequestMapping("/cem/allweight")
 public class AllWeightController {
     @RequestMapping("/get")
-    public R getWeight() throws IOException {
+    public R getWeight(){
         String[] weight = new String[23];
         try {
             weight[0] = PropertiesUtils.getValue("connectionweight");
@@ -44,7 +44,7 @@ public class AllWeightController {
     }
 
     @RequestMapping("/getpingICMP")
-    public R getpingICMP() throws IOException {
+    public R getpingICMP(){
         String[] pingICMP = new String[49];
         try {
             pingICMP[0] = PropertiesUtils.getValue("pingI21");
@@ -102,7 +102,7 @@ public class AllWeightController {
     }
 
     @RequestMapping("/getpingTCP")
-    public R getpingTCP() throws IOException {
+    public R getpingTCP(){
         String[] pingTCP = new String[245];
         try {
             pingTCP[0] = PropertiesUtils.getValue("pingT21");
@@ -159,7 +159,7 @@ public class AllWeightController {
     }
 
     @RequestMapping("/getpingUDP")
-    public R getpingUDP() throws IOException {
+    public R getpingUDP(){
         String[] pingUDP = new String[49];
         try {
             pingUDP[0] = PropertiesUtils.getValue("pingU21");
@@ -216,7 +216,7 @@ public class AllWeightController {
     }
 
     @RequestMapping("/gettrICMP")
-    public R gettrICMP() throws IOException {
+    public R gettrICMP(){
         String[] trICMP = new String[49];
         try {
             trICMP[0] = PropertiesUtils.getValue("trI11");
@@ -273,7 +273,7 @@ public class AllWeightController {
     }
 
     @RequestMapping("/gettrTCP")
-    public R gettrTCP() throws IOException {
+    public R gettrTCP(){
         String[] trTCP = new String[49];
         try {
             trTCP[0] = PropertiesUtils.getValue("trT11");
@@ -330,7 +330,7 @@ public class AllWeightController {
     }
 
     @RequestMapping("/getslaTCP")
-    public R getslaTCP() throws IOException {
+    public R getslaTCP(){
         String[] slaTCP = new String[133];
         try {
             slaTCP[0] = PropertiesUtils.getValue("slaT11");
@@ -471,7 +471,7 @@ public class AllWeightController {
     }
 
     @RequestMapping("/getslaUDP")
-    public R getslaUDP() throws IOException {
+    public R getslaUDP(){
         String[] slaUDP = new String[133];
         try {
             slaUDP[0] = PropertiesUtils.getValue("slaU11");
@@ -612,7 +612,7 @@ public class AllWeightController {
     }
 
     @RequestMapping("/getdns")
-    public R getdns() throws IOException {
+    public R getdns(){
         String[] dns = new String[14];
         try {
             dns[0] = PropertiesUtils.getValue("dns11");
@@ -636,7 +636,7 @@ public class AllWeightController {
     }
 
     @RequestMapping("/getdhcp")
-    public R getdhcp() throws IOException {
+    public R getdhcp(){
         String[] dhcp = new String[14];
         try {
             dhcp[0] = PropertiesUtils.getValue("dhcp11");
@@ -660,7 +660,7 @@ public class AllWeightController {
     }
 
     @RequestMapping("/getadsl")
-    public R getadsl() throws IOException {
+    public R getadsl(){
         String[] adsl = new String[21];
         try {
             adsl[0] = PropertiesUtils.getValue("adsl11");
@@ -691,7 +691,7 @@ public class AllWeightController {
     }
 
     @RequestMapping("/getradius")
-    public R getradius() throws IOException {
+    public R getradius(){
         String[] radius = new String[14];
         try {
             radius[0] = PropertiesUtils.getValue("radius11");
@@ -715,7 +715,7 @@ public class AllWeightController {
     }
 
     @RequestMapping("/getftpUpload")
-    public R getftpUpload() throws IOException {
+    public R getftpUpload(){
         String[] ftpUpload = new String[35];
         try {
             ftpUpload[0] = PropertiesUtils.getValue("ftpU11");
@@ -760,7 +760,7 @@ public class AllWeightController {
     }
 
     @RequestMapping("/getftpDownload")
-    public R getftpDownload() throws IOException {
+    public R getftpDownload(){
         String[] ftpDownload = new String[35];
         try {
             ftpDownload[0] = PropertiesUtils.getValue("ftpD11");
@@ -805,7 +805,7 @@ public class AllWeightController {
     }
 
     @RequestMapping("/getwebDownload")
-    public R getwebDownload() throws IOException {
+    public R getwebDownload(){
         String[] webDownload = new String[28];
         try {
             webDownload[0] = PropertiesUtils.getValue("webD11");
@@ -843,7 +843,7 @@ public class AllWeightController {
     }
 
     @RequestMapping("/getwebpage")
-    public R getwebpage() throws IOException {
+    public R getwebpage(){
         String[] webpage = new String[56];
         try {
             webpage[0] = PropertiesUtils.getValue("webP11");
@@ -909,7 +909,7 @@ public class AllWeightController {
     }
 
     @RequestMapping("/getvideo")
-    public R getvideo() throws IOException {
+    public R getvideo(){
         String[] video = new String[77];
         try {
             video[0] = PropertiesUtils.getValue("video11");
@@ -996,7 +996,7 @@ public class AllWeightController {
     }
 
     @RequestMapping("/getgame")
-    public R getgame() throws IOException {
+    public R getgame(){
         String[] game = new String[35];
         try {
             game[0] = PropertiesUtils.getValue("game11");

@@ -13,7 +13,7 @@ var spst = new Map([[1, 1], [2, 1], [3, 1], [4, 1], [5, 1], [6, 1], [11, 2], [12
 var task_handle = new Vue({
     el: '#handle',
     data: {},
-    mounted: function() {
+    mounted: function () {
         $.ajax({
             url: "../../cem/schedulepolicy/list",
             type: "POST",
@@ -276,30 +276,30 @@ function task_assign(obj) {
 
 function submit_dispatch() {
     var a = parseInt($('input[name=chooseprobe]:checked', '#dispatch_probe').val());
-    if (a == 1){
-    var taskDispatch = new Object();
-    taskDispatch.probePort = 1;
-    taskDispatch.status = 1;
-    taskDispatch.target = getFormJson($('#dispatch_target')).targetId;
-    taskDispatch.taskId = getFormJson($('#dispatch_target')).taskId;
-    taskDispatch.isOndemand = 0;
-    taskDispatch.probeIds = getFormJson($('#dispatch_probe')).probeId;
-    taskDispatch.testNumber = taskDispatch.probeIds.length;
-    console.log(taskDispatch);
-    $.ajax({
-        type: "POST", /*GET会乱码*/
-        url: "../../cem/taskdispatch/saveAll",
-        cache: false,  //禁用缓存
-        data: JSON.stringify(taskDispatch),
-        dataType: "json",
-        contentType: "application/json", /*必须要,不可少*/
-        success: function (result) {
-            toastr.success("任务下发成功!");
-            $('#task_dispatch').modal('hide');
-            task_table.currReset();
-        }
-    });
-    }else if(a == 0){
+    if (a == 1) {
+        var taskDispatch = new Object();
+        taskDispatch.probePort = 1;
+        taskDispatch.status = 1;
+        taskDispatch.target = getFormJson($('#dispatch_target')).targetId;
+        taskDispatch.taskId = getFormJson($('#dispatch_target')).taskId;
+        taskDispatch.isOndemand = 0;
+        taskDispatch.probeIds = getFormJson($('#dispatch_probe')).probeId;
+        taskDispatch.testNumber = taskDispatch.probeIds.length;
+        console.log(taskDispatch);
+        $.ajax({
+            type: "POST", /*GET会乱码*/
+            url: "../../cem/taskdispatch/saveAll",
+            cache: false,  //禁用缓存
+            data: JSON.stringify(taskDispatch),
+            dataType: "json",
+            contentType: "application/json", /*必须要,不可少*/
+            success: function (result) {
+                toastr.success("任务下发成功!");
+                $('#task_dispatch').modal('hide');
+                task_table.currReset();
+            }
+        });
+    } else if (a == 0) {
 
     }
 }
@@ -581,7 +581,7 @@ var task_table = new Vue({
             /*重绘*/
         }
     },
-    mounted: function() {
+    mounted: function () {
         let vm = this;
         // Instantiate the datatable and store the reference to the instance in our dtHandle element.
         vm.dtHandle = $(this.$el).DataTable({
@@ -717,7 +717,7 @@ var dispatch_table = new Vue({
             /*弹出确认模态框*/
         },
     },
-    mounted: function() {
+    mounted: function () {
         let vm = this;
         // console.log(this.$data.taskid);
         vm.dtHandle = $(this.$el).DataTable({
@@ -771,7 +771,7 @@ var dispatch_table = new Vue({
                             row.push(item.probeName);
                             row.push(item.location);
                             row.push(item.accessLayer);
-                            row.push('<span title="'+item.targetName+'" style="white-space: nowrap">' + (item.targetName).substr(0, 25) + '</span>');
+                            row.push('<span title="' + item.targetName + '" style="white-space: nowrap">' + (item.targetName).substr(0, 25) + '</span>');
                             // row.push(item.targetName);
                             row.push('<a class="fontcolor" onclick="cancel_task(this)" id=' + item.id + '>取消任务</a>');
                             rows.push(row);
@@ -796,10 +796,11 @@ $(document).on('hidden.bs.modal', '.modal', function (e) {
     $('body').removeClass('select')
     document.body.onselectstart = document.body.ondrag = null;
 })
-$(document).ready(function(){
+$(document).ready(function () {
 
     $("#myModal_delete").draggable();//为模态对话框添加拖拽
     $("#myModal_edit").draggable();
+    $("#myModal_dispatch").draggable();
     $("#task_dispatch").draggable();
     $("#task_dispatch").css("overflow", "visible");//禁止模态对话框的半透明背景滚动
 

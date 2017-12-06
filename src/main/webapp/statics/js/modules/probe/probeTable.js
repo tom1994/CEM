@@ -895,6 +895,7 @@ var probetable = new Vue({
                             returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
                             returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
                             returnData.data = result.page.list;//返回的数据列表
+                        console.log(result.page);
                             // 重新整理返回数据以匹配表格
                             let rows = [];
                             var i = param.start+1;

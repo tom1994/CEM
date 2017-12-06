@@ -82,7 +82,17 @@
 		<if test="superservice_type != null and superservice_type != ''">
 			AND target.superservice_type = #{superservice_type}
 		</if>
-
+		<choose>
+			<when test="sidx != null and sidx.trim() != ''">
+				order by ${sidx} ${order}
+			</when>
+			<otherwise>
+				order by target.id desc
+			</otherwise>
+		</choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
 	</select>
 
 	<insert id="save" parameterType="io.cem.modules.cem.entity.TargetEntity" useGeneratedKeys="true" keyProperty="id">
