@@ -39,6 +39,7 @@
         <result property="areaName" column="area_name"/>
         <result property="typeName" column="type_name"/>
         <result property="statusName" column="status_name"/>
+        <result property="layerName" column="layer_name"/>
     </resultMap>
 
     <select id="queryObject" resultMap="probeMap">
@@ -47,7 +48,8 @@
             city.city_name     AS city_name,
             county.county_name AS area_name,
             a.data_name        AS type_name,
-            b.data_name        AS status_name
+            b.data_name        AS status_name,
+            layer.layer_name   AS layer_name
         FROM probe
             LEFT JOIN city
                 ON probe.city_id = city.city_id
@@ -57,6 +59,8 @@
                 ON (probe.type = a.data_id AND a.dic_type_id = 1)
             LEFT JOIN dic_data b
                 ON (probe.status = b.data_id AND b.dic_type_id = 3)
+            LEFT JOIN layer
+                ON probe.access_layer = layer.layer_tag
         WHERE probe.id = #{value}
     </select>
 
@@ -109,7 +113,8 @@
         city.city_name AS city_name,
         county.county_name AS area_name,
         a.data_name AS type_name,
-        b.data_name AS status_name
+        b.data_name AS status_name,
+        layer.layer_name AS layer_name
         FROM probe
         LEFT JOIN city
         ON probe.city_id = city.city_id
@@ -119,6 +124,8 @@
         ON (probe.type = a.data_id AND a.dic_type_id = 1 )
         LEFT JOIN dic_data b
         ON (probe.status = b.data_id AND b.dic_type_id = 3)
+        LEFT JOIN layer
+        ON probe.access_layer = layer.layer_tag
 
         WHERE probe.id IS NOT NULL
         <if test="probe_name != null and probe_name != ''">

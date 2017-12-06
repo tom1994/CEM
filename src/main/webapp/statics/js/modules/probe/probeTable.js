@@ -934,7 +934,7 @@ var probetable = new Vue({
             {title: '<div style="width:42px">地市</div>'},
             {title: '<div style="width:42px">区县</div>'},
             {title: '<div style="width:90px">位置</div>'},
-            {title: '<div style="width:40px">层级</div>'},
+            {title: '<div style="width:50px">层级</div>'},
             {title: '<div style="width:55px">上联探针</div>'},
             {title: '<div style="width:40px">状态</div>'},
             {title: '<div style="width:55px">类型</div>'},
@@ -1032,7 +1032,7 @@ var probetable = new Vue({
                                 row.push(item.cityName);
                                 row.push(item.areaName);
                                 row.push(item.location);
-                                row.push(item.accessLayer);
+                                row.push(item.layerName);
                                 row.push(item.upstream);
                                 row.push(item.statusName);
                                 row.push(item.typeName);
