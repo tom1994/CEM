@@ -8,7 +8,10 @@ var st = new Map();//servicetype字典，可通过get方法查对应字符串。
 // var st = new Map();
 st.set(1, "PING(ICMP Echo)");
 st.set(2, "PING(TCP Echo)");
-var stid = new Map([[1, "pingicmp"], [2, "pingtcp"]]);//新建或编辑servicetype参数的id字典，用于根据select的业务类型变更来改变展示的参数。
+var stid = new Map();
+stid.set(1, "pingicmp");
+stid.set(2, "pingtcp");
+//新建或编辑servicetype参数的id字典，用于根据select的业务类型变更来改变展示的参数。
 var spst = new Map([[1, 1], [2, 1], [3, 1], [4, 1], [5, 1], [6, 1], [11, 2], [12, 2], [13, 2], [14, 2], [15, 2], [16, 2]])
 var task_handle = new Vue({
     el: '#handle',
@@ -162,7 +165,6 @@ var delete_data = new Vue({
 
 function dispatch_info(obj) {
     dispatch_table.taskid = parseInt(obj.id);
-    // console.log(dispatch_table.taskid);
     /*获取当前行探针数据id*/
     dispatch_table.redraw();
     $('#myModal_dispatch').modal('show');
@@ -393,7 +395,7 @@ var taskform_data = new Vue({
                 success: function (result) {
                     let code = result.code;
                     let msg = result.msg;
-                    console.log(result);
+                    // console.log(result);
                     if (status == 0) {
                         switch (code) {
                             case 0:
@@ -633,7 +635,6 @@ var task_table = new Vue({
                         result.page.list.forEach(function (item) {
                             let row = [];
                             row.push(i++);
-                            // row.push(item.id);
                             row.push('<a onclick="view_this(this)" id=' + item.id + '><span style="color: black;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">' + item.taskName + '</span></a>');
                             row.push(st.get(item.serviceType));
                             row.push(item.spName);
