@@ -20,7 +20,8 @@
                 <div class="wrapper-module">
                     <div id="weightset">
                         <!--网络连通性测试业务-->
-                        <div class="left-up">
+                        <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6">
                             <div class="wrapper-block wrapper_border">
                                 <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
                                     <span class="modulefont">网络连通性测试业务</span>
@@ -63,7 +64,8 @@
                         </div>
 
                         <!--网络层质量测试业务-->
-                        <div class="right">
+                        <!--<div class="right">-->
+                        <div class="col-lg-6 col-md-6 col-sm-6">
                             <div class="wrapper-block wrapper_border">
                                 <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
                                     <span class="modulefont">网络层质量测试业务</span>
@@ -108,9 +110,11 @@
                                 </div>
                             </div>
                         </div>
+                        </div>
 
                         <!--文件下载类业务-->
-                        <div class="left-up">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6">
                             <div class="wrapper-block wrapper_border">
                                 <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
                                     <span class="modulefont">文件下载类业务</span>
@@ -142,7 +146,8 @@
                         </div>
 
                         <!--网页浏览类业务-->
-                        <div class="right">
+                        <!--<div class="right">-->
+                            <div class="col-lg-6 col-md-6 col-sm-6">
                             <div class="wrapper-block wrapper_border">
                                 <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
                                     <span class="modulefont">网页浏览类业务</span>
@@ -162,9 +167,11 @@
                                 </div>
                             </div>
                         </div>
+                        </div>
 
                         <!--在线视频类业务-->
-                        <div class="left-up">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6">
                             <div class="wrapper-block wrapper_border">
                                 <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
                                     <span class="modulefont">在线视频类业务</span>
@@ -186,7 +193,8 @@
                         </div>
 
                         <!--网络游戏类业务-->
-                        <div class="right">
+                        <!--<div class="right">-->
+                            <div class="col-lg-6 col-md-6 col-sm-6">
                             <div class="wrapper-block wrapper_border">
                                 <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
                                     <span class="modulefont">网络游戏类业务</span>
@@ -207,18 +215,19 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                    </div>
 
-                <div style="text-align: right" id="weight_handle">
-                    <button type="button" class="btn btn-sm btn-success"
-                            style="margin-right: 5px"
-                            v-on:click="submit"><span
-                            class="glyphicon glyphicon-save"></span>保存
-                    </button>
-                    <button type="button" class="btn btn-sm btn-success"
-                            v-on:click="reset"><span
-                            class="glyphicon glyphicon-refresh"></span>重置
-                    </button>
+                    <div style="float: right" id="weight_handle">
+                        <button type="button" class="btn btn-sm btn-success"
+                                style="margin-right: 5px"
+                                v-on:click="submit"><span
+                                class="glyphicon glyphicon-save"></span>保存
+                        </button>
+                        <button type="button" class="btn btn-sm btn-success"
+                                v-on:click="reset"><span
+                                class="glyphicon glyphicon-refresh"></span>重置
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
