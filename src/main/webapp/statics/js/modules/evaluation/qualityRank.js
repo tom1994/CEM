@@ -185,13 +185,13 @@ var probetable = new Vue({
             {title: '<div style="width:10px"></div>'},
             {title: '<div class="checkbox" style="width:100%; align: center"> <label> <input type="checkbox" id="checkAll"></label> </div>'},
             //{title: '<div style=" width:0px;display:none;padding:0px">id</div>'},
-            {title: '<div style="width:70px">探针名</div>'},
-            {title: '<div style="width:42px">地市</div>'},
+            {title: '<div style="width:70px">地市</div>'},
             {title: '<div style="width:42px">区县</div>'},
-            {title: '<div style="width:90px">位置</div>'},
-            {title: '<div style="width:40px">层级</div>'},
-            {title: '<div style="width:55px">上联探针</div>'},
-            {title: '<div style="width:40px">状态</div>'},
+            {title: '<div style="width:42px">探针名</div>'},
+            {title: '<div style="width:90px">业务类型</div>'},
+            {title: '<div style="width:40px">目标地址</div>'},
+            {title: '<div style="width:55px">分数</div>'},
+            {title: '<div style="width:40px">权重</div>'},
             {title: '<div style="width:80px">操作</div>'}
         ],
         rows: [],
@@ -278,7 +278,6 @@ var probetable = new Vue({
                             row.push(i++);
                             row.push('<div class="checkbox"> <label> <input type="checkbox" id="checkALl" name="selectFlag"><div style="display: none">'+item.id+'</div></label> </div>');
                             //row.push('<div class="probe_id" style="display:none">'+item.id+'</div>');
-                            row.push('<a onclick="update_this(this)" id='+item.id+'><span style="color: black;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">'+item.name+'</span></a>');
                             row.push(item.cityId);
                             row.push(item.countyId);
                             row.push(item.probeId);
@@ -287,8 +286,7 @@ var probetable = new Vue({
                             row.push(item.score);
                             row.push(item.base);
                             row.push('<a class="fontcolor" onclick="update_this(this)" id='+item.id+'>详情</a>&nbsp;' +
-                                '<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>&nbsp;'+
-                                '<a class="fontcolor" onclick="dispatch_info(this)" id='+item.id+'>查看任务</a>');
+                                '<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>诊断</a>'); //Todo:完成详情与诊断
                             rows.push(row);
                         });
                         returnData.data = rows;
