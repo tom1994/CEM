@@ -39,16 +39,24 @@ public class ProbeGroupController {
 	@RequiresPermissions("probegroup:list")
 	public R list(String groupdata, Integer page, Integer limit) throws Exception {
 		Map<String, Object> map = new HashMap<>();
-		map.put("offset", (page - 1) * limit);
-		map.put("limit", limit);
 		JSONObject groupdata_jsonobject = JSONObject.parseObject(groupdata);
 		try {
 			map.putAll(JSONUtils.jsonToMap(groupdata_jsonobject));
 		} catch (RuntimeException e) {
 			throw new RRException("内部参数错误，请重试！");
 		}
+		int total = 0;
+		if(page==null) {              /*没有传入page,则取全部值*/
+			map.put("offset", null);
+			map.put("limit", null);
+			page = 0;
+			limit = 0;
+		}else {
+			map.put("offset", (page - 1) * limit);
+			map.put("limit", limit);
+			total = ProbeGroupService.queryTotal(map);
+		}
 		List<ProbeGroupEntity> groupList = ProbeGroupService.queryList(map);
-		int total = ProbeGroupService.queryTotal(map);
 		PageUtils pageUtil = new PageUtils(groupList, total, limit, page);
 		return R.ok().put("page", pageUtil);
 	}
@@ -57,7 +65,7 @@ public class ProbeGroupController {
 	 * 查询列表
 	 */
 	@RequestMapping("/searchlist")
-	@RequiresPermissions("probegroup:searchlist")
+	@RequiresPermissions("probegroup:list")
 	public R searchlist(String groupdata, Integer page, Integer limit) throws Exception {
 		Map<String, Object> map = new HashMap<>();
 		int total = 0;

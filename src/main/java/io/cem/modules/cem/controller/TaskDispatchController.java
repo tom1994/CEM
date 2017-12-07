@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import io.cem.common.utils.CloneUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -99,6 +100,12 @@ public class TaskDispatchController {
             total = taskDispatchService.taskQueryDispatchTotal(id);
         }
         List<TaskDispatchEntity> dispatchList = taskDispatchService.taskQueryDispatchList(id);
+        String[] targetList = new String[dispatchList.size()];
+        for(int i=0; i<dispatchList.size();i++){
+            targetList[i] = dispatchList.get(i).getTarget();
+            String targetName = taskDispatchService.queryTargetBatch(targetList[i].split(",|\""));
+            dispatchList.get(i).setTargetName(targetName);
+        }
         PageUtils pageUtil = new PageUtils(dispatchList, total, limit, page);
         return R.ok().put("page", pageUtil);
     }
@@ -122,8 +129,7 @@ public class TaskDispatchController {
         String[] probeIdsList = taskDispatch.getProbeIds().split(",");
         ArrayList<TaskDispatchEntity> taskDispatchEntityList = new ArrayList<TaskDispatchEntity>();
         for(int i=0; i<probeIdsList.length; i++){
-//            System.out.println(probeIdsList[i].split("\"")[1]);
-            TaskDispatchEntity taskDispatchEntity = taskDispatch;
+            TaskDispatchEntity taskDispatchEntity = CloneUtils.clone(taskDispatch);
             taskDispatchEntity.setProbeId(Integer.parseInt(probeIdsList[i].split("\"")[1]));
             taskDispatchEntityList.add(taskDispatchEntity);
         }

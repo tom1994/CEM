@@ -367,8 +367,8 @@
                 this.container.find(".clear1, .clear2").removeClass("btn-default btn-xs").addClass("btn-mini");
                 this.container.find("input, select").removeClass("form-control");
                 this.container.find(".btn").removeClass("btn-default");
-                this.container.find(".moveall > i, .move > i").removeClass("glyphicon glyphicon-arrow-right").addClass("icon-arrow-right");
-                this.container.find(".removeall > i, .remove > i").removeClass("glyphicon glyphicon-arrow-left").addClass("icon-arrow-left");
+                this.container.find(".moveall > i, .move > i").removeClass("glyphicon glyphicon-chevron-right").addClass("icon-arrow-right");
+                this.container.find(".removeall > i, .remove > i").removeClass("glyphicon glyphicon-chevron-left").addClass("icon-arrow-left");
                 this.container.find(".upBtn > i").removeClass("glyphicon glyphicon-arrow-up").addClass("icon-arrow-up");
                 this.container.find(".downBtn > i").removeClass("glyphicon glyphicon-arrow-down").addClass("icon-arrow-down")
             } else {
@@ -378,8 +378,8 @@
                 this.container.find(".clear1, .clear2").removeClass("btn-mini").addClass("btn-default btn-xs");
                 this.container.find("input, select").addClass("form-control");
                 this.container.find(".btn").addClass("btn-default");
-                this.container.find(".moveall > i, .move > i").removeClass("icon-arrow-right").addClass("glyphicon glyphicon-arrow-right");
-                this.container.find(".removeall > i, .remove > i").removeClass("icon-arrow-left").addClass("glyphicon glyphicon-arrow-left");
+                this.container.find(".moveall > i, .move > i").removeClass("icon-arrow-right").addClass("glyphicon glyphicon-chevron-right");
+                this.container.find(".removeall > i, .remove > i").removeClass("icon-arrow-left").addClass("glyphicon glyphicon-chevron-left");
                 this.container.find(".upBtn > i").removeClass("icon-arrow-up").addClass("glyphicon glyphicon-arrow-up");
                 this.container.find(".downBtn > i").removeClass("icon-arrow-down").addClass("glyphicon glyphicon-arrow-down")
             }

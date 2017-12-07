@@ -79,6 +79,8 @@ public class ProbeEntity implements Serializable {
 	private String typeName;
 	//探针状态
 	private String statusName;
+	//接入层级
+	private String layerName;
 
 	/**
 	 * 设置：探针ID
@@ -465,5 +467,13 @@ public class ProbeEntity implements Serializable {
 	public String getStatusName() {	return statusName; }
 
 	public void setStatusName(String statusName) { this.statusName = statusName; }
+
+	public String getLayerName() {
+		return layerName;
+	}
+
+	public void setLayerName(String layerName) {
+		this.layerName = layerName;
+	}
 
 }

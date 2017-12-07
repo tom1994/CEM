@@ -17,6 +17,8 @@ public interface TargetGroupService {
 	TargetGroupEntity queryObject(Integer id);
 	
 	List<TargetGroupEntity> queryList(Map<String, Object> map);
+
+	List<TargetGroupEntity> queryTGList(Integer id);
 	
 	int queryTotal(Map<String, Object> map);
 	

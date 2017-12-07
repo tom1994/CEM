@@ -94,7 +94,14 @@ public class TargetGroupController {
 		
 		return R.ok().put("targetGroup", targetGroup);
 	}
-	
+
+	@RequestMapping("/infoList/{spid}")
+	@RequiresPermissions("targetgroup:info")
+	public R infoList(@PathVariable("spid") Integer spId){
+		List<TargetGroupEntity> target = targetGroupService.queryTGList(spId);
+		return R.ok().put("targetGroup", target);
+	}
+
 	/**
 	 * 保存
 	 */

@@ -1,11 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    #parse("cemHeader.html")  <!--导入CSS和js文件-->
+    <link href="${rc.contextPath}/statics/css/formStyle.css" rel="stylesheet">
     <meta charset="UTF-8">
     <title>Title</title>
-    <h>周期诊断</h>
 </head>
 <body>
 
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h3>周期性故障诊断</h3>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content" style="padding-bottom: 0 !important;">
+                            <div class="row" id="searchbox" style="border: none !important;">
+
+                                <form class="col-lg-9 col-md-19 col-sm-9 form-horizontal" id="probesearch"
+                                      role="form">
+                                    <div class="form-group row">
+                                        <div class="input-group searchspan">
+                                                    <span class="searchname" title="选择探针"
+                                                          style="width: 80px">选择探针：</span>
+                                        </div>
+
+                                        <div class="input-group searchspan">
+                                            <span class="searchname" title="地市" style="width: 40px">地市</span>
+                                            <select id="selectcity" class="form-control" name="city_id"
+                                                    v-on:change="citychange()" style="width: 110px">
+                                                <option value="1">所有地市</option>
+                                                <option v-for="item in cities"
+                                                        v-bind:value="item.message.cityId">{{ item.message.cityName }}
+                                                </option>
+                                                <!--<option v-for="pitem in parray" v-bind:value="pitem.Id">{{ pitem.Name }}-->
+                                            </select>
+                                        </div>
+
+                                        <div class="input-group searchspan">
+                                            <span class="searchname" title="区县" style="width: 40px">区县</span>
+                                            <select id="selectarea" class="form-control " name="county_id"
+                                                    style="width: 110px">
+                                                <option value="1">所有区县</option>
+                                                <option v-for="item in areas"
+                                                        v-bind:value="item.message.countyId">{{
+                                                    item.message.countyName}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="input-group searchspan">
+                                            <span class="searchname" title="区县" style="width: 40px">目标</span>
+                                            <select id="select_target" class="form-control " name="target_id"
+                                                    style="width: 120px">
+                                                <option value="1">所有目标地址</option>
+                                                <option v-for="item in target"
+                                                        v-bind:value="item.message.targetId">{{
+                                                    item.message.targetName}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group row">
+
+                                    </div>
+
+
+                                    <div class="form-group row">
+                                        <div class="input-group searchspan">
+                                            <span class="searchname" title="时间" style="width: 80px">选择时间：</span>
+                                        </div>
+
+                                        <div class="input-group searchspan">
+                                            <span class="searchname" title="日期" style="width: 40px">起始</span>
+                                            <input type="text" id="start_date" class="form-control"
+                                                   name="startDate"
+                                                   style="width: 140px"
+                                                   value="">
+                                        </div>
+
+                                        <div class="input-group searchspan">
+                                            <span class="searchname" title="日期" style="width: 40px">结束</span>
+                                            <input type="text" id="terminal_date" class="form-control"
+                                                   name="terminalDate"
+                                                   style="width: 140px"
+                                                   value="">
+                                        </div>
+                                    </div>
+
+                                </form>
+
+
+                                <div class="col-lg-3 col-md-3 col-sm-3 pull-left"
+                                     style="text-align:center;height:50px;position: relative;" id="search">
+                                    <button type="button" class="btn btn-sm btn-success"
+                                            style="margin-right: 5px;position: relative;top: 50%;"
+                                            v-on:click="testagentListsearch"><span
+                                            class="glyphicon glyphicon-zoom-in"></span>查询
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12" id="probe_table">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title fontcolor" id="probehandle" style="padding-bottom: 0px !important;">
+                            <div class="btn-group" id="charts_button">                   <!--Vue事件监听-->
+                                <button type="button" class="btn btn-default" v-on:click="">网络连通性</button>
+                                <button type="button" class="btn btn-default" v-on:click="">网络层质量</button>
+                                <button type="button" class="btn btn-default" v-on:click="">WEB浏览</button>
+                                <button type="button" class="btn btn-default" v-on:click="">文件下载</button>
+                                <button type="button" class="btn btn-default" v-on:click="">网络视频</button>
+                                <button type="button" class="btn btn-default" v-on:click="">网络游戏</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">     <!--highcharts图-->
+                <div id="container" style="height: 400px; margin: 0 auto"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script type="text/javascript" src="${rc.contextPath}/statics/js/modules/diagnose/dignosePeriod.js?_${date.systemTime}"></script>
 </body>
 </html>

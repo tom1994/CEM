@@ -48,6 +48,10 @@ public class TaskDispatchEntity implements Serializable {
 
 	private String targetName;
 
+
+
+	private String taskName;
+
 	/**
 	 * 设置：
 	 */
@@ -221,4 +225,13 @@ public class TaskDispatchEntity implements Serializable {
 	public void setTargetName(String targetName) {
 		this.targetName = targetName;
 	}
+
+	public String getTaskName() {
+		return taskName;
+	}
+
+	public void setTaskName(String taskName) {
+		this.taskName = taskName;
+	}
+
 }

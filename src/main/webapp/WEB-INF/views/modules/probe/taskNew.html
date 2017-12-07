@@ -98,9 +98,9 @@
         </div>
     </div>
     <!-- 任务下发模态框（Modal） -->
-    <div class="modal fade" id="task_dispatch" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    <div class="modal fade col-lg-12 col-md-12 col-sm-12" id="task_dispatch" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
-        <div class="modal-dialog" style="width:800px">
+        <div class="col-lg-8 col-md-8 col-sm-8" >
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
@@ -109,31 +109,45 @@
                     <h3 class="modal-title myModalLabel">任务下发</h3>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
-                        <div>
-                            <label>
-                                <input type="radio" name="chooseprobe" checked value="1"><i></i>选择探针
-                            </label>
-                            <label>
-                                <input type="radio" name="chooseprobe" value="0"><i></i>选择探针组
-                            </label>
-                        </div>
-                    </div>
                     <form class="form-horizontal" id="dispatch_probe" role="form">
                         <div class="row">
+                            <div>
+                                <label>
+                                    <input type="radio" name="chooseprobe"
+                                           onclick="$('#probeselected').removeAttr('style', 'display:none');$('#probegroupselected').attr('style', 'display:none')"
+                                           checked value="1"><i></i>选择探针
+                                </label>
+                                <label>
+                                    <input type="radio" name="chooseprobe"
+                                           onclick="$('#probegroupselected').removeAttr('style', 'display:none');$('#probeselected').attr('style', 'display:none')"
+                                           value="0"><i></i>选择探针组
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row" id="probeselected">
                             <div class="ue-container">
                                 <select multiple="multiple" size="10" id="selectprobe" name="probeId">
                                 </select>
                             </div>
                         </div>
+                        <div class="row" id="probegroupselected" style="display: none">
+                            <div class="ue-container">
+                                <select multiple="multiple" size="10" id="selectprobegroup" name="groupId">
+                                </select>
+                            </div>
+                        </div>
                     </form>
                     <div class="row">
-                        <div style="/*border-top: 1px solid #e5e5e5;*/ padding-top: 2%;">
+                        <div style="padding-top: 2%;">
                             <label>
-                                <input type="radio" name="choosetarget" checked value="1"><i></i>选择测试目标
+                                <input type="radio" name="choosetarget"
+                                       onclick="$('#targetselected').removeAttr('style', 'display:none');$('#targetgroupselected').attr('style', 'display:none')"
+                                       checked value="1"><i></i>选择测试目标
                             </label>
                             <label>
-                                <input type="radio" name="choosetarget" value="0">选择测试目标组
+                                <input type="radio" name="choosetarget"
+                                       onclick="$('#targetgroupselected').removeAttr('style', 'display:none');$('#targetselected').attr('style', 'display:none')"
+                                       value="0">选择测试目标组
                             </label>
                         </div>
                     </div>
@@ -141,14 +155,23 @@
                         <div style="display: none">
                             <input type="text" id="taskId" name="taskId" readonly="readonly" unselectable="on">
                         </div>
-                        <div class="row">
+                        <div class="row" id="targetselected">
                             <div class="ue-container">
                                 <select multiple="multiple" size="10" name="targetId" id="selecttarget">
                                 </select>
                             </div>
                         </div>
+                        <div class="row" id="targetgroupselected" style="display: none">
+                            <div class="ue-container">
+                                <select multiple="multiple" size="10" name="targetId" id="selecttargetgroup">
+                                </select>
+                            </div>
+                        </div>
                     </form>
-                    <button type="button" class="btn btn-success" onclick="submit_dispatch()">下发</button>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-success" onclick="submit_dispatch()">确定</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -229,7 +252,7 @@
                                     <select id="alarmtemplate" disabled="disabled" class="form-control"
                                             name="alarmTemplateId">
                                         <option value="">---请选择---</option>
-                                        <option v-for="item in alarmtemplates"
+                                        <option v-for="item in atemplates"
                                                 v-bind:value="item.message.id">{{ item.message.atName}}
                                         </option>
                                     </select>
@@ -335,25 +358,5 @@
         src="${rc.contextPath}/statics/js/modules/probe/taskNew.js?_${date.systemTime}"></script>
 <!--<script type="text/javascript" src="${rc.contextPath}/statics/js/index.js"></script>-->
 <script type="text/javascript" src="${rc.contextPath}/statics/js/doublebox-bootstrap.js"></script>
-<!--<script>-->
-    <!--$(function(){-->
-        <!--var chooseprobeValue = $('input[name="chooseprobe"]:checked ').val();-->
-        <!--if(chooseprobeValue == 1){-->
-            <!--$("#validityPeriodTime").hide();-->
-        <!--}-->
-        <!--if(chooseprobeValue == 0){-->
-            <!--$("#validityPeriodTime").show();-->
-        <!--}-->
-        <!--$(".merchantzc_radio").click(function(){-->
-            <!--var chooseprobeValue = $('input[name="chooseprobe"]:checked ').val();-->
-            <!--if(chooseprobeValue == 1){-->
-                <!--$("#validityPeriodTime").hide();-->
-            <!--}-->
-            <!--if(chooseprobeValue == 0){-->
-                <!--$("#validityPeriodTime").show();-->
-            <!--}-->
-        <!--})-->
-    <!--})-->
-<!--</script>-->
 </body>
 </html>

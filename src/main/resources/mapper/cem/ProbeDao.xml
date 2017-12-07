@@ -3,7 +3,7 @@
 
 <mapper namespace="io.cem.modules.cem.dao.ProbeDao">
 
-	<!-- 可根据自己的需求，是否要使用 -->
+    <!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="io.cem.modules.cem.entity.ProbeEntity" id="probeMap">
         <result property="id" column="id"/>
         <result property="serialNumber" column="serial_number"/>
@@ -35,242 +35,263 @@
         <result property="lastUpdateTime" column="last_update_time"/>
         <result property="remark" column="remark"/>
         <result property="createTime" column="create_time"/>
-		<result property="cityName" column="city_name"/>
-		<result property="areaName" column="area_name"/>
-		<result property="typeName" column="type_name"/>
-		<result property="statusName" column="status_name"/>
+        <result property="cityName" column="city_name"/>
+        <result property="areaName" column="area_name"/>
+        <result property="typeName" column="type_name"/>
+        <result property="statusName" column="status_name"/>
+        <result property="layerName" column="layer_name"/>
     </resultMap>
 
-	<select id="queryObject" resultMap="probeMap">
-	  	SELECT probe.*,
-		city.city_name AS city_name,
-		county.county_name AS area_name,
-		a.data_name AS type_name,
-		b.data_name AS status_name
-		FROM probe
-		LEFT JOIN city
-		ON probe.city_id = city.city_id
-	    LEFT JOIN county
-		ON probe.county_id = county.county_id
-	    LEFT JOIN dic_data a
-		ON (probe.type = a.data_id AND a.dic_type_id = 1 )
-	    LEFT JOIN dic_data b
-		ON (probe.status = b.data_id AND b.dic_type_id = 3)
-		WHERE probe.id = #{value}
-	</select>
+    <select id="queryObject" resultMap="probeMap">
+        SELECT
+            probe.*,
+            city.city_name     AS city_name,
+            county.county_name AS area_name,
+            a.data_name        AS type_name,
+            b.data_name        AS status_name,
+            layer.layer_name   AS layer_name
+        FROM probe
+            LEFT JOIN city
+                ON probe.city_id = city.city_id
+            LEFT JOIN county
+                ON probe.county_id = county.county_id
+            LEFT JOIN dic_data a
+                ON (probe.type = a.data_id AND a.dic_type_id = 1)
+            LEFT JOIN dic_data b
+                ON (probe.status = b.data_id AND b.dic_type_id = 3)
+            LEFT JOIN layer
+                ON probe.access_layer = layer.layer_tag
+        WHERE probe.id = #{value}
+    </select>
 
-	<select id="queryList" resultType="io.cem.modules.cem.entity.ProbeEntity">
-		select * from probe
+    <select id="queryList" resultType="io.cem.modules.cem.entity.ProbeEntity">
+        select * from probe
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
                 order by ${sidx} ${order}
             </when>
-			<otherwise>
+            <otherwise>
                 order by id desc
-			</otherwise>
+            </otherwise>
         </choose>
-		<if test="offset != null and limit != null">
-			limit #{offset}, #{limit}
-		</if>
-	</select>
-	
- 	<select id="queryTotal" resultType="int">
-		select count(*) from probe
-		WHERE id IS NOT NULL
-		<if test="probe_name != null and probe_name != ''">
-			AND probe.probe_name LIKE concat('%',#{probe_name},'%')
-		</if>
-		<if test="location != null and location != ''">
-			AND probe.location LIKE concat('%',#{location},'%')
-		</if>
-		<if test="city_id != null and city_id != ''">
-			AND city_id = #{city_id}
-		</if>
-		<if test="county_id != null and county_id != ''">
-			AND probe.county_id = #{county_id}
-		</if>
-		<if test="group_id != null and group_id != ''">
-			AND probe.group_id = #{group_id}
-		</if>
-		<if test="access_layer != null and access_layer != ''">
-			AND probe.access_layer = #{access_layer}
-		</if>
-		<if test="type != null and type != ''">
-			AND probe.type = #{type}
-		</if>
-		<if test="status != null and status != ''">
-			AND probe.status = #{status}
-		</if>
-	</select>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
 
-	<select id="queryProbeList" resultMap="probeMap">
-		SELECT probe.*,
-		city.city_name AS city_name,
-		county.county_name AS area_name,
-		a.data_name AS type_name,
-		b.data_name AS status_name
-		FROM probe
-		LEFT JOIN city
-		ON probe.city_id = city.city_id
-		LEFT JOIN county
-		ON probe.county_id = county.county_id
-		LEFT JOIN dic_data a
-		ON (probe.type = a.data_id AND a.dic_type_id = 1 )
-		LEFT JOIN dic_data b
-		ON (probe.status = b.data_id AND b.dic_type_id = 3)
+    <select id="queryTotal" resultType="int">
+        select count(*) from probe
+        WHERE id IS NOT NULL
+        <if test="probe_name != null and probe_name != ''">
+            AND probe.probe_name LIKE concat('%',#{probe_name},'%')
+        </if>
+        <if test="location != null and location != ''">
+            AND probe.location LIKE concat('%',#{location},'%')
+        </if>
+        <if test="city_id != null and city_id != ''">
+            AND city_id = #{city_id}
+        </if>
+        <if test="county_id != null and county_id != ''">
+            AND probe.county_id = #{county_id}
+        </if>
+        <if test="group_id != null and group_id != ''">
+            AND probe.group_id = #{group_id}
+        </if>
+        <if test="access_layer != null and access_layer != ''">
+            AND probe.access_layer = #{access_layer}
+        </if>
+        <if test="type != null and type != ''">
+            AND probe.type = #{type}
+        </if>
+        <if test="status != null and status != ''">
+            AND probe.status = #{status}
+        </if>
+    </select>
 
-		WHERE probe.id IS NOT NULL
-		<if test="probe_name != null and probe_name != ''">
-		    AND probe.probe_name LIKE concat('%',#{probe_name},'%')
-		</if>
-		<if test="location != null and location != ''">
-			AND probe.location LIKE concat('%',#{location},'%')
-		</if>
-		<if test="city_id != null and city_id != ''">
-			AND probe.city_id = #{city_id}
-		</if>
-		<if test="county_id != null and county_id != ''">
-			AND probe.county_id = #{county_id}
-		</if>
-		<if test="group_id != null and group_id != ''">
-			AND probe.group_id = #{group_id}
-		</if>
-		<if test="access_layer != null and access_layer != ''">
-			AND probe.access_layer = #{access_layer}
-		</if>
-		<if test="type != null and type != ''">
-			AND probe.type = #{type}
-		</if>
-		<if test="status != null and status != ''">
-			AND probe.status = #{status}
-		</if>
+    <select id="queryProbeList" resultMap="probeMap">
+        SELECT probe.*,
+        city.city_name AS city_name,
+        county.county_name AS area_name,
+        a.data_name AS type_name,
+        b.data_name AS status_name,
+        layer.layer_name AS layer_name
+        FROM probe
+        LEFT JOIN city
+        ON probe.city_id = city.city_id
+        LEFT JOIN county
+        ON probe.county_id = county.county_id
+        LEFT JOIN dic_data a
+        ON (probe.type = a.data_id AND a.dic_type_id = 1 )
+        LEFT JOIN dic_data b
+        ON (probe.status = b.data_id AND b.dic_type_id = 3)
+        LEFT JOIN layer
+        ON probe.access_layer = layer.layer_tag
+
+        WHERE probe.id IS NOT NULL
+        <if test="probe_name != null and probe_name != ''">
+            AND probe.probe_name LIKE concat('%',#{probe_name},'%')
+        </if>
+        <if test="location != null and location != ''">
+            AND probe.location LIKE concat('%',#{location},'%')
+        </if>
+        <if test="city_id != null and city_id != ''">
+            AND probe.city_id = #{city_id}
+        </if>
+        <if test="county_id != null and county_id != ''">
+            AND probe.county_id = #{county_id}
+        </if>
+        <if test="group_id != null and group_id != ''">
+            AND probe.group_id = #{group_id}
+        </if>
+        <if test="access_layer != null and access_layer != ''">
+            AND probe.access_layer = #{access_layer}
+        </if>
+        <if test="type != null and type != ''">
+            AND probe.type = #{type}
+        </if>
+        <if test="status != null and status != ''">
+            AND probe.status = #{status}
+        </if>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+            <otherwise>
+                order by probe.id desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
 
 
+    <insert id="save" parameterType="io.cem.modules.cem.entity.ProbeEntity" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO probe
+        (
+            `serial_number`,
+            `probe_name`,
+            `group_id`,
+            `type`,
+            `access_layer`,
+            `ip_type`,
+            `port_ip`,
+            `city_id`,
+            `county_id`,
+            `location`,
+            upstream_id,
+            `bras_name`,
+            `bras_ip`,
+            `bras_port`,
+            `isp`,
+            `status`,
+            `device`,
+            `version`,
+            `register_time`,
+            `concurrent_task`,
+            `hb_interval`,
+            `last_hb_time`,
+            `task_interval`,
+            `report_interval`,
+            `last_report_time`,
+            `update_interval`,
+            `last_update_time`,
+            `remark`,
+            `create_time`
+        )
+        VALUES
+            (
+                #{serialNumber},
+                #{name},
+                #{groupId},
+                #{type},
+                #{accessLayer},
+                #{ipType},
+                #{portIp},
+                #{city},
+                #{county},
+                #{location},
+                #{upstream},
+                #{brasName},
+                #{brasIp},
+                #{brasPort},
+                #{isp},
+                #{status},
+                #{device},
+                #{version},
+                #{registerTime},
+                #{concurrentTask},
+                #{hbInterval},
+                #{lastHbTime},
+                #{taskInterval},
+                #{reportInterval},
+                #{lastReportTime},
+                #{updateInterval},
+                #{lastUpdateTime},
+                #{remark},
+                #{createTime}
+            )
+    </insert>
 
-	</select>
+    <update id="update" parameterType="io.cem.modules.cem.entity.ProbeEntity">
+        update probe
+        <set>
+            <if test="serialNumber != null">`serial_number` = #{serialNumber},</if>
+            <if test="name != null">`probe_name` = #{name},</if>
+            <if test="groupId != null">`group_id` = #{groupId},</if>
+            <if test="type != null">`type` = #{type},</if>
+            <if test="accessLayer != null">`access_layer` = #{accessLayer},</if>
+            <if test="ipType != null">`ip_type` = #{ipType},</if>
+            <if test="portIp != null">`port_ip` = #{portIp},</if>
+            <if test="city != null">`city_id` = #{city},</if>
+            <if test="county != null">`county_id` = #{county},</if>
+            <if test="location != null">`location` = #{location},</if>
+            <if test="upstream != null">`upstream_id` = #{upstream},</if>
+            <if test="brasName != null">`bras_name` = #{brasName},</if>
+            <if test="brasIp != null">`bras_ip` = #{brasIp},</if>
+            <if test="brasPort != null">`bras_port` = #{brasPort},</if>
+            <if test="isp != null">`isp` = #{isp},</if>
+            <if test="status != null">`status` = #{status},</if>
+            <if test="device != null">`device` = #{device},</if>
+            <if test="version != null">`version` = #{version},</if>
+            <if test="registerTime != null">`register_time` = #{registerTime},</if>
+            <if test="concurrentTask != null">`concurrent_task` = #{concurrentTask},</if>
+            <if test="hbInterval != null">`hb_interval` = #{hbInterval},</if>
+            <if test="lastHbTime != null">`last_hb_time` = #{lastHbTime},</if>
+            <if test="taskInterval != null">`task_interval` = #{taskInterval},</if>
+            <if test="reportInterval != null">`report_interval` = #{reportInterval},</if>
+            <if test="lastReportTime != null">`last_report_time` = #{lastReportTime},</if>
+            <if test="updateInterval != null">`update_interval` = #{updateInterval},</if>
+            <if test="lastUpdateTime != null">`last_update_time` = #{lastUpdateTime},</if>
+            <if test="remark != null">`remark` = #{remark},</if>
+            <if test="createTime != null">`create_time` = #{createTime}</if>
+        </set>
+        where id = #{id}
+    </update>
 
-	<insert id="save" parameterType="io.cem.modules.cem.entity.ProbeEntity" useGeneratedKeys="true" keyProperty="id">
-		insert into probe
-		(
-			`serial_number`, 
-			`probe_name`,
-			`group_id`, 
-			`type`, 
-			`access_layer`, 
-			`ip_type`, 
-			`port_ip`, 
-			city_id,
-			county_id,
-			`location`, 
-			upstream_id,
-			`bras_name`, 
-			`bras_ip`, 
-			`bras_port`, 
-			`isp`, 
-			`status`, 
-			`device`, 
-			`version`, 
-			`register_time`, 
-			`concurrent_task`, 
-			`hb_interval`, 
-			`last_hb_time`, 
-			`task_interval`, 
-			`report_interval`, 
-			`last_report_time`, 
-			`update_interval`, 
-			`last_update_time`, 
-			`remark`, 
-			`create_time`
-		)
-		values
-		(
-			#{serialNumber}, 
-			#{name}, 
-			#{groupId}, 
-			#{type}, 
-			#{accessLayer}, 
-			#{ipType}, 
-			#{portIp}, 
-			#{city}, 
-			#{county}, 
-			#{location}, 
-			#{upstream}, 
-			#{brasName}, 
-			#{brasIp}, 
-			#{brasPort}, 
-			#{isp}, 
-			#{status}, 
-			#{device}, 
-			#{version}, 
-			#{registerTime}, 
-			#{concurrentTask}, 
-			#{hbInterval}, 
-			#{lastHbTime}, 
-			#{taskInterval}, 
-			#{reportInterval}, 
-			#{lastReportTime}, 
-			#{updateInterval}, 
-			#{lastUpdateTime}, 
-			#{remark}, 
-			#{createTime}
-		)
-	</insert>
-	 
-	<update id="update" parameterType="io.cem.modules.cem.entity.ProbeEntity">
-		update probe 
-		<set>
-			<if test="serialNumber != null">`serial_number` = #{serialNumber}, </if>
-			<if test="name != null">`probe_name` = #{name}, </if>
-			<if test="groupId != null">`group_id` = #{groupId}, </if>
-			<if test="type != null">`type` = #{type}, </if>
-			<if test="accessLayer != null">`access_layer` = #{accessLayer}, </if>
-			<if test="ipType != null">`ip_type` = #{ipType}, </if>
-			<if test="portIp != null">`port_ip` = #{portIp}, </if>
-			<if test="city != null">`city_id` = #{city}, </if>
-			<if test="county != null">`county_id` = #{county}, </if>
-			<if test="location != null">`location` = #{location}, </if>
-			<if test="upstream != null">`upstream_id` = #{upstream}, </if>
-			<if test="brasName != null">`bras_name` = #{brasName}, </if>
-			<if test="brasIp != null">`bras_ip` = #{brasIp}, </if>
-			<if test="brasPort != null">`bras_port` = #{brasPort}, </if>
-			<if test="isp != null">`isp` = #{isp}, </if>
-			<if test="status != null">`status` = #{status}, </if>
-			<if test="device != null">`device` = #{device}, </if>
-			<if test="version != null">`version` = #{version}, </if>
-			<if test="registerTime != null">`register_time` = #{registerTime}, </if>
-			<if test="concurrentTask != null">`concurrent_task` = #{concurrentTask}, </if>
-			<if test="hbInterval != null">`hb_interval` = #{hbInterval}, </if>
-			<if test="lastHbTime != null">`last_hb_time` = #{lastHbTime}, </if>
-			<if test="taskInterval != null">`task_interval` = #{taskInterval}, </if>
-			<if test="reportInterval != null">`report_interval` = #{reportInterval}, </if>
-			<if test="lastReportTime != null">`last_report_time` = #{lastReportTime}, </if>
-			<if test="updateInterval != null">`update_interval` = #{updateInterval}, </if>
-			<if test="lastUpdateTime != null">`last_update_time` = #{lastUpdateTime}, </if>
-			<if test="remark != null">`remark` = #{remark}, </if>
-			<if test="createTime != null">`create_time` = #{createTime}</if>
-		</set>
-		where id = #{id}
-	</update>
-	
-	<delete id="delete">
-		delete from probe where id = #{value}
-	</delete>
+    <delete id="delete">
+        DELETE FROM probe
+        WHERE id = #{value}
+    </delete>
 
-	<select id="queryProbe" resultMap="probeMap">
-		select * from probe
-		WHERE county_id = #{value}
-		order by id
-	</select>
+    <select id="queryProbe" resultMap="probeMap">
+        SELECT *
+        FROM probe
+        WHERE county_id = #{value}
+        ORDER BY id
+    </select>
 
-	<select id="queryDetail" resultMap="probeMap">
-		select * from probe WHERE id = #{value}
-	</select>
-	
-	<delete id="deleteBatch">
-		delete from probe where id in 
-		<foreach item="id" collection="array" open="(" separator="," close=")">
-			#{id}
-		</foreach>
-	</delete>
+    <select id="queryDetail" resultMap="probeMap">
+        SELECT *
+        FROM probe
+        WHERE id = #{value}
+    </select>
+
+    <delete id="deleteBatch">
+        delete from probe where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
 
 </mapper>

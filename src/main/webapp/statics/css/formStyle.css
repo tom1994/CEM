@@ -23,7 +23,8 @@ div.service_unselected input{
 }
 
 .btn-box{
-    padding-top: 8%;
+    padding-top: 6%;
+    text-align: center;
 }
 
 .wrapper-content {
@@ -352,6 +353,9 @@ a:link {
     background-color: #1c84c6;
     border:none;
     line-height: 1px!important;
+}
+.form-input {
+    width:100%;
 }
 
 
