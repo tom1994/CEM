@@ -1,5 +1,6 @@
 package io.cem.modules.cem.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.io.IOException;
@@ -9,6 +10,8 @@ import java.util.HashMap;
 import com.alibaba.fastjson.JSONObject;
 import io.cem.common.exception.RRException;
 import io.cem.common.utils.*;
+import io.cem.modules.cem.entity.ScoreEntity;
+import io.cem.modules.cem.service.RecordHourTracertService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.cem.modules.cem.entity.RecordHourPingEntity;
 import io.cem.modules.cem.service.RecordHourPingService;
+import io.cem.modules.cem.entity.RecordHourTracertEntity;
 
 
 import io.cem.common.utils.PageUtils;
@@ -42,21 +46,57 @@ import javax.servlet.http.HttpServletResponse;
 public class RecordHourPingController {
 	@Autowired
 	private RecordHourPingService recordHourPingService;
+	@Autowired
+	private RecordHourTracertService recordHourTracertService;
 	
 	/**
 	 * ZTY用于质量排名界面计算分
 	 */
 	@RequestMapping("/list")
 	@RequiresPermissions("recordhourping:list")
-	public R list(String scoredata, Integer page, Integer limit){
+	public R list(String probedata, Integer page, Integer limit) throws Exception{
 		//查询列表数据
 		Map<String, Object> map = new HashMap<>();
-		JSONObject probedata_jsonobject = JSONObject.parseObject(scoredata);
+		JSONObject probedata_jsonobject = JSONObject.parseObject(probedata);
+		System.out.println(probedata_jsonobject);
 		try {
 			map.putAll(JSONUtils.jsonToMap(probedata_jsonobject));
 		} catch (RuntimeException e) {
 			throw new RRException("内部参数错误，请重试！");
 		}
+		int service = Integer.parseInt(map.get("service").toString());
+		System.out.println(service);
+		List<ScoreEntity> scoreList = new ArrayList<>();
+
+		if(service==0){
+
+ 		}
+		else if(service==1){
+			List<RecordHourPingEntity> pingList = recordHourPingService.queryPingList(map);
+
+			System.out.println(map);
+
+			List<RecordHourTracertEntity> tracertList = recordHourTracertService.queryTracertList(map);
+			scoreList = recordHourPingService.calculateService1(pingList,tracertList);
+		}
+		else if(service==2){
+
+		}
+		else if(service==3){
+
+		}
+		else if(service==4){
+
+		}
+		else if(service==5){
+
+		}
+		else if(service==6){
+
+		}
+		else{
+		}
+
 		int total = 0;
 		if(page==null) {              /*没有传入page,则取全部值*/
 			map.put("offset", null);
@@ -66,10 +106,10 @@ public class RecordHourPingController {
 		}else {
 			map.put("offset", (page - 1) * limit);
 			map.put("limit", limit);
-			total = recordHourPingService.queryTotal(map);
+			total = scoreList.size();
 		}
-		List<RecordHourPingEntity> probeList = recordHourPingService.queryList(map);
-		PageUtils pageUtil = new PageUtils(probeList, total, limit, page);
+		//List<RecordHourPingEntity> probeList = recordHourPingService.queryList(map);
+		PageUtils pageUtil = new PageUtils(scoreList, total, limit, page);
 		return R.ok().put("page", pageUtil);
 	}
 	

@@ -8,12 +8,15 @@ import java.util.Properties;
 public class PropertiesUtils {
    private static Properties prop = new Properties();
    private static final String PATH = "evamodule.properties";
-   public static String getValue(String key) throws IOException {
-       //读取属性文件evamodule.properties
-       InputStream in =new BufferedInputStream(new FileInputStream(PropertiesUtils.class.getClassLoader().getResource(PATH).getPath())) ;
-       prop.load(in);     ///加载属性列表
+
+    public PropertiesUtils() throws IOException {
+        InputStream in =new BufferedInputStream(new FileInputStream(PropertiesUtils.class.getClassLoader().getResource(PATH).getPath())) ;
+        prop.load(in);     ///加载属性列表
+        in.close();
+    }
+
+    public static String getValue(String key) throws IOException {
        String result = prop.getProperty(key);
-       in.close();
        return result;
    }
    public static Object setValue(String key,String value) throws IOException {

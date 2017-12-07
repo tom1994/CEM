@@ -15,7 +15,7 @@ public class AllWeightController {
     @RequestMapping("/get")
     public R getWeight() {
         String[] weight = new String[6];
-        String[] weight_second = new String[17];
+
         try {
             weight[0] = PropertiesUtils.getValue("connectionweight");
             weight[1] = PropertiesUtils.getValue("qualityweight");

@@ -1,7 +1,10 @@
 package io.cem.modules.cem.service;
 
 import io.cem.modules.cem.entity.RecordHourPingEntity;
+import io.cem.modules.cem.entity.RecordHourTracertEntity;
+import io.cem.modules.cem.entity.ScoreEntity;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +20,10 @@ public interface RecordHourPingService {
 	RecordHourPingEntity queryObject(Integer id);
 	
 	List<RecordHourPingEntity> queryList(Map<String, Object> map);
+
+	List<RecordHourPingEntity> queryPingList(Map<String, Object> map);
+
+	List<ScoreEntity> calculateService1(List<RecordHourPingEntity> pingList,List<RecordHourTracertEntity> tracertList);
 	
 	int queryTotal(Map<String, Object> map);
 	
