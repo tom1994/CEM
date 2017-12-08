@@ -173,3 +173,142 @@ Date.prototype.Format = function (fmt) {
     }
     return fmt;
 }
+
+
+// 区域排名列表
+var probetable = new Vue({
+    el: '#probedata_table',
+    data: {
+        headers: [
+            //{title: '<div style="width:16px"></div>'},
+            //{title: '<div class="checkbox" style="width:16px"> <label> <input type="checkbox" id="checkAll"></label> </div>'},
+            {title: '<div style="width:10px"></div>'},
+            {title: '<div class="checkbox" style="width:100%; align: center"> <label> <input type="checkbox" id="checkAll"></label> </div>'},
+            //{title: '<div style=" width:0px;display:none;padding:0px">id</div>'},
+            {title: '<div style="width:70px">地市</div>'},
+            {title: '<div style="width:42px">区县</div>'},
+            {title: '<div style="width:42px">探针名</div>'},
+            {title: '<div style="width:90px">业务类型</div>'},
+            {title: '<div style="width:40px">目标地址</div>'},
+            {title: '<div style="width:55px">分数</div>'},
+            {title: '<div style="width:40px">权重</div>'},
+            {title: '<div style="width:80px">操作</div>'}
+        ],
+        rows: [],
+        dtHandle: null,
+        probedata: {ava_start:'2017-12-01', ava_terminal:'2017-12-06', city_id:'110100', service:'1'}
+
+    },
+    methods: {
+        reset: function () {
+            let vm = this;
+            vm.probedata = {};
+            /*清空probedata*/
+            vm.dtHandle.clear();
+            console.log("重置");
+            vm.dtHandle.draw();
+            /*重置*/
+        },
+        currReset: function () {
+            let vm = this;
+            vm.dtHandle.clear();
+            console.log("当前页面重绘");
+            vm.dtHandle.draw(false);
+            /*当前页面重绘*/
+        },
+        redraw: function () {
+            let vm = this;
+            vm.dtHandle.clear();
+            console.log("页面重绘");
+            vm.dtHandle.draw();
+            /*重绘*/
+        }
+    },
+    mounted: function() {
+        let vm = this;
+        // Instantiate the datatable and store the reference to the instance in our dtHandle element.
+        vm.dtHandle = $(this.$el).DataTable({
+            columns: vm.headers,
+            data: vm.rows,
+            searching: false,
+            paging: true,
+            serverSide: true,
+            info: false,
+            ordering: false, /*禁用排序功能*/
+            /*bInfo: false,*/
+            /*bLengthChange: false,*/    /*禁用Show entries*/
+            scroll: false,
+            oLanguage: {
+                sLengthMenu: "每页 _MENU_ 行数据",
+                oPaginate: {
+                    sNext: '<i class="fa fa-chevron-right" ></i>', /*图标替换上一页,下一页*/
+                    sPrevious: '<i class="fa fa-chevron-left" ></i>'
+                }
+            },
+            sDom: 'Rfrtlip', /*显示在左下角*/
+            ajax: function (data, callback, settings) {
+                //封装请求参数
+                let param = {};
+                param.limit = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
+                param.start = data.start;//开始的记录序号
+                param.page = (data.start / data.length) + 1;//当前页码
+                param.probedata = JSON.stringify(vm.probedata);
+                /*用于查询probe数据*/
+                console.log(param);
+                //ajax请求数据
+                $.ajax({
+                    type: "POST", /*GET会乱码*/
+                    url: "../../recordhourping/list",
+                    cache: false,  //禁用缓存
+                    data: param,  //传入组装的参数
+                    dataType: "json",
+                    success: function (result) {
+                        console.log(result);
+                        //封装返回数据
+                        let returnData = {};
+                        returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
+                        returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
+                        returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
+                        returnData.data = result.page.list;//返回的数据列表
+                        // 重新整理返回数据以匹配表格
+                        let rows = [];
+                        var i = param.start+1;
+                        result.page.list.forEach(function (item) {
+                            let row = [];
+                            row.push(i++);
+                            row.push('<div class="checkbox"> <label> <input type="checkbox" id="checkALl" name="selectFlag"><div style="display: none">'+item.id+'</div></label> </div>');
+                            //row.push('<div class="probe_id" style="display:none">'+item.id+'</div>');
+                            row.push(item.cityId);
+                            row.push(item.countyId);
+                            row.push(item.probeId);
+                            row.push(item.serviceType);
+                            row.push(item.targetId);
+                            row.push(item.score);
+                            row.push(item.base);
+                            row.push('<a class="fontcolor" onclick="update_this(this)" id='+item.id+'>详情</a>&nbsp;' +
+                                '<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>诊断</a>'); //Todo:完成详情与诊断
+                            rows.push(row);
+                        });
+                        returnData.data = rows;
+                        console.log(returnData);
+                        //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
+                        //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
+                        callback(returnData);
+                        $("#probedata_table").colResizable({
+                            liveDrag:true,
+                            gripInnerHtml:"<div class='grip'></div>",
+                            draggingClass:"dragging",
+                            resizeMode:'overflow',
+                        });
+                        // $('td').closest('table').find('th').eq(1).attr('style', 'text-align: center;');
+                        // $('#probe_table tbody').find('td').eq(1).attr('style', 'text-align: center;');
+                        // var trs = $('#probe_table tbody').find('tr');
+                        // trs.find("td").eq(1).attr('style', 'text-align: center;');
+
+                    }
+                });
+            }
+        });
+    }
+});
+

@@ -272,6 +272,7 @@ a:link {
 .wrapper-block{
     padding:5px 20px;
     min-height: 100px;
+    margin: 5px 0;
 }
 
 .left-up{
@@ -334,8 +335,16 @@ a:link {
 }
 .inputset {
     line-height: 2px !important;
-    border:0;
-    outline: none;
+    border:none;
+    /*outline: none;*/
+}
+/*input:active {
+    border-color:#3bb4f2;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 5px rgba(59,180,242,.3);
+}*/
+input:focus {
+    border-color:#3bb4f2;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 5px rgba(59,180,242,.3);
 }
 .service-font {
     color: #676a6c;

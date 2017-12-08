@@ -17,6 +17,8 @@ public interface RecordHourTracertService {
 	RecordHourTracertEntity queryObject(Integer id);
 	
 	List<RecordHourTracertEntity> queryList(Map<String, Object> map);
+
+	List<RecordHourTracertEntity> queryTracertList(Map<String, Object> map);
 	
 	int queryTotal(Map<String, Object> map);
 	

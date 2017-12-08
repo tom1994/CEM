@@ -26,7 +26,13 @@ public class RecordHourTracertServiceImpl implements RecordHourTracertService {
 	public List<RecordHourTracertEntity> queryList(Map<String, Object> map){
 		return recordHourTracertDao.queryList(map);
 	}
-	
+
+	@Override
+	public List<RecordHourTracertEntity> queryTracertList(Map<String, Object> map){
+		return recordHourTracertDao.queryTracertList(map);
+	}
+
+
 	@Override
 	public int queryTotal(Map<String, Object> map){
 		return recordHourTracertDao.queryTotal(map);
