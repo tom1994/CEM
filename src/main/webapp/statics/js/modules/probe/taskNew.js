@@ -12,7 +12,14 @@ var stid = new Map();
 stid.set(1, "pingicmp");
 stid.set(2, "pingtcp");
 //新建或编辑servicetype参数的id字典，用于根据select的业务类型变更来改变展示的参数。
-var spst = new Map([[1, 1], [2, 1], [3, 1], [4, 1], [5, 1], [6, 1], [11, 2], [12, 2], [13, 2], [14, 2], [15, 2], [16, 2]])
+var spst = new Map();
+for(let i=1; i<7; i++){
+    spst.set(i,1)
+};
+for(let i=11; i<17; i++){
+    spst.set(i,2)
+};
+
 var task_handle = new Vue({
     el: '#handle',
     data: {},
@@ -678,8 +685,8 @@ var dispatch_table = new Vue({
         headers: [
             {title: '<div style="width:17px"></div>'},
             {title: '<div style="width:77px">探针名称</div>'},
-            {title: '<div style="width:108px">位置</div>'},
-            {title: '<div style="width:37px">层级</div>'},
+            {title: '<div style="width:78px">位置</div>'},
+            {title: '<div style="width:57px">层级</div>'},
             {title: '<div style="width:160px">测试目标</div>'},
             {title: '<div style="width:67px">操作</div>'}
         ],
@@ -769,8 +776,8 @@ var dispatch_table = new Vue({
                             let row = [];
                             row.push(i++);
                             row.push(item.probeName);
-                            row.push(item.location);
-                            row.push(item.accessLayer);
+                            row.push('<span title="' + item.location + '" style="white-space: nowrap">' + (item.location).substr(0, 10) + '</span>');
+                            row.push(item.layerName);
                             row.push('<span title="' + item.targetName + '" style="white-space: nowrap">' + (item.targetName).substr(0, 25) + '</span>');
                             // row.push(item.targetName);
                             row.push('<a class="fontcolor" onclick="cancel_task(this)" id=' + item.id + '>取消任务</a>');
@@ -790,8 +797,8 @@ $(document).on('hidden.bs.modal', '.modal', function (e) {
     $('body').removeClass('select')
     document.body.onselectstart = document.body.ondrag = null;
 })
-$(document).ready(function () {
 
+$(document).ready(function () {
     $("#myModal_delete").draggable();//为模态对话框添加拖拽
     $("#myModal_edit").draggable();
     $("#myModal_dispatch").draggable();

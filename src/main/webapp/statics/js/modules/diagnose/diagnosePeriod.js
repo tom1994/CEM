@@ -1,3 +1,15 @@
+var status;
+var idArray = new Array();
+var probeGroupNames = new Array();
+var cityNames = new Array();
+var areaNames = new Array();
+var serviceArray = new Array();
+var targetNames = new Array();
+var probeNames = new Array();
+var typeNames = new Array();
+var statusNames = new Array();
+
+
 var Reset = new Vue({
     /*重置,默认时间区间为最近4天*/
     el: '#reset',
@@ -49,7 +61,12 @@ var Reset = new Vue({
 
 var options = {
     chart: {
-        type: 'spline'
+        type: 'spline',
+        events: {
+            load: function(){
+                $('.highcharts-tooltip').hide();
+            }
+        }
     },
     title: {
         text: ''
@@ -75,12 +92,23 @@ var options = {
     },
     tooltip: {
         headerFormat: '<b>{series.name}</b><br>',
-        pointFormat: '日期:{point.x:%Y-%m-%d} qoe:{point.y:.2f}分'
+        pointFormat: '日期:{point.x:%Y-%m-%d} qoe:{point.y:.2f}分',
     },
     plotOptions: {
         spline: {
             marker: {
                 enabled: true
+            }
+        },
+        series: {
+            stickyTracking: false,
+            events: {
+                click: function() {
+                    $('.highcharts-tooltip').show();
+                },
+                mouseOut: function() {
+                    $('.highcharts-tooltip').hide();
+                }
             }
         }
     },
@@ -299,13 +327,7 @@ Vue.component('data-table', {
                 button_change.option_qoe.series_qoe[0].data[i] = val[i].qoe;
             }
             var chart = new Highcharts.Chart('container', options);
-
-
-            // You should _probably_ check that this is changed data... but we'll skip that for this example.
             val.forEach(function (item) {              /*观察user是否变化,更新表格数据*/
-                // Fish out the specific column data for each item in your data set and push it to the appropriate place.
-                // Basically we're just building a multi-dimensional array here. If the data is _already_ in the right format you could
-                // skip this loop...
                 let row = [];
 
                 row.push(item.county);
@@ -314,14 +336,8 @@ Vue.component('data-table', {
                 row.push(item.rttMin);
                 row.push(item.loss);
                 row.push(item.qoe);
-
-                /*console.log(item);*/
-
                 vm.rows.push(row);
             });
-
-            // Here's the magic to keeping the DataTable in sync.
-            // It must be cleared, new rows added, then redrawn!
             vm.dtHandle.clear();
             vm.dtHandle.rows.add(vm.rows);
             vm.dtHandle.draw();
@@ -329,9 +345,7 @@ Vue.component('data-table', {
     },
     mounted: function() {
         let vm = this;
-        // Instantiate the datatable and store the reference to the instance in our dtHandle element.
         vm.dtHandle = $(this.$el).DataTable({
-            // Specify whatever options you want, at a minimum these:
             columns: vm.headers,
             data: vm.rows,
             searching: false,

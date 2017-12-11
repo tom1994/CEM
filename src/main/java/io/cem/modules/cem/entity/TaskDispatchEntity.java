@@ -48,9 +48,9 @@ public class TaskDispatchEntity implements Serializable {
 
 	private String targetName;
 
-
-
 	private String taskName;
+
+	private String layerName;
 
 	/**
 	 * 设置：
@@ -234,4 +234,11 @@ public class TaskDispatchEntity implements Serializable {
 		this.taskName = taskName;
 	}
 
+	public String getLayerName() {
+		return layerName;
+	}
+
+	public void setLayerName(String layerName) {
+		this.layerName = layerName;
+	}
 }
