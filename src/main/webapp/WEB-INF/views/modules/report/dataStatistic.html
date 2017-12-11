@@ -112,7 +112,7 @@
                                     <div class="form-group row">
 
                                         <div class="input-group searchspan">
-                                            <span class="searchname" title="日期" style="width: 80px">起始日期</span>
+                                            <span class="searchname" title="日期" style="width: 80px">起始时间</span>
                                             <input type="text" id="start_date" class="form-control"
                                                    name="startDate"
                                                    style="width: 140px"
@@ -120,7 +120,7 @@
                                         </div>
 
                                         <div class="input-group searchspan">
-                                            <span class="searchname" title="日期" style="width: 80px">结束日期</span>
+                                            <span class="searchname" title="日期" style="width: 80px">结束时间</span>
                                             <input type="text" id="terminal_date" class="form-control"
                                                    name="terminalDate"
                                                    style="width: 140px"
@@ -134,8 +134,7 @@
                                      style="text-align:center;height:50px;position: relative;" id="search">
                                     <button type="button" class="btn btn-sm btn-success"
                                             style="margin-right: 5px;position: relative;top: 50%;"
-                                            v-on:click="testagentListsearch"><span
-                                            class="glyphicon glyphicon-zoom-in"></span>统计
+                                            v-on:click="testagentListsearch">开始统计
                                     </button>
                                 </div>
                             </div>
@@ -144,9 +143,9 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12" id="probe_table">
+                <div class="col-lg-12 col-md-12 col-sm-12" id="data_table">
                     <div class="ibox float-e-margins">
-                        <div class="ibox-title fontcolor" id="probehandle" style="padding-bottom: 0px !important;">
+                        <div class="ibox-title fontcolor" id="dataresult" style="padding-bottom: 0px !important;">
                             <div class="btn-group" id="charts_button">                   <!--Vue事件监听-->
                                 <button type="button" class="btn btn-default" v-on:click="">统计结果表</button>
                                 <button type="button" class="btn btn-default" v-on:click="">折线图</button>
@@ -163,5 +162,22 @@
 
 </div>
 <script type="text/javascript" src="${rc.contextPath}/statics/js/modules/diagnose/dignosePeriod.js?_${date.systemTime}"></script>
+
+<script>
+    $('#start_date').flatpickr({
+        enableTime: true,
+        dateFormat: "Y-m-d H:i",
+        time_24hr: true
+    });
+</script>
+
+<script>
+    $('#terminal_date').flatpickr({
+        enableTime: true,
+        dateFormat: "Y-m-d H:i",
+        time_24hr: true
+    });
+</script>
+
 </body>
 </html>
