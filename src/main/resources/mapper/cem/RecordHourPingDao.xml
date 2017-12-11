@@ -24,6 +24,10 @@
         <result property="jitterVar" column="jitter_var"/>
         <result property="lossRate" column="loss_rate"/>
         <result property="remark" column="remark"/>
+		<result property="cityName" column="city_name"/>
+		<result property="areaName" column="area_name"/>
+		<result property="probeName" column="probe_name"/>
+		<result property="targetName" column="target_name"/>
     </resultMap>
 
 	<select id="queryObject" resultType="io.cem.modules.cem.entity.RecordHourPingEntity">
@@ -46,29 +50,41 @@
 	</select>
 
 	<select id="queryPingList" resultType="io.cem.modules.cem.entity.RecordHourPingEntity">
-		select id,city_id,county_id,probe_id,port,task_id,service_type,target_id,target_ip,record_date,record_time,remark,
-		AVG(delay) AS delay,
-		AVG(delay_std) AS delay_std,
-		AVG(delay_var) AS delay_var,
-		AVG(jitter) AS jitter,
-		AVG(jitter_std) AS jitter_std,
-		AVG(jitter_var) AS jitter_var,
-		AVG(loss_rate) AS loss_rate
+		select record_hour_ping.id,record_hour_ping.city_id,record_hour_ping.county_id,record_hour_ping.probe_id,record_hour_ping.port,record_hour_ping.task_id,record_hour_ping.service_type,record_hour_ping.target_id,record_hour_ping.target_ip,record_hour_ping.record_date,record_hour_ping.record_time,record_hour_ping.remark,
+		city.city_name AS city_name,
+		county.county_name AS area_name,
+        probe.probe_name AS probe_name,
+		target.target_name AS target_name,
+		AVG(record_hour_ping.delay) AS delay,
+		AVG(record_hour_ping.delay_std) AS delay_std,
+		AVG(record_hour_ping.delay_var) AS delay_var,
+		AVG(record_hour_ping.jitter) AS jitter,
+		AVG(record_hour_ping.jitter_std) AS jitter_std,
+		AVG(record_hour_ping.jitter_var) AS jitter_var,
+		AVG(record_hour_ping.loss_rate) AS loss_rate
 		FROM record_hour_ping
-		WHERE record_date BETWEEN #{ava_start} AND #{ava_terminal}
+		LEFT JOIN city
+		ON record_hour_ping.city_id = city.city_id
+		LEFT JOIN county
+		ON record_hour_ping.county_id = county.county_id
+		LEFT JOIN probe
+		ON record_hour_ping.probe_id = probe.id
+		LEFT JOIN target
+		ON record_hour_ping.target_id = target.id
+		WHERE record_hour_ping.record_date BETWEEN #{ava_start} AND #{ava_terminal}
 		<if test="city_id != null and city_id != ''">
-			AND city_id = #{city_id}
+			AND record_hour_ping.city_id = #{city_id}
 		</if>
 		<if test="county_id != null and county_id != ''">
-			AND county_id = #{county_id}
+			AND record_hour_ping.county_id = #{county_id}
 		</if>
 		<if test="target_id != null and target_id != ''">
-			AND target_id = #{target_id}
+			AND record_hour_ping.target_id = #{target_id}
 		</if>
 		<if test="probe_id != null and probe_id != ''">
-			AND probe_id = #{probe_id}
+			AND record_hour_ping.probe_id = #{probe_id}
 		</if>
-		GROUP BY city_id,county_id,service_type,target_id,probe_id
+		GROUP BY record_hour_ping.city_id,record_hour_ping.county_id,record_hour_ping.service_type,record_hour_ping.target_id,record_hour_ping.probe_id
 	</select>
 	
  	<select id="queryTotal" resultType="int">

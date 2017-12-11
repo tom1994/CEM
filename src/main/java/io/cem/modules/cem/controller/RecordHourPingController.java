@@ -73,9 +73,6 @@ public class RecordHourPingController {
  		}
 		else if(service==1){
 			List<RecordHourPingEntity> pingList = recordHourPingService.queryPingList(map);
-
-			System.out.println(map);
-
 			List<RecordHourTracertEntity> tracertList = recordHourTracertService.queryTracertList(map);
 			scoreList = recordHourPingService.calculateService1(pingList,tracertList);
 		}

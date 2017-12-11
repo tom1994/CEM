@@ -278,11 +278,11 @@ var probetable = new Vue({
                             row.push(i++);
                             row.push('<div class="checkbox"> <label> <input type="checkbox" id="checkALl" name="selectFlag"><div style="display: none">'+item.id+'</div></label> </div>');
                             //row.push('<div class="probe_id" style="display:none">'+item.id+'</div>');
-                            row.push(item.cityId);
-                            row.push(item.countyId);
-                            row.push(item.probeId);
+                            row.push(item.cityName);
+                            row.push(item.countyName);
+                            row.push(item.probeName);
                             row.push(item.serviceType);
-                            row.push(item.targetId);
+                            row.push(item.targetName);
                             row.push(item.score);
                             row.push(item.base);
                             row.push('<a class="fontcolor" onclick="update_this(this)" id='+item.id+'>详情</a>&nbsp;' +

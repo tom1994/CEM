@@ -261,10 +261,14 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 
 						ScoreEntity icmpPing = new ScoreEntity();
 						icmpPing.setId(pingList.get(i).getId());
+						icmpPing.setCityName(pingList.get(i).getCityName());
 						icmpPing.setCityId(pingList.get(i).getCityId());
+						icmpPing.setCountyName(pingList.get(i).getAreaName());
 						icmpPing.setCountyId(pingList.get(i).getCountyId());
+						icmpPing.setProbeName(pingList.get(i).getProbeName());
 						icmpPing.setProbeId(pingList.get(i).getProbeId());
 						icmpPing.setServiceType(pingList.get(i).getServiceType());
+						icmpPing.setTargetName(pingList.get(i).getTargetName());
 						icmpPing.setTargetId(pingList.get(i).getTargetId());
 						icmpPing.setScore(score);
 						icmpPing.setBase(Double.parseDouble(pros.getValue("ping_icmp")));
@@ -486,10 +490,14 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 
 						ScoreEntity tcpPing = new ScoreEntity();
 						tcpPing.setId(pingList.get(i).getId());
+						tcpPing.setCityName(pingList.get(i).getCityName());
 						tcpPing.setCityId(pingList.get(i).getCityId());
+						tcpPing.setCountyName(pingList.get(i).getAreaName());
 						tcpPing.setCountyId(pingList.get(i).getCountyId());
+						tcpPing.setProbeName(pingList.get(i).getProbeName());
 						tcpPing.setProbeId(pingList.get(i).getProbeId());
 						tcpPing.setServiceType(pingList.get(i).getServiceType());
+						tcpPing.setTargetName(pingList.get(i).getTargetName());
 						tcpPing.setTargetId(pingList.get(i).getTargetId());
 						tcpPing.setScore(score);
 						tcpPing.setBase(Double.parseDouble(pros.getValue("ping_tcp")));
@@ -712,10 +720,14 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 
 						ScoreEntity udpPing = new ScoreEntity();
 						udpPing.setId(pingList.get(i).getId());
+						udpPing.setCityName(pingList.get(i).getCityName());
 						udpPing.setCityId(pingList.get(i).getCityId());
+						udpPing.setCountyName(pingList.get(i).getAreaName());
 						udpPing.setCountyId(pingList.get(i).getCountyId());
+						udpPing.setProbeName(pingList.get(i).getProbeName());
 						udpPing.setProbeId(pingList.get(i).getProbeId());
 						udpPing.setServiceType(pingList.get(i).getServiceType());
+						udpPing.setTargetName(pingList.get(i).getTargetName());
 						udpPing.setTargetId(pingList.get(i).getTargetId());
 						udpPing.setScore(score);
 						udpPing.setBase(Double.parseDouble(pros.getValue("ping_udp")));
@@ -943,10 +955,14 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 
 						ScoreEntity icmpTracert = new ScoreEntity();
 						icmpTracert.setId(tracertList.get(i).getId());
+						icmpTracert.setCityName(tracertList.get(i).getCityName());
 						icmpTracert.setCityId(tracertList.get(i).getCityId());
+						icmpTracert.setCountyName(tracertList.get(i).getAreaName());
 						icmpTracert.setCountyId(tracertList.get(i).getCountyId());
+						icmpTracert.setProbeName(tracertList.get(i).getProbeName());
 						icmpTracert.setProbeId(tracertList.get(i).getProbeId());
 						icmpTracert.setServiceType(tracertList.get(i).getServiceType());
+						icmpTracert.setTargetName(tracertList.get(i).getTargetName());
 						icmpTracert.setTargetId(tracertList.get(i).getTargetId());
 						icmpTracert.setScore(score);
 						icmpTracert.setBase(Double.parseDouble(pros.getValue("tr_icmp")));
@@ -1170,10 +1186,14 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 
 						ScoreEntity tcpTracert = new ScoreEntity();
 						tcpTracert.setId(tracertList.get(i).getId());
+						tcpTracert.setCityName(tracertList.get(i).getCityName());
 						tcpTracert.setCityId(tracertList.get(i).getCityId());
+						tcpTracert.setCountyName(tracertList.get(i).getAreaName());
 						tcpTracert.setCountyId(tracertList.get(i).getCountyId());
+						tcpTracert.setProbeName(tracertList.get(i).getProbeName());
 						tcpTracert.setProbeId(tracertList.get(i).getProbeId());
 						tcpTracert.setServiceType(tracertList.get(i).getServiceType());
+						tcpTracert.setTargetName(tracertList.get(i).getTargetName());
 						tcpTracert.setTargetId(tracertList.get(i).getTargetId());
 						tcpTracert.setScore(score);
 						tcpTracert.setBase(Double.parseDouble(pros.getValue("tr_tcp")));
@@ -1193,6 +1213,10 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 				scoreTarget.setCountyId(pingIcmp.get(i).getCountyId());
 				scoreTarget.setProbeId(pingIcmp.get(i).getProbeId());
 				scoreTarget.setTargetId(pingIcmp.get(i).getTargetId());
+				scoreTarget.setCityName(pingIcmp.get(i).getCityName());
+				scoreTarget.setCountyName(pingIcmp.get(i).getCountyName());
+				scoreTarget.setProbeName(pingIcmp.get(i).getProbeName());
+				scoreTarget.setTargetName(pingIcmp.get(i).getTargetName());
 				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
 				scoreBase.setScore((pingIcmp.get(i).getScore()) * (pingIcmp.get(i).getBase()));
 				scoreBase.setBase(pingIcmp.get(i).getBase());
@@ -1214,10 +1238,14 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 					ScoreEntity finalScore = new ScoreEntity();
 					finalScore.setId(id);
 					finalScore.setCityId(ite.getCityId());
+					finalScore.setCityName(ite.getCityName());
 					finalScore.setCountyId(ite.getCountyId());
+					finalScore.setCountyName(ite.getCountyName());
 					finalScore.setProbeId(ite.getProbeId());
+					finalScore.setProbeName(ite.getProbeName());
 					finalScore.setServiceType(1);
 					finalScore.setTargetId(ite.getTargetId());
+					finalScore.setTargetName(ite.getTargetName());
 					finalScore.setScore((connection.get(ite).getScore()) / (connection.get(ite).getBase()));
 					finalScore.setBase(Double.parseDouble(pros.getValue("connectionweight")));
 					connectionScore.add(finalScore);
@@ -1225,9 +1253,6 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 				}
 			}
 		}catch(IOException e){}
-		for(int i=0;i<connectionScore.size();i++) {
-			System.out.println("final" + connectionScore);
-		}
 		return connectionScore;
 
 	};
@@ -1240,6 +1265,10 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 			scoreTarget.setCountyId(list.get(i).getCountyId());
 			scoreTarget.setProbeId(list.get(i).getProbeId());
 			scoreTarget.setTargetId(list.get(i).getTargetId());
+			scoreTarget.setCityName(list.get(i).getCityName());
+			scoreTarget.setCountyName(list.get(i).getCountyName());
+			scoreTarget.setProbeName(list.get(i).getProbeName());
+			scoreTarget.setTargetName(list.get(i).getTargetName());
 
 			if (!map.containsKey(scoreTarget)) {
 				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
