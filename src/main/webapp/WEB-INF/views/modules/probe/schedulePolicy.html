@@ -193,15 +193,10 @@
 </script>
 
 <script>
-        laydate.render({
-            elem: '#customtime'
-            , range: true,
-            theme: '#578ebe'
-        });
-
-
-
-
+    $('#customtime').flatpickr({
+        mode:"range",
+        time_24hr: true
+    });
 </script>
 
 </html>
