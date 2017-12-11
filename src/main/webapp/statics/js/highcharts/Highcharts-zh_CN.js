@@ -70,9 +70,10 @@
     },
     credits: {
 
-      text: 'Highcharts',
-      href: 'https://highcharts.com.cn',
-
+      // text: 'Highcharts',
+      // href: 'https://highcharts.com.cn',
+        text: '',
+        href: '',
     },
     xAxis: {
       dateTimeLabelFormats: {

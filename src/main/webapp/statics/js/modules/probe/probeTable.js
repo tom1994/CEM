@@ -322,7 +322,7 @@ var dispatch_table = new Vue({
             //{title: '<div style="width:77px">探针名称</div>'},
             //{title: '<div style="width:108px">位置</div>'},
             //{title: '<div style="width:37px">层级</div>'},
-            {title: '<div style="width:77px">任务名称</div>'},
+            {title: '<div style="width:117px">任务名称</div>'},
             {title: '<div style="width:160px">测试目标</div>'},
             //{title: '<div style="width:67px">操作</div>'}
         ],
@@ -934,7 +934,7 @@ var probetable = new Vue({
             {title: '<div style="width:42px">地市</div>'},
             {title: '<div style="width:42px">区县</div>'},
             {title: '<div style="width:90px">位置</div>'},
-            {title: '<div style="width:50px">层级</div>'},
+            {title: '<div style="width:55px">层级</div>'},
             {title: '<div style="width:55px">上联探针</div>'},
             {title: '<div style="width:40px">状态</div>'},
             {title: '<div style="width:55px">类型</div>'},
@@ -1039,9 +1039,9 @@ var probetable = new Vue({
                                 row.push(item.registerTime);
                                 row.push('<span title="'+item.lastHbTime+'" style="white-space: nowrap">' + (item.lastHbTime).substr(0, 10) + '</span>');
                                 row.push('<span title="'+item.lastReportTime+'" style="white-space: nowrap">' + (item.lastReportTime).substr(0, 10) + '</span>');
-                                row.push('<a class="fontcolor" onclick="update_this(this)" id='+item.id+'>详情</a>&nbsp;' +
-                                    '<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>&nbsp;'+
-                                    '<a class="fontcolor" onclick="dispatch_info(this)" id='+item.id+'>查看任务</a>');
+                                row.push('<a class="fontcolor" style="white-space: nowrap" onclick="update_this(this)" id='+item.id+'>详情</a>&nbsp;' +
+                                    '<a class="fontcolor" style="white-space: nowrap" onclick="delete_this(this)" id='+item.id+'>删除</a>&nbsp;'+
+                                    '<a class="fontcolor" style="white-space: nowrap" onclick="dispatch_info(this)" id='+item.id+'>查看任务</a>');
                                 rows.push(row);
                             });
                             returnData.data = rows;
