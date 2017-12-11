@@ -215,6 +215,7 @@
                                     <select id="servicetype" disabled="disabled" v-on:change="servicechange()"
                                             class="form-control"
                                             name="serviceType">
+                                        <option value="">---请选择---</option>
                                         <optgroup label="网络连通性测试">
                                             <option value="1">PING(ICMP ECHO)</option>
                                             <option value="2">PING(TCP ECHO)</option>
@@ -354,8 +355,7 @@
 </div>
 
 <script>window.jQuery || document.write('<script src="${rc.contextPath}/statics/js/plugins/jquery/jquery-2.0.3.js"><\/script>')</script>
-<script type="text/javascript"
-        src="${rc.contextPath}/statics/js/modules/probe/taskNew.js?_${date.systemTime}"></script>
+<script type="text/javascript" src="${rc.contextPath}/statics/js/modules/probe/taskNew.js?_${date.systemTime}"></script>
 <!--<script type="text/javascript" src="${rc.contextPath}/statics/js/index.js"></script>-->
 <script type="text/javascript" src="${rc.contextPath}/statics/js/doublebox-bootstrap.js"></script>
 </body>
