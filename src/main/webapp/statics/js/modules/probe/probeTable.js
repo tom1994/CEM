@@ -444,8 +444,9 @@ function update_this (obj) {     /*监听修改触发事件*/
         url: "../../cem/probe/detail/"+update_data_id,
         cache: false,  //禁用缓存
         dataType: "json",
-        contentType: "application/json", /*必须要,不可少*/
+        // contentType: "application/json", /*必须要,不可少*/
         success: function (result) {
+            console.log(result);
             console.log("I'm here!!!!"+result.probe.type);
             forms[0].value = result.probe.id;
             forms[1].value = result.probe.name;
@@ -458,7 +459,7 @@ function update_this (obj) {     /*监听修改触发事件*/
             forms[8].value = result.probe.brasIp;
             forms[9].value = result.probe.brasPort;
             forms[10].value = result.probe.accessLayer;
-            forms[11].value = result.probe.upstream;
+            forms[11].value = result.probe.upstreamName;
             forms[12].value = result.probe.statusName;
             forms[13].value = result.probe.device;
             forms[14].value = result.probe.version;
@@ -1033,7 +1034,7 @@ var probetable = new Vue({
                                 row.push(item.areaName);
                                 row.push(item.location);
                                 row.push(item.layerName);
-                                row.push(item.upstream);
+                                row.push(item.upstreamName);
                                 row.push(item.statusName);
                                 row.push(item.typeName);
                                 row.push(item.registerTime);

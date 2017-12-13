@@ -31,7 +31,6 @@ var probedata_handle = new Vue({
         });
     },
     methods: {
-
     }
 });
 
@@ -172,7 +171,7 @@ Date.prototype.Format = function (fmt) {
         }
     }
     return fmt;
-}
+};
 
 
 // 区域排名列表

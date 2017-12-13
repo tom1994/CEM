@@ -82,6 +82,7 @@ public class ProbeEntity implements Serializable {
 	//接入层级
 	private String layerName;
 
+	private String upstreamName;
 	/**
 	 * 设置：探针ID
 	 */
@@ -476,4 +477,11 @@ public class ProbeEntity implements Serializable {
 		this.layerName = layerName;
 	}
 
+	public String getUpstreamName() {
+		return upstreamName;
+	}
+
+	public void setUpstreamName(String upstreamName) {
+		this.upstreamName = upstreamName;
+	}
 }

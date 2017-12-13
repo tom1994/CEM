@@ -70,7 +70,7 @@
 		</if>
 		GROUP BY city_id,county_id,service_type,target_id,probe_id
 	</select>
-	
+
  	<select id="queryTotal" resultType="int">
 		select count(*) from record_hour_ping 
 	</select>

@@ -22,11 +22,9 @@
                     <div class="ibox float-e-margins">
                         <div class="ibox-content" style="padding-bottom: 0 !important;">
                             <div class="row" id="searchbox" style="border: none !important;">
-
                                 <form class="col-lg-9 col-md-19 col-sm-9 form-horizontal" id="probesearch"
                                       role="form">
                                     <div class="form-group row">
-
                                         <div class="input-group searchspan">
                                             <span class="searchname" title="地市" style="width: 40px">地市</span>
                                             <select id="selectcity" class="form-control" name="city_id"
@@ -38,7 +36,6 @@
                                                 <!--<option v-for="pitem in parray" v-bind:value="pitem.Id">{{ pitem.Name }}-->
                                             </select>
                                         </div>
-
                                         <div class="input-group searchspan">
                                             <span class="searchname" title="区县" style="width: 40px">区县</span>
                                             <select id="selectarea" class="form-control " name="county_id"
@@ -68,39 +65,28 @@
                                             </select>
                                         </div>
                                     </div>
-
-
-                                    <div class="form-group row">
-
-                                    </div>
-
-
                                     <div class="form-group row">
                                         <div class="input-group searchspan">
-                                            <span class="searchname" title="日期" style="width: 60px">起始时间</span>
+                                            <span class="searchname" title="日期" style="width: 40px">起始</span>
                                             <input type="text" id="start_date" class="form-control"
                                                    name="startDate"
                                                    style="width: 140px"
                                                    value="">
                                         </div>
-
                                         <div class="input-group searchspan">
-                                            <span class="searchname" title="日期" style="width: 60px">结束时间</span>
+                                            <span class="searchname" title="日期" style="width: 40px">结束</span>
                                             <input type="text" id="terminal_date" class="form-control"
                                                    name="terminalDate"
                                                    style="width: 140px"
                                                    value="">
                                         </div>
                                     </div>
-
                                 </form>
-
-
                                 <div class="col-lg-3 col-md-3 col-sm-3 pull-left"
                                      style="text-align:center;height:50px;position: relative;" id="search">
                                     <button type="button" class="btn btn-sm btn-success"
                                             style="margin-right: 5px;position: relative;top: 50%;"
-                                            v-on:click="testagentListsearch"><span
+                                            v-on:click=""><span
                                             class="glyphicon glyphicon-zoom-in"></span>查询
                                     </button>
                                 </div>
@@ -110,16 +96,16 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12" id="probe_table">
+                <div class="col-lg-12 col-md-12 col-sm-12" >
                     <div class="ibox float-e-margins">
-                        <div class="ibox-title fontcolor" id="probehandle" style="padding-bottom: 0px !important;">
+                        <div class="ibox-title fontcolor"  style="padding-bottom: 0px !important;">
                             <div class="btn-group" id="charts_button">                   <!--Vue事件监听-->
-                                <button type="button" class="btn btn-default" v-on:click="">网络连通性</button>
-                                <button type="button" class="btn btn-default" v-on:click="">网络层质量</button>
-                                <button type="button" class="btn btn-default" v-on:click="">WEB浏览</button>
-                                <button type="button" class="btn btn-default" v-on:click="">文件下载</button>
-                                <button type="button" class="btn btn-default" v-on:click="">网络视频</button>
-                                <button type="button" class="btn btn-default" v-on:click="">网络游戏</button>
+                                <button type="button" class="btn btn-default" v-on:click="ping">网络连通性</button>
+                                <button type="button" class="btn btn-default" v-on:click="sla">网络层质量</button>
+                                <button type="button" class="btn btn-default" v-on:click="web">WEB浏览</button>
+                                <button type="button" class="btn btn-default" v-on:click="download">文件下载</button>
+                                <button type="button" class="btn btn-default" v-on:click="video">网络视频</button>
+                                <button type="button" class="btn btn-default" v-on:click="game">网络游戏</button>
                             </div>
                         </div>
                     </div>
@@ -130,19 +116,7 @@
             </div>
         </div>
     </div>
-
 </div>
 <script type="text/javascript" src="${rc.contextPath}/statics/js/modules/diagnose/diagnosePeriod.js?_${date.systemTime}"></script>
-<script>
-    $('#start_date').appendDtpicker({
-
-    });
-</script>
-
-<script>
-    $('#terminal_date').appendDtpicker({
-
-    });
-</script>
 </body>
 </html>

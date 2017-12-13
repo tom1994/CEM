@@ -8,7 +8,240 @@ var targetNames = new Array();
 var probeNames = new Array();
 var typeNames = new Array();
 var statusNames = new Array();
+var layers = new Map();
+var layerNames = new Array();
+//格式化日期
+Date.prototype.Format = function (fmt) {
+    var o = {
+        "y+": this.getFullYear(),
+        "M+": this.getMonth() + 1,                 //月份
+        "d+": this.getDate(),                    //日
+        "h+": this.getHours(),                   //小时
+        "m+": this.getMinutes(),                 //分
+        "s+": this.getSeconds(),                 //秒
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+        "S+": this.getMilliseconds()             //毫秒
+    };
+    for (var k in o) {
+        if (new RegExp("(" + k + ")").test(fmt)) {
+            if (k == "y+") {
+                fmt = fmt.replace(RegExp.$1, ("" + o[k]).substr(4 - RegExp.$1.length));
+            }
+            else if (k == "S+") {
+                var lens = RegExp.$1.length;
+                lens = lens == 1 ? 3 : lens;
+                fmt = fmt.replace(RegExp.$1, ("00" + o[k]).substr(("" + o[k]).length - 1, lens));
+            }
+            else {
+                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            }
+        }
+    }
+    return fmt;
+};
 
+var button_change = new Vue({
+    /*实例化Vue*/
+    el: '#charts_button',
+    data: {
+        option_ping: {
+            /*设置时延option*/
+            title: {
+                text: '网络连通性'
+            }
+        },
+        option_sla: {
+            /*设置丢包option*/
+            title: {
+                text: '网络层质量'
+            },
+        },
+        option_web: {
+            /*设置web option*/
+            title: {
+                text: 'Web浏览'
+            }
+        },
+        option_download: {
+            /*设置丢包option*/
+            title: {
+                text: '网络层质量'
+            },
+        },
+        option_video: {
+            /*设置丢包option*/
+            title: {
+                text: '网络层质量'
+            },
+        },
+        option_game: {
+            /*设置丢包option*/
+            title: {
+                text: '网络层质量'
+            },
+        }
+    },
+    // 在 `methods` 对象中定义方法
+    methods: {
+        /*事件监听*/
+        ping: function () {
+            // staus = 0;
+            console.log("连通性");
+            options.title = this.option_ping.title;
+            var chart = new Highcharts.Chart('container', options)
+            /*重新绘图*/
+        },
+        sla: function () {
+            staus = 1;
+            console.log("网络层");
+            options.title = this.option_sla.title;
+            var chart = new Highcharts.Chart('container', options)
+        },
+        web: function () {
+            staus = 2;
+            console.log("web");
+            options.title = this.option_web.title;
+            var chart = new Highcharts.Chart('container', options)
+        },
+        download: function () {
+            staus = 0;
+            options.title = this.option_web.title;
+            var chart = new Highcharts.Chart('container', options)
+            /*重新绘图*/
+        },
+        video: function () {
+            staus = 0;
+            options.title = this.option_ping.title;
+            var chart = new Highcharts.Chart('container', options)
+            /*重新绘图*/
+        },
+        game: function () {
+            staus = 0;
+            options.title = this.option_ping.title;
+            var chart = new Highcharts.Chart('container', options)
+            /*重新绘图*/
+        }
+    },
+    mounted: function () {         /*动态加载测试任务组数据*/
+        $.ajax({
+            type: "POST", /*GET会乱码*/
+            url: "../../cem/city/list",
+            cache: false,  //禁用缓存
+            dataType: "json",
+            success: function (result) {
+                for (var i = 0; i < result.page.list.length; i++) {
+                    cityNames[i] = {message: result.page.list[i]}
+                }
+                search_data.cities = cityNames;
+            }
+        });
+        $.ajax({
+            type: "POST", /*GET会乱码*/
+            url: "../../cem/layer/searchlist",
+            cache: false,  //禁用缓存
+            dataType: "json",
+            success: function (result) {
+                for (var i = 0; i < result.page.list.length; i++) {
+                    layers.set(result.page.list[i].layerTag,result.page.list[i].layerName);
+                    let newlayer = {};
+                    newlayer.name = result.page.list[i].layerName;
+                    newlayer.data = [];
+                    options.series[i] = newlayer;
+                }
+            }
+        });
+    },
+});
+
+// var probedata_handle = new Vue({
+//     el: '#probesearch',
+//     data: {},
+//     mounted: function(){         /*动态加载测试任务组数据*/
+//         $.ajax({
+//             type: "POST",   /*GET会乱码*/
+//             url: "../../cem/city/list",
+//             cache: false,  //禁用缓存
+//             dataType: "json",
+//             /* contentType:"application/json",  /!*必须要,不可少*!/*/
+//             success: function (result) {
+//                 for(var i=0;i<result.page.list.length;i++){
+//                     cityNames[i] = {message: result.page.list[i]}
+//                 }
+//                 search_data.cities = cityNames;
+//             }
+//         });
+//     },
+// });
+
+var search_data = new Vue({
+    el: '#probesearch',
+    data: {
+        areas: [],
+        cities: [],
+        probe: [],
+        target: []
+    },
+    methods: {
+        citychange: function () {
+            this.areas = getArea($("#selectcity").val());
+            console.log($("#selectcity").val());
+        }
+    }
+});
+
+var getArea = function (cityid) {
+    $.ajax({
+        url: "../../cem/county/info/" + cityid,
+        type: "POST",
+        cache: false,  //禁用缓存
+        dataType: "json",
+        contentType: "application/json",
+        success: function (result) {
+            search_data.areas = [];
+            areaNames = [];
+            for (var i = 0; i < result.county.length; i++) {
+                areaNames[i] = {message: result.county[i]}
+            }
+            search_data.areas = areaNames;
+        }
+    });
+};
+
+var new_search = new Vue({
+    /*监听查询事件*/
+    el: '#search',
+    methods: {
+        search: function () {
+            console.log("你选择了时间区间" + starttime + "to" + endtime);
+            var postdata = {};
+            postdata.county = $('#area').val();
+            postdata.starttime = starttime;
+            postdata.endtime = endtime;
+            // $.ajax({
+            //     /*后台取得数据,赋值给观察者*/
+            //     type: "POST",
+            //     url: "../../diagnose/list",//Todo
+            //     cache: false,  //禁用缓存
+            //     data: postdata,  //传入组装的参数
+            //     dataType: "json",
+            //     success: function (result) {
+            //         console.log(result);
+            //         // if (result.resultCountyDailywebList.length != 0 && result.resultCountyDailywebList[0] != null) {
+            //         //     if (result.resultCountyDailywebList.length == 1) {
+            //         //         flag = 1;
+            //         //     } else {
+            //         //         flag = 0;
+            //         //     }
+            //         //     new_data.users = result.resultCountyDailywebList;
+            //         // } else {
+            //         //     toastr.warning('该时间区间没有对应数据！');
+            //         // }
+            //         flag = 1;
+            //     }
+            // });
+        }
+    }
+});
 
 var Reset = new Vue({
     /*重置,默认时间区间为最近4天*/
@@ -26,35 +259,32 @@ var Reset = new Vue({
             $.ajax({
                 /*后台取得数据,赋值给观察者*/
                 type: "POST",
-                url: "../resultpingtest/countypinglist",
+                url: "../../recordhourping/list",
                 cache: false,  //禁用缓存
                 data: postdata,  //传入组装的参数
                 dataType: "json",
                 success: function (result) {
                     console.log(result);
-                    console.log("成功返回!" + typeof (result.resultCountyPingtestList));
-                    console.log(result.resultCountyPingtestList);
-                    console.log(result.resultCountyPingtestList.length);
-                    if (result.resultCountyPingtestList.length == 2) {
-                        staus = 0;
-                        flag = 0;
-                        button_change.delay();
-                        /*option先回到状态0,注意,不然会出错*/
-                        new_data.users = result.resultCountyPingtestList;
-                    } else {
-                        toastr.warning('最近4天没有对应数据！');
-                    }
+                    // if (result.resultCountyPingtestList.length == 2) {
+                    staus = 0;
+                    flag = 0;
+                    button_change.ping();
+                    /*option先回到状态0,注意,不然会出错*/
+                    new_data.users = result.resultCountyPingtestList;
+                    // } else {
+                    //     toastr.warning('最近4天没有对应数据！');
+                    // }
                 }
             });
-            $.ajax({
-                type: "POST",
-                url: "../resultpingtest/countypinglist",
-                cache: false,  //禁用缓存
-                data: postdata,  //传入组装的参数
-                dataType: "json",
-                success: function (result) {
-                }
-            });
+            // $.ajax({
+            //     type: "POST",
+            //     url: "../../cem//countypinglist",
+            //     cache: false,  //禁用缓存
+            //     data: postdata,  //传入组装的参数
+            //     dataType: "json",
+            //     success: function (result) {
+            //     }
+            // });
         }
     }
 });
@@ -63,7 +293,7 @@ var options = {
     chart: {
         type: 'spline',
         events: {
-            load: function(){
+            load: function () {
                 $('.highcharts-tooltip').hide();
             }
         }
@@ -92,7 +322,7 @@ var options = {
     },
     tooltip: {
         headerFormat: '<b>{series.name}</b><br>',
-        pointFormat: '日期:{point.x:%Y-%m-%d} qoe:{point.y:.2f}分',
+        pointFormat: '日期:{point.x:%Y-%m-%d} web:{point.y:.2f}分',
     },
     plotOptions: {
         spline: {
@@ -103,239 +333,196 @@ var options = {
         series: {
             stickyTracking: false,
             events: {
-                click: function() {
+                click: function () {
                     $('.highcharts-tooltip').show();
                 },
-                mouseOut: function() {
+                mouseOut: function () {
                     $('.highcharts-tooltip').hide();
                 }
             }
         }
     },
-    series: [{
-        name: '住户',
-        data: [
-            [Date.UTC(2017, 4, 3), 82.6667],
-            [Date.UTC(2017, 4, 4), 60.1765],
-            [Date.UTC(2017, 4, 5), 74.4504]
-        ]
-    }, {
-        name: '楼道',
-        data: [
-            // [Date.UTC(2017, 4, 3), 66],
-            // [Date.UTC(2017, 4, 4), 68.3517],
-            // [Date.UTC(2017, 4, 5), 64.2381]
-        ]
-    }, {
-        name: '小区出口',
-        data: [
-            [Date.UTC(2017, 4, 3), 55],
-            [Date.UTC(2017, 4, 4), 74],
-            [Date.UTC(2017, 4, 5), 92]
-        ]
-    }, {
-        name: 'OLT',
-        data: [
-            [Date.UTC(2017, 4, 3), 77],
-            [Date.UTC(2017, 4, 4), 67],
-            [Date.UTC(2017, 4, 5), 75]
-        ]
-    }, {
-        name: '核心网',
-        data: [
-            [Date.UTC(2017, 4, 3), 92],
-            [Date.UTC(2017, 4, 4), 97.0655],
-            [Date.UTC(2017, 4, 5), 96.6111]
-        ]
-    }]
+    series: []
 };
+
 $(document).ready(function () {
     var chart = new Highcharts.Chart('container', options)
 });
 
-var button_change = new Vue({
-    /*实例化Vue*/
-    el: '#charts_button',
-    data: {
-        option_delay: {
-            /*设置时延option*/
-            title: {
-                text: 'ping时延对比'
-            },
-            series_delay: [{
-                name: '平均时延',
-                data: []
-            }, {
-                name: '最大时延',
-                data: []
-            }, {
-                name: '最小时延',
-                data: []
-            }
-            ],
-            yAxis: {
-                title: {
-                    text: '结果(ms)'
-                }
-            }
-        },
-        option_qoe: {
-            /*设置qoe option*/
-            title: {
-                text: 'qoe对比'
-            },
-            series_qoe: [{
-                name: 'qoe',
-                data: []
-            }
-            ],
-            yAxis: {
-                title: {
-                    text: '结果(分)'
-                },
-                max: 100
-            }
-        },
-        option_loss: {
-            /*设置丢包option*/
-            title: {
-                text: '丢包率'
-            },
-            series_loss: [{
-                name: '丢包',
-                data: []
-            }
-            ],
-            yAxis: {
-                title: {
-                    text: '结果(%)'
-                },
-                max: 100
-            },
-            tooltip: {
-                /*数据提示框*/
-                valueSuffix: '%'    /* y值后缀字符串*/
-            }
-        }
-
-
-    },
-    // 在 `methods` 对象中定义方法
-    methods: {
-        /*事件监听*/
-        delay: function () {
-            staus = 0;
-            console.log("时延");
-            options.title = this.option_delay.title;
-            /*设置标题*/
-
-            options.series = this.option_delay.series_delay;
-            /*设置数据*/
-
-            options.yAxis = this.option_delay.yAxis;
-            /*设置y轴*/
-            options.tooltip = {};
-            /*设置数据提示框*/
-            var chart = new Highcharts.Chart('container', options)
-            /*重新绘图*/
-        },
-        loss: function () {
-            staus = 1;
-            console.log("丢包");
-            options.title = this.option_loss.title;
-
-            options.series = this.option_loss.series_loss;
-            options.yAxis = this.option_loss.yAxis;
-            options.tooltip = this.option_loss.tooltip;
-            var chart = new Highcharts.Chart('container', options)
-        },
-        qoe: function () {
-            staus = 2;
-            console.log("qoe");
-            options.title = this.option_qoe.title;
-            options.series = this.option_qoe.series_qoe;
-            options.yAxis = this.option_qoe.yAxis;
-            options.tooltip = {};
-            var chart = new Highcharts.Chart('container', options)
-        }
-    }
-});
+// var button_change = new Vue({
+//     /*实例化Vue*/
+//     el: '#charts_button',
+//     data: {
+//         option_ping: {
+//             /*设置时延option*/
+//             title: {
+//                 text: 'ping时延对比'
+//             },
+//             // series_ping: [{
+//             //     name: '平均时延',
+//             //     data: []
+//             // }, {
+//             //     name: '最大时延',
+//             //     data: []
+//             // }, {
+//             //     name: '最小时延',
+//             //     data: []
+//             // }
+//             // ],
+//             yAxis: {
+//                 title: {
+//                     text: '结果(ms)'
+//                 }
+//             }
+//         },
+//         option_web: {
+//             /*设置web option*/
+//             title: {
+//                 text: 'web对比'
+//             },
+//             // series_web: [{
+//             //     name: 'web',
+//             //     data: []
+//             // }
+//             // ],
+//             yAxis: {
+//                 title: {
+//                     text: '结果(分)'
+//                 },
+//                 max: 100
+//             }
+//         },
+//         option_sla: {
+//             /*设置丢包option*/
+//             title: {
+//                 text: '丢包率'
+//             },
+//             // series_sla: [{
+//             //     name: '丢包',
+//             //     data: []
+//             // }
+//             // ],
+//             yAxis: {
+//                 title: {
+//                     text: '结果(%)'
+//                 },
+//                 max: 100
+//             },
+//             // tooltip: {
+//             //     /*数据提示框*/
+//             //     valueSuffix: '%'    /* y值后缀字符串*/
+//             // }
+//         }
+//
+//
+//     },
+//     // 在 `methods` 对象中定义方法
+//     methods: {
+//         /*事件监听*/
+//         ping: function () {
+//             staus = 0;
+//             console.log("时延");
+//             options.title = this.option_ping.title;
+//             /*设置标题*/
+//             // options.series = this.option_ping.series_ping;
+//             /*设置数据*/
+//             // options.yAxis = this.option_ping.yAxis;
+//             /*设置y轴*/
+//             // options.tooltip = {};
+//             /*设置数据提示框*/
+//             var chart = new Highcharts.Chart('container', options)
+//             /*重新绘图*/
+//         },
+//         sla: function () {
+//             staus = 1;
+//             console.log("丢包");
+//             options.title = this.option_sla.title;
+//             //
+//             // options.series = this.option_sla.series_sla;
+//             // options.yAxis = this.option_sla.yAxis;
+//             // options.tooltip = this.option_sla.tooltip;
+//             var chart = new Highcharts.Chart('container', options)
+//         },
+//         web: function () {
+//             staus = 2;
+//             console.log("web");
+//             options.title = this.option_web.title;
+//             // options.series = this.option_web.series_web;
+//             // options.yAxis = this.option_web.yAxis;
+//             // options.tooltip = {};
+//             var chart = new Highcharts.Chart('container', options)
+//         },
+//         download: function () {
+//             staus = 0;
+//             options.title = this.option_ping.title;
+//             var chart = new Highcharts.Chart('container', options)
+//             /*重新绘图*/
+//         },
+//         video: function () {
+//             staus = 0;
+//             options.title = this.option_ping.title;
+//             var chart = new Highcharts.Chart('container', options)
+//             /*重新绘图*/
+//         },
+//         game: function () {
+//             staus = 0;
+//             options.title = this.option_ping.title;
+//             var chart = new Highcharts.Chart('container', options)
+//             /*重新绘图*/
+//         }
+//     }
+// });
 
 Vue.component('data-table', {
     template: '<table class="table table-bordered table-hover table-striped" id="area_table"></table>',
     props: ['users'],
-    data: function() {
+    data: function () {
         return {
             headers: [
-                {title: '区县'},
-                {title: '平均时延(ms)', class: 'some-special-class'},
-                {title: '最大时延(ms)'},
-                {title: '最小时延(ms)'},
-                {title: '丢包(%)'},
-                {title: 'qoe(分)'}
+                {title: '探针层级'},
+                {title: '探针名称', class: 'some-special-class'},
+                {title: '得分'},
+                // {title: '时间'}
             ],
             rows: [],
             dtHandle: null
         }
     },
     watch: {
-        users: function(val, oldVal) {
+        users: function (val, oldVal) {
             let vm = this;
             vm.rows = [];
             var times = 1;
             if (flag == 1) {
                 times = 0;
             }
-            options.xAxis.categories = [];
-            if (staus == 0) {                       /*先清空当前状态option的data*/
-                options.series[0].data = [];
-                /*动态设置option*/
-                options.series[1].data = [];
-                options.series[2].data = [];
-            } else if (staus == 1) {
-                options.series[0].data = [];
-            } else {
-                options.series[0].data = [];
+            // options.xAxis.categories = [];
+            for (let i = 0; i < 5; i++) {
+                options.series[i].data = [];
             }
-            button_change.option_delay.series_delay[0].data = [];
-            /*清空所有监听事件的option数据*/
-            /*动态设置button_change.option*/
-            button_change.option_delay.series_delay[1].data = [];
-            button_change.option_delay.series_delay[2].data = [];
-            button_change.option_loss.series_loss[0].data = [];
-            button_change.option_qoe.series_qoe[0].data = [];
-
-            for (var i = 0; i <= times; i++) {                          /*观察user是否变化,重绘HighCharts图*/
-                options.xAxis.categories[i] = val[i].county;
-                if (staus == 0) {                                       /*设置当前状态option*/
-                    options.series[0].data[i] = val[i].rttAvg;
-                    /*动态设置option*/
-                    options.series[1].data[i] = val[i].rttMax;
-                    options.series[2].data[i] = val[i].rttMin;
-                } else if (staus == 1) {
-                    options.series[0].data[i] = val[i].loss;
-                } else {
-                    options.series[0].data[i] = val[i].qoe;
+            for (let i = 0; i < val.length; i++) {
+                // console.log(val[i].date);
+                let date_token = val[i].date.split("-");
+                let year = parseInt(date_token[0]);
+                let month = parseInt(date_token[1]) - 1;
+                let day = parseInt(date_token[2]);
+                if (isNaN(year) || isNaN(month) || isNaN(day)) {
+                    continue;
                 }
-
-                button_change.option_delay.series_delay[0].data[i] = val[i].rttAvg;
-                /*设置监听事件所有option*/
-                /*动态设置button_change.option*/
-                button_change.option_delay.series_delay[1].data[i] = val[i].rttMax;
-                button_change.option_delay.series_delay[2].data[i] = val[i].rttMin;
-                button_change.option_loss.series_loss[0].data[i] = val[i].loss;
-                button_change.option_qoe.series_qoe[0].data[i] = val[i].qoe;
+                // console.log(Date.UTC(year, month, day));
+                options.series[0].data[i] = [Date.UTC(year, month, day), val[i].httpAvgQoe];
+                options.series[1].data[i] = [Date.UTC(year, month, day), val[i].youkuAvgQoe];
+                options.series[2].data[i] = [Date.UTC(year, month, day), val[i].gameAvgQoe];
+                options.series[3].data[i] = [Date.UTC(year, month, day), val[i].speedAvgQoe];
+                options.series[4].data[i] = [Date.UTC(year, month, day), val[i].pingAvgQoe];
             }
             var chart = new Highcharts.Chart('container', options);
             val.forEach(function (item) {              /*观察user是否变化,更新表格数据*/
                 let row = [];
-
-                row.push(item.county);
-                row.push(item.rttAvg);
-                row.push(item.rttMax);
-                row.push(item.rttMin);
-                row.push(item.loss);
-                row.push(item.qoe);
+                row.push(item.layerName);
+                row.push(item.probeName);
+                row.push(item.score);
+                // row.push(item.date);
                 vm.rows.push(row);
             });
             vm.dtHandle.clear();
@@ -343,7 +530,7 @@ Vue.component('data-table', {
             vm.dtHandle.draw();
         }
     },
-    mounted: function() {
+    mounted: function () {
         let vm = this;
         vm.dtHandle = $(this.$el).DataTable({
             columns: vm.headers,
@@ -354,7 +541,6 @@ Vue.component('data-table', {
             info: false,
             ordering: false, /*禁用排序功能*/
             /*bInfo: false,*/
-
             bLengthChange: false, /*禁用Show entries*/
         });
 
@@ -374,8 +560,20 @@ var new_data = new Vue({
             return self.users;
         }
     },
-    mounted: function() {
+    mounted: function () {
         Reset.reset();
         /*调用reset,即为页面加载状态*/
     }
 });
+
+$('#start_date').flatpickr({
+    enableTime: true,
+    dateFormat: "Y-m-d H:i",
+    time_24hr: true
+});
+$('#terminal_date').flatpickr({
+    enableTime: true,
+    dateFormat: "Y-m-d H:i",
+    time_24hr: true
+});
+
