@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.cem.modules.cem.dao.RecordHourSlaDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.cem.modules.cem.entity.RecordHourSlaEntity" id="recordHourSlaMap">
+        <result property="id" column="id"/>
+        <result property="cityId" column="city_id"/>
+        <result property="countyId" column="county_id"/>
+        <result property="probeId" column="probe_id"/>
+        <result property="port" column="port"/>
+        <result property="taskId" column="task_id"/>
+        <result property="serviceType" column="service_type"/>
+        <result property="targetId" column="target_id"/>
+        <result property="targetIp" column="target_ip"/>
+        <result property="recordDate" column="record_date"/>
+        <result property="recordTime" column="record_time"/>
+        <result property="delay" column="delay"/>
+        <result property="gDelay" column="g_delay"/>
+        <result property="rDelay" column="r_delay"/>
+        <result property="delayStd" column="delay_std"/>
+        <result property="gDelayStd" column="g_delay_std"/>
+        <result property="rDelayStd" column="r_delay_std"/>
+        <result property="delayVar" column="delay_var"/>
+        <result property="gDelayVar" column="g_delay_var"/>
+        <result property="rDelayVar" column="r_delay_var"/>
+        <result property="jitter" column="jitter"/>
+        <result property="gJitter" column="g_jitter"/>
+        <result property="rJitter" column="r_jitter"/>
+        <result property="jitterStd" column="jitter_std"/>
+        <result property="gJitterStd" column="g_jitter_std"/>
+        <result property="rJitterStd" column="r_jitter_std"/>
+        <result property="jitterVar" column="jitter_var"/>
+        <result property="gJitterVar" column="g_jitter_var"/>
+        <result property="rJitterVar" column="r_jitter_var"/>
+        <result property="lossRate" column="loss_rate"/>
+        <result property="remark" column="remark"/>
+		<result property="cityName" column="city_name"/>
+		<result property="areaName" column="area_name"/>
+		<result property="probeName" column="probe_name"/>
+		<result property="targetName" column="target_name"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="io.cem.modules.cem.entity.RecordHourSlaEntity">
+		select * from record_hour_sla where id = #{value}
+	</select>
+
+	<select id="queryList" resultType="io.cem.modules.cem.entity.RecordHourSlaEntity">
+		select * from record_hour_sla
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from record_hour_sla 
+	</select>
+
+	<select id="querySlaList" resultType="io.cem.modules.cem.entity.RecordHourSlaEntity">
+		select record_hour_sla.id,record_hour_sla.city_id,record_hour_sla.county_id,record_hour_sla.probe_id,record_hour_sla.port,record_hour_sla.task_id,record_hour_sla.service_type,record_hour_sla.target_id,record_hour_sla.target_ip,record_hour_sla.record_date,record_hour_sla.record_time,record_hour_sla.remark,
+		city.city_name AS city_name,
+		county.county_name AS area_name,
+		probe.probe_name AS probe_name,
+		target.target_name AS target_name,
+		AVG(record_hour_sla.delay) AS delay,
+        AVG(record_hour_sla.g_delay) AS g_delay,
+        AVG(record_hour_sla.r_delay) AS r_delay,
+		AVG(record_hour_sla.delay_std) AS delay_std,
+        AVG(record_hour_sla.g_delay_std) AS g_delay_std,
+        AVG(record_hour_sla.r_delay_std) AS r_delay_std,
+		AVG(record_hour_sla.delay_var) AS delay_var,
+        AVG(record_hour_sla.g_delay_var) AS delay_var,
+        AVG(record_hour_sla.r_delay_var) AS delay_var,
+		AVG(record_hour_sla.jitter) AS jitter,
+        AVG(record_hour_sla.g_jitter) AS g_jitter,
+        AVG(record_hour_sla.r_jitter) AS r_jitter,
+		AVG(record_hour_sla.jitter_std) AS jitter_std,
+        AVG(record_hour_sla.g_jitter_std) AS g_jitter_std,
+        AVG(record_hour_sla.r_jitter_std) AS r_jitter_std,
+		AVG(record_hour_sla.jitter_var) AS jitter_var,
+        AVG(record_hour_sla.g_jitter_var) AS g_jitter_var,
+        AVG(record_hour_sla.r_jitter_var) AS r_jitter_var,
+		AVG(record_hour_sla.loss_rate) AS loss_rate
+		FROM record_hour_sla
+		LEFT JOIN city
+		ON record_hour_sla.city_id = city.city_id
+		LEFT JOIN county
+		ON record_hour_sla.county_id = county.county_id
+		LEFT JOIN probe
+		ON record_hour_sla.probe_id = probe.id
+		LEFT JOIN target
+		ON record_hour_sla.target_id = target.id
+		WHERE record_hour_sla.record_date BETWEEN #{ava_start} AND #{ava_terminal}
+		<if test="city_id != null and city_id != ''">
+			AND record_hour_sla.city_id = #{city_id}
+		</if>
+		<if test="county_id != null and county_id != ''">
+			AND record_hour_sla.county_id = #{county_id}
+		</if>
+		<if test="target_id != null and target_id != ''">
+			AND record_hour_sla.target_id = #{target_id}
+		</if>
+		<if test="probe_id != null and probe_id != ''">
+			AND record_hour_sla.probe_id = #{probe_id}
+		</if>
+		GROUP BY record_hour_sla.city_id,record_hour_sla.county_id,record_hour_sla.service_type,record_hour_sla.target_id,record_hour_sla.probe_id,date_format(record_hour_sla.record_date,'%Y-%m-%d'),time_format(record_hour_sla.record_time, '%H')
+
+	</select>
+	 
+	<insert id="save" parameterType="io.cem.modules.cem.entity.RecordHourSlaEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into record_hour_sla
+		(
+			`city_id`, 
+			`county_id`, 
+			`probe_id`, 
+			`port`, 
+			`task_id`, 
+			`service_type`, 
+			`target_id`, 
+			`target_ip`, 
+			`record_date`, 
+			`record_time`, 
+			`delay`, 
+			`g_delay`, 
+			`r_delay`, 
+			`delay_std`, 
+			`g_delay_std`, 
+			`r_delay_std`, 
+			`delay_var`, 
+			`g_delay_var`, 
+			`r_delay_var`, 
+			`jitter`, 
+			`g_jitter`, 
+			`r_jitter`, 
+			`jitter_std`, 
+			`g_jitter_std`, 
+			`r_jitter_std`, 
+			`jitter_var`, 
+			`g_jitter_var`, 
+			`r_jitter_var`, 
+			`loss_rate`, 
+			`remark`
+		)
+		values
+		(
+			#{cityId}, 
+			#{countyId}, 
+			#{probeId}, 
+			#{port}, 
+			#{taskId}, 
+			#{serviceType}, 
+			#{targetId}, 
+			#{targetIp}, 
+			#{recordDate}, 
+			#{recordTime}, 
+			#{delay}, 
+			#{gDelay}, 
+			#{rDelay}, 
+			#{delayStd}, 
+			#{gDelayStd}, 
+			#{rDelayStd}, 
+			#{delayVar}, 
+			#{gDelayVar}, 
+			#{rDelayVar}, 
+			#{jitter}, 
+			#{gJitter}, 
+			#{rJitter}, 
+			#{jitterStd}, 
+			#{gJitterStd}, 
+			#{rJitterStd}, 
+			#{jitterVar}, 
+			#{gJitterVar}, 
+			#{rJitterVar}, 
+			#{lossRate}, 
+			#{remark}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="io.cem.modules.cem.entity.RecordHourSlaEntity">
+		update record_hour_sla 
+		<set>
+			<if test="cityId != null">`city_id` = #{cityId}, </if>
+			<if test="countyId != null">`county_id` = #{countyId}, </if>
+			<if test="probeId != null">`probe_id` = #{probeId}, </if>
+			<if test="port != null">`port` = #{port}, </if>
+			<if test="taskId != null">`task_id` = #{taskId}, </if>
+			<if test="serviceType != null">`service_type` = #{serviceType}, </if>
+			<if test="targetId != null">`target_id` = #{targetId}, </if>
+			<if test="targetIp != null">`target_ip` = #{targetIp}, </if>
+			<if test="recordDate != null">`record_date` = #{recordDate}, </if>
+			<if test="recordTime != null">`record_time` = #{recordTime}, </if>
+			<if test="delay != null">`delay` = #{delay}, </if>
+			<if test="gDelay != null">`g_delay` = #{gDelay}, </if>
+			<if test="rDelay != null">`r_delay` = #{rDelay}, </if>
+			<if test="delayStd != null">`delay_std` = #{delayStd}, </if>
+			<if test="gDelayStd != null">`g_delay_std` = #{gDelayStd}, </if>
+			<if test="rDelayStd != null">`r_delay_std` = #{rDelayStd}, </if>
+			<if test="delayVar != null">`delay_var` = #{delayVar}, </if>
+			<if test="gDelayVar != null">`g_delay_var` = #{gDelayVar}, </if>
+			<if test="rDelayVar != null">`r_delay_var` = #{rDelayVar}, </if>
+			<if test="jitter != null">`jitter` = #{jitter}, </if>
+			<if test="gJitter != null">`g_jitter` = #{gJitter}, </if>
+			<if test="rJitter != null">`r_jitter` = #{rJitter}, </if>
+			<if test="jitterStd != null">`jitter_std` = #{jitterStd}, </if>
+			<if test="gJitterStd != null">`g_jitter_std` = #{gJitterStd}, </if>
+			<if test="rJitterStd != null">`r_jitter_std` = #{rJitterStd}, </if>
+			<if test="jitterVar != null">`jitter_var` = #{jitterVar}, </if>
+			<if test="gJitterVar != null">`g_jitter_var` = #{gJitterVar}, </if>
+			<if test="rJitterVar != null">`r_jitter_var` = #{rJitterVar}, </if>
+			<if test="lossRate != null">`loss_rate` = #{lossRate}, </if>
+			<if test="remark != null">`remark` = #{remark}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from record_hour_sla where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from record_hour_sla where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

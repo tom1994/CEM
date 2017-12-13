@@ -12,6 +12,15 @@ var probeNames = new Array();
 var typeNames = new Array();
 var statusNames = new Array();
 
+var st = new Map();//servicetype字典，可通过get方法查对应字符串。
+st.set(0, "综合业务");
+st.set(1, "网络连通性业务");
+st.set(2, "网络层质量业务");
+st.set(3, "网页浏览业务");
+st.set(4, "文件下载业务");
+st.set(5, "在线视频业务");
+st.set(6, "网络游戏业务");
+
 var probedata_handle = new Vue({
     el: '#probehandle',
     data: {},
@@ -281,7 +290,7 @@ var probetable = new Vue({
                             row.push(item.cityName);
                             row.push(item.countyName);
                             row.push(item.probeName);
-                            row.push(item.serviceType);
+                            row.push(st.get(item.serviceType));
                             row.push(item.targetName);
                             row.push(item.score);
                             row.push(item.base);

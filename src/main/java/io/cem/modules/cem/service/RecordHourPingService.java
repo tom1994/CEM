@@ -24,7 +24,9 @@ public interface RecordHourPingService {
 	List<RecordHourPingEntity> queryPingList(Map<String, Object> map);
 
 	List<ScoreEntity> calculateService1(List<RecordHourPingEntity> pingList,List<RecordHourTracertEntity> tracertList);
-	
+
+	List<ScoreEntity> calculateServiceDate1(List<RecordHourPingEntity> pingList,List<RecordHourTracertEntity> tracertList);
+
 	int queryTotal(Map<String, Object> map);
 	
 	void save(RecordHourPingEntity recordHourPing);

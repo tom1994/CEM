@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.cem.modules.cem.dao.RecordHourRadiusDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.cem.modules.cem.entity.RecordHourRadiusEntity" id="recordHourRadiusMap">
+        <result property="id" column="id"/>
+        <result property="cityId" column="city_id"/>
+        <result property="countyId" column="county_id"/>
+        <result property="probeId" column="probe_id"/>
+        <result property="port" column="port"/>
+        <result property="taskId" column="task_id"/>
+        <result property="serviceType" column="service_type"/>
+        <result property="targetId" column="target_id"/>
+        <result property="targetIp" column="target_ip"/>
+        <result property="recordDate" column="record_date"/>
+        <result property="recordTime" column="record_time"/>
+        <result property="delay" column="delay"/>
+        <result property="successRate" column="success_rate"/>
+        <result property="remark" column="remark"/>
+		<result property="cityName" column="city_name"/>
+		<result property="areaName" column="area_name"/>
+		<result property="probeName" column="probe_name"/>
+		<result property="targetName" column="target_name"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="io.cem.modules.cem.entity.RecordHourRadiusEntity">
+		select * from record_hour_radius where id = #{value}
+	</select>
+
+	<select id="queryList" resultType="io.cem.modules.cem.entity.RecordHourRadiusEntity">
+		select * from record_hour_radius
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from record_hour_radius 
+	</select>
+
+	<select id="queryRadiusList" resultType="io.cem.modules.cem.entity.RecordHourRadiusEntity">
+		select record_hour_radius.id,record_hour_radius.city_id,record_hour_radius.county_id,record_hour_radius.probe_id,record_hour_radius.port,record_hour_radius.task_id,record_hour_radius.service_type,record_hour_radius.target_id,record_hour_radius.target_ip,record_hour_radius.record_date,record_hour_radius.record_time,record_hour_radius.remark,
+		city.city_name AS city_name,
+		county.county_name AS area_name,
+		probe.probe_name AS probe_name,
+		target.target_name AS target_name,
+		AVG(record_hour_radius.delay) AS delay,
+		AVG(record_hour_radius.success_rate) AS success_rate
+		FROM record_hour_radius
+		LEFT JOIN city
+		ON record_hour_radius.city_id = city.city_id
+		LEFT JOIN county
+		ON record_hour_radius.county_id = county.county_id
+		LEFT JOIN probe
+		ON record_hour_radius.probe_id = probe.id
+		LEFT JOIN target
+		ON record_hour_radius.target_id = target.id
+		WHERE record_hour_radius.record_date BETWEEN #{ava_start} AND #{ava_terminal}
+		<if test="city_id != null and city_id != ''">
+			AND record_hour_radius.city_id = #{city_id}
+		</if>
+		<if test="county_id != null and county_id != ''">
+			AND record_hour_radius.county_id = #{county_id}
+		</if>
+		<if test="target_id != null and target_id != ''">
+			AND record_hour_radius.target_id = #{target_id}
+		</if>
+		<if test="probe_id != null and probe_id != ''">
+			AND record_hour_radius.probe_id = #{probe_id}
+		</if>
+		GROUP BY record_hour_radius.city_id,record_hour_radius.county_id,record_hour_radius.service_type,record_hour_radius.target_id,record_hour_radius.probe_id,date_format(record_hour_radius.record_date,'%Y-%m-%d'),time_format(record_hour_radius.record_time, '%H')
+
+	</select>
+	 
+	<insert id="save" parameterType="io.cem.modules.cem.entity.RecordHourRadiusEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into record_hour_radius
+		(
+			`city_id`, 
+			`county_id`, 
+			`probe_id`, 
+			`port`, 
+			`task_id`, 
+			`service_type`, 
+			`target_id`, 
+			`target_ip`, 
+			`record_date`, 
+			`record_time`, 
+			`delay`, 
+			`success_rate`, 
+			`remark`
+		)
+		values
+		(
+			#{cityId}, 
+			#{countyId}, 
+			#{probeId}, 
+			#{port}, 
+			#{taskId}, 
+			#{serviceType}, 
+			#{targetId}, 
+			#{targetIp}, 
+			#{recordDate}, 
+			#{recordTime}, 
+			#{delay}, 
+			#{successRate}, 
+			#{remark}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="io.cem.modules.cem.entity.RecordHourRadiusEntity">
+		update record_hour_radius 
+		<set>
+			<if test="cityId != null">`city_id` = #{cityId}, </if>
+			<if test="countyId != null">`county_id` = #{countyId}, </if>
+			<if test="probeId != null">`probe_id` = #{probeId}, </if>
+			<if test="port != null">`port` = #{port}, </if>
+			<if test="taskId != null">`task_id` = #{taskId}, </if>
+			<if test="serviceType != null">`service_type` = #{serviceType}, </if>
+			<if test="targetId != null">`target_id` = #{targetId}, </if>
+			<if test="targetIp != null">`target_ip` = #{targetIp}, </if>
+			<if test="recordDate != null">`record_date` = #{recordDate}, </if>
+			<if test="recordTime != null">`record_time` = #{recordTime}, </if>
+			<if test="delay != null">`delay` = #{delay}, </if>
+			<if test="successRate != null">`success_rate` = #{successRate}, </if>
+			<if test="remark != null">`remark` = #{remark}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from record_hour_radius where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from record_hour_radius where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>
