@@ -10,8 +10,8 @@ import java.util.HashMap;
 import com.alibaba.fastjson.JSONObject;
 import io.cem.common.exception.RRException;
 import io.cem.common.utils.*;
-import io.cem.modules.cem.entity.ScoreEntity;
-import io.cem.modules.cem.service.RecordHourTracertService;
+import io.cem.modules.cem.entity.*;
+import io.cem.modules.cem.service.*;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,10 +19,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import io.cem.modules.cem.entity.RecordHourPingEntity;
-import io.cem.modules.cem.service.RecordHourPingService;
-import io.cem.modules.cem.entity.RecordHourTracertEntity;
 
 
 import io.cem.common.utils.PageUtils;
@@ -48,6 +44,16 @@ public class RecordHourPingController {
 	private RecordHourPingService recordHourPingService;
 	@Autowired
 	private RecordHourTracertService recordHourTracertService;
+	@Autowired
+	private RecordHourSlaService recordHourSlaService;
+	@Autowired
+	private RecordHourDnsService recordHourDnsService;
+	@Autowired
+	private RecordHourDhcpService recordHourDhcpService;
+	@Autowired
+	private RecordHourPppoeService recordHourPppoeService;
+	@Autowired
+	private RecordHourRadiusService recordHourRadiusService;
 	
 	/**
 	 * ZTY用于质量排名界面计算分
@@ -73,13 +79,16 @@ public class RecordHourPingController {
  		}
 		else if(service==1){
 			List<RecordHourPingEntity> pingList = recordHourPingService.queryPingList(map);
-
-			System.out.println(map);
-
 			List<RecordHourTracertEntity> tracertList = recordHourTracertService.queryTracertList(map);
 			scoreList = recordHourPingService.calculateService1(pingList,tracertList);
 		}
 		else if(service==2){
+			List<RecordHourSlaEntity> slaList = recordHourSlaService.querySlaList(map);
+			List<RecordHourDnsEntity> dnsList = recordHourDnsService.queryDnsList(map);
+			List<RecordHourDhcpEntity> dhcpList = recordHourDhcpService.queryDhcpList(map);
+			List<RecordHourPppoeEntity> pppoeList = recordHourPppoeService.queryPppoeList(map);
+			List<RecordHourRadiusEntity> radiusList = recordHourRadiusService.queryRadiusList(map);
+			scoreList = recordHourSlaService.calculateService2(slaList,dnsList,dhcpList,pppoeList,radiusList);
 
 		}
 		else if(service==3){

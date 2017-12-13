@@ -1,7 +1,6 @@
 package io.cem.modules.cem.entity;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 
 
@@ -11,9 +10,9 @@ import java.util.Date;
  * 
  * @author ${author}
  * @email ${email}
- * @date 2017-12-02 14:35:31
+ * @date 2017-12-12 15:11:34
  */
-public class RecordHourPingEntity implements Serializable {
+public class RecordHourPppoeEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	//记录ID
@@ -40,18 +39,10 @@ public class RecordHourPingEntity implements Serializable {
 	private String recordTime;
 	//时延平均值
 	private Double delay;
-	//时延标准差
-	private Double delayStd;
-	//时延方差
-	private Double delayVar;
-	//抖动平均值
-	private Double jitter;
-	//抖动标准差
-	private Double jitterStd;
-	//抖动方差
-	private Double jitterVar;
-	//丢包率
-	private Double lossRate;
+	//掉线率
+	private Double dropRate;
+	//查询成功率
+	private Double successRate;
 	//备注
 	private String remark;
 	//地市名称
@@ -208,76 +199,28 @@ public class RecordHourPingEntity implements Serializable {
 		return delay;
 	}
 	/**
-	 * 设置：时延标准差
+	 * 设置：掉线率
 	 */
-	public void setDelayStd(Double delayStd) {
-		this.delayStd = delayStd;
+	public void setDropRate(Double dropRate) {
+		this.dropRate = dropRate;
 	}
 	/**
-	 * 获取：时延标准差
+	 * 获取：掉线率
 	 */
-	public Double getDelayStd() {
-		return delayStd;
+	public Double getDropRate() {
+		return dropRate;
 	}
 	/**
-	 * 设置：时延方差
+	 * 设置：查询成功率
 	 */
-	public void setDelayVar(Double delayVar) {
-		this.delayVar = delayVar;
+	public void setSuccessRate(Double successRate) {
+		this.successRate = successRate;
 	}
 	/**
-	 * 获取：时延方差
+	 * 获取：查询成功率
 	 */
-	public Double getDelayVar() {
-		return delayVar;
-	}
-	/**
-	 * 设置：抖动平均值
-	 */
-	public void setJitter(Double jitter) {
-		this.jitter = jitter;
-	}
-	/**
-	 * 获取：抖动平均值
-	 */
-	public Double getJitter() {
-		return jitter;
-	}
-	/**
-	 * 设置：抖动标准差
-	 */
-	public void setJitterStd(Double jitterStd) {
-		this.jitterStd = jitterStd;
-	}
-	/**
-	 * 获取：抖动标准差
-	 */
-	public Double getJitterStd() {
-		return jitterStd;
-	}
-	/**
-	 * 设置：抖动方差
-	 */
-	public void setJitterVar(Double jitterVar) {
-		this.jitterVar = jitterVar;
-	}
-	/**
-	 * 获取：抖动方差
-	 */
-	public Double getJitterVar() {
-		return jitterVar;
-	}
-	/**
-	 * 设置：丢包率
-	 */
-	public void setLossRate(Double lossRate) {
-		this.lossRate = lossRate;
-	}
-	/**
-	 * 获取：丢包率
-	 */
-	public Double getLossRate() {
-		return lossRate;
+	public Double getSuccessRate() {
+		return successRate;
 	}
 	/**
 	 * 设置：备注

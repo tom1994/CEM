@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="io.cem.modules.cem.dao.RecordHourPingDao">
+<mapper namespace="io.cem.modules.cem.dao.RecordHourDhcpDao">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="io.cem.modules.cem.entity.RecordHourPingEntity" id="recordHourPingMap">
+    <resultMap type="io.cem.modules.cem.entity.RecordHourDhcpEntity" id="recordHourDhcpMap">
         <result property="id" column="id"/>
         <result property="cityId" column="city_id"/>
         <result property="countyId" column="county_id"/>
@@ -17,12 +17,7 @@
         <result property="recordDate" column="record_date"/>
         <result property="recordTime" column="record_time"/>
         <result property="delay" column="delay"/>
-        <result property="delayStd" column="delay_std"/>
-        <result property="delayVar" column="delay_var"/>
-        <result property="jitter" column="jitter"/>
-        <result property="jitterStd" column="jitter_std"/>
-        <result property="jitterVar" column="jitter_var"/>
-        <result property="lossRate" column="loss_rate"/>
+        <result property="successRate" column="success_rate"/>
         <result property="remark" column="remark"/>
 		<result property="cityName" column="city_name"/>
 		<result property="areaName" column="area_name"/>
@@ -30,12 +25,12 @@
 		<result property="targetName" column="target_name"/>
     </resultMap>
 
-	<select id="queryObject" resultType="io.cem.modules.cem.entity.RecordHourPingEntity">
-		select * from record_hour_ping where id = #{value}
+	<select id="queryObject" resultType="io.cem.modules.cem.entity.RecordHourDhcpEntity">
+		select * from record_hour_dhcp where id = #{value}
 	</select>
 
-	<select id="queryList" resultType="io.cem.modules.cem.entity.RecordHourPingEntity">
-		select * from record_hour_ping
+	<select id="queryList" resultType="io.cem.modules.cem.entity.RecordHourDhcpEntity">
+		select * from record_hour_dhcp
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
                 order by ${sidx} ${order}
@@ -48,51 +43,47 @@
 			limit #{offset}, #{limit}
 		</if>
 	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from record_hour_dhcp 
+	</select>
 
-	<select id="queryPingList" resultType="io.cem.modules.cem.entity.RecordHourPingEntity">
-		select record_hour_ping.id,record_hour_ping.city_id,record_hour_ping.county_id,record_hour_ping.probe_id,record_hour_ping.port,record_hour_ping.task_id,record_hour_ping.service_type,record_hour_ping.target_id,record_hour_ping.target_ip,record_hour_ping.record_date,record_hour_ping.record_time,record_hour_ping.remark,
+	<select id="queryDhcpList" resultType="io.cem.modules.cem.entity.RecordHourDhcpEntity">
+		select record_hour_dhcp.id,record_hour_dhcp.city_id,record_hour_dhcp.county_id,record_hour_dhcp.probe_id,record_hour_dhcp.port,record_hour_dhcp.task_id,record_hour_dhcp.service_type,record_hour_dhcp.target_id,record_hour_dhcp.target_ip,record_hour_dhcp.record_date,record_hour_dhcp.record_time,record_hour_dhcp.remark,
 		city.city_name AS city_name,
 		county.county_name AS area_name,
-        probe.probe_name AS probe_name,
+		probe.probe_name AS probe_name,
 		target.target_name AS target_name,
-		AVG(record_hour_ping.delay) AS delay,
-		AVG(record_hour_ping.delay_std) AS delay_std,
-		AVG(record_hour_ping.delay_var) AS delay_var,
-		AVG(record_hour_ping.jitter) AS jitter,
-		AVG(record_hour_ping.jitter_std) AS jitter_std,
-		AVG(record_hour_ping.jitter_var) AS jitter_var,
-		AVG(record_hour_ping.loss_rate) AS loss_rate
-		FROM record_hour_ping
+		AVG(record_hour_dhcp.delay) AS delay,
+		AVG(record_hour_dhcp.success_rate) AS success_rate
+		FROM record_hour_dhcp
 		LEFT JOIN city
-		ON record_hour_ping.city_id = city.city_id
+		ON record_hour_dhcp.city_id = city.city_id
 		LEFT JOIN county
-		ON record_hour_ping.county_id = county.county_id
+		ON record_hour_dhcp.county_id = county.county_id
 		LEFT JOIN probe
-		ON record_hour_ping.probe_id = probe.id
+		ON record_hour_dhcp.probe_id = probe.id
 		LEFT JOIN target
-		ON record_hour_ping.target_id = target.id
-		WHERE record_hour_ping.record_date BETWEEN #{ava_start} AND #{ava_terminal}
+		ON record_hour_dhcp.target_id = target.id
+		WHERE record_hour_dhcp.record_date BETWEEN #{ava_start} AND #{ava_terminal}
 		<if test="city_id != null and city_id != ''">
-			AND record_hour_ping.city_id = #{city_id}
+			AND record_hour_dhcp.city_id = #{city_id}
 		</if>
 		<if test="county_id != null and county_id != ''">
-			AND record_hour_ping.county_id = #{county_id}
+			AND record_hour_dhcp.county_id = #{county_id}
 		</if>
 		<if test="target_id != null and target_id != ''">
-			AND record_hour_ping.target_id = #{target_id}
+			AND record_hour_dhcp.target_id = #{target_id}
 		</if>
 		<if test="probe_id != null and probe_id != ''">
-			AND record_hour_ping.probe_id = #{probe_id}
+			AND record_hour_dhcp.probe_id = #{probe_id}
 		</if>
-		GROUP BY record_hour_ping.city_id,record_hour_ping.county_id,record_hour_ping.service_type,record_hour_ping.target_id,record_hour_ping.probe_id
-	</select>
+		GROUP BY record_hour_dhcp.city_id,record_hour_dhcp.county_id,record_hour_dhcp.service_type,record_hour_dhcp.target_id,record_hour_dhcp.probe_id,date_format(record_hour_dhcp.record_date,'%Y-%m-%d'),time_format(record_hour_dhcp.record_time, '%H')
 
- 	<select id="queryTotal" resultType="int">
-		select count(*) from record_hour_ping 
 	</select>
 	 
-	<insert id="save" parameterType="io.cem.modules.cem.entity.RecordHourPingEntity" useGeneratedKeys="true" keyProperty="id">
-		insert into record_hour_ping
+	<insert id="save" parameterType="io.cem.modules.cem.entity.RecordHourDhcpEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into record_hour_dhcp
 		(
 			`city_id`, 
 			`county_id`, 
@@ -105,12 +96,7 @@
 			`record_date`, 
 			`record_time`, 
 			`delay`, 
-			`delay_std`, 
-			`delay_var`, 
-			`jitter`, 
-			`jitter_std`, 
-			`jitter_var`, 
-			`loss_rate`, 
+			`success_rate`, 
 			`remark`
 		)
 		values
@@ -126,18 +112,13 @@
 			#{recordDate}, 
 			#{recordTime}, 
 			#{delay}, 
-			#{delayStd}, 
-			#{delayVar}, 
-			#{jitter}, 
-			#{jitterStd}, 
-			#{jitterVar}, 
-			#{lossRate}, 
+			#{successRate}, 
 			#{remark}
 		)
 	</insert>
 	 
-	<update id="update" parameterType="io.cem.modules.cem.entity.RecordHourPingEntity">
-		update record_hour_ping 
+	<update id="update" parameterType="io.cem.modules.cem.entity.RecordHourDhcpEntity">
+		update record_hour_dhcp 
 		<set>
 			<if test="cityId != null">`city_id` = #{cityId}, </if>
 			<if test="countyId != null">`county_id` = #{countyId}, </if>
@@ -150,23 +131,18 @@
 			<if test="recordDate != null">`record_date` = #{recordDate}, </if>
 			<if test="recordTime != null">`record_time` = #{recordTime}, </if>
 			<if test="delay != null">`delay` = #{delay}, </if>
-			<if test="delayStd != null">`delay_std` = #{delayStd}, </if>
-			<if test="delayVar != null">`delay_var` = #{delayVar}, </if>
-			<if test="jitter != null">`jitter` = #{jitter}, </if>
-			<if test="jitterStd != null">`jitter_std` = #{jitterStd}, </if>
-			<if test="jitterVar != null">`jitter_var` = #{jitterVar}, </if>
-			<if test="lossRate != null">`loss_rate` = #{lossRate}, </if>
+			<if test="successRate != null">`success_rate` = #{successRate}, </if>
 			<if test="remark != null">`remark` = #{remark}</if>
 		</set>
 		where id = #{id}
 	</update>
 	
 	<delete id="delete">
-		delete from record_hour_ping where id = #{value}
+		delete from record_hour_dhcp where id = #{value}
 	</delete>
 	
 	<delete id="deleteBatch">
-		delete from record_hour_ping where id in 
+		delete from record_hour_dhcp where id in 
 		<foreach item="id" collection="array" open="(" separator="," close=")">
 			#{id}
 		</foreach>

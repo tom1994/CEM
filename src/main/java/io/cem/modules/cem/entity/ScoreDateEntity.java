@@ -1,85 +1,28 @@
 package io.cem.modules.cem.entity;
 
-import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 
-public class ScoreEntity {
-    //记录ID
-    private Integer id;
+public class ScoreDateEntity {
     //地市
     private String cityName;
-    private Integer cityId;
     //区县
     private String countyName;
-    private Integer countyId;
     //探针ID
     private String probeName;
-    private Integer probeId;
-    //子业务类型
-    private Integer serviceType;
     //测试目标ID
     private String targetName;
+    //地市id
+    private Integer cityId;
+    //区县
+    private Integer countyId;
+    //探针ID
+    private Integer probeId;
+    //测试目标ID
     private Integer targetId;
     //记录日期
     private Date recordDate;
     //记录时间
     private String recordTime;
-    //分数
-    private Double score;
-    //权重
-    private Double base;
-
-
-
-    /**
-     * 设置：记录ID
-     */
-    public void setId(Integer id) {
-        this.id = id;
-    }
-    /**
-     * 获取：记录ID
-     */
-    public Integer getId() {
-        return id;
-    }
-    /**
-     * 设置：子业务类型
-     */
-    public void setServiceType(Integer serviceType) {
-        this.serviceType = serviceType;
-    }
-    /**
-     * 获取：子业务类型
-     */
-    public Integer getServiceType() {
-        return serviceType;
-    }
-    /**
-     * 设置：分数
-     */
-    public Double getScore() {
-        return score;
-    }
-    /**
-     * 获取：分数
-     */
-    public void setScore(Double score) {
-        this.score = score;
-    }
-    /**
-     * 设置：权重
-     */
-    public Double getBase() {
-        return base;
-    }
-    /**
-     * 获取：权重
-     */
-    public void setBase(Double base) {
-        this.base = base;
-    }
 
     public String getCityName() {
         return cityName;
@@ -160,4 +103,23 @@ public class ScoreEntity {
     public void setRecordTime(String recordTime) {
         this.recordTime = recordTime;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        ScoreDateEntity temp = (ScoreDateEntity) obj;
+        if(this.getCityId().equals(temp.getCityId())&&this.getCountyId().equals(temp.getCountyId())&&this.getProbeId().equals(temp.getProbeId())&&this.getTargetId().equals(temp.getTargetId())&&this.getRecordDate().equals(temp.getRecordDate())&&this.getRecordTime().equals(temp.getRecordTime())){
+            return true;
+        }
+        return false;
+    }
+
+
+    @Override
+    public int hashCode() {
+
+        if(this.getCityId()!=null&&this.getCountyId()!=null&&this.getProbeId()!=null&&this.getTargetId()!=null)
+            return this.getCityId()&this.getCountyId()&this.getProbeId()&this.getTargetId();
+        return super.hashCode();
+    }
+
 }

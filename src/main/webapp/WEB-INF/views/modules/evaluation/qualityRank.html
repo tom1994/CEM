@@ -36,10 +36,6 @@
                                               role="form">
                                             <div class="form-group row">
                                                 <div class="input-group searchspan">
-                                                    <span class="searchname" title="选择探针"
-                                                          style="width: 80px">选择探针：</span>
-                                                </div>
-                                                <div class="input-group searchspan">
                                                     <span class="searchname" title="地市" style="width: 40px">地市</span>
                                                     <select id="selectcity" class="form-control" name="city_id"
                                                             v-on:change="citychange()" style="width: 110px">
@@ -67,11 +63,6 @@
 
 
                                             <div class="form-group row">
-                                                <div class="input-group searchspan">
-                                                    <span class="searchname" title="选择业务"
-                                                          style="width: 80px">选择业务：</span>
-                                                </div>
-
                                                 <div class="input-group searchspan">
                                                     <span class="searchname" title="业务类型"
                                                           style="width: 80px">业务类型</span>
@@ -104,11 +95,7 @@
 
                                             <div class="form-group row">
                                                 <div class="input-group searchspan">
-                                                    <span class="searchname" title="时间" style="width: 80px">选择时间：</span>
-                                                </div>
-
-                                                <div class="input-group searchspan">
-                                                    <span class="searchname" title="日期" style="width: 40px">起始</span>
+                                                    <span class="searchname" title="日期" style="width: 80px">起始时间：</span>
                                                     <input type="text" id="start_date" class="form-control"
                                                            name="startDate"
                                                            style="width: 140px"
@@ -116,7 +103,7 @@
                                                 </div>
 
                                                 <div class="input-group searchspan">
-                                                    <span class="searchname" title="日期" style="width: 40px">结束</span>
+                                                    <span class="searchname" title="日期" style="width: 80px">结束时间：</span>
                                                     <input type="text" id="terminal_date" class="form-control"
                                                            name="terminalDate"
                                                            style="width: 140px"
