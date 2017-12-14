@@ -1252,6 +1252,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 					connectionScore.add(finalScore);
 				} catch (IOException e) {
 				}
+				id++;
 			}
 		}catch(IOException e){}
 		return connectionScore;
@@ -1280,7 +1281,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 							score = 100 * (Double.parseDouble(pros.getValue("pingI21")));
 						}
 						//delay 80-100
-						else if (((pingList.get(i).getDelay()).compareTo(Double.parseDouble(PropertiesUtils.getValue("pingI22"))) > 0) && ((pingList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("pingI23"))) <= 0)) {
+						else if (((pingList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("pingI22"))) > 0) && ((pingList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("pingI23"))) <= 0)) {
 							score = (80 + ((((pingList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("pingI23")))) * 20) / ((Double.parseDouble(pros.getValue("pingI22")) - (Double.parseDouble(pros.getValue("pingI23"))))))) * (Double.parseDouble(pros.getValue("pingI21")));
 						}
 						//delay 60-80
@@ -2489,6 +2490,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 					connectionScore.add(finalScore);
 				} catch (IOException e) {
 				}
+				id++;
 			}
 		}catch(IOException e){}
 		return connectionScore;

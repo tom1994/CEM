@@ -121,11 +121,21 @@ var search_service = new Vue({
             }else{
                 var ava_start=searchJson.startDate.substr(0,10);
                 var ava_terminal=searchJson.terminalDate.substr(0,10);
-                var start_time=searchJson.startDate.substr(11,15);
-                var terminal_time=searchJson.startDate.substr(11,15);
-                console.log(start_time);
-                var schedulepolicy = JSON.stringify(searchJson);
+                var startTime=searchJson.startDate.substr(11,15);
+                var terminalTime=searchJson.startDate.substr(11,15);
+                var search = new Object();
+                search.city_id = searchJson.city_id;
+                search.couty_id = searchJson.county_id;
+                search.service = searchJson.service_type;
+                search.target_id = searchJson.target_id;
+                search.ava_start = ava_start;
+                search.ava_terminal = ava_terminal;
+                search.starTime = startTime;
+                search.terminalTime = terminalTime;
+                var schedulepolicy = JSON.stringify(search);
                 console.log(schedulepolicy);
+                probetable.probedata = search;
+                probetable.redraw();
 
             }
 
@@ -199,12 +209,11 @@ var probetable = new Vue({
             {title: '<div style="width:90px">业务类型</div>'},
             {title: '<div style="width:40px">目标地址</div>'},
             {title: '<div style="width:55px">分数</div>'},
-            {title: '<div style="width:40px">权重</div>'},
             {title: '<div style="width:80px">操作</div>'}
         ],
         rows: [],
         dtHandle: null,
-        probedata: {ava_start:'2017-12-01', ava_terminal:'2017-12-06', city_id:'110100', service:'1'}
+        probedata: {ava_start:'2017-12-14', ava_terminal:'2017-12-15',service:'0'}
 
     },
     methods: {
@@ -292,7 +301,6 @@ var probetable = new Vue({
                             row.push(st.get(item.serviceType));
                             row.push(item.targetName);
                             row.push(item.score);
-                            row.push(item.base);
                             row.push('<a class="fontcolor" onclick="update_this(this)" id='+item.id+'>详情</a>&nbsp;' +
                                 '<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>诊断</a>'); //Todo:完成详情与诊断
                             rows.push(row);

@@ -54,6 +54,16 @@ public class RecordHourPingController {
 	private RecordHourPppoeService recordHourPppoeService;
 	@Autowired
 	private RecordHourRadiusService recordHourRadiusService;
+	@Autowired
+	private RecordHourWebPageService recordHourWebPageService;
+	@Autowired
+	private RecordHourWebDownloadService recordHourWebDownloadService;
+	@Autowired
+	private RecordHourFtpService recordHourFtpService;
+	@Autowired
+	private RecordHourWebVideoService recordHourWebVideoService;
+	@Autowired
+	private RecordHourGameService recordHourGameService;
 	
 	/**
 	 * ZTY用于质量排名界面计算分
@@ -75,6 +85,31 @@ public class RecordHourPingController {
 		List<ScoreEntity> scoreList = new ArrayList<>();
 
 		if(service==0){
+			List<RecordHourPingEntity> pingList = recordHourPingService.queryPingList(map);
+			List<RecordHourTracertEntity> tracertList = recordHourTracertService.queryTracertList(map);
+			List<ScoreEntity> connection = recordHourPingService.calculateService1(pingList,tracertList);
+
+			List<RecordHourSlaEntity> slaList = recordHourSlaService.querySlaList(map);
+			List<RecordHourDnsEntity> dnsList = recordHourDnsService.queryDnsList(map);
+			List<RecordHourDhcpEntity> dhcpList = recordHourDhcpService.queryDhcpList(map);
+			List<RecordHourPppoeEntity> pppoeList = recordHourPppoeService.queryPppoeList(map);
+			List<RecordHourRadiusEntity> radiusList = recordHourRadiusService.queryRadiusList(map);
+			List<ScoreEntity> quality = recordHourSlaService.calculateService2(slaList,dnsList,dhcpList,pppoeList,radiusList);
+
+			List<RecordHourWebPageEntity> webPageList = recordHourWebPageService.queryWebList(map);
+			List<ScoreEntity> broswer  = recordHourWebPageService.calculateService3(webPageList);
+
+			List<RecordHourWebDownloadEntity> webDownloadList = recordHourWebDownloadService.queryWebDownloadList(map);
+			List<RecordHourFtpEntity> ftpList = recordHourFtpService.queryFtpList(map);
+			List<ScoreEntity> download = recordHourWebDownloadService.calculateService4(webDownloadList,ftpList);
+
+			List<RecordHourWebVideoEntity> videoList = recordHourWebVideoService.queryVideoList(map);
+			List<ScoreEntity> video = recordHourWebVideoService.calculateService5(videoList);
+
+			List<RecordHourGameEntity> gameList = recordHourGameService.queryGameList(map);
+			List<ScoreEntity> game = recordHourGameService.calculateService6(gameList);
+
+			scoreList = recordHourTracertService.calculateService0(connection,quality,broswer,download,video,game);
 
  		}
 		else if(service==1){
@@ -89,19 +124,23 @@ public class RecordHourPingController {
 			List<RecordHourPppoeEntity> pppoeList = recordHourPppoeService.queryPppoeList(map);
 			List<RecordHourRadiusEntity> radiusList = recordHourRadiusService.queryRadiusList(map);
 			scoreList = recordHourSlaService.calculateService2(slaList,dnsList,dhcpList,pppoeList,radiusList);
-
 		}
 		else if(service==3){
-
+			List<RecordHourWebPageEntity> webPageList = recordHourWebPageService.queryWebList(map);
+			scoreList = recordHourWebPageService.calculateService3(webPageList);
 		}
 		else if(service==4){
-
+			List<RecordHourWebDownloadEntity> webDownloadList = recordHourWebDownloadService.queryWebDownloadList(map);
+			List<RecordHourFtpEntity> ftpList = recordHourFtpService.queryFtpList(map);
+            scoreList = recordHourWebDownloadService.calculateService4(webDownloadList,ftpList);
 		}
 		else if(service==5){
-
+			List<RecordHourWebVideoEntity> videoList = recordHourWebVideoService.queryVideoList(map);
+            scoreList = recordHourWebVideoService.calculateService5(videoList);
 		}
 		else if(service==6){
-
+			List<RecordHourGameEntity> gameList = recordHourGameService.queryGameList(map);
+			scoreList = recordHourGameService.calculateService6(gameList);
 		}
 		else{
 		}

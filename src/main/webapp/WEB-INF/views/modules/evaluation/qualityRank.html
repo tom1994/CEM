@@ -39,7 +39,7 @@
                                                     <span class="searchname" title="地市" style="width: 40px">地市</span>
                                                     <select id="selectcity" class="form-control" name="city_id"
                                                             v-on:change="citychange()" style="width: 110px">
-                                                        <option value="1">所有地市</option>
+                                                        <option value="">所有地市</option>
                                                         <option v-for="item in cities"
                                                                 v-bind:value="item.message.cityId">{{
                                                             item.message.cityName }}
@@ -51,7 +51,7 @@
                                                     <span class="searchname" title="区县" style="width: 40px">区县</span>
                                                     <select id="selectarea" class="form-control " name="county_id"
                                                             style="width: 110px">
-                                                        <option value="1">所有区县</option>
+                                                        <option value="">所有区县</option>
                                                         <option v-for="item in areas"
                                                                 v-bind:value="item.message.countyId">{{
                                                             item.message.countyName
@@ -84,9 +84,9 @@
                                                           style="width: 80px">目标地址</span>
                                                     <select id="select_target" class="form-control " name="target_id"
                                                             style="width: 110px">
-                                                        <option value="1">所有目标地址</option>
+                                                        <option value="">所有目标地址</option>
                                                         <option v-for="item in target"
-                                                                v-bind:value="item.message.targetId">{{ item.message.targetName}}</option>
+                                                                v-bind:value="item.message.id">{{ item.message.targetName}}</option>
                                                     </select>
                                                 </div>
 
