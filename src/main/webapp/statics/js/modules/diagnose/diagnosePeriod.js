@@ -147,6 +147,7 @@ var button_change = new Vue({
                     newlayer.name = result.page.list[i].layerName;
                     newlayer.data = [];
                     options.series[i] = newlayer;
+                    //TODO:data[]里格式[Date.UTC(2017, 4, 3), 91.6667], [Date.UTC(2017, 4, 4), 92.1765],[Date.UTC(2017, 4, 5), 93.4504]
                 }
             }
         });

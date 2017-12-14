@@ -47,41 +47,42 @@
 	</select>
 
 	<select id="queryTracertList" resultType="io.cem.modules.cem.entity.RecordHourTracertEntity">
- 		select record_hour_tracert.id,record_hour_tracert.city_id,record_hour_tracert.county_id,record_hour_tracert.probe_id,record_hour_tracert.port,record_hour_tracert.task_id,record_hour_tracert.service_type,record_hour_tracert.target_id,record_hour_tracert.target_ip,record_hour_tracert.record_date,record_hour_tracert.record_time,record_hour_tracert.remark,
+ 		select rht.id,rht.city_id,rht.county_id,rht.probe_id,rht.port,rht.task_id,rht.service_type,rht.target_id,rht.target_ip,rht.record_date,rht.remark,
 		city.city_name AS city_name,
 		county.county_name AS area_name,
 		probe.probe_name AS probe_name,
 		target.target_name AS target_name,
-		AVG(record_hour_tracert.delay) AS delay,
-		AVG(record_hour_tracert.delay_std) AS delay_std,
-		AVG(record_hour_tracert.delay_var) AS delay_var,
-		AVG(record_hour_tracert.jitter) AS jitter,
-		AVG(record_hour_tracert.jitter_std) AS jitter_std,
-		AVG(record_hour_tracert.jitter_var) AS jitter_var,
-		AVG(record_hour_tracert.loss_rate) AS loss_rate
-		FROM record_hour_tracert
+		time_format(record_time, '%H') AS record_time,
+		AVG(rht.delay) AS delay,
+		AVG(rht.delay_std) AS delay_std,
+		AVG(rht.delay_var) AS delay_var,
+		AVG(rht.jitter) AS jitter,
+		AVG(rht.jitter_std) AS jitter_std,
+		AVG(rht.jitter_var) AS jitter_var,
+		AVG(rht.loss_rate) AS loss_rate
+		FROM record_hour_tracert rht
 		LEFT JOIN city
-		ON record_hour_tracert.city_id = city.city_id
+		ON rht.city_id = city.city_id
 		LEFT JOIN county
-		ON record_hour_tracert.county_id = county.county_id
+		ON rht.county_id = county.county_id
 		LEFT JOIN probe
-		ON record_hour_tracert.probe_id = probe.id
+		ON rht.probe_id = probe.id
 		LEFT JOIN target
-		ON record_hour_tracert.target_id = target.id
-		WHERE record_hour_tracert.record_date BETWEEN #{ava_start} AND #{ava_terminal}
+		ON rht.target_id = target.id
+		WHERE rht.record_date BETWEEN #{ava_start} AND #{ava_terminal}
 		<if test="city_id != null and city_id != ''">
-			AND record_hour_tracert.city_id = #{city_id}
+			AND rht.city_id = #{city_id}
 		</if>
 		<if test="county_id != null and county_id != ''">
-			AND record_hour_tracert.county_id = #{county_id}
+			AND rht.county_id = #{county_id}
 		</if>
 		<if test="target_id != null and target_id != ''">
-			AND record_hour_tracert.target_id = #{target_id}
+			AND rht.target_id = #{target_id}
 		</if>
 		<if test="probe_id != null and probe_id != ''">
-			AND record_hour_tracert.probe_id = #{probe_id}
+			AND rht.probe_id = #{probe_id}
 		</if>
-		GROUP BY record_hour_tracert.city_id,record_hour_tracert.county_id,record_hour_tracert.service_type,record_hour_tracert.target_id,record_hour_tracert.probe_id
+		GROUP BY rht.city_id,rht.county_id,rht.service_type,rht.target_id,rht.probe_id,date_format(rht.record_date,'%Y-%m-%d'),time_format(record_time, '%H');
 	</select>
 	
  	<select id="queryTotal" resultType="int">

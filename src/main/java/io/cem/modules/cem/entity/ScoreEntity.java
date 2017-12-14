@@ -30,6 +30,7 @@ public class ScoreEntity {
     //权重
     private Double base;
 
+    private Integer accessLayer;
 
 
     /**
@@ -159,5 +160,13 @@ public class ScoreEntity {
 
     public void setRecordTime(String recordTime) {
         this.recordTime = recordTime;
+    }
+
+    public Integer getAccessLayer() {
+        return accessLayer;
+    }
+
+    public void setAccessLayer(Integer accessLayer) {
+        this.accessLayer = accessLayer;
     }
 }
