@@ -67,7 +67,7 @@
                                                     <span class="searchname" title="业务类型"
                                                           style="width: 80px">业务类型</span>
                                                     <select id="selectservice" class="form-control" name="service_type"
-                                                            v-on:change="servicechange()" style="width: 110px">
+                                                            v-on:change="servicechange()" style="width: 140px">
                                                         <option value="0">综合业务</option>
                                                         <option value="1">网络连通性业务</option>
                                                         <option value="2">网络层质量业务</option>
@@ -78,12 +78,11 @@
                                                         <!--<option v-for="pitem in parray" v-bind:value="pitem.Id">{{ pitem.Name }}-->
                                                     </select>
                                                 </div>
-
                                                 <div class="input-group searchspan">
                                                     <span class="searchname" title="目标地址"
                                                           style="width: 80px">目标地址</span>
                                                     <select id="select_target" class="form-control " name="target_id"
-                                                            style="width: 110px">
+                                                            style="width: 140px">
                                                         <option value="">所有目标地址</option>
                                                         <option v-for="item in target"
                                                                 v-bind:value="item.message.id">{{ item.message.targetName}}</option>
@@ -91,8 +90,6 @@
                                                 </div>
 
                                             </div>
-
-
                                             <div class="form-group row">
                                                 <div class="input-group searchspan">
                                                     <span class="searchname" title="日期" style="width: 80px">起始时间：</span>
@@ -101,7 +98,6 @@
                                                            style="width: 140px"
                                                            value="">
                                                 </div>
-
                                                 <div class="input-group searchspan">
                                                     <span class="searchname" title="日期" style="width: 80px">结束时间：</span>
                                                     <input type="text" id="terminal_date" class="form-control"
@@ -110,7 +106,6 @@
                                                            value="">
                                                 </div>
                                             </div>
-
                                         </form>
 
 

@@ -207,7 +207,7 @@ var probetable = new Vue({
             {title: '<div style="width:42px">区县</div>'},
             {title: '<div style="width:42px">探针名</div>'},
             {title: '<div style="width:90px">业务类型</div>'},
-            {title: '<div style="width:40px">目标地址</div>'},
+            {title: '<div style="width:60px">目标地址</div>'},
             {title: '<div style="width:55px">分数</div>'},
             {title: '<div style="width:80px">操作</div>'}
         ],
