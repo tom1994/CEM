@@ -33,6 +33,11 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 	}
 
 	@Override
+	public List<RecordHourRadiusEntity> queryDayList(Map<String, Object> map){
+		return recordHourRadiusDao.queryDayList(map);
+	}
+
+	@Override
 	public int queryTotal(Map<String, Object> map){
 		return recordHourRadiusDao.queryTotal(map);
 	}

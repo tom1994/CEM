@@ -85,6 +85,42 @@
 		GROUP BY record_hour_web_download.city_id,record_hour_web_download.county_id,record_hour_web_download.service_type,record_hour_web_download.target_id,record_hour_web_download.probe_id,date_format(record_hour_web_download.record_date,'%Y-%m-%d'),time_format(record_hour_web_download.record_time, '%H')
 
 	</select>
+
+	<select id="queryDayList" resultType="io.cem.modules.cem.entity.RecordHourWebDownloadEntity">
+		select webd.id,webd.city_id,webd.county_id,webd.probe_id,webd.port,webd.task_id,webd.service_type,webd.target_id,webd.target_ip,webd.record_date,webd.record_time,webd.remark,
+		city.city_name AS city_name,
+		county.county_name AS area_name,
+		probe.probe_name AS probe_name,
+		target.target_name AS target_name,
+		AVG(webd.dns_delay) AS dns_delay,
+		AVG(webd.conn_delay) AS conn_delay,
+		AVG(webd.headbyte_delay) AS headbyte_delay,
+		AVG(webd.download_rate) AS download_rate
+		FROM record_day_web_download webd
+		LEFT JOIN city
+		ON webd.city_id = city.city_id
+		LEFT JOIN county
+		ON webd.county_id = county.county_id
+		LEFT JOIN probe
+		ON webd.probe_id = probe.id
+		LEFT JOIN target
+		ON webd.target_id = target.id
+		WHERE webd.record_date BETWEEN #{ava_start} AND #{ava_terminal}
+		<if test="city_id != null and city_id != ''">
+			AND webd.city_id = #{city_id}
+		</if>
+		<if test="county_id != null and county_id != ''">
+			AND webd.county_id = #{county_id}
+		</if>
+		<if test="target_id != null and target_id != ''">
+			AND webd.target_id = #{target_id}
+		</if>
+		<if test="probe_id != null and probe_id != ''">
+			AND webd.probe_id = #{probe_id}
+		</if>
+		GROUP BY webd.city_id,webd.county_id,webd.service_type,webd.target_id,webd.probe_id,date_format(webd.record_date,'%Y-%m-%d'),time_format(webd.record_time, '%H')
+
+	</select>
 	 
 	<insert id="save" parameterType="io.cem.modules.cem.entity.RecordHourWebDownloadEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into record_hour_web_download

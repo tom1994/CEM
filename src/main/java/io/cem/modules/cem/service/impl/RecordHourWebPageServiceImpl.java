@@ -35,6 +35,11 @@ public class RecordHourWebPageServiceImpl implements RecordHourWebPageService {
 	public List<RecordHourWebPageEntity> queryWebList(Map<String, Object> map){
 		return recordHourWebPageDao.queryWebList(map);
 	}
+
+	@Override
+	public List<RecordHourWebPageEntity> queryDayList(Map<String, Object> map){
+		return recordHourWebPageDao.queryDayList(map);
+	}
 	
 	@Override
 	public List<ScoreEntity> calculateService3(List<RecordHourWebPageEntity> webPageList){

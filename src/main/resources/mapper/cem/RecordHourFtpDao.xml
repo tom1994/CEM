@@ -89,6 +89,44 @@
 		GROUP BY record_hour_ftp.city_id,record_hour_ftp.county_id,record_hour_ftp.service_type,record_hour_ftp.target_id,record_hour_ftp.probe_id,date_format(record_hour_ftp.record_date,'%Y-%m-%d'),time_format(record_hour_ftp.record_time, '%H')
 
 	</select>
+
+	<select id="queryDayList" resultType="io.cem.modules.cem.entity.RecordHourFtpEntity">
+		select ftp.id,ftp.city_id,ftp.county_id,ftp.probe_id,ftp.port,ftp.task_id,ftp.service_type,ftp.target_id,ftp.target_ip,ftp.record_date,ftp.record_time,ftp.remark,
+		city.city_name AS city_name,
+		county.county_name AS area_name,
+		probe.probe_name AS probe_name,
+		target.target_name AS target_name,
+		AVG(ftp.dns_delay) AS dns_delay,
+		AVG(ftp.conn_delay) AS conn_delay,
+		AVG(ftp.login_delay) AS login_delay,
+		AVG(ftp.headbyte_delay) AS headbyte_delay,
+		AVG(ftp.download_rate) AS download_rate,
+		AVG(ftp.upload_rate) AS upload_rate
+		FROM record_day_ftp ftp
+		LEFT JOIN city
+		ON ftp.city_id = city.city_id
+		LEFT JOIN county
+		ON ftp.county_id = county.county_id
+		LEFT JOIN probe
+		ON ftp.probe_id = probe.id
+		LEFT JOIN target
+		ON ftp.target_id = target.id
+		WHERE ftp.record_date BETWEEN #{ava_start} AND #{ava_terminal}
+		<if test="city_id != null and city_id != ''">
+			AND ftp.city_id = #{city_id}
+		</if>
+		<if test="county_id != null and county_id != ''">
+			AND ftp.county_id = #{county_id}
+		</if>
+		<if test="target_id != null and target_id != ''">
+			AND ftp.target_id = #{target_id}
+		</if>
+		<if test="probe_id != null and probe_id != ''">
+			AND ftp.probe_id = #{probe_id}
+		</if>
+		GROUP BY ftp.city_id,ftp.county_id,ftp.service_type,ftp.target_id,ftp.probe_id,date_format(ftp.record_date,'%Y-%m-%d'),time_format(ftp.record_time, '%H')
+
+	</select>
 	 
 	<insert id="save" parameterType="io.cem.modules.cem.entity.RecordHourFtpEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into record_hour_ftp

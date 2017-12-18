@@ -21,6 +21,8 @@ public interface RecordHourWebVideoService {
 
 	List<RecordHourWebVideoEntity> queryVideoList(Map<String, Object> map);
 
+	List<RecordHourWebVideoEntity> queryDayList(Map<String, Object> map);
+
 	List<ScoreEntity> calculateService5 (List<RecordHourWebVideoEntity> videoList);
 	
 	int queryTotal(Map<String, Object> map);

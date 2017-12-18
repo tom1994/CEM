@@ -20,7 +20,11 @@ public interface RecordHourSlaService {
 
 	List<RecordHourSlaEntity> querySlaList(Map<String, Object> map);
 
+	List<RecordHourSlaEntity> queryDayList(Map<String, Object> map);
+
 	List<ScoreEntity> calculateService2(List<RecordHourSlaEntity> slaList, List<RecordHourDnsEntity> dnsList, List<RecordHourDhcpEntity> dhcpList, List<RecordHourPppoeEntity> pppoeList, List<RecordHourRadiusEntity> radiusList);
+
+	List<ScoreEntity> calculateServiceArea2(List<RecordHourSlaEntity> slaList, List<RecordHourDnsEntity> dnsList, List<RecordHourDhcpEntity> dhcpList, List<RecordHourPppoeEntity> pppoeList, List<RecordHourRadiusEntity> radiusList);
 
 	int queryTotal(Map<String, Object> map);
 	

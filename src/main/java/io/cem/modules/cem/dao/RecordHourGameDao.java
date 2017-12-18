@@ -15,4 +15,5 @@ import java.util.Map;
  */
 public interface RecordHourGameDao extends BaseDao<RecordHourGameEntity> {
     List<RecordHourGameEntity> queryGameList(Map<String, Object> map);
+    List<RecordHourGameEntity> queryDayList(Map<String, Object> map);
 }

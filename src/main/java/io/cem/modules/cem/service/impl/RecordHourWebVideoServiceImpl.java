@@ -37,6 +37,11 @@ public class RecordHourWebVideoServiceImpl implements RecordHourWebVideoService 
 	}
 
 	@Override
+	public List<RecordHourWebVideoEntity> queryDayList(Map<String, Object> map){
+		return recordHourWebVideoDao.queryDayList(map);
+	}
+
+	@Override
 	public List<ScoreEntity> calculateService5 (List<RecordHourWebVideoEntity> videoList){
 		List<ScoreEntity> connectionScore = new ArrayList<>();
 		try {

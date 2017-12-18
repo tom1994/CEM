@@ -84,6 +84,41 @@
 
 	</select>
 
+	<select id="queryDayList" resultType="io.cem.modules.cem.entity.RecordHourPppoeEntity">
+		select pppoe.id,pppoe.city_id,pppoe.county_id,pppoe.probe_id,pppoe.port,pppoe.task_id,pppoe.service_type,pppoe.target_id,pppoe.target_ip,pppoe.record_date,pppoe.record_time,pppoe.remark,
+		city.city_name AS city_name,
+		county.county_name AS area_name,
+		probe.probe_name AS probe_name,
+		target.target_name AS target_name,
+		AVG(pppoe.delay) AS delay,
+		AVG(pppoe.drop_rate) AS drop_rate,
+		AVG(pppoe.success_rate) AS success_rate
+		FROM record_day_pppoe pppoe
+		LEFT JOIN city
+		ON pppoe.city_id = city.city_id
+		LEFT JOIN county
+		ON pppoe.county_id = county.county_id
+		LEFT JOIN probe
+		ON pppoe.probe_id = probe.id
+		LEFT JOIN target
+		ON pppoe.target_id = target.id
+		WHERE pppoe.record_date BETWEEN #{ava_start} AND #{ava_terminal}
+		<if test="city_id != null and city_id != ''">
+			AND pppoe.city_id = #{city_id}
+		</if>
+		<if test="county_id != null and county_id != ''">
+			AND pppoe.county_id = #{county_id}
+		</if>
+		<if test="target_id != null and target_id != ''">
+			AND pppoe.target_id = #{target_id}
+		</if>
+		<if test="probe_id != null and probe_id != ''">
+			AND pppoe.probe_id = #{probe_id}
+		</if>
+		GROUP BY pppoe.city_id,pppoe.county_id,pppoe.service_type,pppoe.target_id,pppoe.probe_id,date_format(pppoe.record_date,'%Y-%m-%d'),time_format(pppoe.record_time, '%H')
+
+	</select>
+
 
 	<insert id="save" parameterType="io.cem.modules.cem.entity.RecordHourPppoeEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into record_hour_pppoe

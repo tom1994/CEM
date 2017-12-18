@@ -35,6 +35,11 @@ public class RecordHourGameServiceImpl implements RecordHourGameService {
 	public List<RecordHourGameEntity> queryGameList(Map<String, Object> map){
 		return recordHourGameDao.queryGameList(map);
 	}
+
+	@Override
+	public List<RecordHourGameEntity> queryDayList(Map<String, Object> map){
+		return recordHourGameDao.queryDayList(map);
+	}
 	
 	@Override
 	public List<ScoreEntity> calculateService6(List<RecordHourGameEntity> gameList){

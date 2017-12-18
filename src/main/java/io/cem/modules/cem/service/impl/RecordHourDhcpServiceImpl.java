@@ -31,6 +31,11 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 	public List<RecordHourDhcpEntity> queryDhcpList(Map<String, Object> map){
 		return recordHourDhcpDao.queryDhcpList(map);
 	}
+
+	@Override
+	public List<RecordHourDhcpEntity> queryDayList(Map<String, Object> map){
+		return recordHourDhcpDao.queryDayList(map);
+	}
 	
 	@Override
 	public int queryTotal(Map<String, Object> map){

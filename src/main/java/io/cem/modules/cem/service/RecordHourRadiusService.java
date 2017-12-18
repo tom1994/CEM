@@ -19,7 +19,9 @@ public interface RecordHourRadiusService {
 	List<RecordHourRadiusEntity> queryList(Map<String, Object> map);
 
 	List<RecordHourRadiusEntity> queryRadiusList(Map<String, Object> map);
-	
+
+	List<RecordHourRadiusEntity> queryDayList(Map<String, Object> map);
+
 	int queryTotal(Map<String, Object> map);
 	
 	void save(RecordHourRadiusEntity recordHourRadius);

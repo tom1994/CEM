@@ -69,7 +69,7 @@ public class RecordHourPingController {
 	 */
 	@RequestMapping("/list")
 	@RequiresPermissions("recordhourping:list")
-	public R list(String probedata, Integer page, Integer limit) throws Exception{
+	public R list(String probedata, Integer page, Integer limit){
 		//查询列表数据
 		Map<String, Object> map = new HashMap<>();
 		JSONObject probedata_jsonobject = JSONObject.parseObject(probedata);
@@ -98,17 +98,63 @@ public class RecordHourPingController {
 		List<ScoreEntity> scoreList = new ArrayList<>();
 		//查询天表
 		if (dateDifferent>5){
-			if (service == 0){}
+			if (service == 0){
+				List<RecordHourPingEntity> pingList = recordHourPingService.queryDayList(map);
+				List<RecordHourTracertEntity> tracertList = recordHourTracertService.queryDayList(map);
+				List<ScoreEntity> connection = recordHourPingService.calculateService1(pingList, tracertList);
+
+				List<RecordHourSlaEntity> slaList = recordHourSlaService.queryDayList(map);
+				List<RecordHourDnsEntity> dnsList = recordHourDnsService.queryDayList(map);
+				List<RecordHourDhcpEntity> dhcpList = recordHourDhcpService.queryDayList(map);
+				List<RecordHourPppoeEntity> pppoeList = recordHourPppoeService.queryDayList(map);
+				List<RecordHourRadiusEntity> radiusList = recordHourRadiusService.queryDayList(map);
+				List<ScoreEntity> quality = recordHourSlaService.calculateService2(slaList, dnsList, dhcpList, pppoeList, radiusList);
+
+				List<RecordHourWebPageEntity> webPageList = recordHourWebPageService.queryDayList(map);
+				List<ScoreEntity> broswer = recordHourWebPageService.calculateService3(webPageList);
+
+				List<RecordHourWebDownloadEntity> webDownloadList = recordHourWebDownloadService.queryDayList(map);
+				List<RecordHourFtpEntity> ftpList = recordHourFtpService.queryDayList(map);
+				List<ScoreEntity> download = recordHourWebDownloadService.calculateService4(webDownloadList, ftpList);
+
+				List<RecordHourWebVideoEntity> videoList = recordHourWebVideoService.queryDayList(map);
+				List<ScoreEntity> video = recordHourWebVideoService.calculateService5(videoList);
+
+				List<RecordHourGameEntity> gameList = recordHourGameService.queryDayList(map);
+				List<ScoreEntity> game = recordHourGameService.calculateService6(gameList);
+
+				scoreList = recordHourTracertService.calculateService0(connection, quality, broswer, download, video, game);
+			}
 			else if (service==1){
-				List<RecordHourPingEntity> pingList = recordHourPingService.queryPingList(map);
-				List<RecordHourTracertEntity> tracertList = recordHourTracertService.queryTracertList(map);
+				List<RecordHourPingEntity> pingList = recordHourPingService.queryDayList(map);
+				List<RecordHourTracertEntity> tracertList = recordHourTracertService.queryDayList(map);
 				scoreList = recordHourPingService.calculateService1(pingList, tracertList);
 			}
-			else if (service==2){}
-			else if (service==3){}
-			else if (service==4){}
-			else if (service==5){}
-			else if (service==6){}
+			else if (service==2){
+				List<RecordHourSlaEntity> slaList = recordHourSlaService.queryDayList(map);
+				List<RecordHourDnsEntity> dnsList = recordHourDnsService.queryDayList(map);
+				List<RecordHourDhcpEntity> dhcpList = recordHourDhcpService.queryDayList(map);
+				List<RecordHourPppoeEntity> pppoeList = recordHourPppoeService.queryDayList(map);
+				List<RecordHourRadiusEntity> radiusList = recordHourRadiusService.queryDayList(map);
+				scoreList = recordHourSlaService.calculateService2(slaList, dnsList, dhcpList, pppoeList, radiusList);
+			}
+			else if (service==3){
+				List<RecordHourWebPageEntity> webPageList = recordHourWebPageService.queryDayList(map);
+				scoreList = recordHourWebPageService.calculateService3(webPageList);
+			}
+			else if (service==4){
+				List<RecordHourWebDownloadEntity> webDownloadList = recordHourWebDownloadService.queryDayList(map);
+				List<RecordHourFtpEntity> ftpList = recordHourFtpService.queryDayList(map);
+				scoreList = recordHourWebDownloadService.calculateService4(webDownloadList, ftpList);
+			}
+			else if (service==5){
+				List<RecordHourWebVideoEntity> videoList = recordHourWebVideoService.queryDayList(map);
+				scoreList = recordHourWebVideoService.calculateService5(videoList);
+			}
+			else if (service==6){
+				List<RecordHourGameEntity> gameList = recordHourGameService.queryDayList(map);
+				scoreList = recordHourGameService.calculateService6(gameList);
+			}
 			else {}
 		}
 		//查询小时表

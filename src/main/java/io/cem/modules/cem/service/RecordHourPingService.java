@@ -24,9 +24,14 @@ public interface RecordHourPingService {
 
 	List<RecordHourPingEntity> queryPingList(Map<String, Object> map);
 
+	List<RecordHourPingEntity> queryDayList(Map<String, Object> map);
+
+
 	List<ScoreEntity> calculateService1(List<RecordHourPingEntity> pingList,List<RecordHourTracertEntity> tracertList);
 
 	List<ScoreEntity> calculateServiceDate1(List<RecordHourPingEntity> pingList,List<RecordHourTracertEntity> tracertList);
+
+	List<ScoreEntity> calculateServiceArea1(List<RecordHourPingEntity> pingList,List<RecordHourTracertEntity> tracertList);
 
 	int differentDays(Date date1, Date date2);
 

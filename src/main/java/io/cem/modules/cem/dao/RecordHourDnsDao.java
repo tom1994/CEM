@@ -15,5 +15,5 @@ import java.util.Map;
  */
 public interface RecordHourDnsDao extends BaseDao<RecordHourDnsEntity> {
     List<RecordHourDnsEntity> queryDnsList(Map<String, Object> map);
-	
+    List<RecordHourDnsEntity> queryDayList(Map<String, Object> map);
 }

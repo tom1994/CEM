@@ -33,6 +33,11 @@ public class RecordHourPppoeServiceImpl implements RecordHourPppoeService {
 	}
 
 	@Override
+	public List<RecordHourPppoeEntity> queryDayList(Map<String, Object> map){
+		return recordHourPppoeDao.queryDayList(map);
+	}
+
+	@Override
 	public int queryTotal(Map<String, Object> map){
 		return recordHourPppoeDao.queryTotal(map);
 	}

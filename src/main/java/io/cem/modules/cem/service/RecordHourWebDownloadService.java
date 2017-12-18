@@ -22,7 +22,11 @@ public interface RecordHourWebDownloadService {
 
 	List<RecordHourWebDownloadEntity> queryWebDownloadList(Map<String, Object> map);
 
+	List<RecordHourWebDownloadEntity> queryDayList(Map<String, Object> map);
+
 	List<ScoreEntity> calculateService4 (List<RecordHourWebDownloadEntity> webDownloadList,List<RecordHourFtpEntity> ftpList);
+
+	List<ScoreEntity> calculateServiceArea4 (List<RecordHourWebDownloadEntity> webDownloadList,List<RecordHourFtpEntity> ftpList);
 
 	int queryTotal(Map<String, Object> map);
 	

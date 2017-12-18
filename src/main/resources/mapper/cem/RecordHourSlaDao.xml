@@ -115,6 +115,57 @@
 		GROUP BY record_hour_sla.city_id,record_hour_sla.county_id,record_hour_sla.service_type,record_hour_sla.target_id,record_hour_sla.probe_id,date_format(record_hour_sla.record_date,'%Y-%m-%d'),time_format(record_hour_sla.record_time, '%H')
 
 	</select>
+
+	<select id="queryDayList" resultType="io.cem.modules.cem.entity.RecordHourSlaEntity">
+		select sla.id,sla.city_id,sla.county_id,sla.probe_id,sla.port,sla.task_id,sla.service_type,sla.target_id,sla.target_ip,sla.record_date,sla.record_time,sla.remark,
+		city.city_name AS city_name,
+		county.county_name AS area_name,
+		probe.probe_name AS probe_name,
+		target.target_name AS target_name,
+		AVG(sla.delay) AS delay,
+		AVG(sla.g_delay) AS g_delay,
+		AVG(sla.r_delay) AS r_delay,
+		AVG(sla.delay_std) AS delay_std,
+		AVG(sla.g_delay_std) AS g_delay_std,
+		AVG(sla.r_delay_std) AS r_delay_std,
+		AVG(sla.delay_var) AS delay_var,
+		AVG(sla.g_delay_var) AS g_delay_var,
+		AVG(sla.r_delay_var) AS r_delay_var,
+		AVG(sla.jitter) AS jitter,
+		AVG(sla.g_jitter) AS g_jitter,
+		AVG(sla.r_jitter) AS r_jitter,
+		AVG(sla.jitter_std) AS jitter_std,
+		AVG(sla.g_jitter_std) AS g_jitter_std,
+		AVG(sla.r_jitter_std) AS r_jitter_std,
+		AVG(sla.jitter_var) AS jitter_var,
+		AVG(sla.g_jitter_var) AS g_jitter_var,
+		AVG(sla.r_jitter_var) AS r_jitter_var,
+		AVG(sla.loss_rate) AS loss_rate
+		FROM record_day_sla sla
+		LEFT JOIN city
+		ON sla.city_id = city.city_id
+		LEFT JOIN county
+		ON sla.county_id = county.county_id
+		LEFT JOIN probe
+		ON sla.probe_id = probe.id
+		LEFT JOIN target
+		ON sla.target_id = target.id
+		WHERE sla.record_date BETWEEN #{ava_start} AND #{ava_terminal}
+		<if test="city_id != null and city_id != ''">
+			AND sla.city_id = #{city_id}
+		</if>
+		<if test="county_id != null and county_id != ''">
+			AND sla.county_id = #{county_id}
+		</if>
+		<if test="target_id != null and target_id != ''">
+			AND sla.target_id = #{target_id}
+		</if>
+		<if test="probe_id != null and probe_id != ''">
+			AND sla.probe_id = #{probe_id}
+		</if>
+		GROUP BY sla.city_id,sla.county_id,sla.service_type,sla.target_id,sla.probe_id,date_format(sla.record_date,'%Y-%m-%d'),time_format(sla.record_time, '%H')
+
+	</select>
 	 
 	<insert id="save" parameterType="io.cem.modules.cem.entity.RecordHourSlaEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into record_hour_sla

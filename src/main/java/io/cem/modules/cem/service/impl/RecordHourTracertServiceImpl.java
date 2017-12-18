@@ -36,6 +36,11 @@ public class RecordHourTracertServiceImpl implements RecordHourTracertService {
 	}
 
 	@Override
+	public List<RecordHourTracertEntity> queryDayList(Map<String, Object> map){
+		return recordHourTracertDao.queryDayList(map);
+	}
+
+	@Override
 	public List<ScoreEntity> calculateService0(List<ScoreEntity> connection, List<ScoreEntity> quality, List<ScoreEntity> broswer, List<ScoreEntity> download, List<ScoreEntity> video, List<ScoreEntity> game){
 		List<ScoreEntity> finalScore = new ArrayList<>();
 
