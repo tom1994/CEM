@@ -49,89 +49,89 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				if(slaList.get(i).getServiceType() == 10){
 					//delay 100
 					if ((slaList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("slaT12"))) <= 0) {
-						score = 100 * (Double.parseDouble(pros.getValue("slaT11")));
+						score += 100 * (Double.parseDouble(pros.getValue("slaT11")));
 					}
 					//delay 80-100
 					else if (((slaList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("slaT12"))) > 0) && ((slaList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("slaT13"))) <= 0)) {
-						score = (80 + ((((slaList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaT13")))) * 20) / ((Double.parseDouble(pros.getValue("slaT12")) - (Double.parseDouble(pros.getValue("slaT13"))))))) * (Double.parseDouble(pros.getValue("slaT11")));
+						score += (80 + ((((slaList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaT13")))) * 20) / ((Double.parseDouble(pros.getValue("slaT12")) - (Double.parseDouble(pros.getValue("slaT13"))))))) * (Double.parseDouble(pros.getValue("slaT11")));
 					}
 					//delay 60-80
 					else if (((slaList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("slaT13"))) > 0) && ((slaList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("slaT14"))) <= 0)) {
-						score = (60 + ((((slaList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaT14")))) * 20) / ((Double.parseDouble(pros.getValue("slaT13")) - (Double.parseDouble(pros.getValue("slaT14"))))))) * (Double.parseDouble(pros.getValue("slaT11")));
+						score += (60 + ((((slaList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaT14")))) * 20) / ((Double.parseDouble(pros.getValue("slaT13")) - (Double.parseDouble(pros.getValue("slaT14"))))))) * (Double.parseDouble(pros.getValue("slaT11")));
 					}
 					//delay 40-60
 					else if (((slaList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("slaT14"))) > 0) && ((slaList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("slaT15"))) <= 0)) {
-						score = (40 + ((((slaList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaT15")))) * 20) / ((Double.parseDouble(pros.getValue("slaT14")) - (Double.parseDouble(pros.getValue("slaT15"))))))) * (Double.parseDouble(pros.getValue("slaT11")));
+						score += (40 + ((((slaList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaT15")))) * 20) / ((Double.parseDouble(pros.getValue("slaT14")) - (Double.parseDouble(pros.getValue("slaT15"))))))) * (Double.parseDouble(pros.getValue("slaT11")));
 					}
 					//delay 20-40
 					else if (((slaList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("slaT15"))) > 0) && ((slaList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("slaT16"))) <= 0)) {
-						score = (20 + ((((slaList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaT16")))) * 20) / ((Double.parseDouble(pros.getValue("slaT15")) - (Double.parseDouble(pros.getValue("slaT16"))))))) * (Double.parseDouble(pros.getValue("slaT11")));
+						score += (20 + ((((slaList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaT16")))) * 20) / ((Double.parseDouble(pros.getValue("slaT15")) - (Double.parseDouble(pros.getValue("slaT16"))))))) * (Double.parseDouble(pros.getValue("slaT11")));
 					}
 					//delay 0-20
 					else if (((slaList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("slaT16"))) > 0) && ((slaList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("slaT17"))) <= 0)) {
-						score = ((((slaList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaT17")))) * 20) / ((Double.parseDouble(pros.getValue("slaT16")) - (Double.parseDouble(pros.getValue("slaT17")))))) * (Double.parseDouble(pros.getValue("slaT11")));
+						score += ((((slaList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaT17")))) * 20) / ((Double.parseDouble(pros.getValue("slaT16")) - (Double.parseDouble(pros.getValue("slaT17")))))) * (Double.parseDouble(pros.getValue("slaT11")));
 					}
 					//delay 0
 					else {
-						score = 0;
+						score += 0;
 					}
 
 					//g_delay 100
 					if ((slaList.get(i).getGDelay()).compareTo(Double.parseDouble(pros.getValue("slaT22"))) <= 0) {
-						score = 100 * (Double.parseDouble(pros.getValue("slaT21")));
+						score += 100 * (Double.parseDouble(pros.getValue("slaT21")));
 					}
 					//g_delay 80-100
 					else if (((slaList.get(i).getGDelay()).compareTo(Double.parseDouble(pros.getValue("slaT22"))) > 0) && ((slaList.get(i).getGDelay()).compareTo(Double.parseDouble(pros.getValue("slaT23"))) <= 0)) {
-						score = (80 + ((((slaList.get(i).getGDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaT23")))) * 20) / ((Double.parseDouble(pros.getValue("slaT22")) - (Double.parseDouble(pros.getValue("slaT23"))))))) * (Double.parseDouble(pros.getValue("slaT21")));
+						score += (80 + ((((slaList.get(i).getGDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaT23")))) * 20) / ((Double.parseDouble(pros.getValue("slaT22")) - (Double.parseDouble(pros.getValue("slaT23"))))))) * (Double.parseDouble(pros.getValue("slaT21")));
 					}
 					//g_delay 60-80
 					else if (((slaList.get(i).getGDelay()).compareTo(Double.parseDouble(pros.getValue("slaT23"))) > 0) && ((slaList.get(i).getGDelay()).compareTo(Double.parseDouble(pros.getValue("slaT24"))) <= 0)) {
-						score = (60 + ((((slaList.get(i).getGDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaT24")))) * 20) / ((Double.parseDouble(pros.getValue("slaT23")) - (Double.parseDouble(pros.getValue("slaT24"))))))) * (Double.parseDouble(pros.getValue("slaT21")));
+						score += (60 + ((((slaList.get(i).getGDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaT24")))) * 20) / ((Double.parseDouble(pros.getValue("slaT23")) - (Double.parseDouble(pros.getValue("slaT24"))))))) * (Double.parseDouble(pros.getValue("slaT21")));
 					}
 					//g_delay 40-60
 					else if (((slaList.get(i).getGDelay()).compareTo(Double.parseDouble(pros.getValue("slaT24"))) > 0) && ((slaList.get(i).getGDelay()).compareTo(Double.parseDouble(pros.getValue("slaT25"))) <= 0)) {
-						score = (40 + ((((slaList.get(i).getGDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaT25")))) * 20) / ((Double.parseDouble(pros.getValue("slaT24")) - (Double.parseDouble(pros.getValue("slaT25"))))))) * (Double.parseDouble(pros.getValue("slaT21")));
+						score += (40 + ((((slaList.get(i).getGDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaT25")))) * 20) / ((Double.parseDouble(pros.getValue("slaT24")) - (Double.parseDouble(pros.getValue("slaT25"))))))) * (Double.parseDouble(pros.getValue("slaT21")));
 					}
 					//g_delay 20-40
 					else if (((slaList.get(i).getGDelay()).compareTo(Double.parseDouble(pros.getValue("slaT25"))) > 0) && ((slaList.get(i).getGDelay()).compareTo(Double.parseDouble(pros.getValue("slaT26"))) <= 0)) {
-						score = (20 + ((((slaList.get(i).getGDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaT26")))) * 20) / ((Double.parseDouble(pros.getValue("slaT25")) - (Double.parseDouble(pros.getValue("slaT26"))))))) * (Double.parseDouble(pros.getValue("slaT21")));
+						score += (20 + ((((slaList.get(i).getGDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaT26")))) * 20) / ((Double.parseDouble(pros.getValue("slaT25")) - (Double.parseDouble(pros.getValue("slaT26"))))))) * (Double.parseDouble(pros.getValue("slaT21")));
 					}
 					//g_delay 0-20
 					else if (((slaList.get(i).getGDelay()).compareTo(Double.parseDouble(pros.getValue("slaT26"))) > 0) && ((slaList.get(i).getGDelay()).compareTo(Double.parseDouble(pros.getValue("slaT27"))) <= 0)) {
-						score = ((((slaList.get(i).getGDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaT27")))) * 20) / ((Double.parseDouble(pros.getValue("slaT26")) - (Double.parseDouble(pros.getValue("slaT27")))))) * (Double.parseDouble(pros.getValue("slaT21")));
+						score += ((((slaList.get(i).getGDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaT27")))) * 20) / ((Double.parseDouble(pros.getValue("slaT26")) - (Double.parseDouble(pros.getValue("slaT27")))))) * (Double.parseDouble(pros.getValue("slaT21")));
 					}
 					//g_delay 0
 					else {
-						score = 0;
+						score += 0;
 					}
 
 					//r_delay 100
 					if ((slaList.get(i).getRDelay()).compareTo(Double.parseDouble(pros.getValue("slaT32"))) <= 0) {
-						score = 100 * (Double.parseDouble(pros.getValue("slaT31")));
+						score += 100 * (Double.parseDouble(pros.getValue("slaT31")));
 					}
 					//r_delay 80-100
 					else if (((slaList.get(i).getRDelay()).compareTo(Double.parseDouble(pros.getValue("slaT32"))) > 0) && ((slaList.get(i).getRDelay()).compareTo(Double.parseDouble(pros.getValue("slaT33"))) <= 0)) {
-						score = (80 + ((((slaList.get(i).getRDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaT33")))) * 20) / ((Double.parseDouble(pros.getValue("slaT32")) - (Double.parseDouble(pros.getValue("slaT33"))))))) * (Double.parseDouble(pros.getValue("slaT31")));
+						score += (80 + ((((slaList.get(i).getRDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaT33")))) * 20) / ((Double.parseDouble(pros.getValue("slaT32")) - (Double.parseDouble(pros.getValue("slaT33"))))))) * (Double.parseDouble(pros.getValue("slaT31")));
 					}
 					//r_delay 60-80
 					else if (((slaList.get(i).getRDelay()).compareTo(Double.parseDouble(pros.getValue("slaT33"))) > 0) && ((slaList.get(i).getRDelay()).compareTo(Double.parseDouble(pros.getValue("slaT34"))) <= 0)) {
-						score = (60 + ((((slaList.get(i).getRDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaT34")))) * 20) / ((Double.parseDouble(pros.getValue("slaT33")) - (Double.parseDouble(pros.getValue("slaT34"))))))) * (Double.parseDouble(pros.getValue("slaT31")));
+						score += (60 + ((((slaList.get(i).getRDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaT34")))) * 20) / ((Double.parseDouble(pros.getValue("slaT33")) - (Double.parseDouble(pros.getValue("slaT34"))))))) * (Double.parseDouble(pros.getValue("slaT31")));
 					}
 					//r_delay 40-60
 					else if (((slaList.get(i).getRDelay()).compareTo(Double.parseDouble(pros.getValue("slaT34"))) > 0) && ((slaList.get(i).getRDelay()).compareTo(Double.parseDouble(pros.getValue("slaT35"))) <= 0)) {
-						score = (40 + ((((slaList.get(i).getRDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaT35")))) * 20) / ((Double.parseDouble(pros.getValue("slaT34")) - (Double.parseDouble(pros.getValue("slaT35"))))))) * (Double.parseDouble(pros.getValue("slaT31")));
+						score += (40 + ((((slaList.get(i).getRDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaT35")))) * 20) / ((Double.parseDouble(pros.getValue("slaT34")) - (Double.parseDouble(pros.getValue("slaT35"))))))) * (Double.parseDouble(pros.getValue("slaT31")));
 					}
 					//r_delay 20-40
 					else if (((slaList.get(i).getRDelay()).compareTo(Double.parseDouble(pros.getValue("slaT35"))) > 0) && ((slaList.get(i).getRDelay()).compareTo(Double.parseDouble(pros.getValue("slaT36"))) <= 0)) {
-						score = (20 + ((((slaList.get(i).getRDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaT36")))) * 20) / ((Double.parseDouble(pros.getValue("slaT35")) - (Double.parseDouble(pros.getValue("slaT36"))))))) * (Double.parseDouble(pros.getValue("slaT31")));
+						score += (20 + ((((slaList.get(i).getRDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaT36")))) * 20) / ((Double.parseDouble(pros.getValue("slaT35")) - (Double.parseDouble(pros.getValue("slaT36"))))))) * (Double.parseDouble(pros.getValue("slaT31")));
 					}
 					//r_delay 0-20
 					else if (((slaList.get(i).getRDelay()).compareTo(Double.parseDouble(pros.getValue("slaT36"))) > 0) && ((slaList.get(i).getRDelay()).compareTo(Double.parseDouble(pros.getValue("slaT37"))) <= 0)) {
-						score = ((((slaList.get(i).getRDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaT37")))) * 20) / ((Double.parseDouble(pros.getValue("slaT36")) - (Double.parseDouble(pros.getValue("slaT37")))))) * (Double.parseDouble(pros.getValue("slaT31")));
+						score += ((((slaList.get(i).getRDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaT37")))) * 20) / ((Double.parseDouble(pros.getValue("slaT36")) - (Double.parseDouble(pros.getValue("slaT37")))))) * (Double.parseDouble(pros.getValue("slaT31")));
 					}
 					//r_delay 0
 					else {
-						score = 0;
+						score += 0;
 					}
 
 					//delay_std 100
@@ -615,103 +615,94 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 					tcpSla.setBase(Double.parseDouble(pros.getValue("sla_tcp")));
 
 					slaTcp.add(tcpSla);
-
-
-					
-					
-
-
-
-
-					
 				}
 				
 				else if(slaList.get(i).getServiceType() == 11){
 					//delay 100
 					if ((slaList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("slaU12"))) <= 0) {
-						score = 100 * (Double.parseDouble(pros.getValue("slaU11")));
+						score += 100 * (Double.parseDouble(pros.getValue("slaU11")));
 					}
 					//delay 80-100
 					else if (((slaList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("slaU12"))) > 0) && ((slaList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("slaU13"))) <= 0)) {
-						score = (80 + ((((slaList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaU13")))) * 20) / ((Double.parseDouble(pros.getValue("slaU12")) - (Double.parseDouble(pros.getValue("slaU13"))))))) * (Double.parseDouble(pros.getValue("slaU11")));
+						score += (80 + ((((slaList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaU13")))) * 20) / ((Double.parseDouble(pros.getValue("slaU12")) - (Double.parseDouble(pros.getValue("slaU13"))))))) * (Double.parseDouble(pros.getValue("slaU11")));
 					}
 					//delay 60-80
 					else if (((slaList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("slaU13"))) > 0) && ((slaList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("slaU14"))) <= 0)) {
-						score = (60 + ((((slaList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaU14")))) * 20) / ((Double.parseDouble(pros.getValue("slaU13")) - (Double.parseDouble(pros.getValue("slaU14"))))))) * (Double.parseDouble(pros.getValue("slaU11")));
+						score += (60 + ((((slaList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaU14")))) * 20) / ((Double.parseDouble(pros.getValue("slaU13")) - (Double.parseDouble(pros.getValue("slaU14"))))))) * (Double.parseDouble(pros.getValue("slaU11")));
 					}
 					//delay 40-60
 					else if (((slaList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("slaU14"))) > 0) && ((slaList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("slaU15"))) <= 0)) {
-						score = (40 + ((((slaList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaU15")))) * 20) / ((Double.parseDouble(pros.getValue("slaU14")) - (Double.parseDouble(pros.getValue("slaU15"))))))) * (Double.parseDouble(pros.getValue("slaU11")));
+						score += (40 + ((((slaList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaU15")))) * 20) / ((Double.parseDouble(pros.getValue("slaU14")) - (Double.parseDouble(pros.getValue("slaU15"))))))) * (Double.parseDouble(pros.getValue("slaU11")));
 					}
 					//delay 20-40
 					else if (((slaList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("slaU15"))) > 0) && ((slaList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("slaU16"))) <= 0)) {
-						score = (20 + ((((slaList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaU16")))) * 20) / ((Double.parseDouble(pros.getValue("slaU15")) - (Double.parseDouble(pros.getValue("slaU16"))))))) * (Double.parseDouble(pros.getValue("slaU11")));
+						score += (20 + ((((slaList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaU16")))) * 20) / ((Double.parseDouble(pros.getValue("slaU15")) - (Double.parseDouble(pros.getValue("slaU16"))))))) * (Double.parseDouble(pros.getValue("slaU11")));
 					}
 					//delay 0-20
 					else if (((slaList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("slaU16"))) > 0) && ((slaList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("slaU17"))) <= 0)) {
-						score = ((((slaList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaU17")))) * 20) / ((Double.parseDouble(pros.getValue("slaU16")) - (Double.parseDouble(pros.getValue("slaU17")))))) * (Double.parseDouble(pros.getValue("slaU11")));
+						score += ((((slaList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaU17")))) * 20) / ((Double.parseDouble(pros.getValue("slaU16")) - (Double.parseDouble(pros.getValue("slaU17")))))) * (Double.parseDouble(pros.getValue("slaU11")));
 					}
 					//delay 0
 					else {
-						score = 0;
+						score += 0;
 					}
 
 					//g_delay 100
 					if ((slaList.get(i).getGDelay()).compareTo(Double.parseDouble(pros.getValue("slaU22"))) <= 0) {
-						score = 100 * (Double.parseDouble(pros.getValue("slaU21")));
+						score += 100 * (Double.parseDouble(pros.getValue("slaU21")));
 					}
 					//g_delay 80-100
 					else if (((slaList.get(i).getGDelay()).compareTo(Double.parseDouble(pros.getValue("slaU22"))) > 0) && ((slaList.get(i).getGDelay()).compareTo(Double.parseDouble(pros.getValue("slaU23"))) <= 0)) {
-						score = (80 + ((((slaList.get(i).getGDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaU23")))) * 20) / ((Double.parseDouble(pros.getValue("slaU22")) - (Double.parseDouble(pros.getValue("slaU23"))))))) * (Double.parseDouble(pros.getValue("slaU21")));
+						score += (80 + ((((slaList.get(i).getGDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaU23")))) * 20) / ((Double.parseDouble(pros.getValue("slaU22")) - (Double.parseDouble(pros.getValue("slaU23"))))))) * (Double.parseDouble(pros.getValue("slaU21")));
 					}
 					//g_delay 60-80
 					else if (((slaList.get(i).getGDelay()).compareTo(Double.parseDouble(pros.getValue("slaU23"))) > 0) && ((slaList.get(i).getGDelay()).compareTo(Double.parseDouble(pros.getValue("slaU24"))) <= 0)) {
-						score = (60 + ((((slaList.get(i).getGDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaU24")))) * 20) / ((Double.parseDouble(pros.getValue("slaU23")) - (Double.parseDouble(pros.getValue("slaU24"))))))) * (Double.parseDouble(pros.getValue("slaU21")));
+						score += (60 + ((((slaList.get(i).getGDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaU24")))) * 20) / ((Double.parseDouble(pros.getValue("slaU23")) - (Double.parseDouble(pros.getValue("slaU24"))))))) * (Double.parseDouble(pros.getValue("slaU21")));
 					}
 					//g_delay 40-60
 					else if (((slaList.get(i).getGDelay()).compareTo(Double.parseDouble(pros.getValue("slaU24"))) > 0) && ((slaList.get(i).getGDelay()).compareTo(Double.parseDouble(pros.getValue("slaU25"))) <= 0)) {
-						score = (40 + ((((slaList.get(i).getGDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaU25")))) * 20) / ((Double.parseDouble(pros.getValue("slaU24")) - (Double.parseDouble(pros.getValue("slaU25"))))))) * (Double.parseDouble(pros.getValue("slaU21")));
+						score += (40 + ((((slaList.get(i).getGDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaU25")))) * 20) / ((Double.parseDouble(pros.getValue("slaU24")) - (Double.parseDouble(pros.getValue("slaU25"))))))) * (Double.parseDouble(pros.getValue("slaU21")));
 					}
 					//g_delay 20-40
 					else if (((slaList.get(i).getGDelay()).compareTo(Double.parseDouble(pros.getValue("slaU25"))) > 0) && ((slaList.get(i).getGDelay()).compareTo(Double.parseDouble(pros.getValue("slaU26"))) <= 0)) {
-						score = (20 + ((((slaList.get(i).getGDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaU26")))) * 20) / ((Double.parseDouble(pros.getValue("slaU25")) - (Double.parseDouble(pros.getValue("slaU26"))))))) * (Double.parseDouble(pros.getValue("slaU21")));
+						score += (20 + ((((slaList.get(i).getGDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaU26")))) * 20) / ((Double.parseDouble(pros.getValue("slaU25")) - (Double.parseDouble(pros.getValue("slaU26"))))))) * (Double.parseDouble(pros.getValue("slaU21")));
 					}
 					//g_delay 0-20
 					else if (((slaList.get(i).getGDelay()).compareTo(Double.parseDouble(pros.getValue("slaU26"))) > 0) && ((slaList.get(i).getGDelay()).compareTo(Double.parseDouble(pros.getValue("slaU27"))) <= 0)) {
-						score = ((((slaList.get(i).getGDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaU27")))) * 20) / ((Double.parseDouble(pros.getValue("slaU26")) - (Double.parseDouble(pros.getValue("slaU27")))))) * (Double.parseDouble(pros.getValue("slaU21")));
+						score += ((((slaList.get(i).getGDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaU27")))) * 20) / ((Double.parseDouble(pros.getValue("slaU26")) - (Double.parseDouble(pros.getValue("slaU27")))))) * (Double.parseDouble(pros.getValue("slaU21")));
 					}
 					//g_delay 0
 					else {
-						score = 0;
+						score += 0;
 					}
 
 					//r_delay 100
 					if ((slaList.get(i).getRDelay()).compareTo(Double.parseDouble(pros.getValue("slaU32"))) <= 0) {
-						score = 100 * (Double.parseDouble(pros.getValue("slaU31")));
+						score += 100 * (Double.parseDouble(pros.getValue("slaU31")));
 					}
 					//r_delay 80-100
 					else if (((slaList.get(i).getRDelay()).compareTo(Double.parseDouble(pros.getValue("slaU32"))) > 0) && ((slaList.get(i).getRDelay()).compareTo(Double.parseDouble(pros.getValue("slaU33"))) <= 0)) {
-						score = (80 + ((((slaList.get(i).getRDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaU33")))) * 20) / ((Double.parseDouble(pros.getValue("slaU32")) - (Double.parseDouble(pros.getValue("slaU33"))))))) * (Double.parseDouble(pros.getValue("slaU31")));
+						score += (80 + ((((slaList.get(i).getRDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaU33")))) * 20) / ((Double.parseDouble(pros.getValue("slaU32")) - (Double.parseDouble(pros.getValue("slaU33"))))))) * (Double.parseDouble(pros.getValue("slaU31")));
 					}
 					//r_delay 60-80
 					else if (((slaList.get(i).getRDelay()).compareTo(Double.parseDouble(pros.getValue("slaU33"))) > 0) && ((slaList.get(i).getRDelay()).compareTo(Double.parseDouble(pros.getValue("slaU34"))) <= 0)) {
-						score = (60 + ((((slaList.get(i).getRDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaU34")))) * 20) / ((Double.parseDouble(pros.getValue("slaU33")) - (Double.parseDouble(pros.getValue("slaU34"))))))) * (Double.parseDouble(pros.getValue("slaU31")));
+						score += (60 + ((((slaList.get(i).getRDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaU34")))) * 20) / ((Double.parseDouble(pros.getValue("slaU33")) - (Double.parseDouble(pros.getValue("slaU34"))))))) * (Double.parseDouble(pros.getValue("slaU31")));
 					}
 					//r_delay 40-60
 					else if (((slaList.get(i).getRDelay()).compareTo(Double.parseDouble(pros.getValue("slaU34"))) > 0) && ((slaList.get(i).getRDelay()).compareTo(Double.parseDouble(pros.getValue("slaU35"))) <= 0)) {
-						score = (40 + ((((slaList.get(i).getRDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaU35")))) * 20) / ((Double.parseDouble(pros.getValue("slaU34")) - (Double.parseDouble(pros.getValue("slaU35"))))))) * (Double.parseDouble(pros.getValue("slaU31")));
+						score += (40 + ((((slaList.get(i).getRDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaU35")))) * 20) / ((Double.parseDouble(pros.getValue("slaU34")) - (Double.parseDouble(pros.getValue("slaU35"))))))) * (Double.parseDouble(pros.getValue("slaU31")));
 					}
 					//r_delay 20-40
 					else if (((slaList.get(i).getRDelay()).compareTo(Double.parseDouble(pros.getValue("slaU35"))) > 0) && ((slaList.get(i).getRDelay()).compareTo(Double.parseDouble(pros.getValue("slaU36"))) <= 0)) {
-						score = (20 + ((((slaList.get(i).getRDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaU36")))) * 20) / ((Double.parseDouble(pros.getValue("slaU35")) - (Double.parseDouble(pros.getValue("slaU36"))))))) * (Double.parseDouble(pros.getValue("slaU31")));
+						score += (20 + ((((slaList.get(i).getRDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaU36")))) * 20) / ((Double.parseDouble(pros.getValue("slaU35")) - (Double.parseDouble(pros.getValue("slaU36"))))))) * (Double.parseDouble(pros.getValue("slaU31")));
 					}
 					//r_delay 0-20
 					else if (((slaList.get(i).getRDelay()).compareTo(Double.parseDouble(pros.getValue("slaU36"))) > 0) && ((slaList.get(i).getRDelay()).compareTo(Double.parseDouble(pros.getValue("slaU37"))) <= 0)) {
-						score = ((((slaList.get(i).getRDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaU37")))) * 20) / ((Double.parseDouble(pros.getValue("slaU36")) - (Double.parseDouble(pros.getValue("slaU37")))))) * (Double.parseDouble(pros.getValue("slaU31")));
+						score += ((((slaList.get(i).getRDelay().doubleValue()) - (Double.parseDouble(pros.getValue("slaU37")))) * 20) / ((Double.parseDouble(pros.getValue("slaU36")) - (Double.parseDouble(pros.getValue("slaU37")))))) * (Double.parseDouble(pros.getValue("slaU31")));
 					}
 					//r_delay 0
 					else {
-						score = 0;
+						score += 0;
 					}
 
 					//delay_std 100
@@ -1203,60 +1194,60 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				double score=0;
 				//delay 100
 				if ((dnsList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("dns12"))) <= 0) {
-					score = 100 * (Double.parseDouble(pros.getValue("dns11")));
+					score += 100 * (Double.parseDouble(pros.getValue("dns11")));
 				}
 				//delay 80-100
 				else if (((dnsList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("dns12"))) > 0) && ((dnsList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("dns13"))) <= 0)) {
-					score = (80 + ((((dnsList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("dns13")))) * 20) / ((Double.parseDouble(pros.getValue("dns12")) - (Double.parseDouble(pros.getValue("dns13"))))))) * (Double.parseDouble(pros.getValue("dns11")));
+					score += (80 + ((((dnsList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("dns13")))) * 20) / ((Double.parseDouble(pros.getValue("dns12")) - (Double.parseDouble(pros.getValue("dns13"))))))) * (Double.parseDouble(pros.getValue("dns11")));
 				}
 				//delay 60-80
 				else if (((dnsList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("dns13"))) > 0) && ((dnsList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("dns14"))) <= 0)) {
-					score = (60 + ((((dnsList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("dns14")))) * 20) / ((Double.parseDouble(pros.getValue("dns13")) - (Double.parseDouble(pros.getValue("dns14"))))))) * (Double.parseDouble(pros.getValue("dns11")));
+					score += (60 + ((((dnsList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("dns14")))) * 20) / ((Double.parseDouble(pros.getValue("dns13")) - (Double.parseDouble(pros.getValue("dns14"))))))) * (Double.parseDouble(pros.getValue("dns11")));
 				}
 				//delay 40-60
 				else if (((dnsList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("dns14"))) > 0) && ((dnsList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("dns15"))) <= 0)) {
-					score = (40 + ((((dnsList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("dns15")))) * 20) / ((Double.parseDouble(pros.getValue("dns14")) - (Double.parseDouble(pros.getValue("dns15"))))))) * (Double.parseDouble(pros.getValue("dns11")));
+					score += (40 + ((((dnsList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("dns15")))) * 20) / ((Double.parseDouble(pros.getValue("dns14")) - (Double.parseDouble(pros.getValue("dns15"))))))) * (Double.parseDouble(pros.getValue("dns11")));
 				}
 				//delay 20-40
 				else if (((dnsList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("dns15"))) > 0) && ((dnsList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("dns16"))) <= 0)) {
-					score = (20 + ((((dnsList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("dns16")))) * 20) / ((Double.parseDouble(pros.getValue("dns15")) - (Double.parseDouble(pros.getValue("dns16"))))))) * (Double.parseDouble(pros.getValue("dns11")));
+					score += (20 + ((((dnsList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("dns16")))) * 20) / ((Double.parseDouble(pros.getValue("dns15")) - (Double.parseDouble(pros.getValue("dns16"))))))) * (Double.parseDouble(pros.getValue("dns11")));
 				}
 				//delay 0-20
 				else if (((dnsList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("dns16"))) > 0) && ((dnsList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("dns17"))) <= 0)) {
-					score = ((((dnsList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("dns17")))) * 20) / ((Double.parseDouble(pros.getValue("dns16")) - (Double.parseDouble(pros.getValue("dns17")))))) * (Double.parseDouble(pros.getValue("dns11")));
+					score += ((((dnsList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("dns17")))) * 20) / ((Double.parseDouble(pros.getValue("dns16")) - (Double.parseDouble(pros.getValue("dns17")))))) * (Double.parseDouble(pros.getValue("dns11")));
 				}
 				//delay 0
 				else {
-					score = 0;
+					score += 0;
 				}
 
 				//success rate 100
 				if ((dnsList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dns22"))) <= 0) {
-					score = 100 * (Double.parseDouble(pros.getValue("dns21")));
+					score += 100 * (Double.parseDouble(pros.getValue("dns21")));
 				}
 				//delay 80-100
 				else if (((dnsList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dns22"))) > 0) && ((dnsList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dns23"))) <= 0)) {
-					score = (80 + ((((dnsList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("dns23")))) * 20) / ((Double.parseDouble(pros.getValue("dns22")) - (Double.parseDouble(pros.getValue("dns23"))))))) * (Double.parseDouble(pros.getValue("dns21")));
+					score += (80 + ((((dnsList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("dns23")))) * 20) / ((Double.parseDouble(pros.getValue("dns22")) - (Double.parseDouble(pros.getValue("dns23"))))))) * (Double.parseDouble(pros.getValue("dns21")));
 				}
 				//delay 60-80
 				else if (((dnsList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dns23"))) > 0) && ((dnsList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dns24"))) <= 0)) {
-					score = (60 + ((((dnsList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("dns24")))) * 20) / ((Double.parseDouble(pros.getValue("dns23")) - (Double.parseDouble(pros.getValue("dns24"))))))) * (Double.parseDouble(pros.getValue("dns21")));
+					score += (60 + ((((dnsList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("dns24")))) * 20) / ((Double.parseDouble(pros.getValue("dns23")) - (Double.parseDouble(pros.getValue("dns24"))))))) * (Double.parseDouble(pros.getValue("dns21")));
 				}
 				//delay 40-60
 				else if (((dnsList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dns24"))) > 0) && ((dnsList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dns25"))) <= 0)) {
-					score = (40 + ((((dnsList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("dns25")))) * 20) / ((Double.parseDouble(pros.getValue("dns24")) - (Double.parseDouble(pros.getValue("dns25"))))))) * (Double.parseDouble(pros.getValue("dns21")));
+					score += (40 + ((((dnsList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("dns25")))) * 20) / ((Double.parseDouble(pros.getValue("dns24")) - (Double.parseDouble(pros.getValue("dns25"))))))) * (Double.parseDouble(pros.getValue("dns21")));
 				}
 				//delay 20-40
 				else if (((dnsList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dns25"))) > 0) && ((dnsList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dns26"))) <= 0)) {
-					score = (20 + ((((dnsList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("dns26")))) * 20) / ((Double.parseDouble(pros.getValue("dns25")) - (Double.parseDouble(pros.getValue("dns26"))))))) * (Double.parseDouble(pros.getValue("dns21")));
+					score += (20 + ((((dnsList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("dns26")))) * 20) / ((Double.parseDouble(pros.getValue("dns25")) - (Double.parseDouble(pros.getValue("dns26"))))))) * (Double.parseDouble(pros.getValue("dns21")));
 				}
 				//delay 0-20
 				else if (((dnsList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dns26"))) > 0) && ((dnsList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dns27"))) <= 0)) {
-					score = ((((dnsList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("dns27")))) * 20) / ((Double.parseDouble(pros.getValue("dns26")) - (Double.parseDouble(pros.getValue("dns27")))))) * (Double.parseDouble(pros.getValue("dns21")));
+					score += ((((dnsList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("dns27")))) * 20) / ((Double.parseDouble(pros.getValue("dns26")) - (Double.parseDouble(pros.getValue("dns27")))))) * (Double.parseDouble(pros.getValue("dns21")));
 				}
 				//delay 0
 				else {
-					score = 0;
+					score += 0;
 				}
 				System.out.println("Dns:"+score);
 
@@ -1283,60 +1274,60 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				double score=0;
 				//delay 100
 				if ((dhcpList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("dhcp12"))) <= 0) {
-					score = 100 * (Double.parseDouble(pros.getValue("dhcp11")));
+					score += 100 * (Double.parseDouble(pros.getValue("dhcp11")));
 				}
 				//delay 80-100
 				else if (((dhcpList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("dhcp12"))) > 0) && ((dhcpList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("dhcp13"))) <= 0)) {
-					score = (80 + ((((dhcpList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("dhcp13")))) * 20) / ((Double.parseDouble(pros.getValue("dhcp12")) - (Double.parseDouble(pros.getValue("dhcp13"))))))) * (Double.parseDouble(pros.getValue("dhcp11")));
+					score += (80 + ((((dhcpList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("dhcp13")))) * 20) / ((Double.parseDouble(pros.getValue("dhcp12")) - (Double.parseDouble(pros.getValue("dhcp13"))))))) * (Double.parseDouble(pros.getValue("dhcp11")));
 				}
 				//delay 60-80
 				else if (((dhcpList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("dhcp13"))) > 0) && ((dhcpList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("dhcp14"))) <= 0)) {
-					score = (60 + ((((dhcpList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("dhcp14")))) * 20) / ((Double.parseDouble(pros.getValue("dhcp13")) - (Double.parseDouble(pros.getValue("dhcp14"))))))) * (Double.parseDouble(pros.getValue("dhcp11")));
+					score += (60 + ((((dhcpList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("dhcp14")))) * 20) / ((Double.parseDouble(pros.getValue("dhcp13")) - (Double.parseDouble(pros.getValue("dhcp14"))))))) * (Double.parseDouble(pros.getValue("dhcp11")));
 				}
 				//delay 40-60
 				else if (((dhcpList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("dhcp14"))) > 0) && ((dhcpList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("dhcp15"))) <= 0)) {
-					score = (40 + ((((dhcpList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("dhcp15")))) * 20) / ((Double.parseDouble(pros.getValue("dhcp14")) - (Double.parseDouble(pros.getValue("dhcp15"))))))) * (Double.parseDouble(pros.getValue("dhcp11")));
+					score += (40 + ((((dhcpList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("dhcp15")))) * 20) / ((Double.parseDouble(pros.getValue("dhcp14")) - (Double.parseDouble(pros.getValue("dhcp15"))))))) * (Double.parseDouble(pros.getValue("dhcp11")));
 				}
 				//delay 20-40
 				else if (((dhcpList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("dhcp15"))) > 0) && ((dhcpList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("dhcp16"))) <= 0)) {
-					score = (20 + ((((dhcpList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("dhcp16")))) * 20) / ((Double.parseDouble(pros.getValue("dhcp15")) - (Double.parseDouble(pros.getValue("dhcp16"))))))) * (Double.parseDouble(pros.getValue("dhcp11")));
+					score += (20 + ((((dhcpList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("dhcp16")))) * 20) / ((Double.parseDouble(pros.getValue("dhcp15")) - (Double.parseDouble(pros.getValue("dhcp16"))))))) * (Double.parseDouble(pros.getValue("dhcp11")));
 				}
 				//delay 0-20
 				else if (((dhcpList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("dhcp16"))) > 0) && ((dhcpList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("dhcp17"))) <= 0)) {
-					score = ((((dhcpList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("dhcp17")))) * 20) / ((Double.parseDouble(pros.getValue("dhcp16")) - (Double.parseDouble(pros.getValue("dhcp17")))))) * (Double.parseDouble(pros.getValue("dhcp11")));
+					score += ((((dhcpList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("dhcp17")))) * 20) / ((Double.parseDouble(pros.getValue("dhcp16")) - (Double.parseDouble(pros.getValue("dhcp17")))))) * (Double.parseDouble(pros.getValue("dhcp11")));
 				}
 				//delay 0
 				else {
-					score = 0;
+					score += 0;
 				}
 
 				//success rate 100
 				if ((dhcpList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dhcp22"))) <= 0) {
-					score = 100 * (Double.parseDouble(pros.getValue("dhcp21")));
+					score += 100 * (Double.parseDouble(pros.getValue("dhcp21")));
 				}
 				//delay 80-100
 				else if (((dhcpList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dhcp22"))) > 0) && ((dhcpList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dhcp23"))) <= 0)) {
-					score = (80 + ((((dhcpList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("dhcp23")))) * 20) / ((Double.parseDouble(pros.getValue("dhcp22")) - (Double.parseDouble(pros.getValue("dhcp23"))))))) * (Double.parseDouble(pros.getValue("dhcp21")));
+					score += (80 + ((((dhcpList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("dhcp23")))) * 20) / ((Double.parseDouble(pros.getValue("dhcp22")) - (Double.parseDouble(pros.getValue("dhcp23"))))))) * (Double.parseDouble(pros.getValue("dhcp21")));
 				}
 				//delay 60-80
 				else if (((dhcpList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dhcp23"))) > 0) && ((dhcpList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dhcp24"))) <= 0)) {
-					score = (60 + ((((dhcpList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("dhcp24")))) * 20) / ((Double.parseDouble(pros.getValue("dhcp23")) - (Double.parseDouble(pros.getValue("dhcp24"))))))) * (Double.parseDouble(pros.getValue("dhcp21")));
+					score += (60 + ((((dhcpList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("dhcp24")))) * 20) / ((Double.parseDouble(pros.getValue("dhcp23")) - (Double.parseDouble(pros.getValue("dhcp24"))))))) * (Double.parseDouble(pros.getValue("dhcp21")));
 				}
 				//delay 40-60
 				else if (((dhcpList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dhcp24"))) > 0) && ((dhcpList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dhcp25"))) <= 0)) {
-					score = (40 + ((((dhcpList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("dhcp25")))) * 20) / ((Double.parseDouble(pros.getValue("dhcp24")) - (Double.parseDouble(pros.getValue("dhcp25"))))))) * (Double.parseDouble(pros.getValue("dhcp21")));
+					score += (40 + ((((dhcpList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("dhcp25")))) * 20) / ((Double.parseDouble(pros.getValue("dhcp24")) - (Double.parseDouble(pros.getValue("dhcp25"))))))) * (Double.parseDouble(pros.getValue("dhcp21")));
 				}
 				//delay 20-40
 				else if (((dhcpList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dhcp25"))) > 0) && ((dhcpList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dhcp26"))) <= 0)) {
-					score = (20 + ((((dhcpList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("dhcp26")))) * 20) / ((Double.parseDouble(pros.getValue("dhcp25")) - (Double.parseDouble(pros.getValue("dhcp26"))))))) * (Double.parseDouble(pros.getValue("dhcp21")));
+					score += (20 + ((((dhcpList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("dhcp26")))) * 20) / ((Double.parseDouble(pros.getValue("dhcp25")) - (Double.parseDouble(pros.getValue("dhcp26"))))))) * (Double.parseDouble(pros.getValue("dhcp21")));
 				}
 				//delay 0-20
 				else if (((dhcpList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dhcp26"))) > 0) && ((dhcpList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dhcp27"))) <= 0)) {
-					score = ((((dhcpList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("dhcp27")))) * 20) / ((Double.parseDouble(pros.getValue("dhcp26")) - (Double.parseDouble(pros.getValue("dhcp27")))))) * (Double.parseDouble(pros.getValue("dhcp21")));
+					score += ((((dhcpList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("dhcp27")))) * 20) / ((Double.parseDouble(pros.getValue("dhcp26")) - (Double.parseDouble(pros.getValue("dhcp27")))))) * (Double.parseDouble(pros.getValue("dhcp21")));
 				}
 				//delay 0
 				else {
-					score = 0;
+					score += 0;
 				}
 				System.out.println("DHCP:"+score);
 
@@ -1363,89 +1354,89 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				double score=0;
 				//delay 100
 				if ((pppoeList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("adsl12"))) <= 0) {
-					score = 100 * (Double.parseDouble(pros.getValue("adsl11")));
+					score += 100 * (Double.parseDouble(pros.getValue("adsl11")));
 				}
 				//delay 80-100
 				else if (((pppoeList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("adsl12"))) > 0) && ((pppoeList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("adsl13"))) <= 0)) {
-					score = (80 + ((((pppoeList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("adsl13")))) * 20) / ((Double.parseDouble(pros.getValue("adsl12")) - (Double.parseDouble(pros.getValue("adsl13"))))))) * (Double.parseDouble(pros.getValue("adsl11")));
+					score += (80 + ((((pppoeList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("adsl13")))) * 20) / ((Double.parseDouble(pros.getValue("adsl12")) - (Double.parseDouble(pros.getValue("adsl13"))))))) * (Double.parseDouble(pros.getValue("adsl11")));
 				}
 				//delay 60-80
 				else if (((pppoeList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("adsl13"))) > 0) && ((pppoeList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("adsl14"))) <= 0)) {
-					score = (60 + ((((pppoeList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("adsl14")))) * 20) / ((Double.parseDouble(pros.getValue("adsl13")) - (Double.parseDouble(pros.getValue("adsl14"))))))) * (Double.parseDouble(pros.getValue("adsl11")));
+					score += (60 + ((((pppoeList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("adsl14")))) * 20) / ((Double.parseDouble(pros.getValue("adsl13")) - (Double.parseDouble(pros.getValue("adsl14"))))))) * (Double.parseDouble(pros.getValue("adsl11")));
 				}
 				//delay 40-60
 				else if (((pppoeList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("adsl14"))) > 0) && ((pppoeList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("adsl15"))) <= 0)) {
-					score = (40 + ((((pppoeList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("adsl15")))) * 20) / ((Double.parseDouble(pros.getValue("adsl14")) - (Double.parseDouble(pros.getValue("adsl125"))))))) * (Double.parseDouble(pros.getValue("adsl11")));
+					score += (40 + ((((pppoeList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("adsl15")))) * 20) / ((Double.parseDouble(pros.getValue("adsl14")) - (Double.parseDouble(pros.getValue("adsl125"))))))) * (Double.parseDouble(pros.getValue("adsl11")));
 				}
 				//delay 20-40
 				else if (((pppoeList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("adsl15"))) > 0) && ((pppoeList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("adsl16"))) <= 0)) {
-					score = (20 + ((((pppoeList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("adsl16")))) * 20) / ((Double.parseDouble(pros.getValue("adsl15")) - (Double.parseDouble(pros.getValue("adsl16"))))))) * (Double.parseDouble(pros.getValue("adsl11")));
+					score += (20 + ((((pppoeList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("adsl16")))) * 20) / ((Double.parseDouble(pros.getValue("adsl15")) - (Double.parseDouble(pros.getValue("adsl16"))))))) * (Double.parseDouble(pros.getValue("adsl11")));
 				}
 				//delay 0-20
 				else if (((pppoeList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("adsl16"))) > 0) && ((pppoeList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("adsl17"))) <= 0)) {
-					score = ((((pppoeList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("adsl17")))) * 20) / ((Double.parseDouble(pros.getValue("adsl16")) - (Double.parseDouble(pros.getValue("adsl17")))))) * (Double.parseDouble(pros.getValue("adsl11")));
+					score += ((((pppoeList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("adsl17")))) * 20) / ((Double.parseDouble(pros.getValue("adsl16")) - (Double.parseDouble(pros.getValue("adsl17")))))) * (Double.parseDouble(pros.getValue("adsl11")));
 				}
 				//delay 0
 				else {
-					score = 0;
+					score += 0;
 				}
 
 				//loss rate 100
 				if ((pppoeList.get(i).getDropRate()).compareTo(Double.parseDouble(pros.getValue("adsl22"))) <= 0) {
-					score = 100 * (Double.parseDouble(pros.getValue("adsl21")));
+					score += 100 * (Double.parseDouble(pros.getValue("adsl21")));
 				}
 				//delay 80-100
 				else if (((pppoeList.get(i).getDropRate()).compareTo(Double.parseDouble(pros.getValue("adsl22"))) > 0) && ((pppoeList.get(i).getDropRate()).compareTo(Double.parseDouble(pros.getValue("adsl23"))) <= 0)) {
-					score = (80 + ((((pppoeList.get(i).getDropRate().doubleValue()) - (Double.parseDouble(pros.getValue("adsl23")))) * 20) / ((Double.parseDouble(pros.getValue("adsl22")) - (Double.parseDouble(pros.getValue("adsl23"))))))) * (Double.parseDouble(pros.getValue("adsl21")));
+					score += (80 + ((((pppoeList.get(i).getDropRate().doubleValue()) - (Double.parseDouble(pros.getValue("adsl23")))) * 20) / ((Double.parseDouble(pros.getValue("adsl22")) - (Double.parseDouble(pros.getValue("adsl23"))))))) * (Double.parseDouble(pros.getValue("adsl21")));
 				}
 				//delay 60-80
 				else if (((pppoeList.get(i).getDropRate()).compareTo(Double.parseDouble(pros.getValue("adsl23"))) > 0) && ((pppoeList.get(i).getDropRate()).compareTo(Double.parseDouble(pros.getValue("adsl24"))) <= 0)) {
-					score = (60 + ((((pppoeList.get(i).getDropRate().doubleValue()) - (Double.parseDouble(pros.getValue("adsl24")))) * 20) / ((Double.parseDouble(pros.getValue("adsl23")) - (Double.parseDouble(pros.getValue("adsl24"))))))) * (Double.parseDouble(pros.getValue("adsl21")));
+					score += (60 + ((((pppoeList.get(i).getDropRate().doubleValue()) - (Double.parseDouble(pros.getValue("adsl24")))) * 20) / ((Double.parseDouble(pros.getValue("adsl23")) - (Double.parseDouble(pros.getValue("adsl24"))))))) * (Double.parseDouble(pros.getValue("adsl21")));
 				}
 				//delay 40-60
 				else if (((pppoeList.get(i).getDropRate()).compareTo(Double.parseDouble(pros.getValue("adsl24"))) > 0) && ((pppoeList.get(i).getDropRate()).compareTo(Double.parseDouble(pros.getValue("adsl25"))) <= 0)) {
-					score = (40 + ((((pppoeList.get(i).getDropRate().doubleValue()) - (Double.parseDouble(pros.getValue("adsl25")))) * 20) / ((Double.parseDouble(pros.getValue("adsl24")) - (Double.parseDouble(pros.getValue("adsl125"))))))) * (Double.parseDouble(pros.getValue("adsl21")));
+					score += (40 + ((((pppoeList.get(i).getDropRate().doubleValue()) - (Double.parseDouble(pros.getValue("adsl25")))) * 20) / ((Double.parseDouble(pros.getValue("adsl24")) - (Double.parseDouble(pros.getValue("adsl25"))))))) * (Double.parseDouble(pros.getValue("adsl21")));
 				}
 				//delay 20-40
 				else if (((pppoeList.get(i).getDropRate()).compareTo(Double.parseDouble(pros.getValue("adsl25"))) > 0) && ((pppoeList.get(i).getDropRate()).compareTo(Double.parseDouble(pros.getValue("adsl26"))) <= 0)) {
-					score = (20 + ((((pppoeList.get(i).getDropRate().doubleValue()) - (Double.parseDouble(pros.getValue("adsl26")))) * 20) / ((Double.parseDouble(pros.getValue("adsl25")) - (Double.parseDouble(pros.getValue("adsl26"))))))) * (Double.parseDouble(pros.getValue("adsl21")));
+					score += (20 + ((((pppoeList.get(i).getDropRate().doubleValue()) - (Double.parseDouble(pros.getValue("adsl26")))) * 20) / ((Double.parseDouble(pros.getValue("adsl25")) - (Double.parseDouble(pros.getValue("adsl26"))))))) * (Double.parseDouble(pros.getValue("adsl21")));
 				}
 				//delay 0-20
 				else if (((pppoeList.get(i).getDropRate()).compareTo(Double.parseDouble(pros.getValue("adsl26"))) > 0) && ((pppoeList.get(i).getDropRate()).compareTo(Double.parseDouble(pros.getValue("adsl27"))) <= 0)) {
-					score = ((((pppoeList.get(i).getDropRate().doubleValue()) - (Double.parseDouble(pros.getValue("adsl27")))) * 20) / ((Double.parseDouble(pros.getValue("adsl26")) - (Double.parseDouble(pros.getValue("adsl27")))))) * (Double.parseDouble(pros.getValue("adsl21")));
+					score += ((((pppoeList.get(i).getDropRate().doubleValue()) - (Double.parseDouble(pros.getValue("adsl27")))) * 20) / ((Double.parseDouble(pros.getValue("adsl26")) - (Double.parseDouble(pros.getValue("adsl27")))))) * (Double.parseDouble(pros.getValue("adsl21")));
 				}
 				//delay 0
 				else {
-					score = 0;
+					score += 0;
 				}
 
 				//success rate 100
 				if ((pppoeList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("adsl32"))) <= 0) {
-					score = 100 * (Double.parseDouble(pros.getValue("adsl31")));
+					score += 100 * (Double.parseDouble(pros.getValue("adsl31")));
 				}
 				//delay 80-100
 				else if (((pppoeList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("adsl32"))) > 0) && ((pppoeList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("adsl33"))) <= 0)) {
-					score = (80 + ((((pppoeList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("adsl33")))) * 20) / ((Double.parseDouble(pros.getValue("adsl32")) - (Double.parseDouble(pros.getValue("adsl33"))))))) * (Double.parseDouble(pros.getValue("adsl31")));
+					score += (80 + ((((pppoeList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("adsl33")))) * 20) / ((Double.parseDouble(pros.getValue("adsl32")) - (Double.parseDouble(pros.getValue("adsl33"))))))) * (Double.parseDouble(pros.getValue("adsl31")));
 				}
 				//delay 60-80
 				else if (((pppoeList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("adsl33"))) > 0) && ((pppoeList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("adsl34"))) <= 0)) {
-					score = (60 + ((((pppoeList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("adsl34")))) * 20) / ((Double.parseDouble(pros.getValue("adsl33")) - (Double.parseDouble(pros.getValue("adsl34"))))))) * (Double.parseDouble(pros.getValue("adsl31")));
+					score += (60 + ((((pppoeList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("adsl34")))) * 20) / ((Double.parseDouble(pros.getValue("adsl33")) - (Double.parseDouble(pros.getValue("adsl34"))))))) * (Double.parseDouble(pros.getValue("adsl31")));
 				}
 				//delay 40-60
 				else if (((pppoeList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("adsl34"))) > 0) && ((pppoeList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("adsl35"))) <= 0)) {
-					score = (40 + ((((pppoeList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("adsl35")))) * 20) / ((Double.parseDouble(pros.getValue("adsl34")) - (Double.parseDouble(pros.getValue("adsl35"))))))) * (Double.parseDouble(pros.getValue("adsl31")));
+					score += (40 + ((((pppoeList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("adsl35")))) * 20) / ((Double.parseDouble(pros.getValue("adsl34")) - (Double.parseDouble(pros.getValue("adsl35"))))))) * (Double.parseDouble(pros.getValue("adsl31")));
 				}
 				//delay 20-40
 				else if (((pppoeList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("adsl35"))) > 0) && ((pppoeList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("adsl36"))) <= 0)) {
-					score = (20 + ((((pppoeList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("adsl36")))) * 20) / ((Double.parseDouble(pros.getValue("adsl35")) - (Double.parseDouble(pros.getValue("adsl36"))))))) * (Double.parseDouble(pros.getValue("adsl31")));
+					score += (20 + ((((pppoeList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("adsl36")))) * 20) / ((Double.parseDouble(pros.getValue("adsl35")) - (Double.parseDouble(pros.getValue("adsl36"))))))) * (Double.parseDouble(pros.getValue("adsl31")));
 				}
 				//delay 0-20
 				else if (((pppoeList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("adsl36"))) > 0) && ((pppoeList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("adsl37"))) <= 0)) {
-					score = ((((pppoeList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("adsl37")))) * 20) / ((Double.parseDouble(pros.getValue("adsl36")) - (Double.parseDouble(pros.getValue("adsl37")))))) * (Double.parseDouble(pros.getValue("adsl31")));
+					score += ((((pppoeList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("adsl37")))) * 20) / ((Double.parseDouble(pros.getValue("adsl36")) - (Double.parseDouble(pros.getValue("adsl37")))))) * (Double.parseDouble(pros.getValue("adsl31")));
 				}
 				//delay 0
 				else {
-					score = 0;
+					score += 0;
 				}
 				System.out.println("PppOe:"+score);
 
@@ -1471,75 +1462,75 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				double score=0;
 				//delay 100
 				if ((radiusList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("radius12"))) <= 0) {
-					score = 100 * (Double.parseDouble(pros.getValue("radius11")));
+					score += 100 * (Double.parseDouble(pros.getValue("radius11")));
 				}
 				//delay 80-100
 				else if (((radiusList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("radius12"))) > 0) && ((radiusList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("radius13"))) <= 0)) {
-					score = (80 + ((((radiusList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("radius13")))) * 20) / ((Double.parseDouble(pros.getValue("radius12")) - (Double.parseDouble(pros.getValue("radius13"))))))) * (Double.parseDouble(pros.getValue("radius11")));
+					score += (80 + ((((radiusList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("radius13")))) * 20) / ((Double.parseDouble(pros.getValue("radius12")) - (Double.parseDouble(pros.getValue("radius13"))))))) * (Double.parseDouble(pros.getValue("radius11")));
 				}
 				//delay 60-80
 				else if (((radiusList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("radius13"))) > 0) && ((radiusList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("radius14"))) <= 0)) {
-					score = (60 + ((((radiusList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("radius14")))) * 20) / ((Double.parseDouble(pros.getValue("radius13")) - (Double.parseDouble(pros.getValue("radius14"))))))) * (Double.parseDouble(pros.getValue("radius11")));
+					score += (60 + ((((radiusList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("radius14")))) * 20) / ((Double.parseDouble(pros.getValue("radius13")) - (Double.parseDouble(pros.getValue("radius14"))))))) * (Double.parseDouble(pros.getValue("radius11")));
 				}
 				//delay 40-60
 				else if (((radiusList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("radius14"))) > 0) && ((radiusList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("radius15"))) <= 0)) {
-					score = (40 + ((((radiusList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("radius15")))) * 20) / ((Double.parseDouble(pros.getValue("radius14")) - (Double.parseDouble(pros.getValue("radius15"))))))) * (Double.parseDouble(pros.getValue("radius11")));
+					score += (40 + ((((radiusList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("radius15")))) * 20) / ((Double.parseDouble(pros.getValue("radius14")) - (Double.parseDouble(pros.getValue("radius15"))))))) * (Double.parseDouble(pros.getValue("radius11")));
 				}
 				//delay 20-40
 				else if (((radiusList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("radius15"))) > 0) && ((radiusList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("radius16"))) <= 0)) {
-					score = (20 + ((((radiusList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("radius16")))) * 20) / ((Double.parseDouble(pros.getValue("radius15")) - (Double.parseDouble(pros.getValue("radius16"))))))) * (Double.parseDouble(pros.getValue("radius11")));
+					score += (20 + ((((radiusList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("radius16")))) * 20) / ((Double.parseDouble(pros.getValue("radius15")) - (Double.parseDouble(pros.getValue("radius16"))))))) * (Double.parseDouble(pros.getValue("radius11")));
 				}
 				//delay 0-20
 				else if (((radiusList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("radius16"))) > 0) && ((radiusList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("radius17"))) <= 0)) {
-					score = ((((radiusList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("radius17")))) * 20) / ((Double.parseDouble(pros.getValue("radius16")) - (Double.parseDouble(pros.getValue("radius17")))))) * (Double.parseDouble(pros.getValue("radius11")));
+					score += ((((radiusList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("radius17")))) * 20) / ((Double.parseDouble(pros.getValue("radius16")) - (Double.parseDouble(pros.getValue("radius17")))))) * (Double.parseDouble(pros.getValue("radius11")));
 				}
 				//delay 0
 				else {
-					score = 0;
+					score += 0;
 				}
 
 				//success rate 100
 				if ((radiusList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("radius22"))) <= 0) {
-					score = 100 * (Double.parseDouble(pros.getValue("radius21")));
+					score += 100 * (Double.parseDouble(pros.getValue("radius21")));
 				}
 				//delay 80-100
 				else if (((radiusList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("radius22"))) > 0) && ((radiusList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("radius23"))) <= 0)) {
-					score = (80 + ((((radiusList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("radius23")))) * 20) / ((Double.parseDouble(pros.getValue("radius22")) - (Double.parseDouble(pros.getValue("radius23"))))))) * (Double.parseDouble(pros.getValue("radius21")));
+					score += (80 + ((((radiusList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("radius23")))) * 20) / ((Double.parseDouble(pros.getValue("radius22")) - (Double.parseDouble(pros.getValue("radius23"))))))) * (Double.parseDouble(pros.getValue("radius21")));
 				}
 				//delay 60-80
 				else if (((radiusList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("radius23"))) > 0) && ((radiusList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("radius24"))) <= 0)) {
-					score = (60 + ((((radiusList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("radius24")))) * 20) / ((Double.parseDouble(pros.getValue("radius23")) - (Double.parseDouble(pros.getValue("radius24"))))))) * (Double.parseDouble(pros.getValue("radius21")));
+					score += (60 + ((((radiusList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("radius24")))) * 20) / ((Double.parseDouble(pros.getValue("radius23")) - (Double.parseDouble(pros.getValue("radius24"))))))) * (Double.parseDouble(pros.getValue("radius21")));
 				}
 				//delay 40-60
 				else if (((radiusList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("radius24"))) > 0) && ((radiusList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("radius25"))) <= 0)) {
-					score = (40 + ((((radiusList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("radius25")))) * 20) / ((Double.parseDouble(pros.getValue("radius24")) - (Double.parseDouble(pros.getValue("radius25"))))))) * (Double.parseDouble(pros.getValue("radius21")));
+					score += (40 + ((((radiusList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("radius25")))) * 20) / ((Double.parseDouble(pros.getValue("radius24")) - (Double.parseDouble(pros.getValue("radius25"))))))) * (Double.parseDouble(pros.getValue("radius21")));
 				}
 				//delay 20-40
 				else if (((radiusList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("radius25"))) > 0) && ((radiusList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("radius26"))) <= 0)) {
-					score = (20 + ((((radiusList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("radius26")))) * 20) / ((Double.parseDouble(pros.getValue("radius25")) - (Double.parseDouble(pros.getValue("radius26"))))))) * (Double.parseDouble(pros.getValue("radius21")));
+					score += (20 + ((((radiusList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("radius26")))) * 20) / ((Double.parseDouble(pros.getValue("radius25")) - (Double.parseDouble(pros.getValue("radius26"))))))) * (Double.parseDouble(pros.getValue("radius21")));
 				}
 				//delay 0-20
 				else if (((radiusList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("radius26"))) > 0) && ((radiusList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("radius27"))) <= 0)) {
-					score = ((((radiusList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("radius27")))) * 20) / ((Double.parseDouble(pros.getValue("radius26")) - (Double.parseDouble(pros.getValue("radius27")))))) * (Double.parseDouble(pros.getValue("radius21")));
+					score += ((((radiusList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("radius27")))) * 20) / ((Double.parseDouble(pros.getValue("radius26")) - (Double.parseDouble(pros.getValue("radius27")))))) * (Double.parseDouble(pros.getValue("radius21")));
 				}
 				//delay 0
 				else {
-					score = 0;
+					score += 0;
 				}
 				System.out.println("RADIUS:"+score);
 
 
 				ScoreEntity RADIUS = new ScoreEntity();
-				RADIUS.setId(dnsList.get(i).getId());
-				RADIUS.setCityName(dnsList.get(i).getCityName());
-				RADIUS.setCityId(dnsList.get(i).getCityId());
-				RADIUS.setCountyName(dnsList.get(i).getAreaName());
-				RADIUS.setCountyId(dnsList.get(i).getCountyId());
-				RADIUS.setProbeName(dnsList.get(i).getProbeName());
-				RADIUS.setProbeId(dnsList.get(i).getProbeId());
-				RADIUS.setServiceType(dnsList.get(i).getServiceType());
-				RADIUS.setTargetName(dnsList.get(i).getTargetName());
-				RADIUS.setTargetId(dnsList.get(i).getTargetId());
+				RADIUS.setId(radiusList.get(i).getId());
+				RADIUS.setCityName(radiusList.get(i).getCityName());
+				RADIUS.setCityId(radiusList.get(i).getCityId());
+				RADIUS.setCountyName(radiusList.get(i).getAreaName());
+				RADIUS.setCountyId(radiusList.get(i).getCountyId());
+				RADIUS.setProbeName(radiusList.get(i).getProbeName());
+				RADIUS.setProbeId(radiusList.get(i).getProbeId());
+				RADIUS.setServiceType(radiusList.get(i).getServiceType());
+				RADIUS.setTargetName(radiusList.get(i).getTargetName());
+				RADIUS.setTargetId(radiusList.get(i).getTargetId());
 				RADIUS.setScore(score);
 				RADIUS.setBase(Double.parseDouble(pros.getValue("radius")));
 
