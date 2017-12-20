@@ -28,6 +28,8 @@ public interface RecordHourWebDownloadService {
 
 	List<ScoreEntity> calculateServiceArea4 (List<RecordHourWebDownloadEntity> webDownloadList,List<RecordHourFtpEntity> ftpList);
 
+	List<ScoreEntity> calculateServiceDate4 (List<RecordHourWebDownloadEntity> webDownloadList,List<RecordHourFtpEntity> ftpList);
+
 	int queryTotal(Map<String, Object> map);
 	
 	void save(RecordHourWebDownloadEntity recordHourWebDownload);

@@ -26,6 +26,8 @@ public interface RecordHourSlaService {
 
 	List<ScoreEntity> calculateServiceArea2(List<RecordHourSlaEntity> slaList, List<RecordHourDnsEntity> dnsList, List<RecordHourDhcpEntity> dhcpList, List<RecordHourPppoeEntity> pppoeList, List<RecordHourRadiusEntity> radiusList);
 
+	List<ScoreEntity> calculateServiceDate2(List<RecordHourSlaEntity> slaList, List<RecordHourDnsEntity> dnsList, List<RecordHourDhcpEntity> dhcpList, List<RecordHourPppoeEntity> pppoeList, List<RecordHourRadiusEntity> radiusList);
+
 	int queryTotal(Map<String, Object> map);
 	
 	void save(RecordHourSlaEntity recordHourSla);

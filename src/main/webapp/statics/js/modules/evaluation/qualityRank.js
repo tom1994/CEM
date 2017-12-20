@@ -300,8 +300,8 @@ var probetable = new Vue({
             {title: '<div style="width:10px"></div>'},
             {title: '<div class="checkbox" style="width:100%; align: center"> <label> <input type="checkbox" id="checkAll"></label> </div>'},
             {title: '<div style="width:70px">地市</div>'},
-            {title: '<div style="width:42px">区县</div>'},
-            {title: '<div style="width:42px">探针名</div>'},
+            {title: '<div style="width:70px">区县</div>'},
+            {title: '<div style="width:70px">探针名称</div>'},
             {title: '<div style="width:90px">业务类型</div>'},
             {title: '<div style="width:60px">目标地址</div>'},
             {title: '<div style="width:55px">分数</div>'},
@@ -336,7 +336,7 @@ var probetable = new Vue({
             vm.dtHandle.draw();
             /*重绘*/
         }
-    },
+},
     mounted: function() {
         let vm = this;
         // Instantiate the datatable and store the reference to the instance in our dtHandle element.
@@ -432,7 +432,7 @@ var areatable = new Vue({
             {title: '<div style="width:10px"></div>'},
             {title: '<div class="checkbox" style="width:100%; align: center"> <label> <input type="checkbox" id="checkAll"></label> </div>'},
             {title: '<div style="width:70px">地市</div>'},
-            {title: '<div style="width:42px">区县</div>'},
+            {title: '<div style="width:70px">区县</div>'},
             {title: '<div style="width:90px">业务类型</div>'},
             {title: '<div style="width:60px">目标地址</div>'},
             {title: '<div style="width:55px">分数</div>'},

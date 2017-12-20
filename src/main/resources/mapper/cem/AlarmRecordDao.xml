@@ -17,6 +17,7 @@
         <result property="targetId" column="target_id"/>
         <result property="recordTime" column="record_time"/>
         <result property="remark" column="remark"/>
+		<result property="probeName" column="probe_name"/>
     </resultMap>
 
 	<select id="queryObject" resultType="io.cem.modules.cem.entity.AlarmRecordEntity">
@@ -37,9 +38,53 @@
 			limit #{offset}, #{limit}
 		</if>
 	</select>
+
+
+	<select id="queryAlarmRecordList" resultMap="alarmRecordMap">
+		SELECT alarm_record.*,
+		probe.probe_name AS probe_name
+		FROM alarm_record
+		LEFT JOIN probe
+		ON alarm_record.probe_id = probe.id
+
+		WHERE alarm_record.id IS NOT NULL
+		<if test="type != null and type != ''">
+			AND alarm_record.type = #{type}
+		</if>
+		<if test="level != null and level != ''">
+			AND alarm_record.level = #{level}
+		</if>
+		<if test="status != null and status != ''">
+			AND alarm_record.status = #{status}
+		</if>
+
+		<choose>
+			<when test="sidx != null and sidx.trim() != ''">
+				order by ${sidx} ${order}
+			</when>
+			<otherwise>
+				order by probe.id desc
+			</otherwise>
+		</choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+
 	
  	<select id="queryTotal" resultType="int">
-		select count(*) from alarm_record 
+		select count(*) from alarm_record
+		WHERE id IS NOT NULL
+		<if test="type != null and type != ''">
+			AND alarm_record.type = #{type}
+		</if>
+		<if test="level != null and level != ''">
+			AND alarm_record.level = #{level}
+		</if>
+		<if test="status != null and status != ''">
+			AND alarm_record.status = #{status}
+		</if>
 	</select>
 	 
 	<insert id="save" parameterType="io.cem.modules.cem.entity.AlarmRecordEntity" useGeneratedKeys="true" keyProperty="id">

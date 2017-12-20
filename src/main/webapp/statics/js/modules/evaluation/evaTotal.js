@@ -33,7 +33,7 @@ var probedata_handle = new Vue({
     }
 });
 
-var search_service = new Vue({
+var search_service = new Vue({ //Todo:完成查询条件框
     el: '#search',
     data: {
         /*name: [],
@@ -168,4 +168,140 @@ var getProbe = function (countyid) {
         }
     });
 }
+
+
+var connection_data = new Vue({
+    el: '#v-for-connection',
+    data: {
+        probedata: {ava_start:(new Date()).Format("yyyy-MM-dd"), ava_terminal:(new Date()).Format("yyyy-MM-dd"),service:'1'}
+    },
+    mounted: function(){         /*动态加载测试任务组数据*/
+        let param = {};
+        param.probedata = JSON.stringify(connection_data.probedata);
+        console.log(param);
+        $.ajax({
+            type: "POST",   /*GET会乱码*/
+            url: "../../recordhourping/qualityList",//Todo:改成测试任务组的list方法
+            cache: false,  //禁用缓存
+            data: param,  //传入组装的参数
+            dataType: "json",
+            /* contentType:"application/json",  /!*必须要,不可少*!/*/
+            success: function (result) {
+               // for(var i=0;i<result.page.list.length;i++){
+                 //   cityNames[i] = {message: result.page.list[i]}
+                //}
+                //search_data.cities = cityNames;
+            }
+        });
+    },
+    methods: {
+
+    }
+});
+
+var connection_data =new Vue({
+    el: '#v-for-connection',
+    data: {
+        connection: {
+            最高分: 0,
+            平均分: 0,
+            最低分: 0
+        }
+    }
+})
+
+var chart = null;
+// 获取 CSV 数据并初始化图表
+$.getJSON('https://data.jianshukeji.com/jsonp?filename=csv/analytics.csv&callback=?', function (csv) {
+    chart = Highcharts.chart('container', {
+        data: {
+            csv: csv
+        },
+        title: {
+            text: ''
+        },
+        subtitle: {
+            text: ''
+        },
+        xAxis: {
+            tickInterval: 7 * 24 * 3600 * 1000, // 坐标轴刻度间隔为一星期
+            tickWidth: 0,
+            gridLineWidth: 1,
+            labels: {
+                align: 'left',
+                x: 3,
+                y: -3
+            },
+            // 时间格式化字符
+            // 默认会根据当前的刻度间隔取对应的值，即当刻度间隔为一周时，取 week 值
+            dateTimeLabelFormats: {
+                week: '%Y-%m-%d'
+            }
+        },
+        yAxis: [{ // 第一个 Y 轴，放置在左边（默认在坐标）
+            title: {
+                text: null
+            },
+            labels: {
+                align: 'left',
+                x: 3,
+                y: 16,
+                format: '{value:.,0f}'
+            },
+            showFirstLabel: false
+        }, {    // 第二个坐标轴，放置在右边
+            linkedTo: 0,
+            gridLineWidth: 0,
+            opposite: true,  // 通过此参数设置坐标轴显示在对立面
+            title: {
+                text: null
+            },
+            labels: {
+                align: 'right',
+                x: -3,
+                y: 16,
+                format: '{value:.,0f}'
+            },
+            showFirstLabel: false
+        }],
+        legend: {
+            align: 'left',
+            verticalAlign: 'top',
+            y: 20,
+            floating: true,
+            borderWidth: 0
+        },
+        tooltip: {
+            shared: true,
+            crosshairs: true,
+            // 时间格式化字符
+            // 默认会根据当前的数据点间隔取对应的值
+            // 当前图表中数据点间隔为 1天，所以配置 day 值即可
+            dateTimeLabelFormats: {
+                day: '%Y-%m-%d'
+            }
+        },
+        plotOptions: {
+            series: {
+                cursor: 'pointer',
+                point: {
+                    events: {
+                        // 数据点点击事件
+                        // 其中 e 变量为事件对象，this 为当前数据点对象
+                        click: function (e) {
+                            $('.message').html( Highcharts.dateFormat('%Y-%m-%d', this.x) + ':<br/>  访问量：' +this.y );
+                        }
+                    }
+                },
+                marker: {
+                    lineWidth: 1
+                }
+            }
+        }
+    });
+});
+
+
+
+
 

@@ -26,7 +26,12 @@ public class AlarmRecordServiceImpl implements AlarmRecordService {
 	public List<AlarmRecordEntity> queryList(Map<String, Object> map){
 		return alarmRecordDao.queryList(map);
 	}
-	
+
+	@Override
+	public List<AlarmRecordEntity> queryAlarmRecordList(Map<String, Object> map){
+		return alarmRecordDao.queryAlarmRecordList(map);
+	}
+
 	@Override
 	public int queryTotal(Map<String, Object> map){
 		return alarmRecordDao.queryTotal(map);
