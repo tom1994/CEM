@@ -18,10 +18,24 @@
         <result property="recordTime" column="record_time"/>
         <result property="remark" column="remark"/>
 		<result property="probeName" column="probe_name"/>
+		<result property="dataName" column="data_name"/>
+		<result property="targetName" column="target_name"/>
     </resultMap>
 
 	<select id="queryObject" resultType="io.cem.modules.cem.entity.AlarmRecordEntity">
-		select * from alarm_record where id = #{value}
+		SELECT alarm_record.*,
+            probe.probe_name    AS probe_name,
+            dic_data.data_name AS data_name,
+            target.target_name AS target_name
+        FROM alarm_record
+            LEFT JOIN probe
+                ON alarm_record.probe_id = probe.id
+            LEFT JOIN dic_data
+                ON (alarm_record.service_type = dic_data.data_id AND dic_data.dic_type_id=5 )
+            LEFT JOIN target
+                ON alarm_record.target_id = target.id
+
+        WHERE alarm_record.id = #{value}
 	</select>
 
 	<select id="queryList" resultType="io.cem.modules.cem.entity.AlarmRecordEntity">
@@ -132,6 +146,14 @@
 			<if test="targetId != null">`target_id` = #{targetId}, </if>
 			<if test="recordTime != null">`record_time` = #{recordTime}, </if>
 			<if test="remark != null">`remark` = #{remark}</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="operate" parameterType="Integer">
+		update alarm_record
+		<set>
+			`status` = 1
 		</set>
 		where id = #{id}
 	</update>

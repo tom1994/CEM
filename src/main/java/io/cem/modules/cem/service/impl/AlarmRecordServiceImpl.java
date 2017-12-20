@@ -46,6 +46,9 @@ public class AlarmRecordServiceImpl implements AlarmRecordService {
 	public void update(AlarmRecordEntity alarmRecord){
 		alarmRecordDao.update(alarmRecord);
 	}
+
+	@Override
+	public void operate(Integer id){alarmRecordDao.operate(id);}
 	
 	@Override
 	public void delete(Integer id){

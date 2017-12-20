@@ -87,11 +87,9 @@
     <div class="col-lg-12 col-md-12 col-sm-12">
         <div class="ibox float-e-margins">
             <div class="ibox-title fontcolor" id="probehandle" style="padding-bottom: 0px !important;">
-                <a href="../../cem/probe/download">
-                    <button type="button" class="btn btn-sm btn-success"><span
-                            class="glyphicon glyphicon-ok"></span>批量确认
-                    </button>
-                </a>
+                <button type="button" class="btn btn-sm btn-success"><span
+                        class="glyphicon glyphicon-ok"></span>批量确认
+                </button>
                 <p id="flip" style="position:relative; left:45%;" class="glyphicon glyphicon-menu-up" onClick="toggle1('searchbox')"></p>
             </div>
             <div class="ibox-content">
@@ -131,6 +129,100 @@
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
+</div>
+
+<!-- 详情模态框（Modal） -->
+<div class="modal fade" id="myModal_update" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" style="width: 700px"> <!--修改bootstrap modal模态框的宽度-->
+        <div class="modal-content">
+            <div class="modal-header" style="">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h3 class="modal-title myModalLabel">详细信息</h3>
+            </div>
+            <div class="modal-body" style="padding: 0px 30px 0px 30px !important;">
+                <div class="row">
+                    <form class="form-horizontal" id="probeform_data" role="form">
+                        <div class="form-group row">
+                            <label for="id"
+                                   class="col-lg-2 col-md-2 col-sm-2 input-label form_border"
+                                   style="display: none">id:</label>
+                            <div class="col-lg-2 col-md-2 col-sm-2 "
+
+                                 style="display: none">
+                                <input type="text" class="form-control" id="id" name="id"
+                                       placeholder="请输入id">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="type"
+                                   class="col-lg-3 col-md-3 col-sm-3 input-label form_border">告警类型:</label>
+                            <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                <input type="text" class="form-control" id="type" name="type"
+                                       readonly="readonly" unselectable='on'>
+                            </div>
+                            <label for="level"
+                                   class="col-lg-3 col-md-3 col-sm-3 input-label form_border">告警级别:</label>
+                            <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                <input type="text" class="form-control" id="level" name="level"
+                                       readonly="readonly" unselectable='on'>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="status"
+                                   class="col-lg-3 col-md-3 col-sm-3 input-label form_border">告警状态:</label>
+                            <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                <input type="text" class="form-control" id="status" name="status"
+                                       readonly="readonly" unselectable='on'>
+                            </div>
+                            <label for="probeName"
+                                   class="col-lg-3 col-md-3 col-sm-3 input-label form_border">探针名称:</label>
+                            <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                <input type="text" class="form-control" id="probeName" name="probeName"
+                                       readonly="readonly" unselectable='on'>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="targetName"
+                                   class="col-lg-3 col-md-3 col-sm-3 input-label form_border">测试目标:</label>
+                            <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                <input type="text" class="form-control" id="targetName" name="targetName"
+                                       readonly="readonly" unselectable='on'>
+                            </div>
+                            <label for="serviceType"
+                                   class="col-lg-3 col-md-3 col-sm-3 input-label form_border">子业务类型:</label>
+                            <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                <input type="text" class="form-control" id="serviceType" name="serviceType"
+                                       readonly="readonly" unselectable='on'>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="recordTime"
+                                   class="col-lg-3 col-md-3 col-sm-3 input-label form_border">记录时间:</label>
+                            <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                <input type="text" class="form-control" id="recordTime" name="recordTime"
+                                       readonly="readonly" unselectable='on'>
+                            </div>
+                        </div>
+
+                        <!--unselectable属性解决IE鼠标光标聚焦问题-->
+
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer" style="">
+                <button type="button" class="btn btn-success" data-dismiss="modal">确定</button>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 

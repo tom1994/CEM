@@ -53,6 +53,96 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
     return o;
 }
 
+/*告警列表确定功能*/
+function operate_this (obj) {     /*监听修改触发事件*/
+    operate_data_id = parseInt(obj.id);
+    /*获取当前行探针数据id*/
+    console.log(operate_data_id);
+    $.ajax({
+        type: "POST", /*GET会乱码*/
+        url: "../../alarmrecord/operate/"+operate_data_id,
+        cache: false,  //禁用缓存
+        dataType: "json",
+        // contentType: "application/json", /*必须要,不可少*/
+        success: function (result) {
+            alerttable.redraw();
+        }
+    });
+
+}
+
+/*告警列表详情功能*/
+function update_this (obj) {     /*监听修改触发事件*/
+    update_data_id = parseInt(obj.id);
+    /*获取当前行探针数据id*/
+    console.log(update_data_id);
+    status = 1;      /*状态1表示修改*/
+    var forms = $('#probeform_data  .form-control');
+    /*去除只读状态*/
+    //$('#probeform_data input[type=text]').prop("readonly", false);
+
+    $.ajax({
+        type: "POST", /*GET会乱码*/
+        url: "../../alarmrecord/detail/"+update_data_id,
+        cache: false,  //禁用缓存
+        dataType: "json",
+        // contentType: "application/json", /*必须要,不可少*/
+        success: function (result) {
+            console.log(result);
+            forms[0].value = result.alarm.id;
+            forms[1].value = st.get(result.alarm.type);
+            forms[2].value = le.get(result.alarm.level);
+            forms[3].value = tus.get(result.alarm.status);
+            forms[4].value = result.alarm.probeName;
+            forms[5].value = result.alarm.targetName;
+            forms[6].value = result.alarm.dataName;
+            forms[7].value = result.alarm.recordTime;
+        }
+    });
+    probeform_data.modaltitle = "详细信息";
+    /*修改模态框标题*/
+    $('#myModal_update').modal('show');
+}
+
+
+
+/*选中表格事件*/
+$(document).ready(function () {
+    $(".list td").slice(14).each(function(){    //操作列取消选中状态
+        $('#alert_table tbody').slice(8).on('click', 'tr', function () {   /*表格某一行选中状态*/
+            if ($(this).hasClass('selected')) {
+                $(this).removeClass('selected');
+                $(this).find("input:checkbox").prop("checked", false);
+                /*prop可以,attr会出错*/
+            }
+            else {
+                /*vm.dtHandle.$('tr.selected').removeClass('selected');*/
+                /*只能选中一行*/
+                $(this).addClass('selected');
+                $(this).find("input:checkbox").prop("checked", true);
+            }
+        });
+    });
+
+    $('#checkAll').on('click', function () {
+        if (this.checked) {
+            $("input[name='selectFlag']:checkbox").each(function () { //遍历所有的name为selectFlag的 checkbox
+                $(this).prop("checked", true);
+                $(this).closest('tr').addClass('selected');
+                /*取得最近的tr元素*/
+            })
+        } else {   //反之 取消全选
+            $("input[name='selectFlag']:checkbox").each(function () { //遍历所有的name为selectFlag的 checkbox
+                $(this).prop("checked", false);
+                $(this).closest('tr').removeClass('selected');
+                /*取得最近的tr元素*/
+
+            })
+        }
+    })
+
+});
+
 
 
 // 告警记录列表
@@ -157,8 +247,8 @@ var alerttable = new Vue({
                             row.push(tus.get(item.status));
                             row.push(item.probeName);
                             row.push(item.recordTime);
-                            row.push('<a class="fontcolor" onclick="" id='+item.id+'>确定</a>&nbsp;' +
-                                '<a class="fontcolor" onclick="" id='+item.id+'>详情</a>'); //Todo:完成详情与诊断
+                            row.push('<a class="fontcolor" onclick="operate_this(this)" id='+item.id+'>确定</a>&nbsp;' +
+                                '<a class="fontcolor" onclick="update_this(this)" id='+item.id+'>详情</a>'); //Todo:完成详情与诊断
                             rows.push(row);
                         });
                         returnData.data = rows;
@@ -166,7 +256,7 @@ var alerttable = new Vue({
                         //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);
-                        $("#alert_table_table").colResizable({
+                        $("#alert_table").colResizable({
                             liveDrag:true,
                             gripInnerHtml:"<div class='grip'></div>",
                             draggingClass:"dragging",
@@ -208,3 +298,7 @@ function toggle1(param){
     }
     $("#"+param).toggle();
 }
+
+$(document).ready(function () {
+    $("#myModal_update").draggable();//为模态对话框添加拖拽
+})

@@ -25,6 +25,8 @@ public interface AlarmRecordService {
 	void save(AlarmRecordEntity alarmRecord);
 	
 	void update(AlarmRecordEntity alarmRecord);
+
+	void operate(Integer id);
 	
 	void delete(Integer id);
 	

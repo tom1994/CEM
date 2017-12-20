@@ -15,4 +15,5 @@ import java.util.Map;
  */
 public interface AlarmRecordDao extends BaseDao<AlarmRecordEntity> {
     List<AlarmRecordEntity> queryAlarmRecordList(Map<String, Object> map);
+    void operate(Integer id);
 }

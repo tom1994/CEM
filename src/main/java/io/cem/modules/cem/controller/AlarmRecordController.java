@@ -64,8 +64,21 @@ public class AlarmRecordController {
 		PageUtils pageUtil = new PageUtils(probeList, total, limit, page);
 		return R.ok().put("page", pageUtil);
 	}
-	
-	
+
+	/**
+	 * 详细信息
+	 */
+	@RequestMapping("/detail/{id}")
+	@RequiresPermissions("alarmrecord:detail")
+	public R detail(@PathVariable("id") Integer id){
+//		ProbeEntity probeList = probeService.queryDetail(id);
+		AlarmRecordEntity alarmList = alarmRecordService.queryObject(id);
+		System.out.println(alarmList);
+		return R.ok().put("alarm", alarmList);
+	}
+
+
+
 	/**
 	 * 信息
 	 */
@@ -98,6 +111,18 @@ public class AlarmRecordController {
 		
 		return R.ok();
 	}
+
+	/**
+	 * 修改状态
+	 */
+	@RequestMapping("/operate/{id}")
+	@RequiresPermissions("alarmrecord:operate")
+	public R update(@PathVariable("id") Integer id){
+		alarmRecordService.operate(id);
+
+		return R.ok();
+	}
+
 	
 	/**
 	 * 删除
