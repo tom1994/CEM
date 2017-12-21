@@ -1,11 +1,217 @@
 <!DOCTYPE html>
 <html lang="en">
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    #parse("cemHeader.html")  <!--导入CSS和js文件-->
+    <link href="${rc.contextPath}/statics/css/formStyle.css" rel="stylesheet">
     <meta charset="UTF-8">
-    <title>Title</title>
-    <h>数据统计</h>
+    <title>数据统计</title>
 </head>
 <body>
+
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="ibox float-e-margins">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content" style="padding-bottom: 0 !important;">
+                            <div class="row" id="searchbox" style="border: none !important;">
+
+                                <form class="col-lg-9 col-md-19 col-sm-9 form-horizontal" id="resultsearch"
+                                      role="form">
+                                    <div class="form-group row">
+                                        <div class="input-group searchspan">
+                                            <span class="searchname" title="业务类型" style="width: 60px">业务类型</span>
+                                            <select id="selectservice" class="form-control" name="service_type"
+                                                    style="width: 150px" v-on:change="servicechange()">
+                                                <option value=""></option>
+                                                <optgroup label="网络连通性测试">
+                                                    <option value="1">PING(ICMP ECHO)</option>
+                                                    <option value="2">PING(TCP ECHO)</option>
+                                                    <option value="3">PING(UDP ECHO)</option>
+                                                    <option value="4">Trace Route(ICMP)</option>
+                                                    <option value="5">Trace Route(UDP)</option>
+                                                </optgroup>
+                                                <optgroup label="网络层质量测试">
+                                                    <option value="10">SLA(TCP)</option>
+                                                    <option value="11">SLA(UDP)</option>
+                                                    <option value="12">ADSL接入</option>
+                                                    <option value="13">DHCP</option>
+                                                    <option value="14">DNS</option>
+                                                    <option value="15">Radius认证</option>
+                                                </optgroup>
+                                                <optgroup label="网页浏览类测试">
+                                                    <option value="20">WEB页面访问</option>
+                                                </optgroup>
+                                                <optgroup label="文件下载类测试">
+                                                    <option value="30">WEB下载</option>
+                                                    <option value="31">FTP下载</option>
+                                                    <option value="32">FTP上传</option>
+                                                </optgroup>
+                                                <optgroup label="在线视频类测试">
+                                                    <option value="40">在线视频</option>
+                                                </optgroup>
+                                                <optgroup label="在线游戏类测试">
+                                                    <option value="50">网络游戏</option>
+                                                </optgroup>
+                                            </select>
+                                        </div>
+
+                                        <div class="input-group searchspan">
+                                            <span class="searchname" title="测试任务" style="width: 60px">测试任务</span>
+                                            <select id="selecttask" class="form-control selectdata" name="task_id" style="width: 150px">
+                                                <option value=""></option>
+                                                <option v-for="item in tasks"
+                                                        v-bind:value="item.message.id">
+                                                    {{item.message.taskName}}
+                                                </option>
+                                            </select>
+                                        </div>
+
+                                        <div class="input-group searchspan">
+                                            <span class="searchname" title="测试目标" style="width: 60px">测试目标</span>
+                                            <select id="selecttarget" class="form-control selectdata" name="target_id"
+                                                    style="width: 150px">
+                                                <option value=""></option>
+                                                <option v-for="item in targets"
+                                                        v-bind:value="item.message.id">
+                                                    {{item.message.targetName}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="input-group searchspan">
+                                            <span class="searchname" title="地市" style="width: 60px">地市</span>
+                                            <select id="selectcity" class="form-control" name="city_id"
+                                                    v-on:change="citychange()" style="width: 110px">
+                                                <option value=""></option>
+                                                <option v-for="item in cities"
+                                                        v-bind:value="item.message.cityId">{{ item.message.cityName }}
+                                                </option>
+                                                <!--<option v-for="pitem in parray" v-bind:value="pitem.Id">{{ pitem.Name }}-->
+                                            </select>
+                                        </div>
+                                        <div class="input-group searchspan">
+                                            <span class="searchname" title="区县" style="width: 60px">区县</span>
+                                            <select id="selectarea" class="form-control " name="county_id"
+                                                    v-on:change="areachange()" style="width: 110px">
+                                                <option value=""></option>
+                                                <option v-for="item in areas"
+                                                        v-bind:value="item.message.countyId">
+                                                    {{item.message.countyName}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="input-group searchspan">
+                                            <span class="searchname" title="探针名" style="width: 60px">探针名</span>
+                                            <select id="selectprobe" class="form-control selectdata" name="probe_id"
+                                                    style="width: 110px">
+                                                <option value=""></option>
+                                                <option v-for="item in probeNames"
+                                                        v-bind:value="item.message.id">
+                                                    {{item.message.name}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+
+                                        <div class="input-group searchspan">
+                                            <span class="searchname" title="日期" style="width: 60px">起始时间</span>
+                                            <input type="text" id="start_date" class="form-control selectdata"
+                                                   name="startDate"
+                                                   style="width: 150px"
+                                                   value="">
+                                        </div>
+
+                                        <div class="input-group searchspan">
+                                            <span class="searchname" title="日期" style="width: 60px">结束时间</span>
+                                            <input type="text" id="terminal_date" class="form-control selectdata"
+                                                   name="terminalDate"
+                                                   style="width: 150px"
+                                                   value="">
+                                        </div>
+
+                                    </div>
+
+                                </form>
+
+                                <div class="col-lg-3 col-md-3 col-sm-3 pull-left"
+                                     style="text-align:center;height:50px;position: relative;" id="search">
+                                    <button type="button" class="btn btn-sm btn-success"
+                                            style="margin-right: 5px;position: relative;top: 50%;"
+                                            v-on:click="resultListsearch">开始统计
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" id="result_table">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title fontcolor" id="resulthandle" style="padding-bottom: 0px !important;">
+                            <button type="button" class="btn btn-sm btn-success" v-on:click="toExcel(recordtag)">
+                                <span class="glyphicon glyphicon-open"></span>导出
+                            </button>
+                            <p id="flip" style="position:relative; left:45%;" class="glyphicon glyphicon-menu-up" onClick="toggle1('searchbox')"></p>
+                        </div>
+                        <div class="record-table ibox-content service_unselected" id="ping_record">
+                            <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                                <table  class="table table-bordered " id="pingdata_table" ></table>
+                            </div>
+                        </div>
+                        <div class="record-table ibox-content service_unselected" id="tracert_record">
+                            <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                                <table  class="table table-bordered " id="tracertdata_table" ></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script type="text/javascript" src="${rc.contextPath}/statics/js/modules/report/dataStatistic.js?_${date.systemTime}"></script>
+
+<script>
+    $('#start_date').flatpickr({
+        enableTime: true,
+        dateFormat: "Y-m-d H:i",
+        time_24hr: true
+    });
+</script>
+
+<script>
+    $('#terminal_date').flatpickr({
+        enableTime: true,
+        dateFormat: "Y-m-d H:i",
+        time_24hr: true
+    });
+</script>
+
+<script type="text/javascript">
+    //参数para1：希望隐藏元素的id值
+    function toggle1(param){
+        if ($("#flip").attr("class")=="glyphicon glyphicon-menu-up")
+        {
+            $("#flip").attr("class","glyphicon glyphicon-menu-down");
+        }
+        else
+        {
+            $("#flip").attr("class","glyphicon glyphicon-menu-up");
+        }
+        $("#"+param).toggle();
+    }
+</script>
 
 </body>
 </html>

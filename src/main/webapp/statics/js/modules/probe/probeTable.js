@@ -21,6 +21,7 @@ var probedata_handle = new Vue({
             dataType: "json",
             /* contentType:"application/json",  /!*必须要,不可少*!/*/
             success: function (result) {
+                console.log(result);
                 for(var i=0;i<result.page.list.length;i++){
                     cityNames[i] = {message: result.page.list[i]}
                 }

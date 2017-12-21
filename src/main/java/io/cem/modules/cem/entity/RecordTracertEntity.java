@@ -20,24 +20,40 @@ public class RecordTracertEntity implements Serializable {
 	private Integer id;
 	//探针ID
 	private Integer probeId;
+	//探针名称
+	private String probeName;
 	//探针端口
 	private String port;
 	//任务ID
 	private Integer taskId;
-	//子业务类型
+	//任务名称
+	private String taskName;
+	//子业务类型代号
 	private Integer serviceType;
-	//任务类型
+	//子业务类型
+	private String servicetypeName;
+	//任务类型代号
 	private Integer taskType;
-	//测试目标类型
+	//任务类型
+	private String tasktypeName;
+	//测试目标类型代号
 	private Integer targetType;
+	//测试目标类型
+	private String targettypeName;
 	//测试目标ID
 	private Integer targetId;
-	//测试目标IP
+	//测试目标名称
+	private String targetName;
+	//测试目标IP代号
 	private Integer targetIp;
+	//测试目标IP
+	private String targetipName;
 	//测试目标归属地
 	private String targetLoc;
-	//测试结果
+	//测试结果代号
 	private Integer state;
+	//测试结果
+	private String stateName;
 	//记录日期
 	private Date recordDate;
 	//记录时间
@@ -56,6 +72,8 @@ public class RecordTracertEntity implements Serializable {
 	private BigDecimal jitterVar;
 	//丢包率
 	private BigDecimal lossRate;
+	//单跳指标记录
+	private String hopRecord;
 	//备注
 	private String remark;
 
@@ -83,6 +101,13 @@ public class RecordTracertEntity implements Serializable {
 	public Integer getProbeId() {
 		return probeId;
 	}
+	public String getProbeName() {
+		return probeName;
+	}
+
+	public void setProbeName(String probeName) {
+		this.probeName = probeName;
+	}
 	/**
 	 * 设置：探针端口
 	 */
@@ -107,6 +132,13 @@ public class RecordTracertEntity implements Serializable {
 	public Integer getTaskId() {
 		return taskId;
 	}
+	public String getTaskName() {
+		return taskName;
+	}
+
+	public void setTaskName(String taskName) {
+		this.taskName = taskName;
+	}
 	/**
 	 * 设置：子业务类型
 	 */
@@ -118,6 +150,12 @@ public class RecordTracertEntity implements Serializable {
 	 */
 	public Integer getServiceType() {
 		return serviceType;
+	}
+	public String getServicetypeName() {
+		return servicetypeName;
+	}
+	public void setServicetypeName(String servicetypeName) {
+		this.servicetypeName = servicetypeName;
 	}
 	/**
 	 * 设置：任务类型
@@ -131,6 +169,13 @@ public class RecordTracertEntity implements Serializable {
 	public Integer getTaskType() {
 		return taskType;
 	}
+	public String getTasktypeName() {
+		return tasktypeName;
+	}
+
+	public void setTasktypeName(String tasktypeName) {
+		this.tasktypeName = tasktypeName;
+	}
 	/**
 	 * 设置：测试目标类型
 	 */
@@ -142,6 +187,13 @@ public class RecordTracertEntity implements Serializable {
 	 */
 	public Integer getTargetType() {
 		return targetType;
+	}
+	public String getTargettypeName() {
+		return targettypeName;
+	}
+
+	public void setTargettypeName(String targettypeName) {
+		this.targettypeName = targettypeName;
 	}
 	/**
 	 * 设置：测试目标ID
@@ -155,6 +207,13 @@ public class RecordTracertEntity implements Serializable {
 	public Integer getTargetId() {
 		return targetId;
 	}
+	public String getTargetName() {
+		return targetName;
+	}
+
+	public void setTargetName(String targetName) {
+		this.targetName = targetName;
+	}
 	/**
 	 * 设置：测试目标IP
 	 */
@@ -166,6 +225,13 @@ public class RecordTracertEntity implements Serializable {
 	 */
 	public Integer getTargetIp() {
 		return targetIp;
+	}
+	public String getTargetipName() {
+		return targetipName;
+	}
+
+	public void setTargetipName(String targetipName) {
+		this.targetipName = targetipName;
 	}
 	/**
 	 * 设置：测试目标归属地
@@ -190,6 +256,13 @@ public class RecordTracertEntity implements Serializable {
 	 */
 	public Integer getState() {
 		return state;
+	}
+	public String getStateName() {
+		return stateName;
+	}
+
+	public void setStateName(String stateName) {
+		this.stateName = stateName;
 	}
 	/**
 	 * 设置：记录日期
@@ -298,6 +371,18 @@ public class RecordTracertEntity implements Serializable {
 	 */
 	public BigDecimal getLossRate() {
 		return lossRate;
+	}
+	/**
+	 * 获取：单跳指标记录
+	 */
+	public String getHopRecord() {
+		return hopRecord;
+	}
+	/**
+	 * 设置：单跳指标记录
+	 */
+	public void setHopRecord(String hopRecord) {
+		this.hopRecord = hopRecord;
 	}
 	/**
 	 * 设置：备注

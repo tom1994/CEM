@@ -1,8 +1,12 @@
 package io.cem.modules.cem.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.alibaba.fastjson.JSONObject;
+import io.cem.common.exception.RRException;
+import io.cem.common.utils.JSONUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,15 +40,28 @@ public class RecordPingController {
 	 */
 	@RequestMapping("/list")
 	@RequiresPermissions("recordping:list")
-	public R list(@RequestParam Map<String, Object> params){
-		//查询列表数据
-        Query query = new Query(params);
-
-		List<RecordPingEntity> recordPingList = recordPingService.queryList(query);
-		int total = recordPingService.queryTotal(query);
-		
-		PageUtils pageUtil = new PageUtils(recordPingList, total, query.getLimit(), query.getPage());
-		
+	public R list(String resultdata, Integer page, Integer limit) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		JSONObject resultdata_jsonobject = JSONObject.parseObject(resultdata);
+		try {
+			map.putAll(JSONUtils.jsonToMap(resultdata_jsonobject));
+		} catch (RuntimeException e) {
+			throw new RRException("内部参数错误，请重试！");
+		}
+		int total = 0;
+		if(page==null) {              /*没有传入page,则取全部值*/
+			map.put("offset", null);
+			map.put("limit", null);
+			page = 0;
+			limit = 0;
+		}else {
+			map.put("offset", (page - 1) * limit);
+			map.put("limit", limit);
+			total = recordPingService.queryTotal(map);
+		}
+		List<RecordPingEntity> resultList = recordPingService.queryPingList(map);
+		System.out.println(resultList);
+		PageUtils pageUtil = new PageUtils(resultList, total, limit, page);
 		return R.ok().put("page", pageUtil);
 	}
 	
@@ -92,5 +109,5 @@ public class RecordPingController {
 		
 		return R.ok();
 	}
-	
+
 }

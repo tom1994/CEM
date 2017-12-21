@@ -7,15 +7,23 @@
     <resultMap type="io.cem.modules.cem.entity.RecordTracertEntity" id="recordTracertMap">
         <result property="id" column="id"/>
         <result property="probeId" column="probe_id"/>
+		<result property="probeName" column="probe_name"/>
         <result property="port" column="port"/>
         <result property="taskId" column="task_id"/>
+		<result property="taskName" column="task_name"/>
         <result property="serviceType" column="service_type"/>
+		<result property="servicetypeName" column="servicetype_name"/>
         <result property="taskType" column="task_type"/>
+		<result property="tasktypeName" column="tasktype_name"/>
         <result property="targetType" column="target_type"/>
+		<result property="targettypeName" column="targettype_name"/>
         <result property="targetId" column="target_id"/>
+		<result property="targetName" column="target_name"/>
         <result property="targetIp" column="target_ip"/>
+		<result property="targetipName" column="targetip_name"/>
         <result property="targetLoc" column="target_loc"/>
         <result property="state" column="state"/>
+		<result property="stateName" column="state_name"/>
         <result property="recordDate" column="record_date"/>
         <result property="recordTime" column="record_time"/>
         <result property="delay" column="delay"/>
@@ -25,6 +33,7 @@
         <result property="jitterStd" column="jitter_std"/>
         <result property="jitterVar" column="jitter_var"/>
         <result property="lossRate" column="loss_rate"/>
+		<result property="hopRecord" column="hop_record"/>
         <result property="remark" column="remark"/>
     </resultMap>
 
@@ -46,7 +55,47 @@
 			limit #{offset}, #{limit}
 		</if>
 	</select>
-	
+
+	<!--根据条件查询测试结果-->
+	<select id="queryTracertList" resultType="io.cem.modules.cem.entity.RecordTracertEntity">
+		select record_tracert.*,
+		probe.probe_name AS probe_name,
+		task.task_name AS task_name,
+		target.target_name AS target_name,
+		target.value AS targetip_name,
+		a.data_name AS tasktype_name,
+		b.data_name AS targettype_name,
+		c.data_name AS state_name,
+		d.data_name AS servicetype_name
+		FROM record_tracert
+		LEFT JOIN probe
+		ON probe.id = record_tracert.probe_id
+		LEFT JOIN task
+		ON task.id = record_tracert.task_id
+		LEFT JOIN target
+		ON target.id = record_tracert.target_id
+		LEFT JOIN dic_data a
+		ON (a.dic_type_id = 6 AND record_tracert.task_type = a.data_id)
+		LEFT JOIN dic_data b
+		ON (b.dic_type_id = 8 AND record_tracert.target_type = b.data_id)
+		LEFT JOIN dic_data c
+		ON (c.dic_type_id = 9 AND record_tracert.state = c.data_id)
+		LEFT JOIN dic_data d
+		ON (d.dic_type_id = 5 AND record_tracert.service_type = d.data_id)
+		<!-- WHERE (record_date BETWEEN #{startDate} AND #{terminalDate}) AND (record_time BETWEEN #{startTime} AND #{terminalTime}) AND task_id = #{taskId} AND target_id = #{targetId} AND probe_id = #{probeId}-->
+		<!--暂时不判断时间，只根据日期筛选-->
+		WHERE record_date BETWEEN #{startDate} AND #{terminalDate}
+		<if test="task_id != null and task_id != ''">
+			AND task_id = #{task_id}
+		</if>
+		<if test="target_id != null and target_id != ''">
+			AND target_id = #{target_id}
+		</if>
+		<if test="probe_id != null and probe_id != ''">
+			AND probe_id = #{probe_id}
+		</if>
+	</select>
+
  	<select id="queryTotal" resultType="int">
 		select count(*) from record_tracert 
 	</select>

@@ -19,7 +19,7 @@ var spdata_handle = new Vue({
             /*去除只读状态*/
             $('#spform_data select').prop("disabled", false);
 
-            for (var i = 0; i < 4; i++) {
+            for (var i = 0; i <5; i++) {
                 forms[i].value = ""
             }
             spform_data.modaltitle = "新增调度策略";
@@ -285,8 +285,7 @@ var sptable = new Vue({
         headers: [
             {title: '<div style="width:15px"></div>'},
             {title: '<div style="width:142px">策略名称</div>'},
-            {title: '<div style="width:100px">开始日期</div>'},
-            {title: '<div style="width:100px">结束日期</div>'},
+            {title: '<div style="width:180px">起止日期</div>'},
             {title: '<div style="width:160px">时间间隔(分钟)</div>'},
             {title: '<div style="width:142px">备注</div>'},
             {title: '<div style="width:100px">创建时间</div>'},
@@ -375,12 +374,13 @@ var sptable = new Vue({
                         let rows = [];
                         var i = param.start+1;
                         result.page.list.forEach(function (item) {
+                            console.log(item.scheduler);
+                            var scheduler = item.scheduler;
                             let row = [];
                             row.push(i++);
                             row.push(item.spName);
-                            row.push((item.startDate).substr(0,10));
-                            row.push((item.endDate).substr(0,10));
-                            row.push(item.interval);
+                            row.push((item.startDate).substr(0,10)+'-'+(item.endDate).substr(0,10));
+                            row.push((JSON.parse(scheduler)).interval);
                             row.push(item.remark);
                             row.push(item.createTime);
                             row.push('<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>');
@@ -404,3 +404,13 @@ var sptable = new Vue({
         });
     }
 });
+
+var changescale = new Vue({
+    "el":'#changescale',
+    data:{},
+    methods:{
+        changetime: function(){
+
+        }
+    }
+})

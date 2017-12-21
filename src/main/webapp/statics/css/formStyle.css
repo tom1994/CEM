@@ -367,6 +367,8 @@ input:focus {
     width:100%;
 }
 
+/*临时建立的类，为方便提取筛选测试结果的所需条件*/
+.selectdata {}
 
 
 

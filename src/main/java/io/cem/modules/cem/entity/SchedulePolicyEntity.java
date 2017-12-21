@@ -19,7 +19,7 @@ public class SchedulePolicyEntity implements Serializable {
 	private Integer id;
 	//名称
 	private String spName;
-	//Cron表达式
+	//JSON字符串
 	private String scheduler;
 	//备注
 	private String remark;
@@ -27,8 +27,6 @@ public class SchedulePolicyEntity implements Serializable {
 	private Date startDate;
 	//结束日期
 	private Date endDate;
-	//时间间隔
-	private Integer interval;
 	//创建时间
 	private Date createTime;
 
@@ -57,13 +55,13 @@ public class SchedulePolicyEntity implements Serializable {
 		return spName;
 	}
 	/**
-	 * 设置：Cron表达式
+	 * 设置：
 	 */
 	public void setScheduler(String scheduler) {
 		this.scheduler = scheduler;
 	}
 	/**
-	 * 获取：Cron表达式
+	 * 获取：
 	 */
 	public String getScheduler() {
 		return scheduler;
@@ -115,18 +113,6 @@ public class SchedulePolicyEntity implements Serializable {
 	 */
 	public Date getCreateTime() {
 		return createTime;
-	}
-	/**
-	 * 设置：时间间隔
-	 */
-	public void setInterval(Integer interval) {
-		this.interval = interval;
-	}
-	/**
-	 * 获取：时间间隔
-	 */
-	public Integer getInterval() {
-		return interval;
 	}
 
 }

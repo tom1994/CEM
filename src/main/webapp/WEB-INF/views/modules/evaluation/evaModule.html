@@ -19,202 +19,199 @@
             <div class="col-lg-12 col-md-12 col-sm-12" style="padding-right: 30px;padding-left: 30px;">
                 <div class="wrapper-module">
                     <div id="weightset">
-                        <!--网络连通性测试业务-->
                         <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-6">
-                            <div class="wrapper-block wrapper_border">
-                                <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
-                                    <span class="modulefont">网络连通性测试业务</span>
-                                    <div class="tools">
-                                        <label for="connectionweight" style="font-size:15px;color: white">权重：</label>
-                                        <input class="superservice-input" type="text" id="connectionweight" name="connectionweight" size="3">
-                                               <!--onkeyup="if(! /^d*(?:.d{0,2})?$/.test(this.value)) {this.value='';}"-->
+                            <!--网络连通性测试业务-->
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="wrapper-block wrapper_border">
+                                    <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
+                                        <span class="modulefont">网络连通性测试业务</span>
+                                        <div class="tools">
+                                            <label for="connectionweight" style="font-size:15px;color: white">权重：</label>
+                                            <input class="superservice-input" type="text" id="connectionweight" name="connectionweight" size="3">
+                                                   <!--onkeyup="if(! /^d*(?:.d{0,2})?$/.test(this.value)) {this.value='';}"-->
+                                        </div>
+                                    </div>
+
+                                    <div class="wrapper-block" style="font-size:15px !important">
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <a class="service-font" v-on:click="ping_icmpSet">PING(ICMP Echo):</a>
+                                                <input class="inputset" type="text" id="ping_icmp" name="ping_icmp" size="3">
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <a class="service-font" v-on:click="ping_tcpSet">PING(TCP Echo):</a>
+                                                <input class="inputset" type="text" id="ping_tcp" name="ping_tcp" size="3">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <a class="service-font" v-on:click="ping_udpSet">PING(UDP Echo):</a>
+                                                <input class="inputset" type="text" id="ping_udp" name="ping_udp" size="3">
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <a class="service-font" v-on:click="tr_tcpSet">Trace Route(TCP):</a>
+                                                <input class="inputset" type="text" id="tr_tcp" name="tr_tcp" size="3">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <a class="service-font" v-on:click="tr_icmpSet">Trace Route(ICMP):</a>
+                                                <input class="inputset" type="text" id="tr_icmp" name="tr_icmp" size="3">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+                            </div>
 
-                                <div class="wrapper-block" style="font-size:15px !important">
-                                    <div class="row">
-                                        <div class="col-lg-6 col-md-6 col-sm-6">
-                                            <a class="service-font" v-on:click="ping_icmpSet">PING(ICMP Echo):</a>
-                                            <input class="inputset" type="text" id="ping_icmp" name="ping_icmp" size="3">
-                                        </div>
-                                        <div class="col-lg-6 col-md-6 col-sm-6">
-                                            <a class="service-font" v-on:click="ping_tcpSet">PING(TCP Echo):</a>
-                                            <input class="inputset" type="text" id="ping_tcp" name="ping_tcp" size="3">
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-6 col-md-6 col-sm-6">
-                                            <a class="service-font" v-on:click="ping_udpSet">PING(UDP Echo):</a>
-                                            <input class="inputset" type="text" id="ping_udp" name="ping_udp" size="3">
-                                        </div>
-                                        <div class="col-lg-6 col-md-6 col-sm-6">
-                                            <a class="service-font" v-on:click="tr_tcpSet">Trace Route(TCP Echo):</a>
-                                            <input class="inputset" type="text" id="tr_tcp" name="tr_tcp" size="3">
+                            <!--网络层质量测试业务-->
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="wrapper-block wrapper_border">
+                                    <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
+                                        <span class="modulefont">网络层质量测试业务</span>
+                                        <div class="tools">
+                                            <label for="qualityweight" style="font-size:15px;color: white">权重：</label>
+                                            <input class="superservice-input" type="text" id="qualityweight" name="qualityweight" size="3">
+                                                   <!--onkeyup="if(! /^d*(?:.d{0,2})?$/.test(this.value)) {this.value=this.value.replace(/[^\d]+/g,'');}"-->     <!--只能输入数字,小数点后保留两位-->
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-lg-12 col-md-12 col-sm-12">
-                                            <a class="service-font" v-on:click="tr_icmpSet">Trace Route(ICMP Echo):</a>
-                                            <input class="inputset" type="text" id="tr_icmp" name="tr_icmp" size="3">
+
+                                    <div class="wrapper-block" style="font-size:15px !important;">
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <a class="service-font" v-on:click="sla_tcpSet">SLA(TCP):</a>
+                                                <input class="inputset" type="text" id="sla_tcp" name="sla_tcp" size="3">
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <a class="service-font" v-on:click="sla_udpSet">SLA(UDP):</a>
+                                                <input class="inputset" type="text" id="sla_udp" name="sla_udp" size="3">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <a class="service-font" v-on:click="dnsSet">DNS:</a>
+                                                <input class="inputset" type="text" id="dns" name="dns" size="3">
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <a class="service-font" v-on:click="dhcpSet">DHCP:</a>
+                                                <input class="inputset" type="text" id="dhcp" name="dhcp" size="3">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <a class="service-font" v-on:click="adslSet">ADSL接入:</a>
+                                                <input class="inputset" type="text" id="adsl" name="adsl" size="3">
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <a class="service-font" v-on:click="radiusSet">Radius认证:</a>
+                                                <input class="inputset" type="text" id="radius" name="radius" size="3">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!--网络层质量测试业务-->
-                        <!--<div class="right">-->
-                        <div class="col-lg-6 col-md-6 col-sm-6">
-                            <div class="wrapper-block wrapper_border">
-                                <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
-                                    <span class="modulefont">网络层质量测试业务</span>
-                                    <div class="tools">
-                                        <label for="qualityweight" style="font-size:15px;color: white">权重：</label>
-                                        <input class="superservice-input" type="text" id="qualityweight" name="qualityweight" size="3">
-                                               <!--onkeyup="if(! /^d*(?:.d{0,2})?$/.test(this.value)) {this.value=this.value.replace(/[^\d]+/g,'');}"-->     <!--只能输入数字,小数点后保留两位-->
-                                    </div>
-                                </div>
-
-                                <div class="wrapper-block" style="font-size:15px !important;">
-                                    <div class="row">
-                                        <div class="col-lg-6 col-md-6 col-sm-6">
-                                            <a class="service-font" v-on:click="sla_tcpSet">SLA(TCP Echo):</a>
-                                            <input class="inputset" type="text" id="sla_tcp" name="sla_tcp" size="3">
-                                        </div>
-                                        <div class="col-lg-6 col-md-6 col-sm-6">
-                                            <a class="service-font" v-on:click="sla_udpSet">SLA(UDP Echo):</a>
-                                            <input class="inputset" type="text" id="sla_udp" name="sla_udp" size="3">
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-6 col-md-6 col-sm-6">
-                                            <a class="service-font" v-on:click="dnsSet">DNS:</a>
-                                            <input class="inputset" type="text" id="dns" name="dns" size="3">
-                                        </div>
-                                        <div class="col-lg-6 col-md-6 col-sm-6">
-                                            <a class="service-font" v-on:click="dhcpSet">DHCP:</a>
-                                            <input class="inputset" type="text" id="dhcp" name="dhcp" size="3">
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-6 col-md-6 col-sm-6">
-                                            <a class="service-font" v-on:click="adslSet">ADSL接入:</a>
-                                            <input class="inputset" type="text" id="adsl" name="adsl" size="3">
-                                        </div>
-                                        <div class="col-lg-6 col-md-6 col-sm-6">
-                                            <a class="service-font" v-on:click="radiusSet">Radius认证:</a>
-                                            <input class="inputset" type="text" id="radius" name="radius" size="3">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        </div>
-
-                        <!--文件下载类业务-->
                         <div class="row">
+                            <!--文件下载类业务-->
                             <div class="col-lg-6 col-md-6 col-sm-6">
-                            <div class="wrapper-block wrapper_border">
-                                <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
-                                    <span class="modulefont">文件下载类业务</span>
-                                    <div class="tools">
-                                        <label for="downloadweight" style="font-size:15px;color: white">权重：</label>
-                                        <input class="superservice-input" type="text" id="downloadweight" name="downloadweight" size="3">
+                                <div class="wrapper-block wrapper_border">
+                                    <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
+                                        <span class="modulefont">文件下载类业务</span>
+                                        <div class="tools">
+                                            <label for="downloadweight" style="font-size:15px;color: white">权重：</label>
+                                            <input class="superservice-input" type="text" id="downloadweight" name="downloadweight" size="3">
+                                        </div>
+                                    </div>
+
+                                    <div class="wrapper-block" style="font-size:15px !important;">
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <a class="service-font" v-on:click="ftp_uploadSet">FTP上传:</a>
+                                                <input class="inputset" type="text" id="ftp_upload" name="ftp_upload" size="3">
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <a class="service-font" v-on:click="ftp_downloadSet">FTP下载:</a>
+                                                <input class="inputset" type="text" id="ftp_download" name="ftp_download" size="3">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <a class="service-font" v-on:click="web_downloadSet">WEB下载:</a>
+                                                <input class="inputset" type="text" id="web_download" name="web_download" size="3">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+                            </div>
 
-                                <div class="wrapper-block" style="font-size:15px !important;">
-                                    <div class="row">
-                                        <div class="col-lg-6 col-md-6 col-sm-6">
-                                            <a class="service-font" v-on:click="ftp_uploadSet">FTP上传:</a>
-                                            <input class="inputset" type="text" id="ftp_upload" name="ftp_upload" size="3">
-                                        </div>
-                                        <div class="col-lg-6 col-md-6 col-sm-6">
-                                            <a class="service-font" v-on:click="ftp_downloadSet">FTP下载:</a>
-                                            <input class="inputset" type="text" id="ftp_download" name="ftp_download" size="3">
+                            <!--网页浏览类业务-->
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="wrapper-block wrapper_border">
+                                    <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
+                                        <span class="modulefont">网页浏览类业务</span>
+                                        <div class="tools">
+                                            <label for="browseweight" style="font-size:15px;color: white">权重：</label>
+                                            <input class="superservice-input" type="text" id="browseweight" name="browseweight" size="3">
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-lg-6 col-md-6 col-sm-6">
-                                            <a class="service-font" v-on:click="web_downloadSet">WEB下载:</a>
-                                            <input class="inputset" type="text" id="web_download" name="web_download" size="3">
+
+                                    <div class="wrapper-block" style="font-size:15px !important;">
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <a class="service-font" v-on:click="webpageSet">WEB页面访问:</a>
+                                                <input class="inputset" type="text" id="webpage" name="webpage" size="3" readonly="readonly">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!--网页浏览类业务-->
-                        <!--<div class="right">-->
-                            <div class="col-lg-6 col-md-6 col-sm-6">
-                            <div class="wrapper-block wrapper_border">
-                                <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
-                                    <span class="modulefont">网页浏览类业务</span>
-                                    <div class="tools">
-                                        <label for="browseweight" style="font-size:15px;color: white">权重：</label>
-                                        <input class="superservice-input" type="text" id="browseweight" name="browseweight" size="3">
-                                    </div>
-                                </div>
-
-                                <div class="wrapper-block" style="font-size:15px !important;">
-                                    <div class="row">
-                                        <div class="col-lg-6 col-md-6 col-sm-6">
-                                            <a class="service-font" v-on:click="webpageSet">WEB页面访问:</a>
-                                            <input class="inputset" type="text" id="webpage" name="webpage" size="3" readonly="readonly">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        </div>
-
-                        <!--在线视频类业务-->
                         <div class="row">
+                            <!--在线视频类业务-->
                             <div class="col-lg-6 col-md-6 col-sm-6">
-                            <div class="wrapper-block wrapper_border">
-                                <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
-                                    <span class="modulefont">在线视频类业务</span>
-                                    <div class="tools">
-                                        <label for="videoweight" style="font-size:15px;color: white">权重：</label>
-                                        <input class="superservice-input" type="text" id="videoweight" name="videoweight" size="3">
+                                <div class="wrapper-block wrapper_border">
+                                    <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
+                                        <span class="modulefont">在线视频类业务</span>
+                                        <div class="tools">
+                                            <label for="videoweight" style="font-size:15px;color: white">权重：</label>
+                                            <input class="superservice-input" type="text" id="videoweight" name="videoweight" size="3">
+                                        </div>
+                                    </div>
+
+                                    <div class="wrapper-block" style="font-size:15px !important;">
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <a class="service-font" v-on:click="videoSet">在线视频:</a>
+                                                <input class="inputset" type="text" id="video" name="video" size="3" readonly="readonly">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+                            </div>
 
-                                <div class="wrapper-block" style="font-size:15px !important;">
-                                    <div class="row">
-                                        <div class="col-lg-6 col-md-6 col-sm-6">
-                                            <a class="service-font" v-on:click="videoSet">在线视频:</a>
-                                            <input class="inputset" type="text" id="video" name="video" size="3" readonly="readonly">
+                            <!--网络游戏类业务-->
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="wrapper-block wrapper_border">
+                                    <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
+                                        <span class="modulefont">网络游戏类业务</span>
+                                        <div class="tools">
+                                            <label for="gameweight" style="font-size:15px;color: white">权重：</label>
+                                            <input class="superservice-input" type="text" id="gameweight" name="gameweight" size="3">
+                                        </div>
+                                    </div>
+
+                                    <div class="wrapper-block" style="font-size:15px !important;">
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <a class="service-font" v-on:click="gameSet">网络游戏:</a>
+                                                <input class="inputset" type="text" id="game" name="game" size="3" readonly="readonly">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        <!--网络游戏类业务-->
-                        <!--<div class="right">-->
-                            <div class="col-lg-6 col-md-6 col-sm-6">
-                            <div class="wrapper-block wrapper_border">
-                                <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
-                                    <span class="modulefont">网络游戏类业务</span>
-                                    <div class="tools">
-                                        <label for="gameweight" style="font-size:15px;color: white">权重：</label>
-                                        <input class="superservice-input" type="text" id="gameweight" name="gameweight" size="3">
-                                    </div>
-                                </div>
-
-                                <div class="wrapper-block" style="font-size:15px !important;">
-                                    <div class="row">
-                                        <div class="col-lg-6 col-md-6 col-sm-6">
-                                            <a class="service-font" v-on:click="gameSet">网络游戏:</a>
-                                            <input class="inputset" type="text" id="game" name="game" size="3" readonly="readonly">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     </div>
 
                     <div style="float: right" id="weight_handle">
@@ -618,7 +615,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                     &times;
                 </button>
-                <h3 class="modal-title myModalLabel">Trace Route(ICMP Echo)指标权重设置</h3>
+                <h3 class="modal-title myModalLabel">Trace Route(ICMP)指标权重设置</h3>
             </div>
 
             <div class="modal-body" style="padding: 0px 30px 0px 30px !important;">
@@ -742,7 +739,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                     &times;
                 </button>
-                <h3 class="modal-title myModalLabel">Trace Route(TCP Echo)指标权重设置</h3>
+                <h3 class="modal-title myModalLabel">Trace Route(TCP)指标权重设置</h3>
             </div>
 
             <div class="modal-body" style="padding: 0px 30px 0px 30px !important;">
@@ -867,7 +864,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                     &times;
                 </button>
-                <h3 class="modal-title myModalLabel">SLA(TCP Echo)指标权重设置</h3>
+                <h3 class="modal-title myModalLabel">SLA(TCP)指标权重设置</h3>
             </div>
 
             <div class="modal-body" style="padding: 0px 30px 0px 30px !important;">
@@ -1134,7 +1131,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                     &times;
                 </button>
-                <h3 class="modal-title myModalLabel">SLA(UDP Echo)指标权重设置</h3>
+                <h3 class="modal-title myModalLabel">SLA(UDP)指标权重设置</h3>
             </div>
 
             <div class="modal-body" style="padding: 0px 30px 0px 30px !important;">
