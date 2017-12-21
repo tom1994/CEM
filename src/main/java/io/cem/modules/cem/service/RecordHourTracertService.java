@@ -1,6 +1,7 @@
 package io.cem.modules.cem.service;
 
 import io.cem.modules.cem.entity.RecordHourTracertEntity;
+import io.cem.modules.cem.entity.ScoreEntity;
 
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,10 @@ public interface RecordHourTracertService {
 	List<RecordHourTracertEntity> queryList(Map<String, Object> map);
 
 	List<RecordHourTracertEntity> queryTracertList(Map<String, Object> map);
+
+	List<RecordHourTracertEntity> queryDayList(Map<String, Object> map);
+
+	List<ScoreEntity> calculateService0(List<ScoreEntity> connection,List<ScoreEntity> quality,List<ScoreEntity> broswer,List<ScoreEntity> download,List<ScoreEntity> video,List<ScoreEntity> game);
 	
 	int queryTotal(Map<String, Object> map);
 	

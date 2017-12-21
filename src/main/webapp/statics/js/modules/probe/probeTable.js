@@ -47,45 +47,6 @@ var probedata_handle = new Vue({
                 /*ajax传输*/
             }
         },
-        /*probeview: function () {     /!*查看监听事件*!/
-            var trs = $('#probe_table tbody').find('tr:has(:checked)');
-            /!*find被选中的行*!/
-            var forms = $('#probeform_data .form-control');
-            var id = trs.find("td").eq(2).text();
-            if (trs.length == 0) {
-                toastr.warning('请选择查看项目！');
-            } else if (trs.length == 1) {
-                $.ajax({
-                    type: "POST",   /!*GET会乱码*!/
-                    url: "../../cem/probe/info/"+id,
-                    cache: false,  //禁用缓存
-                    dataType: "json",
-                    /!* contentType:"application/json",  /!*必须要,不可少*!/!*!/
-                    success: function (result) {
-                        forms[0].value = result.probe.id;
-                        forms[1].value = result.probe.serialNumber;
-                        forms[2].value = result.probe.name;
-                        forms[3].value = result.probe.type;
-                        forms[4].value = result.probe.city;
-                        forms[5].value = result.probe.county;
-                        forms[6].value = result.probe.location;
-                        forms[7].value = result.probe.ipType;
-                        forms[8].value = result.probe.portIp;
-                        forms[9].value = result.probe.brasName;
-                        forms[10].value = result.probe.brasIp;
-                        forms[11].value = result.probe.brasPort;
-                    }
-                });
-                $('#probeform_data input[type=text]').prop("readonly", true);//将input元素设置为readonly
-                $('#probeform_data select').prop("disabled", true);//将select元素设置为不可变
-
-                probeform_data.modaltitle = "查看";
-                /!*修改模态框标题*!/
-                $('#myModal').modal('show');
-            } else {
-                toastr.warning('请选择一条记录再查看！');
-            }
-        },*/
         testagentListsearch: function () {   /*查询监听事件*/
             var data = getFormJson($('#probesearch'));
             /*得到查询条件*/
@@ -162,9 +123,6 @@ var search_list = new Vue({
 });
 
 
-
-
-
 var probegroupdata_handle = new Vue({
     el: '#probehandle',
     data: {},
@@ -189,33 +147,6 @@ var probegroupdata_handle = new Vue({
 
     }
 });
-var probegroupdata_handle = new Vue({
-    el: '#probehandle',
-    data: {},
-    mounted: function(){         /*动态加载测试任务组数据*/
-        $.ajax({
-            type: "POST",   /*GET会乱码*/
-            url: "../../cem/probegroup/searchlist",//Todo:改成测试任务组的list方法
-            cache: false,  //禁用缓存
-            dataType: "json",
-            /* contentType:"application/json",  /!*必须要,不可少*!/*/
-            success: function (result) {
-                for(var i=0;i<result.page.list.length;i++){
-                    probeGroupNames[i] = {message: result.page.list[i]}
-                }
-                search_data.probegroup_names = probeGroupNames;
-            }
-        });
-    },
-    methods: {
-
-
-
-    }
-});
-
-
-
 
 
 var probegroup_handle = new Vue({
@@ -436,7 +367,7 @@ function update_this (obj) {     /*监听修改触发事件*/
     /*获取当前行探针数据id*/
     console.log(update_data_id);
     status = 1;      /*状态1表示修改*/
-    var forms = $('#probeform_data  .form-control');
+    var forms = $('#probeform_data .form-control');
     /*去除只读状态*/
     //$('#probeform_data input[type=text]').prop("readonly", false);
 
@@ -445,8 +376,9 @@ function update_this (obj) {     /*监听修改触发事件*/
         url: "../../cem/probe/detail/"+update_data_id,
         cache: false,  //禁用缓存
         dataType: "json",
-        contentType: "application/json", /*必须要,不可少*/
+        // contentType: "application/json", /*必须要,不可少*/
         success: function (result) {
+            console.log(result);
             console.log("I'm here!!!!"+result.probe.type);
             forms[0].value = result.probe.id;
             forms[1].value = result.probe.name;
@@ -459,7 +391,7 @@ function update_this (obj) {     /*监听修改触发事件*/
             forms[8].value = result.probe.brasIp;
             forms[9].value = result.probe.brasPort;
             forms[10].value = result.probe.accessLayer;
-            forms[11].value = result.probe.upstream;
+            forms[11].value = result.probe.upstreamName;
             forms[12].value = result.probe.statusName;
             forms[13].value = result.probe.device;
             forms[14].value = result.probe.version;
@@ -848,19 +780,19 @@ var searchgroup_data = new Vue({
 
 /*选中表格事件*/
 $(document).ready(function () {
-    $(".list td").slice(14).each(function(){    //操作列取消选中状态
-    $('#probe_table tbody').slice(14).on('click', 'tr', function () {   /*表格某一行选中状态*/
-        if ($(this).hasClass('selected')) {
-            $(this).removeClass('selected');
-            $(this).find("input:checkbox").prop("checked", false);
-            /*prop可以,attr会出错*/
-        }
-        else {
-            /*vm.dtHandle.$('tr.selected').removeClass('selected');*/
-            /*只能选中一行*/
-            $(this).addClass('selected');
-            $(this).find("input:checkbox").prop("checked", true);
-        }
+    $(".list td").slice(14).each(function () {    //操作列取消选中状态
+        $('#probe_table tbody').slice(14).on('click', 'tr', function () {   /*表格某一行选中状态*/
+            if ($(this).hasClass('selected')) {
+                $(this).removeClass('selected');
+                $(this).find("input:checkbox").prop("checked", false);
+                /*prop可以,attr会出错*/
+            }
+            else {
+                /*vm.dtHandle.$('tr.selected').removeClass('selected');*/
+                /*只能选中一行*/
+                $(this).addClass('selected');
+                $(this).find("input:checkbox").prop("checked", true);
+            }
         });
     });
 
@@ -883,42 +815,6 @@ $(document).ready(function () {
 
 });
 
-/*选中探针组表格事件*/
-//$(document).ready(function () {
-  //  $('#group_table tbody').on('click', 'tr', function () {   /*表格某一行选中状态*/
-    //    if ($(this).hasClass('selected')) {
- //           $(this).removeClass('selected');
-  //          $(this).find("input:checkbox").prop("checked", false);
-  //          /*prop可以,attr会出错*/
-  //      }
-   //     else {
-   //         $(this).addClass('selected');
-   //         console.log('success');
-   //         $(this).find("input:checkbox").prop("checked", true);
-   //     }
-  //  });
-
-  //  $('#checkAllGroup').on('click', function () {
-  //      if (this.checked) {
-  //          $("input[name='groupselectFlag']:checkbox").each(function () { //遍历所有的name为selectFlag的 checkbox
-  //              $(this).prop("checked", true);
-  //              $(this).closest('tr').addClass('selected');
-  //              /*取得最近的tr元素*/
-  //          })
-  //      } else {   //反之 取消全选
-  //          $("input[name='groupselectFlag']:checkbox").each(function () { //遍历所有的name为selectFlag的 checkbox
-  //              $(this).prop("checked", false);
- //               $(this).closest('tr').removeClass('selected');
- //               /*取得最近的tr元素*/
-
- //           })
- //       }
- //   })
-
-//});
-
-
-
 
 
 // 探针列表
@@ -929,7 +825,7 @@ var probetable = new Vue({
             //{title: '<div style="width:16px"></div>'},
             //{title: '<div class="checkbox" style="width:16px"> <label> <input type="checkbox" id="checkAll"></label> </div>'},
             {title: '<div style="width:10px"></div>'},
-            {title: '<div class="checkbox" style="width:100%; align: center"> <label> <input type="checkbox" id="checkAll"></label> </div>'},
+            {title: '<div class="checkbox"> <label> <input type="checkbox" id="checkAll"></label> </div>'},
             //{title: '<div style=" width:0px;display:none;padding:0px">id</div>'},
             {title: '<div style="width:70px">探针名</div>'},
             {title: '<div style="width:42px">地市</div>'},
@@ -1027,14 +923,14 @@ var probetable = new Vue({
                             result.page.list.forEach(function (item) {
                                 let row = [];
                                 row.push(i++);
-                                row.push('<div class="checkbox"> <label> <input type="checkbox" id="checkALl" name="selectFlag"><div style="display: none">'+item.id+'</div></label> </div>');
+                                row.push('<div class="checkbox"> <label> <input type="checkbox" name="selectFlag"></label> </div>');
                                 //row.push('<div class="probe_id" style="display:none">'+item.id+'</div>');
                                 row.push('<a onclick="update_this(this)" id='+item.id+'><span style="color: black;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">'+item.name+'</span></a>');
                                 row.push(item.cityName);
                                 row.push(item.areaName);
                                 row.push(item.location);
                                 row.push(item.layerName);
-                                row.push(item.upstream);
+                                row.push(item.upstreamName);
                                 row.push(item.statusName);
                                 row.push(item.typeName);
                                 row.push(item.registerTime);

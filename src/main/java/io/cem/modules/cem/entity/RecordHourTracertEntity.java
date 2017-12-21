@@ -39,24 +39,33 @@ public class RecordHourTracertEntity implements Serializable {
 	//记录时间
 	private String recordTime;
 	//时延平均值
-	private BigDecimal delay;
+	private Double delay;
 	//时延标准差
-	private BigDecimal delayStd;
+	private Double delayStd;
 	//时延方差
-	private BigDecimal delayVar;
+	private Double delayVar;
 	//抖动平均值
-	private BigDecimal jitter;
+	private Double jitter;
 	//抖动标准差
-	private BigDecimal jitterStd;
+	private Double jitterStd;
 	//抖动方差
-	private BigDecimal jitterVar;
+	private Double jitterVar;
 	//丢包率
-	private BigDecimal lossRate;
+	private Double lossRate;
 	//单跳测试结果
 	private String hopRecord;
 	//备注
 	private String remark;
+	//地市名称
+	private String cityName;
+	//区县名称
+	private String areaName;
+	//探针名称
+	private String probeName;
+	//测试目标名称
+	private String targetName;
 
+	private Integer accessLayer;
 	/**
 	 * 设置：测试记录ID
 	 */
@@ -192,85 +201,85 @@ public class RecordHourTracertEntity implements Serializable {
 	/**
 	 * 设置：时延平均值
 	 */
-	public void setDelay(BigDecimal delay) {
+	public void setDelay(Double delay) {
 		this.delay = delay;
 	}
 	/**
 	 * 获取：时延平均值
 	 */
-	public BigDecimal getDelay() {
+	public Double getDelay() {
 		return delay;
 	}
 	/**
 	 * 设置：时延标准差
 	 */
-	public void setDelayStd(BigDecimal delayStd) {
+	public void setDelayStd(Double delayStd) {
 		this.delayStd = delayStd;
 	}
 	/**
 	 * 获取：时延标准差
 	 */
-	public BigDecimal getDelayStd() {
+	public Double getDelayStd() {
 		return delayStd;
 	}
 	/**
 	 * 设置：时延方差
 	 */
-	public void setDelayVar(BigDecimal delayVar) {
+	public void setDelayVar(Double delayVar) {
 		this.delayVar = delayVar;
 	}
 	/**
 	 * 获取：时延方差
 	 */
-	public BigDecimal getDelayVar() {
+	public Double getDelayVar() {
 		return delayVar;
 	}
 	/**
 	 * 设置：抖动平均值
 	 */
-	public void setJitter(BigDecimal jitter) {
+	public void setJitter(Double jitter) {
 		this.jitter = jitter;
 	}
 	/**
 	 * 获取：抖动平均值
 	 */
-	public BigDecimal getJitter() {
+	public Double getJitter() {
 		return jitter;
 	}
 	/**
 	 * 设置：抖动标准差
 	 */
-	public void setJitterStd(BigDecimal jitterStd) {
+	public void setJitterStd(Double jitterStd) {
 		this.jitterStd = jitterStd;
 	}
 	/**
 	 * 获取：抖动标准差
 	 */
-	public BigDecimal getJitterStd() {
+	public Double getJitterStd() {
 		return jitterStd;
 	}
 	/**
 	 * 设置：抖动方差
 	 */
-	public void setJitterVar(BigDecimal jitterVar) {
+	public void setJitterVar(Double jitterVar) {
 		this.jitterVar = jitterVar;
 	}
 	/**
 	 * 获取：抖动方差
 	 */
-	public BigDecimal getJitterVar() {
+	public Double getJitterVar() {
 		return jitterVar;
 	}
 	/**
 	 * 设置：丢包率
 	 */
-	public void setLossRate(BigDecimal lossRate) {
+	public void setLossRate(Double lossRate) {
 		this.lossRate = lossRate;
 	}
 	/**
 	 * 获取：丢包率
 	 */
-	public BigDecimal getLossRate() {
+	public Double getLossRate() {
 		return lossRate;
 	}
 	/**
@@ -296,5 +305,45 @@ public class RecordHourTracertEntity implements Serializable {
 	 */
 	public String getRemark() {
 		return remark;
+	}
+
+	public String getCityName() {
+		return cityName;
+	}
+
+	public void setCityName(String cityName) {
+		this.cityName = cityName;
+	}
+
+	public String getAreaName() {
+		return areaName;
+	}
+
+	public void setAreaName(String areaName) {
+		this.areaName = areaName;
+	}
+
+	public String getProbeName() {
+		return probeName;
+	}
+
+	public void setProbeName(String probeName) {
+		this.probeName = probeName;
+	}
+
+	public String getTargetName() {
+		return targetName;
+	}
+
+	public void setTargetName(String targetName) {
+		this.targetName = targetName;
+	}
+
+	public Integer getAccessLayer() {
+		return accessLayer;
+	}
+
+	public void setAccessLayer(Integer accessLayer) {
+		this.accessLayer = accessLayer;
 	}
 }

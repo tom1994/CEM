@@ -11,7 +11,6 @@
     <title>质量排名</title>
     #parse("cemHeader.html")  <!--导入CSS和js文件-->
     <link href="${rc.contextPath}/statics/css/formStyle.css" rel="stylesheet">  <!--自定义CSS-->
-    <!-- <link href="${rc.contextPath}/statics/css/components.min.css" rel="stylesheet">  -->
 </head>
 <body>
 <div class="htmleaf-container">
@@ -36,14 +35,10 @@
                                               role="form">
                                             <div class="form-group row">
                                                 <div class="input-group searchspan">
-                                                    <span class="searchname" title="选择探针"
-                                                          style="width: 80px">选择探针：</span>
-                                                </div>
-                                                <div class="input-group searchspan">
                                                     <span class="searchname" title="地市" style="width: 40px">地市</span>
                                                     <select id="selectcity" class="form-control" name="city_id"
                                                             v-on:change="citychange()" style="width: 110px">
-                                                        <option value="1">所有地市</option>
+                                                        <option value="">所有地市</option>
                                                         <option v-for="item in cities"
                                                                 v-bind:value="item.message.cityId">{{
                                                             item.message.cityName }}
@@ -55,7 +50,7 @@
                                                     <span class="searchname" title="区县" style="width: 40px">区县</span>
                                                     <select id="selectarea" class="form-control " name="county_id"
                                                             style="width: 110px">
-                                                        <option value="1">所有区县</option>
+                                                        <option value="">所有区县</option>
                                                         <option v-for="item in areas"
                                                                 v-bind:value="item.message.countyId">{{
                                                             item.message.countyName
@@ -63,20 +58,12 @@
                                                         </option>
                                                     </select>
                                                 </div>
-                                            </div>
-
-
-                                            <div class="form-group row">
-                                                <div class="input-group searchspan">
-                                                    <span class="searchname" title="选择业务"
-                                                          style="width: 80px">选择业务：</span>
-                                                </div>
 
                                                 <div class="input-group searchspan">
                                                     <span class="searchname" title="业务类型"
                                                           style="width: 80px">业务类型</span>
                                                     <select id="selectservice" class="form-control" name="service_type"
-                                                            v-on:change="servicechange()" style="width: 110px">
+                                                            v-on:change="servicechange()" style="width: 140px">
                                                         <option value="0">综合业务</option>
                                                         <option value="1">网络连通性业务</option>
                                                         <option value="2">网络层质量业务</option>
@@ -87,43 +74,34 @@
                                                         <!--<option v-for="pitem in parray" v-bind:value="pitem.Id">{{ pitem.Name }}-->
                                                     </select>
                                                 </div>
-
                                                 <div class="input-group searchspan">
                                                     <span class="searchname" title="目标地址"
                                                           style="width: 80px">目标地址</span>
                                                     <select id="select_target" class="form-control " name="target_id"
-                                                            style="width: 110px">
-                                                        <option value="1">所有目标地址</option>
+                                                            style="width: 140px">
+                                                        <option value="">所有目标地址</option>
                                                         <option v-for="item in target"
-                                                                v-bind:value="item.message.targetId">{{ item.message.targetName}}</option>
+                                                                v-bind:value="item.message.id">{{ item.message.targetName}}</option>
                                                     </select>
                                                 </div>
-
                                             </div>
-
 
                                             <div class="form-group row">
                                                 <div class="input-group searchspan">
-                                                    <span class="searchname" title="时间" style="width: 80px">选择时间：</span>
-                                                </div>
-
-                                                <div class="input-group searchspan">
-                                                    <span class="searchname" title="日期" style="width: 40px">起始</span>
+                                                    <span class="searchname" title="日期" style="width: 80px">起始时间：</span>
                                                     <input type="text" id="start_date" class="form-control"
                                                            name="startDate"
                                                            style="width: 140px"
                                                            value="">
                                                 </div>
-
                                                 <div class="input-group searchspan">
-                                                    <span class="searchname" title="日期" style="width: 40px">结束</span>
+                                                    <span class="searchname" title="日期" style="width: 80px">结束时间：</span>
                                                     <input type="text" id="terminal_date" class="form-control"
                                                            name="terminalDate"
                                                            style="width: 140px"
                                                            value="">
                                                 </div>
                                             </div>
-
                                         </form>
 
 
@@ -183,42 +161,30 @@
                                         <form class="col-lg-9 col-md-19 col-sm-9 form-horizontal" id="areasearch"
                                               role="form">
                                             <div class="form-group row">
-                                                <div class="input-group searchspan">
-                                                    <span class="searchname" title="选择探针"
-                                                          style="width: 80px">选择探针：</span>
-                                                </div>
 
                                                 <div class="input-group searchspan">
                                                     <span class="searchname" title="地市" style="width: 40px">地市</span>
-                                                    <select id="area_city" class="form-control" name="city" style="width: 110px">
-                                                        <option value="1">所有地市</option>
+                                                    <select id="area_city" class="form-control" name="city_id" style="width: 110px">
+                                                        <option value="">所有地市</option>
                                                         <option v-for="item in cities"
                                                                 v-bind:value="item.message.cityId">{{ item.message.cityName }}
                                                         </option>
                                                         <!--<option v-for="pitem in parray" v-bind:value="pitem.Id">{{ pitem.Name }}-->
                                                     </select>
                                                 </div>
-                                            </div>
-
-
-                                            <div class="form-group row">
-                                                <div class="input-group searchspan">
-                                                    <span class="searchname" title="选择业务"
-                                                          style="width: 80px">选择业务：</span>
-                                                </div>
 
                                                 <div class="input-group searchspan">
                                                     <span class="searchname" title="业务类型"
                                                           style="width: 80px">业务类型</span>
                                                     <select id="area_service" class="form-control" name="servicetype"
-                                                            style="width: 110px">
-                                                        <option value="1">综合业务</option>
-                                                        <option value="2">网络连通性业务</option>
-                                                        <option value="3">网络层质量业务</option>
-                                                        <option value="4">网页浏览业务</option>
-                                                        <option value="5">文件下载业务</option>
-                                                        <option value="6">在线视频业务</option>
-                                                        <option value="7">网络游戏业务</option>
+                                                            v-on:change="servicechange()" style="width: 110px">
+                                                        <option value="0">综合业务</option>
+                                                        <option value="1">网络连通性业务</option>
+                                                        <option value="2">网络层质量业务</option>
+                                                        <option value="3">网页浏览业务</option>
+                                                        <option value="4">文件下载业务</option>
+                                                        <option value="5">在线视频业务</option>
+                                                        <option value="6">网络游戏业务</option>
                                                         <!--<option v-for="pitem in parray" v-bind:value="pitem.Id">{{ pitem.Name }}-->
                                                     </select>
                                                 </div>
@@ -228,21 +194,16 @@
                                                           style="width: 80px">目标地址</span>
                                                     <select id="area_target" class="form-control " name="target"
                                                             style="width: 110px">
-                                                        <option value="1">所有目标地址</option>
-                                                        <option></option>
+                                                        <option value="">所有目标地址</option>
+                                                        <option v-for="item in target"
+                                                                v-bind:value="item.message.id">{{ item.message.targetName}}</option>
                                                     </select>
                                                 </div>
-
                                             </div>
-
 
                                             <div class="form-group row">
                                                 <div class="input-group searchspan">
-                                                    <span class="searchname" title="时间" style="width: 80px">选择时间：</span>
-                                                </div>
-
-                                                <div class="input-group searchspan">
-                                                    <span class="searchname" title="日期" style="width: 40px">起始</span>
+                                                    <span class="searchname" title="日期" style="width: 80px">起始时间：</span>
                                                     <input type="text" id="areastart_date" class="form-control"
                                                            name="startDate"
                                                            style="width: 140px"
@@ -250,7 +211,7 @@
                                                 </div>
 
                                                 <div class="input-group searchspan">
-                                                    <span class="searchname" title="日期" style="width: 40px">结束</span>
+                                                    <span class="searchname" title="日期" style="width: 80px">结束时间：</span>
                                                     <input type="text" id="areaterminal_date" class="form-control"
                                                            name="terminalDate"
                                                            style="width: 140px"
@@ -285,8 +246,13 @@
                                     <button type="button" class="btn btn-sm btn-success"><span
                                             class="glyphicon glyphicon-open"></span>导出
                                     </button>
-                                    <p id="area_flip" style="position:relative; left:35%;" class="glyphicon glyphicon-menu-up" onClick="toggle1('area_searchbox')"></p>
                                 </a>
+                                    <p id="area_flip" style="position:relative; left:45%;" class="glyphicon glyphicon-menu-up" onClick="toggle2('area_searchbox')"></p>
+                            </div>
+                            <div class="ibox-content">
+                                <div class="row " style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                                    <table  class="table table-bordered " id="areadata_table" ></table>
+                                </div>
                             </div>
                         </div>
 
@@ -364,6 +330,22 @@
     });
 </script>
 
+<script>
+    $('#areastart_date').flatpickr({
+        enableTime: true,
+        dateFormat: "Y-m-d H:i",
+        time_24hr: true
+    });
+</script>
+
+<script>
+    $('#areaterminal_date').flatpickr({
+        enableTime: true,
+        dateFormat: "Y-m-d H:i",
+        time_24hr: true
+    });
+</script>
+
 <script type="text/javascript">
     //参数para1：希望隐藏元素的id值
     function toggle1(param){
@@ -374,6 +356,21 @@
         else
         {
             $("#flip").attr("class","glyphicon glyphicon-menu-up");
+        }
+        $("#"+param).toggle();
+    }
+</script>
+
+<script type="text/javascript">
+    //参数para1：希望隐藏元素的id值
+    function toggle2(param){
+        if ($("#area_flip").attr("class")=="glyphicon glyphicon-menu-up")
+        {
+            $("#area_flip").attr("class","glyphicon glyphicon-menu-down");
+        }
+        else
+        {
+            $("#area_flip").attr("class","glyphicon glyphicon-menu-up");
         }
         $("#"+param).toggle();
     }

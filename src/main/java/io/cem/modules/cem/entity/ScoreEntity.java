@@ -8,20 +8,29 @@ public class ScoreEntity {
     //记录ID
     private Integer id;
     //地市
+    private String cityName;
     private Integer cityId;
     //区县
+    private String countyName;
     private Integer countyId;
     //探针ID
+    private String probeName;
     private Integer probeId;
     //子业务类型
     private Integer serviceType;
     //测试目标ID
+    private String targetName;
     private Integer targetId;
+    //记录日期
+    private Date recordDate;
+    //记录时间
+    private String recordTime;
     //分数
     private Double score;
     //权重
     private Double base;
 
+    private Integer accessLayer;
 
 
     /**
@@ -37,42 +46,6 @@ public class ScoreEntity {
         return id;
     }
     /**
-     * 设置：地市
-     */
-    public void setCityId(Integer cityId) {
-        this.cityId = cityId;
-    }
-    /**
-     * 获取：地市
-     */
-    public Integer getCityId() {
-        return cityId;
-    }
-    /**
-     * 设置：区县
-     */
-    public void setCountyId(Integer countyId) {
-        this.countyId = countyId;
-    }
-    /**
-     * 获取：区县
-     */
-    public Integer getCountyId() {
-        return countyId;
-    }
-    /**
-     * 设置：探针ID
-     */
-    public void setProbeId(Integer probeId) {
-        this.probeId = probeId;
-    }
-    /**
-     * 获取：探针ID
-     */
-    public Integer getProbeId() {
-        return probeId;
-    }
-    /**
      * 设置：子业务类型
      */
     public void setServiceType(Integer serviceType) {
@@ -83,18 +56,6 @@ public class ScoreEntity {
      */
     public Integer getServiceType() {
         return serviceType;
-    }
-    /**
-     * 设置：测试目标ID
-     */
-    public void setTargetId(Integer targetId) {
-        this.targetId = targetId;
-    }
-    /**
-     * 获取：测试目标ID
-     */
-    public Integer getTargetId() {
-        return targetId;
     }
     /**
      * 设置：分数
@@ -119,5 +80,93 @@ public class ScoreEntity {
      */
     public void setBase(Double base) {
         this.base = base;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    public String getCountyName() {
+        return countyName;
+    }
+
+    public void setCountyName(String countyName) {
+        this.countyName = countyName;
+    }
+
+    public String getProbeName() {
+        return probeName;
+    }
+
+    public void setProbeName(String probeName) {
+        this.probeName = probeName;
+    }
+
+    public String getTargetName() {
+        return targetName;
+    }
+
+    public void setTargetName(String targetName) {
+        this.targetName = targetName;
+    }
+
+    public Integer getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(Integer cityId) {
+        this.cityId = cityId;
+    }
+
+    public Integer getCountyId() {
+        return countyId;
+    }
+
+    public void setCountyId(Integer countyId) {
+        this.countyId = countyId;
+    }
+
+    public Integer getProbeId() {
+        return probeId;
+    }
+
+    public void setProbeId(Integer probeId) {
+        this.probeId = probeId;
+    }
+
+    public Integer getTargetId() {
+        return targetId;
+    }
+
+    public void setTargetId(Integer targetId) {
+        this.targetId = targetId;
+    }
+
+    public Date getRecordDate() {
+        return recordDate;
+    }
+
+    public void setRecordDate(Date recordDate) {
+        this.recordDate = recordDate;
+    }
+
+    public String getRecordTime() {
+        return recordTime;
+    }
+
+    public void setRecordTime(String recordTime) {
+        this.recordTime = recordTime;
+    }
+
+    public Integer getAccessLayer() {
+        return accessLayer;
+    }
+
+    public void setAccessLayer(Integer accessLayer) {
+        this.accessLayer = accessLayer;
     }
 }

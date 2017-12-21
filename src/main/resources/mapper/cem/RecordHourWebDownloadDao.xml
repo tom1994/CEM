@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.cem.modules.cem.dao.RecordHourWebDownloadDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.cem.modules.cem.entity.RecordHourWebDownloadEntity" id="recordHourWebDownloadMap">
+        <result property="id" column="id"/>
+        <result property="cityId" column="city_id"/>
+        <result property="countyId" column="county_id"/>
+        <result property="probeId" column="probe_id"/>
+        <result property="port" column="port"/>
+        <result property="taskId" column="task_id"/>
+        <result property="serviceType" column="service_type"/>
+        <result property="targetId" column="target_id"/>
+        <result property="targetIp" column="target_ip"/>
+        <result property="recordDate" column="record_date"/>
+        <result property="recordTime" column="record_time"/>
+        <result property="dnsDelay" column="dns_delay"/>
+        <result property="connDelay" column="conn_delay"/>
+        <result property="headbyteDelay" column="headbyte_delay"/>
+        <result property="downloadRate" column="download_rate"/>
+        <result property="remark" column="remark"/>
+		<result property="cityName" column="city_name"/>
+		<result property="areaName" column="area_name"/>
+		<result property="probeName" column="probe_name"/>
+		<result property="targetName" column="target_name"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="io.cem.modules.cem.entity.RecordHourWebDownloadEntity">
+		select * from record_hour_web_download where id = #{value}
+	</select>
+
+	<select id="queryList" resultType="io.cem.modules.cem.entity.RecordHourWebDownloadEntity">
+		select * from record_hour_web_download
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from record_hour_web_download 
+	</select>
+
+	<select id="queryWebDownloadList" resultType="io.cem.modules.cem.entity.RecordHourWebDownloadEntity">
+		select record_hour_web_download.id,record_hour_web_download.city_id,record_hour_web_download.county_id,record_hour_web_download.probe_id,record_hour_web_download.port,record_hour_web_download.task_id,record_hour_web_download.service_type,record_hour_web_download.target_id,record_hour_web_download.target_ip,record_hour_web_download.record_date,record_hour_web_download.record_time,record_hour_web_download.remark,
+		city.city_name AS city_name,
+		county.county_name AS area_name,
+		probe.probe_name AS probe_name,
+		target.target_name AS target_name,
+		AVG(record_hour_web_download.dns_delay) AS dns_delay,
+		AVG(record_hour_web_download.conn_delay) AS conn_delay,
+		AVG(record_hour_web_download.headbyte_delay) AS headbyte_delay,
+		AVG(record_hour_web_download.download_rate) AS download_rate
+		FROM record_hour_web_download
+		LEFT JOIN city
+		ON record_hour_web_download.city_id = city.city_id
+		LEFT JOIN county
+		ON record_hour_web_download.county_id = county.county_id
+		LEFT JOIN probe
+		ON record_hour_web_download.probe_id = probe.id
+		LEFT JOIN target
+		ON record_hour_web_download.target_id = target.id
+		WHERE record_hour_web_download.record_date BETWEEN #{ava_start} AND #{ava_terminal}
+		<if test="city_id != null and city_id != ''">
+			AND record_hour_web_download.city_id = #{city_id}
+		</if>
+		<if test="county_id != null and county_id != ''">
+			AND record_hour_web_download.county_id = #{county_id}
+		</if>
+		<if test="target_id != null and target_id != ''">
+			AND record_hour_web_download.target_id = #{target_id}
+		</if>
+		<if test="probe_id != null and probe_id != ''">
+			AND record_hour_web_download.probe_id = #{probe_id}
+		</if>
+		GROUP BY record_hour_web_download.city_id,record_hour_web_download.county_id,record_hour_web_download.service_type,record_hour_web_download.target_id,record_hour_web_download.probe_id,date_format(record_hour_web_download.record_date,'%Y-%m-%d'),time_format(record_hour_web_download.record_time, '%H')
+
+	</select>
+
+	<select id="queryDayList" resultType="io.cem.modules.cem.entity.RecordHourWebDownloadEntity">
+		select webd.id,webd.city_id,webd.county_id,webd.probe_id,webd.port,webd.task_id,webd.service_type,webd.target_id,webd.target_ip,webd.record_date,webd.record_time,webd.remark,
+		city.city_name AS city_name,
+		county.county_name AS area_name,
+		probe.probe_name AS probe_name,
+		target.target_name AS target_name,
+		AVG(webd.dns_delay) AS dns_delay,
+		AVG(webd.conn_delay) AS conn_delay,
+		AVG(webd.headbyte_delay) AS headbyte_delay,
+		AVG(webd.download_rate) AS download_rate
+		FROM record_day_web_download webd
+		LEFT JOIN city
+		ON webd.city_id = city.city_id
+		LEFT JOIN county
+		ON webd.county_id = county.county_id
+		LEFT JOIN probe
+		ON webd.probe_id = probe.id
+		LEFT JOIN target
+		ON webd.target_id = target.id
+		WHERE webd.record_date BETWEEN #{ava_start} AND #{ava_terminal}
+		<if test="city_id != null and city_id != ''">
+			AND webd.city_id = #{city_id}
+		</if>
+		<if test="county_id != null and county_id != ''">
+			AND webd.county_id = #{county_id}
+		</if>
+		<if test="target_id != null and target_id != ''">
+			AND webd.target_id = #{target_id}
+		</if>
+		<if test="probe_id != null and probe_id != ''">
+			AND webd.probe_id = #{probe_id}
+		</if>
+		GROUP BY webd.city_id,webd.county_id,webd.service_type,webd.target_id,webd.probe_id,date_format(webd.record_date,'%Y-%m-%d'),time_format(webd.record_time, '%H')
+
+	</select>
+	 
+	<insert id="save" parameterType="io.cem.modules.cem.entity.RecordHourWebDownloadEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into record_hour_web_download
+		(
+			`city_id`, 
+			`county_id`, 
+			`probe_id`, 
+			`port`, 
+			`task_id`, 
+			`service_type`, 
+			`target_id`, 
+			`target_ip`, 
+			`record_date`, 
+			`record_time`, 
+			`dns_delay`, 
+			`conn_delay`, 
+			`headbyte_delay`, 
+			`download_rate`, 
+			`remark`
+		)
+		values
+		(
+			#{cityId}, 
+			#{countyId}, 
+			#{probeId}, 
+			#{port}, 
+			#{taskId}, 
+			#{serviceType}, 
+			#{targetId}, 
+			#{targetIp}, 
+			#{recordDate}, 
+			#{recordTime}, 
+			#{dnsDelay}, 
+			#{connDelay}, 
+			#{headbyteDelay}, 
+			#{downloadRate}, 
+			#{remark}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="io.cem.modules.cem.entity.RecordHourWebDownloadEntity">
+		update record_hour_web_download 
+		<set>
+			<if test="cityId != null">`city_id` = #{cityId}, </if>
+			<if test="countyId != null">`county_id` = #{countyId}, </if>
+			<if test="probeId != null">`probe_id` = #{probeId}, </if>
+			<if test="port != null">`port` = #{port}, </if>
+			<if test="taskId != null">`task_id` = #{taskId}, </if>
+			<if test="serviceType != null">`service_type` = #{serviceType}, </if>
+			<if test="targetId != null">`target_id` = #{targetId}, </if>
+			<if test="targetIp != null">`target_ip` = #{targetIp}, </if>
+			<if test="recordDate != null">`record_date` = #{recordDate}, </if>
+			<if test="recordTime != null">`record_time` = #{recordTime}, </if>
+			<if test="dnsDelay != null">`dns_delay` = #{dnsDelay}, </if>
+			<if test="connDelay != null">`conn_delay` = #{connDelay}, </if>
+			<if test="headbyteDelay != null">`headbyte_delay` = #{headbyteDelay}, </if>
+			<if test="downloadRate != null">`download_rate` = #{downloadRate}, </if>
+			<if test="remark != null">`remark` = #{remark}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from record_hour_web_download where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from record_hour_web_download where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

@@ -39,6 +39,12 @@ public class AlarmRecordEntity implements Serializable {
 	private Date recordTime;
 	//备注
 	private String remark;
+	//探针名称
+	private String probeName;
+	//子业务名称
+	private String dataName;
+	//目标地址
+	private String targetName;
 
 	/**
 	 * 设置：告警记录ID
@@ -183,5 +189,29 @@ public class AlarmRecordEntity implements Serializable {
 	 */
 	public String getRemark() {
 		return remark;
+	}
+
+	public String getProbeName() {
+		return probeName;
+	}
+
+	public void setProbeName(String probeName) {
+		this.probeName = probeName;
+	}
+
+	public String getDataName() {
+		return dataName;
+	}
+
+	public void setDataName(String dataName) {
+		this.dataName = dataName;
+	}
+
+	public String getTargetName() {
+		return targetName;
+	}
+
+	public void setTargetName(String targetName) {
+		this.targetName = targetName;
 	}
 }

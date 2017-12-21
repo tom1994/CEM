@@ -122,7 +122,8 @@ public class ProbeController {
 	@RequestMapping("/detail/{id}")
 	@RequiresPermissions("probe:detail")
 	public R detail(@PathVariable("id") Integer id){
-		ProbeEntity probeList = probeService.queryDetail(id);
+//		ProbeEntity probeList = probeService.queryDetail(id);
+		ProbeEntity probeList = probeService.queryObject(id);
 		System.out.println(probeList);
 		return R.ok().put("probe", probeList);
 	}
