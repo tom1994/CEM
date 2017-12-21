@@ -8,6 +8,10 @@ var st = new Map();//servicetype字典，可通过get方法查对应字符串。
 // var st = new Map();
 st.set(1, "PING(ICMP Echo)");
 st.set(2, "PING(TCP Echo)");
+st.set(3, "PING(UDP Echo)");
+st.set(4, "TraceRoute(ICMP)");
+st.set(5, "TraceRoute(UDP)");
+st.set(10, "SLA(TCP)");
 var stid = new Map();
 stid.set(1, "pingicmp");
 stid.set(2, "pingtcp");
@@ -16,7 +20,7 @@ var spst = new Map();
 for(let i=1; i<7; i++){
     spst.set(i,1)
 };
-for(let i=11; i<17; i++){
+for(let i=10; i<17; i++){
     spst.set(i,2)
 };
 

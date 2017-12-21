@@ -380,7 +380,7 @@ var sptable = new Vue({
                             row.push(i++);
                             row.push(item.spName);
                             row.push((item.startDate).substr(0,10)+'-'+(item.endDate).substr(0,10));
-                            row.push(scheduler);
+                            row.push((JSON.parse(scheduler)).interval);
                             row.push(item.remark);
                             row.push(item.createTime);
                             row.push('<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>');

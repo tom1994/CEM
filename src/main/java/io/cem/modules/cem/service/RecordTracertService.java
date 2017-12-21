@@ -17,6 +17,8 @@ public interface RecordTracertService {
 	RecordTracertEntity queryObject(Integer id);
 	
 	List<RecordTracertEntity> queryList(Map<String, Object> map);
+
+	List<RecordTracertEntity> queryTracertList(Map<String, Object> map);
 	
 	int queryTotal(Map<String, Object> map);
 	

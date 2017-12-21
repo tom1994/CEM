@@ -31,6 +31,9 @@ public class TaskServiceImpl implements TaskService {
 	public List<TaskEntity> queryTaskList(Map<String, Object> map){
 		return taskDao.queryTaskList(map);
 	}
+
+	@Override
+	public List<TaskEntity> infoByService(Integer servicetype){ return taskDao.infoByService(servicetype); }
 	
 	@Override
 	public int queryTotal(Map<String, Object> map){
