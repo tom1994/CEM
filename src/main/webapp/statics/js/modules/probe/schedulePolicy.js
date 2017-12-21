@@ -284,7 +284,6 @@ var sptable = new Vue({
     data: {
         headers: [
             {title: '<div style="width:15px"></div>'},
-            {title: '<div style="width:15px">ID</div>'},
             {title: '<div style="width:142px">策略名称</div>'},
             {title: '<div style="width:100px">开始日期</div>'},
             {title: '<div style="width:100px">结束日期</div>'},
@@ -378,7 +377,6 @@ var sptable = new Vue({
                         result.page.list.forEach(function (item) {
                             let row = [];
                             row.push(i++);
-                            row.push(item.id);
                             row.push(item.spName);
                             row.push((item.startDate).substr(0,10));
                             row.push((item.endDate).substr(0,10));

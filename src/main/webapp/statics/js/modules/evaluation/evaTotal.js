@@ -170,15 +170,19 @@ var getProbe = function (countyid) {
 }
 
 
-var connection_data = new Vue({
+var connection_service = new Vue({
     el: '#v-for-connection',
     data: {
-        probedata: {ava_start:(new Date()).Format("yyyy-MM-dd"), ava_terminal:(new Date()).Format("yyyy-MM-dd"),service:'1'}
+        connection: {
+            最高分: 0,
+            平均分: 0,
+            最低分: 0
+        },
+        probedata: {ava_start:"2017-12-1", ava_terminal:"2017-12-5",service:'1'}
     },
     mounted: function(){         /*动态加载测试任务组数据*/
         let param = {};
-        param.probedata = JSON.stringify(connection_data.probedata);
-        console.log(param);
+        param.probedata = JSON.stringify(this.probedata);
         $.ajax({
             type: "POST",   /*GET会乱码*/
             url: "../../recordhourping/qualityList",//Todo:改成测试任务组的list方法
@@ -187,10 +191,8 @@ var connection_data = new Vue({
             dataType: "json",
             /* contentType:"application/json",  /!*必须要,不可少*!/*/
             success: function (result) {
-               // for(var i=0;i<result.page.list.length;i++){
-                 //   cityNames[i] = {message: result.page.list[i]}
-                //}
-                //search_data.cities = cityNames;
+                console.log(result);
+
             }
         });
     },
@@ -199,16 +201,6 @@ var connection_data = new Vue({
     }
 });
 
-var connection_data =new Vue({
-    el: '#v-for-connection',
-    data: {
-        connection: {
-            最高分: 0,
-            平均分: 0,
-            最低分: 0
-        }
-    }
-})
 
 var chart = null;
 // 获取 CSV 数据并初始化图表
