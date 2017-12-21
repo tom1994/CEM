@@ -1,8 +1,12 @@
 package io.cem.modules.cem.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.alibaba.fastjson.JSONObject;
+import io.cem.common.exception.RRException;
+import io.cem.common.utils.JSONUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,19 +40,45 @@ public class AlarmRecordController {
 	 */
 	@RequestMapping("/list")
 	@RequiresPermissions("alarmrecord:list")
-	public R list(@RequestParam Map<String, Object> params){
-		//查询列表数据
-        Query query = new Query(params);
+	public R list(String probedata, Integer page, Integer limit) throws Exception{
+		Map<String, Object> map = new HashMap<>();
+		JSONObject probedata_jsonobject = JSONObject.parseObject(probedata);
+		try {
+			map.putAll(JSONUtils.jsonToMap(probedata_jsonobject));
+		} catch (RuntimeException e) {
+			throw new RRException("内部参数错误，请重试！");
+		}
 
-		List<AlarmRecordEntity> alarmRecordList = alarmRecordService.queryList(query);
-		int total = alarmRecordService.queryTotal(query);
-		
-		PageUtils pageUtil = new PageUtils(alarmRecordList, total, query.getLimit(), query.getPage());
-		
+		int total = 0;
+		if(page==null) {              /*没有传入page,则取全部值*/
+			map.put("offset", null);
+			map.put("limit", null);
+			page = 0;
+			limit = 0;
+		}else {
+			map.put("offset", (page - 1) * limit);
+			map.put("limit", limit);
+			total = alarmRecordService.queryTotal(map);
+		}
+		List<AlarmRecordEntity> probeList = alarmRecordService.queryAlarmRecordList(map);
+		PageUtils pageUtil = new PageUtils(probeList, total, limit, page);
 		return R.ok().put("page", pageUtil);
 	}
-	
-	
+
+	/**
+	 * 详细信息
+	 */
+	@RequestMapping("/detail/{id}")
+	@RequiresPermissions("alarmrecord:detail")
+	public R detail(@PathVariable("id") Integer id){
+//		ProbeEntity probeList = probeService.queryDetail(id);
+		AlarmRecordEntity alarmList = alarmRecordService.queryObject(id);
+		System.out.println(alarmList);
+		return R.ok().put("alarm", alarmList);
+	}
+
+
+
 	/**
 	 * 信息
 	 */
@@ -81,6 +111,18 @@ public class AlarmRecordController {
 		
 		return R.ok();
 	}
+
+	/**
+	 * 修改状态
+	 */
+	@RequestMapping("/operate/{id}")
+	@RequiresPermissions("alarmrecord:operate")
+	public R update(@PathVariable("id") Integer id){
+		alarmRecordService.operate(id);
+
+		return R.ok();
+	}
+
 	
 	/**
 	 * 删除

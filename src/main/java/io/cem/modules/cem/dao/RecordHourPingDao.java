@@ -15,4 +15,5 @@ import java.util.Map;
  */
 public interface RecordHourPingDao extends BaseDao<RecordHourPingEntity> {
     List<RecordHourPingEntity> queryPingList(Map<String, Object> map);
+    List<RecordHourPingEntity> queryDayList(Map<String, Object> map);
 }

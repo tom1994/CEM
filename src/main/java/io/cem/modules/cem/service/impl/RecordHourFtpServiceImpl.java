@@ -33,6 +33,11 @@ public class RecordHourFtpServiceImpl implements RecordHourFtpService {
 	}
 
 	@Override
+	public List<RecordHourFtpEntity> queryDayList(Map<String, Object> map){
+		return recordHourFtpDao.queryDayList(map);
+	}
+
+	@Override
 	public int queryTotal(Map<String, Object> map){
 		return recordHourFtpDao.queryTotal(map);
 	}

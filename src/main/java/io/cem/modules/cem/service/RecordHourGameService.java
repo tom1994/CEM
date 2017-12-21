@@ -21,6 +21,8 @@ public interface RecordHourGameService {
 
 	List<RecordHourGameEntity> queryGameList(Map<String, Object> map);
 
+	List<RecordHourGameEntity> queryDayList(Map<String, Object> map);
+
 	List<ScoreEntity> calculateService6(List<RecordHourGameEntity> gameList);
 	
 	int queryTotal(Map<String, Object> map);

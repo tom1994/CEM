@@ -201,7 +201,7 @@ public class AllWeightController {
             pingUDP[31] = pros.getValue("pingU64");
             pingUDP[32] = pros.getValue("pingU65");
             pingUDP[33] = pros.getValue("pingU66");
-            pingUDP[33] = pros.getValue("pingU67");
+            pingUDP[34] = pros.getValue("pingU67");
             pingUDP[35] = pros.getValue("pingU71");
             pingUDP[36] = pros.getValue("pingU72");
             pingUDP[37] = pros.getValue("pingU73");

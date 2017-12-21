@@ -15,4 +15,5 @@ import java.util.Map;
  */
 public interface RecordHourWebVideoDao extends BaseDao<RecordHourWebVideoEntity> {
     List<RecordHourWebVideoEntity> queryVideoList(Map<String, Object> map);
+    List<RecordHourWebVideoEntity> queryDayList(Map<String, Object> map);
 }

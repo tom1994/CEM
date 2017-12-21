@@ -7,6 +7,7 @@ import java.util.Map;
 import com.alibaba.fastjson.JSONObject;
 import io.cem.common.exception.RRException;
 import io.cem.common.utils.JSONUtils;
+import io.cem.modules.cem.entity.TargetEntity;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -53,7 +54,19 @@ public class TaskController {
 		PageUtils pageUtil = new PageUtils(taskList, total, limit, page);
 		return R.ok().put("page", pageUtil);
 	}
-	
+
+
+	/**
+	 * 根据servicetype查询task
+	 */
+	@RequestMapping("/infoByService/{id}")
+	@RequiresPermissions("task:info")
+	public R infobat(@PathVariable("id") Integer servicetype){
+		List<TaskEntity> task = taskService.infoByService(servicetype);
+		System.out.println(task);
+		return R.ok().put("task", task);
+
+	}
 	
 	/**
 	 * 信息

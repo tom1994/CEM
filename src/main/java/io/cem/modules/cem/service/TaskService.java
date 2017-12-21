@@ -20,6 +20,8 @@ public interface TaskService {
 
 	List<TaskEntity> queryTaskList(Map<String, Object> map);
 
+	List<TaskEntity> infoByService(Integer servicetype);
+
 	int queryTotal(Map<String, Object> map);
 	
 	void save(TaskEntity task);

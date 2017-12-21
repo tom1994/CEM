@@ -21,6 +21,8 @@ public interface RecordHourWebPageService {
 
 	List<RecordHourWebPageEntity> queryWebList(Map<String, Object> map);
 
+	List<RecordHourWebPageEntity> queryDayList(Map<String, Object> map);
+
 	List<ScoreEntity> calculateService3(List<RecordHourWebPageEntity> webPageList);
 	
 	int queryTotal(Map<String, Object> map);

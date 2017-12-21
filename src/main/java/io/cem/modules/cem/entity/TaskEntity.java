@@ -21,6 +21,8 @@ public class TaskEntity implements Serializable {
 	private String taskName;
 	//子业务类型
 	private Integer serviceType;
+
+	private String servicetypeName;
 	//调度策略ID
 	private Integer schPolicyId;
 	//参数
@@ -76,6 +78,11 @@ public class TaskEntity implements Serializable {
 	public Integer getServiceType() {
 		return serviceType;
 	}
+
+	public String getServicetypeName() { return servicetypeName; }
+
+	public void setServicetypeName(String servicetypeName) { this.servicetypeName = servicetypeName; }
+
 	/**
 	 * 设置：调度策略ID
 	 */

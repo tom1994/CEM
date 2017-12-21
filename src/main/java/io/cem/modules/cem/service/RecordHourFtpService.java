@@ -19,7 +19,9 @@ public interface RecordHourFtpService {
 	List<RecordHourFtpEntity> queryList(Map<String, Object> map);
 
 	List<RecordHourFtpEntity> queryFtpList(Map<String, Object> map);
-	
+
+	List<RecordHourFtpEntity> queryDayList(Map<String, Object> map);
+
 	int queryTotal(Map<String, Object> map);
 	
 	void save(RecordHourFtpEntity recordHourFtp);

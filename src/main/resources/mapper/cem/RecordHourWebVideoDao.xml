@@ -66,7 +66,7 @@
 		target.target_name AS target_name,
 		AVG(record_hour_web_video.dns_delay) AS dns_delay,
 		AVG(record_hour_web_video.ws_conn_delay) AS ws_conn_delay,
-		AVG(record_hour_web_video.web_page_delay) AS headbyte_delay,
+		AVG(record_hour_web_video.web_page_delay) AS web_page_delay,
 		AVG(record_hour_web_video.ss_conn_delay) AS ss_conn_delay,
 		AVG(record_hour_web_video.address_delay) AS address_delay,
 		AVG(record_hour_web_video.ms_conn_delay) AS ms_conn_delay,
@@ -99,6 +99,50 @@
 			AND record_hour_web_video.probe_id = #{probe_id}
 		</if>
 		GROUP BY record_hour_web_video.city_id,record_hour_web_video.county_id,record_hour_web_video.service_type,record_hour_web_video.target_id,record_hour_web_video.probe_id,date_format(record_hour_web_video.record_date,'%Y-%m-%d'),time_format(record_hour_web_video.record_time, '%H')
+
+	</select>
+
+	<select id="queryDayList" resultType="io.cem.modules.cem.entity.RecordHourWebVideoEntity">
+		select webv.id,webv.city_id,webv.county_id,webv.probe_id,webv.port,webv.task_id,webv.service_type,webv.target_id,webv.target_ip,webv.record_date,webv.record_time,webv.remark,
+		city.city_name AS city_name,
+		county.county_name AS area_name,
+		probe.probe_name AS probe_name,
+		target.target_name AS target_name,
+		AVG(webv.dns_delay) AS dns_delay,
+		AVG(webv.ws_conn_delay) AS ws_conn_delay,
+		AVG(webv.web_page_delay) AS web_page_delay,
+		AVG(webv.ss_conn_delay) AS ss_conn_delay,
+		AVG(webv.address_delay) AS address_delay,
+		AVG(webv.ms_conn_delay) AS ms_conn_delay,
+		AVG(webv.head_frame_delay) AS head_frame_delay,
+		AVG(webv.init_buffer_delay) AS init_buffer_delay,
+		AVG(webv.load_delay) AS load_delay,
+		AVG(webv.total_buffer_delay) AS total_buffer_delay,
+		AVG(webv.download_rate) AS download_rate,
+		AVG(webv.buffer_time) AS buffer_time
+		FROM record_day_web_video webv
+		LEFT JOIN city
+		ON webv.city_id = city.city_id
+		LEFT JOIN county
+		ON webv.county_id = county.county_id
+		LEFT JOIN probe
+		ON webv.probe_id = probe.id
+		LEFT JOIN target
+		ON webv.target_id = target.id
+		WHERE webv.record_date BETWEEN #{ava_start} AND #{ava_terminal}
+		<if test="city_id != null and city_id != ''">
+			AND webv.city_id = #{city_id}
+		</if>
+		<if test="county_id != null and county_id != ''">
+			AND webv.county_id = #{county_id}
+		</if>
+		<if test="target_id != null and target_id != ''">
+			AND webv.target_id = #{target_id}
+		</if>
+		<if test="probe_id != null and probe_id != ''">
+			AND webv.probe_id = #{probe_id}
+		</if>
+		GROUP BY webv.city_id,webv.county_id,webv.service_type,webv.target_id,webv.probe_id,date_format(webv.record_date,'%Y-%m-%d'),time_format(webv.record_time, '%H')
 
 	</select>
 	 

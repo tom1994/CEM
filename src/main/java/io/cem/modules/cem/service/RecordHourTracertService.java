@@ -21,6 +21,8 @@ public interface RecordHourTracertService {
 
 	List<RecordHourTracertEntity> queryTracertList(Map<String, Object> map);
 
+	List<RecordHourTracertEntity> queryDayList(Map<String, Object> map);
+
 	List<ScoreEntity> calculateService0(List<ScoreEntity> connection,List<ScoreEntity> quality,List<ScoreEntity> broswer,List<ScoreEntity> download,List<ScoreEntity> video,List<ScoreEntity> game);
 	
 	int queryTotal(Map<String, Object> map);

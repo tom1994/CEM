@@ -15,4 +15,6 @@ import java.util.Map;
  */
 public interface TaskDao extends BaseDao<TaskEntity> {
     List<TaskEntity> queryTaskList(Map<String,Object> map);
+
+    List<TaskEntity> infoByService(Integer servicetype);
 }

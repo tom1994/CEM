@@ -81,6 +81,40 @@
 		GROUP BY record_hour_radius.city_id,record_hour_radius.county_id,record_hour_radius.service_type,record_hour_radius.target_id,record_hour_radius.probe_id,date_format(record_hour_radius.record_date,'%Y-%m-%d'),time_format(record_hour_radius.record_time, '%H')
 
 	</select>
+
+	<select id="queryDayList" resultType="io.cem.modules.cem.entity.RecordHourRadiusEntity">
+		select radius.id,radius.city_id,radius.county_id,radius.probe_id,radius.port,radius.task_id,radius.service_type,radius.target_id,radius.target_ip,radius.record_date,radius.record_time,radius.remark,
+		city.city_name AS city_name,
+		county.county_name AS area_name,
+		probe.probe_name AS probe_name,
+		target.target_name AS target_name,
+		AVG(radius.delay) AS delay,
+		AVG(radius.success_rate) AS success_rate
+		FROM record_day_radius radius
+		LEFT JOIN city
+		ON radius.city_id = city.city_id
+		LEFT JOIN county
+		ON radius.county_id = county.county_id
+		LEFT JOIN probe
+		ON radius.probe_id = probe.id
+		LEFT JOIN target
+		ON radius.target_id = target.id
+		WHERE radius.record_date BETWEEN #{ava_start} AND #{ava_terminal}
+		<if test="city_id != null and city_id != ''">
+			AND radius.city_id = #{city_id}
+		</if>
+		<if test="county_id != null and county_id != ''">
+			AND radius.county_id = #{county_id}
+		</if>
+		<if test="target_id != null and target_id != ''">
+			AND radius.target_id = #{target_id}
+		</if>
+		<if test="probe_id != null and probe_id != ''">
+			AND radius.probe_id = #{probe_id}
+		</if>
+		GROUP BY radius.city_id,radius.county_id,radius.service_type,radius.target_id,radius.probe_id,date_format(radius.record_date,'%Y-%m-%d'),time_format(radius.record_time, '%H')
+
+	</select>
 	 
 	<insert id="save" parameterType="io.cem.modules.cem.entity.RecordHourRadiusEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into record_hour_radius

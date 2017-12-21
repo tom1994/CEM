@@ -1,11 +1,235 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <h>告警信息</h>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>探针列表</title>
+    #parse("cemHeader.html")  <!--导入CSS和js文件-->
+    <link href="${rc.contextPath}/statics/css/formStyle.css" rel="stylesheet">  <!--自定义CSS-->
+
 </head>
 <body>
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content" style="padding-bottom: 0 !important;">
+                    <div class="row" id="searchbox" style="border: none !important;">
+                        <form class="col-lg-9 col-md-19 col-sm-9 form-horizontal" id="probesearch"
+                              role="form">
+                            <div class="form-group row">
+                                <div class="input-group searchspan">
+                                    <span class="searchname" title="告警类型" style="width: 80px">告警类型</span>
+                                    <select id="selecttype" class="form-control" name="type" style="width: 110px">
+                                        <option value="">所有类型</option>
+                                        <option value="1">离线告警</option>
+                                        <option value="2">性能告警</option>
+                                        <option value="3">中断告警</option>
+                                        <option value="4">阈值告警</option>
+                                    </select>
+                                </div>
+
+                                <div class="input-group searchspan">
+                                    <span class="searchname" title="告警级别" style="width: 80px">告警级别</span>
+                                    <select id="selectlevel" class="form-control " name="level" style="width: 110px">
+                                        <option value="">所有级别</option>
+                                        <option value="1">严重</option>
+                                        <option value="2">一般</option>
+                                    </select>
+                                </div>
+
+                                <div class="input-group searchspan">
+                                    <span class="searchname" title="告警状态" style="width: 80px">告警状态</span>
+                                    <select id="selectstatus" class="form-control" name="status" style="width: 110px">
+                                        <option value="">所有状态</option>
+                                        <option value="0">未处理</option>
+                                        <option value="1">已处理</option>
+                                    </select>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="input-group searchspan">
+                                    <span class="searchname" title="日期" style="width: 80px">起始时间</span>
+                                    <input type="text" id="start_date" class="form-control"
+                                           name="startDate"
+                                           style="width: 140px"
+                                           value="">
+                                </div>
+                                <div class="input-group searchspan">
+                                    <span class="searchname" title="日期" style="width: 80px">结束时间</span>
+                                    <input type="text" id="terminal_date" class="form-control"
+                                           name="terminalDate"
+                                           style="width: 140px"
+                                           value="">
+                                </div>
+                            </div>
+                        </form>
+
+
+                        <div class="col-lg-3 col-md-3 col-sm-3 pull-left"
+                             style="text-align:center;height:50px;position: relative;" id="search">
+                            <button type="button" class="btn btn-sm btn-success"
+                                    style="margin-right: 5px;position: relative;top: 50%;"
+                                    v-on:click="testagentListsearch"><span
+                                    class="glyphicon glyphicon-zoom-in"></span>查询
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" id="test_table">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title fontcolor" id="probehandle" style="padding-bottom: 0px !important;">
+                <button type="button" class="btn btn-sm btn-success"><span
+                        class="glyphicon glyphicon-ok"></span>批量确认
+                </button>
+                <p id="flip" style="position:relative; left:45%;" class="glyphicon glyphicon-menu-up" onClick="toggle1('searchbox')"></p>
+            </div>
+            <div class="ibox-content">
+                <div class="row " style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                    <table  class="table table-bordered " id="alert_table" ></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 无效时间提醒模态框（Modal） -->
+<div class="modal fade" id="nonavailable_time" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+    <div class="modal-dialog" style="width: 500px"> <!--修改bootstrap modal模态框的宽度-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h3 class="modal-title" id="myModalLabel">提醒</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <form class="form-horizontal" id="schedulepolicyform_data" role="form">
+                        <div class="form-group row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 form_border">
+                                <p style="font-size: medium;text-align: left">您输入的起止时间无效，请核查后重新输入！</p>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">确定</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<!-- 详情模态框（Modal） -->
+<div class="modal fade" id="myModal_update" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" style="width: 700px"> <!--修改bootstrap modal模态框的宽度-->
+        <div class="modal-content">
+            <div class="modal-header" style="">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h3 class="modal-title myModalLabel">详细信息</h3>
+            </div>
+            <div class="modal-body" style="padding: 0px 30px 0px 30px !important;">
+                <div class="row">
+                    <form class="form-horizontal" id="probeform_data" role="form">
+                        <div class="form-group row">
+                            <label for="id"
+                                   class="col-lg-2 col-md-2 col-sm-2 input-label form_border"
+                                   style="display: none">id:</label>
+                            <div class="col-lg-2 col-md-2 col-sm-2 "
+
+                                 style="display: none">
+                                <input type="text" class="form-control" id="id" name="id"
+                                       placeholder="请输入id">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="type"
+                                   class="col-lg-3 col-md-3 col-sm-3 input-label form_border">告警类型:</label>
+                            <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                <input type="text" class="form-control" id="type" name="type"
+                                       readonly="readonly" unselectable='on'>
+                            </div>
+                            <label for="level"
+                                   class="col-lg-3 col-md-3 col-sm-3 input-label form_border">告警级别:</label>
+                            <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                <input type="text" class="form-control" id="level" name="level"
+                                       readonly="readonly" unselectable='on'>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="status"
+                                   class="col-lg-3 col-md-3 col-sm-3 input-label form_border">告警状态:</label>
+                            <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                <input type="text" class="form-control" id="status" name="status"
+                                       readonly="readonly" unselectable='on'>
+                            </div>
+                            <label for="probeName"
+                                   class="col-lg-3 col-md-3 col-sm-3 input-label form_border">探针名称:</label>
+                            <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                <input type="text" class="form-control" id="probeName" name="probeName"
+                                       readonly="readonly" unselectable='on'>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="targetName"
+                                   class="col-lg-3 col-md-3 col-sm-3 input-label form_border">测试目标:</label>
+                            <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                <input type="text" class="form-control" id="targetName" name="targetName"
+                                       readonly="readonly" unselectable='on'>
+                            </div>
+                            <label for="serviceType"
+                                   class="col-lg-3 col-md-3 col-sm-3 input-label form_border">子业务类型:</label>
+                            <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                <input type="text" class="form-control" id="serviceType" name="serviceType"
+                                       readonly="readonly" unselectable='on'>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="recordTime"
+                                   class="col-lg-3 col-md-3 col-sm-3 input-label form_border">记录时间:</label>
+                            <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                <input type="text" class="form-control" id="recordTime" name="recordTime"
+                                       readonly="readonly" unselectable='on'>
+                            </div>
+                        </div>
+
+                        <!--unselectable属性解决IE鼠标光标聚焦问题-->
+
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer" style="">
+                <button type="button" class="btn btn-success" data-dismiss="modal">确定</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+<script type="text/javascript"
+        src="${rc.contextPath}/statics/js/modules/alert/alertInformation.js?_${date.systemTime}"></script>
 
 </body>
 </html>

@@ -32,6 +32,10 @@ public class RecordHourDnsServiceImpl implements RecordHourDnsService {
 		return recordHourDnsDao.queryDnsList(map);
 	}
 
+	@Override
+	public List<RecordHourDnsEntity> queryDayList(Map<String, Object> map){
+		return recordHourDnsDao.queryDayList(map);
+	}
 
 	@Override
 	public int queryTotal(Map<String, Object> map){

@@ -15,4 +15,5 @@ import java.util.Map;
  */
 public interface RecordHourFtpDao extends BaseDao<RecordHourFtpEntity> {
     List<RecordHourFtpEntity> queryFtpList(Map<String, Object> map);
+    List<RecordHourFtpEntity> queryDayList(Map<String, Object> map);
 }

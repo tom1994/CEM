@@ -81,6 +81,40 @@
 		GROUP BY record_hour_dns.city_id,record_hour_dns.county_id,record_hour_dns.service_type,record_hour_dns.target_id,record_hour_dns.probe_id,date_format(record_hour_dns.record_date,'%Y-%m-%d'),time_format(record_hour_dns.record_time, '%H')
 
 	</select>
+
+	<select id="queryDayList" resultType="io.cem.modules.cem.entity.RecordHourDnsEntity">
+		select dns.id,dns.city_id,dns.county_id,dns.probe_id,dns.port,dns.task_id,dns.service_type,dns.target_id,dns.target_ip,dns.record_date,dns.record_time,dns.remark,
+		city.city_name AS city_name,
+		county.county_name AS area_name,
+		probe.probe_name AS probe_name,
+		target.target_name AS target_name,
+		AVG(dns.delay) AS delay,
+		AVG(dns.success_rate) AS success_rate
+		FROM record_day_dns dns
+		LEFT JOIN city
+		ON dns.city_id = city.city_id
+		LEFT JOIN county
+		ON dns.county_id = county.county_id
+		LEFT JOIN probe
+		ON dns.probe_id = probe.id
+		LEFT JOIN target
+		ON dns.target_id = target.id
+		WHERE dns.record_date BETWEEN #{ava_start} AND #{ava_terminal}
+		<if test="city_id != null and city_id != ''">
+			AND dns.city_id = #{city_id}
+		</if>
+		<if test="county_id != null and county_id != ''">
+			AND dns.county_id = #{county_id}
+		</if>
+		<if test="target_id != null and target_id != ''">
+			AND dns.target_id = #{target_id}
+		</if>
+		<if test="probe_id != null and probe_id != ''">
+			AND dns.probe_id = #{probe_id}
+		</if>
+		GROUP BY dns.city_id,dns.county_id,dns.service_type,dns.target_id,dns.probe_id,date_format(dns.record_date,'%Y-%m-%d'),time_format(dns.record_time, '%H')
+
+	</select>
 	 
 	<insert id="save" parameterType="io.cem.modules.cem.entity.RecordHourDnsEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into record_hour_dns

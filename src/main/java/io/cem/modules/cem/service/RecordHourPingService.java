@@ -5,6 +5,7 @@ import io.cem.modules.cem.entity.RecordHourTracertEntity;
 import io.cem.modules.cem.entity.ScoreEntity;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -23,9 +24,16 @@ public interface RecordHourPingService {
 
 	List<RecordHourPingEntity> queryPingList(Map<String, Object> map);
 
+	List<RecordHourPingEntity> queryDayList(Map<String, Object> map);
+
+
 	List<ScoreEntity> calculateService1(List<RecordHourPingEntity> pingList,List<RecordHourTracertEntity> tracertList);
 
 	List<ScoreEntity> calculateServiceDate1(List<RecordHourPingEntity> pingList,List<RecordHourTracertEntity> tracertList);
+
+	List<ScoreEntity> calculateServiceArea1(List<RecordHourPingEntity> pingList,List<RecordHourTracertEntity> tracertList);
+
+	int differentDays(Date date1, Date date2);
 
 	int queryTotal(Map<String, Object> map);
 	
