@@ -9,6 +9,7 @@ var areaNames = new Array();
 var probeNames = new Array();
 var typeNames = new Array();
 var statusNames = new Array();
+var qualityScore = new Array();
 
 var probedata_handle = new Vue({
     el: '#probehandle',
@@ -48,13 +49,45 @@ var search_service = new Vue({ //Todo:完成查询条件框
                 console.log("时间选择有误，请重新选择！");
                 $('#nonavailable_time').modal('show');
             }else{
-                var ava_start=searchJson.startDate.substr(0,10);
-                var ava_terminal=searchJson.terminalDate.substr(0,10);
-                var start_time=searchJson.startDate.substr(11,15);
-                var terminal_time=searchJson.startDate.substr(11,15);
-                console.log(start_time);
-                var schedulepolicy = JSON.stringify(searchJson);
-                console.log(schedulepolicy);
+                var search = new Object();
+                search.city_id = searchJson.city_id;
+                search.couty_id = searchJson.county_id;
+                search.probe_id = searchJson.probe_id;
+                search.ava_start = searchJson.startDate.substr(0,10);
+                search.ava_terminal = searchJson.terminalDate.substr(0,10);
+                search.starTime = searchJson.startDate.substr(11,15);
+                search.terminalTime = searchJson.startDate.substr(11,15);
+                let param = {};
+                param.probedata = JSON.stringify(search);
+                $.ajax({
+                    type: "POST",   /*GET会乱码*/
+                    url: "../../recordhourping/qualityList",//Todo:改成测试任务组的list方法
+                    cache: false,  //禁用缓存
+                    data: param,  //传入组装的参数
+                    dataType: "json",
+                    /* contentType:"application/json",  /!*必须要,不可少*!/*/
+                    success: function (result) {
+                        console.log(result);
+                        connection_service.connection.max = parseFloat(result.score.connectionMax).toFixed(3);
+                        connection_service.connection.average = parseFloat(result.score.connectionAverage).toFixed(3);
+                        connection_service.connection.min = parseFloat(result.score.connectionMin).toFixed(3);
+                        quality_service.quality.max = parseFloat(result.score.qualityMax).toFixed(3);
+                        quality_service.quality.average = parseFloat(result.score.qualityAverage).toFixed(3);
+                        quality_service.quality.min = parseFloat(result.score.qualityMin).toFixed(3);
+                        download_service.download.max = parseFloat(result.score.downloadMax).toFixed(3);
+                        download_service.download.average = parseFloat(result.score.downloadAverage).toFixed(3);
+                        download_service.download.min = parseFloat(result.score.downloadMin).toFixed(3);
+                        page_service.page.max = parseFloat(result.score.pageMax).toFixed(3);
+                        page_service.page.average = parseFloat(result.score.pageAverage).toFixed(3);
+                        page_service.page.min = parseFloat(result.score.pageMin).toFixed(3);
+                        video_service.video.max = parseFloat(result.score.videoMax).toFixed(3);
+                        video_service.video.average = parseFloat(result.score.videoAverage).toFixed(3);
+                        video_service.video.min = parseFloat(result.score.videoMin).toFixed(3);
+                        game_service.game.max = parseFloat(result.score.gameMax).toFixed(3);
+                        game_service.game.average = parseFloat(result.score.gameAverage).toFixed(3);
+                        game_service.game.min = parseFloat(result.score.gameMin).toFixed(3);
+                    }
+                });
 
             }
 
@@ -174,11 +207,14 @@ var connection_service = new Vue({
     el: '#v-for-connection',
     data: {
         connection: {
-            最高分: 0,
-            平均分: 0,
-            最低分: 0
+            max: 0,
+            average: 0,
+            min: 0
         },
-        probedata: {ava_start:"2017-12-1", ava_terminal:"2017-12-5",service:'1'}
+        probedata: {ava_start:(new Date()).Format("yyyy-MM-dd"), ava_terminal:(new Date()).Format("yyyy-MM-dd")}
+    },
+    methods:{
+
     },
     mounted: function(){         /*动态加载测试任务组数据*/
         let param = {};
@@ -191,15 +227,98 @@ var connection_service = new Vue({
             dataType: "json",
             /* contentType:"application/json",  /!*必须要,不可少*!/*/
             success: function (result) {
-                console.log(result);
+                console.log(result.score.connectionMax);
+                connection_service.connection.max = parseFloat(result.score.connectionMax).toFixed(3);
+                connection_service.connection.average = parseFloat(result.score.connectionAverage).toFixed(3);
+                connection_service.connection.min = parseFloat(result.score.connectionMin).toFixed(3);
+                quality_service.quality.max = parseFloat(result.score.qualityMax).toFixed(3);
+                quality_service.quality.average = parseFloat(result.score.qualityAverage).toFixed(3);
+                quality_service.quality.min = parseFloat(result.score.qualityMin).toFixed(3);
+                download_service.download.max = parseFloat(result.score.downloadMax).toFixed(3);
+                download_service.download.average = parseFloat(result.score.downloadAverage).toFixed(3);
+                download_service.download.min = parseFloat(result.score.downloadMin).toFixed(3);
+                page_service.page.max = parseFloat(result.score.pageMax).toFixed(3);
+                page_service.page.average = parseFloat(result.score.pageAverage).toFixed(3);
+                page_service.page.min = parseFloat(result.score.pageMin).toFixed(3);
+                video_service.video.max = parseFloat(result.score.videoMax).toFixed(3);
+                video_service.video.average = parseFloat(result.score.videoAverage).toFixed(3);
+                video_service.video.min = parseFloat(result.score.videoMin).toFixed(3);
+                game_service.game.max = parseFloat(result.score.gameMax).toFixed(3);
+                game_service.game.average = parseFloat(result.score.gameAverage).toFixed(3);
+                game_service.game.min = parseFloat(result.score.gameMin).toFixed(3);
 
             }
         });
     },
-    methods: {
 
-    }
 });
+
+var quality_service = new Vue({
+    el: '#v-for-quality',
+    data: {
+        quality: {
+            max: 0,
+            average: 0,
+            min: 0
+        },
+    },
+    methods:{
+    },
+});
+
+var download_service = new Vue({
+    el: '#v-for-download',
+    data: {
+        download: {
+            max: 0,
+            average: 0,
+            min: 0
+        },
+    },
+    methods:{
+    },
+});
+
+var page_service = new Vue({
+    el: '#v-for-page',
+    data: {
+        page: {
+            max: 0,
+            average: 0,
+            min: 0
+        },
+    },
+    methods:{
+    },
+});
+
+var video_service = new Vue({
+    el: '#v-for-video',
+    data: {
+        video: {
+            max: 0,
+            average: 0,
+            min: 0
+        },
+    },
+    methods:{
+    },
+});
+
+var game_service = new Vue({
+    el: '#v-for-game',
+    data: {
+        game: {
+            max: 0,
+            average: 0,
+            min: 0
+        },
+    },
+    methods:{
+    },
+});
+
+
 
 
 var chart = null;

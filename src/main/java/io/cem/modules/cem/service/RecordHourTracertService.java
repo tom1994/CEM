@@ -1,5 +1,6 @@
 package io.cem.modules.cem.service;
 
+import io.cem.modules.cem.entity.EvaluationEntity;
 import io.cem.modules.cem.entity.RecordHourTracertEntity;
 import io.cem.modules.cem.entity.ScoreEntity;
 

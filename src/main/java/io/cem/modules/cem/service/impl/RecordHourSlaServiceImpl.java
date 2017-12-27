@@ -3739,6 +3739,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 					tcpSla.setServiceType(slaList.get(i).getServiceType());
 					tcpSla.setTargetName(slaList.get(i).getTargetName());
 					tcpSla.setTargetId(slaList.get(i).getTargetId());
+					tcpSla.setRecordDate(slaList.get(i).getRecordDate());
+					tcpSla.setRecordTime(slaList.get(i).getRecordTime());
 					tcpSla.setScore(score);
 					tcpSla.setBase(Double.parseDouble(pros.getValue("sla_tcp")));
 
@@ -4309,6 +4311,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 					udpSla.setServiceType(slaList.get(i).getServiceType());
 					udpSla.setTargetName(slaList.get(i).getTargetName());
 					udpSla.setTargetId(slaList.get(i).getTargetId());
+					udpSla.setRecordDate(slaList.get(i).getRecordDate());
+					udpSla.setRecordTime(slaList.get(i).getRecordTime());
 					udpSla.setScore(score);
 					udpSla.setBase(Double.parseDouble(pros.getValue("sla_udp")));
 
@@ -4391,6 +4395,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				DNS.setServiceType(dnsList.get(i).getServiceType());
 				DNS.setTargetName(dnsList.get(i).getTargetName());
 				DNS.setTargetId(dnsList.get(i).getTargetId());
+				DNS.setRecordDate(dnsList.get(i).getRecordDate());
+				DNS.setRecordTime(dnsList.get(i).getRecordTime());
 				DNS.setScore(score);
 				DNS.setBase(Double.parseDouble(pros.getValue("dns")));
 
@@ -4471,6 +4477,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				DHCP.setServiceType(dnsList.get(i).getServiceType());
 				DHCP.setTargetName(dnsList.get(i).getTargetName());
 				DHCP.setTargetId(dnsList.get(i).getTargetId());
+				DHCP.setRecordDate(dnsList.get(i).getRecordDate());
+				DHCP.setRecordTime(dnsList.get(i).getRecordTime());
 				DHCP.setScore(score);
 				DHCP.setBase(Double.parseDouble(pros.getValue("dhcp")));
 
@@ -4580,6 +4588,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				PPPOE.setServiceType(pppoeList.get(i).getServiceType());
 				PPPOE.setTargetName(pppoeList.get(i).getTargetName());
 				PPPOE.setTargetId(pppoeList.get(i).getTargetId());
+				PPPOE.setRecordDate(pppoeList.get(i).getRecordDate());
+				PPPOE.setRecordTime(pppoeList.get(i).getRecordTime());
 				PPPOE.setScore(score);
 				PPPOE.setBase(Double.parseDouble(pros.getValue("adsl")));
 
@@ -4659,6 +4669,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				RADIUS.setServiceType(radiusList.get(i).getServiceType());
 				RADIUS.setTargetName(radiusList.get(i).getTargetName());
 				RADIUS.setTargetId(radiusList.get(i).getTargetId());
+				RADIUS.setRecordDate(radiusList.get(i).getRecordDate());
+				RADIUS.setRecordTime(radiusList.get(i).getRecordTime());
 				RADIUS.setScore(score);
 				RADIUS.setBase(Double.parseDouble(pros.getValue("radius")));
 
@@ -4676,6 +4688,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				scoreTarget.setCountyName(slaTcp.get(i).getCountyName());
 				scoreTarget.setProbeName(slaTcp.get(i).getProbeName());
 				scoreTarget.setTargetName(slaTcp.get(i).getTargetName());
+				scoreTarget.setRecordDate(slaTcp.get(i).getRecordDate());
+				scoreTarget.setRecordTime(slaTcp.get(i).getRecordTime());
 				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
 				scoreBase.setScore((slaTcp.get(i).getScore()) * (slaTcp.get(i).getBase()));
 				scoreBase.setBase(slaTcp.get(i).getBase());

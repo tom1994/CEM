@@ -232,11 +232,11 @@ public class RecordHourPingController {
 
 
 	/**
-	 * ZTY用于质量评分界面计算分和画图
+	 * ZTY用于质量评分界面计算分
 	 */
 	@RequestMapping("/qualityList")
 	@RequiresPermissions("recordhourping:qualityList")
-	public List<ScoreEntity> qualityList(String probedata){
+	public R qualityList(String probedata){
 		//查询列表数据
 		Map<String, Object> map = new HashMap<>();
 		JSONObject probedata_jsonobject = JSONObject.parseObject(probedata);
@@ -246,12 +246,9 @@ public class RecordHourPingController {
 		} catch (RuntimeException e) {
 			throw new RRException("内部参数错误，请重试！");
 		}
-		int service = Integer.parseInt(map.get("service").toString());
-		System.out.println(service);
 		String dateStr = map.get("ava_start").toString();
 		String dateStr2 = map.get("ava_terminal").toString();
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		SimpleDateFormat format2 = new SimpleDateFormat("yyyy-MM-dd");
 		int dateDifferent = 0;
 		try
 		{
@@ -262,72 +259,437 @@ public class RecordHourPingController {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		List<ScoreEntity> scoreList = new ArrayList<>();
+
+		EvaluationEntity score = new EvaluationEntity();
 		//查询天表
 		if (dateDifferent>5){
-			if (service==1){
-				List<RecordHourPingEntity> pingList = recordHourPingService.queryDayList(map);
-				List<RecordHourTracertEntity> tracertList = recordHourTracertService.queryDayList(map);
-				scoreList = recordHourPingService.calculateServiceDate1(pingList, tracertList);
+			//网络连通性业务
+			List<RecordHourPingEntity> pingList = recordHourPingService.queryDayList(map);
+			List<RecordHourTracertEntity> tracertList = recordHourTracertService.queryDayList(map);
+			List<ScoreEntity> connectionList = recordHourPingService.calculateServiceDate1(pingList, tracertList);
+			if(connectionList.size()!=0) {
+				double maxConnection = connectionList.get(0).getScore();
+				double averageConnection = 0;
+				double sumConnection = 0;
+				double minConnection = connectionList.get(0).getScore();
+				for (int i = 1; i < connectionList.size(); i++) {
+					if (connectionList.get(i).getScore() > maxConnection) {
+						maxConnection = connectionList.get(i).getScore();
+					} else {
+					}
+				}
+				score.setConnectionMax(maxConnection);
+				for (int i = 1; i < connectionList.size(); i++) {
+					if (connectionList.get(i).getScore() < minConnection) {
+						minConnection = connectionList.get(i).getScore();
+					} else {
+					}
+				}
+				score.setConnectionMin(minConnection);
+
+				for (int i = 0; i < connectionList.size(); i++) {
+					sumConnection += connectionList.get(i).getScore();
+				}
+				averageConnection = sumConnection / connectionList.size();
+				score.setConnectionAverage(averageConnection);
+			}else{
+				score.setConnectionMax(0.0);
+				score.setConnectionAverage(0.0);
+				score.setConnectionMin(0.0);
 			}
-			else if (service==2){
-				List<RecordHourSlaEntity> slaList = recordHourSlaService.queryDayList(map);
-				List<RecordHourDnsEntity> dnsList = recordHourDnsService.queryDayList(map);
-				List<RecordHourDhcpEntity> dhcpList = recordHourDhcpService.queryDayList(map);
-				List<RecordHourPppoeEntity> pppoeList = recordHourPppoeService.queryDayList(map);
-				List<RecordHourRadiusEntity> radiusList = recordHourRadiusService.queryDayList(map);
-				scoreList = recordHourSlaService.calculateServiceDate2(slaList, dnsList, dhcpList, pppoeList, radiusList);
+
+			//网络层质量业务
+			List<RecordHourSlaEntity> slaList = recordHourSlaService.queryDayList(map);
+			List<RecordHourDnsEntity> dnsList = recordHourDnsService.queryDayList(map);
+			List<RecordHourDhcpEntity> dhcpList = recordHourDhcpService.queryDayList(map);
+			List<RecordHourPppoeEntity> pppoeList = recordHourPppoeService.queryDayList(map);
+			List<RecordHourRadiusEntity> radiusList = recordHourRadiusService.queryDayList(map);
+			List<ScoreEntity> qualityList = recordHourSlaService.calculateServiceDate2(slaList, dnsList, dhcpList, pppoeList, radiusList);
+			if(qualityList.size()!=0) {
+				double maxQuality = qualityList.get(0).getScore();
+				double averageQuality = 0;
+				double sumQuality = 0;
+				double minQuality = qualityList.get(0).getScore();
+				for (int i = 1; i < qualityList.size(); i++) {
+					if (qualityList.get(i).getScore() > maxQuality) {
+						maxQuality = qualityList.get(i).getScore();
+					} else {
+					}
+				}
+				score.setQualityMax(maxQuality);
+				for (int i = 1; i < qualityList.size(); i++) {
+					if (qualityList.get(i).getScore() < minQuality) {
+						minQuality = qualityList.get(i).getScore();
+					} else {
+					}
+				}
+				score.setQualityMin(minQuality);
+
+				for (int i = 0; i < qualityList.size(); i++) {
+					sumQuality += qualityList.get(i).getScore();
+				}
+				averageQuality = sumQuality / qualityList.size();
+				score.setQualityAverage(averageQuality);
+			}else{
+				score.setQualityMax(0.0);
+				score.setQualityAverage(0.0);
+				score.setQualityMin(0.0);
 			}
-			else if (service==3){
-				List<RecordHourWebPageEntity> webPageList = recordHourWebPageService.queryDayList(map);
-				scoreList = recordHourWebPageService.calculateService3(webPageList);
+
+
+			//文件下载类业务
+			List<RecordHourWebPageEntity> webPageList = recordHourWebPageService.queryDayList(map);
+			List<ScoreEntity> pageList = recordHourWebPageService.calculateService3(webPageList);
+			if (pageList.size()!=0) {
+				double maxPage = pageList.get(0).getScore();
+				double averagePage = 0;
+				double sumPage = 0;
+				double minPage = pageList.get(0).getScore();
+				for (int i = 1; i < pageList.size(); i++) {
+					if (pageList.get(i).getScore() > maxPage) {
+						maxPage = pageList.get(i).getScore();
+					} else {
+					}
+				}
+				score.setPageMax(maxPage);
+				for (int i = 1; i < pageList.size(); i++) {
+					if (pageList.get(i).getScore() < minPage) {
+						minPage = pageList.get(i).getScore();
+					} else {
+					}
+				}
+				score.setPageMin(minPage);
+
+				for (int i = 0; i < pageList.size(); i++) {
+					sumPage += pageList.get(i).getScore();
+				}
+				averagePage = sumPage / pageList.size();
+				score.setPageAverage(averagePage);
+			} else {
+				score.setPageMax(0.0);
+				score.setPageAverage(0.0);
+				score.setPageMin(0.0);
 			}
-			else if (service==4){
-				List<RecordHourWebDownloadEntity> webDownloadList = recordHourWebDownloadService.queryDayList(map);
-				List<RecordHourFtpEntity> ftpList = recordHourFtpService.queryDayList(map);
-				scoreList = recordHourWebDownloadService.calculateServiceDate4(webDownloadList, ftpList);
+
+			//网页浏览类业务
+			List<RecordHourWebDownloadEntity> webDownloadList = recordHourWebDownloadService.queryDayList(map);
+			List<RecordHourFtpEntity> ftpList = recordHourFtpService.queryDayList(map);
+			List<ScoreEntity> downloadList = recordHourWebDownloadService.calculateServiceDate4(webDownloadList, ftpList);
+			if (downloadList.size()!=0) {
+				double maxDownload = downloadList.get(0).getScore();
+				double averageDownload = 0;
+				double sumDownload = 0;
+				double minDownload = downloadList.get(0).getScore();
+				for (int i = 1; i < downloadList.size(); i++) {
+					if (downloadList.get(i).getScore() > maxDownload) {
+						maxDownload = downloadList.get(i).getScore();
+					} else {
+					}
+				}
+				score.setDownloadMax(maxDownload);
+				for (int i = 1; i < downloadList.size(); i++) {
+					if (downloadList.get(i).getScore() < minDownload) {
+						minDownload = downloadList.get(i).getScore();
+					} else {
+					}
+				}
+				score.setDownloadMin(minDownload);
+
+				for (int i = 0; i < downloadList.size(); i++) {
+					sumDownload += downloadList.get(i).getScore();
+				}
+				averageDownload = sumDownload / downloadList.size();
+				score.setDownloadAverage(averageDownload);
+			} else {
+				score.setDownloadMax(0.0);
+				score.setDownloadAverage(0.0);
+				score.setDownloadMin(0.0);
 			}
-			else if (service==5){
-				List<RecordHourWebVideoEntity> videoList = recordHourWebVideoService.queryDayList(map);
-				scoreList = recordHourWebVideoService.calculateService5(videoList);
+
+			//在线视频业务
+			List<RecordHourWebVideoEntity> videoList = recordHourWebVideoService.queryDayList(map);
+			List<ScoreEntity> videoServiceList = recordHourWebVideoService.calculateService5(videoList);
+			if (videoServiceList.size()!=0) {
+				double maxVideo = videoServiceList.get(0).getScore();
+				double averageVideo = 0;
+				double sumVideo = 0;
+				double minVideo = videoServiceList.get(0).getScore();
+				for (int i = 1; i < videoServiceList.size(); i++) {
+					if (videoServiceList.get(i).getScore() > maxVideo) {
+						maxVideo = videoServiceList.get(i).getScore();
+					} else {
+					}
+				}
+				score.setVideoMax(maxVideo);
+				for (int i = 1; i < videoServiceList.size(); i++) {
+					if (videoServiceList.get(i).getScore() < minVideo) {
+						minVideo = videoServiceList.get(i).getScore();
+					} else {
+					}
+				}
+				score.setVideoMin(minVideo);
+
+				for (int i = 0; i < videoServiceList.size(); i++) {
+					sumVideo += videoServiceList.get(i).getScore();
+				}
+				averageVideo = sumVideo / videoServiceList.size();
+				score.setVideoAverage(averageVideo);
+			} else {
+				score.setVideoMax(0.0);
+				score.setVideoAverage(0.0);
+				score.setVideoMin(0.0);
 			}
-			else if (service==6){
-				List<RecordHourGameEntity> gameList = recordHourGameService.queryDayList(map);
-				scoreList = recordHourGameService.calculateService6(gameList);
+
+			//网络游戏业务
+			List<RecordHourGameEntity> gameList = recordHourGameService.queryDayList(map);
+			List<ScoreEntity> gameServiceList = recordHourGameService.calculateService6(gameList);
+			if (gameServiceList.size()!=0) {
+				double maxGame = gameServiceList.get(0).getScore();
+				double averageGame = 0;
+				double sumGame = 0;
+				double minGame = gameServiceList.get(0).getScore();
+				for (int i = 1; i < gameServiceList.size(); i++) {
+					if (gameServiceList.get(i).getScore() > maxGame) {
+						maxGame = gameServiceList.get(i).getScore();
+					} else {
+					}
+				}
+				score.setGameMax(maxGame);
+				for (int i = 1; i < gameServiceList.size(); i++) {
+					if (gameServiceList.get(i).getScore() < minGame) {
+						minGame = gameServiceList.get(i).getScore();
+					} else {
+					}
+				}
+				score.setGameMin(minGame);
+
+				for (int i = 0; i < gameServiceList.size(); i++) {
+					sumGame += gameServiceList.get(i).getScore();
+				}
+				averageGame = sumGame / gameServiceList.size();
+				score.setGameAverage(averageGame);
+			} else {
+				score.setGameMax(0.0);
+				score.setGameAverage(0.0);
+				score.setGameMin(0.0);
 			}
-			else {}
+
 		}
 		//查询小时表
 		else {
-			if (service == 1) {
-				List<RecordHourPingEntity> pingList = recordHourPingService.queryPingList(map);
-				List<RecordHourTracertEntity> tracertList = recordHourTracertService.queryTracertList(map);
-				scoreList = recordHourPingService.calculateServiceDate1(pingList, tracertList);
-			} else if (service == 2) {
-				List<RecordHourSlaEntity> slaList = recordHourSlaService.querySlaList(map);
-				List<RecordHourDnsEntity> dnsList = recordHourDnsService.queryDnsList(map);
-				List<RecordHourDhcpEntity> dhcpList = recordHourDhcpService.queryDhcpList(map);
-				List<RecordHourPppoeEntity> pppoeList = recordHourPppoeService.queryPppoeList(map);
-				List<RecordHourRadiusEntity> radiusList = recordHourRadiusService.queryRadiusList(map);
-				scoreList = recordHourSlaService.calculateServiceDate2(slaList, dnsList, dhcpList, pppoeList, radiusList);
-			} else if (service == 3) {
-				List<RecordHourWebPageEntity> webPageList = recordHourWebPageService.queryWebList(map);
-				scoreList = recordHourWebPageService.calculateService3(webPageList);
-			} else if (service == 4) {
-				List<RecordHourWebDownloadEntity> webDownloadList = recordHourWebDownloadService.queryWebDownloadList(map);
-				List<RecordHourFtpEntity> ftpList = recordHourFtpService.queryFtpList(map);
-				scoreList = recordHourWebDownloadService.calculateServiceDate4(webDownloadList, ftpList);
-			} else if (service == 5) {
-				List<RecordHourWebVideoEntity> videoList = recordHourWebVideoService.queryVideoList(map);
-				scoreList = recordHourWebVideoService.calculateService5(videoList);
-			} else if (service == 6) {
-				List<RecordHourGameEntity> gameList = recordHourGameService.queryGameList(map);
-				scoreList = recordHourGameService.calculateService6(gameList);
+			//网络连通性业务
+			List<RecordHourPingEntity> pingList = recordHourPingService.queryPingList(map);
+			List<RecordHourTracertEntity> tracertList = recordHourTracertService.queryTracertList(map);
+			List<ScoreEntity> connectionList = recordHourPingService.calculateServiceDate1(pingList, tracertList);
+			if (connectionList.size()!=0) {
+				double maxConnection = connectionList.get(0).getScore();
+				double averageConnection = 0;
+				double sumConnection = 0;
+				double minConnection = connectionList.get(0).getScore();
+				for (int i = 1; i < connectionList.size(); i++) {
+					if (connectionList.get(i).getScore() > maxConnection) {
+						maxConnection = connectionList.get(i).getScore();
+					} else {
+					}
+				}
+				score.setConnectionMax(maxConnection);
+				for (int i = 1; i < connectionList.size(); i++) {
+					if (connectionList.get(i).getScore() < minConnection) {
+						minConnection = connectionList.get(i).getScore();
+					} else {
+					}
+				}
+				score.setConnectionMin(minConnection);
+
+				for (int i = 0; i < connectionList.size(); i++) {
+					sumConnection += connectionList.get(i).getScore();
+				}
+				averageConnection = sumConnection / connectionList.size();
+				score.setConnectionAverage(averageConnection);
 			} else {
+				score.setConnectionMax(0.0);
+				score.setConnectionAverage(0.0);
+				score.setConnectionMin(0.0);
+			}
+
+			//网络层质量业务
+			List<RecordHourSlaEntity> slaList = recordHourSlaService.querySlaList(map);
+			List<RecordHourDnsEntity> dnsList = recordHourDnsService.queryDnsList(map);
+			List<RecordHourDhcpEntity> dhcpList = recordHourDhcpService.queryDhcpList(map);
+			List<RecordHourPppoeEntity> pppoeList = recordHourPppoeService.queryPppoeList(map);
+			List<RecordHourRadiusEntity> radiusList = recordHourRadiusService.queryRadiusList(map);
+			List<ScoreEntity> qualityList = recordHourSlaService.calculateServiceDate2(slaList, dnsList, dhcpList, pppoeList, radiusList);
+			if (qualityList.size()!=0) {
+				double maxQuality = qualityList.get(0).getScore();
+				double averageQuality = 0;
+				double sumQuality = 0;
+				double minQuality = qualityList.get(0).getScore();
+				for (int i = 1; i < qualityList.size(); i++) {
+					if (qualityList.get(i).getScore() > maxQuality) {
+						maxQuality = qualityList.get(i).getScore();
+					} else {
+					}
+				}
+				score.setQualityMax(maxQuality);
+				for (int i = 1; i < qualityList.size(); i++) {
+					if (qualityList.get(i).getScore() < minQuality) {
+						minQuality = qualityList.get(i).getScore();
+					} else {
+					}
+				}
+				score.setQualityMin(minQuality);
+
+				for (int i = 0; i < qualityList.size(); i++) {
+					sumQuality += qualityList.get(i).getScore();
+				}
+				averageQuality = sumQuality / qualityList.size();
+				score.setQualityAverage(averageQuality);
+			} else {
+				score.setQualityMax(0.0);
+				score.setQualityAverage(0.0);
+				score.setQualityMin(0.0);
+			}
+
+			//网页浏览类业务
+			List<RecordHourWebPageEntity> webPageList = recordHourWebPageService.queryWebList(map);
+			List<ScoreEntity> pageList = recordHourWebPageService.calculateService3(webPageList);
+			if (pageList.size()!=0) {
+				double maxPage = pageList.get(0).getScore();
+				double averagePage = 0;
+				double sumPage = 0;
+				double minPage = pageList.get(0).getScore();
+				for (int i = 1; i < pageList.size(); i++) {
+					if (pageList.get(i).getScore() > maxPage) {
+						maxPage = pageList.get(i).getScore();
+					} else {
+					}
+				}
+				score.setPageMax(maxPage);
+				for (int i = 1; i < pageList.size(); i++) {
+					if (pageList.get(i).getScore() < minPage) {
+						minPage = pageList.get(i).getScore();
+					} else {
+					}
+				}
+				score.setPageMin(minPage);
+
+				for (int i = 0; i < pageList.size(); i++) {
+					sumPage += pageList.get(i).getScore();
+				}
+				averagePage = sumPage / pageList.size();
+				score.setPageAverage(averagePage);
+			} else {
+				score.setPageMax(0.0);
+				score.setPageAverage(0.0);
+				score.setPageMin(0.0);
+			}
+
+
+			//文件下载类业务
+			List<RecordHourWebDownloadEntity> webDownloadList = recordHourWebDownloadService.queryWebDownloadList(map);
+			List<RecordHourFtpEntity> ftpList = recordHourFtpService.queryFtpList(map);
+			List<ScoreEntity> downloadList = recordHourWebDownloadService.calculateServiceDate4(webDownloadList, ftpList);
+			if (downloadList.size()!=0) {
+				double maxDownload = downloadList.get(0).getScore();
+				double averageDownload = 0;
+				double sumDownload = 0;
+				double minDownload = downloadList.get(0).getScore();
+				for (int i = 1; i < downloadList.size(); i++) {
+					if (downloadList.get(i).getScore() > maxDownload) {
+						maxDownload = downloadList.get(i).getScore();
+					} else {
+					}
+				}
+				score.setDownloadMax(maxDownload);
+				for (int i = 1; i < downloadList.size(); i++) {
+					if (downloadList.get(i).getScore() < minDownload) {
+						minDownload = downloadList.get(i).getScore();
+					} else {
+					}
+				}
+				score.setDownloadMin(minDownload);
+
+				for (int i = 0; i < downloadList.size(); i++) {
+					sumDownload += downloadList.get(i).getScore();
+				}
+				averageDownload = sumDownload / downloadList.size();
+				score.setDownloadAverage(averageDownload);
+			} else {
+				score.setDownloadMax(0.0);
+				score.setDownloadAverage(0.0);
+				score.setDownloadMin(0.0);
+			}
+
+			//在线视频业务
+			List<RecordHourWebVideoEntity> videoList = recordHourWebVideoService.queryVideoList(map);
+			List<ScoreEntity> videoServiceList = recordHourWebVideoService.calculateService5(videoList);
+			if (videoServiceList.size()!=0) {
+				double maxVideo = videoServiceList.get(0).getScore();
+				double averageVideo = 0;
+				double sumVideo = 0;
+				double minVideo = videoServiceList.get(0).getScore();
+				for (int i = 1; i < videoServiceList.size(); i++) {
+					if (videoServiceList.get(i).getScore() > maxVideo) {
+						maxVideo = videoServiceList.get(i).getScore();
+					} else {
+					}
+				}
+				score.setVideoMax(maxVideo);
+				for (int i = 1; i < videoServiceList.size(); i++) {
+					if (videoServiceList.get(i).getScore() < minVideo) {
+						minVideo = videoServiceList.get(i).getScore();
+					} else {
+					}
+				}
+				score.setVideoMin(minVideo);
+
+				for (int i = 0; i < videoServiceList.size(); i++) {
+					sumVideo += videoServiceList.get(i).getScore();
+				}
+				averageVideo = sumVideo / videoServiceList.size();
+				score.setVideoAverage(averageVideo);
+			} else {
+				score.setVideoMax(0.0);
+				score.setVideoAverage(0.0);
+				score.setVideoMin(0.0);
+			}
+
+			//网络游戏业务
+			List<RecordHourGameEntity> gameList = recordHourGameService.queryGameList(map);
+			List<ScoreEntity> gameServiceList = recordHourGameService.calculateService6(gameList);
+			if (gameServiceList.size()!=0) {
+				double maxGame = gameServiceList.get(0).getScore();
+				double averageGame = 0;
+				double sumGame = 0;
+				double minGame = gameServiceList.get(0).getScore();
+				for (int i = 1; i < gameServiceList.size(); i++) {
+					if (gameServiceList.get(i).getScore() > maxGame) {
+						maxGame = gameServiceList.get(i).getScore();
+					} else {
+					}
+				}
+				score.setGameMax(maxGame);
+				for (int i = 1; i < gameServiceList.size(); i++) {
+					if (gameServiceList.get(i).getScore() < minGame) {
+						minGame = gameServiceList.get(i).getScore();
+					} else {
+					}
+				}
+				score.setGameMin(minGame);
+
+				for (int i = 0; i < gameServiceList.size(); i++) {
+					sumGame += gameServiceList.get(i).getScore();
+				}
+				averageGame = sumGame / gameServiceList.size();
+				score.setGameAverage(averageGame);
+			} else {
+				score.setGameMax(0.0);
+				score.setGameAverage(0.0);
+				score.setGameMin(0.0);
 			}
 		}
 
-		return scoreList;
+		return R.ok().put("score", score);
 
 	}
 	
