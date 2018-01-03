@@ -220,19 +220,15 @@ var search_area_service = new Vue({
                 console.log("时间选择有误，请重新选择！");
                 $('#nonavailable_time').modal('show');
             }else{
-                var ava_start=searchJson.startDate.substr(0,10);
-                var ava_terminal=searchJson.terminalDate.substr(0,10);
-                var startTime=searchJson.startDate.substr(11,15);
-                var terminalTime=searchJson.startDate.substr(11,15);
                 var search = new Object();
                 search.city_id = searchJson.city_id;
                 search.couty_id = searchJson.county_id;
                 search.service = searchJson.servicetype;
                 search.target_id = searchJson.target_id;
-                search.ava_start = ava_start;
-                search.ava_terminal = ava_terminal;
-                search.starTime = startTime;
-                search.terminalTime = terminalTime;
+                search.ava_start = searchJson.startDate.substr(0,10);
+                search.ava_terminal = searchJson.terminalDate.substr(0,10);
+                search.starTime = searchJson.startDate.substr(11,15);
+                search.terminalTime = searchJson.startDate.substr(11,15);
                 var schedulepolicy = JSON.stringify(search);
                 console.log(schedulepolicy);
                 areatable.probedata = search;

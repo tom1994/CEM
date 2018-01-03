@@ -27,6 +27,8 @@ public class AlarmTemplateEntity implements Serializable {
 	private String remark;
 	//创建时间
 	private Date createTime;
+	//子业务名称
+	private String serviceName;
 
 	/**
 	 * 设置：告警模板ID
@@ -99,5 +101,13 @@ public class AlarmTemplateEntity implements Serializable {
 	 */
 	public Date getCreateTime() {
 		return createTime;
+	}
+
+	public String getServiceName() {
+		return serviceName;
+	}
+
+	public void setServiceName(String serviceName) {
+		this.serviceName = serviceName;
 	}
 }

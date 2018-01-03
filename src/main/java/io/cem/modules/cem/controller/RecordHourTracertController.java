@@ -58,7 +58,7 @@ public class RecordHourTracertController {
 	private RecordHourGameService recordHourGameService;
 	
 	/**
-	 * 列表
+	 * ZTY用于区域排名
 	 */
 	@RequestMapping("/list")
 	@RequiresPermissions("recordhourtracert:list")

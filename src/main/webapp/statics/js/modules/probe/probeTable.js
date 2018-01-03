@@ -492,8 +492,8 @@ var delete_data = new Vue({
             $(this.$el).modal('hide');
 
         },
-        cancel_delete: function () {
-
+        cancel_delete: function (obj) {
+            $(this.$el).modal('hide');
         },
         delete_data: function () {
             idArray = [];
