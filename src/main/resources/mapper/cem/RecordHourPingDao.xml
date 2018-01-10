@@ -36,18 +36,43 @@
 	</select>
 
 	<select id="queryList" resultType="io.cem.modules.cem.entity.RecordHourPingEntity">
-		select * from record_hour_ping
-        <choose>
-            <when test="sidx != null and sidx.trim() != ''">
-                order by ${sidx} ${order}
-            </when>
-			<otherwise>
-                order by id desc
-			</otherwise>
-        </choose>
-		<if test="offset != null and limit != null">
-			limit #{offset}, #{limit}
+		select
+		    record_hour_ping.* ,
+		    city.city_name     AS city_name,
+		    county.county_name AS area_name,
+		    probe.probe_name AS probe_name,
+		    probe.access_layer,
+		    target.target_name AS target_name
+		FROM record_hour_ping rhp
+		LEFT JOIN city
+		ON rhp.city_id = city.city_id
+		LEFT JOIN county
+		ON rhp.county_id = county.county_id
+		LEFT JOIN probe
+		ON rhp.probe_id = probe.id
+		LEFT JOIN target
+		ON rhp.target_id = target.id
+		WHERE rhp.record_date BETWEEN #{ava_start} AND #{ava_terminal}
+		<if test="city_id != null and city_id != ''">
+			AND record_hour_ping.city_id = #{city_id}
 		</if>
+		<if test="county_id != null and county_id != ''">
+			AND record_hour_ping.county_id = #{county_id}
+		</if>
+		<if test="target_id != null and target_id != ''">
+			AND record_hour_ping.target_id = #{target_id}
+		</if>
+		<if test="probe_id != null and probe_id != ''">
+			AND record_hour_ping.probe_id = #{probe_id}
+		</if>
+		<choose>
+			<when test="sidx != null and sidx.trim() != ''">
+				order by ${sidx} ${order}
+			</when>
+			<otherwise>
+				order by id desc
+			</otherwise>
+		</choose>
 	</select>
 
 	<select id="queryPingList" resultType="io.cem.modules.cem.entity.RecordHourPingEntity">

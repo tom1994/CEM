@@ -391,10 +391,12 @@ var taskform_data = new Vue({
             var oDate = new Date();
             var tasknewJson = getFormJson($('#taskform_data'));
             var paramnewJson = getFormJson($('#taskform_param'));
+            console.log(paramnewJson);
             tasknewJson.parameter = paramnewJson;
             tasknewJson.isDeleted = 0;
             tasknewJson.createTime = oDate.getDate();
             tasknewJson.remark = "无";
+            console.log(tasknewJson);
             var tasknew = JSON.stringify(tasknewJson);
             $.ajax({
                 type: "POST", /*GET会乱码*/

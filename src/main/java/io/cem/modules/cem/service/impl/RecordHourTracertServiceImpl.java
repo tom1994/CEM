@@ -1,8 +1,6 @@
 package io.cem.modules.cem.service.impl;
 
-import io.cem.modules.cem.entity.ScoreBaseEntity;
-import io.cem.modules.cem.entity.ScoreEntity;
-import io.cem.modules.cem.entity.ScoreTargetEntity;
+import io.cem.modules.cem.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +8,6 @@ import java.io.IOException;
 import java.util.*;
 
 import io.cem.modules.cem.dao.RecordHourTracertDao;
-import io.cem.modules.cem.entity.RecordHourTracertEntity;
 import io.cem.modules.cem.service.RecordHourTracertService;
 
 

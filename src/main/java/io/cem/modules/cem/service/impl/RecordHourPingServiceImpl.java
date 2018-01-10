@@ -3722,7 +3722,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 		}catch(IOException e){}
 		return connectionScore;
 
-	};
+	}
 
 	public Map<ScoreTargetEntity,ScoreBaseEntity> putMap(List<ScoreEntity> list,Map<ScoreTargetEntity,ScoreBaseEntity> map){
 		for (int i = 0; i < list.size(); i++) {
@@ -3765,6 +3765,8 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 			scoreTarget.setCountyName(list.get(i).getCountyName());
 			scoreTarget.setProbeName(list.get(i).getProbeName());
 			scoreTarget.setTargetName(list.get(i).getTargetName());
+			scoreTarget.setRecordDate(list.get(i).getRecordDate());
+			scoreTarget.setRecordTime(list.get(i).getRecordTime());
 
 			if (!map.containsKey(scoreTarget)) {
 				ScoreBaseEntity scoreBase = new ScoreBaseEntity();

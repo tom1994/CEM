@@ -11,6 +11,7 @@
         <result property="value" column="value"/>
         <result property="remark" column="remark"/>
         <result property="createTime" column="create_time"/>
+		<result property="serviceName" column="service_name"/>
     </resultMap>
 
 	<select id="queryObject" resultType="io.cem.modules.cem.entity.AlarmTemplateEntity">
@@ -18,7 +19,11 @@
 	</select>
 
 	<select id="queryList" resultType="io.cem.modules.cem.entity.AlarmTemplateEntity">
-		select * from alarm_template
+		select alarm_template.* ,
+		a.data_name        AS service_name
+		FROM alarm_template
+		LEFT JOIN dic_data a
+		ON (alarm_template.service_type = a.data_id AND a.dic_type_id = 5)
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
                 order by ${sidx} ${order}
@@ -33,8 +38,12 @@
 	</select>
 
 	<select id="queryatList" resultType="io.cem.modules.cem.entity.AlarmTemplateEntity">
-		select * from alarm_template
-		WHERE service_type = #{value}
+		select alarm_template.* ,
+		a.data_name        AS service_name
+		FROM alarm_template
+		LEFT JOIN dic_data a
+		ON (alarm_template.service_type = a.data_id AND a.dic_type_id = 5)
+		WHERE alarm_template.id = #{value}
 		order by id
 	</select>
 	

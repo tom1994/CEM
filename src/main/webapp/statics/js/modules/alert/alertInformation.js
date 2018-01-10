@@ -276,14 +276,12 @@ var alerttable = new Vue({
 
 
 $('#start_date').flatpickr({
-    enableTime: true,
-    dateFormat: "Y-m-d H:i",
+    dateFormat: "Y-m-d",
     time_24hr: true
 });
 
 $('#terminal_date').flatpickr({
-    enableTime: true,
-    dateFormat: "Y-m-d H:i",
+    dateFormat: "Y-m-d",
     time_24hr: true
 });
 

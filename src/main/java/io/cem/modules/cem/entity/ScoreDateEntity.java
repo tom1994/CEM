@@ -1,6 +1,9 @@
 package io.cem.modules.cem.entity;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class ScoreDateEntity {
     //地市
@@ -106,12 +109,23 @@ public class ScoreDateEntity {
 
     @Override
     public boolean equals(Object obj) {
-        ScoreDateEntity temp = (ScoreDateEntity) obj;
-        if(this.getCityId().equals(temp.getCityId())&&this.getCountyId().equals(temp.getCountyId())&&this.getProbeId().equals(temp.getProbeId())&&this.getTargetId().equals(temp.getTargetId())&&this.getRecordDate().equals(temp.getRecordDate())&&this.getRecordTime().equals(temp.getRecordTime())){
+        ScoreDateEntity temp = (ScoreDateEntity)obj;
+        String end_time = format(this.getRecordDate(), "yyyy-MM-dd", Locale.CHINA);
+        String end_time1= format(temp.getRecordDate(), "yyyy-MM-dd", Locale.CHINA);
+        if(this.getCityId().equals(temp.getCityId())&&this.getCountyId().equals(temp.getCountyId())&&this.getProbeId().equals(temp.getProbeId())&&this.getTargetId().equals(temp.getTargetId())&&end_time.equals(end_time1)&&this.getRecordTime().equals(temp.getRecordTime())){
             return true;
         }
         return false;
     }
+
+    //格式化指定类型的date​，返回String
+    public static String format(Date date, String pattern, Locale locale) {
+        if (date == null || pattern == null) {
+            return null;
+        }
+        return new SimpleDateFormat(pattern, locale).format(date);
+    }
+
 
 
     @Override
