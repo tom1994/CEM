@@ -131,7 +131,7 @@ var getProbe = function (countyid) {
 }
 
 var getTask = function (servicetype) {
-    console.log(servicetype);
+    //console.log(servicetype);
     $.ajax({
         url: "../../cem/task/infoByService/"+servicetype,
         type: "POST", /*GET会乱码*/
@@ -150,7 +150,7 @@ var getTask = function (servicetype) {
 
 /*此处的serviceId其实是superservice的*/
 var getTarget = function (serviceId) {
-    console.log(serviceId);
+    //console.log(serviceId);
     $.ajax({
         url: "../../target/infobat/"+serviceId,
         type: "POST", /*GET会乱码*/
@@ -178,9 +178,10 @@ var search_list = new Vue({
             dataType: "json",
             /* contentType:"application/json",  /!*必须要,不可少*!/*/
             success: function (result) {
-
             }
         });
+        getTask(1);
+        getTarget(1);
     },
     methods: {
         resultListsearch: function () {   /*查询监听事件*/
@@ -195,11 +196,15 @@ var search_list = new Vue({
             /*获取表单元素的值*/
             var starttemp = data.startDate;
             var termtemp = data.terminalDate;
+
+            /*if((data.startDate="") && (data.terminalDate=""))
+            {
+                data.startDate = '1900-12-12 00:00:00';
+                data.terminalDate = new Date();
+            }*/
+
             data.startDate = (data.startDate).substr(0,10);//截取日期部分字段
             data.terminalDate = (data.terminalDate).substr(0,10);
-            data.probe_id = parseInt(data.probe_id);
-            data.target_id = parseInt(data.target_id);
-            data.task_id = parseInt(data.task_id);
             /*可直接在json对象中添加键值对*/
             //data.startTime = starttemp.substr(11);//截取时刻部分字段
             //data.terminalTime = termtemp.substr(11);
@@ -223,8 +228,40 @@ var search_list = new Vue({
     }
 });
 
+//格式化日期
+Date.prototype.Format = function (fmt) {
+    var o = {
+        "y+": this.getFullYear(),
+        "M+": this.getMonth() + 1,                 //月份
+        "d+": this.getDate(),                    //日
+        "h+": this.getHours(),                   //小时
+        "m+": this.getMinutes(),                 //分
+        "s+": this.getSeconds(),                 //秒
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+        "S+": this.getMilliseconds()             //毫秒
+    };
+    for (var k in o) {
+        if (new RegExp("(" + k + ")").test(fmt)){
+            if(k == "y+"){
+                fmt = fmt.replace(RegExp.$1, ("" + o[k]).substr(4 - RegExp.$1.length));
+            }
+            else if(k=="S+"){
+                var lens = RegExp.$1.length;
+                lens = lens==1?3:lens;
+                fmt = fmt.replace(RegExp.$1, ("00" + o[k]).substr(("" + o[k]).length - 1,lens));
+            }
+            else{
+                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            }
+        }
+    }
+    return fmt;
+};
 
 
+var today = new Date();
+today.setDate(today.getDate() - 4); //显示近四天内的数据
+//console.log(today.Format("yyyy-MM-dd"));
 // ping统计结果列表(页面展示的是探针1对应的recordping)
 var pingresulttable = new Vue({
     el: '#pingdata_table',
@@ -254,7 +291,9 @@ var pingresulttable = new Vue({
         dtHandle: null,
         /*resultdata中的起止日期必须有初始值，因为xml中他们不能为空*/
         //resultdata: {startDate:'2017-11-24', startTime:'10:00',terminalDate:'2017-11-25',terminalTime:'11:00',probeId:'1',taskId:'2238',targetId:'2'}
-        resultdata: {startDate:'2017-11-24',terminalDate:'2017-11-27',probe_id:'1',task_id:'2238',target_id:'2'}
+        //resultdata: {startDate:'2017-11-24',terminalDate:'2017-11-27',probe_id:'1',task_id:'2238',target_id:'2'}
+
+        resultdata: {startDate:today.Format("yyyy-MM-dd"), terminalDate:(new Date()).Format("yyyy-MM-dd"), probe_id:'1',task_id:'2238',target_id:'2'}
     },
     methods: {
         reset: function () {
@@ -310,8 +349,9 @@ var pingresulttable = new Vue({
                 param.start = data.start;//开始的记录序号
                 param.page = (data.start / data.length) + 1;//当前页码
                 param.resultdata = JSON.stringify(vm.resultdata);
+                console.log(param.resultdata);
                 /*用于查询probe数据*/
-                console.log(param);
+                //console.log(param);
                 //ajax请求数据
                 $.ajax({
                     type: "POST", /*GET会乱码*/
@@ -331,7 +371,7 @@ var pingresulttable = new Vue({
                         let rows = [];
                         var i = param.start+1;
                         result.page.list.forEach(function (item) {
-                            console.log(item);
+                            //console.log(item);
                             let row = [];
                             row.push(i++);
                             row.push(item.probeName);
@@ -355,7 +395,7 @@ var pingresulttable = new Vue({
                             rows.push(row);
                         });
                         returnData.data = rows;
-                        console.log(returnData);
+                        //console.log(returnData);
                         //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);
@@ -401,7 +441,7 @@ var tracertresulttable = new Vue({
         rows: [],
         dtHandle: null,
         /*resultdata: {startDate:'2017-11-24', startTime:'10:00',terminalDate:'2017-11-25',terminalTime:'11:00',probeId:'1',taskId:'2238',targetId:'2'}*/
-        resultdata: {startDate:'2017-11-30',terminalDate:'2017-12-11',probe_id:'1',taskId:'2231',target_id:'5'}
+        resultdata: {startDate:'2017-11-30',terminalDate:'2017-12-11',probe_id:'1',taskId:'2245',target_id:'5'}
     },
     methods: {
         reset: function () {
@@ -519,6 +559,7 @@ var tracertresulttable = new Vue({
     }
 });
 
+/*
 var toExcel = new Vue({
     el:'#resulthandle',
     data:{
@@ -549,4 +590,4 @@ var toExcel = new Vue({
             });
         }
     }
-})
+})*/
