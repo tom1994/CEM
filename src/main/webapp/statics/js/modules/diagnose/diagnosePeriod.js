@@ -8,7 +8,7 @@ var probeNames = [];
 var status = 1;
 
 var layers = new Map();
-var layerNames = new Array();
+var layerNames = new Map();
 //格式化日期
 Date.prototype.Format = function (fmt) {
     var o = {
@@ -83,7 +83,7 @@ var button_change = new Vue({
 
     methods: {
         ping: function () {
-            staus = 1;
+            status = 1;
             console.log("连通性");
             options.title = this.option_ping.title;
             new_search.search();
@@ -91,35 +91,35 @@ var button_change = new Vue({
             /*重新绘图*/
         },
         sla: function () {
-            staus = 2;
+            status = 2;
             console.log("网络层");
             options.title = this.option_sla.title;
             new_search.search();
             var chart = new Highcharts.Chart('container', options)
         },
         web: function () {
-            staus = 3;
+            status = 3;
             console.log("web");
             options.title = this.option_web.title;
             new_search.search();
             var chart = new Highcharts.Chart('container', options)
         },
         download: function () {
-            staus = 4;
+            status = 4;
             options.title = this.option_web.title;
             new_search.search();
             var chart = new Highcharts.Chart('container', options)
             /*重新绘图*/
         },
         video: function () {
-            staus = 5;
+            status = 5;
             options.title = this.option_ping.title;
             new_search.search();
             var chart = new Highcharts.Chart('container', options)
             /*重新绘图*/
         },
         game: function () {
-            staus = 6;
+            status = 6;
             options.title = this.option_ping.title;
             new_search.search();
             var chart = new Highcharts.Chart('container', options)
@@ -148,6 +148,7 @@ var button_change = new Vue({
                 for (let i = 0; i < result.page.list.length; i++) {
                     // layers.set(result.page.list[i].layerTag, result.page.list[i].layerName);
                     layers.set(result.page.list[i].layerName, result.page.list[i].layerTag);
+                    layerNames.set(result.page.list[i].layerTag, result.page.list[i].layerName);
                     let newlayer = {};
                     newlayer.name = result.page.list[i].layerName;
                     newlayer.data = [];
@@ -157,26 +158,6 @@ var button_change = new Vue({
         });
     },
 });
-
-// var probedata_handle = new Vue({
-//     el: '#probesearch',
-//     data: {},
-//     mounted: function(){         /*动态加载测试任务组数据*/
-//         $.ajax({
-//             type: "POST",   /*GET会乱码*/
-//             url: "../../cem/city/list",
-//             cache: false,  //禁用缓存
-//             dataType: "json",
-//             /* contentType:"application/json",  /!*必须要,不可少*!/*/
-//             success: function (result) {
-//                 for(var i=0;i<result.page.list.length;i++){
-//                     cityNames[i] = {message: result.page.list[i]}
-//                 }
-//                 search_data.cities = cityNames;
-//             }
-//         });
-//     },
-// });
 
 var search_data = new Vue({
     el: '#probesearch',
@@ -206,7 +187,7 @@ var getArea = function (cityid) {
         success: function (result) {
             search_data.areas = [];
             areaNames = [];
-            for (var i = 0; i < result.county.length; i++) {
+            for (let i = 0; i < result.county.length; i++) {
                 areaNames[i] = {message: result.county[i]}
             }
             search_data.areas = areaNames;
@@ -216,17 +197,16 @@ var getArea = function (cityid) {
 
 var getProbe = function (countyid) {
     $.ajax({
-        url: "../../cem/probe/info/"+countyid,
+        url: "../../cem/probe/info/" + countyid,
         type: "POST",
         cache: false,  //禁用缓存
         dataType: "json",
         contentType: "application/json",
         success: function (result) {
             console.log(result);
-            for(var i=0;i<result.probe.length;i++){
+            for (var i = 0; i < result.probe.length; i++) {
                 probeNames[i] = {message: result.probe[i]}
             }
-            console.log(probeNames);
             search_data.probe = probeNames;
         }
     });
@@ -235,8 +215,6 @@ var getProbe = function (countyid) {
 var new_search = new Vue({
     /*监听查询事件*/
     el: '#search',
-    // data: {
-    // },
     methods: {
         search: function () {
             var searchJson = getFormJson($('#probesearch'));
@@ -244,9 +222,8 @@ var new_search = new Vue({
                 console.log("时间选择有误，请重新选择！");
                 toastr.warning('时间选择有误，请重新选择！');
             } else {
-                let search = {};
+                var search = {};
                 search.service = status;
-                console.log(searchJson);
                 search.city_id = searchJson.cityid;
                 search.county_id = searchJson.countyid;
                 search.probe_id = searchJson.probeid;
@@ -254,7 +231,11 @@ var new_search = new Vue({
                 search.ava_terminal = searchJson.terminalDate.substr(0, 10);
                 search.starTime = searchJson.startDate.substr(11, 15);
                 search.terminalTime = searchJson.startDate.substr(11, 15);
-                console.log(search);
+                if (search.ava_start.length != 0 && search.ava_terminal.length != 0) {
+                } else {
+                    search.ava_start =  new Date(new Date() - 1000 * 60 * 60 * 24 * 4).Format("yyyy-MM-dd");
+                    search.ava_terminal = (new Date()).Format("yyyy-MM-dd");
+                }
                 let param = {};
                 param.probedata = JSON.stringify(search);
                 $.ajax({
@@ -267,29 +248,10 @@ var new_search = new Vue({
                     success: function (result) {
                         console.log(result);
                         if (result.page.list.length !== 0) {
-                            // if (status == 1) {
-                            //     button_change.ping();
-                            // }
-                            // else if (status == 2) {
-                            //     button_change.sla();
-                            // }
-                            // else if (status == 3) {
-                            //     button_change.web();
-                            // }
-                            // else if (status == 4) {
-                            //     button_change.download();
-                            // }
-                            // else if (status == 5) {
-                            //     button_change.video();
-                            // }
-                            // else if (status == 6) {
-                            //     button_change.game();
-                            // }
-                            /*option先回到状态0,注意,不然会出错*/
                             new_data.scoredata = result.page.list;
-                            console.log("查询" + new_data.scoredata);
                         } else {
-                            toastr.warning('最近4天没有对应数据！');
+                            new_data.scoredata = [];
+                            toastr.warning('该日期范围没有对应数据！');
                         }
                     }
                 });
@@ -540,7 +502,7 @@ Vue.component('data-table', {
         return {
             headers: [
                 {title: '所属层级'},
-                // {title: '探针名称', class: 'some-special-class'},
+                {title: '测试目标', class: 'some-special-class'},
                 {title: '得分'},
                 {title: '时间'}
             ],
@@ -584,8 +546,8 @@ Vue.component('data-table', {
             var chart = new Highcharts.Chart('container', options);
             val.forEach(function (item) {              /*观察user是否变化,更新表格数据*/
                 let row = [];
-                row.push(item.accessLayer);
-                // row.push(item.probeName);
+                row.push(layerNames.get(item.accessLayer));
+                row.push(item.targetName);
                 row.push("" + item.score);
                 row.push("" + item.recordDate.substr(0, 10) + " " + item.recordTime + ":00")
                 // row.push(item.date);
@@ -642,6 +604,7 @@ $('#terminal_date').flatpickr({
     dateFormat: "Y-m-d H:i",
     time_24hr: true
 });
+
 function getFormJson(form) {      /*将表单对象变为json对象*/
     var o = {};
     var a = $(form).serializeArray();

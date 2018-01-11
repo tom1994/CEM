@@ -29,7 +29,7 @@
                                             <span class="searchname" title="地市" style="width: 40px">地市</span>
                                             <select id="selectcity" class="form-control" name="cityid"
                                                     v-on:change="citychange()" style="width: 110px">
-                                                <option value="1">所有地市</option>
+                                                <option value="">所有地市</option>
                                                 <option v-for="item in cities"
                                                         v-bind:value="item.message.cityId">{{ item.message.cityName }}
                                                 </option>
@@ -40,7 +40,7 @@
                                             <span class="searchname" title="区县" style="width: 40px">区县</span>
                                             <select id="selectarea" class="form-control " name="countyid"
                                                     v-on:change="areachange()" style="width: 110px">
-                                                <option value="1">所有区县</option>
+                                                <option value="">所有区县</option>
                                                 <option v-for="item in areas"
                                                         v-bind:value="item.message.countyId">{{
                                                     item.message.countyName}}

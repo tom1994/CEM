@@ -83,7 +83,7 @@ public class DiagnoseController {
         }
         List<ScoreEntity> scoreList = new ArrayList<>();
         int service = Integer.parseInt(map.get("service").toString());
-        if (map.get("probe_id") != null) {
+        if (map.get("probe_id") != null && ! map.get("probe_id").equals("")) {
             int probeId = Integer.parseInt(map.get("probe_id").toString());
             List<ProbeEntity> probeList = probeService.queryProbeByLayer(probeId);
 
