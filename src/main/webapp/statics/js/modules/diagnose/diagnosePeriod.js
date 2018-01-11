@@ -1,13 +1,12 @@
-var status;
-var idArray = new Array();
-var probeGroupNames = new Array();
-var cityNames = new Array();
-var areaNames = new Array();
-var serviceArray = new Array();
-var targetNames = new Array();
-var probeNames = new Array();
-var typeNames = new Array();
-var statusNames = new Array();
+var idArray = [];
+var probeGroupNames = [];
+var cityNames = [];
+var areaNames = [];
+var serviceArray = [];
+var targetNames = [];
+var probeNames = [];
+var status = 1;
+
 var layers = new Map();
 var layerNames = new Array();
 //格式化日期
@@ -65,59 +64,64 @@ var button_change = new Vue({
         option_download: {
             /*设置丢包option*/
             title: {
-                text: '网络层质量'
+                text: '网络下载'
             },
         },
         option_video: {
             /*设置丢包option*/
             title: {
-                text: '网络层质量'
+                text: '网络视频'
             },
         },
         option_game: {
             /*设置丢包option*/
             title: {
-                text: '网络层质量'
+                text: '网络游戏'
             },
         }
     },
-    // 在 `methods` 对象中定义方法
+
     methods: {
-        /*事件监听*/
         ping: function () {
-            // staus = 0;
+            staus = 1;
             console.log("连通性");
             options.title = this.option_ping.title;
+            new_search.search();
             var chart = new Highcharts.Chart('container', options)
             /*重新绘图*/
         },
         sla: function () {
-            staus = 1;
+            staus = 2;
             console.log("网络层");
             options.title = this.option_sla.title;
+            new_search.search();
             var chart = new Highcharts.Chart('container', options)
         },
         web: function () {
-            staus = 2;
+            staus = 3;
             console.log("web");
             options.title = this.option_web.title;
+            new_search.search();
             var chart = new Highcharts.Chart('container', options)
         },
         download: function () {
-            staus = 0;
+            staus = 4;
             options.title = this.option_web.title;
+            new_search.search();
             var chart = new Highcharts.Chart('container', options)
             /*重新绘图*/
         },
         video: function () {
-            staus = 0;
+            staus = 5;
             options.title = this.option_ping.title;
+            new_search.search();
             var chart = new Highcharts.Chart('container', options)
             /*重新绘图*/
         },
         game: function () {
-            staus = 0;
+            staus = 6;
             options.title = this.option_ping.title;
+            new_search.search();
             var chart = new Highcharts.Chart('container', options)
             /*重新绘图*/
         }
@@ -129,7 +133,7 @@ var button_change = new Vue({
             cache: false,  //禁用缓存
             dataType: "json",
             success: function (result) {
-                for (var i = 0; i < result.page.list.length; i++) {
+                for (let i = 0; i < result.page.list.length; i++) {
                     cityNames[i] = {message: result.page.list[i]}
                 }
                 search_data.cities = cityNames;
@@ -141,13 +145,13 @@ var button_change = new Vue({
             cache: false,  //禁用缓存
             dataType: "json",
             success: function (result) {
-                for (var i = 0; i < result.page.list.length; i++) {
-                    layers.set(result.page.list[i].layerTag,result.page.list[i].layerName);
+                for (let i = 0; i < result.page.list.length; i++) {
+                    // layers.set(result.page.list[i].layerTag, result.page.list[i].layerName);
+                    layers.set(result.page.list[i].layerName, result.page.list[i].layerTag);
                     let newlayer = {};
                     newlayer.name = result.page.list[i].layerName;
                     newlayer.data = [];
                     options.series[i] = newlayer;
-                    //TODO:data[]里格式[Date.UTC(2017, 4, 3), 91.6667], [Date.UTC(2017, 4, 4), 92.1765],[Date.UTC(2017, 4, 5), 93.4504]
                 }
             }
         });
@@ -185,7 +189,9 @@ var search_data = new Vue({
     methods: {
         citychange: function () {
             this.areas = getArea($("#selectcity").val());
-            console.log($("#selectcity").val());
+        },
+        areachange: function () {
+            this.probe = getProbe($("#selectarea").val());
         }
     }
 });
@@ -208,38 +214,86 @@ var getArea = function (cityid) {
     });
 };
 
+var getProbe = function (countyid) {
+    $.ajax({
+        url: "../../cem/probe/info/"+countyid,
+        type: "POST",
+        cache: false,  //禁用缓存
+        dataType: "json",
+        contentType: "application/json",
+        success: function (result) {
+            console.log(result);
+            for(var i=0;i<result.probe.length;i++){
+                probeNames[i] = {message: result.probe[i]}
+            }
+            console.log(probeNames);
+            search_data.probe = probeNames;
+        }
+    });
+};
+
 var new_search = new Vue({
     /*监听查询事件*/
     el: '#search',
+    // data: {
+    // },
     methods: {
         search: function () {
-            console.log("你选择了时间区间" + starttime + "to" + endtime);
-            var postdata = {};
-            postdata.county = $('#area').val();
-            postdata.starttime = starttime;
-            postdata.endtime = endtime;
-            // $.ajax({
-            //     /*后台取得数据,赋值给观察者*/
-            //     type: "POST",
-            //     url: "../../diagnose/list",//Todo
-            //     cache: false,  //禁用缓存
-            //     data: postdata,  //传入组装的参数
-            //     dataType: "json",
-            //     success: function (result) {
-            //         console.log(result);
-            //         // if (result.resultCountyDailywebList.length != 0 && result.resultCountyDailywebList[0] != null) {
-            //         //     if (result.resultCountyDailywebList.length == 1) {
-            //         //         flag = 1;
-            //         //     } else {
-            //         //         flag = 0;
-            //         //     }
-            //         //     new_data.users = result.resultCountyDailywebList;
-            //         // } else {
-            //         //     toastr.warning('该时间区间没有对应数据！');
-            //         // }
-            //         flag = 1;
-            //     }
-            // });
+            var searchJson = getFormJson($('#probesearch'));
+            if ((searchJson.startDate) > (searchJson.terminalDate)) {
+                console.log("时间选择有误，请重新选择！");
+                toastr.warning('时间选择有误，请重新选择！');
+            } else {
+                let search = {};
+                search.service = status;
+                console.log(searchJson);
+                search.city_id = searchJson.cityid;
+                search.county_id = searchJson.countyid;
+                search.probe_id = searchJson.probeid;
+                search.ava_start = searchJson.startDate.substr(0, 10);
+                search.ava_terminal = searchJson.terminalDate.substr(0, 10);
+                search.starTime = searchJson.startDate.substr(11, 15);
+                search.terminalTime = searchJson.startDate.substr(11, 15);
+                console.log(search);
+                let param = {};
+                param.probedata = JSON.stringify(search);
+                $.ajax({
+                    /*后台取得数据,赋值给观察者*/
+                    type: "POST",
+                    url: "../../diagnose/list",
+                    cache: false,  //禁用缓存
+                    data: param,  //传入组装的参数
+                    dataType: "json",
+                    success: function (result) {
+                        console.log(result);
+                        if (result.page.list.length !== 0) {
+                            // if (status == 1) {
+                            //     button_change.ping();
+                            // }
+                            // else if (status == 2) {
+                            //     button_change.sla();
+                            // }
+                            // else if (status == 3) {
+                            //     button_change.web();
+                            // }
+                            // else if (status == 4) {
+                            //     button_change.download();
+                            // }
+                            // else if (status == 5) {
+                            //     button_change.video();
+                            // }
+                            // else if (status == 6) {
+                            //     button_change.game();
+                            // }
+                            /*option先回到状态0,注意,不然会出错*/
+                            new_data.scoredata = result.page.list;
+                            console.log("查询" + new_data.scoredata);
+                        } else {
+                            toastr.warning('最近4天没有对应数据！');
+                        }
+                    }
+                });
+            }
         }
     }
 });
@@ -247,45 +301,43 @@ var new_search = new Vue({
 var Reset = new Vue({
     /*重置,默认时间区间为最近4天*/
     el: '#reset',
+    data: {
+        probedata: {
+            ava_start: (new Date()).Format("2017-11-27"),
+            ava_terminal: (new Date()).Format("2017-12-01"),
+            probe_id: '6',
+            service: '1'
+        }
+    },
     methods: {
         reset: function () {
             /*重置,回到页面加载时的数据*/
             var postdata = {};
+            this.probedata.service = status;
             postdata.area = '';
+            postdata.probedata = JSON.stringify(this.probedata);
             postdata.starttime = new Date(new Date() - 1000 * 60 * 60 * 24 * 4).Format("yyyy-MM-dd") + " 00:00:00";
             /*前4天日期*/
             postdata.endtime = (new Date()).Format("yyyy-MM-dd") + " 23:59:59";
             /*当前日期*/
-            console.log(postdata);
             $.ajax({
                 /*后台取得数据,赋值给观察者*/
                 type: "POST",
-                url: "../../recordhourping/list",
+                url: "../../diagnose/list",
                 cache: false,  //禁用缓存
                 data: postdata,  //传入组装的参数
                 dataType: "json",
                 success: function (result) {
                     console.log(result);
-                    // if (result.resultCountyPingtestList.length == 2) {
-                    staus = 0;
-                    flag = 0;
-                    button_change.ping();
-                    /*option先回到状态0,注意,不然会出错*/
-                    new_data.users = result.resultCountyPingtestList;
-                    // } else {
-                    //     toastr.warning('最近4天没有对应数据！');
-                    // }
+                    if (result.page.list.length !== 0) {
+                        /*option先回到状态0,注意,不然会出错*/
+                        new_data.scoredata = result.page.list;
+                        console.log(new_data.scoredata);
+                    } else {
+                        toastr.warning('最近4天没有对应数据！');
+                    }
                 }
             });
-            // $.ajax({
-            //     type: "POST",
-            //     url: "../../cem//countypinglist",
-            //     cache: false,  //禁用缓存
-            //     data: postdata,  //传入组装的参数
-            //     dataType: "json",
-            //     success: function (result) {
-            //     }
-            // });
         }
     }
 });
@@ -323,7 +375,7 @@ var options = {
     },
     tooltip: {
         headerFormat: '<b>{series.name}</b><br>',
-        pointFormat: '日期:{point.x:%Y-%m-%d} web:{point.y:.2f}分',
+        pointFormat: '日期:{point.x:%Y-%m-%d} 分数:{point.y:.2f}分',
     },
     plotOptions: {
         spline: {
@@ -473,56 +525,69 @@ $(document).ready(function () {
 //         }
 //     }
 // });
+function compare(property) {
+    return function (obj1, obj2) {
+        let value1 = obj1[property];
+        let value2 = obj2[property];
+        return value1 - value2;     // 升序
+    }
+}
 
 Vue.component('data-table', {
-    template: '<table class="table table-bordered table-hover table-striped" id="area_table"></table>',
-    props: ['users'],
+    template: '<table class="table table-bordered table-hover table-striped" id="table"></table>',
+    props: ['scoredata'],
     data: function () {
         return {
             headers: [
-                {title: '探针层级'},
-                {title: '探针名称', class: 'some-special-class'},
+                {title: '所属层级'},
+                // {title: '探针名称', class: 'some-special-class'},
                 {title: '得分'},
-                // {title: '时间'}
+                {title: '时间'}
             ],
             rows: [],
             dtHandle: null
         }
     },
     watch: {
-        users: function (val, oldVal) {
+        scoredata: function (val, oldVal) {
             let vm = this;
             vm.rows = [];
-            var times = 1;
-            if (flag == 1) {
-                times = 0;
-            }
+            // var times = 1;
+            // if (flag == 1) {
+            //     times = 0;
+            // }
             // options.xAxis.categories = [];
-            for (let i = 0; i < 5; i++) {
+            for (let i = 0; i < options.series.length; i++) {
                 options.series[i].data = [];
             }
-            for (let i = 0; i < val.length; i++) {
-                // console.log(val[i].date);
-                let date_token = val[i].date.split("-");
-                let year = parseInt(date_token[0]);
-                let month = parseInt(date_token[1]) - 1;
-                let day = parseInt(date_token[2]);
-                if (isNaN(year) || isNaN(month) || isNaN(day)) {
-                    continue;
+            for (let i = 0; i < options.series.length; i++) {
+                for (let j = 0; j < val.length; j++) {
+                    if (parseInt(layers.get(options.series[i].name)) == parseInt(val[j].accessLayer)) {
+                        let date_token = val[j].recordDate.split("-");
+                        let year = parseInt(date_token[0]);
+                        let month = parseInt(date_token[1]) - 1;
+                        let day = parseInt(date_token[2]);
+                        let hour = parseInt(val[j].recordTime);
+                        if (isNaN(year) || isNaN(month) || isNaN(day)) {
+                            continue;
+                        }
+                        options.series[i].data[j] = [Date.UTC(year, month, day, hour), val[j].score];
+                        options.series[i].data.sort(compare("0"));
+                    }
                 }
-                // console.log(Date.UTC(year, month, day));
-                options.series[0].data[i] = [Date.UTC(year, month, day), val[i].httpAvgQoe];
-                options.series[1].data[i] = [Date.UTC(year, month, day), val[i].youkuAvgQoe];
-                options.series[2].data[i] = [Date.UTC(year, month, day), val[i].gameAvgQoe];
-                options.series[3].data[i] = [Date.UTC(year, month, day), val[i].speedAvgQoe];
-                options.series[4].data[i] = [Date.UTC(year, month, day), val[i].pingAvgQoe];
+                // options.series[0].data[i] = [Date.UTC(year, month, day), val[i].httpAvgQoe];
+                // options.series[1].data[i] = [Date.UTC(year, month, day), val[i].youkuAvgQoe];
+                // options.series[2].data[i] = [Date.UTC(year, month, day), val[i].gameAvgQoe];
+                // options.series[3].data[i] = [Date.UTC(year, month, day), val[i].speedAvgQoe];
+                // options.series[4].data[i] = [Date.UTC(year, month, day), val[i].pingAvgQoe];
             }
             var chart = new Highcharts.Chart('container', options);
             val.forEach(function (item) {              /*观察user是否变化,更新表格数据*/
                 let row = [];
-                row.push(item.layerName);
-                row.push(item.probeName);
-                row.push(item.score);
+                row.push(item.accessLayer);
+                // row.push(item.probeName);
+                row.push("" + item.score);
+                row.push("" + item.recordDate.substr(0, 10) + " " + item.recordTime + ":00")
                 // row.push(item.date);
                 vm.rows.push(row);
             });
@@ -550,15 +615,15 @@ Vue.component('data-table', {
 });
 
 var new_data = new Vue({
-    el: '#tabledemo',
+    el: '#table',
     data: {
-        users: [],
+        scoredata: [],
         search: ''
     },
     computed: {
-        filteredUsers: function () {                 /*此处可以对传入数据进行处理*/
+        filteredData: function () {                 /*此处可以对传入数据进行处理*/
             let self = this;
-            return self.users;
+            return self.scoredata;
         }
     },
     mounted: function () {
@@ -577,4 +642,18 @@ $('#terminal_date').flatpickr({
     dateFormat: "Y-m-d H:i",
     time_24hr: true
 });
-
+function getFormJson(form) {      /*将表单对象变为json对象*/
+    var o = {};
+    var a = $(form).serializeArray();
+    $.each(a, function () {
+        if (o[this.name] !== undefined) {
+            if (!o[this.name].push) {
+                o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '');
+        } else {
+            o[this.name] = this.value || '';
+        }
+    });
+    return o;
+};

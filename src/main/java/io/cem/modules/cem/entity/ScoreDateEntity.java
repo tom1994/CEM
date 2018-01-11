@@ -27,6 +27,8 @@ public class ScoreDateEntity {
     //记录时间
     private String recordTime;
 
+    private Integer accessLayer;
+
     public String getCityName() {
         return cityName;
     }
@@ -136,4 +138,11 @@ public class ScoreDateEntity {
         return super.hashCode();
     }
 
+    public Integer getAccessLayer() {
+        return accessLayer;
+    }
+
+    public void setAccessLayer(Integer accessLayer) {
+        this.accessLayer = accessLayer;
+    }
 }

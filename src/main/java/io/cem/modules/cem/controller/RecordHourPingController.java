@@ -63,6 +63,8 @@ public class RecordHourPingController {
 	private RecordHourWebVideoService recordHourWebVideoService;
 	@Autowired
 	private RecordHourGameService recordHourGameService;
+	@Autowired
+	private ProbeService probeService;
 	
 	/**
 	 * ZTY用于质量排名界面计算分

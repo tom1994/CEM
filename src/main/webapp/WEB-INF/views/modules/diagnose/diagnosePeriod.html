@@ -27,7 +27,7 @@
                                     <div class="form-group row">
                                         <div class="input-group searchspan">
                                             <span class="searchname" title="地市" style="width: 40px">地市</span>
-                                            <select id="selectcity" class="form-control" name="city_id"
+                                            <select id="selectcity" class="form-control" name="cityid"
                                                     v-on:change="citychange()" style="width: 110px">
                                                 <option value="1">所有地市</option>
                                                 <option v-for="item in cities"
@@ -38,8 +38,8 @@
                                         </div>
                                         <div class="input-group searchspan">
                                             <span class="searchname" title="区县" style="width: 40px">区县</span>
-                                            <select id="selectarea" class="form-control " name="county_id"
-                                                    style="width: 110px">
+                                            <select id="selectarea" class="form-control " name="countyid"
+                                                    v-on:change="areachange()" style="width: 110px">
                                                 <option value="1">所有区县</option>
                                                 <option v-for="item in areas"
                                                         v-bind:value="item.message.countyId">{{
@@ -48,16 +48,17 @@
                                             </select>
                                         </div>
                                         <div class="input-group searchspan">
-                                            <span class="searchname" title="探针名" style="width: 40px">探针名</span>
-                                            <input type="text" class="form-control" name="probe_name"
-                                                   style="width: 110px"
-                                                   value="">
+                                            <span class="searchname" title="探针" style="width: 40px">探针</span>
+                                            <select class="form-control " name="probeid" style="width: 110px">
+                                                <option value="">---请选择---</option>
+                                                <option v-for="item in probe" v-bind:value="item.message.id">{{ item.message.name}}</option>
+                                            </select>
                                         </div>
                                         <div class="input-group searchspan">
                                             <span class="searchname" title="区县" style="width: 40px">目标</span>
                                             <select id="select_target" class="form-control " name="target_id"
                                                     style="width: 120px">
-                                                <option value="1">所有目标地址</option>
+                                                <option value="">所有目标地址</option>
                                                 <option v-for="item in target"
                                                         v-bind:value="item.message.targetId">{{
                                                     item.message.targetName}}
@@ -86,7 +87,7 @@
                                      style="text-align:center;height:50px;position: relative;" id="search">
                                     <button type="button" class="btn btn-sm btn-success"
                                             style="margin-right: 5px;position: relative;top: 50%;"
-                                            v-on:click=""><span
+                                            v-on:click="search"><span
                                             class="glyphicon glyphicon-zoom-in"></span>查询
                                     </button>
                                 </div>
@@ -113,6 +114,25 @@
             </div>
             <div class="row">     <!--highcharts图-->
                 <div id="container" style="height: 400px; margin: 0 10px 0 0 "></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <!--<button type="button" class="btn btn-primary btn-sm pull-right" onclick="exportExcel()">导出-->
+                <!--</button>  &lt;!&ndash;模板按钮,导出表格excel&ndash;&gt;-->
+                <h3>数据明细</h3>
+            </div>
+            <div class="ibox-content">
+                <div class="row pre-scrollable">     <!--表格-->
+                    <div id="table">
+                        <data-table :scoredata="filteredData"></data-table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

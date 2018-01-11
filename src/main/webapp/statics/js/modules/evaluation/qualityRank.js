@@ -392,7 +392,7 @@ var probetable = new Vue({
                             row.push(item.probeName);
                             row.push(st.get(item.serviceType));
                             row.push(item.targetName);
-                            row.push(item.score);
+                            row.push(item.score.substr(0,10));
                             row.push('<a class="fontcolor" onclick="update_this(this)" id='+item.id+'>详情</a>&nbsp;' +
                                 '<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>诊断</a>'); //Todo:完成详情与诊断
                             rows.push(row);

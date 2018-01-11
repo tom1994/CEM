@@ -3,6 +3,7 @@ package io.cem.modules.cem.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -11,57 +12,72 @@ import io.cem.modules.cem.entity.ProbeEntity;
 import io.cem.modules.cem.service.ProbeService;
 
 
-
 @Service("probeService")
 public class ProbeServiceImpl implements ProbeService {
-	@Autowired
-	private ProbeDao probeDao;
-	
-	@Override
-	public ProbeEntity queryObject(Integer id){
-		return probeDao.queryObject(id);
-	}
-	
-	@Override
-	public List<ProbeEntity> queryList(Map<String, Object> map){
-		return probeDao.queryList(map);
-	}
+    @Autowired
+    private ProbeDao probeDao;
 
-	@Override
-	public List<ProbeEntity> queryProbeList(Map<String, Object> map){
+    @Override
+    public ProbeEntity queryObject(Integer id) {
+        return probeDao.queryObject(id);
+    }
 
-		return probeDao.queryProbeList(map);
-	}
+    @Override
+    public List<ProbeEntity> queryList(Map<String, Object> map) {
+        return probeDao.queryList(map);
+    }
 
-	@Override
-	public List<ProbeEntity> queryProbe(Integer id){ return probeDao.queryProbe(id); }
+    @Override
+    public List<ProbeEntity> queryProbeList(Map<String, Object> map) {
 
-	@Override
-	public ProbeEntity queryDetail(Integer id){ return probeDao.queryDetail(id); }
+        return probeDao.queryProbeList(map);
+    }
 
-	@Override
-	public int queryTotal(Map<String, Object> map){
-		return probeDao.queryTotal(map);
-	}
-	
-	@Override
-	public void save(ProbeEntity probe){
-		probeDao.save(probe);
-	}
-	
-	@Override
-	public void update(ProbeEntity probe){
-		probeDao.update(probe);
-	}
-	
-	@Override
-	public void delete(Integer id){
-		probeDao.delete(id);
-	}
-	
-	@Override
-	public void deleteBatch(Integer[] ids){
-		probeDao.deleteBatch(ids);
-	}
-	
+    @Override
+    public List<ProbeEntity> queryProbeByLayer(Integer id) {
+        List<ProbeEntity> probeList = new ArrayList<>();
+        ProbeEntity probeLayer = probeDao.queryProbeByLayer(id);
+        while (probeLayer.getUpstream() != null && probeLayer.getUpstream() != 0) {
+            probeList.add(probeLayer);
+            probeLayer = probeDao.queryProbeByLayer(probeLayer.getUpstream());
+        }
+        probeList.add(probeLayer);
+        return probeList;
+    }
+
+    @Override
+    public List<ProbeEntity> queryProbe(Integer id) {
+        return probeDao.queryProbe(id);
+    }
+
+    @Override
+    public ProbeEntity queryDetail(Integer id) {
+        return probeDao.queryDetail(id);
+    }
+
+    @Override
+    public int queryTotal(Map<String, Object> map) {
+        return probeDao.queryTotal(map);
+    }
+
+    @Override
+    public void save(ProbeEntity probe) {
+        probeDao.save(probe);
+    }
+
+    @Override
+    public void update(ProbeEntity probe) {
+        probeDao.update(probe);
+    }
+
+    @Override
+    public void delete(Integer id) {
+        probeDao.delete(id);
+    }
+
+    @Override
+    public void deleteBatch(Integer[] ids) {
+        probeDao.deleteBatch(ids);
+    }
+
 }

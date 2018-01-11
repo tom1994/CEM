@@ -19,6 +19,8 @@ public class ScoreTargetEntity {
     //测试目标ID
     private Integer targetId;
 
+    private Integer accessLayer;
+
     public String getCityName() {
         return cityName;
     }
@@ -99,5 +101,13 @@ public class ScoreTargetEntity {
         if(this.getCityId()!=null&&this.getCountyId()!=null&&this.getProbeId()!=null&&this.getTargetId()!=null)
             return this.getCityId()&this.getCountyId()&this.getProbeId()&this.getTargetId();
         return super.hashCode();
+    }
+
+    public Integer getAccessLayer() {
+        return accessLayer;
+    }
+
+    public void setAccessLayer(Integer accessLayer) {
+        this.accessLayer = accessLayer;
     }
 }

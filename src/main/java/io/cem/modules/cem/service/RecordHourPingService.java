@@ -26,7 +26,6 @@ public interface RecordHourPingService {
 
 	List<RecordHourPingEntity> queryDayList(Map<String, Object> map);
 
-
 	List<ScoreEntity> calculateService1(List<RecordHourPingEntity> pingList,List<RecordHourTracertEntity> tracertList);
 
 	List<ScoreEntity> calculateServiceDate1(List<RecordHourPingEntity> pingList,List<RecordHourTracertEntity> tracertList);

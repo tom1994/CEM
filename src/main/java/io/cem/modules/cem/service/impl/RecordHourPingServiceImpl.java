@@ -274,6 +274,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						icmpPing.setServiceType(pingList.get(i).getServiceType());
 						icmpPing.setTargetName(pingList.get(i).getTargetName());
 						icmpPing.setTargetId(pingList.get(i).getTargetId());
+						icmpPing.setAccessLayer(pingList.get(i).getAccessLayer());
 						icmpPing.setScore(score);
 						icmpPing.setBase(Double.parseDouble(pros.getValue("ping_icmp")));
 
@@ -503,6 +504,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						tcpPing.setServiceType(pingList.get(i).getServiceType());
 						tcpPing.setTargetName(pingList.get(i).getTargetName());
 						tcpPing.setTargetId(pingList.get(i).getTargetId());
+						tcpPing.setAccessLayer(pingList.get(i).getAccessLayer());
 						tcpPing.setScore(score);
 						tcpPing.setBase(Double.parseDouble(pros.getValue("ping_tcp")));
 
@@ -733,6 +735,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						udpPing.setServiceType(pingList.get(i).getServiceType());
 						udpPing.setTargetName(pingList.get(i).getTargetName());
 						udpPing.setTargetId(pingList.get(i).getTargetId());
+						udpPing.setAccessLayer(pingList.get(i).getAccessLayer());
 						udpPing.setScore(score);
 						udpPing.setBase(Double.parseDouble(pros.getValue("ping_udp")));
 
@@ -968,6 +971,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						icmpTracert.setServiceType(tracertList.get(i).getServiceType());
 						icmpTracert.setTargetName(tracertList.get(i).getTargetName());
 						icmpTracert.setTargetId(tracertList.get(i).getTargetId());
+						icmpTracert.setAccessLayer(tracertList.get(i).getAccessLayer());
 						icmpTracert.setScore(score);
 						icmpTracert.setBase(Double.parseDouble(pros.getValue("tr_icmp")));
 
@@ -1199,6 +1203,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						tcpTracert.setServiceType(tracertList.get(i).getServiceType());
 						tcpTracert.setTargetName(tracertList.get(i).getTargetName());
 						tcpTracert.setTargetId(tracertList.get(i).getTargetId());
+						tcpTracert.setAccessLayer(tracertList.get(i).getAccessLayer());
 						tcpTracert.setScore(score);
 						tcpTracert.setBase(Double.parseDouble(pros.getValue("tr_tcp")));
 
@@ -1221,6 +1226,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 				scoreTarget.setCountyName(pingIcmp.get(i).getCountyName());
 				scoreTarget.setProbeName(pingIcmp.get(i).getProbeName());
 				scoreTarget.setTargetName(pingIcmp.get(i).getTargetName());
+				scoreTarget.setAccessLayer(pingIcmp.get(i).getAccessLayer());
 				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
 				scoreBase.setScore((pingIcmp.get(i).getScore()) * (pingIcmp.get(i).getBase()));
 				scoreBase.setBase(pingIcmp.get(i).getBase());
@@ -1250,6 +1256,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 					finalScore.setServiceType(1);
 					finalScore.setTargetId(ite.getTargetId());
 					finalScore.setTargetName(ite.getTargetName());
+					finalScore.setAccessLayer(ite.getAccessLayer());
 					finalScore.setScore((connection.get(ite).getScore()) / (connection.get(ite).getBase()));
 					finalScore.setBase(Double.parseDouble(pros.getValue("connectionweight")));
 					connectionScore.add(finalScore);
@@ -1260,7 +1267,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 		}catch(IOException e){}
 		return connectionScore;
 
-	};
+	}
 
 	@Override
 	//For quality rank page
@@ -1498,6 +1505,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						icmpPing.setServiceType(pingList.get(i).getServiceType());
 						icmpPing.setTargetName(pingList.get(i).getTargetName());
 						icmpPing.setTargetId(pingList.get(i).getTargetId());
+						icmpPing.setAccessLayer(pingList.get(i).getAccessLayer());
 						icmpPing.setRecordDate(pingList.get(i).getRecordDate());
 						icmpPing.setRecordTime(pingList.get(i).getRecordTime());
 						icmpPing.setScore(score);
@@ -1729,6 +1737,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						tcpPing.setServiceType(pingList.get(i).getServiceType());
 						tcpPing.setTargetName(pingList.get(i).getTargetName());
 						tcpPing.setTargetId(pingList.get(i).getTargetId());
+						tcpPing.setAccessLayer(pingList.get(i).getAccessLayer());
 						tcpPing.setRecordDate(pingList.get(i).getRecordDate());
 						tcpPing.setRecordTime(pingList.get(i).getRecordTime());
 						tcpPing.setScore(score);
@@ -1961,6 +1970,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						udpPing.setServiceType(pingList.get(i).getServiceType());
 						udpPing.setTargetName(pingList.get(i).getTargetName());
 						udpPing.setTargetId(pingList.get(i).getTargetId());
+						udpPing.setAccessLayer(pingList.get(i).getAccessLayer());
 						udpPing.setRecordDate(pingList.get(i).getRecordDate());
 						udpPing.setRecordTime(pingList.get(i).getRecordTime());
 						udpPing.setScore(score);
@@ -2198,6 +2208,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						icmpTracert.setServiceType(tracertList.get(i).getServiceType());
 						icmpTracert.setTargetName(tracertList.get(i).getTargetName());
 						icmpTracert.setTargetId(tracertList.get(i).getTargetId());
+						icmpTracert.setAccessLayer(tracertList.get(i).getAccessLayer());
 						icmpTracert.setRecordDate(tracertList.get(i).getRecordDate());
 						icmpTracert.setRecordTime(tracertList.get(i).getRecordTime());
 						icmpTracert.setScore(score);
@@ -2431,6 +2442,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						tcpTracert.setServiceType(tracertList.get(i).getServiceType());
 						tcpTracert.setTargetName(tracertList.get(i).getTargetName());
 						tcpTracert.setTargetId(tracertList.get(i).getTargetId());
+						tcpTracert.setAccessLayer(tracertList.get(i).getAccessLayer());
 						tcpTracert.setRecordDate(tracertList.get(i).getRecordDate());
 						tcpTracert.setRecordTime(tracertList.get(i).getRecordTime());
 						tcpTracert.setScore(score);
@@ -2457,6 +2469,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 				scoreTarget.setTargetName(pingIcmp.get(i).getTargetName());
 				scoreTarget.setRecordDate(pingIcmp.get(i).getRecordDate());
 				scoreTarget.setRecordTime(pingIcmp.get(i).getRecordTime());
+				scoreTarget.setAccessLayer(pingIcmp.get(i).getAccessLayer());
 				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
 				scoreBase.setScore((pingIcmp.get(i).getScore()) * (pingIcmp.get(i).getBase()));
 				scoreBase.setBase(pingIcmp.get(i).getBase());
@@ -2486,6 +2499,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 					finalScore.setServiceType(1);
 					finalScore.setTargetId(ite.getTargetId());
 					finalScore.setTargetName(ite.getTargetName());
+					finalScore.setAccessLayer(ite.getAccessLayer());
 					finalScore.setRecordDate(ite.getRecordDate());
 					finalScore.setRecordTime(ite.getRecordTime());
 					finalScore.setScore((connection.get(ite).getScore()) / (connection.get(ite).getBase()));
@@ -2736,6 +2750,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						icmpPing.setServiceType(pingList.get(i).getServiceType());
 						icmpPing.setTargetName(pingList.get(i).getTargetName());
 						icmpPing.setTargetId(pingList.get(i).getTargetId());
+						icmpPing.setAccessLayer(pingList.get(i).getAccessLayer());
 						icmpPing.setScore(score);
 						icmpPing.setBase(Double.parseDouble(pros.getValue("ping_icmp")));
 
@@ -2965,6 +2980,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						tcpPing.setServiceType(pingList.get(i).getServiceType());
 						tcpPing.setTargetName(pingList.get(i).getTargetName());
 						tcpPing.setTargetId(pingList.get(i).getTargetId());
+						tcpPing.setAccessLayer(pingList.get(i).getAccessLayer());
 						tcpPing.setScore(score);
 						tcpPing.setBase(Double.parseDouble(pros.getValue("ping_tcp")));
 
@@ -3195,6 +3211,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						udpPing.setServiceType(pingList.get(i).getServiceType());
 						udpPing.setTargetName(pingList.get(i).getTargetName());
 						udpPing.setTargetId(pingList.get(i).getTargetId());
+						udpPing.setAccessLayer(pingList.get(i).getAccessLayer());
 						udpPing.setScore(score);
 						udpPing.setBase(Double.parseDouble(pros.getValue("ping_udp")));
 
@@ -3430,6 +3447,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						icmpTracert.setServiceType(tracertList.get(i).getServiceType());
 						icmpTracert.setTargetName(tracertList.get(i).getTargetName());
 						icmpTracert.setTargetId(tracertList.get(i).getTargetId());
+						icmpTracert.setAccessLayer(tracertList.get(i).getAccessLayer());
 						icmpTracert.setScore(score);
 						icmpTracert.setBase(Double.parseDouble(pros.getValue("tr_icmp")));
 
@@ -3661,6 +3679,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						tcpTracert.setServiceType(tracertList.get(i).getServiceType());
 						tcpTracert.setTargetName(tracertList.get(i).getTargetName());
 						tcpTracert.setTargetId(tracertList.get(i).getTargetId());
+						tcpTracert.setAccessLayer(tracertList.get(i).getAccessLayer());
 						tcpTracert.setScore(score);
 						tcpTracert.setBase(Double.parseDouble(pros.getValue("tr_tcp")));
 
@@ -3683,6 +3702,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 				scoreTarget.setCountyName(pingIcmp.get(i).getCountyName());
 				scoreTarget.setProbeName(pingIcmp.get(i).getProbeName());
 				scoreTarget.setTargetName(pingIcmp.get(i).getTargetName());
+				scoreTarget.setAccessLayer(pingIcmp.get(i).getAccessLayer());
 				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
 				scoreBase.setScore((pingIcmp.get(i).getScore()) * (pingIcmp.get(i).getBase()));
 				scoreBase.setBase(pingIcmp.get(i).getBase());
@@ -3735,6 +3755,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 			scoreTarget.setCountyName(list.get(i).getCountyName());
 			scoreTarget.setProbeName(list.get(i).getProbeName());
 			scoreTarget.setTargetName(list.get(i).getTargetName());
+			scoreTarget.setAccessLayer(list.get(i).getAccessLayer());
 
 			if (!map.containsKey(scoreTarget)) {
 				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
@@ -3765,6 +3786,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 			scoreTarget.setCountyName(list.get(i).getCountyName());
 			scoreTarget.setProbeName(list.get(i).getProbeName());
 			scoreTarget.setTargetName(list.get(i).getTargetName());
+			scoreTarget.setAccessLayer(list.get(i).getAccessLayer());
 			scoreTarget.setRecordDate(list.get(i).getRecordDate());
 			scoreTarget.setRecordTime(list.get(i).getRecordTime());
 
@@ -3797,6 +3819,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 			scoreTarget.setCountyName(list.get(i).getCountyName());
 			scoreTarget.setProbeName(list.get(i).getProbeName());
 			scoreTarget.setTargetName(list.get(i).getTargetName());
+			scoreTarget.setAccessLayer(list.get(i).getAccessLayer());
 			scoreTarget.setRecordDate(list.get(i).getRecordDate());
 			scoreTarget.setRecordTime(list.get(i).getRecordTime());
 

@@ -63,9 +63,13 @@
                 ON (probe.status = b.data_id AND b.dic_type_id = 3)
             LEFT JOIN layer
                 ON probe.access_layer = layer.layer_tag
-            LEFT JOIN(SELECT probe.probe_name parent_name,probe.upstream_id parent_id FROM probe
-            WHERE id in (SELECT upstream_id FROM probe )) parent
-            ON  parent.parent_id = probe.upstream_id
+            LEFT JOIN (SELECT
+                           probe.probe_name  parent_name,
+                           probe.upstream_id parent_id
+                       FROM probe
+                       WHERE id IN (SELECT upstream_id
+                                    FROM probe)) parent
+                ON parent.parent_id = probe.upstream_id
         WHERE probe.id = #{value}
     </select>
 
@@ -134,7 +138,7 @@
         ON probe.access_layer = layer.layer_tag
         LEFT JOIN(SELECT probe.probe_name parent_name,probe.upstream_id parent_id FROM probe
         WHERE id in (SELECT upstream_id FROM probe )) parent
-        ON  parent.parent_id = probe.upstream_id
+        ON parent.parent_id = probe.upstream_id
 
         WHERE probe.id IS NOT NULL
         <if test="probe_name != null and probe_name != ''">
@@ -174,6 +178,16 @@
         </if>
     </select>
 
+    <select id="queryProbeByLayer" resultType="io.cem.modules.cem.entity.ProbeEntity">
+        SELECT probe.id,
+        probe_name,
+        upstream_id AS upstream,
+        access_layer
+        FROM probe
+        INNER JOIN layer
+        ON access_layer = layer.layer_tag
+        WHERE probe.id = #{value}
+    </select>
 
     <insert id="save" parameterType="io.cem.modules.cem.entity.ProbeEntity" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO probe

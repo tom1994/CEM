@@ -24,6 +24,9 @@ public class ScoreAreaEntity {
     //记录时间
     private String recordTime;
 
+    private Integer accessLayer;
+
+
     public String getCityName() {
         return cityName;
     }
@@ -120,5 +123,13 @@ public class ScoreAreaEntity {
         if(this.getCityId()!=null&&this.getCountyId()!=null&&this.getTargetId()!=null)
             return this.getCityId()&this.getCountyId()&this.getTargetId();
         return super.hashCode();
+    }
+
+    public Integer getAccessLayer() {
+        return accessLayer;
+    }
+
+    public void setAccessLayer(Integer accessLayer) {
+        this.accessLayer = accessLayer;
     }
 }
