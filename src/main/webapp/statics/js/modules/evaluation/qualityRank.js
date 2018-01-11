@@ -190,10 +190,15 @@ var search_service = new Vue({
                 search.couty_id = searchJson.county_id;
                 search.service = searchJson.service_type;
                 search.target_id = searchJson.target_id;
-                search.ava_start = ava_start;
-                search.ava_terminal = ava_terminal;
-                search.starTime = startTime;
-                search.terminalTime = terminalTime;
+                if(ava_start.length!=0&&ava_terminal.length!=0&&startTime.length!=0&&terminalTime.length!=0) {
+                    search.ava_start = ava_start;
+                    search.ava_terminal = ava_terminal;
+                    search.starTime = startTime;
+                    search.terminalTime = terminalTime;
+                }else{
+                    search.ava_start = (new Date()).Format("yyyy-MM-dd");
+                    search.ava_terminal = (new Date()).Format("yyyy-MM-dd");
+                }
                 var schedulepolicy = JSON.stringify(search);
                 console.log(schedulepolicy);
                 probetable.probedata = search;

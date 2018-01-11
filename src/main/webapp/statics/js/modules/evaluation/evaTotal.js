@@ -5,6 +5,7 @@ var status;
 var cityNames = new Array();
 var areaNames = new Array();
 var probeNames = new Array();
+var layers = new Map();
 
 var probedata_handle = new Vue({
     el: '#probehandle',
@@ -44,18 +45,25 @@ var search_service = new Vue({ //Todo:完成查询条件框
                 console.log("时间选择有误，请重新选择！");
                 $('#nonavailable_time').modal('show');
             }else{
+                var ava_start=searchJson.startDate.substr(0,10);
+                var ava_terminal=searchJson.terminalDate.substr(0,10);
+                var startTime=searchJson.startDate.substr(11,15);
+                var terminalTime=searchJson.startDate.substr(11,15);
                 var search = new Object();
                 search.city_id = searchJson.city_id;
                 search.couty_id = searchJson.county_id;
                 search.probe_id = searchJson.probe_id;
-                search.ava_start = searchJson.startDate.substr(0,10);
-                search.ava_terminal = searchJson.terminalDate.substr(0,10);
-                search.starTime = searchJson.startDate.substr(11,15);
-                search.terminalTime = searchJson.startDate.substr(11,15);
+                if(ava_start.length!=0&&ava_terminal.length!=0&&startTime.length!=0&&terminalTime.length!=0) {
+                    search.ava_start = ava_start;
+                    search.ava_terminal = ava_terminal;
+                    search.starTime = startTime;
+                    search.terminalTime = terminalTime;
+                }else{
+                    search.ava_start = (new Date()).Format("yyyy-MM-dd");
+                    search.ava_terminal = (new Date()).Format("yyyy-MM-dd");
+                }
                 let param = {};
                 param.probedata = JSON.stringify(search);
-                pingresulttable.resultdata = search;
-                pingresulttable.redraw();
                 $.ajax({
                     type: "POST",   /*GET会乱码*/
                     url: "../../recordhourping/qualityList",//Todo:改成测试任务组的list方法
@@ -314,4 +322,9 @@ var game_service = new Vue({
 function connection_info() {
     $('#myModal_dispatch').modal('show');
 }
+
+
+
+
+
 

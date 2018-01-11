@@ -84,15 +84,18 @@
 		ON (d.dic_type_id = 5 AND record_tracert.service_type = d.data_id)
 		<!-- WHERE (record_date BETWEEN #{startDate} AND #{terminalDate}) AND (record_time BETWEEN #{startTime} AND #{terminalTime}) AND task_id = #{taskId} AND target_id = #{targetId} AND probe_id = #{probeId}-->
 		<!--暂时不判断时间，只根据日期筛选-->
-		WHERE record_date BETWEEN #{startDate} AND #{terminalDate}
+		WHERE
 		<if test="task_id != null and task_id != ''">
-			AND task_id = #{task_id}
+			task_id = #{task_id}
 		</if>
 		<if test="target_id != null and target_id != ''">
 			AND target_id = #{target_id}
 		</if>
 		<if test="probe_id != null and probe_id != ''">
 			AND probe_id = #{probe_id}
+		</if>
+		<if test="startDate != null and startDate != '' and terminalDate != null and terminalDate != '' ">
+			AND (record_date BETWEEN #{startDate} AND #{terminalDate})
 		</if>
 	</select>
 

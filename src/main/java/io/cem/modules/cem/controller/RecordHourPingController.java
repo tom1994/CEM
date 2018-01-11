@@ -86,17 +86,17 @@ public class RecordHourPingController {
 		String dateStr = map.get("ava_start").toString();
 		String dateStr2 = map.get("ava_terminal").toString();
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		SimpleDateFormat format2 = new SimpleDateFormat("yyyy-MM-dd");
 		int dateDifferent = 0;
-		try
-		{
+
+		try {
 			Date date2 = format.parse(dateStr2);
 			Date date = format.parse(dateStr);
 
-			dateDifferent = recordHourPingService.differentDays(date,date2);
+			dateDifferent = recordHourPingService.differentDays(date, date2);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
+
 		List<ScoreEntity> scoreList = new ArrayList<>();
 		//查询天表
 		if (dateDifferent>5){
@@ -252,15 +252,15 @@ public class RecordHourPingController {
 		String dateStr2 = map.get("ava_terminal").toString();
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		int dateDifferent = 0;
-		try
-		{
+		try {
 			Date date2 = format.parse(dateStr2);
 			Date date = format.parse(dateStr);
 
-			dateDifferent = recordHourPingService.differentDays(date,date2);
+			dateDifferent = recordHourPingService.differentDays(date, date2);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
+
 
 		EvaluationEntity score = new EvaluationEntity();
 		//查询天表
@@ -714,15 +714,16 @@ public class RecordHourPingController {
 		String dateStr2 = map.get("ava_terminal").toString();
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		int dateDifferent = 0;
-		try
-		{
+
+		try {
 			Date date2 = format.parse(dateStr2);
 			Date date = format.parse(dateStr);
 
-			dateDifferent = recordHourPingService.differentDays(date,date2);
+			dateDifferent = recordHourPingService.differentDays(date, date2);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
+
 
 		int total = 0;
 		if(page==null) {              /*没有传入page,则取全部值*/
@@ -747,6 +748,52 @@ public class RecordHourPingController {
 		System.out.println(pingList);
 		PageUtils pageUtil = new PageUtils(pingList, total, limit, page);
 		return R.ok().put("page", pageUtil);
+	}
+
+	/**
+	 * ZTY用于绘制网络连通性图
+	 */
+	@RequestMapping("/connection")
+	@RequiresPermissions("recordhourping:connection")
+	public R connectionImage(String probedata, Integer page, Integer limit){
+		//查询列表数据
+		Map<String, Object> map = new HashMap<>();
+		JSONObject probedata_jsonobject = JSONObject.parseObject(probedata);
+		System.out.println(probedata_jsonobject);
+		try {
+			map.putAll(JSONUtils.jsonToMap(probedata_jsonobject));
+		} catch (RuntimeException e) {
+			throw new RRException("内部参数错误，请重试！");
+		}
+		String dateStr = map.get("ava_start").toString();
+		String dateStr2 = map.get("ava_terminal").toString();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		int dateDifferent = 0;
+		try
+		{
+			Date date2 = format.parse(dateStr2);
+			Date date = format.parse(dateStr);
+
+			dateDifferent = recordHourPingService.differentDays(date,date2);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+		List<ScoreEntity> scoreList = new ArrayList<>();
+		//查询天表
+		if (dateDifferent > 5) {
+			List<RecordHourPingEntity> pingList = recordHourPingService.queryDayList(map);
+			List<RecordHourTracertEntity> tracertList = recordHourTracertService.queryDayList(map);
+			scoreList = recordHourPingService.calculateService1(pingList, tracertList);
+		}
+		//查询小时表
+		else {
+			List<RecordHourPingEntity> pingList = recordHourPingService.queryPingList(map);
+			List<RecordHourTracertEntity> tracertList = recordHourTracertService.queryTracertList(map);
+			scoreList = recordHourPingService.calculateService1(pingList, tracertList);
+		}
+		System.out.println(scoreList);
+		return R.ok().put("scoreList", scoreList);
 	}
 	
 	
