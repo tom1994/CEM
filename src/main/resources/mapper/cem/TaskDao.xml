@@ -41,12 +41,15 @@
 	<select id="queryTaskList" resultMap="taskMap">
 		select task.*,
 		schedule_policy.sp_name,
-		alarm_template.at_name
+		alarm_template.at_name,
+	    B.count_dispatch
 		FROM task
 		LEFT JOIN alarm_template
 		ON task.alarm_template_id = alarm_template.id
 		LEFT JOIN schedule_policy
 		ON task.sch_policy_id = schedule_policy.id
+		LEFT JOIN (select count(*) AS count_dispatch, task_id from task_dispatch group by task_id) B
+		ON task.id = B.task_id
 		<choose>
 			<when test="sidx != null and sidx.trim() != ''">
 				order by ${sidx} ${order}

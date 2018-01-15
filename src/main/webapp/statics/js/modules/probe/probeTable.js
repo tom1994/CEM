@@ -62,6 +62,15 @@ var probedata_handle = new Vue({
     }
 });
 
+function transString(string,i,j) {
+    if(string ==null) {
+        return "";
+    }
+    else {
+        return string.substr(i,j);
+    }
+}
+
 var layer_handle = new Vue({
     el: '#probehandle',
     data: {},
@@ -348,7 +357,7 @@ var dispatch_table = new Vue({
                             //row.push(item.location);
                             //row.push(item.accessLayer);
                             row.push(item.taskName);
-                            row.push('<span title="' + item.targetName + '" style="white-space: nowrap">' + (item.targetName).substr(0, 25) + '</span>');
+                            row.push('<span title="' + item.targetName + '" style="white-space: nowrap">' + transString(item.targetName,0,25)+ '</span>');
                             //row.push('<a class="fontcolor" onclick="cancel_task(this)" id=' + item.id + '>取消任务</a>');
                             rows.push(row);
                         });
@@ -934,8 +943,8 @@ var probetable = new Vue({
                                 row.push(item.statusName);
                                 row.push(item.typeName);
                                 row.push(item.registerTime);
-                                row.push('<span title="'+item.lastHbTime+'" style="white-space: nowrap">' + (item.lastHbTime).substr(0, 10) + '</span>');
-                                row.push('<span title="'+item.lastReportTime+'" style="white-space: nowrap">' + (item.lastReportTime).substr(0, 10) + '</span>');
+                                row.push('<span title="'+item.lastHbTime+'" style="white-space: nowrap">' + transString(item.lastHbTime,0,10) + '</span>');
+                                row.push('<span title="'+item.lastReportTime+'" style="white-space: nowrap">' + transString(item.lastReportTime,0,10) + '</span>');
                                 row.push('<a class="fontcolor" style="white-space: nowrap" onclick="update_this(this)" id='+item.id+'>详情</a>&nbsp;' +
                                     '<a class="fontcolor" style="white-space: nowrap" onclick="delete_this(this)" id='+item.id+'>删除</a>&nbsp;'+
                                     '<a class="fontcolor" style="white-space: nowrap" onclick="dispatch_info(this)" id='+item.id+'>查看任务</a>');

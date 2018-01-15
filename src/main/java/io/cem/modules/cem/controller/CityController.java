@@ -39,7 +39,6 @@ public class CityController {
 	 * 列表
 	 */
 	@RequestMapping("/list")
-	@RequiresPermissions("city:list")
 	public R list(String citydata, Integer page, Integer limit) throws Exception {
 		Map<String, Object> map = new HashMap<>();
 		int total = 0;
