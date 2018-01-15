@@ -32,6 +32,8 @@ for(let i=10; i<12; i++){
     recordtype.set(i,"sla")
 }
 
+
+
 function getFormJson(form) {      /*将表单对象变为json对象*/
     var o = {};
     var a = $(form).serializeArray();
@@ -94,6 +96,47 @@ var search_data = new Vue({
         areachange: function () {
             this.probeNames = getProbe($("#selectarea").val());
         },
+        resultListsearch: function () {   /*查询监听事件*/
+            /*显示相应的data_table*/
+            $(".record-table").addClass("service_unselected");
+            this.servicetype = parseInt($('#selectservice').val());
+            recordtag = recordtype.get(this.servicetype);
+            $("#" + recordtag + "_record ").removeClass("service_unselected");
+
+            var data = getFormJson($('#resultsearch .selectdata'));
+            /*得到查询条件*/
+            /*获取表单元素的值*/
+            var starttemp = data.startTime;
+            var termtemp = data.terminalTime;
+
+            /*if((data.startDate="") && (data.terminalDate=""))
+             {
+             data.startDate = '1900-12-12 00:00:00';
+             data.terminalDate = new Date();
+             }*/
+
+            //data.startDate = (data.startDate).substr(0,10);//截取日期部分字段
+            //data.terminalDate = (data.terminalDate).substr(0,10);
+            /*可直接在json对象中添加键值对*/
+            data.startTime = starttemp+":00";//截取时刻部分字段
+            data.terminalTime = termtemp+":00";
+            console.log(data);
+
+            if(recordtag == "ping") {
+                pingresulttable.resultdata = data;
+                pingresulttable.redraw();
+                /*根据查询条件重绘*/
+            }
+            if(recordtag == "tracert"){
+                tracertresulttable.resultdata = data;
+                tracertresulttable.redraw();
+                /*根据查询条件重绘*/
+            }
+
+        },
+        reset: function () {    /*重置*/
+            document.getElementById("resultsearch").reset();
+        }
     }
 });
 
@@ -167,16 +210,16 @@ var getTarget = function (serviceId) {
     });
 }
 
-var search_list = new Vue({
+/*var search_list = new Vue({
     el: '#search',
     data: {},
-    mounted: function(){         /*动态加载测试任务组数据*/
+    mounted: function(){         /!*动态加载测试任务组数据*!/
         $.ajax({
-            type: "POST",   /*GET会乱码*/
+            type: "POST",   /!*GET会乱码*!/
             url: "../../cem/probe/list",//Todo:改成测试任务组的list方法
             cache: false,  //禁用缓存
             dataType: "json",
-            /* contentType:"application/json",  /!*必须要,不可少*!/*/
+            /!* contentType:"application/json",  /!*必须要,不可少*!/!*!/
             success: function (result) {
             }
         });
@@ -184,28 +227,28 @@ var search_list = new Vue({
         getTarget(1);
     },
     methods: {
-        resultListsearch: function () {   /*查询监听事件*/
-            /*显示相应的data_table*/
+        resultListsearch: function () {   /!*查询监听事件*!/
+            /!*显示相应的data_table*!/
             $(".record-table").addClass("service_unselected");
             this.servicetype = parseInt($('#selectservice').val());
             recordtag = recordtype.get(this.servicetype);
             $("#" + recordtag + "_record ").removeClass("service_unselected");
 
             var data = getFormJson($('#resultsearch .selectdata'));
-            /*得到查询条件*/
-            /*获取表单元素的值*/
-            var starttemp = data.startDate;
-            var termtemp = data.terminalDate;
+            /!*得到查询条件*!/
+            /!*获取表单元素的值*!/
+            //var starttemp = data.startDate;
+            //var termtemp = data.terminalDate;
 
-            /*if((data.startDate="") && (data.terminalDate=""))
+            /!*if((data.startDate="") && (data.terminalDate=""))
             {
                 data.startDate = '1900-12-12 00:00:00';
                 data.terminalDate = new Date();
-            }*/
+            }*!/
 
-            data.startDate = (data.startDate).substr(0,10);//截取日期部分字段
-            data.terminalDate = (data.terminalDate).substr(0,10);
-            /*可直接在json对象中添加键值对*/
+            //data.startDate = (data.startDate).substr(0,10);//截取日期部分字段
+            //data.terminalDate = (data.terminalDate).substr(0,10);
+            /!*可直接在json对象中添加键值对*!/
             //data.startTime = starttemp.substr(11);//截取时刻部分字段
             //data.terminalTime = termtemp.substr(11);
             console.log(data);
@@ -213,20 +256,20 @@ var search_list = new Vue({
             if(recordtag == "ping") {
                 pingresulttable.resultdata = data;
                 pingresulttable.redraw();
-                /*根据查询条件重绘*/
+                /!*根据查询条件重绘*!/
             }
             if(recordtag == "tracert"){
                 tracertresulttable.resultdata = data;
                 tracertresulttable.redraw();
-                /*根据查询条件重绘*/
+                /!*根据查询条件重绘*!/
             }
 
         },
-        reset: function () {    /*重置*/
+        reset: function () {    /!*重置*!/
             resulttable.reset();
         }
     }
-});
+});*/
 
 //格式化日期
 Date.prototype.Format = function (fmt) {
@@ -271,12 +314,9 @@ var pingresulttable = new Vue({
             {title: '<div style="width:70px">探针名</div>'},
             {title: '<div style="width:60px">探针端口</div>'},
             {title: '<div style="width:110px">业务类型</div>'},
-            {title: '<div style="width:55px">任务类型</div>'},
             {title: '<div style="width:110px">测试任务名称</div>'},
-            {title: '<div style="width:90px">测试目标类型</div>'},
-            {title: '<div style="width:110px">测试目标名/探针名</div>'},
+            {title: '<div style="width:110px">测试目标</div>'},
             {title: '<div style="width:90px">测试目标IP</div>'},
-            {title: '<div style="width:55px">测试结果</div>'},
             {title: '<div style="width:50px">时延(秒)</div>'},
             {title: '<div style="width:90px">时延标准差(秒)</div>'},
             {title: '<div style="width:75px">时延方差(秒)</div>'},
@@ -289,11 +329,8 @@ var pingresulttable = new Vue({
         ],
         rows: [],
         dtHandle: null,
-        /*resultdata中的起止日期必须有初始值，因为xml中他们不能为空*/
-        //resultdata: {startDate:'2017-11-24', startTime:'10:00',terminalDate:'2017-11-25',terminalTime:'11:00',probeId:'1',taskId:'2238',targetId:'2'}
-        //resultdata: {startDate:'2017-11-24',terminalDate:'2017-11-27',probe_id:'1',task_id:'2238',target_id:'2'}
-
-        resultdata: {startDate:today.Format("yyyy-MM-dd"), terminalDate:(new Date()).Format("yyyy-MM-dd"), probe_id:'1',task_id:'2238',target_id:'2'}
+        resultdata: {startDate:today.Format("yyyy-MM-dd"), terminalDate:(new Date()).Format("yyyy-MM-dd"),
+            probe_id:'16',task_id:'2201',target_id:'1068',startTime:"00:00:00",terminalTime:"19:00:00"}
     },
     methods: {
         reset: function () {
@@ -371,18 +408,15 @@ var pingresulttable = new Vue({
                         let rows = [];
                         var i = param.start+1;
                         result.page.list.forEach(function (item) {
-                            //console.log(item);
+                            console.log(item);
                             let row = [];
                             row.push(i++);
                             row.push(item.probeName);
                             row.push(item.port);
                             row.push(item.servicetypeName);
-                            row.push(item.tasktypeName);
                             row.push(item.taskName);
-                            row.push(item.targettypeName);
                             row.push(item.targetName);
                             row.push(item.targetipName);
-                            row.push(item.stateName);
                             row.push(item.delay);
                             row.push(item.delayStd);
                             row.push(item.delayVar);
@@ -421,12 +455,9 @@ var tracertresulttable = new Vue({
             {title: '<div style="width:70px">探针名</div>'},
             {title: '<div style="width:60px">探针端口</div>'},
             {title: '<div style="width:115px">业务类型</div>'},
-            {title: '<div style="width:55px">任务类型</div>'},
             {title: '<div style="width:110px">测试任务名称</div>'},
-            {title: '<div style="width:90px">测试目标类型</div>'},
-            {title: '<div style="width:145px">测试目标名/探针名</div>'},
+            {title: '<div style="width:145px">测试目标</div>'},
             {title: '<div style="width:90px">测试目标IP</div>'},
-            {title: '<div style="width:55px">测试结果</div>'},
             {title: '<div style="width:50px">时延(秒)</div>'},
             {title: '<div style="width:90px">时延标准差(秒)</div>'},
             {title: '<div style="width:75px">时延方差(秒)</div>'},
@@ -523,12 +554,9 @@ var tracertresulttable = new Vue({
                             row.push(item.probeName);
                             row.push(item.port);
                             row.push(item.servicetypeName);
-                            row.push(item.tasktypeName);
                             row.push(item.taskName);
-                            row.push(item.targettypeName);
                             row.push(item.targetName);
                             row.push(item.targetipName);
-                            row.push(item.stateName);
                             row.push(item.delay);
                             row.push(item.delayStd);
                             row.push(item.delayVar);
@@ -559,6 +587,20 @@ var tracertresulttable = new Vue({
     }
 });
 
+$(document).ready(
+    function () {
+        $.ajax({
+            type: "POST",   /*GET会乱码*/
+            url: "../../cem/probe/list",
+            cache: false,  //禁用缓存
+            dataType: "json",
+            success: function (result) {
+            }
+        });
+        getTask(1);
+        getTarget(1);
+    }
+)
 /*
 var toExcel = new Vue({
     el:'#resulthandle',
