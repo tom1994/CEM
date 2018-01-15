@@ -5,7 +5,6 @@ var schedulepolicies = new Array();
 var alarmtemplates = new Array();
 
 var st = new Map();//servicetype字典，可通过get方法查对应字符串。
-// var st = new Map();
 st.set(1, "PING(ICMP Echo)");
 st.set(2, "PING(TCP Echo)");
 st.set(3, "PING(UDP Echo)");
@@ -35,7 +34,7 @@ var task_handle = new Vue({
             dataType: "json",
             contentType: "application/json",
             success: function (result) {
-                for (var i = 0; i < result.page.list.length; i++) {
+                for (let i = 0; i < result.page.list.length; i++) {
                     schedulepolicies[i] = {message: result.page.list[i]}
                 }
                 taskform_data.schpolicies = schedulepolicies;
@@ -53,7 +52,7 @@ var task_handle = new Vue({
             $('#taskform_data input[type=text]').prop("unselectable", 'off');
             taskform_data.modaltitle = "新建任务";
             /*修改模态框标题*/
-            for (var i = 0; i < 3; i++) {
+            for (let i = 0; i < 3; i++) {
                 forms[i].value = ""
             }
             $(".service").addClass("service_unselected");
@@ -473,20 +472,20 @@ var taskform_data = new Vue({
     }
 });
 
-function getDispatch(taskid) {
-    var countDispatch = 0;
-    $.ajax({
-        type: "POST", /*GET会乱码*/
-        url: "../../cem/taskdispatch/info/" + taskid,
-        cache: false,  //禁用缓存
-        dataType: "json",
-        async: false,
-        success: function (result) {
-            countDispatch = result.page.list.length;
-        }
-    });
-    return countDispatch;
-}
+// function getDispatch(taskid) {
+//     var countDispatch = 0;
+//     $.ajax({
+//         type: "POST", /*GET会乱码*/
+//         url: "../../cem/taskdispatch/info/" + taskid,
+//         cache: false,  //禁用缓存
+//         dataType: "json",
+//         async: false,
+//         success: function (result) {
+//             countDispatch = result.page.list.length;
+//         }
+//     });
+//     return countDispatch;
+// }
 
 function getFormJson(form) {      /*将表单对象变为json对象*/
     var o = {};
@@ -646,14 +645,16 @@ var task_table = new Vue({
                         let rows = [];
                         var i = param.start + 1;
                         result.page.list.forEach(function (item) {
+                            if(item.countDispatch == null){
+                                item.countDispatch = 0;
+                            }
                             let row = [];
                             row.push(i++);
                             row.push('<a onclick="view_this(this)" id=' + item.id + '><span style="color: black;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">' + item.taskName + '</span></a>');
                             row.push(st.get(item.serviceType));
                             row.push(item.spName);
                             row.push(item.atName);
-                            row.push('<a class="fontcolor" onclick="dispatch_info(this)" id=' + item.id + '>' + getDispatch(item.id) + '</a>&nbsp;');
-                            // row.push('<a class="fontcolor" onclick="task_assign(this)" id=\'+item.id+\'>下发任务</a>');
+                            row.push('<a class="fontcolor" onclick="dispatch_info(this)" id=' + item.id + '>' + item.countDispatch + '</a>&nbsp;');
                             row.push('<a class="fontcolor" onclick="task_assign(this)" id=' + item.id + ' name=' + item.serviceType + '>下发任务</a>&nbsp;' +
                                 '<a class="fontcolor" onclick="delete_this(this)" id=' + item.id + '>删除</a>&nbsp;' +
                                 '<a class="fontcolor" onclick="view_this(this)" id=' + item.id + '>详情</a>');

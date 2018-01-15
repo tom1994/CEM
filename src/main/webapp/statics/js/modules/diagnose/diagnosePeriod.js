@@ -64,13 +64,13 @@ var button_change = new Vue({
         option_download: {
             /*设置丢包option*/
             title: {
-                text: '网络下载'
+                text: '文件下载'
             },
         },
         option_video: {
             /*设置丢包option*/
             title: {
-                text: '网络视频'
+                text: '在线视频'
             },
         },
         option_game: {
@@ -267,27 +267,26 @@ var Reset = new Vue({
         probedata: {
             ava_start: (new Date()).Format("2017-11-27"),
             ava_terminal: (new Date()).Format("2017-12-01"),
-            probe_id: '6',
+            city_id: '110100',
             service: '1'
         }
     },
     methods: {
         reset: function () {
             /*重置,回到页面加载时的数据*/
-            var postdata = {};
+            var param = {};
             this.probedata.service = status;
-            postdata.area = '';
-            postdata.probedata = JSON.stringify(this.probedata);
-            postdata.starttime = new Date(new Date() - 1000 * 60 * 60 * 24 * 4).Format("yyyy-MM-dd") + " 00:00:00";
+            param.probedata = JSON.stringify(this.probedata);
+            param.starttime = new Date(new Date() - 1000 * 60 * 60 * 24 * 4).Format("yyyy-MM-dd") + " 00:00:00";
             /*前4天日期*/
-            postdata.endtime = (new Date()).Format("yyyy-MM-dd") + " 23:59:59";
+            param.endtime = (new Date()).Format("yyyy-MM-dd") + " 23:59:59";
             /*当前日期*/
             $.ajax({
                 /*后台取得数据,赋值给观察者*/
                 type: "POST",
                 url: "../../diagnose/list",
                 cache: false,  //禁用缓存
-                data: postdata,  //传入组装的参数
+                data: param,  //传入组装的参数
                 dataType: "json",
                 success: function (result) {
                     console.log(result);

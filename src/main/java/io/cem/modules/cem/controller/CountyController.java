@@ -39,7 +39,6 @@ public class CountyController {
 	 * 列表
 	 */
 	@RequestMapping("/list")
-	@RequiresPermissions("county:list")
 	public R list(String countydata, Integer page, Integer limit) throws Exception {
 		Map<String, Object> map = new HashMap<>();
 		int total = 0;

@@ -10,6 +10,7 @@ import com.alibaba.fastjson.JSONObject;
 import io.cem.common.exception.RRException;
 import io.cem.common.utils.JSONUtils;
 import io.cem.common.utils.excel.ExcelUtils;
+import io.cem.modules.cem.entity.RecordHourPingEntity;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,10 +67,18 @@ public class RecordPingController {
 			map.put("limit", limit);
 			total = recordPingService.queryTotal(map);
 		}
-		List<RecordPingEntity> resultList = recordPingService.queryPingList(map);
-		System.out.println(resultList);
-		PageUtils pageUtil = new PageUtils(resultList, total, limit, page);
-		return R.ok().put("page", pageUtil);
+		if (Integer.parseInt(map.get("queryType").toString())  == 1){
+			List<RecordPingEntity> resultList = recordPingService.queryPingList(map);
+			System.out.println(resultList);
+			PageUtils pageUtil = new PageUtils(resultList, total, limit, page);
+			return R.ok().put("page", pageUtil);
+		}else{
+			List<RecordHourPingEntity> resultList = recordPingService.queryIntervalList(map);
+			System.out.println(resultList);
+			PageUtils pageUtil = new PageUtils(resultList, total, limit, page);
+			return R.ok().put("page", pageUtil);
+		}
+
 	}
 
 	@RequestMapping("/download")
