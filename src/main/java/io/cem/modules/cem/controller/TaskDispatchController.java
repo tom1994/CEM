@@ -70,7 +70,7 @@ public class TaskDispatchController {
         List<TaskDispatchEntity> dispatchList = taskDispatchService.queryDispatchList(id);
         String[] targetList = new String[dispatchList.size()];
 //        Integer[] targetIds = new Integer[100];
-        for(int i=0; i<dispatchList.size();i++){
+        for (int i = 0; i < dispatchList.size(); i++) {
             targetList[i] = dispatchList.get(i).getTarget();
 //            System.out.print(targetList[1]);
             String targetName = taskDispatchService.queryTargetBatch(targetList[i].split(",|\""));
@@ -101,7 +101,7 @@ public class TaskDispatchController {
         }
         List<TaskDispatchEntity> dispatchList = taskDispatchService.taskQueryDispatchList(id);
         String[] targetList = new String[dispatchList.size()];
-        for(int i=0; i<dispatchList.size();i++){
+        for (int i = 0; i < dispatchList.size(); i++) {
             targetList[i] = dispatchList.get(i).getTarget();
             String targetName = taskDispatchService.queryTargetBatch(targetList[i].split(",|\""));
             dispatchList.get(i).setTargetName(targetName);
@@ -124,18 +124,29 @@ public class TaskDispatchController {
     @RequestMapping("/saveAll")
     @RequiresPermissions("taskdispatch:save")
     public R saveAll(@RequestBody TaskDispatchEntity taskDispatch/*, String[] probeIds*/) {
-//        taskDispatchService.save(taskDispatch);
+//      TODO:探针组对应方法
         System.out.println(taskDispatch.getTarget());
-        String[] probeIdsList = taskDispatch.getProbeIds().split(",");
-        ArrayList<TaskDispatchEntity> taskDispatchEntityList = new ArrayList<TaskDispatchEntity>();
-        for(int i=0; i<probeIdsList.length; i++){
-            TaskDispatchEntity taskDispatchEntity = CloneUtils.clone(taskDispatch);
-            taskDispatchEntity.setProbeId(Integer.parseInt(probeIdsList[i].split("\"")[1]));
-            taskDispatchEntityList.add(taskDispatchEntity);
+        if (taskDispatch.getProbeIds().isEmpty() && ! taskDispatch.getProbeGroupIds().isEmpty()) {
+            String[] probeGroupIds = taskDispatch.getProbeGroupIds().split(",");
+            for (int i = 0; i<taskDispatch.getProbeGroupIds().length();i++){
+//               TODO: probeGroupIds[i] =
+            }
+            return R.ok();
+        } else if (! taskDispatch.getProbeIds().isEmpty() && taskDispatch.getProbeGroupIds().isEmpty()){
+            String[] probeIdsList = taskDispatch.getProbeIds().split(",");
+            List<TaskDispatchEntity> taskDispatchEntityList = new ArrayList<TaskDispatchEntity>();
+            taskDispatchEntityList.add(taskDispatch);
+            for (int i = 1; i < probeIdsList.length; i++) {
+                TaskDispatchEntity taskDispatchEntity = CloneUtils.clone(taskDispatch);
+                taskDispatchEntity.setProbeId(Integer.parseInt(probeIdsList[i].split("\"")[1]));
+                taskDispatchEntityList.add(taskDispatchEntity);
+            }
+            taskDispatchService.saveAll(taskDispatchEntityList);
+            System.out.println(taskDispatch.getProbeIds());
+            return R.ok();
+        }else{
+            return R.error(111,"探针或探针组格式错误");
         }
-        taskDispatchService.saveAll(taskDispatchEntityList);
-        System.out.println(taskDispatch.getProbeIds());
-        return R.ok();
     }
 
     /**

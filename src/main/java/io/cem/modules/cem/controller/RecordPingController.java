@@ -31,11 +31,6 @@ import javax.servlet.http.HttpServletResponse;
 
 
 /**
- * 
- * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2017-10-12 17:12:45
  */
 @RestController
 @RequestMapping("recordping")

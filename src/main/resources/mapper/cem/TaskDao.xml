@@ -48,7 +48,7 @@
 		ON task.alarm_template_id = alarm_template.id
 		LEFT JOIN schedule_policy
 		ON task.sch_policy_id = schedule_policy.id
-		LEFT JOIN (select count(*) AS count_dispatch, task_id from task_dispatch group by task_id) B
+		LEFT JOIN (select count(*) AS count_dispatch, task_id from task_dispatch WHERE task_dispatch.status=1 group by task_id) B
 		ON task.id = B.task_id
 		<choose>
 			<when test="sidx != null and sidx.trim() != ''">

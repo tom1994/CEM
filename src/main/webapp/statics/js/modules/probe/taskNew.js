@@ -191,7 +191,7 @@ function task_assign(obj) {
     var tgtoSelect;
     var forms = $('#dispatch_target');
     $('#taskId').val(parseInt(obj.id));
-    console.log($('#taskId').val());
+    // console.log($('#taskId').val());
     var servicetype = parseInt(obj.name);
     var sp_service = spst.get(servicetype);
     // 多选列表的数据传入格式
@@ -285,17 +285,33 @@ function task_assign(obj) {
         }
     });
 }
-
+//a=1 选择探针 a=0 选择探针组 b=1 测试目标 b=0 测试目标组
 function submit_dispatch() {
     var a = parseInt($('input[name=chooseprobe]:checked', '#dispatch_probe').val());
+    var b = parseInt($('input[name=choosetarget]:checked', '#dispatch_target').val());
+    var probeList = getFormJson($('#dispatch_probe'));
+    var targetList = getFormJson($('#dispatch_target'));
     if (a == 1) {
-        var taskDispatch = new Object();
+        let taskDispatch = {};
         taskDispatch.probePort = 1;
         taskDispatch.status = 1;
-        taskDispatch.target = getFormJson($('#dispatch_target')).targetId;
-        taskDispatch.taskId = getFormJson($('#dispatch_target')).taskId;
+        // 其他提取select值的方案
+        // console.log(document.getElementById("bootstrap-duallistbox-selected-list_probeId").value);
+        // console.log($("#bootstrap-duallistbox-selected-list_probeId").find("option:selected").text());
+        // console.log($("#bootstrap-duallistbox-selected-list_probeId").val());
+        // let c = $("#bootstrap-duallistbox-selected-list_targetId").val();
+        // let b = parseInt(c[0]);
+        // console.log(b);
+        if(b == 1){
+            taskDispatch.target = targetList.targetId;
+        }else if(b == 0){
+            taskDispatch.targetGroup = targetList.targetGroupId;
+        }else {
+            toastr.info('无该选项，请联系管理员');
+        }
+        taskDispatch.taskId = targetList.taskId;
         taskDispatch.isOndemand = 0;
-        taskDispatch.probeIds = getFormJson($('#dispatch_probe')).probeId;
+        taskDispatch.probeIds = probeList.probeId;
         taskDispatch.testNumber = taskDispatch.probeIds.length;
         console.log(taskDispatch);
         $.ajax({
@@ -312,7 +328,36 @@ function submit_dispatch() {
             }
         });
     } else if (a == 0) {
-
+        let taskDispatch = {};
+        taskDispatch.probePort = 1;
+        taskDispatch.status = 1;
+        if(b == 1){
+            taskDispatch.target = targetList.targetId;
+        }else if(b == 0){
+            taskDispatch.targetGroup = targetList.targetGroupId;
+        }else {
+            toastr.info('无该选项，请联系管理员');
+        }
+        taskDispatch.taskId = targetList.taskId;
+        taskDispatch.isOndemand = 0;
+        taskDispatch.probeGroupIds = probeList.probeGroupId;
+        console.log(taskDispatch);
+        $.ajax({
+            type: "POST", /*GET会乱码*/
+            url: "../../cem/taskdispatch/saveAll",
+            cache: false,  //禁用缓存
+            data: JSON.stringify(taskDispatch),
+            dataType: "json",
+            contentType: "application/json", /*必须要,不可少*/
+            success: function (result) {
+                if(R.ok.code=0){
+                    console.log(R.ok.code=0);
+                }
+                toastr.success("任务下发成功!");
+                $('#task_dispatch').modal('hide');
+                task_table.currReset();
+            }
+        });
     }
 }
 
@@ -374,7 +419,7 @@ Date.prototype.Format = function (fmt) {
         }
     }
     return fmt;
-}
+};
 
 var taskform_data = new Vue({
     el: '#myModal_edit',
@@ -450,9 +495,9 @@ var taskform_data = new Vue({
             this.servicetype = parseInt($('#servicetype').val());
             var servicetypeid = stid.get(this.servicetype);
             var selectst = "#" + servicetypeid;
-            $("#" + servicetypeid).removeClass("service_unselected");
-            $("#" + servicetypeid + " input[type=text]").prop("disabled", false);
-            $("#" + servicetypeid + " select").prop("disabled", false);
+            $(selectst).removeClass("service_unselected");
+            $(selectst + " input[type=text]").prop("disabled", false);
+            $(selectst + " select").prop("disabled", false);
             this.getalarmtemplates(this.servicetype);
         },
         getalarmtemplates: function (servicetypeid) {
