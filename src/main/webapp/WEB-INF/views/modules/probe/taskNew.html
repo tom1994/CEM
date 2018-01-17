@@ -61,7 +61,7 @@
     </div>
     <!-- 删除确认模态框（Modal） -->
     <div class="modal fade" id="myModal_delete" tabindex="-1" role="dialog"
-         aria-labelledby="myModalLabel" aria-hidden="" true>
+         aria-labelledby="myModalLabel" aria-hidden="true" >
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -87,9 +87,10 @@
         </div>
     </div>
     <!-- 任务下发模态框（Modal） -->
-    <div class="modal fade col-lg-12 col-md-12 col-sm-12" id="task_dispatch" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    <div class="modal fade col-lg-12 col-md-12 col-sm-12" id="task_dispatch" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel"
          aria-hidden="true">
-        <div class="col-lg-8 col-md-8 col-sm-8" >
+        <div class="col-lg-8 col-md-8 col-sm-8">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
@@ -121,26 +122,26 @@
                         </div>
                         <div class="row" id="probegroupselected" style="display: none">
                             <div class="ue-container">
-                                <select multiple="multiple" size="10" id="selectprobegroup" name="groupId">
+                                <select multiple="multiple" size="10" id="selectprobegroup" name="probeGroupId">
                                 </select>
                             </div>
                         </div>
                     </form>
-                    <div class="row">
-                        <div style="padding-top: 2%;">
-                            <label>
-                                <input type="radio" name="choosetarget"
-                                       onclick="$('#targetselected').removeAttr('style', 'display:none');$('#targetgroupselected').attr('style', 'display:none')"
-                                       checked value="1"><i></i>选择测试目标
-                            </label>
-                            <label>
-                                <input type="radio" name="choosetarget"
-                                       onclick="$('#targetgroupselected').removeAttr('style', 'display:none');$('#targetselected').attr('style', 'display:none')"
-                                       value="0">选择测试目标组
-                            </label>
-                        </div>
-                    </div>
                     <form class="form-horizontal" id="dispatch_target" role="form">
+                        <div class="row">
+                            <div style="padding-top: 2%;">
+                                <label>
+                                    <input type="radio" name="choosetarget"
+                                           onclick="$('#targetselected').removeAttr('style', 'display:none');$('#targetgroupselected').attr('style', 'display:none')"
+                                           checked value="1"><i></i>选择测试目标
+                                </label>
+                                <label>
+                                    <input type="radio" name="choosetarget"
+                                           onclick="$('#targetgroupselected').removeAttr('style', 'display:none');$('#targetselected').attr('style', 'display:none')"
+                                           value="0">选择测试目标组
+                                </label>
+                            </div>
+                        </div>
                         <div style="display: none">
                             <input type="text" id="taskId" name="taskId" readonly="readonly" unselectable="on">
                         </div>
@@ -152,7 +153,7 @@
                         </div>
                         <div class="row" id="targetgroupselected" style="display: none">
                             <div class="ue-container">
-                                <select multiple="multiple" size="10" name="targetId" id="selecttargetgroup">
+                                <select multiple="multiple" size="10" name="targetGroupId" id="selecttargetgroup">
                                 </select>
                             </div>
                         </div>

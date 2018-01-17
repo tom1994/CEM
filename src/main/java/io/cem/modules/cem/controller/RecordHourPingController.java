@@ -30,11 +30,6 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * 
- * 
- * @author ${author}
- * @email ${email}
- * @date 2017-12-02 14:35:31
  */
 @RestController
 @RequestMapping("recordhourping")

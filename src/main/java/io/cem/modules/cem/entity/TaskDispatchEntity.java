@@ -46,6 +46,8 @@ public class TaskDispatchEntity implements Serializable {
 
 	private String probeIds;
 
+	private String probeGroupIds;
+
 	private String targetName;
 
 	private String taskName;
@@ -240,5 +242,13 @@ public class TaskDispatchEntity implements Serializable {
 
 	public void setLayerName(String layerName) {
 		this.layerName = layerName;
+	}
+
+	public String getProbeGroupIds() {
+		return probeGroupIds;
+	}
+
+	public void setProbeGroupIds(String probeGroupIds) {
+		this.probeGroupIds = probeGroupIds;
 	}
 }
