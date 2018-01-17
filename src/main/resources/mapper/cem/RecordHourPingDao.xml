@@ -11,7 +11,9 @@
         <result property="probeId" column="probe_id"/>
         <result property="port" column="port"/>
         <result property="taskId" column="task_id"/>
+		<result property="taskName" column="task_name"/>
         <result property="serviceType" column="service_type"/>
+		<result property="servicetypeName" column="servicetype_name"/>
         <result property="targetId" column="target_id"/>
         <result property="targetIp" column="target_ip"/>
         <result property="recordDate" column="record_date"/>
@@ -28,6 +30,7 @@
 		<result property="areaName" column="area_name"/>
 		<result property="probeName" column="probe_name"/>
 		<result property="targetName" column="target_name"/>
+		<result property="targetipName" column="targetip_name"/>
 		<result property="accessLayer" column="access_layer"/>
     </resultMap>
 
@@ -155,13 +158,14 @@
 		GROUP BY rhp.city_id,rhp.county_id,rhp.service_type,rhp.target_id,rhp.probe_id,date_format(rhp.record_date,'%Y-%m-%d'),time_format(record_time, '%H');
 	</select>
 
+	 <!--根据统计粒度查询小时表-->
 	<select id="queryIntervalList" resultType="io.cem.modules.cem.entity.RecordHourPingEntity">
-		select rhp.id,rhp.city_id,rhp.county_id,rhp.probe_id,rhp.port,rhp.task_id,rhp.service_type,rhp.target_id,rhp.target_ip,rhp.record_date,rhp.remark,
-		city.city_name AS city_name,
-		county.county_name AS area_name,
+		select rhp.id,rhp.probe_id,rhp.port,rhp.task_id,rhp.service_type,rhp.target_id,rhp.target_ip,rhp.record_date,rhp.record_time,rhp.remark,
 		probe.probe_name AS probe_name,
-		probe.access_layer,
+		task.task_name AS task_name,
 		target.target_name AS target_name,
+		target.value AS targetip_name,
+		dic_data.data_name AS servicetype_name,
 		time_format(record_time, '%H') AS record_time,
 		AVG(rhp.delay) AS delay,
 		AVG(rhp.delay_std) AS delay_std,
@@ -171,21 +175,19 @@
 		AVG(rhp.jitter_var) AS jitter_var,
 		AVG(rhp.loss_rate) AS loss_rate
 		FROM record_hour_ping rhp
-		LEFT JOIN city
-		ON rhp.city_id = city.city_id
-		LEFT JOIN county
-		ON rhp.county_id = county.county_id
 		LEFT JOIN probe
 		ON rhp.probe_id = probe.id
+		LEFT JOIN task
+		ON rhp.task_id = task.id
 		LEFT JOIN target
 		ON rhp.target_id = target.id
-		WHERE rhp.record_date BETWEEN #{ava_start} AND #{ava_terminal}
-		AND record_time between #{startTime} AND #{endTime}
-		<if test="city_id != null and city_id != ''">
-			AND rhp.city_id = #{city_id}
-		</if>
-		<if test="county_id != null and county_id != ''">
-			AND rhp.county_id = #{county_id}
+		LEFT JOIN dic_data
+		ON dic_data.dic_type_id = 5 AND rhp.service_type = dic_data.data_id
+		WHERE
+		rhp.record_date BETWEEN #{startDate} AND #{terminalDate}
+		AND time_format(record_time,'%H') between #{startTime} AND #{terminalTime}
+		<if test="task_id != null and task_id != ''">
+			AND rhp.task_id = #{task_id}
 		</if>
 		<if test="target_id != null and target_id != ''">
 			AND rhp.target_id = #{target_id}
@@ -193,7 +195,7 @@
 		<if test="probe_id != null and probe_id != ''">
 			AND rhp.probe_id = #{probe_id}
 		</if>
-		GROUP BY rhp.service_type,rhp.target_id,rhp.probe_id,date_format(rhp.record_date,'%Y-%m-%d'),time_format(record_time, '%H');
+		GROUP BY rhp.service_type,rhp.target_id,rhp.task_id,rhp.probe_id,date_format(rhp.record_date,'%Y-%m-%d'),time_format(record_time, '%H');
 	</select>
 
  	<select id="queryTotal" resultType="int">

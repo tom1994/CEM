@@ -15,12 +15,12 @@ var spdata_handle = new Vue({
             /*状态0,表示新增*/
             var forms = $('#spform_data .form-control');
 
-            $('#spform_data input[type=text]').prop("readonly", false);
+            //$('#spform_data input[type=text]').prop("readonly", false);
             /*去除只读状态*/
             $('#spform_data select').prop("disabled", false);
 
             for (var i = 0; i <5; i++) {
-                forms[i].value = ""
+                forms[i].value = "";
             }
             spform_data.modaltitle = "新增调度策略";
             /*修改模态框标题*/
@@ -29,23 +29,23 @@ var spdata_handle = new Vue({
     }
 });
 
-function update_this (obj) {     /*监听修改触发事件*/
+/*function update_this (obj) {     /!*监听修改触发事件*!/
     update_data_id = parseInt(obj.id);
-    /*获取当前行探针数据id*/
+    /!*获取当前行探针数据id*!/
     console.log(update_data_id);
-    status = 1;      /*状态1表示修改*/
-    /*find被选中的行*/
+    status = 1;      /!*状态1表示修改*!/
+    /!*find被选中的行*!/
     var forms = $('#spform_data .form-control');
-    /*去除只读状态*/
+    /!*去除只读状态*!/
     $('#spform_data input[type=text]').prop("readonly", false);
 
     $.ajax({
-        type: "POST", /*GET会乱码*/
+        type: "POST", /!*GET会乱码*!/
         url: "../../cem/schedulepolicy/info/"+update_data_id,
         cache: false,  //禁用缓存
         //data: ,  //传入组装的参数
         dataType: "json",
-        contentType: "application/json", /*必须要,不可少*/
+        contentType: "application/json", /!*必须要,不可少*!/
         success: function (result) {
             forms[0].value = result.schedulePolicy.id;
             forms[1].value = result.schedulePolicy.spName;
@@ -54,9 +54,9 @@ function update_this (obj) {     /*监听修改触发事件*/
         }
     });
     spform_data.modaltitle = "修改调度策略";
-    /*修改模态框标题*/
+    /!*修改模态框标题*!/
     $('#myModal_sp').modal('show');
-}
+}*/
 
 function delete_ajax() {
     var ids = JSON.stringify(idArray);
@@ -286,8 +286,8 @@ var sptable = new Vue({
             {title: '<div style="width:15px"></div>'},
             {title: '<div style="width:142px">策略名称</div>'},
             {title: '<div style="width:180px">起止日期</div>'},
-            {title: '<div style="width:160px">时间间隔(分钟)</div>'},
-            {title: '<div style="width:142px">备注</div>'},
+            {title: '<div style="width:90px">时间间隔(分钟)</div>'},
+            {title: '<div style="width:160px">备注</div>'},
             {title: '<div style="width:100px">创建时间</div>'},
             {title: '<div style="width:40px">操作</div>'}
         ],
@@ -379,7 +379,7 @@ var sptable = new Vue({
                             let row = [];
                             row.push(i++);
                             row.push(item.spName);
-                            row.push((item.startDate).substr(0,10)+'-'+(item.endDate).substr(0,10));
+                            row.push((item.startDate).substr(0,10)+' - '+(item.endDate).substr(0,10));
                             row.push((JSON.parse(scheduler)).interval);
                             row.push(item.remark);
                             row.push(item.createTime);
