@@ -19,7 +19,7 @@ var spdata_handle = new Vue({
             /*去除只读状态*/
             $('#spform_data select').prop("disabled", false);
 
-            for (var i = 0; i <5; i++) {
+            for (var i = 0; i <4; i++) {
                 forms[i].value = "";
             }
             spform_data.modaltitle = "新增调度策略";
@@ -146,7 +146,6 @@ Date.prototype.Format = function (fmt) {
     return fmt;
 }
 
-
 var spform_data = new Vue({
     el: '#myModal_sp',
     data: {
@@ -160,18 +159,19 @@ var spform_data = new Vue({
         submit: function () {
             var spJson = getFormJson($('#spform_data'));
             console.log(spJson);
-            if (typeof(spJson["spName"]) == "undefined") {                  /*3个select必选*/
+            if ($("#everyday").checked == true){
+                spJson.startDate = new Date().Format("yyyy-MM-dd hh:mm:ss");
+                spJson.endDate = "2070-12-31";
+            }
+            if (typeof(spJson["spName"]) == "undefined") {
                 toastr.warning("请添加策略名称");
-            } else if (typeof(spJson["scheduler"]) == "undefined") {
-                toastr.warning("请添加任务描述!");
-            } else if (typeof(spJson["remark"]) == "undefined") {
-                toastr.warning("请添加备注!");
             } else {
-                var d = new Date().Format("yyyy-MM-dd hh:mm:ss");        //获取日期与时间
-                spJson['startDate'] = d;
-                var sp = JSON.stringify(spJson);
-                /*封装成json数组*/
-                /*获取表单元素的值*/
+                spJson.createTime = new Date().Format("yyyy-MM-dd hh:mm:ss");        //获取日期与时间
+                var scheduler = '{"start_time":"00:00:00", "end_time":"23:59:00", "interval":"0"}';
+                var schedulerObj = JSON.parse(scheduler);
+                schedulerObj.interval = spJson.interval;
+                spJson.scheduler = JSON.stringify(schedulerObj);
+                var sp = JSON.stringify(spJson);/*封装成json数组*/
                 console.log(sp);
                 var mapstr;
                 if (status == 0) {
@@ -179,7 +179,6 @@ var spform_data = new Vue({
                 } else if (status == 1) {
                     mapstr = "update"
                 }
-                console.log("状态:"+status);
                 $.ajax({
                     type: "POST", /*GET会乱码*/
                     url: "../../cem/schedulepolicy/" + mapstr,
@@ -222,7 +221,8 @@ var spform_data = new Vue({
                     }
                 });
             }
-        }
+        },
+
     }
 });
 
@@ -362,8 +362,6 @@ var sptable = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                        console.log(result);
-
                         //封装返回数据
                         let returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -374,12 +372,16 @@ var sptable = new Vue({
                         let rows = [];
                         var i = param.start+1;
                         result.page.list.forEach(function (item) {
-                            console.log(item.scheduler);
+                            if ((item.endDate).substr(0,10) == "2070-12-31") {
+                                var dateDisplay = "每天";
+                            } else {
+                                dateDisplay = (item.startDate).substr(0,10)+' - '+(item.endDate).substr(0,10);
+                            }
                             var scheduler = item.scheduler;
                             let row = [];
                             row.push(i++);
                             row.push(item.spName);
-                            row.push((item.startDate).substr(0,10)+' - '+(item.endDate).substr(0,10));
+                            row.push(dateDisplay);
                             row.push((JSON.parse(scheduler)).interval);
                             row.push(item.remark);
                             row.push(item.createTime);
@@ -404,13 +406,3 @@ var sptable = new Vue({
         });
     }
 });
-
-var changescale = new Vue({
-    "el":'#changescale',
-    data:{},
-    methods:{
-        changetime: function(){
-
-        }
-    }
-})
