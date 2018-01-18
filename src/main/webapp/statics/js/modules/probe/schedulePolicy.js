@@ -15,12 +15,12 @@ var spdata_handle = new Vue({
             /*状态0,表示新增*/
             var forms = $('#spform_data .form-control');
 
-            $('#spform_data input[type=text]').prop("readonly", false);
+            //$('#spform_data input[type=text]').prop("readonly", false);
             /*去除只读状态*/
             $('#spform_data select').prop("disabled", false);
 
-            for (var i = 0; i <5; i++) {
-                forms[i].value = ""
+            for (var i = 0; i <4; i++) {
+                forms[i].value = "";
             }
             spform_data.modaltitle = "新增调度策略";
             /*修改模态框标题*/
@@ -29,23 +29,23 @@ var spdata_handle = new Vue({
     }
 });
 
-function update_this (obj) {     /*监听修改触发事件*/
+/*function update_this (obj) {     /!*监听修改触发事件*!/
     update_data_id = parseInt(obj.id);
-    /*获取当前行探针数据id*/
+    /!*获取当前行探针数据id*!/
     console.log(update_data_id);
-    status = 1;      /*状态1表示修改*/
-    /*find被选中的行*/
+    status = 1;      /!*状态1表示修改*!/
+    /!*find被选中的行*!/
     var forms = $('#spform_data .form-control');
-    /*去除只读状态*/
+    /!*去除只读状态*!/
     $('#spform_data input[type=text]').prop("readonly", false);
 
     $.ajax({
-        type: "POST", /*GET会乱码*/
+        type: "POST", /!*GET会乱码*!/
         url: "../../cem/schedulepolicy/info/"+update_data_id,
         cache: false,  //禁用缓存
         //data: ,  //传入组装的参数
         dataType: "json",
-        contentType: "application/json", /*必须要,不可少*/
+        contentType: "application/json", /!*必须要,不可少*!/
         success: function (result) {
             forms[0].value = result.schedulePolicy.id;
             forms[1].value = result.schedulePolicy.spName;
@@ -54,9 +54,9 @@ function update_this (obj) {     /*监听修改触发事件*/
         }
     });
     spform_data.modaltitle = "修改调度策略";
-    /*修改模态框标题*/
+    /!*修改模态框标题*!/
     $('#myModal_sp').modal('show');
-}
+}*/
 
 function delete_ajax() {
     var ids = JSON.stringify(idArray);
@@ -146,7 +146,6 @@ Date.prototype.Format = function (fmt) {
     return fmt;
 }
 
-
 var spform_data = new Vue({
     el: '#myModal_sp',
     data: {
@@ -160,18 +159,19 @@ var spform_data = new Vue({
         submit: function () {
             var spJson = getFormJson($('#spform_data'));
             console.log(spJson);
-            if (typeof(spJson["spName"]) == "undefined") {                  /*3个select必选*/
+            if ($("#everyday").checked == true){
+                spJson.startDate = new Date().Format("yyyy-MM-dd hh:mm:ss");
+                spJson.endDate = "2070-12-31";
+            }
+            if (typeof(spJson["spName"]) == "undefined") {
                 toastr.warning("请添加策略名称");
-            } else if (typeof(spJson["scheduler"]) == "undefined") {
-                toastr.warning("请添加任务描述!");
-            } else if (typeof(spJson["remark"]) == "undefined") {
-                toastr.warning("请添加备注!");
             } else {
-                var d = new Date().Format("yyyy-MM-dd hh:mm:ss");        //获取日期与时间
-                spJson['startDate'] = d;
-                var sp = JSON.stringify(spJson);
-                /*封装成json数组*/
-                /*获取表单元素的值*/
+                spJson.createTime = new Date().Format("yyyy-MM-dd hh:mm:ss");        //获取日期与时间
+                var scheduler = '{"start_time":"00:00:00", "end_time":"23:59:00", "interval":"0"}';
+                var schedulerObj = JSON.parse(scheduler);
+                schedulerObj.interval = spJson.interval;
+                spJson.scheduler = JSON.stringify(schedulerObj);
+                var sp = JSON.stringify(spJson);/*封装成json数组*/
                 console.log(sp);
                 var mapstr;
                 if (status == 0) {
@@ -179,7 +179,6 @@ var spform_data = new Vue({
                 } else if (status == 1) {
                     mapstr = "update"
                 }
-                console.log("状态:"+status);
                 $.ajax({
                     type: "POST", /*GET会乱码*/
                     url: "../../cem/schedulepolicy/" + mapstr,
@@ -222,7 +221,8 @@ var spform_data = new Vue({
                     }
                 });
             }
-        }
+        },
+
     }
 });
 
@@ -286,8 +286,8 @@ var sptable = new Vue({
             {title: '<div style="width:15px"></div>'},
             {title: '<div style="width:142px">策略名称</div>'},
             {title: '<div style="width:180px">起止日期</div>'},
-            {title: '<div style="width:160px">时间间隔(分钟)</div>'},
-            {title: '<div style="width:142px">备注</div>'},
+            {title: '<div style="width:90px">时间间隔(分钟)</div>'},
+            {title: '<div style="width:160px">备注</div>'},
             {title: '<div style="width:100px">创建时间</div>'},
             {title: '<div style="width:40px">操作</div>'}
         ],
@@ -362,8 +362,6 @@ var sptable = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                        console.log(result);
-
                         //封装返回数据
                         let returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -374,12 +372,16 @@ var sptable = new Vue({
                         let rows = [];
                         var i = param.start+1;
                         result.page.list.forEach(function (item) {
-                            console.log(item.scheduler);
+                            if ((item.endDate).substr(0,10) == "2070-12-31") {
+                                var dateDisplay = "每天";
+                            } else {
+                                dateDisplay = (item.startDate).substr(0,10)+' - '+(item.endDate).substr(0,10);
+                            }
                             var scheduler = item.scheduler;
                             let row = [];
                             row.push(i++);
                             row.push(item.spName);
-                            row.push((item.startDate).substr(0,10)+'-'+(item.endDate).substr(0,10));
+                            row.push(dateDisplay);
                             row.push((JSON.parse(scheduler)).interval);
                             row.push(item.remark);
                             row.push(item.createTime);
@@ -404,13 +406,3 @@ var sptable = new Vue({
         });
     }
 });
-
-var changescale = new Vue({
-    "el":'#changescale',
-    data:{},
-    methods:{
-        changetime: function(){
-
-        }
-    }
-})

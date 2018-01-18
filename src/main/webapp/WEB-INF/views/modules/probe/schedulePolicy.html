@@ -39,36 +39,46 @@
                 <div class="row">
                     <form class="form-horizontal" id="spform_data" role="form">
                         <div class="form-group row">
-                            <label for="id"
-                                   class="col-lg-3 col-md-3 col-sm-3 control-label form_border"
+                            <label for="id" class="col-lg-3 col-md-3 col-sm-3 control-label form_border"
                                    style="display: none">id:</label>
-                            <div class="col-lg-3 col-md-3 col-sm-3 form_border"
+                            <div class="col-lg-8 col-md-8 col-sm-8 form_border"
                                  style="display: none">
-                                <input type="text" class="form-control" id="id" name="id"
-                                       placeholder="请输入id">
+                                <input type="text" class="form-control" id="id" name="id"  >
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="name"
-                                   class="col-lg-3 col-md-3 col-sm-3 control-label form_border" style="font-size: medium;font-weight: bold">策略名称:</label>
-                            <div class="col-lg-9 col-md-9 col-sm-9 ">
-                                <input type="text" class="form-control" id="name" name="spName"
-                                       placeholder="请输入策略名称">
+                            <label for="name" class="col-lg-3 col-md-3 col-sm-3 control-label form_border"
+                                   style="font-size: 15px">策略名称:</label>
+                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                <input type="text" class="form-control" id="name" name="spName"  >
                             </div>
                         </div>
-                        <div class="form-group row" style="padding-right: 30px !important;">
-                            <div class="col-lg-3 col-md-3 col-sm-3 control-label form_border" style="font-size: 15px">起止日期:</div>
-                            <div class="col-lg-9 col-md-9 col-sm-9" id="changescale">
-                                <input type="radio" class="form-control" id="everyday" name="time" value="everyday">每天
-                                <input type="radio" class="form-control" id="customtime" name="time">自定义
+                        <div class="form-group row">
+                            <span class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                 style="font-size: 15px; font-weight: bold">起止日期:</span>
+                            <div class="col-lg-9 col-md-9 col-sm-9" style="display: inline-block" id="changescale">
+                                <label><input type="radio" id="everyday" name="choosedate" onclick="">每天</label>
+                                <label><input type="radio" id="customtime" name="choosedate">自定义</label>
+                                <input type="text" id="startDate" class=""
+                                       name="startDate" style="width: 85px">
+                                <span style="width: 5px">-</span>
+                                <input type="text" id="endDate" class=""
+                                       name="endDate" style="width: 85px; display: inline-block">
+                                </span>
                             </div>
                         </div>
-                        <div class="form-group row"  style="padding-right: 30px !important;">
-                            <label for="remark"
-                                   class="col-lg-3 col-md-3 col-sm-3 control-label form_border" style="font-size: 15px">时间间隔:</label>
-                            <div class="col-lg-9 col-md-9 col-sm-9 ">
-                                <input type="text" class="form-control" id="remark" name="remark"
-                                       placeholder="请输入时间间隔"><!--Todo:时间间隔只能允许输入15分钟到24小时-->
+                        <div class="form-group row">
+                            <label for="interval" class="col-lg-3 col-md-3 col-sm-3 control-label form_border"
+                                   style="font-size: 15px">时间间隔:</label>
+                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                <input type="text" class="form-control" id="interval" name="interval"  ><!--Todo:时间间隔只能允许输入15分钟到24小时-->
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="remark" class="col-lg-3 col-md-3 col-sm-3 control-label form_border"
+                                   style="font-size: 15px">备注:</label>
+                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                <input type="text" class="form-control" id="remark" name="remark"  >
                             </div>
                         </div>
                     </form>
@@ -180,10 +190,40 @@
     })
 </script>
 
+<!--<script type="text/javascript">
+    $(function () {
+        $('#customtime').click(function () {
+            if ($(this).prop("checked",true)) {
+                $('.service_unselected').removeClass("service_unselected");
+            } else {
+                $('.service_unselected').addClass("service_unselected");
+            }
+        });
+    });
+</script>-->
+
 <script>
-    $('#customtime').flatpickr({
-        mode:"range",
-        time_24hr: true
+    $('#startDate').flatpickr({
+        enableTime: false,
+        dateFormat: "Y-m-d"
+    });
+</script>
+
+<script>
+    $('#endDate').flatpickr({
+        enableTime: false,
+        dateFormat: "Y-m-d"
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $(function(){
+            $('input:reset').click(function(){
+                $('.input #startDate').val("");
+                $('.input #endDate').val("");
+            });
+        });
     });
 </script>
 

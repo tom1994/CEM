@@ -28,8 +28,14 @@ public class RecordHourPingEntity implements Serializable {
 	private String port;
 	//任务ID
 	private Integer taskId;
+
+	private String taskName;
+
 	//子业务类型
 	private Integer serviceType;
+
+	private String servicetypeName;
+
 	//测试目标ID
 	private Integer targetId;
 	//测试目标IP
@@ -65,6 +71,9 @@ public class RecordHourPingEntity implements Serializable {
 
 	private Integer accessLayer;
 
+	private String targetipName;
+
+	private String timeRange;
 	/**
 	 * 设置：记录ID
 	 */
@@ -333,4 +342,22 @@ public class RecordHourPingEntity implements Serializable {
 	public void setAccessLayer(Integer accessLayer) {
 		this.accessLayer = accessLayer;
 	}
+
+	public String getTargetipName() {return targetipName;}
+
+	public void setTargetipName(String targetipName) {this.targetipName = targetipName;}
+
+	public String getServicetypeName() {return servicetypeName;}
+
+	public void setServicetypeName(String servicetypeName) {this.servicetypeName = servicetypeName;}
+
+	public String getTimeRange() {
+		return timeRange;
+	}
+
+	public void setTimeRange(String timeRange) {this.timeRange = timeRange;}
+
+	public String getTaskName() {return taskName;}
+
+	public void setTaskName(String taskName) {this.taskName = taskName;}
 }

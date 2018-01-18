@@ -47,27 +47,45 @@ public class RecordPingServiceImpl implements RecordPingService {
 	@Override
 	public List<RecordHourPingEntity> queryIntervalList(Map<String, Object> map){
 		int interval = Integer.parseInt(map.get("interval").toString());
-		String st = "00:00:00";
-		Date startTime = new Date();
-		DateFormat df = new SimpleDateFormat("HH:mm:ss");
-		try {
-			startTime = df.parse(st);
-		} catch (ParseException e) {
-			e.printStackTrace();
-			System.out.println("输入有误！！！！");
-		}
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(startTime);
+//		int start = 0;
+//		Date startTime = new Date();
+//		DateFormat df = new SimpleDateFormat("HH:mm:ss");
+//		try {
+//			startTime = df.parse(st);
+//		} catch (ParseException e) {
+//			e.printStackTrace();
+//			System.out.println("输入有误！！！！");
+//		}
+//		Calendar calendar = Calendar.getInstance();
+//		calendar.setTime(startTime);
 		List<RecordHourPingEntity> recordPingList = new ArrayList<>();
-		for (int i=0; i<24; i=i+interval){
-			map.put("startTime", df.format(calendar));
-			calendar.add(Calendar.HOUR_OF_DAY, interval);
-			map.put("endTime", df.format(calendar));
-			recordPingList.addAll(recordHourPingDao.queryIntervalList(map));
+		for (int i=0; i<=24-interval; i=i+interval){
+			if (i<10){
+				String st = "0"+i;
+				map.put("startTime", st);
+			} else{
+				map.put("startTime",i);
+			}
+			int j = i+interval;
+			if(j<10){
+				String et = "0"+j;
+				map.put("terminalTime", et);
+			} else{
+				map.put("terminalTime",j);
+			}
+//			map.put("startTime", df.format(calendar));
+//			calendar.add(Calendar.HOUR_OF_DAY, interval);
+//			map.put("terminalTime", df.format(calendar));
+//			int tmp = Integer.parseInt(String.valueOf(st.charAt(1));
+			List<RecordHourPingEntity> recordHourPing = recordHourPingDao.queryIntervalList(map);
+			for(int k=0; k<recordHourPing.size(); k++){
+				recordHourPing.get(k).setTimeRange(i+":00-"+j+":00");
+			}
+			recordPingList.addAll(recordHourPing);
 		}
 		return recordPingList;
 	}
-	
+
 	@Override
 	public int queryTotal(Map<String, Object> map){
 		return recordPingDao.queryTotal(map);

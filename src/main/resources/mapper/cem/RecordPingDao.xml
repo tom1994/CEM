@@ -82,8 +82,9 @@
 		LEFT JOIN dic_data d
 		ON (d.dic_type_id = 5 AND record_ping.service_type = d.data_id)
 		WHERE
+		record_ping.id >= 0
 		<if test="task_id != null and task_id != ''">
-			task_id = #{task_id}
+			AND task_id = #{task_id}
 		</if>
 		<if test="target_id != null and target_id != ''">
 			AND target_id = #{target_id}
@@ -93,6 +94,20 @@
 		</if>
 		<if test="startDate != null and startDate != '' and terminalDate != null and terminalDate != '' ">
 			AND (record_date BETWEEN #{startDate} AND #{terminalDate})
+		</if>
+		<if test="startTime != null and startTime != '' and terminalTime != null and terminalTime != '' ">
+			AND (record_time BETWEEN #{startTime} AND #{terminalTime})
+		</if>
+		<choose>
+			<when test="sidx != null and sidx.trim() != ''">
+				order by ${sidx} ${order}
+			</when>
+			<otherwise>
+				order by id desc
+			</otherwise>
+		</choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
 		</if>
 	</select>
 
