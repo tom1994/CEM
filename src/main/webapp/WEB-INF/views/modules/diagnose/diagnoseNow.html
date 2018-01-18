@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     #parse("cemHeader.html")  <!--导入CSS和js文件-->
     <link href="${rc.contextPath}/statics/css/formStyle.css" rel="stylesheet">
+    <link href="${rc.contextPath}/statics/css/bootstrap-multiselect.css" rel="stylesheet">
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
@@ -50,33 +51,59 @@
         </form>
     </div>
     <div class="row">
-        <form>
+        <form id="superservice" role="form">
             <div class="row col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                <input type="checkbox" id="ping" class="" name="startDate" value="">
+                <input type="checkbox" id="ping" class="" name="ping" value="1" onclick="getTarget()">
                 <label for="ping">网络连通性</label>
-                <input type="checkbox" id="sla" class="" name="startDate" value="">
+                <input type="checkbox" id="sla" class="" name="sla" value="2" onclick="getTarget()">
                 <label for="sla">网络层质量</label>
-                <input type="checkbox" id="web" class="" name="startDate" value="">
+                <input type="checkbox" id="web" class="" name="web" value="3" onclick="getTarget()">
                 <label for="web">Web浏览</label>
-                <input type="checkbox" id="download" class="" name="startDate" value="">
+                <input type="checkbox" id="download" class="" name="download" value="4" onclick="getTarget()">
                 <label for="download">文件下载</label>
-                <input type="checkbox" id="video" class="" name="startDate" value="">
+                <input type="checkbox" id="video" class="" name="video" value="5" onclick="getTarget()">
                 <label for="video">在线视频</label>
-                <input type="checkbox" id="game" class="" name="startDate" value="">
+                <input type="checkbox" id="game" class="" name="game" value="6" onclick="getTarget()">
                 <label for="game">网络游戏</label>
             </div>
         </form>
     </div>
-    <div class="input-group searchspan">
+
+    <div class="input-group searchspan" id="target">
         <span class="searchname" title="测试目标" style="width: 40px">目标</span>
         <select class="form-control " name="targetid" style="width: 110px">
             <option value="">---请选择---</option>
             <option v-for="item in target" v-bind:value="item.message.id">{{ item.message.targetName}}</option>
         </select>
+        <a id="diagnose" target="_blank" href="#">
+            <button type="button" class="btn btn-success" onclick="diagnose()">开始测试
+            </button>
+        </a>
     </div>
 </div>
-
+<select class="input-group searchspan" id="example-radio-optgroups">
+    <option value="1-1">Option 1.1</option>
+    <option value="1-2">Option 1.2</option>
+    <option value="1-3">Option 1.3</option>
+    <option value="2-1">Option 2.1</option>
+    <option value="2-2">Option 2.2</option>
+    <option value="2-3">Option 2.3</option>
+</select>
+<select id="example-all" multiple="multiple">
+    <optgroup label="Group 1" class="group-1">
+        <option value="1-1">Option 1.1</option>
+        <option value="1-2" selected="selected">Option 1.2</option>
+        <option value="1-3" selected="selected">Option 1.3</option>
+    </optgroup>
+    <optgroup label="Group 2" class="group-2">
+        <option value="2-1">Option 2.1</option>
+        <option value="2-2">Option 2.2</option>
+        <option value="2-3">Option 2.3</option>
+    </optgroup>
+</select>
 <script type="text/javascript"
         src="${rc.contextPath}/statics/js/modules/diagnose/diagnoseNow.js?_${date.systemTime}"></script>
+<script type="text/javascript"
+        src="${rc.contextPath}/statics/js/bootstrap-multiselect.js?_${date.systemTime}"></script>
 </body>
 </html>

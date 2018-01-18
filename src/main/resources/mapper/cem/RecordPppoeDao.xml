@@ -43,6 +43,31 @@
 		</if>
 	</select>
 	
+	<select id="queryPppoeTest" resultType="io.cem.modules.cem.entity.RecordPppoeEntity">
+		select record_pppoe.*,
+		probe.probe_name AS probe_name,
+		target.target_name AS target_name,
+		target.value AS targetip_name
+		FROM record_pppoe
+		LEFT JOIN probe
+		ON  record_pppoe.probe_id =probe.id
+		LEFT JOIN target
+		ON record_pppoe.target_id = target.id
+		WHERE
+		record_pppoe.dispatch_id = #{dispatch_id}
+		<choose>
+			<when test="sidx != null and sidx.trim() != ''">
+				order by ${sidx} ${order}
+			</when>
+			<otherwise>
+				order by id desc
+			</otherwise>
+		</choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
  	<select id="queryTotal" resultType="int">
 		select count(*) from record_pppoe 
 	</select>

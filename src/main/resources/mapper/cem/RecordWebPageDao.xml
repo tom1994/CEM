@@ -47,6 +47,31 @@
 			limit #{offset}, #{limit}
 		</if>
 	</select>
+
+	<select id="queryWebPageTest" resultType="io.cem.modules.cem.entity.RecordWebPageEntity">
+		select record_web_page.*,
+		probe.probe_name AS probe_name,
+		target.target_name AS target_name,
+		target.value AS targetip_name
+		FROM record_web_page
+		LEFT JOIN probe
+		ON  record_web_page.probe_id =probe.id
+		LEFT JOIN target
+		ON record_web_page.target_id = target.id
+		WHERE
+		record_web_page.dispatch_id = #{dispatch_id}
+		<choose>
+			<when test="sidx != null and sidx.trim() != ''">
+				order by ${sidx} ${order}
+			</when>
+			<otherwise>
+				order by id desc
+			</otherwise>
+		</choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
 	
  	<select id="queryTotal" resultType="int">
 		select count(*) from record_web_page 

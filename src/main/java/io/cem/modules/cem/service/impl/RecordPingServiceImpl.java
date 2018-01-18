@@ -35,6 +35,11 @@ public class RecordPingServiceImpl implements RecordPingService {
 	}
 
 	@Override
+	public List<RecordPingEntity> queryPingTest(Map<String, Object> map){
+		return recordPingDao.queryPingTest(map);
+	}
+
+	@Override
 	public List<RecordPingEntity> queryPingList(Map<String, Object> map){
 		return recordPingDao.queryPingList(map);
 	}

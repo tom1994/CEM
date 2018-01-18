@@ -4,11 +4,6 @@ import io.cem.modules.cem.entity.ErrorCodeEntity;
 import io.cem.modules.sys.dao.BaseDao;
 
 /**
- * 
- * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2017-10-12 17:12:44
  */
 public interface ErrorCodeDao extends BaseDao<ErrorCodeEntity> {
 	

@@ -19,6 +19,8 @@ public interface RecordPingService {
 
 	List<RecordHourPingEntity> queryIntervalList(Map<String, Object> map);
 
+	List<RecordPingEntity> queryPingTest(Map<String, Object> map);
+
 	int queryTotal(Map<String, Object> map);
 	
 	void save(RecordPingEntity recordPing);

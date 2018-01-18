@@ -51,7 +51,12 @@ public class TaskDispatchServiceImpl implements TaskDispatchService {
 	public int taskQueryDispatchTotal(Integer id){
 		return taskDispatchDao.taskQueryDispatchTotal(id);
 	}
-	
+
+	@Override
+	public int queryTestStatus(Integer id){
+		return taskDispatchDao.queryTestStatus(id);
+	}
+
 	@Override
 	public void save(TaskDispatchEntity taskDispatch){
 		taskDispatchDao.save(taskDispatch);

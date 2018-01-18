@@ -48,7 +48,32 @@
  	<select id="queryTotal" resultType="int">
 		select count(*) from record_game 
 	</select>
-	 
+
+	<select id="queryGameTest" resultType="io.cem.modules.cem.entity.RecordGameEntity">
+		select record_game.*,
+		probe.probe_name AS probe_name,
+		target.target_name AS target_name,
+		target.value AS targetip_name
+		FROM record_game
+		LEFT JOIN probe
+		ON  record_game.probe_id =probe.id
+		LEFT JOIN target
+		ON record_game.target_id = target.id
+		WHERE
+		record_game.dispatch_id = #{dispatch_id}
+		<choose>
+			<when test="sidx != null and sidx.trim() != ''">
+				order by ${sidx} ${order}
+			</when>
+			<otherwise>
+				order by id desc
+			</otherwise>
+		</choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
 	<insert id="save" parameterType="io.cem.modules.cem.entity.RecordGameEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into record_game
 		(

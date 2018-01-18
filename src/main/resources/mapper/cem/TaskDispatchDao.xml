@@ -74,6 +74,13 @@
 		WHERE task_id = #{value}
 	</select>
 
+	<select id="queryTestStatus" resultType="int">
+		SELECT count(*) FROM task_dispatch
+		WHERE id = #{value}
+		AND is_ondemand = 1
+		AND status=2
+	</select>
+
 	<select id="taskQueryDispatchTotal" resultType="int">
 		select count(*) from task_dispatch
 		WHERE probe_id = #{value}
