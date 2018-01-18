@@ -31,7 +31,12 @@ public class RecordFtpServiceImpl implements RecordFtpService {
 	public int queryTotal(Map<String, Object> map){
 		return recordFtpDao.queryTotal(map);
 	}
-	
+
+	@Override
+	public List<RecordFtpEntity> queryFtpTest(Map<String, Object> map){
+		return recordFtpDao.queryFtpTest(map);
+	}
+
 	@Override
 	public void save(RecordFtpEntity recordFtp){
 		recordFtpDao.save(recordFtp);

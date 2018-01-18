@@ -31,7 +31,12 @@ public class RecordTracertServiceImpl implements RecordTracertService {
 	public List<RecordTracertEntity> queryTracertList(Map<String, Object> map){
 		return recordTracertDao.queryTracertList(map);
 	}
-	
+
+	@Override
+	public List<RecordTracertEntity> queryTracertTest(Map<String, Object> map){
+		return recordTracertDao.queryTracertTest(map);
+	}
+
 	@Override
 	public int queryTotal(Map<String, Object> map){
 		return recordTracertDao.queryTotal(map);

@@ -17,6 +17,8 @@ public interface RecordFtpService {
 	RecordFtpEntity queryObject(Integer id);
 	
 	List<RecordFtpEntity> queryList(Map<String, Object> map);
+
+	List<RecordFtpEntity> queryFtpTest(Map<String, Object> map);
 	
 	int queryTotal(Map<String, Object> map);
 	

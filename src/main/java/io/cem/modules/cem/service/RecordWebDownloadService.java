@@ -17,7 +17,9 @@ public interface RecordWebDownloadService {
 	RecordWebDownloadEntity queryObject(Integer id);
 	
 	List<RecordWebDownloadEntity> queryList(Map<String, Object> map);
-	
+
+	List<RecordWebDownloadEntity> queryWebDownloadTest(Map<String, Object> map);
+
 	int queryTotal(Map<String, Object> map);
 	
 	void save(RecordWebDownloadEntity recordWebDownload);

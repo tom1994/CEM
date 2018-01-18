@@ -17,6 +17,8 @@ public interface RecordWebPageService {
 	RecordWebPageEntity queryObject(Integer id);
 	
 	List<RecordWebPageEntity> queryList(Map<String, Object> map);
+
+	List<RecordWebPageEntity> queryWebPageTest(Map<String, Object> map);
 	
 	int queryTotal(Map<String, Object> map);
 	

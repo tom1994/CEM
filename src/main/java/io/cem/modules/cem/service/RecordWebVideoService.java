@@ -17,6 +17,8 @@ public interface RecordWebVideoService {
 	RecordWebVideoEntity queryObject(Integer id);
 	
 	List<RecordWebVideoEntity> queryList(Map<String, Object> map);
+
+	List<RecordWebVideoEntity> queryWebVideoTest(Map<String, Object> map);
 	
 	int queryTotal(Map<String, Object> map);
 	

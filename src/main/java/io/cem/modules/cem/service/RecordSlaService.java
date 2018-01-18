@@ -17,6 +17,8 @@ public interface RecordSlaService {
 	RecordSlaEntity queryObject(Integer id);
 	
 	List<RecordSlaEntity> queryList(Map<String, Object> map);
+
+	List<RecordSlaEntity> querySlaTest(Map<String, Object> map);
 	
 	int queryTotal(Map<String, Object> map);
 	

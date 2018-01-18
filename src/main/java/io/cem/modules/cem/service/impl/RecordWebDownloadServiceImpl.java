@@ -31,7 +31,12 @@ public class RecordWebDownloadServiceImpl implements RecordWebDownloadService {
 	public int queryTotal(Map<String, Object> map){
 		return recordWebDownloadDao.queryTotal(map);
 	}
-	
+
+	@Override
+	public List<RecordWebDownloadEntity> queryWebDownloadTest(Map<String, Object> map){
+		return recordWebDownloadDao.queryWebDownloadTest(map);
+	}
+
 	@Override
 	public void save(RecordWebDownloadEntity recordWebDownload){
 		recordWebDownloadDao.save(recordWebDownload);

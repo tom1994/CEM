@@ -31,7 +31,12 @@ public class RecordWebPageServiceImpl implements RecordWebPageService {
 	public int queryTotal(Map<String, Object> map){
 		return recordWebPageDao.queryTotal(map);
 	}
-	
+
+	@Override
+	public List<RecordWebPageEntity> queryWebPageTest(Map<String, Object> map){
+		return recordWebPageDao.queryWebPageTest(map);
+	}
+
 	@Override
 	public void save(RecordWebPageEntity recordWebPage){
 		recordWebPageDao.save(recordWebPage);

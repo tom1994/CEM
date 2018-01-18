@@ -17,7 +17,9 @@ public interface RecordDnsService {
 	RecordDnsEntity queryObject(Integer id);
 	
 	List<RecordDnsEntity> queryList(Map<String, Object> map);
-	
+
+	List<RecordDnsEntity> queryDnsTest(Map<String, Object> map);
+
 	int queryTotal(Map<String, Object> map);
 	
 	void save(RecordDnsEntity recordDns);

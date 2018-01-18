@@ -31,7 +31,12 @@ public class RecordSlaServiceImpl implements RecordSlaService {
 	public int queryTotal(Map<String, Object> map){
 		return recordSlaDao.queryTotal(map);
 	}
-	
+
+	@Override
+	public List<RecordSlaEntity> querySlaTest(Map<String, Object> map){
+		return recordSlaDao.querySlaTest(map);
+	}
+
 	@Override
 	public void save(RecordSlaEntity recordSla){
 		recordSlaDao.save(recordSla);

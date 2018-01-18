@@ -17,6 +17,8 @@ public interface RecordPppoeService {
 	RecordPppoeEntity queryObject(Integer id);
 	
 	List<RecordPppoeEntity> queryList(Map<String, Object> map);
+
+	List<RecordPppoeEntity> queryPppoeTest(Map<String, Object> map);
 	
 	int queryTotal(Map<String, Object> map);
 	

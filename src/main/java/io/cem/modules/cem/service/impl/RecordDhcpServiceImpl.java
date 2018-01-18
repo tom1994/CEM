@@ -31,7 +31,12 @@ public class RecordDhcpServiceImpl implements RecordDhcpService {
 	public int queryTotal(Map<String, Object> map){
 		return recordDhcpDao.queryTotal(map);
 	}
-	
+
+	@Override
+	public List<RecordDhcpEntity> queryDhcpTest(Map<String, Object> map){
+		return recordDhcpDao.queryDhcpTest(map);
+	}
+
 	@Override
 	public void save(RecordDhcpEntity recordDhcp){
 		recordDhcpDao.save(recordDhcp);

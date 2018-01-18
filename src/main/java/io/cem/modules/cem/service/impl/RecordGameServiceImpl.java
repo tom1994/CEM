@@ -31,7 +31,12 @@ public class RecordGameServiceImpl implements RecordGameService {
 	public int queryTotal(Map<String, Object> map){
 		return recordGameDao.queryTotal(map);
 	}
-	
+
+	@Override
+	public List<RecordGameEntity> queryGameTest(Map<String, Object> map){
+		return recordGameDao.queryGameTest(map);
+	}
+
 	@Override
 	public void save(RecordGameEntity recordGame){
 		recordGameDao.save(recordGame);

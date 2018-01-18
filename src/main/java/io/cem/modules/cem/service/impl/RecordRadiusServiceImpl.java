@@ -31,7 +31,12 @@ public class RecordRadiusServiceImpl implements RecordRadiusService {
 	public int queryTotal(Map<String, Object> map){
 		return recordRadiusDao.queryTotal(map);
 	}
-	
+
+	@Override
+	public List<RecordRadiusEntity> queryRadiusTest(Map<String, Object> map){
+		return recordRadiusDao.queryRadiusTest(map);
+	}
+
 	@Override
 	public void save(RecordRadiusEntity recordRadius){
 		recordRadiusDao.save(recordRadius);

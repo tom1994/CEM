@@ -17,6 +17,8 @@ public interface RecordDhcpService {
 	RecordDhcpEntity queryObject(Integer id);
 	
 	List<RecordDhcpEntity> queryList(Map<String, Object> map);
+
+	List<RecordDhcpEntity> queryDhcpTest(Map<String, Object> map);
 	
 	int queryTotal(Map<String, Object> map);
 	

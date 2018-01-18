@@ -31,7 +31,13 @@ public class RecordPppoeServiceImpl implements RecordPppoeService {
 	public int queryTotal(Map<String, Object> map){
 		return recordPppoeDao.queryTotal(map);
 	}
-	
+
+	@Override
+	public List<RecordPppoeEntity> queryPppoeTest(Map<String, Object> map){
+		return recordPppoeDao.queryPppoeTest(map);
+	}
+
+
 	@Override
 	public void save(RecordPppoeEntity recordPppoe){
 		recordPppoeDao.save(recordPppoe);

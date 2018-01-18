@@ -17,6 +17,8 @@ public interface RecordGameService {
 	RecordGameEntity queryObject(Integer id);
 	
 	List<RecordGameEntity> queryList(Map<String, Object> map);
+
+	List<RecordGameEntity> queryGameTest(Map<String, Object> map);
 	
 	int queryTotal(Map<String, Object> map);
 	

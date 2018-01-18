@@ -31,7 +31,12 @@ public class RecordDnsServiceImpl implements RecordDnsService {
 	public int queryTotal(Map<String, Object> map){
 		return recordDnsDao.queryTotal(map);
 	}
-	
+
+	@Override
+	public List<RecordDnsEntity> queryDnsTest(Map<String, Object> map){
+		return recordDnsDao.queryDnsTest(map);
+	}
+
 	@Override
 	public void save(RecordDnsEntity recordDns){
 		recordDnsDao.save(recordDns);

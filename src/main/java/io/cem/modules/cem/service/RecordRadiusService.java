@@ -17,6 +17,8 @@ public interface RecordRadiusService {
 	RecordRadiusEntity queryObject(Integer id);
 	
 	List<RecordRadiusEntity> queryList(Map<String, Object> map);
+
+	List<RecordRadiusEntity> queryRadiusTest(Map<String, Object> map);
 	
 	int queryTotal(Map<String, Object> map);
 	

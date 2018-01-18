@@ -31,7 +31,12 @@ public class RecordWebVideoServiceImpl implements RecordWebVideoService {
 	public int queryTotal(Map<String, Object> map){
 		return recordWebVideoDao.queryTotal(map);
 	}
-	
+
+	@Override
+	public List<RecordWebVideoEntity> queryWebVideoTest(Map<String, Object> map){
+		return recordWebVideoDao.queryWebVideoTest(map);
+	}
+
 	@Override
 	public void save(RecordWebVideoEntity recordWebVideo){
 		recordWebVideoDao.save(recordWebVideo);
