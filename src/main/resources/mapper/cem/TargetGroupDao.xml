@@ -31,6 +31,25 @@
 		</if>
 	</select>
 
+	<select id="queryByTgNameList" resultMap="targetGroupMap">
+		select * from target_group
+		WHERE target_group.id IS NOT NULL
+		<if test="tg_name != null and tg_name != ''">
+			AND target_group.tg_name LIKE concat('%',#{tg_name},'%')
+		</if>
+		<choose>
+			<when test="sidx != null and sidx.trim() != ''">
+				order by ${sidx} ${order}
+			</when>
+			<otherwise>
+				order by target_group.id desc
+			</otherwise>
+		</choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
 	<select id="queryTGList" resultMap="targetGroupMap">
 		select * from target_group
 		WHERE superservice_type = #{value}

@@ -30,6 +30,12 @@
                                         <form class="col-lg-10 col-md-10 col-sm-10 form-horizontal" id="targetsearch"
                                               role="form">
                                             <div class=" form-group row">
+                                                <!--回车键bug,添加一项以免按回车键直接提交表单，页面刷新-->
+                                                <div style="display: none">
+                                                    <span class=""></span>
+                                                    <input type="text">
+                                                </div>
+
                                                 <div class="input-group searchspan">
                                                     <span class="searchname" style="width: auto">测试目标</span>
                                                     <input type="text" class="form-control" name="target_name" style="width: 120px"
@@ -81,19 +87,15 @@
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12" id="targettable">
                             <div class="ibox float-e-margins">
-                                <div class="ibox-title fontcolor" id="targethandle"
-                                     style="padding-bottom: 0px !important;">
-
-                                    <button type="button" class="btn btn-sm btn-success"
-                                            v-on:click=""><span
-                                            class="glyphicon glyphicon-plus"></span>新增
+                                <div class="ibox-title fontcolor" id="targethandle" style="padding-bottom: 0px !important;">
+                                    <button type="button" class="btn btn-sm btn-success" v-on:click="targetadd">
+                                        <span class="glyphicon glyphicon-plus"></span>新增
                                     </button>
-                                    <button type="button" class="btn btn-sm btn-success"
-                                            v-on:click=""><span
-                                            class="glyphicon glyphicon-trash"></span>批量删除
+                                    <button type="button" class="btn btn-sm btn-success" v-on:click="targetdelBatch">
+                                        <span class="glyphicon glyphicon-trash"></span>批量删除
                                     </button>
-
-                                    <p id="flip" style="position:relative; left:35%;" class="glyphicon glyphicon-menu-up" onClick="toggle1('searchbox')"></p>
+                                    <p id="flip" style="position:relative; left:35%;" class="glyphicon glyphicon-menu-up"
+                                       onClick="toggle1('searchbox')"></p>
                                 </div>
                                 <div class="ibox-content">
                                     <div class="row " style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
@@ -106,8 +108,7 @@
 
                     <!-- 详情模态框（Modal） -->
                     <div class="modal fade" id="myModal_update" tabindex="-1" role="dialog"
-                         aria-labelledby="myModalLabel"
-                         aria-hidden="true">
+                         aria-labelledby="myModalLabel" aria-hidden="true">
                         <div class="modal-dialog" style="width: 700px"> <!--修改bootstrap modal模态框的宽度-->
                             <div class="modal-content">
                                 <div class="modal-header" style="">
@@ -168,9 +169,9 @@
                                                 <label for="groupid"
                                                        class="col-lg-3 col-md-3 col-sm-3 input-label form_border">测试目标组:</label>
                                                 <div class="form_border col-lg-4 col-md-4 col-sm-4">
-                                                    <select id="groupid" class="form-control" name="groupid" style="width: 100%">  <!--VUE列表渲染-->
-                                                        <option v-for="item in groupIds">
-                                                            {{ item.groupId }}
+                                                    <select id="groupid" class="form-control" name="groupId" style="width: 100%">  <!--VUE列表渲染-->
+                                                        <option v-for="item in groupNames" v-bind:value="item.message.id">
+                                                            {{ item.message.tgName }}
                                                         </option>
                                                     </select>
                                                 </div>
@@ -183,16 +184,6 @@
                                                     <input type="text" class="form-control" id="remark"
                                                            name="remark" style="width: 100%"
                                                            placeholder="请输入">
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group row">
-                                                <label for="createtime"
-                                                       class="col-lg-3 col-md-3 col-sm-3 input-label form_border">创建时间:</label>
-                                                <div class="form_border col-lg-4 col-md-4 col-sm-4">
-                                                    <input type="text" class="form-control" id="createtime"
-                                                           name="createtime" style="width: 100%"
-                                                           placeholder="请输入" readonly="readonly">
                                                 </div>
                                             </div>
                                         </form>
@@ -246,9 +237,13 @@
                                 <div class="ibox-content" id="groupsearchbox" style="padding-bottom: 0">
                                     <div class="row">
                                         <form class="form-horizontal" id="tgsearch" role="form">
+                                            <div style="display: none">
+                                                <span class=""></span>
+                                                <input type="text">
+                                            </div>
                                             <div class=" col-lg-5 col-md-5 col-sm-5 searchspan">
                                                 <span class="searchname" title="测试目标组名">测试目标组名：</span>
-                                                <input type="text" class="form-control" name="tgName" style="width: 110px"
+                                                <input type="text" class="form-control" name="tg_name" style="width: 110px"
                                                        value="">
                                             </div>
                                         </form>
@@ -350,16 +345,6 @@
                                             <input type="text" class="form-control" id="tgremark"
                                                    name="remark" style="width: 100%"
                                                    placeholder="请输入">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <label for="tgcreatetime"
-                                               class="col-lg-3 col-md-3 col-sm-3 input-label form_border">创建时间:</label>
-                                        <div class="form_border col-lg-4 col-md-4 col-sm-4">
-                                            <input type="text" class="form-control" id="tgcreatetime"
-                                                   name="createTime" style="width: 100%"
-                                                   placeholder="请输入" readonly="readonly">
                                         </div>
                                     </div>
                                 </form>

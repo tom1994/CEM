@@ -190,18 +190,6 @@
     })
 </script>
 
-<!--<script type="text/javascript">
-    $(function () {
-        $('#customtime').click(function () {
-            if ($(this).prop("checked",true)) {
-                $('.service_unselected').removeClass("service_unselected");
-            } else {
-                $('.service_unselected').addClass("service_unselected");
-            }
-        });
-    });
-</script>-->
-
 <script>
     $('#startDate').flatpickr({
         enableTime: false,
@@ -217,14 +205,14 @@
 </script>
 
 <script type="text/javascript">
-    $(document).ready(function(){
-        $(function(){
-            $('input:reset').click(function(){
-                $('.input #startDate').val("");
-                $('.input #endDate').val("");
-            });
+$(document).ready(function(){
+    $(function(){
+        $('input:reset').click(function(){
+            $('.input #startDate').val("");
+            $('.input #endDate').val("");
         });
     });
+});
 </script>
 
 </html>
