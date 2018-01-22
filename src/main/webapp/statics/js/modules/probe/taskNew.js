@@ -498,25 +498,27 @@ var taskform_data = new Vue({
             $(selectst).removeClass("service_unselected");
             $(selectst + " input[type=text]").prop("disabled", false);
             $(selectst + " select").prop("disabled", false);
-            this.getalarmtemplates(this.servicetype);
+            getalarmtemplates(this.servicetype);
         },
-        getalarmtemplates: function (servicetypeid) {
-            $.ajax({
-                type: "POST", /*GET会乱码*/
-                url: "../../cem/alarmtemplate/info/" + servicetypeid,
-                cache: false,  //禁用缓存
-                dataType: "json",
-                success: function (result) {
-                    taskform_data.atemplates = [];
-                    for (var i = 0; i < result.atList.length; i++) {
-                        taskform_data.atemplates.push({message: result.atList[i]});
-                    }
-                }
-            });
-        }
     }
 });
 
+var getalarmtemplates = function (servicetypeid) {
+    $.ajax({
+        type: "POST", /*GET会乱码*/
+        url: "../../cem/alarmtemplate/info/" + servicetypeid,
+        cache: false,  //禁用缓存
+        dataType: "json",
+        success: function (result) {
+            console.log(result);
+            taskform_data.atemplates = [];
+            for (var i = 0; i < result.atList.length; i++) {
+                taskform_data.atemplates.push({message: result.atList[i]});
+            }
+            console.log(taskform_data.atemplates);
+        }
+    });
+}
 // function getDispatch(taskid) {
 //     var countDispatch = 0;
 //     $.ajax({

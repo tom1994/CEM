@@ -306,11 +306,11 @@ var Reset = new Vue({
 var options = {
     chart: {
         type: 'spline',
-        events: {
-            load: function () {
-                $('.highcharts-tooltip').hide();
-            }
-        }
+        // events: {
+        //     load: function () {
+        //         $('.highcharts-tooltip').hide();
+        //     }
+        // }
     },
     title: {
         text: ''
@@ -335,6 +335,7 @@ var options = {
         max: 100
     },
     tooltip: {
+        crosshairs: true,
         headerFormat: '<b>{series.name}</b><br>',
         pointFormat: '日期:{point.x:%Y-%m-%d} 分数:{point.y:.2f}分',
     },
@@ -347,7 +348,7 @@ var options = {
         series: {
             stickyTracking: false,
             events: {
-                click: function () {
+                mouseOver: function () {
                     $('.highcharts-tooltip').show();
                 },
                 mouseOut: function () {

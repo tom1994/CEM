@@ -1,3 +1,19 @@
+$.ajax({
+    url: "../../cem/probe/list",
+    type: "POST",
+    cache: false,  //禁用缓存
+    dataType: "json",
+    contentType: "application/json",
+    success: function (result) {
+        let probes = [];
+        console.log(result);
+        for (let i = 0; i < result.page.list.length; i++) {
+            probes[i] = {message: result.page.list[i]}
+        }
+        search_data.probe = probes;
+    }
+});
+
 var search_data = new Vue({
     el: '#probesearch',
     data: {
@@ -151,7 +167,7 @@ $(document).ready(function () {
             for (let i = 0; i < result.page.list.length; i++) {
                 targets[i] = {message: result.page.list[i]}
             }
-            search_data.target = targets;
+            target_data.target = targets;
         }
     });
     $.ajax({
@@ -167,6 +183,9 @@ $(document).ready(function () {
                 probes[i] = {message: result.page.list[i]}
             }
             search_data.probe = probes;
+            setTimeout(function(){
+                $('.jq22').comboSelect();
+            },500);
         }
     });
 });
@@ -178,24 +197,24 @@ function diagnose() {
     document.getElementById("diagnose").click();
 }
 
-$(document).ready(function() {
-    // $('#example-multiple').multiselect();
-    // $('#example-radio').multiselect();
-    // $('#example-multiple-optgroups').multiselect();
-    $('#example-radio-optgroups').multiselect({
-        enableClickableOptGroups: true,
-        enableCollapsibleOptGroups: true,
-        includeSelectAllOption: true,
-        buttonWidth: '400px',
-        dropRight: true,
-        maxHeight: 200,
-        onChange: function(option, checked) {
-            alert($(option).val());
-        },
-        nonSelectedText: '请选择',
-        numberDisplayed: 10,
-        enableFiltering: true,
-        allSelectedText:'全部',
-    });
-
-});
+// $(document).ready(function() {
+//     // $('#example-multiple').multiselect();
+//     // $('#example-radio').multiselect();
+//     // $('#example-multiple-optgroups').multiselect();
+//     $('#example-radio-optgroups').multiselect({
+//         enableClickableOptGroups: true,
+//         enableCollapsibleOptGroups: true,
+//         includeSelectAllOption: true,
+//         buttonWidth: '400px',
+//         dropRight: true,
+//         maxHeight: 200,
+//         onChange: function(option, checked) {
+//             alert($(option).val());
+//         },
+//         nonSelectedText: '请选择',
+//         numberDisplayed: 10,
+//         enableFiltering: true,
+//         allSelectedText:'全部',
+//     });
+//
+// });

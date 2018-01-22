@@ -14,4 +14,5 @@ import java.util.List;
  */
 public interface AlarmTemplateDao extends BaseDao<AlarmTemplateEntity> {
 	List<AlarmTemplateEntity> queryatList(Integer id);
+	List<AlarmTemplateEntity> queryAtByService(Integer id);
 }

@@ -887,6 +887,7 @@ var probetable = new Vue({
             data: vm.rows,
             searching: false,
             paging: true,
+            // autowidth: true,
             serverSide: true,
             info: false,
             ordering: false, /*禁用排序功能*/

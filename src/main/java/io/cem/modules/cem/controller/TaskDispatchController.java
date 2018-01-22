@@ -5,7 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import io.cem.common.utils.CloneUtils;
+import com.alibaba.fastjson.JSONObject;
+import io.cem.common.exception.RRException;
+import io.cem.common.utils.*;
+import io.cem.modules.cem.entity.ProbeEntity;
+import io.cem.modules.cem.service.ProbeService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,9 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.cem.modules.cem.entity.TaskDispatchEntity;
 import io.cem.modules.cem.service.TaskDispatchService;
-import io.cem.common.utils.PageUtils;
-import io.cem.common.utils.Query;
-import io.cem.common.utils.R;
 
 
 /**
@@ -31,6 +32,8 @@ public class TaskDispatchController {
     @Autowired
     private TaskDispatchService taskDispatchService;
 
+    @Autowired
+    private ProbeService probeService;
     /**
      * 列表
      */
@@ -121,6 +124,30 @@ public class TaskDispatchController {
         return R.ok();
     }
 
+    /**
+     * 下发实时诊断任务
+     */
+    @RequestMapping("/saveAndReturn")
+    @RequiresPermissions("taskdispatch:save")
+    public R saveAndReturn(String param) {
+        Map<String, Object> map = new HashMap<>();
+        JSONObject probedata_jsonobject = JSONObject.parseObject(param);
+        System.out.println(probedata_jsonobject);
+        try {
+            map.putAll(JSONUtils.jsonToMap(probedata_jsonobject));
+        } catch (RuntimeException e) {
+            throw new RRException("内部参数错误，请重试！");
+        }
+        int probeId = Integer.parseInt(map.get("probe_id").toString());
+        List<ProbeEntity> probeList = probeService.queryProbeByLayer(probeId);6
+        for(int i =1; i<probeList.size(); i++){
+
+            List<TaskDispatchEntity> taskdispatch =
+        }
+
+        return R.ok();
+    }
+    
     @RequestMapping("/saveAll")
     @RequiresPermissions("taskdispatch:save")
     public R saveAll(@RequestBody TaskDispatchEntity taskDispatch/*, String[] probeIds*/) {
