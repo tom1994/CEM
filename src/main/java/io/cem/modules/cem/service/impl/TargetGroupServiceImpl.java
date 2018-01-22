@@ -28,6 +28,12 @@ public class TargetGroupServiceImpl implements TargetGroupService {
 	}
 
 	@Override
+	public List<TargetGroupEntity> queryByTgNameList(Map<String, Object> map){
+		return targetGroupDao.queryByTgNameList(map);
+	}
+
+
+	@Override
 	public List<TargetGroupEntity> queryTGList(Integer id){
 		return targetGroupDao.queryTGList(id);
 	}

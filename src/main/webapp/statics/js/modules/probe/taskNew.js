@@ -5,23 +5,31 @@ var schedulepolicies = new Array();
 var alarmtemplates = new Array();
 
 var st = new Map();//servicetype字典，可通过get方法查对应字符串。
-st.set(1, "PING(ICMP Echo)");
-st.set(2, "PING(TCP Echo)");
-st.set(3, "PING(UDP Echo)");
-st.set(4, "TraceRoute(ICMP)");
-st.set(5, "TraceRoute(UDP)");
-st.set(10, "SLA(TCP)");
-var stid = new Map();
-stid.set(1, "pingicmp");
-stid.set(2, "pingtcp");
-//新建或编辑servicetype参数的id字典，用于根据select的业务类型变更来改变展示的参数。
+st.set(1, "PING(ICMP Echo)"); st.set(2, "PING(TCP Echo)"); st.set(3, "PING(UDP Echo)");
+st.set(4, "TraceRoute(ICMP)"); st.set(5, "TraceRoute(UDP)");
+st.set(10, "SLA(TCP)"); st.set(11, "SLA(UDP)"); st.set(12, "ADSL接入");
+st.set(13, "DHCP"); st.set(14, "DNS"); st.set(15, "Radius认证");
+st.set(20, "WEB页面访问"); st.set(30, "WEB下载"); st.set(31, "FTP下载"); st.set(32, "FTP上传");
+st.set(40, "在线视频"); st.set(50, "网络游戏");
+var stid = new Map();//新建或编辑servicetype参数的id字典，用于根据select的业务类型变更来改变展示的参数。
+stid.set(1, "pingicmp"); stid.set(2, "pingtcp"); stid.set(3, "pingicmp"); stid.set(4,"tracert");
+stid.set(5,"tracert"); stid.set(10,"sla"); stid.set(11,"sla"); stid.set(12,"pppoe");
+stid.set(13,"dhcp"); stid.set(14,"dns"); stid.set(15,"radius"); stid.set(20,"webpage");
+stid.set(30,"web_download"); stid.set(31,"ftp_download"); stid.set(32,"ftp_upload");
+stid.set(40,"online_video"); stid.set(50,"game");
 var spst = new Map();
-for(let i=1; i<7; i++){
+for(let i=1; i<6; i++){
     spst.set(i,1)
 };
-for(let i=10; i<17; i++){
+for(let i=10; i<16; i++){
     spst.set(i,2)
 };
+spst.set(20,3);
+for(let i=30; i<33; i++){
+    spst.set(i,4)
+};
+spst.set(40,5);
+spst.set(50,6);
 
 var task_handle = new Vue({
     el: '#handle',
@@ -60,8 +68,7 @@ var task_handle = new Vue({
             $('#viewfooter').attr('style', 'display:none');
             $('#newfooter').removeAttr('style', 'display:none');
             $('#myModal_edit').modal('show');
-        },
-
+        }
     }
 });
 
@@ -102,13 +109,113 @@ function get_viewModal(update_data_id) {
             taskforms[2].value = result.task.serviceType;
             taskforms[3].value = result.task.schPolicyId;
             taskforms[4].value = result.task.alarmTemplateId;
-            paramforms[0].value = param.count;
-            paramforms[1].value = param.interval;
-            paramforms[2].value = param.size;
-            paramforms[3].value = param.payload;
-            paramforms[4].value = param.ttl;
-            paramforms[5].value = param.tos;
-            paramforms[6].value = param.timeout;
+            if (stid.get(servicetypeid) == "pingicmp") {
+                paramforms[0].value = param.count;
+                paramforms[1].value = param.interval;
+                paramforms[2].value = param.size;
+                paramforms[3].value = param.payload;
+                paramforms[4].value = param.ttl;
+                paramforms[5].value = param.tos;
+                paramforms[6].value = param.timeout;
+            }
+            if (stid.get(servicetypeid) == "pingtcp") {
+                paramforms[7].value = param.count;
+                paramforms[8].value = param.interval;
+                paramforms[9].value = param.ttl;
+                paramforms[10].value = param.tos;
+                paramforms[11].value = param.timeout;
+            }
+            if (stid.get(servicetypeid) == "tracert") {
+                paramforms[12].value = param.count;
+                paramforms[13].value = param.interval;
+                paramforms[14].value = param.size;
+                paramforms[15].value = param.tos;
+                paramforms[16].value = param.timeout;
+                paramforms[17].value = param.max_hop;
+            }
+            if (stid.get(servicetypeid) == "sla") {
+                paramforms[18].value = param.count;
+                paramforms[19].value = param.interval;
+                paramforms[20].value = param.size;
+                paramforms[21].value = param.payload;
+                paramforms[22].value = param.ttl;
+                paramforms[23].value = param.timeout;
+            }
+            if (stid.get(servicetypeid) == "dhcp") {
+                paramforms[24].value = param.times;
+                paramforms[25].value = param.timeout;
+                paramforms[26].value = param.is_renew;
+            }
+            if (stid.get(servicetypeid) == "dns") {
+                paramforms[27].value = param.times;
+                paramforms[28].value = param.interval;
+                paramforms[29].value = param.count;
+                paramforms[30].value = param.timeout;
+                paramforms[31].value = param.domains;
+            }
+            if (stid.get(servicetypeid) == "pppoe") {
+                paramforms[32].value = param.username;
+                paramforms[33].value = param.password;
+                paramforms[34].value = param.times;
+                paramforms[35].value = param.interval;
+                paramforms[36].value = param.online_time;
+            }
+            if (stid.get(servicetypeid) == "radius") {
+                paramforms[37].value = param.auth_port;
+                paramforms[38].value = param.nas_port;
+                paramforms[39].value = param.secret;
+                paramforms[40].value = param.username;
+                paramforms[41].value = param.password;
+                paramforms[42].value = param.times;
+                paramforms[43].value = param.interval;
+            }
+            if (stid.get(servicetypeid) == "ftp_upload") {
+                paramforms[44].value = param.port;
+                paramforms[45].value = param.filename;
+                paramforms[46].value = param.lasting_name;
+                paramforms[47].value = param.upload_size;
+                //paramforms[48].value = param.is_delete;
+                //paramforms[49].value = param.is_anonymous;
+                paramforms[52].value = param.username;
+                paramforms[53].value = param.password;
+            }
+            if (stid.get(servicetypeid) == "ftp_download") {
+                paramforms[54].value = param.port;
+                paramforms[55].value = param.filename;
+                paramforms[56].value = param.lasting_name;
+                paramforms[57].value = param.download_size;
+                //paramforms[58].value = param.is_delete;
+                //paramforms[59].value = param.is_anonymous;
+                paramforms[62].value = param.username;
+                paramforms[63].value = param.password;
+            }
+            if (stid.get(servicetypeid) == "web_download") {
+                paramforms[64].value = param.lasting_time;
+            }
+            if (stid.get(servicetypeid) == "webpage") {
+                paramforms[65].value = param.max_element;
+                paramforms[66].value = param.element_timeout;
+                paramforms[67].value = param.page_timeout;
+                paramforms[68].value = param.max_size;
+                paramforms[69].value = param.user_agent;
+                //paramforms[70].value = param.is_http_proxy;
+                paramforms[72].value = param.address;
+                paramforms[73].value = param.port;
+                paramforms[74].value = param.username;
+                paramforms[75].value = param.password;
+            }
+            if (stid.get(servicetypeid) == "online_video") {
+                paramforms[76].value = param.video_quality;
+                paramforms[77].value = param.lasting_time;
+                paramforms[78].value = param.first_buffer_time;
+            }
+            if (stid.get(servicetypeid) == "game") {
+                paramforms[79].value = param.count;
+                paramforms[80].value = param.interval;
+                paramforms[81].value = param.size;
+                paramforms[82].value = param.timeout;
+            }
+            $("#" + stid.get(servicetypeid)).addClass("service_unselected");
             $("#" + stid.get(servicetypeid)).removeClass("service_unselected");
             $('#newfooter').attr('style', 'display:none');
             $('#viewfooter').removeAttr('style', 'display:none');

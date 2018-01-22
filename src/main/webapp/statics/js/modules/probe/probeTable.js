@@ -125,9 +125,6 @@ var search_list = new Vue({
         reset: function () {    /*重置*/
             probetable.reset();
         }
-
-
-
     }
 });
 

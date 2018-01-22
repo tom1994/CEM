@@ -5,6 +5,10 @@ var status;
 var idArray = new Array();
 var tgidArray = new Array();
 var targetGroupNames = new Array();
+var groupNames = new Array();  //模态框中目标组
+var tgNames = new Array();
+var itemIds = new Array();
+
 /*创建业务类型字典表*/
 var sst = new Map();
 sst.set(1, "网络连通性测试业务");
@@ -15,7 +19,7 @@ sst.set(5, "在线视频类业务");
 sst.set(6, "网络游戏类业务");
 
 var targetgroupdata_handle = new Vue({
-    el: '#targethandle',
+    el: '#tghandle',
     data: {},
     mounted: function(){         /*动态加载测试任务组数据*/
         $.ajax({
@@ -25,24 +29,38 @@ var targetgroupdata_handle = new Vue({
             dataType: "json",
             /* contentType:"application/json",  /!*必须要,不可少*!/*/
             success: function (result) {
+                console.log(result);
                 for(var i=0;i<result.page.list.length;i++){
                     targetGroupNames[i] = {message: result.page.list[i]}
                 }
                 search_data.target_names = targetGroupNames;
+                targetform_data.groupNames = targetGroupNames;
             }
         });
     },
     methods: {
+        tgadd: function () {   /*监听录入触发事件*/
+            status = 0;
+            /*状态0,表示录入*/
+            var forms = $('#tgform_data .form-control');
+            $('#tgform_data input[type=text]').prop("readonly", false);
+            /*去除只读状态*/
+            $('#tgform_data select').prop("disabled", false);
 
-
-
+            for (var i = 0; i < 4; i++) {
+                forms[i].value = ""
+            }
+            tgform_data.modaltitle = "新增测试目标组";
+            /*修改模态框标题*/
+            $('#myModal_tgupdate').modal('show');
+        }
     }
 });
 
 var target_search = new Vue({
     el:'#search',
     data:{},
-    mounted: function(){         /*动态加载测试任务组数据*/
+    mounted: function(){         /*动态加载测试目标数据*/
         $.ajax({
             type: "POST",   /*GET会乱码*/
             url: "../../target/list",
@@ -71,10 +89,8 @@ var target_search = new Vue({
 })
 
 var tg_search = new Vue({
-    el:'#groupsearchbox',
-    data:{
-        groupIds:[]
-    },
+    el:'#groupsearch',
+    data:{},
     methods:{
         tg_search:function() {   /*查询监听事件*/
             var data = getFormJson($('#tgsearch'));
@@ -91,24 +107,23 @@ var tg_search = new Vue({
     }
 })
 
-
-
-
 var targetdata_handle = new Vue({
     el: '#targethandle',
     data: {},
-    mounted: function(){},
+    mounted: function(){
+
+    },
     methods: {
         targetadd: function(){
             status = 0;
             /*状态0,表示录入*/
             var forms = $('#targetform_data .form-control');
 
-            $('#targetform_data input[type=text]').prop("readonly", false);
+            //$('#targetform_data input[type=text]').prop("readonly", false);
             /*去除只读状态*/
-            $('#targetform_data select').prop("disabled", false);
+            //$('#targetform_data select').prop("disabled", false);
 
-            for (var i = 0; i < 7; i++) {
+            for (var i = 0; i < 6; i++) {
                 forms[i].value = ""
             }
             targetform_data.modaltitle = "新增测试目标";
@@ -116,18 +131,19 @@ var targetdata_handle = new Vue({
             $('#myModal_update').modal('show');
         },
         targetdelBatch: function () {   /*批量删除监听事件*/
-            status = 2;
-            /*状态2表示删除*/
             var trs = $('#target_table tbody').find('tr:has(:checked)');
             if (trs.length == 0) {
                 toastr.warning('请选择删除项目！');
             } else {
-                for (var i = 0; i < trs.length; i++) {       /*取得选中行的id*/
+                /*for (var i = 0; i < trs.length; i++) {
                     var tds = trs.eq(i).find("td");
                     idArray[i] = parseInt(tds.eq(2).text());
-                    /*将id加入数组中*/
                     console.log(tds.eq(2).text())
-                }
+                }*/
+                $('input[name="selectFlag"]:checked').each(function(){
+                    idArray.push(getId(this));
+                });
+                console.log(idArray);
                 delete_ajax();
                 /*ajax传输*/
             }
@@ -135,34 +151,14 @@ var targetdata_handle = new Vue({
     }
 });
 
-var tg_handle = new Vue({
-    el: '#tghandle',
-    data: {},
-    mounted: function(){},
-    methods: {
-        tgadd: function () {   /*监听录入触发事件*/
-            status = 0;
-            /*状态0,表示录入*/
-            var forms = $('#tgform_data .form-control');
-            $('#tgform_data input[type=text]').prop("readonly", false);
-            /*去除只读状态*/
-            $('#tgform_data select').prop("disabled", false);
-
-            for (var i = 0; i < 5; i++) {
-                forms[i].value = ""
-            }
-            tgform_data.modaltitle = "新增测试目标组";
-            /*修改模态框标题*/
-            $('#myModal_tgupdate').modal('show');
-
-        }
-    }
-});
+function getId(obj) {
+    return(parseInt(obj.id));
+    console.log(parseInt(obj.id));
+}
 
 /*测试目标列表编辑功能*/
-function update_this (obj) {     /*监听修改触发事件*/
+function update_this (obj) {
     update_data_id = parseInt(obj.id);
-    /*获取当前行探针数据id*/
     console.log(update_data_id);
     status = 1;      /*状态1表示修改*/
     var forms = $('#targetform_data .form-control');
@@ -181,7 +177,6 @@ function update_this (obj) {     /*监听修改触发事件*/
             forms[3].value = result.target.superserviceType;
             forms[4].value = result.target.groupId;
             forms[5].value = result.target.remark;
-            forms[6].value = result.target.createTime;
         }
     });
     targetform_data.modaltitle = "测试目标详情";
@@ -189,10 +184,10 @@ function update_this (obj) {     /*监听修改触发事件*/
     $('#myModal_update').modal('show');
 }
 
-//探针组列表编辑功能
+//测试目标组详情
 function tgupdate_this (obj) {     /*监听修改触发事件*/
     tgdata_id = parseInt(obj.id);
-    /*获取当前行探针组数据id*/
+    /*获取当前行测试目标组数据id*/
     console.log(tgdata_id);
     status = 1;      /*状态1表示修改*/
     /*find被选中的行*/
@@ -210,7 +205,6 @@ function tgupdate_this (obj) {     /*监听修改触发事件*/
             forms[1].value = result.targetGroup.tgName;
             forms[2].value = result.targetGroup.superserviceType;
             forms[3].value = result.targetGroup.remark;
-            forms[4].value = result.targetGroup.createTime;
         }
     });
     tgform_data.modaltitle = "测试目标组详情";
@@ -230,15 +224,12 @@ function delete_ajax() {
         dataType: "json",
         contentType: "application/json", /*必须要,不可少*/
         success: function (result) {
-
-            toastr.success("业务信息删除成功!");
-
             target_table.currReset();
-
             idArray = [];
             /*清空id数组*/
             delete_data.close_modal();
             /*关闭模态框*/
+            toastr.success("业务信息删除成功!");
         }
     });
 }
@@ -277,7 +268,7 @@ var delete_data = new Vue({
     }
 });
 
-//探针组删除功能
+//测试目标组删除功能
 function tgdelete_ajax() {
     var tgids = JSON.stringify(tgidArray);
     /*对象数组字符串*/
@@ -339,7 +330,7 @@ var targetform_data = new Vue({
     el: '#myModal_update',
     data: {
         modaltitle: "", /*定义模态框标题*/
-        groupIds:[]
+        groupNames:[]
     },
     // 在 `methods` 对象中定义方法
     methods: {
@@ -670,8 +661,7 @@ var target_table = new Vue({
                         result.page.list.forEach(function (item) {
                             let row = [];
                             row.push(i++);
-                            row.push('<div class="checkbox"> <label> <input type="checkbox" id="checkALl" name="selectFlag"><div style="display: none">'+item.id+'</div></label> </div>');
-                           // row.push('<div class="id" style="display:none">'+item.id+'</div>');
+                            row.push('<div class="checkbox"> <label> <input type="checkbox" id='+item.id+' name="selectFlag" onclick="getId(this)">');
                             row.push('<a onclick="update_this(this)" id='+item.id+'><span style="color: black;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">'+item.targetName+'</span></a>');
                             row.push(item.value);
                             row.push(sst.get(item.superserviceType));
@@ -706,7 +696,6 @@ var tg_table = new Vue({
     data: {
         headers: [
             {title: '<div style="width:10px"></div>'},
-           // {title: '<div class="checkbox" style="width:100%; align: center"> <label> <input type="checkbox" id="checkAll"></label> </div>'},
             {title: '<div style="width:100px;text-align: center">测试目标组名</div>'},
             {title: '<div style="width:100px;text-align: center">业务类型</div>'},
             {title: '<div style="width:100px;text-align: center">备注</div>'},
@@ -793,30 +782,7 @@ var tg_table = new Vue({
                         var i = param.start+1;
                         result.page.list.forEach(function (item) {
                             let row = [];
-                            /*let superserviceType = item.superserviceType;
-                            switch (superserviceType) {
-                                case 0:
-                                    superserviceType = "网络连通性测试业务";
-                                    break;
-                                case 1:
-                                    superserviceType = "网络层质量测试业务";
-                                    break;
-                                case 2:
-                                    superserviceType = "文件下载类业务";
-                                    break;
-                                case 3:
-                                    superserviceType = "网页浏览类业务";
-                                    break;
-                                case 4:
-                                    superserviceType = "在线视频类业务";
-                                    break;
-                                case 5:
-                                    superserviceType = "网络游戏类业务";
-                                    break;
-                            }*/
                             row.push(i++);
-                            //row.push('<div class="checkbox"> <label> <input type="checkbox" id="checkALl" name="selectFlag"><div style="display: none">'+item.id+'</div></label> </div>');
-                            //row.push('<div class="id" style="display:none">'+item.id+'</div>');
                             row.push('<a onclick="tgupdate_this(this)" id='+item.id+'><span style="color: black;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">'+item.tgName+'</span></a>');
                             row.push(sst.get(item.superserviceType));
                             row.push(item.remark);
@@ -824,7 +790,6 @@ var tg_table = new Vue({
                             row.push('<a class="fontcolor" onclick="tgupdate_this(this)" id='+item.id+'>详情</a>&nbsp&nbsp;' +
                                 '<a class="fontcolor" onclick="tgdelete_this(this)" id='+item.id+'>删除</a>');
                             rows.push(row);
-                            // console.log(item);
                         });
                         returnData.data = rows;
                         console.log(returnData);
