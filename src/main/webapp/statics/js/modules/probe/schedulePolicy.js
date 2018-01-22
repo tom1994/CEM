@@ -158,8 +158,9 @@ var spform_data = new Vue({
     methods: {
         submit: function () {
             var spJson = getFormJson($('#spform_data'));
-            console.log(spJson);
-            if ($("#everyday").checked == true){
+            var datevalue =$('input:radio[name="choosedate"]:checked').val();
+            console.log(datevalue);
+            if (datevalue == 1){
                 spJson.startDate = new Date().Format("yyyy-MM-dd hh:mm:ss");
                 spJson.endDate = "2070-12-31";
             }
