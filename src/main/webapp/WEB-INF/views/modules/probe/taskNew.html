@@ -184,7 +184,7 @@
                             <div class="form-group row">
                                 <label for="id"
                                        class="col-lg-2 col-md-2 col-sm-2"
-                                       style="display: none">id:</label>
+                                       style="display: none">id</label>
                                 <div class="col-lg-2 col-md-2 col-sm-2 "
                                      style="display: none">
                                     <input type="text" class="form-control" id="id" name="id"
@@ -192,7 +192,7 @@
                                 </div>
                                 <label for="taskname"
                                        class="col-lg-3 col-md-3 col-sm-3 form_border"
-                                       style="font-size: medium">任务名称:</label>
+                                       style="font-size: medium">任务名称</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <input type="text" class="form-control" id="taskname"
                                            name="taskName" readonly="readonly" unselectable="on"
@@ -200,7 +200,7 @@
                                 </div>
                                 <label for="servicetype"
                                        class="col-lg-3 col-md-3 col-sm-3 form_border"
-                                       style="font-size: medium">任务类型:</label>
+                                       style="font-size: medium">任务类型</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <select id="servicetype" disabled="disabled" v-on:change="servicechange()"
                                             class="form-control"
@@ -241,7 +241,7 @@
                             <div class="form-group row">
                                 <label for="schpolicy"
                                        class="col-lg-3 col-md-3 col-sm-3 form_border"
-                                       style="font-size: medium">调度策略:</label>
+                                       style="font-size: medium">调度策略</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <select id="schpolicy" class="form-control" disabled="disabled" name="schPolicyId">
                                         <option value="">---请选择---</option>
@@ -252,7 +252,7 @@
                                 </div>
                                 <label for="alarmtemplate"
                                        class="col-lg-3 col-md-3 col-sm-3 form_border"
-                                       style="font-size: medium">告警模板:</label>
+                                       style="font-size: medium">告警模板</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <select id="alarmtemplate" disabled="disabled" class="form-control"
                                             name="alarmTemplateId">
@@ -303,20 +303,20 @@
                                 <div class="form-group row">
                                     <label for="ttl"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                           style="font-size: medium">TTL(次):</label>
+                                           style="font-size: medium">TTL(次)</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text" class="form-control" id="ttl"
                                                name="ttl" disabled="disabled" value="255" placeholder="">
                                     </div>
                                     <label for="tos"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                           style="font-size: medium">IP服务类型:</label>
+                                           style="font-size: medium">IP服务类型</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <select name="tos" disabled="disabled" id="tos" class="form-control">
-                                            <option value="000">普通</option>
-                                            <option value="001">优先</option>
-                                            <option value="010">快速</option>
-                                            <option value="011">闪速</option>
+                                            <option value="0">普通</option>
+                                            <option value="1">优先</option>
+                                            <option value="10">快速</option>
+                                            <option value="11">闪速</option>
                                             <option value="100">疾速</option>
                                             <option value="101">关键</option>
                                             <option value="110">网间控制</option>
@@ -325,7 +325,7 @@
                                     </div>
                                     <label for="timeout"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                           style="font-size: medium">超时时间(s):</label>
+                                           style="font-size: medium">超时时间(s)</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text" class="form-control" id="timeout"
                                                name="timeout" disabled="disabled" value="5" placeholder="">
@@ -354,20 +354,20 @@
                                 <div class="form-group row">
                                     <label for="pt_ttl"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                           style="font-size: medium">TTL(次）:</label>
+                                           style="font-size: medium">TTL(次)</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text" class="form-control" id="pt_ttl"
                                                name="ttl" disabled="disabled" value="255" placeholder="">
                                     </div>
                                     <label for="pt_tos"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                           style="font-size: medium">IP服务类型:</label>
+                                           style="font-size: medium">IP服务类型</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <select name="tos" disabled="disabled" id="pt_tos" class="form-control">
-                                            <option value="000">普通</option>
-                                            <option value="001">优先</option>
-                                            <option value="010">快速</option>
-                                            <option value="011">闪速</option>
+                                            <option value="0">普通</option>
+                                            <option value="1">优先</option>
+                                            <option value="10">快速</option>
+                                            <option value="11">闪速</option>
                                             <option value="100">疾速</option>
                                             <option value="101">关键</option>
                                             <option value="110">网间控制</option>
@@ -376,7 +376,7 @@
                                     </div>
                                     <label for="pt_timeout"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                           style="font-size: medium">超出时间（s):</label>
+                                           style="font-size: medium">超出时间(s)</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text" class="form-control" id="pt_timeout"
                                                name="timeout" disabled="disabled" value="5" placeholder="">
@@ -412,13 +412,13 @@
                                     </div>
                                     <label for="tr_tos"
                                            class="col-lg-3 col-md-3 col-sm-3 form_border"
-                                           style="font-size: medium">IP服务类型:</label>
+                                           style="font-size: medium">IP服务类型</label>
                                     <div class="col-lg-3 col-md-3 col-sm-3">
                                         <select name="tos" disabled="disabled" id="tr_tos" class="form-control">
-                                            <option value="000">普通</option>
-                                            <option value="001">优先</option>
-                                            <option value="010">快速</option>
-                                            <option value="011">闪速</option>
+                                            <option value="0">普通</option>
+                                            <option value="1">优先</option>
+                                            <option value="10">快速</option>
+                                            <option value="11">闪速</option>
                                             <option value="100">疾速</option>
                                             <option value="101">关键</option>
                                             <option value="110">网间控制</option>
@@ -429,14 +429,14 @@
                                 <div class="form-group row">
                                     <label for="tr_timeout"
                                            class="col-lg-3 col-md-3 col-sm-3 form_border"
-                                           style="font-size: medium">超出时间（s):</label>
+                                           style="font-size: medium">超出时间(s)</label>
                                     <div class="col-lg-3 col-md-3 col-sm-3">
                                         <input type="text" class="form-control" id="tr_timeout"
                                                name="timeout" disabled="disabled" value="5" placeholder="">
                                     </div>
                                     <label for="max_hop"
                                            class="col-lg-3 col-md-3 col-sm-3 form_border"
-                                           style="font-size: medium">最大跳数:</label>
+                                           style="font-size: medium">最大跳数</label>
                                     <div class="col-lg-3 col-md-3 col-sm-3">
                                         <input type="text" class="form-control" id="max_hop"
                                                name="max_hop" disabled="disabled" value="32" placeholder="">
@@ -482,14 +482,14 @@
                                 <div class="form-group row">
                                     <label for="sla_ttl"
                                            class="col-lg-3 col-md-3 col-sm-3 form_border"
-                                           style="font-size: medium">TTL(次）:</label>
+                                           style="font-size: medium">TTL(次)</label>
                                     <div class="col-lg-3 col-md-3 col-sm-3">
                                         <input type="text" class="form-control" id="sla_ttl"
                                                name="ttl" disabled="disabled" value="255" placeholder="">
                                     </div>
                                     <label for="sla_timeout"
                                            class="col-lg-3 col-md-3 col-sm-3 form_border"
-                                           style="font-size: medium">超时时间(s):</label>
+                                           style="font-size: medium">超时时间(s)</label>
                                     <div class="col-lg-3 col-md-3 col-sm-3">
                                         <input type="text" class="form-control" id="sla_timeout"
                                                name="timeout" disabled="disabled" value="5" placeholder="">
@@ -520,10 +520,10 @@
                                            class="col-lg-3 col-md-3 col-sm-3 form_border"
                                            style="font-size: medium">是否使用原IP</label>
                                     <div class="col-lg-3 col-md-3 col-sm-3">
-                                        <label><input type="radio" id="is_renew"
-                                                      value="1" name="is_renew">是</label>
-                                        <label><input type="radio" id="not_renew"
-                                                      value="0" name="is_renew">否</label>
+                                        <select name="is_renew" disabled="disabled" id="is_renew" class="form-control">
+                                            <option value="1">是</option>
+                                            <option value="0">否</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -565,7 +565,7 @@
                                 <div class="form-group row">
                                     <label for="domains"
                                            class="col-lg-3 col-md-3 col-sm-3 form_border"
-                                           style="font-size: medium">待查询域名:</label>
+                                           style="font-size: medium">待查询域名</label>
                                     <div class="col-lg-3 col-md-3 col-sm-3">
                                         <input type="text" class="form-control" id="domains"
                                                name="domains" disabled="disabled">
@@ -714,19 +714,19 @@
                                            class="col-lg-3 col-md-3 col-sm-3 form_border"
                                            style="font-size: medium">是否删除文件</label>
                                     <div class="col-lg-3 col-md-3 col-sm-3">
-                                        <label><input type="radio" id="is_delete"
-                                                      value="1" name="is_delete">是</label>
-                                        <label><input type="radio" id="not_delete"
-                                                      value="0" name="is_delete">否</label>
+                                        <select name="is_delete" disabled="disabled" id="is_delete" class="form-control">
+                                            <option value="1">是</option>
+                                            <option value="0">否</option>
+                                        </select>
                                     </div>
                                     <label for="is_anonymous"
                                            class="col-lg-3 col-md-3 col-sm-3 form_border"
                                            style="font-size: medium">是否匿名</label>
                                     <div class="col-lg-3 col-md-3 col-sm-3">
-                                        <label><input type="radio" id="is_anonymous"
-                                                      value="1" name="is_anonymous">是</label>
-                                        <label><input type="radio" id="not_anonymous"
-                                                      value="0" name="is_anonymous">否</label>
+                                        <select name="is_anonymous" disabled="disabled" id="is_anonymous" class="form-control">
+                                            <option value="1">是</option>
+                                            <option value="0">否</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -784,10 +784,10 @@
                                            class="col-lg-3 col-md-3 col-sm-3 form_border"
                                            style="font-size: medium">是否匿名</label>
                                     <div class="col-lg-3 col-md-3 col-sm-3">
-                                        <label><input type="radio" id="ftpdown_is_anonymous"
-                                                      value="1" name="is_anonymous">是</label>
-                                        <label><input type="radio" id="ftpdown_not_anonymous"
-                                                      value="0" name="is_anonymous">否</label>
+                                        <select name="is_anonymous" disabled="disabled" id="ftpdown_is_anonymous" class="form-control">
+                                            <option value="1">是</option>
+                                            <option value="0">否</option>
+                                        </select>
                                     </div>
                                     <div class="form-group row">
                                         <label for="ftpdown_username"
@@ -861,14 +861,14 @@
                                         <input type="text" class="form-control" id="user_agent"
                                                disabled="disabled" name="user_agent">
                                     </div>
-                                    <label for="max_size"
+                                    <label for="is_http_proxy"
                                            class="col-lg-3 col-md-3 col-sm-3 form_border"
                                            style="font-size: medium">是否使用HTTP代理</label>
                                     <div class="col-lg-3 col-md-3 col-sm-3">
-                                        <label><input type="radio" id="is_http_proxy" style="width:10px;"
-                                                      value="1" name="is_http_proxy">是</label>
-                                        <label><input type="radio" id="not_http_proxy" style="width:10px;"
-                                                      value="0" name="is_http_proxy">否</label>
+                                        <select name="is_http_proxy" disabled="disabled" id="is_http_proxy" class="form-control">
+                                            <option value="1">是</option>
+                                            <option value="0">否</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group row">

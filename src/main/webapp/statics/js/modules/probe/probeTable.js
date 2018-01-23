@@ -3,6 +3,7 @@
  */
 var status;
 var idArray = new Array();
+var probeNames = new Array();
 var probeGroupNames = new Array();
 var probeLayer = new Array();
 var cityNames = new Array();
@@ -26,6 +27,23 @@ var probedata_handle = new Vue({
                     cityNames[i] = {message: result.page.list[i]}
                 }
                 search_data.cities = cityNames;
+                probeform_data.cityNames = cityNames;
+            }
+        });
+
+        $.ajax({
+            type: "POST",   /*GET会乱码*/
+            url: "../../cem/probe/list",
+            cache: false,  //禁用缓存
+            dataType: "json",
+            success: function (result) {
+                console.log(result);
+                for(var i=0;i<result.page.list.length;i++){
+                    probeNames[i] = {message: result.page.list[i]}
+                }
+                probeform_data.upstreams = probeNames;
+                probeform_data.iptypeNames = probeNames;
+                probeform_data.statusNames = probeNames;
             }
         });
     },
@@ -96,7 +114,6 @@ var layer_handle = new Vue({
     }
 });
 
-
 var search_list = new Vue({
     el: '#search',
     data: {},
@@ -128,7 +145,6 @@ var search_list = new Vue({
     }
 });
 
-
 var probegroupdata_handle = new Vue({
     el: '#probehandle',
     data: {},
@@ -141,9 +157,11 @@ var probegroupdata_handle = new Vue({
             /* contentType:"application/json",  /!*必须要,不可少*!/*/
             success: function (result) {
                 for(var i=0;i<result.page.list.length;i++){
+                    //console.log(result);
                     probeGroupNames[i] = {message: result.page.list[i]}
                 }
                 search_data.probegroup_names = probeGroupNames;
+                probeform_data.groupNames = probeGroupNames;
             }
         });
     },
@@ -153,7 +171,6 @@ var probegroupdata_handle = new Vue({
 
     }
 });
-
 
 var probegroup_handle = new Vue({
     el: '#grouphandle',
@@ -371,7 +388,7 @@ var dispatch_table = new Vue({
 function update_this (obj) {     /*监听修改触发事件*/
     update_data_id = parseInt(obj.id);
     /*获取当前行探针数据id*/
-    console.log(update_data_id);
+    //console.log(update_data_id);
     status = 1;      /*状态1表示修改*/
     var forms = $('#probeform_data .form-control');
     /*去除只读状态*/
@@ -384,21 +401,24 @@ function update_this (obj) {     /*监听修改触发事件*/
         dataType: "json",
         // contentType: "application/json", /*必须要,不可少*/
         success: function (result) {
-            console.log(result);
-            console.log("I'm here!!!!"+result.probe.type);
+            console.log(result.probe);
+            console.log(result.probe.city);
+            console.log(result.probe.county);
             forms[0].value = result.probe.id;
             forms[1].value = result.probe.name;
             forms[2].value = result.probe.serialNumber;
             forms[3].value = result.probe.type;
-            forms[4].value = result.probe.cityName;
-            forms[5].value = result.probe.countyName;
+            forms[4].value = result.probe.city;
+            /*渲染区县的下拉列表，否则无法显示county对应的countyName*/
+            probeform_data.countyNames = queryArea(forms[4].value);
+            forms[5].value = result.probe.county;
             forms[6].value = result.probe.location;
             forms[7].value = result.probe.brasName;
             forms[8].value = result.probe.brasIp;
             forms[9].value = result.probe.brasPort;
             forms[10].value = result.probe.accessLayer;
-            forms[11].value = result.probe.upstreamName;
-            forms[12].value = result.probe.statusName;
+            forms[11].value = result.probe.upstream;
+            forms[12].value = result.probe.status;
             forms[13].value = result.probe.device;
             forms[14].value = result.probe.version;
             forms[15].value = result.probe.concurrentTask;
@@ -511,6 +531,7 @@ var delete_data = new Vue({
         }
     }
 });
+
 //探针组删除功能
 function deletegroup_ajax() {
     var ids = JSON.stringify(idArray);
@@ -573,29 +594,26 @@ var probeform_data = new Vue({
     el: '#myModal_update',
     data: {
         modaltitle: "", /*定义模态框标题*/
-        countyNames: [
-            {message: '海淀区'},
-            {message: '朝阳区'},
-        ],
-        cityNames: [
-            {message: '北京市'}
-        ],
+        countyNames: [],
+        cityNames: [],
         typeNames:[],
         statusNames:[],
-        ipTypes: [
-            {message:'ip类型1'},
-            {message:'ip类型2'}
-        ],
-        probegroup_names: [
-        ],
+        iptypeNames: [],
+        groupNames: [],
         types: [],
         status:[],
         accessLayers:[],
         citys:[],
-        countys:[]
+        countys:[],
+        upstreams:[]
     },
     // 在 `methods` 对象中定义方法
     methods: {
+        /*模态框中选择区县*/
+        queryArea: function(){
+            //console.log($("#city").val());
+            this.countyNames = queryArea($("#city").val());
+        },
         submit: function () {
             var probeJson = getFormJson($('#probeform_data'));
             if (typeof(probeJson["name"]) == "undefined") {
@@ -651,8 +669,6 @@ var probeform_data = new Vue({
                     }
                 });
             }
-
-
         }
     }
 });
@@ -743,7 +759,6 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
     return o;
 }
 
-
 var search_data = new Vue({
     el:'#probesearch',
     data:{
@@ -756,11 +771,13 @@ var search_data = new Vue({
     },
     methods:{
         citychange: function () {
+            //console.log($("#selectcity").val());
             this.areas = getArea($("#selectcity").val());
         }
     }
 });
 
+/*搜索框中的联动选择地市和区县*/
 var getArea = function (cityid) {
     $.ajax({
         url: "../../cem/county/info/"+cityid,
@@ -773,6 +790,22 @@ var getArea = function (cityid) {
                 areaNames[i] = {message: result.county[i]}
             }
             search_data.areas = areaNames;
+        }
+    });
+}
+/*详情里的联动选择地市和区县*/
+var queryArea = function (cityid) {
+    $.ajax({
+        url: "../../cem/county/info/"+cityid,
+        type: "POST",
+        cache: false,  //禁用缓存
+        dataType: "json",
+        contentType: "application/json",
+        success: function (result) {
+            for(var i=0;i<result.county.length;i++){
+                areaNames[i] = {message: result.county[i]}
+            }
+            probeform_data.countyNames = areaNames;
         }
     });
 }
@@ -821,8 +854,6 @@ $(document).ready(function () {
 
 });
 
-
-
 // 探针列表
 var probetable = new Vue({
     el: '#probedata_table',
@@ -838,9 +869,9 @@ var probetable = new Vue({
             {title: '<div style="width:42px">区县</div>'},
             {title: '<div style="width:90px">位置</div>'},
             {title: '<div style="width:55px">层级</div>'},
-            {title: '<div style="width:55px">上联探针</div>'},
+            {title: '<div style="width:70px">上联探针</div>'},
             {title: '<div style="width:40px">状态</div>'},
-            {title: '<div style="width:55px">类型</div>'},
+            {title: '<div style="width:70px">类型</div>'},
             {title: '<div style="width:130px">注册时间</div>'},
             {title: '<div style="width:80px">最后心跳时间</div>'},
             {title: '<div style="width:80px">最后上报时间</div>'},
@@ -970,7 +1001,6 @@ var probetable = new Vue({
     }
 });
 
-
 // 探针组列表
 var grouptable = new Vue({
     el: '#probegroup_table',
@@ -1082,7 +1112,6 @@ var grouptable = new Vue({
         });
     }
 });
-
 
 var dragModal = {
     mouseStartPoint: {"left": 0, "top": 0},

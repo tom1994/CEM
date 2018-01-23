@@ -185,9 +185,7 @@
                                                 <label for="id"
                                                        class="col-lg-2 col-md-2 col-sm-2 input-label form_border"
                                                        style="display: none">id:</label>
-                                                <div class="col-lg-2 col-md-2 col-sm-2 "
-
-                                                     style="display: none">
+                                                <div class="col-lg-2 col-md-2 col-sm-2" style="display: none">
                                                     <input type="text" class="form-control" id="id" name="id"
                                                            placeholder="请输入id">
                                                 </div>
@@ -210,7 +208,11 @@
                                                        class="col-lg-2 col-md-2 col-sm-2 input-label form_border">探针类型:</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                                     <select id="type" class="form-control" name="type">  <!--VUE列表渲染-->
-                                                        <option></option>
+                                                        <option value="10">机架探针</option>
+                                                        <option value="20">盒式探针</option>
+                                                        <option value="30">家庭网关软探针</option>
+                                                        <option value="31">ONU软探针</option>
+                                                        <option value="32">OLT软探针</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -219,9 +221,9 @@
                                                 <label for="city"
                                                        class="col-lg-2 col-md-2 col-sm-2 input-label form_border">所属地市:</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border">
-                                                    <select id="city" class="form-control" name="city">  <!--VUE列表渲染-->
-                                                        <option v-for="item in cityNames">
-                                                            {{ item.message }}
+                                                    <select id="city" class="form-control" name="city" v-on:change="queryArea()">  <!--VUE列表渲染-->
+                                                        <option v-for="item in cityNames" v-bind:value="item.message.cityId">
+                                                            {{ item.message.cityName }}
                                                         </option>
                                                     </select>
                                                 </div>
@@ -230,8 +232,9 @@
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                                     <select id="county" class="form-control" name="county">
                                                         <!--VUE列表渲染-->
-                                                        <option v-for="item in countyNames">
-                                                            {{ item.message }}
+                                                        <option v-for="item in countyNames"
+                                                                v-bind:value="item.message.countyId">
+                                                            {{ item.message.countyName }}
                                                         </option>
                                                     </select>
                                                 </div>
@@ -272,22 +275,36 @@
                                                 <label for="accessLayer"
                                                        class="col-lg-2 col-md-2 col-sm-2 input-label form_border">接入层级:</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border">
-                                                    <input id="accessLayer" class="form-control" name="accessLayer">
-                                                    </input>
+                                                    <select id="accessLayer" class="form-control" name="accessLayer">  <!--VUE列表渲染-->
+                                                        <option value="1000">住户</option>
+                                                        <option value="2000">楼道</option>
+                                                        <option value="3000">小区出口</option>
+                                                        <option value="4000">BRAS</option>
+                                                        <option value="5000">核心</option>
+                                                    </select>
                                                 </div>
                                                 <label for="upstream"
                                                        class="col-lg-2 col-md-2 col-sm-2 input-label form_border">上联探针:</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border">
-                                                    <input id="upstream" class="form-control" name="upstream"
-                                                           readonly="readonly" unselectable='on'>
-                                                    </input>
+                                                    <select id="upstream" class="form-control selectdata" name="upstream"
+                                                            style="width: 110px">
+                                                        <option v-for="item in probeNames"
+                                                                v-bind:value="item.message.id">
+                                                            {{item.message.name}}
+                                                        </option>
+                                                    </select>
                                                 </div>
                                                 <label for="status"
                                                        class="col-lg-2 col-md-2 col-sm-2 input-label form_border">状态:</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border">
-                                                    <input id="status" class="form-control" name="status"
-                                                           readonly="readonly" unselectable='on'>
-                                                    </input>
+                                                    <select id="status" class="form-control" name="status"
+                                                            readonly="readonly" unselectable='on'>
+                                                        <!--VUE列表渲染-->
+                                                        <option v-for="item in statusNames"
+                                                                v-bind:value="item.message.status">
+                                                            {{ item.message.statusName }}
+                                                        </option>
+                                                    </select>
                                                 </div>
                                             </div>
                                             <!--unselectable属性解决IE鼠标光标聚焦问题-->
@@ -317,22 +334,35 @@
                                                 <label for="groupId"
                                                        class="col-lg-2 col-md-2 col-sm-2 input-label form_border">所属探针组:</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border">
-                                                    <input type="text" class="form-control" id="groupId"
-                                                           name="groupId"
-                                                           placeholder="请输入">
+                                                    <select id="groupId" class="form-control" name="groupId">
+                                                        <!--VUE列表渲染-->
+                                                        <option v-for="item in groupNames"
+                                                                v-bind:value="item.message.id">
+                                                            {{ item.message.name }}
+                                                        </option>
+                                                    </select>
                                                 </div>
                                                 <label for="ipType"
                                                        class="col-lg-2 col-md-2 col-sm-2 input-label form_border">IP类型:</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border">
-                                                    <input type="text" class="form-control" id="ipType"
-                                                           name="ipType" readonly="readonly" unselectable='on'>
+                                                    <select id="ipType" class="form-control" name="ipType"
+                                                            readonly="readonly" unselectable='on'>
+                                                        <!--VUE列表渲染-->
+                                                        <option v-for="item in iptypeNames"
+                                                                v-bind:value="item.message.ipType">
+                                                            {{ item.message.iptypeName }}
+                                                        </option>
+                                                    </select>
                                                 </div>
                                                 <label for="isp"
                                                        class="col-lg-2 col-md-2 col-sm-2 input-label form_border">接入运营商:</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border">
-                                                    <input type="text" class="form-control" id="isp"
-                                                           name="isp"
-                                                           placeholder="请输入">
+                                                    <select id="isp" class="form-control" name="isp">  <!--VUE列表渲染-->
+                                                        <option value="0">广电</option>
+                                                        <option value="1">移动</option>
+                                                        <option value="2">联通</option>
+                                                        <option value="3">电信</option>
+                                                    </select>
                                                 </div>
                                             </div>
 
