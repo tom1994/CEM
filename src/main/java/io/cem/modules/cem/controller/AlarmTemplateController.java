@@ -66,7 +66,15 @@ public class AlarmTemplateController {
 		return R.ok().put("atList", atList);
 	}
 
-
+	/**
+	 * miao根据servicetype的id来list出符合条件的告警模板
+	 */
+	@RequestMapping("/infoByService/{id}")
+	@RequiresPermissions("alarmtemplate:info")
+	public R infoByService(@PathVariable("id") Integer id){
+		List<AlarmTemplateEntity> atList = alarmTemplateService.queryAtByService(id);
+		return R.ok().put("atList", atList);
+	}
 	
 	/**
 	 * 保存

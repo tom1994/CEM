@@ -12,7 +12,8 @@
 <div class="htmleaf-container">
     <div class="tab" role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active"><a href="#Section1" aria-controls="home" role="tab" data-toggle="tab">
+            <li role="presentation" class="active"><a href="#Section1" aria-controls="home" role="tab"
+                                                      data-toggle="tab">
                 测试目标管理</a></li>
             <li role="presentation"><a href="#Section2" aria-controls="profile" role="tab" data-toggle="tab">
                 测试目标组管理</a></li>
@@ -38,22 +39,29 @@
 
                                                 <div class="input-group searchspan">
                                                     <span class="searchname" style="width: auto">测试目标</span>
-                                                    <input type="text" class="form-control" name="target_name" style="width: 120px"
+                                                    <input type="text" class="form-control" name="target_name"
+                                                           style="width: 120px"
                                                            value="" placeholder="名称或网址">
                                                 </div>
-
+                                                <div style="display: none">
+                                                    <span class=""></span>
+                                                    <input type="text">
+                                                </div>
                                                 <div class="input-group searchspan">
                                                     <span class="searchname" style="width: auto">测试目标组名</span>
-                                                    <select class="form-control " name="group_id" style="width: 130px;text-align: center">
+                                                    <select class="form-control " name="group_id"
+                                                            style="width: 130px;text-align: center">
                                                         <option value="">---请选择---</option>
                                                         <option v-for="item in target_names"
-                                                                v-bind:value="item.message.id">{{ item.message.tgName }}</option>
+                                                                v-bind:value="item.message.id">{{ item.message.tgName }}
+                                                        </option>
                                                     </select>
                                                 </div>
 
                                                 <div class="input-group searchspan">
                                                     <span class="searchname" style="width: auto">业务类型</span>
-                                                    <select class="form-control " name="superservice_type" style="width: 150px;text-align: center">
+                                                    <select class="form-control " name="superservice_type"
+                                                            style="width: 150px;text-align: center">
                                                         <option value="">---请选择---</option>
                                                         <option value="1">网络连通性测试业务</option>
                                                         <option value="2">网络层质量测试业务</option>
@@ -94,12 +102,13 @@
                                     <button type="button" class="btn btn-sm btn-success" v-on:click="targetdelBatch">
                                         <span class="glyphicon glyphicon-trash"></span>批量删除
                                     </button>
+
                                     <p id="flip" style="position:relative; left:35%;" class="glyphicon glyphicon-menu-up"
                                        onClick="toggle1('searchbox')"></p>
                                 </div>
                                 <div class="ibox-content">
                                     <div class="row " style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
-                                        <table  class="table table-bordered" id="target_table" ></table>
+                                        <table class="table table-bordered" id="target_table"></table>
                                     </div>
                                 </div>
                             </div>
@@ -135,7 +144,8 @@
                                                 <label for="targetname"
                                                        class="col-lg-3 col-md-3 col-sm-3 input-label form_border">测试目标名:</label>
                                                 <div class="form_border col-lg-4 col-md-4 col-sm-4">
-                                                    <input type="text" class="form-control" id="targetname" name="targetname"
+                                                    <input type="text" class="form-control" id="targetname"
+                                                           name="targetname"
                                                            style="width: 100%" placeholder="请输入">
                                                 </div>
                                             </div>
@@ -144,7 +154,8 @@
                                                 <label for="value"
                                                        class="col-lg-3 col-md-3 col-sm-3 input-label form_border">测试目标地址:</label>
                                                 <div class="form_border col-lg-4 col-md-4 col-sm-4">
-                                                    <input type="text" class="form-control" id="value" name="value" style="width: 100%"
+                                                    <input type="text" class="form-control" id="value" name="value"
+                                                           style="width: 100%"
                                                            placeholder="请输入">
                                                 </div>
                                             </div>
@@ -153,7 +164,8 @@
                                                 <label for="superservicetype"
                                                        class="col-lg-3 col-md-3 col-sm-3 input-label form_border">业务类型:</label>
                                                 <div class="form_border col-lg-4 col-md-4 col-sm-4">
-                                                    <select id="superservicetype" class="form-control" name="superservicetype" style="width: 100%">  <!--VUE列表渲染-->
+                                                    <select id="superservicetype" class="form-control"
+                                                            name="superservicetype" style="width: 100%">  <!--VUE列表渲染-->
                                                         <option value=""></option>
                                                         <option value="1">网络连通性测试业务</option>
                                                         <option value="2">网络层质量测试业务</option>
@@ -273,7 +285,8 @@
                                             class="glyphicon glyphicon-plus"></span>新增
                                     </button>
 
-                                    <p id="flip2" style="position:relative; left:35%;" class="glyphicon glyphicon-menu-up" onClick="toggle2('groupsearchbox')"></p>
+                                    <p id="flip2" style="position:relative; left:35%;"
+                                       class="glyphicon glyphicon-menu-up" onClick="toggle2('groupsearchbox')"></p>
                                 </div>
 
                                 <div class="ibox-content">
@@ -326,7 +339,8 @@
                                         <label for="tgsuperservicetype"
                                                class="col-lg-3 col-md-3 col-sm-3 input-label form_border">业务类型:</label>
                                         <div class="form_border col-lg-4 col-md-4 col-sm-4">
-                                            <select id="tgsuperservicetype" class="form-control" name="superserviceType" style="width: 100%">  <!--VUE列表渲染-->
+                                            <select id="tgsuperservicetype" class="form-control" name="superserviceType"
+                                                    style="width: 100%">  <!--VUE列表渲染-->
                                                 <option value=""></option>
                                                 <option value="1">网络连通性测试业务</option>
                                                 <option value="2">网络层质量测试业务</option>
@@ -397,28 +411,24 @@
 
 <script type="text/javascript">
     //参数para1：希望隐藏元素的id值
-    function toggle1(param){
-        if ($("#flip").attr("class")=="glyphicon glyphicon-menu-up")
-        {
-            $("#flip").attr("class","glyphicon glyphicon-menu-down");
+    function toggle1(param) {
+        if ($("#flip").attr("class") == "glyphicon glyphicon-menu-up") {
+            $("#flip").attr("class", "glyphicon glyphicon-menu-down");
         }
-        else
-        {
-            $("#flip").attr("class","glyphicon glyphicon-menu-up");
+        else {
+            $("#flip").attr("class", "glyphicon glyphicon-menu-up");
         }
-        $("#"+param).toggle();
+        $("#" + param).toggle();
     }
 
-    function toggle2(param){
-        if ($("#flip2").attr("class")=="glyphicon glyphicon-menu-up")
-        {
-            $("#flip2").attr("class","glyphicon glyphicon-menu-down");
+    function toggle2(param) {
+        if ($("#flip2").attr("class") == "glyphicon glyphicon-menu-up") {
+            $("#flip2").attr("class", "glyphicon glyphicon-menu-down");
         }
-        else
-        {
-            $("#flip2").attr("class","glyphicon glyphicon-menu-up");
+        else {
+            $("#flip2").attr("class", "glyphicon glyphicon-menu-up");
         }
-        $("#"+param).toggle();
+        $("#" + param).toggle();
     }
 </script>
 

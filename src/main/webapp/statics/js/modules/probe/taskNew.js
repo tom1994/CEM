@@ -216,17 +216,17 @@ function get_viewModal(update_data_id) {
                 paramforms[76].value = param.size;
                 paramforms[77].value = param.timeout;
             }
-            $("#" + stid.get(servicetypeid)).addClass("service_unselected");
-            $("#" + stid.get(servicetypeid)).removeClass("service_unselected");
-            $('#newfooter').attr('style', 'display:none');
-            $('#viewfooter').removeAttr('style', 'display:none');
-            $("#taskform_data input[type=text]").attr('disabled', 'disabled');
-            $("#taskform_data select").attr('disabled', 'disabled');
-            $(".service input[type=text]").attr('disabled', 'disabled');
-            $(".service select").attr('disabled', 'disabled');
-            $('#myModal_edit').modal('show');
         }
     });
+    $("#" + stid.get(servicetypeid)).addClass("service_unselected");
+    $("#" + stid.get(servicetypeid)).removeClass("service_unselected");
+    $('#newfooter').attr('style', 'display:none');
+    $('#viewfooter').removeAttr('style', 'display:none');
+    $("#taskform_data input[type=text]").attr('disabled', 'disabled');
+    $("#taskform_data select").attr('disabled', 'disabled');
+    $(".service input[type=text]").attr('disabled', 'disabled');
+    $(".service select").attr('disabled', 'disabled');
+    $('#myModal_edit').modal('show');
 }
 
 function delete_ajax() {
@@ -397,8 +397,8 @@ function task_assign(obj) {
 function submit_dispatch() {
     var a = parseInt($('input[name=chooseprobe]:checked', '#dispatch_probe').val());
     var b = parseInt($('input[name=choosetarget]:checked', '#dispatch_target').val());
-    var probeList = getFormJson($('#dispatch_probe'));
-    var targetList = getFormJson($('#dispatch_target'));
+    var probeList = getFormJson2($('#dispatch_probe'));
+    var targetList = getFormJson2($('#dispatch_target'));
     if (a == 1) {
         let taskDispatch = {};
         taskDispatch.probePort = 1;
@@ -420,7 +420,7 @@ function submit_dispatch() {
         taskDispatch.taskId = targetList.taskId;
         taskDispatch.isOndemand = 0;
         taskDispatch.probeIds = probeList.probeId;
-        taskDispatch.testNumber = taskDispatch.probeIds.length;
+        taskDispatch.testNumber = 0;
         console.log(taskDispatch);
         $.ajax({
             type: "POST", /*GET会乱码*/
@@ -608,25 +608,28 @@ var taskform_data = new Vue({
             $(selectst).removeClass("service_unselected");
             $(selectst + " input[type=text]").prop("disabled", false);
             $(selectst + " select").prop("disabled", false);
-            this.getalarmtemplates(this.servicetype);
+            getalarmtemplates(this.servicetype);
         },
-        getalarmtemplates: function (servicetypeid) {
-            $.ajax({
-                type: "POST", /*GET会乱码*/
-                url: "../../cem/alarmtemplate/info/" + servicetypeid,
-                cache: false,  //禁用缓存
-                dataType: "json",
-                success: function (result) {
-                    taskform_data.atemplates = [];
-                    for (var i = 0; i < result.atList.length; i++) {
-                        taskform_data.atemplates.push({message: result.atList[i]});
-                    }
-                }
-            });
-        }
     }
 });
 
+var getalarmtemplates = function (servicetypeid) {
+    console.log(servicetypeid);
+    $.ajax({
+        type: "POST", /*GET会乱码*/
+        url: "../../cem/alarmtemplate/infoByService/" + servicetypeid,
+        cache: false,  //禁用缓存
+        dataType: "json",
+        success: function (result) {
+            console.log(result);
+            taskform_data.atemplates = [];
+            for (var i = 0; i < result.atList.length; i++) {
+                taskform_data.atemplates.push({message: result.atList[i]});
+            }
+            console.log(taskform_data.atemplates);
+        }
+    });
+}
 // function getDispatch(taskid) {
 //     var countDispatch = 0;
 //     $.ajax({
@@ -645,6 +648,26 @@ var taskform_data = new Vue({
 function getFormJson(form) {      /*将表单对象变为json对象*/
     var o = {};
     var a = $(form).serializeArray();
+    $.each(a, function () {
+        if (o[this.name] !== undefined) {
+            if (!o[this.name].push) {
+                o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '');
+        } else {
+            o[this.name] = this.value || '';
+        }
+    });
+    return o;
+}
+function getFormJson2(form) {      /*将表单对象变为json对象*/
+    var o = {};
+    var a = $(form).serializeArray();
+    for (let i = 0; i < a.length; i++) {
+        if (a[i].value != null && a[i].value != "") {
+            a[i].value = parseInt(a[i].value);
+        }
+    }
     $.each(a, function () {
         if (o[this.name] !== undefined) {
             if (!o[this.name].push) {
@@ -955,8 +978,8 @@ var dispatch_table = new Vue({
 });
 
 $(document).on('hidden.bs.modal', '.modal', function (e) {
-    $('.modal-dialog').css({'top': '0px', 'left': '0px'})
-    $('body').removeClass('select')
+    $('.modal-dialog').css({'top': '0px', 'left': '0px'});
+    $('body').removeClass('select');
     document.body.onselectstart = document.body.ondrag = null;
 })
 
@@ -967,4 +990,8 @@ $(document).ready(function () {
     $("#task_dispatch").draggable();
     $("#task_dispatch").css("overflow", "visible");//禁止模态对话框的半透明背景滚动
 
-})
+});
+$('#myModal_edit').on('hide.bs.modal', function () {
+    $(".service").addClass("service_unselected");
+    $(".service").attr('disabled', 'disabled');
+});

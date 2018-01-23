@@ -115,6 +115,35 @@
 		)
 	</insert>
 
+	<insert id="saveAndReturn" parameterType="io.cem.modules.cem.entity.TaskDispatchEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into task_dispatch
+		(
+		`task_id`,
+		`probe_id`,
+		`probe_port`,
+		`target`,
+		`target_group`,
+		`is_ondemand`,
+		`test_number`,
+		`test_interval`,
+		`status`,
+		`remark`
+		)
+		values
+		(
+		#{taskId},
+		#{probeId},
+		#{probePort},
+		#{target},
+		#{targetGroup},
+		#{isOndemand},
+		#{testNumber},
+		#{testInterval},
+		#{status},
+		#{remark}
+		)
+	</insert>
+
 	 <update id="cancelTask">
 		 update task_dispatch
 		 SET status = 0
