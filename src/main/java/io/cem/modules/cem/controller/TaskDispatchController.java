@@ -5,11 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.qiniu.util.Json;
 import io.cem.common.exception.RRException;
 import io.cem.common.utils.*;
 import io.cem.modules.cem.entity.ProbeEntity;
+import io.cem.modules.cem.entity.TargetEntity;
 import io.cem.modules.cem.service.ProbeService;
+import io.cem.modules.cem.service.TargetService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,6 +38,10 @@ public class TaskDispatchController {
 
     @Autowired
     private ProbeService probeService;
+
+    @Autowired
+    private TargetService targetService;
+
     /**
      * 列表
      */
@@ -129,7 +137,7 @@ public class TaskDispatchController {
      */
     @RequestMapping("/saveAndReturn")
     @RequiresPermissions("taskdispatch:save")
-    public R saveAndReturn(String param) {
+    public R saveAndReturn(@RequestBody String param) {
         Map<String, Object> map = new HashMap<>();
         JSONObject probedata_jsonobject = JSONObject.parseObject(param);
         System.out.println(probedata_jsonobject);
@@ -138,28 +146,102 @@ public class TaskDispatchController {
         } catch (RuntimeException e) {
             throw new RRException("内部参数错误，请重试！");
         }
-        int probeId = Integer.parseInt(map.get("probe_id").toString());
-        List<ProbeEntity> probeList = probeService.queryProbeByLayer(probeId);6
-        for(int i =1; i<probeList.size(); i++){
+        int probeId = Integer.parseInt(map.get("probeId").toString());
+        List<ProbeEntity> probeList = probeService.queryProbeByLayer(probeId);
+        JSONObject targetjson = new JSONObject();
+        targetjson.put("target_port", "");
+        targetjson.put("target_type", 1);
+        TargetEntity targetEntity = targetService.queryObject(Integer.parseInt(map.get("target").toString()));
+        targetjson.put("target_value", targetEntity.getValue());
+        targetjson.put("target_id", map.get("target"));
+//定义用于存储的任务Entity
+        TaskDispatchEntity taskDispatch = new TaskDispatchEntity();
+        taskDispatch.setIsOndemand(1);
+        taskDispatch.setStatus(0);
+        taskDispatch.setProbePort("port1");
+        taskDispatch.setTarget("[" + JSON.toJSONString(targetjson) + "]");
 
-            List<TaskDispatchEntity> taskdispatch =
+        int size = probeList.size();
+        int ping[][] = new int[5][size];
+        int sla[][] = new int[6][size];
+        int web[] = new int[size];
+        int download[][] = new int[4][size];
+        int video[] = new int[size];
+        int game[] = new int[size];
+        JSONObject dispatch = new JSONObject();
+        for (int i = 0; i < size; i++) {
+            taskDispatch.setProbeId(probeList.get(i).getId());
+            if (map.containsKey("ping")) {
+                taskDispatch.setTestNumber(3);
+                taskDispatch.setTestInterval(30);
+                for (int a = 0; a < 5; a++) {
+                    taskDispatch.setTaskId(a + 1);
+                    taskDispatchService.saveAndReturn(taskDispatch);
+                    ping[a][i] = taskDispatch.getId();
+                }
+                dispatch.put("ping", ping);
+            }
+            if (map.containsKey("sla")) {
+                taskDispatch.setTestNumber(3);
+                taskDispatch.setTestInterval(30);
+                taskDispatch.setTaskId(2);
+                for (int b = 0; b < 6; b++) {
+                    taskDispatch.setTaskId(b + 20);
+                    taskDispatchService.saveAndReturn(taskDispatch);
+                    sla[b][i] = taskDispatch.getId();
+                }
+                dispatch.put("sla", sla);
+            }
+            if (map.containsKey("web")) {
+                taskDispatch.setTestNumber(3);
+                taskDispatch.setTestInterval(30);
+                taskDispatch.setTaskId(20);
+                taskDispatchService.saveAndReturn(taskDispatch);
+                web[i] = taskDispatch.getId();
+                dispatch.put("web", web);
+            }
+            if (map.containsKey("download")) {
+                taskDispatch.setTestNumber(3);
+                taskDispatch.setTestInterval(30);
+                for (int d = 0; d < 3; d++) {
+                    taskDispatch.setTaskId(d + 30);
+                    taskDispatchService.saveAndReturn(taskDispatch);
+                    download[d][i] = taskDispatch.getId();
+                }
+                dispatch.put("download", download);
+            }
+            if (map.containsKey("video")) {
+                taskDispatch.setTestNumber(3);
+                taskDispatch.setTestInterval(30);
+                taskDispatch.setTaskId(40);
+                taskDispatchService.saveAndReturn(taskDispatch);
+                video[i] = taskDispatch.getId();
+                dispatch.put("video", video);
+            }
+            if (map.containsKey("game")) {
+                taskDispatch.setTestNumber(3);
+                taskDispatch.setTestInterval(30);
+                taskDispatch.setTaskId(50);
+                taskDispatchService.saveAndReturn(taskDispatch);
+                game[i] = taskDispatch.getId();
+                dispatch.put("game", game);
+            }
         }
-
-        return R.ok();
+        return R.ok().put("taskdispatch", dispatch);
     }
-    
+
     @RequestMapping("/saveAll")
     @RequiresPermissions("taskdispatch:save")
     public R saveAll(@RequestBody TaskDispatchEntity taskDispatch/*, String[] probeIds*/) {
 //      TODO:探针组对应方法
         System.out.println(taskDispatch.getTarget());
-        if (taskDispatch.getProbeIds().isEmpty() && ! taskDispatch.getProbeGroupIds().isEmpty()) {
+        if (taskDispatch.getProbeIds().isEmpty() && !taskDispatch.getProbeGroupIds().isEmpty()) {
             String[] probeGroupIds = taskDispatch.getProbeGroupIds().split(",");
-            for (int i = 0; i<taskDispatch.getProbeGroupIds().length();i++){
+            for (int i = 0; i < taskDispatch.getProbeGroupIds().length(); i++) {
 //               TODO: probeGroupIds[i] =
             }
             return R.ok();
-        } else if (! taskDispatch.getProbeIds().isEmpty() && taskDispatch.getProbeGroupIds().isEmpty()){
+        } else if (!taskDispatch.getProbeIds().isEmpty() && taskDispatch.getProbeGroupIds().isEmpty()) {
             String[] probeIdsList = taskDispatch.getProbeIds().split(",");
             List<TaskDispatchEntity> taskDispatchEntityList = new ArrayList<TaskDispatchEntity>();
             taskDispatchEntityList.add(taskDispatch);
@@ -171,8 +253,8 @@ public class TaskDispatchController {
             taskDispatchService.saveAll(taskDispatchEntityList);
             System.out.println(taskDispatch.getProbeIds());
             return R.ok();
-        }else{
-            return R.error(111,"探针或探针组格式错误");
+        } else {
+            return R.error(111, "探针或探针组格式错误");
         }
     }
 

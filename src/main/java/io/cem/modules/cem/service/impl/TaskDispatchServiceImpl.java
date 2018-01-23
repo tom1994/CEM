@@ -63,6 +63,11 @@ public class TaskDispatchServiceImpl implements TaskDispatchService {
 	}
 
 	@Override
+	public int saveAndReturn(TaskDispatchEntity taskDispatch){
+		return taskDispatchDao.saveAndReturn(taskDispatch);
+	}
+
+	@Override
 	public void saveAll(List<TaskDispatchEntity> taskDispatchList) {
 		taskDispatchDao.saveAll(taskDispatchList);
 	}

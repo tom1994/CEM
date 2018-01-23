@@ -42,17 +42,17 @@
                     </select>
                 </div>
                 <div class="input-group searchspan">
-                <span class="searchname" title="探针" style="width: 40px">探针</span>
-                <!--<div class="jq22">-->
-                        <!--<select name="probeid"  style="width: 110px" >-->
-                            <!--<option value="">-&#45;&#45;请选择-&#45;&#45;</option>-->
-                            <!--<option v-for="item in probe" v-bind:value="item.message.id">{{ item.message.name}}</option>-->
-                        <!--</select>-->
-                <!--</div>-->
-                <select name="probeid" class="form-control" style="width: 110px" >
-                    <option value="">---请选择---</option>
-                    <option v-for="item in probe" v-bind:value="item.message.id">{{ item.message.name}}</option>
-                </select>
+                    <span class="searchname" title="探针" style="width: 40px">探针</span>
+                    <!--<div class="jq22">-->
+                    <!--<select name="probeid"  style="width: 110px" >-->
+                    <!--<option value="">-&#45;&#45;请选择-&#45;&#45;</option>-->
+                    <!--<option v-for="item in probe" v-bind:value="item.message.id">{{ item.message.name}}</option>-->
+                    <!--</select>-->
+                    <!--</div>-->
+                    <select name="probeid" class="form-control" style="width: 110px">
+                        <option value="">---请选择---</option>
+                        <option v-for="item in probe" v-bind:value="item.message.id">{{ item.message.name}}</option>
+                    </select>
                 </div>
             </div>
         </form>
@@ -77,16 +77,19 @@
     </div>
 
     <div class="input-group searchspan" id="target">
+        <form id="targetsearch" role="form">
         <span class="searchname" title="测试目标" style="width: 40px">目标</span>
         <select class="form-control " name="targetid" style="width: 110px">
             <option value="">---请选择---</option>
             <option v-for="item in target" v-bind:value="item.message.id">{{ item.message.targetName}}</option>
         </select>
-        <a id="diagnose" target="_blank" href="#">
+        </form>
+        <a id="diagnose" target="_blank" href="" style="display: none">  </a>
             <button type="button" class="btn btn-success" onclick="diagnose()">开始测试
             </button>
-        </a>
+
     </div>
+
 </div>
 
 <!--<div class="jq22">-->
@@ -131,6 +134,6 @@
         src="${rc.contextPath}/statics/js/modules/diagnose/diagnoseNow.js?_${date.systemTime}"></script>
 
 <!--<script type="text/javascript"-->
-        <!--src="${rc.contextPath}/statics/js/bootstrap-multiselect.js?_${date.systemTime}"></script>-->
+<!--src="${rc.contextPath}/statics/js/bootstrap-multiselect.js?_${date.systemTime}"></script>-->
 </body>
 </html>

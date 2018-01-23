@@ -47,7 +47,7 @@
 	</select>
 
 	<select id="queryAtByService" resultType="io.cem.modules.cem.entity.AlarmTemplateEntity">
-		select alarm_template.* ,
+		select alarm_template.*
 		FROM alarm_template
 		WHERE service_type = #{value}
 	</select>
