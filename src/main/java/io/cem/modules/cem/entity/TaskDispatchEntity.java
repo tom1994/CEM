@@ -25,6 +25,10 @@ public class TaskDispatchEntity implements Serializable {
 	private String probePort;
 	//测试目标
 	private String target;
+
+	private int[] targetIds;
+
+	private int[] targetGroupIds;
 	//测试目标组
 	private String targetGroup;
 	//是否按需任务
@@ -47,6 +51,8 @@ public class TaskDispatchEntity implements Serializable {
 	private int[] probeIds;
 
 	private int[] probeGroupIds;
+
+	private Integer probeGroupId;
 
 	private String targetName;
 
@@ -250,5 +256,28 @@ public class TaskDispatchEntity implements Serializable {
 
 	public void setProbeGroupIds(int[] probeGroupIds) {
 		this.probeGroupIds = probeGroupIds;
+	}
+
+	public Integer getProbeGroupId() {
+		return probeGroupId;
+	}
+
+	public void setProbeGroupId(Integer probeGroupId) {
+		this.probeGroupId = probeGroupId;
+	}
+
+	public int[] getTargetIds() {
+		return targetIds;
+	}
+
+	public void setTargetIds(int[] targetIds) {
+		this.targetIds = targetIds;
+	}
+	public int[] getTargetGroupIds() {
+		return targetGroupIds;
+	}
+
+	public void setTargetGroupIds(int[] targetGroupIds) {
+		this.targetGroupIds = targetGroupIds;
 	}
 }

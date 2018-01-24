@@ -428,7 +428,7 @@ function submit_dispatch() {
     var targetList = getFormJson2($('#dispatch_target'));
     if (a == 1) {
         let taskDispatch = {};
-        taskDispatch.probePort = 1;
+        taskDispatch.probePort = "port1";
         taskDispatch.status = 1;
         // 其他提取select值的方案
         // console.log(document.getElementById("bootstrap-duallistbox-selected-list_probeId").value);
@@ -438,64 +438,39 @@ function submit_dispatch() {
         // let b = parseInt(c[0]);
         // console.log(b);
         if (b == 1) {
-            taskDispatch.target = targetList.targetId;
+            taskDispatch.targetIds = targetList.targetId;
+            if (typeof taskDispatch.targetIds == "number") {
+                taskDispatch.targetIds = "[" + taskDispatch.targetIds + "]"
+            }
         } else if (b == 0) {
-            taskDispatch.targetGroup = targetList.targetGroupId;
-        } else {
-            toastr.info('无该选项，请联系管理员');
+            taskDispatch.targetGroupIds = targetList.targetGroupId;
+            if (typeof taskDispatch.targetGroupIds == "number") {
+                taskDispatch.targetGroupIds = "[" + taskDispatch.targetGroupIds + "]"
+            }
         }
         taskDispatch.taskId = targetList.taskId;
         taskDispatch.isOndemand = 0;
         taskDispatch.probeIds = probeList.probeId;
         taskDispatch.testNumber = 0;
         console.log(taskDispatch);
-        console.log(typeof taskDispatch.probeIds);
         if (typeof taskDispatch.probeIds == "number") {
-            console.log('success');
-            taskDispatch.probeId = taskDispatch.probeIds;
-            $.ajax({
-                type: "POST", /*GET会乱码*/
-                url: "../../cem/taskdispatch/save",
-                cache: false,  //禁用缓存
-                data: JSON.stringify(taskDispatch),
-                dataType: "json",
-                contentType: "application/json", /*必须要,不可少*/
-                success: function (result) {
-                    toastr.success("任务下发成功!");
-                    $('#task_dispatch').modal('hide');
-                    task_table.currReset();
-                }
-            });
-        } else {
-            $.ajax({
-                type: "POST", /*GET会乱码*/
-                url: "../../cem/taskdispatch/saveAll",
-                cache: false,  //禁用缓存
-                data: JSON.stringify(taskDispatch),
-                dataType: "json",
-                contentType: "application/json", /*必须要,不可少*/
-                success: function (result) {
-                    toastr.success("任务下发成功!");
-                    $('#task_dispatch').modal('hide');
-                    task_table.currReset();
-                }
-            });
+            // console.log('success');
+            // taskDispatch.probeId = taskDispatch.probeIds;
+            // $.ajax({
+            //     type: "POST", /*GET会乱码*/
+            //     url: "../../cem/taskdispatch/save",
+            //     cache: false,  //禁用缓存
+            //     data: JSON.stringify(taskDispatch),
+            //     dataType: "json",
+            //     contentType: "application/json", /*必须要,不可少*/
+            //     success: function (result) {
+            //         toastr.success("任务下发成功!");
+            //         $('#task_dispatch').modal('hide');
+            //         task_table.currReset();
+            //     }
+            // });
+            taskDispatch.probeIds = "[" + taskDispatch.probeIds + "]"
         }
-    } else if (a == 0) {
-        let taskDispatch = {};
-        taskDispatch.probePort = 1;
-        taskDispatch.status = 1;
-        if (b == 1) {
-            taskDispatch.target = targetList.targetId;
-        } else if (b == 0) {
-            taskDispatch.targetGroup = targetList.targetGroupId;
-        } else {
-            toastr.info('无该选项，请联系管理员');
-        }
-        taskDispatch.taskId = targetList.taskId;
-        taskDispatch.isOndemand = 0;
-        taskDispatch.probeGroupIds = probeList.probeGroupId;
-        console.log(taskDispatch);
         $.ajax({
             type: "POST", /*GET会乱码*/
             url: "../../cem/taskdispatch/saveAll",
@@ -504,9 +479,58 @@ function submit_dispatch() {
             dataType: "json",
             contentType: "application/json", /*必须要,不可少*/
             success: function (result) {
-                if (R.ok.code = 0) {
-                    console.log(R.ok.code = 0);
-                }
+                toastr.success("任务下发成功!");
+                $('#task_dispatch').modal('hide');
+                task_table.currReset();
+            }
+        });
+    } else if (a == 0) {
+        let taskDispatch = {};
+        taskDispatch.probePort = "port1";
+        taskDispatch.status = 1;
+        if (b == 1) {
+            taskDispatch.targetIds = targetList.targetId;
+            if (typeof taskDispatch.targetIds == "number") {
+                taskDispatch.targetIds = "[" + taskDispatch.targetIds + "]"
+            }
+        } else if (b == 0) {
+            taskDispatch.targetGroupIds = targetList.targetGroupId;
+            if (typeof taskDispatch.targetGroupIds == "number") {
+                taskDispatch.targetGroupIds = "[" + taskDispatch.targetGroupIds + "]"
+            }
+        }
+        taskDispatch.taskId = targetList.taskId;
+        taskDispatch.isOndemand = 0;
+        taskDispatch.probeGroupIds = probeList.probeGroupId;
+        console.log(taskDispatch);
+        if (typeof taskDispatch.probeGroupIds == "number") {
+            // taskDispatch.probeGroupId = taskDispatch.probeGroupIds;
+            // $.ajax({
+            //     type: "POST", /*GET会乱码*/
+            //     url: "../../cem/taskdispatch/save",
+            //     cache: false,  //禁用缓存
+            //     data: JSON.stringify(taskDispatch),
+            //     dataType: "json",
+            //     contentType: "application/json", /*必须要,不可少*/
+            //     success: function (result) {
+            //         if (R.ok.code = 0) {
+            //             console.log(R.ok.code = 0);
+            //         }
+            //         toastr.success("任务下发成功!");
+            //         $('#task_dispatch').modal('hide');
+            //         task_table.currReset();
+            //     }
+            // });
+            taskDispatch.probeGroupIds = "[" + taskDispatch.probeGroupIds + "]"
+        }
+        $.ajax({
+            type: "POST", /*GET会乱码*/
+            url: "../../cem/taskdispatch/saveAll",
+            cache: false,  //禁用缓存
+            data: JSON.stringify(taskDispatch),
+            dataType: "json",
+            contentType: "application/json", /*必须要,不可少*/
+            success: function (result) {
                 toastr.success("任务下发成功!");
                 $('#task_dispatch').modal('hide');
                 task_table.currReset();

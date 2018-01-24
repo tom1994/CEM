@@ -186,6 +186,12 @@
         </if>
     </select>
 
+    <select id="queryProbeListByGroup" resultType="io.cem.modules.cem.entity.ProbeEntity">
+        SELECT id
+        FROM probe
+        WHERE group_id = #{value}
+    </select>
+
     <select id="queryProbeByLayer" resultType="io.cem.modules.cem.entity.ProbeEntity">
         SELECT probe.id,
         probe_name,

@@ -127,8 +127,18 @@ public class TaskDispatchController {
     @RequestMapping("/save")
     @RequiresPermissions("taskdispatch:save")
     public R save(@RequestBody TaskDispatchEntity taskDispatch) {
-        taskDispatchService.save(taskDispatch);
-
+        if (taskDispatch.getProbeGroupId() != null) {
+            List<TaskDispatchEntity> taskDispatchEntityList = new ArrayList<>();
+            List<ProbeEntity> probes = probeService.queryProbeListByGroup(taskDispatch.getProbeGroupId());
+            for (ProbeEntity probe : probes) {
+                TaskDispatchEntity taskDispatchEntity = CloneUtils.clone(taskDispatch);
+                taskDispatchEntity.setProbeId(probe.getId());
+                taskDispatchEntityList.add(taskDispatchEntity);
+            }
+            taskDispatchService.saveAll(taskDispatchEntityList);
+        } else {
+            taskDispatchService.save(taskDispatch);
+        }
         return R.ok();
     }
 
@@ -232,13 +242,51 @@ public class TaskDispatchController {
 
     @RequestMapping("/saveAll")
     @RequiresPermissions("taskdispatch:save")
-    public R saveAll(@RequestBody TaskDispatchEntity taskDispatch/*, String[] probeIds*/) {
-//      TODO:探针组对应方法
+    public R saveAll(@RequestBody TaskDispatchEntity taskDispatch) {
+        if (taskDispatch.getTargetGroupIds() != null) {
+            int[] targetGroupIds = taskDispatch.getTargetGroupIds();
+//            List<TargetEntity> targetEntities = new ArrayList<>();
+            ArrayList target = new ArrayList();
+            JSONObject targetjson = new JSONObject();
+            targetjson.put("target_port", "");
+            targetjson.put("target_type", 1);
+            for (int i = 0; i < targetGroupIds.length; i++) {
+                List<TargetEntity> targetEntities = targetService.queryTargetListByGroup(targetGroupIds[i]);
+                for (int j = 0; j < targetEntities.size(); j++) {
+                    targetjson.put("target_id", targetEntities.get(j).getId());
+                    targetjson.put("target_value", targetEntities.get(j).getValue());
+                    target.add(JSON.toJSONString(targetjson));
+                }
+            }
+            String a = target.toString();
+            String b = target + "";
+            taskDispatch.setTarget(target.toString());
+        } else {
+            ArrayList target = new ArrayList();
+            int[] targetIds = taskDispatch.getTargetIds();
+            JSONObject targetjson = new JSONObject();
+            targetjson.put("target_port", "");
+            targetjson.put("target_type", 1);
+            for (int targetId : targetIds) {
+                TargetEntity targetEntity = targetService.queryObject(targetId);
+                targetjson.put("target_id", targetEntity.getId());
+                targetjson.put("target_value", targetEntity.getValue());
+                target.add(JSON.toJSON(targetjson));
+            }
+            taskDispatch.setTarget(target.toString());
+        }
         if (taskDispatch.getProbeIds() == null && taskDispatch.getProbeGroupIds() != null) {
             int[] probeGroupIds = taskDispatch.getProbeGroupIds();
-            for (int i = 0; i < probeGroupIds.length; i++) {
-//               TODO: 通过groupId来查询对应的probe probeGroupIds[i] =
+            List<TaskDispatchEntity> taskDispatchEntityList = new ArrayList<>();
+            for (int probeGroupId : probeGroupIds) {
+                List<ProbeEntity> probes = probeService.queryProbeListByGroup(probeGroupId);
+                for (ProbeEntity probe : probes) {
+                    TaskDispatchEntity taskDispatchEntity = CloneUtils.clone(taskDispatch);
+                    taskDispatchEntity.setProbeId(probe.getId());
+                    taskDispatchEntityList.add(taskDispatchEntity);
+                }
             }
+            taskDispatchService.saveAll(taskDispatchEntityList);
             return R.ok();
         } else if (taskDispatch.getProbeIds() != null && taskDispatch.getProbeGroupIds() == null) {
             int[] probeIdsList = taskDispatch.getProbeIds();
@@ -250,7 +298,6 @@ public class TaskDispatchController {
                 taskDispatchEntityList.add(taskDispatchEntity);
             }
             taskDispatchService.saveAll(taskDispatchEntityList);
-            System.out.println(taskDispatch.getProbeIds());
             return R.ok();
         } else {
             return R.error(111, "探针或探针组格式错误");

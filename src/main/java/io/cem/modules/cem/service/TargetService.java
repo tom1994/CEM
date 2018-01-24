@@ -23,6 +23,8 @@ public interface TargetService {
 	List<TargetEntity> queryTgByTList(Map<String, Object> map);
 
 	List<TargetEntity> queryTargetList(Integer spId);
+
+	List<TargetEntity> queryTargetListByGroup(Integer id);
 	
 	int queryTotal(Map<String, Object> map);
 	
