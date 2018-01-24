@@ -19,12 +19,17 @@ public class ProbeEntity implements Serializable {
 	private String name;
 	//所属探针组ID
 	private Integer groupId;
+
+	private String groupName;
 	//探针类型
 	private Integer type;
 	//接入层级
 	private Integer accessLayer;
 	//IP类型
 	private Integer ipType;
+
+	private String iptypeName;
+
 	//端口及IP
 	private String portIp;
 	//归属地市
@@ -43,6 +48,8 @@ public class ProbeEntity implements Serializable {
 	private String brasPort;
 	//接入运营商
 	private Integer isp;
+
+	private String ispName;
 	//探针状态
 	private Integer status;
 	//设备型号
@@ -131,6 +138,10 @@ public class ProbeEntity implements Serializable {
 	public Integer getGroupId() {
 		return groupId;
 	}
+
+	public String getGroupName() { return groupName; }
+
+	public void setGroupName(String groupName) { this.groupName = groupName; }
 	/**
 	 * 设置：探针类型
 	 */
@@ -167,6 +178,9 @@ public class ProbeEntity implements Serializable {
 	public Integer getIpType() {
 		return ipType;
 	}
+	public String getIptypeName() { return iptypeName; }
+	public void setIptypeName(String iptypeName) { this.iptypeName = iptypeName; }
+
 	/**
 	 * 设置：端口及IP
 	 */
@@ -275,6 +289,10 @@ public class ProbeEntity implements Serializable {
 	public Integer getIsp() {
 		return isp;
 	}
+
+	public String getIspName() { return ispName; }
+
+	public void setIspName(String ispName) { this.ispName = ispName; }
 	/**
 	 * 设置：探针状态
 	 */

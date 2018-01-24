@@ -130,6 +130,7 @@ function get_viewModal(update_data_id) {
         success: function (result) {
             var param = JSON.parse(result.task.parameter);
             servicetypeid = result.task.serviceType;
+            console.log(result);
             taskforms[0].value = result.task.id;
             taskforms[1].value = result.task.taskName;
             taskforms[2].value = result.task.serviceType;
@@ -200,46 +201,46 @@ function get_viewModal(update_data_id) {
                 paramforms[45].value = param.filename;
                 paramforms[46].value = param.lasting_name;
                 paramforms[47].value = param.upload_size;
-                //paramforms[48].value = param.is_delete;
-                //paramforms[49].value = param.is_anonymous;
-                paramforms[52].value = param.username;
-                paramforms[53].value = param.password;
+                paramforms[48].value = param.is_delete;
+                paramforms[49].value = param.is_anonymous;
+                paramforms[50].value = param.username;
+                paramforms[51].value = param.password;
             }
             if (stid.get(servicetypeid) == "ftp_download") {
-                paramforms[54].value = param.port;
-                paramforms[55].value = param.filename;
-                paramforms[56].value = param.lasting_name;
-                paramforms[57].value = param.download_size;
-                //paramforms[58].value = param.is_delete;
-                //paramforms[59].value = param.is_anonymous;
-                paramforms[62].value = param.username;
-                paramforms[63].value = param.password;
+                paramforms[52].value = param.port;
+                paramforms[53].value = param.filename;
+                paramforms[54].value = param.lasting_name;
+                paramforms[55].value = param.download_size;
+                paramforms[56].value = param.is_delete;
+                paramforms[57].value = param.is_anonymous;
+                paramforms[58].value = param.username;
+                paramforms[59].value = param.password;
             }
             if (stid.get(servicetypeid) == "web_download") {
-                paramforms[64].value = param.lasting_time;
+                paramforms[60].value = param.lasting_time;
             }
             if (stid.get(servicetypeid) == "webpage") {
-                paramforms[65].value = param.max_element;
-                paramforms[66].value = param.element_timeout;
-                paramforms[67].value = param.page_timeout;
-                paramforms[68].value = param.max_size;
-                paramforms[69].value = param.user_agent;
-                //paramforms[70].value = param.is_http_proxy;
-                paramforms[72].value = param.address;
-                paramforms[73].value = param.port;
-                paramforms[74].value = param.username;
-                paramforms[75].value = param.password;
+                paramforms[61].value = param.max_element;
+                paramforms[62].value = param.element_timeout;
+                paramforms[63].value = param.page_timeout;
+                paramforms[64].value = param.max_size;
+                paramforms[65].value = param.user_agent;
+                paramforms[66].value = param.is_http_proxy;
+                paramforms[67].value = param.address;
+                paramforms[68].value = param.port;
+                paramforms[69].value = param.username;
+                paramforms[70].value = param.password;
             }
             if (stid.get(servicetypeid) == "online_video") {
-                paramforms[76].value = param.video_quality;
-                paramforms[77].value = param.lasting_time;
-                paramforms[78].value = param.first_buffer_time;
+                paramforms[71].value = param.video_quality;
+                paramforms[72].value = param.lasting_time;
+                paramforms[73].value = param.first_buffer_time;
             }
             if (stid.get(servicetypeid) == "game") {
-                paramforms[79].value = param.count;
-                paramforms[80].value = param.interval;
-                paramforms[81].value = param.size;
-                paramforms[82].value = param.timeout;
+                paramforms[74].value = param.count;
+                paramforms[75].value = param.interval;
+                paramforms[76].value = param.size;
+                paramforms[77].value = param.timeout;
             }
         }
     });
@@ -588,13 +589,15 @@ var taskform_data = new Vue({
             var oDate = new Date();
             var tasknewJson = getFormJson($('#taskform_data'));
             var paramnewJson = getFormJson($('#taskform_param'));
+            var paramnew = JSON.stringify(paramnewJson);
             console.log(paramnewJson);
-            tasknewJson.parameter = paramnewJson;
-            tasknewJson.isDeleted = 0;
-            tasknewJson.createTime = oDate.getDate();
+            tasknewJson.parameter = paramnew;
+            tasknewJson.isDeleted = "0";
+            tasknewJson.alarmTemplateId = "0";
+            tasknewJson.createTime = oDate.Format("yyyy-MM-dd hh:mm:ss");
             tasknewJson.remark = "无";
-            console.log(tasknewJson);
             var tasknew = JSON.stringify(tasknewJson);
+            console.log(tasknewJson);
             $.ajax({
                 type: "POST", /*GET会乱码*/
                 url: "../../cem/task/save",
@@ -609,27 +612,27 @@ var taskform_data = new Vue({
                     if (status == 0) {
                         switch (code) {
                             case 0:
-                                toastr.success("新增成功!");
+                                toastr.success("修改成功!");
                                 $('#myModal_edit').modal('hide');    //jQuery选定
                                 break;
                             case 403:
                                 toastr.error(msg);
                                 break;
                             default:
-                                toastr.error("未知错误");
+                                toastr.error("修改出现未知错误");
                                 break
                         }
                     } else if (status == 1) {
                         switch (code) {
                             case 0:
-                                toastr.success("修改成功!");
+                                toastr.success("新建成功!");
                                 $('#myModal_edit').modal('hide');
                                 break;
                             case 403:
                                 toastr.error(msg);
                                 break;
                             default:
-                                toastr.error("未知错误");
+                                toastr.error("创建出现未知错误");
                                 break
                         }
                     }

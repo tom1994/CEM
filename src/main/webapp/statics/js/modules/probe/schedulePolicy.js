@@ -194,14 +194,14 @@ var spform_data = new Vue({
                         if (status == 0) {
                             switch (code) {
                                 case 0:
-                                    toastr.success("策略新增成功!");
+                                    toastr.success("任务创建成功!");
                                     $('#myModal_sp').modal('hide');    //jQuery选定
                                     break;
                                 case 403:
                                     toastr.error(msg);
                                     break;
                                 default:
-                                    toastr.error("未知错误");
+                                    toastr.error("创建出现未知错误");
                                     break
                             }
                         } else if (status == 1) {
