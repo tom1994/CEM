@@ -234,20 +234,19 @@ public class TaskDispatchController {
     @RequiresPermissions("taskdispatch:save")
     public R saveAll(@RequestBody TaskDispatchEntity taskDispatch/*, String[] probeIds*/) {
 //      TODO:探针组对应方法
-        System.out.println(taskDispatch.getTarget());
-        if (taskDispatch.getProbeIds().isEmpty() && !taskDispatch.getProbeGroupIds().isEmpty()) {
-            String[] probeGroupIds = taskDispatch.getProbeGroupIds().split(",");
-            for (int i = 0; i < taskDispatch.getProbeGroupIds().length(); i++) {
-//               TODO: probeGroupIds[i] =
+        if (taskDispatch.getProbeIds() == null && taskDispatch.getProbeGroupIds() != null) {
+            int[] probeGroupIds = taskDispatch.getProbeGroupIds();
+            for (int i = 0; i < probeGroupIds.length; i++) {
+//               TODO: 通过groupId来查询对应的probe probeGroupIds[i] =
             }
             return R.ok();
-        } else if (!taskDispatch.getProbeIds().isEmpty() && taskDispatch.getProbeGroupIds().isEmpty()) {
-            String[] probeIdsList = taskDispatch.getProbeIds().split(",");
-            List<TaskDispatchEntity> taskDispatchEntityList = new ArrayList<TaskDispatchEntity>();
+        } else if (taskDispatch.getProbeIds() != null && taskDispatch.getProbeGroupIds() == null) {
+            int[] probeIdsList = taskDispatch.getProbeIds();
+            List<TaskDispatchEntity> taskDispatchEntityList = new ArrayList<>();
             taskDispatchEntityList.add(taskDispatch);
-            for (int i = 1; i < probeIdsList.length; i++) {
+            for (int j = 0; j < probeIdsList.length; j++) {
                 TaskDispatchEntity taskDispatchEntity = CloneUtils.clone(taskDispatch);
-                taskDispatchEntity.setProbeId(Integer.parseInt(probeIdsList[i].split("\"")[1]));
+                taskDispatchEntity.setProbeId(probeIdsList[j]);
                 taskDispatchEntityList.add(taskDispatchEntity);
             }
             taskDispatchService.saveAll(taskDispatchEntityList);

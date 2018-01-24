@@ -44,9 +44,9 @@ public class TaskDispatchEntity implements Serializable {
 
 	private String accessLayer;
 
-	private String probeIds;
+	private int[] probeIds;
 
-	private String probeGroupIds;
+	private int[] probeGroupIds;
 
 	private String targetName;
 
@@ -211,15 +211,6 @@ public class TaskDispatchEntity implements Serializable {
 		this.accessLayer = accessLayer;
 	}
 
-
-	public String getProbeIds() {
-		return probeIds;
-	}
-
-	public void setProbeIds(String probeIds) {
-		this.probeIds = probeIds;
-	}
-
 	public String getTargetName() {
 		return targetName;
 	}
@@ -244,11 +235,20 @@ public class TaskDispatchEntity implements Serializable {
 		this.layerName = layerName;
 	}
 
-	public String getProbeGroupIds() {
+
+	public int[] getProbeIds() {
+		return probeIds;
+	}
+
+	public void setProbeIds(int[] probeIds) {
+		this.probeIds = probeIds;
+	}
+
+	public int[] getProbeGroupIds() {
 		return probeGroupIds;
 	}
 
-	public void setProbeGroupIds(String probeGroupIds) {
+	public void setProbeGroupIds(int[] probeGroupIds) {
 		this.probeGroupIds = probeGroupIds;
 	}
 }
