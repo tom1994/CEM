@@ -5,31 +5,57 @@ var schedulepolicies = new Array();
 var alarmtemplates = new Array();
 
 var st = new Map();//servicetype字典，可通过get方法查对应字符串。
-st.set(1, "PING(ICMP Echo)"); st.set(2, "PING(TCP Echo)"); st.set(3, "PING(UDP Echo)");
-st.set(4, "TraceRoute(ICMP)"); st.set(5, "TraceRoute(UDP)");
-st.set(10, "SLA(TCP)"); st.set(11, "SLA(UDP)"); st.set(12, "ADSL接入");
-st.set(13, "DHCP"); st.set(14, "DNS"); st.set(15, "Radius认证");
-st.set(20, "WEB页面访问"); st.set(30, "WEB下载"); st.set(31, "FTP下载"); st.set(32, "FTP上传");
-st.set(40, "在线视频"); st.set(50, "网络游戏");
+st.set(1, "PING(ICMP Echo)");
+st.set(2, "PING(TCP Echo)");
+st.set(3, "PING(UDP Echo)");
+st.set(4, "TraceRoute(ICMP)");
+st.set(5, "TraceRoute(UDP)");
+st.set(10, "SLA(TCP)");
+st.set(11, "SLA(UDP)");
+st.set(12, "ADSL接入");
+st.set(13, "DHCP");
+st.set(14, "DNS");
+st.set(15, "Radius认证");
+st.set(20, "WEB页面访问");
+st.set(30, "WEB下载");
+st.set(31, "FTP下载");
+st.set(32, "FTP上传");
+st.set(40, "在线视频");
+st.set(50, "网络游戏");
 var stid = new Map();//新建或编辑servicetype参数的id字典，用于根据select的业务类型变更来改变展示的参数。
-stid.set(1, "pingicmp"); stid.set(2, "pingtcp"); stid.set(3, "pingicmp"); stid.set(4,"tracert");
-stid.set(5,"tracert"); stid.set(10,"sla"); stid.set(11,"sla"); stid.set(12,"pppoe");
-stid.set(13,"dhcp"); stid.set(14,"dns"); stid.set(15,"radius"); stid.set(20,"webpage");
-stid.set(30,"web_download"); stid.set(31,"ftp_download"); stid.set(32,"ftp_upload");
-stid.set(40,"online_video"); stid.set(50,"game");
+stid.set(1, "pingicmp");
+stid.set(2, "pingtcp");
+stid.set(3, "pingicmp");
+stid.set(4, "tracert");
+stid.set(5, "tracert");
+stid.set(10, "sla");
+stid.set(11, "sla");
+stid.set(12, "pppoe");
+stid.set(13, "dhcp");
+stid.set(14, "dns");
+stid.set(15, "radius");
+stid.set(20, "webpage");
+stid.set(30, "web_download");
+stid.set(31, "ftp_download");
+stid.set(32, "ftp_upload");
+stid.set(40, "online_video");
+stid.set(50, "game");
 var spst = new Map();
-for(let i=1; i<6; i++){
-    spst.set(i,1)
-};
-for(let i=10; i<16; i++){
-    spst.set(i,2)
-};
-spst.set(20,3);
-for(let i=30; i<33; i++){
-    spst.set(i,4)
-};
-spst.set(40,5);
-spst.set(50,6);
+for (let i = 1; i < 6; i++) {
+    spst.set(i, 1)
+}
+;
+for (let i = 10; i < 16; i++) {
+    spst.set(i, 2)
+}
+;
+spst.set(20, 3);
+for (let i = 30; i < 33; i++) {
+    spst.set(i, 4)
+}
+;
+spst.set(40, 5);
+spst.set(50, 6);
 
 var task_handle = new Vue({
     el: '#handle',
@@ -393,6 +419,7 @@ function task_assign(obj) {
         }
     });
 }
+
 //a=1 选择探针 a=0 选择探针组 b=1 测试目标 b=0 测试目标组
 function submit_dispatch() {
     var a = parseInt($('input[name=chooseprobe]:checked', '#dispatch_probe').val());
@@ -401,7 +428,7 @@ function submit_dispatch() {
     var targetList = getFormJson2($('#dispatch_target'));
     if (a == 1) {
         let taskDispatch = {};
-        taskDispatch.probePort = 1;
+        taskDispatch.probePort = "port1";
         taskDispatch.status = 1;
         // 其他提取select值的方案
         // console.log(document.getElementById("bootstrap-duallistbox-selected-list_probeId").value);
@@ -410,18 +437,40 @@ function submit_dispatch() {
         // let c = $("#bootstrap-duallistbox-selected-list_targetId").val();
         // let b = parseInt(c[0]);
         // console.log(b);
-        if(b == 1){
-            taskDispatch.target = targetList.targetId;
-        }else if(b == 0){
-            taskDispatch.targetGroup = targetList.targetGroupId;
-        }else {
-            toastr.info('无该选项，请联系管理员');
+        if (b == 1) {
+            taskDispatch.targetIds = targetList.targetId;
+            if (typeof taskDispatch.targetIds == "number") {
+                taskDispatch.targetIds = "[" + taskDispatch.targetIds + "]"
+            }
+        } else if (b == 0) {
+            taskDispatch.targetGroupIds = targetList.targetGroupId;
+            if (typeof taskDispatch.targetGroupIds == "number") {
+                taskDispatch.targetGroupIds = "[" + taskDispatch.targetGroupIds + "]"
+            }
         }
         taskDispatch.taskId = targetList.taskId;
         taskDispatch.isOndemand = 0;
         taskDispatch.probeIds = probeList.probeId;
         taskDispatch.testNumber = 0;
         console.log(taskDispatch);
+        if (typeof taskDispatch.probeIds == "number") {
+            // console.log('success');
+            // taskDispatch.probeId = taskDispatch.probeIds;
+            // $.ajax({
+            //     type: "POST", /*GET会乱码*/
+            //     url: "../../cem/taskdispatch/save",
+            //     cache: false,  //禁用缓存
+            //     data: JSON.stringify(taskDispatch),
+            //     dataType: "json",
+            //     contentType: "application/json", /*必须要,不可少*/
+            //     success: function (result) {
+            //         toastr.success("任务下发成功!");
+            //         $('#task_dispatch').modal('hide');
+            //         task_table.currReset();
+            //     }
+            // });
+            taskDispatch.probeIds = "[" + taskDispatch.probeIds + "]"
+        }
         $.ajax({
             type: "POST", /*GET会乱码*/
             url: "../../cem/taskdispatch/saveAll",
@@ -437,19 +486,43 @@ function submit_dispatch() {
         });
     } else if (a == 0) {
         let taskDispatch = {};
-        taskDispatch.probePort = 1;
+        taskDispatch.probePort = "port1";
         taskDispatch.status = 1;
-        if(b == 1){
-            taskDispatch.target = targetList.targetId;
-        }else if(b == 0){
-            taskDispatch.targetGroup = targetList.targetGroupId;
-        }else {
-            toastr.info('无该选项，请联系管理员');
+        if (b == 1) {
+            taskDispatch.targetIds = targetList.targetId;
+            if (typeof taskDispatch.targetIds == "number") {
+                taskDispatch.targetIds = "[" + taskDispatch.targetIds + "]"
+            }
+        } else if (b == 0) {
+            taskDispatch.targetGroupIds = targetList.targetGroupId;
+            if (typeof taskDispatch.targetGroupIds == "number") {
+                taskDispatch.targetGroupIds = "[" + taskDispatch.targetGroupIds + "]"
+            }
         }
         taskDispatch.taskId = targetList.taskId;
         taskDispatch.isOndemand = 0;
         taskDispatch.probeGroupIds = probeList.probeGroupId;
         console.log(taskDispatch);
+        if (typeof taskDispatch.probeGroupIds == "number") {
+            // taskDispatch.probeGroupId = taskDispatch.probeGroupIds;
+            // $.ajax({
+            //     type: "POST", /*GET会乱码*/
+            //     url: "../../cem/taskdispatch/save",
+            //     cache: false,  //禁用缓存
+            //     data: JSON.stringify(taskDispatch),
+            //     dataType: "json",
+            //     contentType: "application/json", /*必须要,不可少*/
+            //     success: function (result) {
+            //         if (R.ok.code = 0) {
+            //             console.log(R.ok.code = 0);
+            //         }
+            //         toastr.success("任务下发成功!");
+            //         $('#task_dispatch').modal('hide');
+            //         task_table.currReset();
+            //     }
+            // });
+            taskDispatch.probeGroupIds = "[" + taskDispatch.probeGroupIds + "]"
+        }
         $.ajax({
             type: "POST", /*GET会乱码*/
             url: "../../cem/taskdispatch/saveAll",
@@ -458,9 +531,6 @@ function submit_dispatch() {
             dataType: "json",
             contentType: "application/json", /*必须要,不可少*/
             success: function (result) {
-                if(R.ok.code=0){
-                    console.log(R.ok.code=0);
-                }
                 toastr.success("任务下发成功!");
                 $('#task_dispatch').modal('hide');
                 task_table.currReset();
@@ -660,6 +730,7 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
     });
     return o;
 }
+
 function getFormJson2(form) {      /*将表单对象变为json对象*/
     var o = {};
     var a = $(form).serializeArray();
@@ -823,7 +894,7 @@ var task_table = new Vue({
                         let rows = [];
                         var i = param.start + 1;
                         result.page.list.forEach(function (item) {
-                            if(item.countDispatch == null){
+                            if (item.countDispatch == null) {
                                 item.countDispatch = 0;
                             }
                             let row = [];

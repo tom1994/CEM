@@ -20,6 +20,8 @@ public interface ProbeService {
 
 	List<ProbeEntity> queryProbeByLayer(Integer id);
 
+	List<ProbeEntity> queryProbeListByGroup(Integer id);
+
 	ProbeEntity queryDetail(Integer id);
 
 	int queryTotal(Map<String, Object> map);
