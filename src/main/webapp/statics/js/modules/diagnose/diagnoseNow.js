@@ -223,7 +223,9 @@ function diagnose() {
             // if (dispatch.game != undefined) {
             //     url = url + "?game=" + dispatch.game;
             // }
-            url=url+"?dispatch="+dispatch
+            var dispatchString = JSON.stringify(dispatch);
+            console.log(dispatchString);
+            url=url+"?dispatch="+dispatchString;
             console.log(url);
             document.getElementById("diagnose").href = url;
             document.getElementById("diagnose").click();

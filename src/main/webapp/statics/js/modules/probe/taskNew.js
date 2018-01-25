@@ -244,7 +244,7 @@ function get_viewModal(update_data_id) {
             }
         }
     });
-    $("#" + stid.get(servicetypeid)).addClass("service_unselected");
+    // $("#" + stid.get(servicetypeid)).addClass("service_unselected");
     $("#" + stid.get(servicetypeid)).removeClass("service_unselected");
     $('#newfooter').attr('style', 'display:none');
     $('#viewfooter').removeAttr('style', 'display:none');
@@ -430,13 +430,6 @@ function submit_dispatch() {
         let taskDispatch = {};
         taskDispatch.probePort = "port1";
         taskDispatch.status = 1;
-        // 其他提取select值的方案
-        // console.log(document.getElementById("bootstrap-duallistbox-selected-list_probeId").value);
-        // console.log($("#bootstrap-duallistbox-selected-list_probeId").find("option:selected").text());
-        // console.log($("#bootstrap-duallistbox-selected-list_probeId").val());
-        // let c = $("#bootstrap-duallistbox-selected-list_targetId").val();
-        // let b = parseInt(c[0]);
-        // console.log(b);
         if (b == 1) {
             taskDispatch.targetIds = targetList.targetId;
             if (typeof taskDispatch.targetIds == "number") {

@@ -80,10 +80,8 @@ public class TaskDispatchController {
         }
         List<TaskDispatchEntity> dispatchList = taskDispatchService.queryDispatchList(id);
         String[] targetList = new String[dispatchList.size()];
-//        Integer[] targetIds = new Integer[100];
         for (int i = 0; i < dispatchList.size(); i++) {
             targetList[i] = dispatchList.get(i).getTarget();
-//            System.out.print(targetList[1]);
             String targetName = taskDispatchService.queryTargetBatch(targetList[i].split(",|\""));
             dispatchList.get(i).setTargetName(targetName);
         }
@@ -245,7 +243,6 @@ public class TaskDispatchController {
     public R saveAll(@RequestBody TaskDispatchEntity taskDispatch) {
         if (taskDispatch.getTargetGroupIds() != null) {
             int[] targetGroupIds = taskDispatch.getTargetGroupIds();
-//            List<TargetEntity> targetEntities = new ArrayList<>();
             ArrayList target = new ArrayList();
             JSONObject targetjson = new JSONObject();
             targetjson.put("target_port", "");
@@ -258,8 +255,6 @@ public class TaskDispatchController {
                     target.add(JSON.toJSONString(targetjson));
                 }
             }
-            String a = target.toString();
-            String b = target + "";
             taskDispatch.setTarget(target.toString());
         } else {
             ArrayList target = new ArrayList();
@@ -291,7 +286,6 @@ public class TaskDispatchController {
         } else if (taskDispatch.getProbeIds() != null && taskDispatch.getProbeGroupIds() == null) {
             int[] probeIdsList = taskDispatch.getProbeIds();
             List<TaskDispatchEntity> taskDispatchEntityList = new ArrayList<>();
-            taskDispatchEntityList.add(taskDispatch);
             for (int j = 0; j < probeIdsList.length; j++) {
                 TaskDispatchEntity taskDispatchEntity = CloneUtils.clone(taskDispatch);
                 taskDispatchEntity.setProbeId(probeIdsList[j]);
