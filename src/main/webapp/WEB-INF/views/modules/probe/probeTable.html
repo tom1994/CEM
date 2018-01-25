@@ -113,7 +113,6 @@
                                             </div>
                                         </form>
 
-
                                         <div class="col-lg-3 col-md-3 col-sm-3 pull-left"
                                              style="text-align:center;height:50px;position: relative;" id="search" >
                                             <button type="button" class="btn btn-sm btn-success"
@@ -448,7 +447,6 @@
 
                     </div>
 
-
                     <!-- 删除确认模态框（Modal） -->
                     <div class="modal fade" id="myModal_delete" tabindex="-1" role="dialog"
                          aria-labelledby="myModalLabel"
@@ -514,14 +512,14 @@
                         <div class="col-lg-12 col-md-12 col-sm-12">
                             <div class="ibox float-e-margins">
                                 <div class="ibox-content" style="padding-bottom: 0">
-                                    <div class="row">
-                                        <form class="form-horizontal" id="grouptosearch" role="form">
+                                    <div class="row" id="groupSearchBox">
+                                        <form class="form-horizontal" id="groupsearchdata" role="form">
                                             <div class=" col-lg-5 col-md-5 col-sm-5 searchspan">
                                                 <span class="searchname" title="探针组名">探针组名：</span>
                                                 <input type="text" class="form-control" name="name" style="width: 110px"
                                                        value="">
                                             </div>
-                                            <div class="btn-group pull-left">
+                                            <div class="btn-group pull-left" id="groupSearch">
                                                 <button type="button" class="btn btn-sm btn-success"
                                                         style="margin-right: 5px; margin-top: 5px"
                                                         v-on:click="groupsearch"><span
@@ -542,6 +540,7 @@
                                     <button type="button" class="btn btn-sm btn-success" v-on:click="groupadd"><span
                                             class="glyphicon glyphicon-plus"></span>录入
                                     </button>
+                                    <p id="flip2" style="position:relative; left:35%;" class="glyphicon glyphicon-menu-up" onClick="toggle2('groupSearchBox')"></p>
                                 </div>
                                 <div class="ibox-content">
                                     <div class="row " style="overflow: scroll;">     <!--表格 overflow-x: scroll超出滚动-->
@@ -655,6 +654,21 @@
         else
         {
             $("#flip").attr("class","glyphicon glyphicon-menu-up");
+        }
+        $("#"+param).toggle();
+    }
+</script>
+
+<script type="text/javascript">
+    //参数para1：希望隐藏元素的id值
+    function toggle2(param){
+        if ($("#flip2").attr("class")=="glyphicon glyphicon-menu-up")
+        {
+            $("#flip2").attr("class","glyphicon glyphicon-menu-down");
+        }
+        else
+        {
+            $("#flip2").attr("class","glyphicon glyphicon-menu-up");
         }
         $("#"+param).toggle();
     }

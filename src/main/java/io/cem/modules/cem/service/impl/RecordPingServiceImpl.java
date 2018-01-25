@@ -90,6 +90,11 @@ public class RecordPingServiceImpl implements RecordPingService {
 	public int queryTotal(Map<String, Object> map){
 		return recordPingDao.queryTotal(map);
 	}
+
+	@Override
+	public int queryIntervalTotal(Map<String, Object> map){
+		return recordPingDao.queryTotal(map);
+	}
 	
 	@Override
 	public void save(RecordPingEntity recordPing){

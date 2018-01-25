@@ -74,6 +74,7 @@ public class RecordHourPingEntity implements Serializable {
 	private String targetipName;
 
 	private String timeRange;
+
 	/**
 	 * 设置：记录ID
 	 */

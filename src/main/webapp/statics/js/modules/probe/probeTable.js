@@ -146,29 +146,21 @@ var search_list = new Vue({
 });
 
 var probegroupdata_handle = new Vue({
-    el: '#probehandle',
+    el: '#groupSearch',
     data: {},
-    mounted: function(){         /*动态加载测试任务组数据*/
-        $.ajax({
-            type: "POST",   /*GET会乱码*/
-            url: "../../cem/probegroup/searchlist",//Todo:改成测试任务组的list方法
-            cache: false,  //禁用缓存
-            dataType: "json",
-            /* contentType:"application/json",  /!*必须要,不可少*!/*/
-            success: function (result) {
-                for(var i=0;i<result.page.list.length;i++){
-                    //console.log(result);
-                    probeGroupNames[i] = {message: result.page.list[i]}
-                }
-                search_data.probegroup_names = probeGroupNames;
-                probeform_data.groupNames = probeGroupNames;
-            }
-        });
+    mounted: function(){
+
     },
     methods: {
-
-
-
+        groupsearch: function () {   /*查询监听事件*/
+            var data = getFormJson($('#groupsearchdata'));
+            /*得到查询条件*/
+            /*获取表单元素的值*/
+            console.log(data);
+            grouptable.groupdata = data;
+            grouptable.redraw();
+            /*根据查询条件重绘*/
+        }
     }
 });
 
@@ -176,38 +168,19 @@ var probegroup_handle = new Vue({
     el: '#grouphandle',
     data: {},
     mounted: function(){         /*动态加载测试任务组数据*/
-        // $.ajax({
-        //     type: "POST",   /*GET会乱码*/
-        //     url: "../../cem/probegroup/list",//Todo:改成测试任务组的list方法
-        //     cache: false,  //禁用缓存
-        //     dataType: "json",
-        //     /* contentType:"application/json",  /!*必须要,不可少*!/*/
-        //     success: function (result) {
-        //         for(var i=0;i<result.page.list.length;i++){
-        //             testGroupNames[i] = {message: result.page.list[i]}
-        //         }
-        //         probeform_data.testgroup_names = testGroupNames;    /*注意,这个js执行放在probeform_data和search_data之前才行*/
-        //         search_data.testgroup_names = testGroupNames;
-        //     }
-        // });
+
     },
     methods: {
         groupadd: function () {   /*监听录入触发事件*/
             status = 0;
             /*状态0,表示录入*/
             var forms = $('#groupform_data .form-control');
-
-            $('#groupform_data input[type=text]').prop("readonly", false);
-            /*去除只读状态*/
-            $('#groupform_data select').prop("disabled", false);
-
-            for (var i = 0; i < 2; i++) {
-                forms[i].value = ""
+            for (var i = 0; i < 3; i++) {
+                forms[i].value = "";
             }
             groupform_data.modaltitle = "新建探针组";
             /*修改模态框标题*/
             $('#groupModal').modal('show');
-
         },
         groupupdate: function () {     /*监听编辑触发事件*/
             status = 1;
@@ -218,9 +191,9 @@ var probegroup_handle = new Vue({
             var id = trs.find("td").eq(2).text();//parseInt(obj.id)
             console.log(trs.length + "表单对象:" + forms.length);
 
-            $('#groupform_data input[type=text]').prop("readonly", false);
+            //$('#groupform_data input[type=text]').prop("readonly", false);
             /*去除只读状态*/
-            $('#groupform_data select').prop("disabled", false);
+            //$('#groupform_data select').prop("disabled", false);
 
             if (trs.length == 0) {
                 toastr.warning('请选择编辑项目！');
@@ -243,15 +216,6 @@ var probegroup_handle = new Vue({
             } else {
                 toastr.warning('请选择一条记录再编辑！');
             }
-        },
-        groupsearch: function () {   /*查询监听事件*/
-            var data = getFormJson($('#searchgroup'));
-            /*得到查询条件*/
-            /*获取表单元素的值*/
-            console.log(data);
-            grouptable.groupdata = data;
-            grouptable.redraw();
-            /*根据查询条件重绘*/
         },
         reset: function () {    /*重置*/
             grouptable.reset();
@@ -673,6 +637,35 @@ var probeform_data = new Vue({
     }
 });
 
+Date.prototype.Format = function (fmt) {
+    var o = {
+        "y+": this.getFullYear(),
+        "M+": this.getMonth() + 1,                 //月份
+        "d+": this.getDate(),                    //日
+        "h+": this.getHours(),                   //小时
+        "m+": this.getMinutes(),                 //分
+        "s+": this.getSeconds(),                 //秒
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+        "S+": this.getMilliseconds()             //毫秒
+    };
+    for (var k in o) {
+        if (new RegExp("(" + k + ")").test(fmt)){
+            if(k == "y+"){
+                fmt = fmt.replace(RegExp.$1, ("" + o[k]).substr(4 - RegExp.$1.length));
+            }
+            else if(k=="S+"){
+                var lens = RegExp.$1.length;
+                lens = lens==1?3:lens;
+                fmt = fmt.replace(RegExp.$1, ("00" + o[k]).substr(("" + o[k]).length - 1,lens));
+            }
+            else{
+                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            }
+        }
+    }
+    return fmt;
+}
+
 //探针组录入
 var groupform_data = new Vue({
     el: '#groupModal',
@@ -686,6 +679,7 @@ var groupform_data = new Vue({
             if (typeof(probegroupJson["name"]) == "undefined") {                  /*3个select必选*/
                 toastr.warning("探针组名不能为空！");
             } else {
+                probegroupJson.createTime = new Date().Format("yyyy-MM-dd hh:mm:ss");
                 var probegroup = JSON.stringify(probegroupJson);
                 /*封装成json数组*/
                 /*获取表单元素的值*/
@@ -711,6 +705,7 @@ var groupform_data = new Vue({
                             switch (code) {
                                 case 0:
                                     toastr.success("业务信息录入成功!");
+                                    $('#groupModal').modal('hide');
                                     break;
                                 case 403:
                                     toastr.error(msg);
@@ -723,6 +718,7 @@ var groupform_data = new Vue({
                             switch (code) {
                                 case 0:
                                     toastr.success("业务信息更新成功!");
+                                    $('#groupModal').modal('hide');
                                     break;
                                 case 403:
                                     toastr.error(msg);
@@ -1008,9 +1004,6 @@ var grouptable = new Vue({
     data: {
         headers: [
             {title: '<div style="width:16px"></div>'},
-            //{title: '<div class="checkbox"> <label> <input type="checkbox" id="checkAllGroup""></label> </div>'},
-            //{title: '<div style="display:none">id</div>'},
-            // {title: '<div style="width:58px">探针组ID</div>'},
             {title: '<div style="width:100px">探针组名</div>'},
             {title: '<div style="width:100px">备注</div>'},
             {title: '<div style="width:52px">操作</div>'}
@@ -1070,17 +1063,17 @@ var grouptable = new Vue({
                 param.start = data.start;//开始的记录序号
                 param.page = (data.start / data.length) + 1;//当前页码
                 param.groupdata = JSON.stringify(vm.groupdata);
-                /*用于查询probe数据*/
+                /*用于查询probegroup数据*/
                 console.log(param);
                 //ajax请求数据
                 $.ajax({
                     type: "POST", /*GET会乱码*/
-                    url: "../../cem/probegroup/list",
+                    url: "../../cem/probegroup/searchlist",
                     cache: false,  //禁用缓存
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-
+                        console.log(result);
                         //封装返回数据
                         let returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -1093,8 +1086,6 @@ var grouptable = new Vue({
                         result.page.list.forEach(function (item) {
                             let row = [];
                             row.push(i++);
-                            //row.push('<div class="checkbox"> <label> <input type="checkbox"  id="checkALlGroup" name="groupselectFlag"></label> </div>');
-                            // row.push('<div class="probe_id">'+item.id+'</div>');
                             row.push(item.name);
                             row.push(item.remark);
                             row.push('<a class="fontcolor" onclick="updategroup_this(this)" id='+item.id+'>编辑</a>&nbsp&nbsp;<a class="fontcolor" onclick="deletegroup_this(this)" id='+item.id+'>删除</a>');

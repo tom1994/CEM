@@ -17,6 +17,10 @@
 
 	<select id="queryList" resultMap="probeGroupMap">
 		select * from probe_group
+		WHERE probe_group.id IS NOT NULL
+		<if test="name != null and name != ''">
+			AND probe_group.pg_name LIKE concat('%',#{name},'%')
+		</if>
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
                 order by ${sidx} ${order}

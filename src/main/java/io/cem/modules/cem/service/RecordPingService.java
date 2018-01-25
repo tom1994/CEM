@@ -22,6 +22,8 @@ public interface RecordPingService {
 	List<RecordPingEntity> queryPingTest(Map<String, Object> map);
 
 	int queryTotal(Map<String, Object> map);
+
+	int queryIntervalTotal(Map<String, Object> map);
 	
 	void save(RecordPingEntity recordPing);
 	

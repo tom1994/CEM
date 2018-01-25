@@ -11,6 +11,7 @@ var itemIds = new Array();
 
 /*创建业务类型字典表*/
 var sst = new Map();
+sst.set(0, "综合业务");
 sst.set(1, "网络连通性测试业务");
 sst.set(2, "网络层质量测试业务");
 sst.set(3, "文件下载类业务");

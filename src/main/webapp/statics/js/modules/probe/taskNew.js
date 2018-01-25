@@ -173,7 +173,7 @@ function get_viewModal(update_data_id) {
             if (stid.get(servicetypeid) == "ftp_upload") {
                 paramforms[44].value = param.port;
                 paramforms[45].value = param.filename;
-                paramforms[46].value = param.lasting_name;
+                paramforms[46].value = param.lasting_time;
                 paramforms[47].value = param.upload_size;
                 paramforms[48].value = param.is_delete;
                 paramforms[49].value = param.is_anonymous;
@@ -216,17 +216,17 @@ function get_viewModal(update_data_id) {
                 paramforms[76].value = param.size;
                 paramforms[77].value = param.timeout;
             }
+
+            $("#" + stid.get(servicetypeid)).removeClass("service_unselected");
+            $('#newfooter').attr('style', 'display:none');
+            $('#viewfooter').removeAttr('style', 'display:none');
+            $("#taskform_data input[type=text]").attr('disabled', 'disabled');
+            $("#taskform_data select").attr('disabled', 'disabled');
+            $(".service input[type=text]").attr('disabled', 'disabled');
+            $(".service select").attr('disabled', 'disabled');
+            $('#myModal_edit').modal('show');
         }
     });
-    $("#" + stid.get(servicetypeid)).addClass("service_unselected");
-    $("#" + stid.get(servicetypeid)).removeClass("service_unselected");
-    $('#newfooter').attr('style', 'display:none');
-    $('#viewfooter').removeAttr('style', 'display:none');
-    $("#taskform_data input[type=text]").attr('disabled', 'disabled');
-    $("#taskform_data select").attr('disabled', 'disabled');
-    $(".service input[type=text]").attr('disabled', 'disabled');
-    $(".service select").attr('disabled', 'disabled');
-    $('#myModal_edit').modal('show');
 }
 
 function delete_ajax() {
