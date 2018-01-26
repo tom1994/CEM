@@ -54,6 +54,8 @@ public class RecordHourPppoeEntity implements Serializable {
 	//测试目标名称
 	private String targetName;
 
+	private Integer accessLayer;
+
 	/**
 	 * 设置：记录ID
 	 */
@@ -265,5 +267,13 @@ public class RecordHourPppoeEntity implements Serializable {
 
 	public void setTargetName(String targetName) {
 		this.targetName = targetName;
+	}
+
+	public Integer getAccessLayer() {
+		return accessLayer;
+	}
+
+	public void setAccessLayer(Integer accessLayer) {
+		accessLayer = accessLayer;
 	}
 }
