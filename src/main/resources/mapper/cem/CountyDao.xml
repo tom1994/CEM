@@ -9,6 +9,7 @@
         <result property="countyId" column="county_id"/>
         <result property="countyName" column="county_name"/>
         <result property="cityId" column="city_id"/>
+		<result property="areaId" column="area_id"/>
     </resultMap>
 
 	<select id="queryObject" resultType="io.cem.modules.cem.entity.CountyEntity">
@@ -28,6 +29,15 @@
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
+	</select>
+
+	<select id="queryByProbe" resultType="io.cem.modules.cem.entity.CountyEntity">
+		SELECT county.county_id AS area_id,county.county_name
+		from county
+		LEFT JOIN probe
+  		ON probe.city_id= county.city_id
+		WHERE probe.id= #{value}
+		ORDER BY area_id
 	</select>
 
 	<select id="queryCountyList" resultType="io.cem.modules.cem.entity.CountyEntity">

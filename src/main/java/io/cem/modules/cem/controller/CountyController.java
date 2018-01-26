@@ -56,7 +56,14 @@ public class CountyController {
 		PageUtils pageUtil = new PageUtils(countyList, total, limit, page);
 		return R.ok().put("page", pageUtil);
 	}
-	
+
+
+	@RequestMapping("/infoByProbe/{id}")
+	@RequiresPermissions("county:info")
+	public R infoByProbe(@PathVariable("id") Integer id){
+		List<CountyEntity> countyList = countyService.queryByProbe(id);
+		return R.ok().put("county", countyList);
+	}
 	
 	/**
 	 * 信息

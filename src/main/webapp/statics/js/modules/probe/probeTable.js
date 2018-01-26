@@ -7,11 +7,9 @@ var probeNames = new Array();
 var probeGroupNames = new Array();
 var probeLayer = new Array();
 var cityNames = new Array();
-var areaNames = new Array();
 var typeNames = new Array();
 var statusNames = new Array();
 var probegroup_names = new Array();
-var areaNames_detail = new Array();
 
 var probedata_handle = new Vue({
     el: '#probehandle',
@@ -121,6 +119,7 @@ var layer_handle = new Vue({
                     probeLayer[i] = {message: result.page.list[i]}
                 }
                 search_data.accessLayers = probeLayer;
+                probeform_data.accessLayers = probeLayer;
             }
         });
     },
@@ -145,6 +144,7 @@ var search_list = new Vue({
             /*根据查询条件重绘*/
         },
         reset: function () {    /*重置*/
+            document.getElementById("probesearch").reset();
             probetable.reset();
         }
     }
@@ -350,10 +350,65 @@ var dispatch_table = new Vue({
 function update_this (obj) {     /*监听修改触发事件*/
     var update_data_id = parseInt(obj.id);
     /*获取当前行探针数据id*/
-    //console.log(update_data_id);
     status = 1;      /*状态1表示修改*/
     var forms = $('#probeform_data .form-control');
 
+    /*渲染区县的下拉列表，否则无法显示county对应的countyName*/
+    $.ajax({
+        url: "../../cem/county/infoByProbe/"+update_data_id,
+        type: "POST",
+        cache: false,  //禁用缓存
+        dataType: "json",
+        contentType: "application/json",
+        success: function (result_county) {
+            console.log(result_county);
+            var areaNames = [];
+            for(var i=0;i<result_county.county.length;i++){
+                areaNames[i] = {message: result_county.county[i]}
+            }
+            probeform_data.countyNames = areaNames;
+            $.ajax({
+                type: "POST", /*GET会乱码*/
+                url: "../../cem/probe/detail/"+update_data_id,
+                cache: false,  //禁用缓存
+                dataType: "json",
+                // contentType: "application/json", /*必须要,不可少*/
+                success: function (result) {
+                    console.log(result.probe);
+                    forms[0].value = result.probe.id;
+                    forms[1].value = result.probe.name;
+                    forms[2].value = result.probe.serialNumber;
+                    forms[3].value = result.probe.type;
+                    forms[4].value = result.probe.city;
+                    setTimeout( function () {
+                        forms[5].value = result.probe.county;
+                    },100);
+                    forms[6].value = result.probe.location;
+                    forms[7].value = result.probe.brasName;
+                    forms[8].value = result.probe.brasIp;
+                    forms[9].value = result.probe.brasPort;
+                    forms[10].value = result.probe.accessLayer;
+                    forms[11].value = result.probe.upstream;
+                    forms[12].value = result.probe.status;
+                    forms[13].value = result.probe.device;
+                    forms[14].value = result.probe.version;
+                    forms[15].value = result.probe.concurrentTask;
+                    forms[16].value = result.probe.groupId;
+                    forms[17].value = result.probe.ipType;
+                    forms[18].value = result.probe.isp;
+                    forms[19].value = result.probe.hbInterval;
+                    forms[20].value = result.probe.taskInterval;
+                    forms[21].value = result.probe.reportInterval;
+                    forms[22].value = result.probe.updateInterval;
+                    forms[23].value = result.probe.lastHbTime;
+                    forms[24].value = result.probe.registerTime;
+                    forms[25].value = result.probe.lastReportTime;
+                    forms[26].value = result.probe.lastUpdateTime;
+                    forms[27].value = result.probe.portIp;
+                }
+            });
+        }
+    });
     $.ajax({
         type: "POST", /*GET会乱码*/
         url: "../../cem/probe/detail/"+update_data_id,
@@ -361,37 +416,15 @@ function update_this (obj) {     /*监听修改触发事件*/
         dataType: "json",
         // contentType: "application/json", /*必须要,不可少*/
         success: function (result) {
-             console.log(result.probe);
-            // console.log(result.probe.city);
-             console.log(result.probe.county);
+            console.log(result.probe);
             forms[0].value = result.probe.id;
             forms[1].value = result.probe.name;
             forms[2].value = result.probe.serialNumber;
             forms[3].value = result.probe.type;
             forms[4].value = result.probe.city;
-            /*渲染区县的下拉列表，否则无法显示county对应的countyName*/
-            //probeform_data.countyNames = queryArea(forms[4].value);
-            var tmp = result.probe.county;
-            $.ajax({
-                url: "../../cem/county/info/"+forms[4].value,
-                type: "POST",
-                cache: false,  //禁用缓存
-                dataType: "json",
-                contentType: "application/json",
-                success: function (result) {
-                    for(var i=0;i<result.county.length;i++){
-                        areaNames[i] = {message: result.county[i]}
-                    }
-                    probeform_data.countyNames = areaNames;
-                    forms[5].value = tmp;
-                    setTimeout(function () {
-                        forms[5].value = tmp;
-                        console.log(forms[5].value);
-                    }, 100);
-
-                    console.log(forms[5].value);
-                }
-            });
+            setTimeout( function () {
+            forms[5].value = result.probe.county;
+            },100);
             forms[6].value = result.probe.location;
             forms[7].value = result.probe.brasName;
             forms[8].value = result.probe.brasIp;
@@ -414,8 +447,6 @@ function update_this (obj) {     /*监听修改触发事件*/
             forms[25].value = result.probe.lastReportTime;
             forms[26].value = result.probe.lastUpdateTime;
             forms[27].value = result.probe.portIp;
-            console.log(forms[4].value);
-            console.log(forms[5].value);
         }
     });
     probeform_data.modaltitle = "详细信息";
@@ -582,11 +613,7 @@ var probeform_data = new Vue({
         statusNames:[],
         iptypeNames: [],
         groupNames: [],
-        types: [],
-        status:[],
         accessLayers:[],
-        citys:[],
-        countys:[],
         upstreams:[]
     },
     // 在 `methods` 对象中定义方法
@@ -800,6 +827,7 @@ var getArea = function (cityid) {
         dataType: "json",
         contentType: "application/json",
         success: function (result) {
+            var areaNames = [];
             for(var i=0;i<result.county.length;i++){
                 areaNames[i] = {message: result.county[i]}
             }
@@ -816,10 +844,10 @@ var queryArea = function (cityid) {
         dataType: "json",
         contentType: "application/json",
         success: function (result) {
+            var areaNames_detail = new Array();
             for(var i=0;i<result.county.length;i++){
                 areaNames_detail[i] = {message: result.county[i]}
             }
-            console.log("ssss")
             probeform_data.countyNames = areaNames_detail;
         }
     });
