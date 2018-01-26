@@ -86,7 +86,7 @@ public class RecordPingController {
     }
 
     @RequestMapping("/diagnose")
-    public R diagnose(String resultdata, Integer page, Integer limit, Integer dispatchId) throws Exception {
+    public R diagnose(String resultdata, Integer page, Integer limit, Integer[] dispatchId) throws Exception {
         Map<String, Object> map = new HashMap<>();
         JSONObject resultdata_jsonobject = JSONObject.parseObject(resultdata);
         try {
@@ -105,17 +105,19 @@ public class RecordPingController {
             map.put("limit", limit);
             total = recordPingService.queryTotal(map);
         }
-        map.put("dispatch_id", dispatchId);
+
         while (true) {
-//            int testStatus = Integer.parseInt(map.get("dispatchId").toString());
-//            if (taskDispatchService.queryTestStatus(testStatus) > 0) {
             if (taskDispatchService.queryTestStatus(dispatchId) > 0) {
                 break;
             } else {
                 sleep(5000);
             }
         }
-        List<RecordPingEntity> resultList = recordPingService.queryPingTest(map);
+        List<RecordPingEntity> resultList = new ArrayList<>();
+        for(int i = 0; i<dispatchId.length;i++){
+            map.put("dispatch_id", dispatchId[i]);
+            resultList.addAll(recordPingService.queryPingTest(map));
+        }
         System.out.println(resultList);
         PageUtils pageUtil = new PageUtils(resultList, total, limit, page);
         return R.ok().put("page", pageUtil);

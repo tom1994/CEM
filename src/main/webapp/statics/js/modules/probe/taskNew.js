@@ -80,7 +80,11 @@ var task_handle = new Vue({
             $('#taskform_data input[type=text]').prop("disabled", false);
             $('#taskform_data select').prop("disabled", false);
             $('#taskform_data input[type=text]').prop("readonly", false);
-            $('#taskform_data input[type=text]').prop("unselectable", false);
+            $('#taskname').removeAttr('unselectable');
+            $('.service input[type=text]').removeAttr('unselectable');
+            $('.service').prop("readonly", false);
+            $('.service').removeAttr('unselectable');
+            $('.service').prop("disabled", false);
             taskform_data.modaltitle = "新建任务";
             /*修改模态框标题*/
             for (let i = 0; i < 3; i++) {
@@ -241,9 +245,12 @@ function get_viewModal(update_data_id) {
             $("#" + stid.get(servicetypeid)).removeClass("service_unselected");
             $('#newfooter').attr('style', 'display:none');
             $('#viewfooter').removeAttr('style', 'display:none');
-            $("#taskform_data input[type=text]").removeAttr("readonly");
+            // $("#taskform_data input[type=text]").removeAttr("readonly");
             $("#taskform_data select").attr('disabled', 'disabled');
+            $("#taskform_data input[type=text]").attr('disabled', 'disabled');
+            $("#taskform_data input[type=text]").attr('unselectable', 'on');
             $(".service input[type=text]").attr('disabled', 'disabled');
+            $(".service input[type=text]").attr('unselectable', 'on');
             $(".service select").attr('disabled', 'disabled');
             $('#myModal_edit').modal('show');
         }

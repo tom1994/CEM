@@ -1,5 +1,6 @@
 package io.cem.modules.cem.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,7 +55,7 @@ public class RecordWebDownloadController {
 	}
 
 	@RequestMapping("/diagnose")
-	public R diagnose(String resultdata, Integer page, Integer limit, Integer dispatchId) throws Exception {
+	public R diagnose(String resultdata, Integer page, Integer limit, Integer[] dispatchId) throws Exception {
 		Map<String, Object> map = new HashMap<>();
 		JSONObject resultdata_jsonobject = JSONObject.parseObject(resultdata);
 		try {
@@ -81,7 +82,11 @@ public class RecordWebDownloadController {
 				sleep(5000);
 			}
 		}
-		List<RecordWebDownloadEntity> resultList = recordWebDownloadService.queryWebDownloadTest(map);
+		List<RecordWebDownloadEntity> resultList = new ArrayList<>();
+		for(int i = 0; i<dispatchId.length;i++){
+			map.put("dispatch_id", dispatchId[i]);
+			resultList.addAll(recordWebDownloadService.queryWebDownloadTest(map));
+		}
 		System.out.println(resultList);
 		PageUtils pageUtil = new PageUtils(resultList, total, limit, page);
 		return R.ok().put("page", pageUtil);

@@ -90,7 +90,7 @@
     <div class="modal fade col-lg-12 col-md-12 col-sm-12" id="task_dispatch" tabindex="-1" role="dialog"
          aria-labelledby="myModalLabel"
          aria-hidden="true">
-        <div class="col-lg-8 col-md-8 col-sm-8">
+        <div class="col-lg-12 col-md-12 col-sm-12">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
@@ -98,7 +98,7 @@
                     </button>
                     <h3 class="modal-title myModalLabel">任务下发</h3>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" style="padding-bottom: 5px">
                     <form class="form-horizontal" id="dispatch_probe" role="form">
                         <div class="row">
                             <div>
@@ -115,13 +115,13 @@
                             </div>
                         </div>
                         <div class="row" id="probeselected">
-                            <div class="ue-container">
+                            <div class="multi-container">
                                 <select multiple="multiple" size="10" id="selectprobe" name="probeId">
                                 </select>
                             </div>
                         </div>
                         <div class="row" id="probegroupselected" style="display: none">
-                            <div class="ue-container">
+                            <div class="multi-container">
                                 <select multiple="multiple" size="10" id="selectprobegroup" name="probeGroupId">
                                 </select>
                             </div>
@@ -129,7 +129,6 @@
                     </form>
                     <form class="form-horizontal" id="dispatch_target" role="form">
                         <div class="row">
-                            <div style="padding-top: 2%;">
                                 <label>
                                     <input type="radio" name="choosetarget"
                                            onclick="$('#targetselected').removeAttr('style', 'display:none');$('#targetgroupselected').attr('style', 'display:none')"
@@ -140,19 +139,18 @@
                                            onclick="$('#targetgroupselected').removeAttr('style', 'display:none');$('#targetselected').attr('style', 'display:none')"
                                            value="0">选择测试目标组
                                 </label>
-                            </div>
                         </div>
                         <div style="display: none">
                             <input type="text" id="taskId" name="taskId" readonly="readonly" unselectable="on">
                         </div>
                         <div class="row" id="targetselected">
-                            <div class="ue-container">
+                            <div class="multi-container">
                                 <select multiple="multiple" size="10" name="targetId" id="selecttarget">
                                 </select>
                             </div>
                         </div>
                         <div class="row" id="targetgroupselected" style="display: none">
-                            <div class="ue-container">
+                            <div class="multi-container">
                                 <select multiple="multiple" size="10" name="targetGroupId" id="selecttargetgroup">
                                 </select>
                             </div>

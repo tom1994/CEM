@@ -27,8 +27,6 @@ import io.cem.modules.cem.service.TaskDispatchService;
 
 
 /**
- * @author
- * @date 2017-11-13 11:01:11
  */
 @RestController
 @RequestMapping("/cem/taskdispatch")
@@ -173,7 +171,7 @@ public class TaskDispatchController {
         int ping[][] = new int[5][size];
         int sla[][] = new int[6][size];
         int web[] = new int[size];
-        int download[][] = new int[4][size];
+        int download[][] = new int[3][size];
         int video[] = new int[size];
         int game[] = new int[size];
         JSONObject dispatch = new JSONObject();

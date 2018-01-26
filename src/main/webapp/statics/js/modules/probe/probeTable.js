@@ -371,6 +371,7 @@ function update_this (obj) {     /*监听修改触发事件*/
             forms[4].value = result.probe.city;
             /*渲染区县的下拉列表，否则无法显示county对应的countyName*/
             //probeform_data.countyNames = queryArea(forms[4].value);
+            var tmp = result.probe.county;
             $.ajax({
                 url: "../../cem/county/info/"+forms[4].value,
                 type: "POST",
@@ -381,10 +382,16 @@ function update_this (obj) {     /*监听修改触发事件*/
                     for(var i=0;i<result.county.length;i++){
                         areaNames[i] = {message: result.county[i]}
                     }
-                    probeform_data.areas = areaNames;
+                    probeform_data.countyNames = areaNames;
+                    forms[5].value = tmp;
+                    setTimeout(function () {
+                        forms[5].value = tmp;
+                        console.log(forms[5].value);
+                    }, 100);
+
+                    console.log(forms[5].value);
                 }
             });
-            forms[5].value = result.probe.county;
             forms[6].value = result.probe.location;
             forms[7].value = result.probe.brasName;
             forms[8].value = result.probe.brasIp;
@@ -812,6 +819,7 @@ var queryArea = function (cityid) {
             for(var i=0;i<result.county.length;i++){
                 areaNames_detail[i] = {message: result.county[i]}
             }
+            console.log("ssss")
             probeform_data.countyNames = areaNames_detail;
         }
     });
