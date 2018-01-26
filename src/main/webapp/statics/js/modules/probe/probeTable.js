@@ -121,6 +121,7 @@ var layer_handle = new Vue({
                     probeLayer[i] = {message: result.page.list[i]}
                 }
                 search_data.accessLayers = probeLayer;
+                probeform_data.accessLayers = probeLayer;
             }
         });
     },
@@ -145,6 +146,7 @@ var search_list = new Vue({
             /*根据查询条件重绘*/
         },
         reset: function () {    /*重置*/
+            document.getElementById("probesearch").reset();
             probetable.reset();
         }
     }
@@ -350,9 +352,25 @@ var dispatch_table = new Vue({
 function update_this (obj) {     /*监听修改触发事件*/
     update_data_id = parseInt(obj.id);
     /*获取当前行探针数据id*/
-    //console.log(update_data_id);
     status = 1;      /*状态1表示修改*/
     var forms = $('#probeform_data .form-control');
+
+    /*渲染区县的下拉列表，否则无法显示county对应的countyName*/
+    $.ajax({
+        url: "../../cem/county/infoByProbe/"+update_data_id,
+        type: "POST",
+        cache: false,  //禁用缓存
+        dataType: "json",
+        contentType: "application/json",
+        success: function (result_county) {
+            console.log(result_county);
+            for(var i=0;i<result_county.county.length;i++){
+                areaNames[i] = {message: result_county.county[i]}
+            }
+            probeform_data.countyNames = areaNames;
+
+        }
+    });
 
     $.ajax({
         type: "POST", /*GET会乱码*/
@@ -361,29 +379,11 @@ function update_this (obj) {     /*监听修改触发事件*/
         dataType: "json",
         // contentType: "application/json", /*必须要,不可少*/
         success: function (result) {
-             console.log(result.probe);
-            // console.log(result.probe.city);
-             console.log(result.probe.county);
             forms[0].value = result.probe.id;
             forms[1].value = result.probe.name;
             forms[2].value = result.probe.serialNumber;
             forms[3].value = result.probe.type;
             forms[4].value = result.probe.city;
-            /*渲染区县的下拉列表，否则无法显示county对应的countyName*/
-            //probeform_data.countyNames = queryArea(forms[4].value);
-            $.ajax({
-                url: "../../cem/county/info/"+forms[4].value,
-                type: "POST",
-                cache: false,  //禁用缓存
-                dataType: "json",
-                contentType: "application/json",
-                success: function (result) {
-                    for(var i=0;i<result.county.length;i++){
-                        areaNames[i] = {message: result.county[i]}
-                    }
-                    probeform_data.areas = areaNames;
-                }
-            });
             forms[5].value = result.probe.county;
             forms[6].value = result.probe.location;
             forms[7].value = result.probe.brasName;
@@ -407,8 +407,6 @@ function update_this (obj) {     /*监听修改触发事件*/
             forms[25].value = result.probe.lastReportTime;
             forms[26].value = result.probe.lastUpdateTime;
             forms[27].value = result.probe.portIp;
-            console.log(forms[4].value);
-            console.log(forms[5].value);
         }
     });
     probeform_data.modaltitle = "详细信息";
@@ -575,11 +573,7 @@ var probeform_data = new Vue({
         statusNames:[],
         iptypeNames: [],
         groupNames: [],
-        types: [],
-        status:[],
         accessLayers:[],
-        citys:[],
-        countys:[],
         upstreams:[]
     },
     // 在 `methods` 对象中定义方法
@@ -809,6 +803,7 @@ var queryArea = function (cityid) {
         dataType: "json",
         contentType: "application/json",
         success: function (result) {
+            console.log(result);
             for(var i=0;i<result.county.length;i++){
                 areaNames_detail[i] = {message: result.county[i]}
             }

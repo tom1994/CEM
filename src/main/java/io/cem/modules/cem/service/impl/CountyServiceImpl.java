@@ -26,6 +26,11 @@ public class CountyServiceImpl implements CountyService {
 	public List<CountyEntity> queryCountyList(Integer id){
 		return countyDao.queryCountyList(id);
 	}
+
+	@Override
+	public List<CountyEntity> queryByProbe(Integer id){
+		return countyDao.queryByProbe(id);
+	}
 	
 	@Override
 	public List<CountyEntity> queryList(Map<String, Object> map){

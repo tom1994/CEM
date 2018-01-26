@@ -231,7 +231,7 @@
                                                     <select id="county" class="form-control" name="county">
                                                         <!--VUE列表渲染-->
                                                         <option v-for="item in countyNames"
-                                                                v-bind:value="item.message.countyId">
+                                                                v-bind:value="item.message.areaId">
                                                             {{ item.message.countyName }}
                                                         </option>
                                                     </select>
@@ -270,23 +270,21 @@
                                             </div>
 
                                             <div class="form-group row">
-                                                <label for="accessLayer"
+                                                <label for="access_layer"
                                                        class="col-lg-2 col-md-2 col-sm-2 input-label form_border">接入层级:</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border">
-                                                    <select id="accessLayer" class="form-control" name="accessLayer">  <!--VUE列表渲染-->
-                                                        <option value="1000">住户</option>
-                                                        <option value="2000">楼道</option>
-                                                        <option value="3000">小区出口</option>
-                                                        <option value="4000">BRAS</option>
-                                                        <option value="5000">核心</option>
+                                                    <select class="form-control" name="access_layer" id="access_layer">
+                                                        <option v-for="item in accessLayers"
+                                                                v-bind:value="item.message.layerTag">
+                                                            {{ item.message.layerName }}
+                                                        </option>
                                                     </select>
                                                 </div>
                                                 <label for="upstream"
                                                        class="col-lg-2 col-md-2 col-sm-2 input-label form_border">上联探针:</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border">
-                                                    <select id="upstream" class="form-control selectdata" name="upstream"
-                                                            style="width: 110px">
-                                                        <option v-for="item in probeNames"
+                                                    <select id="upstream" class="form-control selectdata" name="upstream">
+                                                        <option v-for="item in upstreams"
                                                                 v-bind:value="item.message.id">
                                                             {{item.message.name}}
                                                         </option>
