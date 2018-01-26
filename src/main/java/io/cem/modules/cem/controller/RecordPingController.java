@@ -67,16 +67,18 @@ public class RecordPingController {
         } else {
             map.put("offset", (page - 1) * limit);
             map.put("limit", limit);
-            total = recordPingService.queryTotal(map);
+            /*total = recordPingService.queryTotal(map);*/
         }
         if (Integer.parseInt(map.get("queryType").toString()) == 1) {
             List<RecordPingEntity> resultList = recordPingService.queryPingList(map);
             System.out.println(resultList);
+            total = resultList.size();
             PageUtils pageUtil = new PageUtils(resultList, total, limit, page);
             return R.ok().put("page", pageUtil);
         } else {
             List<RecordHourPingEntity> resultList = recordPingService.queryIntervalList(map);
             System.out.println(resultList);
+            total = resultList.size();
             PageUtils pageUtil = new PageUtils(resultList, total, limit, page);
             return R.ok().put("page", pageUtil);
         }

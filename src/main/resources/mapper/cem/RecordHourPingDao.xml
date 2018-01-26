@@ -196,6 +196,7 @@
 			AND rhp.probe_id = #{probe_id}
 		</if>
 		GROUP BY rhp.service_type,rhp.target_id,rhp.task_id,rhp.probe_id,date_format(rhp.record_date,'%Y-%m-%d'),time_format(record_time, '%H');
+
 	</select>
 
  	<select id="queryTotal" resultType="int">

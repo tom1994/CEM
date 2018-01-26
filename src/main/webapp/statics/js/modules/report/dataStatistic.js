@@ -32,8 +32,6 @@ for(let i=10; i<12; i++){
     recordtype.set(i,"sla")
 }
 
-
-
 function getFormJson(form) {      /*将表单对象变为json对象*/
     var o = {};
     var a = $(form).serializeArray();
@@ -259,7 +257,6 @@ Date.prototype.Format = function (fmt) {
     }
     return fmt;
 };
-
 
 var today = new Date();
 today.setDate(today.getDate() - 4); //显示近四天内的数据

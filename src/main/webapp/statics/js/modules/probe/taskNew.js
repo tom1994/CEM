@@ -44,16 +44,13 @@ var spst = new Map();
 for (let i = 1; i < 6; i++) {
     spst.set(i, 1)
 }
-;
 for (let i = 10; i < 16; i++) {
     spst.set(i, 2)
 }
-;
 spst.set(20, 3);
 for (let i = 30; i < 33; i++) {
     spst.set(i, 4)
 }
-;
 spst.set(40, 5);
 spst.set(50, 6);
 
@@ -83,7 +80,7 @@ var task_handle = new Vue({
             $('#taskform_data input[type=text]').prop("disabled", false);
             $('#taskform_data select').prop("disabled", false);
             $('#taskform_data input[type=text]').prop("readonly", false);
-            $('#taskform_data input[type=text]').prop("unselectable", 'off');
+            $('#taskform_data input[type=text]').prop("unselectable", false);
             taskform_data.modaltitle = "新建任务";
             /*修改模态框标题*/
             for (let i = 0; i < 3; i++) {
@@ -119,7 +116,6 @@ function view_this(obj) {     /*监听详情触发事件*/
 
 function get_viewModal(update_data_id) {
     var taskforms = $('#taskform_data .form-control');
-    var paramforms = $('#taskform_param .form-control');
     var servicetypeid = 0;
     $.ajax({
         type: "POST", /*GET会乱码*/
@@ -130,7 +126,7 @@ function get_viewModal(update_data_id) {
         success: function (result) {
             var param = JSON.parse(result.task.parameter);
             servicetypeid = result.task.serviceType;
-            console.log(result);
+            var paramforms = $('#'+stid.get(servicetypeid)+'_param'+' .form-control');
             taskforms[0].value = result.task.id;
             taskforms[1].value = result.task.taskName;
             taskforms[2].value = result.task.serviceType;
@@ -146,113 +142,112 @@ function get_viewModal(update_data_id) {
                 paramforms[6].value = param.timeout;
             }
             if (stid.get(servicetypeid) == "pingtcp") {
-                paramforms[7].value = param.count;
-                paramforms[8].value = param.interval;
-                paramforms[9].value = param.ttl;
-                paramforms[10].value = param.tos;
-                paramforms[11].value = param.timeout;
+                paramforms[0].value= param.count;
+                paramforms[1].value= param.interval;
+                paramforms[2].value= param.ttl;
+                paramforms[3].value = param.tos;
+                paramforms[4].value = param.timeout;
             }
             if (stid.get(servicetypeid) == "tracert") {
-                paramforms[12].value = param.count;
-                paramforms[13].value = param.interval;
-                paramforms[14].value = param.size;
-                paramforms[15].value = param.tos;
-                paramforms[16].value = param.timeout;
-                paramforms[17].value = param.max_hop;
+                paramforms[0].value = param.count;
+                paramforms[1].value = param.interval;
+                paramforms[2].value = param.size;
+                paramforms[3].value = param.tos;
+                paramforms[4].value = param.timeout;
+                paramforms[5].value = param.max_hop;
             }
             if (stid.get(servicetypeid) == "sla") {
-                paramforms[18].value = param.count;
-                paramforms[19].value = param.interval;
-                paramforms[20].value = param.size;
-                paramforms[21].value = param.payload;
-                paramforms[22].value = param.ttl;
-                paramforms[23].value = param.timeout;
+                paramforms[0].value = param.count;
+                paramforms[1].value = param.interval;
+                paramforms[2].value = param.size;
+                paramforms[3].value = param.payload;
+                paramforms[4].value = param.ttl;
+                paramforms[5].value = param.timeout;
             }
             if (stid.get(servicetypeid) == "dhcp") {
-                paramforms[24].value = param.times;
-                paramforms[25].value = param.timeout;
-                paramforms[26].value = param.is_renew;
+                paramforms[0].value = param.times;
+                paramforms[1].value = param.timeout;
+                paramforms[2].value = param.is_renew;
             }
             if (stid.get(servicetypeid) == "dns") {
-                paramforms[27].value = param.times;
-                paramforms[28].value = param.interval;
-                paramforms[29].value = param.count;
-                paramforms[30].value = param.timeout;
-                paramforms[31].value = param.domains;
+                paramforms[0].value = param.times;
+                paramforms[1].value = param.interval;
+                paramforms[2].value = param.count;
+                paramforms[3].value = param.timeout;
+                paramforms[4].value = param.domains;
             }
             if (stid.get(servicetypeid) == "pppoe") {
-                paramforms[32].value = param.username;
-                paramforms[33].value = param.password;
-                paramforms[34].value = param.times;
-                paramforms[35].value = param.interval;
-                paramforms[36].value = param.online_time;
+                paramforms[0].value = param.username;
+                paramforms[1].value = param.password;
+                paramforms[2].value = param.times;
+                paramforms[3].value = param.interval;
+                paramforms[4].value = param.online_time;
             }
             if (stid.get(servicetypeid) == "radius") {
-                paramforms[37].value = param.auth_port;
-                paramforms[38].value = param.nas_port;
-                paramforms[39].value = param.secret;
-                paramforms[40].value = param.username;
-                paramforms[41].value = param.password;
-                paramforms[42].value = param.times;
-                paramforms[43].value = param.interval;
+                paramforms[0].value = param.auth_port;
+                paramforms[1].value = param.nas_port;
+                paramforms[2].value = param.secret;
+                paramforms[3].value = param.username;
+                paramforms[4].value = param.password;
+                paramforms[5].value = param.times;
+                paramforms[6].value = param.interval;
             }
             if (stid.get(servicetypeid) == "ftp_upload") {
-                paramforms[44].value = param.port;
-                paramforms[45].value = param.filename;
-                paramforms[46].value = param.lasting_name;
-                paramforms[47].value = param.upload_size;
-                paramforms[48].value = param.is_delete;
-                paramforms[49].value = param.is_anonymous;
-                paramforms[50].value = param.username;
-                paramforms[51].value = param.password;
+                paramforms[0].value = param.port;
+                paramforms[1].value = param.filename;
+                paramforms[2].value = param.lasting_time;
+                paramforms[3].value = param.upload_size;
+                paramforms[4].value = param.is_delete;
+                paramforms[5].value = param.is_anonymous;
+                paramforms[6].value = param.username;
+                paramforms[7].value = param.password;
             }
             if (stid.get(servicetypeid) == "ftp_download") {
-                paramforms[52].value = param.port;
-                paramforms[53].value = param.filename;
-                paramforms[54].value = param.lasting_name;
-                paramforms[55].value = param.download_size;
-                paramforms[56].value = param.is_delete;
-                paramforms[57].value = param.is_anonymous;
-                paramforms[58].value = param.username;
-                paramforms[59].value = param.password;
+                paramforms[0].value = param.port;
+                paramforms[1].value = param.filename;
+                paramforms[2].value = param.lasting_name;
+                paramforms[3].value = param.download_size;
+                paramforms[4].value = param.is_delete;
+                paramforms[5].value = param.is_anonymous;
+                paramforms[6].value = param.username;
+                paramforms[7].value = param.password;
             }
             if (stid.get(servicetypeid) == "web_download") {
-                paramforms[60].value = param.lasting_time;
+                paramforms[0].value = param.lasting_time;
             }
             if (stid.get(servicetypeid) == "webpage") {
-                paramforms[61].value = param.max_element;
-                paramforms[62].value = param.element_timeout;
-                paramforms[63].value = param.page_timeout;
-                paramforms[64].value = param.max_size;
-                paramforms[65].value = param.user_agent;
-                paramforms[66].value = param.is_http_proxy;
-                paramforms[67].value = param.address;
-                paramforms[68].value = param.port;
-                paramforms[69].value = param.username;
-                paramforms[70].value = param.password;
+                paramforms[0].value = param.max_element;
+                paramforms[1].value = param.element_timeout;
+                paramforms[2].value = param.page_timeout;
+                paramforms[3].value = param.max_size;
+                paramforms[4].value = param.user_agent;
+                paramforms[5].value = param.is_http_proxy;
+                paramforms[6].value = param.address;
+                paramforms[7].value = param.port;
+                paramforms[8].value = param.username;
+                paramforms[9].value = param.password;
             }
             if (stid.get(servicetypeid) == "online_video") {
-                paramforms[71].value = param.video_quality;
-                paramforms[72].value = param.lasting_time;
-                paramforms[73].value = param.first_buffer_time;
+                paramforms[0].value = param.video_quality;
+                paramforms[1].value = param.lasting_time;
+                paramforms[2].value = param.first_buffer_time;
             }
             if (stid.get(servicetypeid) == "game") {
-                paramforms[74].value = param.count;
-                paramforms[75].value = param.interval;
-                paramforms[76].value = param.size;
-                paramforms[77].value = param.timeout;
+                paramforms[0].value = param.count;
+                paramforms[1].value = param.interval;
+                paramforms[2].value = param.size;
+                paramforms[3].value = param.timeout;
             }
+            $("#" + stid.get(servicetypeid)).removeClass("service_unselected");
+            $('#newfooter').attr('style', 'display:none');
+            $('#viewfooter').removeAttr('style', 'display:none');
+            $("#taskform_data input[type=text]").attr('disabled', 'disabled');
+            $("#taskform_data select").attr('disabled', 'disabled');
+            $(".service input[type=text]").attr('disabled', 'disabled');
+            $(".service select").attr('disabled', 'disabled');
+            $('#myModal_edit').modal('show');
         }
     });
-    // $("#" + stid.get(servicetypeid)).addClass("service_unselected");
-    $("#" + stid.get(servicetypeid)).removeClass("service_unselected");
-    $('#newfooter').attr('style', 'display:none');
-    $('#viewfooter').removeAttr('style', 'display:none');
-    $("#taskform_data input[type=text]").attr('disabled', 'disabled');
-    $("#taskform_data select").attr('disabled', 'disabled');
-    $(".service input[type=text]").attr('disabled', 'disabled');
-    $(".service select").attr('disabled', 'disabled');
-    $('#myModal_edit').modal('show');
 }
 
 function delete_ajax() {
@@ -279,7 +274,6 @@ function delete_this(obj) {
     delete_data.show_deleteModal();
     delete_data.id = parseInt(obj.id);
     /*获取当前行探针数据id*/
-    console.log(delete_data.id);
 }
 
 var delete_data = new Vue({
@@ -605,16 +599,14 @@ var taskform_data = new Vue({
         submit: function () {
             var oDate = new Date();
             var tasknewJson = getFormJson($('#taskform_data'));
-            var paramnewJson = getFormJson($('#taskform_param'));
+            var paramnewJson = getFormJson2($('#' + stid.get(parseInt(tasknewJson.serviceType)) + '_param'));
             var paramnew = JSON.stringify(paramnewJson);
-            console.log(paramnewJson);
             tasknewJson.parameter = paramnew;
             tasknewJson.isDeleted = "0";
             tasknewJson.alarmTemplateId = "0";
             tasknewJson.createTime = oDate.Format("yyyy-MM-dd hh:mm:ss");
             tasknewJson.remark = "无";
             var tasknew = JSON.stringify(tasknewJson);
-            console.log(tasknewJson);
             $.ajax({
                 type: "POST", /*GET会乱码*/
                 url: "../../cem/task/save",
@@ -693,20 +685,6 @@ var getalarmtemplates = function (servicetypeid) {
         }
     });
 }
-// function getDispatch(taskid) {
-//     var countDispatch = 0;
-//     $.ajax({
-//         type: "POST", /*GET会乱码*/
-//         url: "../../cem/taskdispatch/info/" + taskid,
-//         cache: false,  //禁用缓存
-//         dataType: "json",
-//         async: false,
-//         success: function (result) {
-//             countDispatch = result.page.list.length;
-//         }
-//     });
-//     return countDispatch;
-// }
 
 function getFormJson(form) {      /*将表单对象变为json对象*/
     var o = {};
@@ -737,9 +715,9 @@ function getFormJson2(form) {      /*将表单对象变为json对象*/
             if (!o[this.name].push) {
                 o[this.name] = [o[this.name]];
             }
-            o[this.name].push(this.value || '');
+            o[this.name].push(this.value);
         } else {
-            o[this.name] = this.value || '';
+            o[this.name] = this.value;
         }
     });
     return o;
