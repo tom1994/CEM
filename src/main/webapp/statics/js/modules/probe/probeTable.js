@@ -350,7 +350,7 @@ var dispatch_table = new Vue({
 
 /*探针列表详情功能*/
 function update_this (obj) {     /*监听修改触发事件*/
-    update_data_id = parseInt(obj.id);
+    var update_data_id = parseInt(obj.id);
     /*获取当前行探针数据id*/
     status = 1;      /*状态1表示修改*/
     var forms = $('#probeform_data .form-control');
@@ -821,8 +821,8 @@ var searchgroup_data = new Vue({
 
 /*选中表格事件*/
 $(document).ready(function () {
-    $(".list td").slice(14).each(function () {    //操作列取消选中状态
-        $('#probe_table tbody').slice(14).on('click', 'tr', function () {   /*表格某一行选中状态*/
+    $(".list td").slice(1).each(function () {//操作列取消选中状态
+        $('#probe_table tbody').slice(1).on('click', 'tr', function () {/*表格某一行选中状态*/
             if ($(this).hasClass('selected')) {
                 $(this).removeClass('selected');
                 $(this).find("input:checkbox").prop("checked", false);
@@ -836,6 +836,19 @@ $(document).ready(function () {
             }
         });
     });
+    // $('#probe_table tbody').on('click', 'tr', function () {   /*表格某一行选中状态*/
+    //     if ($(this).hasClass('selected')) {
+    //         $(this).removeClass('selected');
+    //         $(this).find("input:checkbox").prop("checked", false);
+    //         /*prop可以,attr会出错*/
+    //     }
+    //     else {
+    //         /*vm.dtHandle.$('tr.selected').removeClass('selected');*/
+    //         /*只能选中一行*/
+    //         $(this).addClass('selected');
+    //         $(this).find("input:checkbox").prop("checked", true);
+    //     }
+    // });
 
     $('#checkAll').on('click', function () {
         if (this.checked) {

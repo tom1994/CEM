@@ -61,7 +61,7 @@
     </div>
     <!-- 删除确认模态框（Modal） -->
     <div class="modal fade" id="myModal_delete" tabindex="-1" role="dialog"
-         aria-labelledby="myModalLabel" aria-hidden="true" >
+         aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -264,7 +264,7 @@
                                 </div>
                             </div>
                         </form>
-                        <form class="form-horizontal" id="taskform_param" role="form">
+                        <form class="form-horizontal" id="pingicmp_param" role="form">
                             <div class="service service_unselected" id="pingicmp">
                                 <div class="form-group row">
                                     <label for="count"
@@ -332,6 +332,8 @@
                                     </div>
                                 </div>
                             </div>
+                        </form>
+                        <form class="form-horizontal" id="pingtcp_param" role="form">
                             <div class="service service_unselected" id="pingtcp">
                                 <div class="form-group row">
                                     <label for="pt_count"
@@ -383,25 +385,27 @@
                                     </div>
                                 </div>
                             </div>
+                        </form>
+                        <form class="form-horizontal" id="tracert_param" role="form">
                             <div class="service service_unselected" id="tracert">
                                 <div class="form-group row">
-                                <label for="tr_count"
-                                       class="col-lg-3 col-md-3 col-sm-3 form_border"
-                                       style="font-size: medium">单跳发包个数</label>
-                                <div class="col-lg-3 col-md-3 col-sm-3">
-                                    <input type="text" class="form-control" id="tr_count"
-                                           value="3" disabled="disabled" name="count"
-                                           placeholder="">
+                                    <label for="tr_count"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">单跳发包个数</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="tr_count"
+                                               value="3" disabled="disabled" name="count"
+                                               placeholder="">
+                                    </div>
+                                    <label for="tr_interval"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">发包间隔(ms)</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="tr_interval"
+                                               value="20" disabled="disabled" name="interval"
+                                               placeholder="">
+                                    </div>
                                 </div>
-                                <label for="tr_interval"
-                                       class="col-lg-3 col-md-3 col-sm-3 form_border"
-                                       style="font-size: medium">发包间隔(ms)</label>
-                                <div class="col-lg-3 col-md-3 col-sm-3">
-                                    <input type="text" class="form-control" id="tr_interval"
-                                           value="20" disabled="disabled" name="interval"
-                                           placeholder="">
-                                </div>
-                            </div>
                                 <div class="form-group row">
                                     <label for="tr_size"
                                            class="col-lg-3 col-md-3 col-sm-3 form_border"
@@ -443,6 +447,8 @@
                                     </div>
                                 </div>
                             </div>
+                        </form>
+                        <form class="form-horizontal" id="sla_param" role="form">
                             <div class="service service_unselected" id="sla">
                                 <div class="form-group row">
                                     <label for="sla_count"
@@ -496,6 +502,8 @@
                                     </div>
                                 </div>
                             </div>
+                        </form>
+                        <form class="form-horizontal" id="dhcp_param" role="form">
                             <div class="service service_unselected" id="dhcp">
                                 <div class="form-group row">
                                     <label for="times"
@@ -520,13 +528,16 @@
                                            class="col-lg-3 col-md-3 col-sm-3 form_border"
                                            style="font-size: medium">是否使用原IP</label>
                                     <div class="col-lg-3 col-md-3 col-sm-3">
-                                        <select name="is_renew" disabled="disabled" id="is_renew" class="form-control">
+                                        <select name="is_renew" disabled="disabled" id="is_renew"
+                                                class="form-control">
                                             <option value="1">是</option>
                                             <option value="0">否</option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
+                        </form>
+                        <form class="form-horizontal" id="dns_param" role="form">
                             <div class="service service_unselected" id="dns">
                                 <div class="form-group row">
                                     <label for="dns_times"
@@ -572,6 +583,8 @@
                                     </div>
                                 </div>
                             </div>
+                        </form>
+                        <form class="form-horizontal" id="pppoe_param" role="form">
                             <div class="service service_unselected" id="pppoe">
                                 <div class="form-group row">
                                     <label for="username"
@@ -617,6 +630,8 @@
                                     </div>
                                 </div>
                             </div>
+                        </form>
+                        <form class="form-horizontal" id="radius_param" role="form">
                             <div class="service service_unselected" id="radius">
                                 <div class="form-group row">
                                     <label for="auth_port"
@@ -676,6 +691,8 @@
                                     </div>
                                 </div>
                             </div>
+                        </form>
+                        <form class="form-horizontal" id="ftp_upload_param" role="form">
                             <div class="service service_unselected" id="ftp_upload">
                                 <div class="form-group row">
                                     <label for="port"
@@ -714,7 +731,8 @@
                                            class="col-lg-3 col-md-3 col-sm-3 form_border"
                                            style="font-size: medium">是否删除文件</label>
                                     <div class="col-lg-3 col-md-3 col-sm-3">
-                                        <select name="is_delete" disabled="disabled" id="is_delete" class="form-control">
+                                        <select name="is_delete" disabled="disabled" id="is_delete"
+                                                class="form-control">
                                             <option value="1">是</option>
                                             <option value="0">否</option>
                                         </select>
@@ -723,7 +741,8 @@
                                            class="col-lg-3 col-md-3 col-sm-3 form_border"
                                            style="font-size: medium">是否匿名</label>
                                     <div class="col-lg-3 col-md-3 col-sm-3">
-                                        <select name="is_anonymous" disabled="disabled" id="is_anonymous" class="form-control">
+                                        <select name="is_anonymous" disabled="disabled" id="is_anonymous"
+                                                class="form-control">
                                             <option value="1">是</option>
                                             <option value="0">否</option>
                                         </select>
@@ -746,6 +765,8 @@
                                     </div>
                                 </div>
                             </div>
+                        </form>
+                        <form class="form-horizontal" id="ftp_download_param" role="form">
                             <div class="service service_unselected" id="ftp_download">
                                 <div class="form-group row">
                                     <label for="ftpdown_port"
@@ -784,7 +805,8 @@
                                            class="col-lg-3 col-md-3 col-sm-3 form_border"
                                            style="font-size: medium">是否匿名</label>
                                     <div class="col-lg-3 col-md-3 col-sm-3">
-                                        <select name="is_anonymous" disabled="disabled" id="ftpdown_is_anonymous" class="form-control">
+                                        <select name="is_anonymous" disabled="disabled" id="ftpdown_is_anonymous"
+                                                class="form-control">
                                             <option value="1">是</option>
                                             <option value="0">否</option>
                                         </select>
@@ -809,6 +831,8 @@
                                     </div>
                                 </div>
                             </div>
+                        </form>
+                        <form class="form-horizontal" id="web_download_param" role="form">
                             <div class="service service_unselected" id="web_download">
                                 <div class="form-group row">
                                     <label for="web_lasting_time"
@@ -820,6 +844,8 @@
                                     </div>
                                 </div>
                             </div>
+                        </form>
+                        <form class="form-horizontal" id="webpage_param" role="form">
                             <div class="service service_unselected" id="webpage">
                                 <div class="form-group row">
                                     <label for="max_element"
@@ -865,7 +891,8 @@
                                            class="col-lg-3 col-md-3 col-sm-3 form_border"
                                            style="font-size: medium">是否使用HTTP代理</label>
                                     <div class="col-lg-3 col-md-3 col-sm-3">
-                                        <select name="is_http_proxy" disabled="disabled" id="is_http_proxy" class="form-control">
+                                        <select name="is_http_proxy" disabled="disabled" id="is_http_proxy"
+                                                class="form-control">
                                             <option value="1">是</option>
                                             <option value="0">否</option>
                                         </select>
@@ -904,13 +931,16 @@
                                     </div>
                                 </div>
                             </div>
+                        </form>
+                        <form class="form-horizontal" id="online_video_param" role="form">
                             <div class="service service_unselected" id="online_video">
                                 <div class="form-group row">
                                     <label for="video_quality"
                                            class="col-lg-3 col-md-3 col-sm-3 form_border"
                                            style="font-size: medium">视频质量</label>
                                     <div class="col-lg-3 col-md-3 col-sm-3">
-                                        <select name="video_quality" disabled="disabled" id="video_quality" class="form-control">
+                                        <select name="video_quality" disabled="disabled" id="video_quality"
+                                                class="form-control">
                                             <option value="1">标清</option>
                                             <option value="2">高清</option>
                                             <option value="3">超清</option>
@@ -934,6 +964,8 @@
                                     </div>
                                 </div>
                             </div>
+                        </form>
+                        <form class="form-horizontal" id="game_param" role="form">
                             <div class="service service_unselected" id="game">
                                 <div class="form-group row">
                                     <label for="game_count"
