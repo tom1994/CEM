@@ -86,6 +86,8 @@ public class RecordHourSlaEntity implements Serializable {
 	//测试目标名称
 	private String targetName;
 
+	private Integer accessLayer;
+
 	/**
 	 * 设置：记录ID
 	 */
@@ -491,4 +493,11 @@ public class RecordHourSlaEntity implements Serializable {
 		this.targetName = targetName;
 	}
 
+	public Integer getAccessLayer() {
+		return accessLayer;
+	}
+
+	public void setAccessLayer(Integer accessLayer) {
+		this.accessLayer = accessLayer;
+	}
 }

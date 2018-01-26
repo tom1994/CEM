@@ -26,11 +26,21 @@ public interface RecordHourPingService {
 
 	List<RecordHourPingEntity> queryDayList(Map<String, Object> map);
 
-	List<ScoreEntity> calculateService1(List<RecordHourPingEntity> pingList,List<RecordHourTracertEntity> tracertList);
+	List<ScoreEntity> calculatePingIcmp(List<RecordHourPingEntity> pingList);
 
-	List<ScoreEntity> calculateServiceDate1(List<RecordHourPingEntity> pingList,List<RecordHourTracertEntity> tracertList);
+	List<ScoreEntity> calculatePingTcp(List<RecordHourPingEntity> pingList);
 
-	List<ScoreEntity> calculateServiceArea1(List<RecordHourPingEntity> pingList,List<RecordHourTracertEntity> tracertList);
+	List<ScoreEntity> calculatePingUdp(List<RecordHourPingEntity> pingList);
+
+	List<ScoreEntity> calculateTracertIcmp(List<RecordHourTracertEntity> tracertList);
+
+	List<ScoreEntity> calculateTracertUdp(List<RecordHourTracertEntity> tracertList);
+
+	List<ScoreEntity> calculateService1(List<ScoreEntity> pingIcmp,List<ScoreEntity> pingTcp,List<ScoreEntity> pingUdp,List<ScoreEntity> tracertIcmp,List<ScoreEntity> tracertUdp);
+
+	List<ScoreEntity> calculateDate1(List<ScoreEntity> pingIcmp,List<ScoreEntity> pingTcp,List<ScoreEntity> pingUdp,List<ScoreEntity> tracertIcmp,List<ScoreEntity> tracertUdp);
+
+	List<ScoreEntity> calculateArea1(List<ScoreEntity> pingIcmp,List<ScoreEntity> pingTcp,List<ScoreEntity> pingUdp,List<ScoreEntity> tracertIcmp,List<ScoreEntity> tracertUdp);
 
 	int differentDays(Date date1, Date date2);
 

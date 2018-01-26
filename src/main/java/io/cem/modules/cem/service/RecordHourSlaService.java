@@ -22,11 +22,23 @@ public interface RecordHourSlaService {
 
 	List<RecordHourSlaEntity> queryDayList(Map<String, Object> map);
 
-	List<ScoreEntity> calculateService2(List<RecordHourSlaEntity> slaList, List<RecordHourDnsEntity> dnsList, List<RecordHourDhcpEntity> dhcpList, List<RecordHourPppoeEntity> pppoeList, List<RecordHourRadiusEntity> radiusList);
+	List<ScoreEntity> calculateSlaTcp(List<RecordHourSlaEntity> slaList);
 
-	List<ScoreEntity> calculateServiceArea2(List<RecordHourSlaEntity> slaList, List<RecordHourDnsEntity> dnsList, List<RecordHourDhcpEntity> dhcpList, List<RecordHourPppoeEntity> pppoeList, List<RecordHourRadiusEntity> radiusList);
+	List<ScoreEntity> calculateSlaUdp(List<RecordHourSlaEntity> slaList);
 
-	List<ScoreEntity> calculateServiceDate2(List<RecordHourSlaEntity> slaList, List<RecordHourDnsEntity> dnsList, List<RecordHourDhcpEntity> dhcpList, List<RecordHourPppoeEntity> pppoeList, List<RecordHourRadiusEntity> radiusList);
+	List<ScoreEntity> calculateDns(List<RecordHourDnsEntity> dnsList);
+
+	List<ScoreEntity> calculateDhcp(List<RecordHourDhcpEntity> dhcpList);
+
+	List<ScoreEntity> calculatePppoe(List<RecordHourPppoeEntity> pppoeList);
+
+	List<ScoreEntity> calculateRadius(List<RecordHourRadiusEntity> radiusList);
+
+	List<ScoreEntity> calculateService2(List<ScoreEntity> slaTcp,List<ScoreEntity> slaUdp,List<ScoreEntity> dns,List<ScoreEntity> dhcp,List<ScoreEntity> pppoe,List<ScoreEntity> radius);
+
+	List<ScoreEntity> calculateArea2(List<ScoreEntity> slaTcp,List<ScoreEntity> slaUdp,List<ScoreEntity> dns,List<ScoreEntity> dhcp,List<ScoreEntity> pppoe,List<ScoreEntity> radius);
+
+	List<ScoreEntity> calculateDate2(List<ScoreEntity> slaTcp,List<ScoreEntity> slaUdp,List<ScoreEntity> dns,List<ScoreEntity> dhcp,List<ScoreEntity> pppoe,List<ScoreEntity> radius);
 
 	int queryTotal(Map<String, Object> map);
 	
