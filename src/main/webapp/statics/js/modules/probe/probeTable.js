@@ -7,11 +7,9 @@ var probeNames = new Array();
 var probeGroupNames = new Array();
 var probeLayer = new Array();
 var cityNames = new Array();
-var areaNames = new Array();
 var typeNames = new Array();
 var statusNames = new Array();
 var probegroup_names = new Array();
-var areaNames_detail = new Array();
 
 var probedata_handle = new Vue({
     el: '#probehandle',
@@ -364,14 +362,53 @@ function update_this (obj) {     /*监听修改触发事件*/
         contentType: "application/json",
         success: function (result_county) {
             console.log(result_county);
+            var areaNames = [];
             for(var i=0;i<result_county.county.length;i++){
                 areaNames[i] = {message: result_county.county[i]}
             }
             probeform_data.countyNames = areaNames;
-
+            $.ajax({
+                type: "POST", /*GET会乱码*/
+                url: "../../cem/probe/detail/"+update_data_id,
+                cache: false,  //禁用缓存
+                dataType: "json",
+                // contentType: "application/json", /*必须要,不可少*/
+                success: function (result) {
+                    console.log(result.probe);
+                    forms[0].value = result.probe.id;
+                    forms[1].value = result.probe.name;
+                    forms[2].value = result.probe.serialNumber;
+                    forms[3].value = result.probe.type;
+                    forms[4].value = result.probe.city;
+                    setTimeout( function () {
+                        forms[5].value = result.probe.county;
+                    },100);
+                    forms[6].value = result.probe.location;
+                    forms[7].value = result.probe.brasName;
+                    forms[8].value = result.probe.brasIp;
+                    forms[9].value = result.probe.brasPort;
+                    forms[10].value = result.probe.accessLayer;
+                    forms[11].value = result.probe.upstream;
+                    forms[12].value = result.probe.status;
+                    forms[13].value = result.probe.device;
+                    forms[14].value = result.probe.version;
+                    forms[15].value = result.probe.concurrentTask;
+                    forms[16].value = result.probe.groupId;
+                    forms[17].value = result.probe.ipType;
+                    forms[18].value = result.probe.isp;
+                    forms[19].value = result.probe.hbInterval;
+                    forms[20].value = result.probe.taskInterval;
+                    forms[21].value = result.probe.reportInterval;
+                    forms[22].value = result.probe.updateInterval;
+                    forms[23].value = result.probe.lastHbTime;
+                    forms[24].value = result.probe.registerTime;
+                    forms[25].value = result.probe.lastReportTime;
+                    forms[26].value = result.probe.lastUpdateTime;
+                    forms[27].value = result.probe.portIp;
+                }
+            });
         }
     });
-
     $.ajax({
         type: "POST", /*GET会乱码*/
         url: "../../cem/probe/detail/"+update_data_id,
@@ -379,13 +416,15 @@ function update_this (obj) {     /*监听修改触发事件*/
         dataType: "json",
         // contentType: "application/json", /*必须要,不可少*/
         success: function (result) {
-            console.log(result);
+            console.log(result.probe);
             forms[0].value = result.probe.id;
             forms[1].value = result.probe.name;
             forms[2].value = result.probe.serialNumber;
             forms[3].value = result.probe.type;
             forms[4].value = result.probe.city;
+            setTimeout( function () {
             forms[5].value = result.probe.county;
+            },100);
             forms[6].value = result.probe.location;
             forms[7].value = result.probe.brasName;
             forms[8].value = result.probe.brasIp;
@@ -789,6 +828,7 @@ var getArea = function (cityid) {
         dataType: "json",
         contentType: "application/json",
         success: function (result) {
+            var areaNames = [];
             for(var i=0;i<result.county.length;i++){
                 areaNames[i] = {message: result.county[i]}
             }
@@ -805,7 +845,7 @@ var queryArea = function (cityid) {
         dataType: "json",
         contentType: "application/json",
         success: function (result) {
-            console.log(result);
+            var areaNames_detail = new Array();
             for(var i=0;i<result.county.length;i++){
                 areaNames_detail[i] = {message: result.county[i]}
             }

@@ -1,5 +1,6 @@
 package io.cem.modules.cem.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,11 +27,6 @@ import static java.lang.Thread.sleep;
 
 
 /**
- * 
- * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2017-10-12 17:12:47
  */
 @RestController
 @RequestMapping("recordtracert")
@@ -70,7 +66,7 @@ public class RecordTracertController {
 	}
 
 	@RequestMapping("/diagnose")
-	public R diagnose(String resultdata, Integer page, Integer limit, Integer dispatchId) throws Exception {
+	public R diagnose(String resultdata, Integer page, Integer limit, Integer[] dispatchId) throws Exception {
 		Map<String, Object> map = new HashMap<>();
 		JSONObject resultdata_jsonobject = JSONObject.parseObject(resultdata);
 		try {
@@ -97,7 +93,11 @@ public class RecordTracertController {
 				sleep(5000);
 			}
 		}
-		List<RecordTracertEntity> resultList = recordTracertService.queryTracertTest(map);
+		List<RecordTracertEntity> resultList = new ArrayList<>();
+		for(int i = 0; i<dispatchId.length;i++){
+			map.put("dispatch_id", dispatchId[i]);
+			resultList.addAll(recordTracertService.queryTracertTest(map));
+		}
 		System.out.println(resultList);
 		PageUtils pageUtil = new PageUtils(resultList, total, limit, page);
 		return R.ok().put("page", pageUtil);

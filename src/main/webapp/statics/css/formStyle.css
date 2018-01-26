@@ -21,6 +21,11 @@ div.service_unselected input{
     /*border: 1px solid #ddd;*/
     background: #fff;
 }
+.multi-container {
+    margin-top: 1%;
+    margin-bottom: 20px;
+    background: #fff;
+}
 
 .btn-box{
     padding-top: 6%;

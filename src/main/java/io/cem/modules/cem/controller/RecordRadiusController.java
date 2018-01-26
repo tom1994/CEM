@@ -1,5 +1,6 @@
 package io.cem.modules.cem.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,11 +27,6 @@ import static java.lang.Thread.sleep;
 
 
 /**
- * 
- * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2017-10-12 17:12:46
  */
 @RestController
 @RequestMapping("recordradius")
@@ -59,7 +55,7 @@ public class RecordRadiusController {
 
 
 	@RequestMapping("/diagnose")
-	public R diagnose(String resultdata, Integer page, Integer limit, Integer dispatchId) throws Exception {
+	public R diagnose(String resultdata, Integer page, Integer limit, Integer[] dispatchId) throws Exception {
 		Map<String, Object> map = new HashMap<>();
 		JSONObject resultdata_jsonobject = JSONObject.parseObject(resultdata);
 		try {
@@ -86,7 +82,11 @@ public class RecordRadiusController {
 				sleep(5000);
 			}
 		}
-		List<RecordRadiusEntity> resultList = recordRadiusService.queryRadiusTest(map);
+		List<RecordRadiusEntity> resultList = new ArrayList<>();
+		for(int i = 0; i<dispatchId.length;i++){
+			map.put("dispatch_id", dispatchId[i]);
+			resultList.addAll(recordRadiusService.queryRadiusTest(map));
+		}
 		System.out.println(resultList);
 		PageUtils pageUtil = new PageUtils(resultList, total, limit, page);
 		return R.ok().put("page", pageUtil);
