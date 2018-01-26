@@ -83,14 +83,14 @@
                                                             style="width: 110px">
                                                         <option value="">---请选择---</option>
                                                         <option v-for="item in accessLayers"
-                                                                v-bind:value="item.message.id">{{ item.message.layerName }}</option>
+                                                                v-bind:value="item.message.layerTag">{{ item.message.layerName }}</option>
                                                     </select>
                                                 </div>
                                                 <div class="input-group searchspan">
                                                     <span class="searchname" title="类型" style="width: 40px">类型</span>
                                                     <select class="form-control" name="type"
                                                             style="width: 110px;">
-                                                        <option value="0">---请选择---</option>
+                                                        <option value="">---请选择---</option>
                                                         <!--vue 绑定value属性    重要！！！！-->
                                                         <option value="10">机架探针</option>
                                                         <option value="20">盒式探针</option>
@@ -107,7 +107,8 @@
                                                         <option value="">---请选择---</option>
                                                         <!--vue 绑定value属性    重要！！！！-->
                                                         <option value="1">在线</option>
-                                                        <option value="0">离线</option>
+                                                        <option value="2">离线</option>
+                                                        <option value="3">异常</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -295,7 +296,7 @@
                                                        class="col-lg-2 col-md-2 col-sm-2 input-label form_border">状态:</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                                     <select id="status" class="form-control" name="status"
-                                                            readonly="readonly" unselectable='on'>
+                                                            disabled="disabled" unselectable='on'>
                                                         <!--VUE列表渲染-->
                                                         <option v-for="item in statusNames"
                                                                 v-bind:value="item.message.status">
@@ -343,7 +344,7 @@
                                                        class="col-lg-2 col-md-2 col-sm-2 input-label form_border">IP类型:</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                                     <select id="ipType" class="form-control" name="ipType"
-                                                            readonly="readonly" unselectable='on'>
+                                                            disabled="disabled" unselectable='on'>
                                                         <!--VUE列表渲染-->
                                                         <option v-for="item in iptypeNames"
                                                                 v-bind:value="item.message.ipType">
@@ -514,7 +515,7 @@
                                 <div class="ibox-content" style="padding-bottom: 0">
                                     <div class="row" id="groupSearchBox">
                                         <form class="form-horizontal" id="groupsearchdata" role="form">
-                                            <div class=" col-lg-5 col-md-5 col-sm-5 searchspan">
+                                            <div class="col-lg-5 col-md-5 col-sm-5 searchspan">
                                                 <span class="searchname" title="探针组名">探针组名：</span>
                                                 <input type="text" class="form-control" name="name" style="width: 110px"
                                                        value="">
@@ -545,7 +546,6 @@
                                 <div class="ibox-content">
                                     <div class="row " style="overflow: scroll;">     <!--表格 overflow-x: scroll超出滚动-->
                                         <table class="table table-bordered " style="width: 100%" id="probegroup_table"></table>
-
                                     </div>
                                 </div>
                             </div>
@@ -585,7 +585,7 @@
                                                style="font-size: medium">探针组名:</label>
                                         <div class="col-lg-3 col-md-3 col-sm-3 ">
                                             <input type="text" class="form-control" id="groupname" name="name"
-                                                   placeholder="请输入探针组名">
+                                                   placeholder="请输入">
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -594,7 +594,7 @@
                                                style="font-size: medium">备注:</label>
                                         <div class="col-lg-3 col-md-3 col-sm-3 ">
                                             <input type="text" class="form-control" id="remark" name="remark"
-                                                   placeholder="请输入探针组备注">
+                                                   placeholder="请输入">
                                         </div>
                                     </div>
                                 </form>

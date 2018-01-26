@@ -259,7 +259,7 @@ Date.prototype.Format = function (fmt) {
 };
 
 var today = new Date();
-today.setDate(today.getDate() - 4); //显示近四天内的数据
+today.setDate(today.getDate() - 1); //显示近一天内的数据
 //console.log(today.Format("yyyy-MM-dd"));
 // ping统计结果列表(页面展示的是探针1对应的recordping)
 var pingresulttable = new Vue({

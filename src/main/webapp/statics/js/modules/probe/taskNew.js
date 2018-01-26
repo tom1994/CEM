@@ -246,7 +246,7 @@ function get_viewModal(update_data_id) {
             $("#" + stid.get(servicetypeid)).removeClass("service_unselected");
             $('#newfooter').attr('style', 'display:none');
             $('#viewfooter').removeAttr('style', 'display:none');
-            $("#taskform_data input[type=text]").attr('disabled', 'disabled');
+            $("#taskform_data input[type=text]").removeAttr("readonly");
             $("#taskform_data select").attr('disabled', 'disabled');
             $(".service input[type=text]").attr('disabled', 'disabled');
             $(".service select").attr('disabled', 'disabled');
@@ -471,19 +471,28 @@ function submit_dispatch() {
             // });
             taskDispatch.probeIds = "[" + taskDispatch.probeIds + "]"
         }
-        $.ajax({
-            type: "POST", /*GET会乱码*/
-            url: "../../cem/taskdispatch/saveAll",
-            cache: false,  //禁用缓存
-            data: JSON.stringify(taskDispatch),
-            dataType: "json",
-            contentType: "application/json", /*必须要,不可少*/
-            success: function (result) {
-                toastr.success("任务下发成功!");
-                $('#task_dispatch').modal('hide');
-                task_table.currReset();
-            }
-        });
+        if (typeof taskDispatch.probeIds == "undefined"){
+            toastr.warning("请选择探针！");
+        } else if (b == 1 && typeof taskDispatch.targetIds == "undefined") {
+            toastr.warning("请选择测试目标！");
+        } else if (b == 0 && typeof taskDispatch.targetGroupIds == "undefined") {
+            toastr.warning("请选择测试目标组！");
+        } else {
+            $.ajax({
+                type: "POST", /*GET会乱码*/
+                url: "../../cem/taskdispatch/saveAll",
+                cache: false,  //禁用缓存
+                data: JSON.stringify(taskDispatch),
+                dataType: "json",
+                contentType: "application/json", /*必须要,不可少*/
+                success: function (result) {
+                    toastr.success("任务下发成功!");
+                    $('#task_dispatch').modal('hide');
+                    task_table.currReset();
+                }
+            });
+        }
+
     } else if (a == 0) {
         let taskDispatch = {};
         taskDispatch.probePort = "port1";
@@ -523,19 +532,46 @@ function submit_dispatch() {
             // });
             taskDispatch.probeGroupIds = "[" + taskDispatch.probeGroupIds + "]"
         }
-        $.ajax({
-            type: "POST", /*GET会乱码*/
-            url: "../../cem/taskdispatch/saveAll",
-            cache: false,  //禁用缓存
-            data: JSON.stringify(taskDispatch),
-            dataType: "json",
-            contentType: "application/json", /*必须要,不可少*/
-            success: function (result) {
-                toastr.success("任务下发成功!");
-                $('#task_dispatch').modal('hide');
-                task_table.currReset();
-            }
-        });
+        if (typeof taskDispatch.probeIds == "number") {
+            // console.log('success');
+            // taskDispatch.probeId = taskDispatch.probeIds;
+            // $.ajax({
+            //     type: "POST", /*GET会乱码*/
+            //     url: "../../cem/taskdispatch/save",
+            //     cache: false,  //禁用缓存
+            //     data: JSON.stringify(taskDispatch),
+            //     dataType: "json",
+            //     contentType: "application/json", /*必须要,不可少*/
+            //     success: function (result) {
+            //         toastr.success("任务下发成功!");
+            //         $('#task_dispatch').modal('hide');
+            //         task_table.currReset();
+            //     }
+            // });
+            taskDispatch.probeIds = "[" + taskDispatch.probeIds + "]"
+        }
+        if (typeof taskDispatch.probeGroupIds == "undefined"){
+            toastr.warning("请选择探针组！");
+        } else if (b == 1 && typeof taskDispatch.targetIds == "undefined") {
+            toastr.warning("请选择测试目标！");
+        } else if (b == 0 && typeof taskDispatch.targetGroupIds == "undefined") {
+            toastr.warning("请选择测试目标组！");
+        } else {
+            $.ajax({
+                type: "POST", /*GET会乱码*/
+                url: "../../cem/taskdispatch/saveAll",
+                cache: false,  //禁用缓存
+                data: JSON.stringify(taskDispatch),
+                dataType: "json",
+                contentType: "application/json", /*必须要,不可少*/
+                success: function (result) {
+                    toastr.success("任务下发成功!");
+                    $('#task_dispatch').modal('hide');
+                    task_table.currReset();
+                }
+            });
+        }
+
     }
 }
 
@@ -614,55 +650,63 @@ var taskform_data = new Vue({
             var tasknewJson = getFormJson($('#taskform_data'));
             var paramnewJson = getFormJson($('#taskform_param'));
             var paramnew = JSON.stringify(paramnewJson);
-            console.log(paramnewJson);
+            console.log(tasknewJson);
             tasknewJson.parameter = paramnew;
             tasknewJson.isDeleted = "0";
             tasknewJson.alarmTemplateId = "0";
             tasknewJson.createTime = oDate.Format("yyyy-MM-dd hh:mm:ss");
             tasknewJson.remark = "无";
-            var tasknew = JSON.stringify(tasknewJson);
-            console.log(tasknewJson);
-            $.ajax({
-                type: "POST", /*GET会乱码*/
-                url: "../../cem/task/save",
-                cache: false,  //禁用缓存
-                data: tasknew,  //传入组装的参数
-                dataType: "json",
-                contentType: "application/json", /*必须要,不可少*/
-                success: function (result) {
-                    let code = result.code;
-                    let msg = result.msg;
-                    // console.log(result);
-                    if (status == 0) {
-                        switch (code) {
-                            case 0:
-                                toastr.success("修改成功!");
-                                $('#myModal_edit').modal('hide');    //jQuery选定
-                                break;
-                            case 403:
-                                toastr.error(msg);
-                                break;
-                            default:
-                                toastr.error("修改出现未知错误");
-                                break
+            if (tasknewJson.taskName == "") {
+                toastr.warning("请输入任务名称！");
+            } else if (tasknewJson.serviceType == "") {
+                toastr.warning("请选择任务类型！");
+            } else if (tasknewJson.schPolicyId == ""){
+                toastr.warning("请选择调度策略！");
+            } else {
+                var tasknew = JSON.stringify(tasknewJson);
+                console.log(tasknewJson);
+                $.ajax({
+                    type: "POST", /*GET会乱码*/
+                    url: "../../cem/task/save",
+                    cache: false,  //禁用缓存
+                    data: tasknew,  //传入组装的参数
+                    dataType: "json",
+                    contentType: "application/json", /*必须要,不可少*/
+                    success: function (result) {
+                        let code = result.code;
+                        let msg = result.msg;
+                        // console.log(result);
+                        if (status == 0) {
+                            switch (code) {
+                                case 0:
+                                    toastr.success("修改成功!");
+                                    $('#myModal_edit').modal('hide');    //jQuery选定
+                                    break;
+                                case 403:
+                                    toastr.error(msg);
+                                    break;
+                                default:
+                                    toastr.error("未知错误");
+                                    break
+                            }
+                        } else if (status == 1) {
+                            switch (code) {
+                                case 0:
+                                    toastr.success("新建成功!");
+                                    $('#myModal_edit').modal('hide');
+                                    break;
+                                case 403:
+                                    toastr.error(msg);
+                                    break;
+                                default:
+                                    toastr.error("未知错误");
+                                    break
+                            }
                         }
-                    } else if (status == 1) {
-                        switch (code) {
-                            case 0:
-                                toastr.success("新建成功!");
-                                $('#myModal_edit').modal('hide');
-                                break;
-                            case 403:
-                                toastr.error(msg);
-                                break;
-                            default:
-                                toastr.error("创建出现未知错误");
-                                break
-                        }
+                        task_table.currReset();
                     }
-                    task_table.currReset();
-                }
-            });
+                });
+            }
         },
         cancel: function () {
             $(this.$el).modal('hide');

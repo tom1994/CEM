@@ -120,10 +120,6 @@ var targetdata_handle = new Vue({
             /*状态0,表示录入*/
             var forms = $('#targetform_data .form-control');
 
-            //$('#targetform_data input[type=text]').prop("readonly", false);
-            /*去除只读状态*/
-            //$('#targetform_data select').prop("disabled", false);
-
             for (var i = 0; i < 6; i++) {
                 forms[i].value = ""
             }
@@ -798,10 +794,6 @@ var tg_table = new Vue({
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);
                         $("#tg_table").colResizable({
-                            liveDrag:true,
-                            gripInnerHtml:"<div class='grip'></div>",
-                            draggingClass:"dragging",
-                            resizeMode:'overflow',
                         });
                     }
                 });

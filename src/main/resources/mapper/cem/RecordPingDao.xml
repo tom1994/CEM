@@ -95,8 +95,8 @@
 		<if test="startDate != null and startDate != '' and terminalDate != null and terminalDate != '' ">
 			AND (record_date BETWEEN #{startDate} AND #{terminalDate})
 		</if>
-		<if test="startTime != null and startTime != '' and terminalTime != null and terminalTime != '' ">
-			AND (record_time BETWEEN #{startTime} AND #{terminalTime})
+		<if test="start_time != null and start_time != '' and end_time != null and end_time != '' ">
+			AND (record_time BETWEEN #{start_time} AND #{end_time})
 		</if>
 		<choose>
 			<when test="sidx != null and sidx.trim() != ''">
