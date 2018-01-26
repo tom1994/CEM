@@ -379,6 +379,7 @@ function update_this (obj) {     /*监听修改触发事件*/
         dataType: "json",
         // contentType: "application/json", /*必须要,不可少*/
         success: function (result) {
+            console.log(result);
             forms[0].value = result.probe.id;
             forms[1].value = result.probe.name;
             forms[2].value = result.probe.serialNumber;
@@ -407,6 +408,7 @@ function update_this (obj) {     /*监听修改触发事件*/
             forms[25].value = result.probe.lastReportTime;
             forms[26].value = result.probe.lastUpdateTime;
             forms[27].value = result.probe.portIp;
+            console.log(forms[5].value);
         }
     });
     probeform_data.modaltitle = "详细信息";
