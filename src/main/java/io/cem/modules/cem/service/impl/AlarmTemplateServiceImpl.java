@@ -31,6 +31,13 @@ public class AlarmTemplateServiceImpl implements AlarmTemplateService {
 	public List<AlarmTemplateEntity> queryatList(Integer id){
 		return alarmTemplateDao.queryatList(id);
 	}
+
+	@Override
+	public List<AlarmTemplateEntity> queryAtByService(Integer id){
+		return alarmTemplateDao.queryAtByService(id);
+	}
+
+
 	@Override
 	public int queryTotal(Map<String, Object> map){
 		return alarmTemplateDao.queryTotal(map);

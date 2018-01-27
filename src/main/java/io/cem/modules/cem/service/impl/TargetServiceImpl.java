@@ -42,6 +42,11 @@ public class TargetServiceImpl implements TargetService {
 	}
 
 	@Override
+	public List<TargetEntity> queryTargetListByGroup(Integer id){
+		return targetDao.queryTargetListByGroup(id);
+	}
+
+	@Override
 	public int queryTotal(Map<String, Object> map){
 		return targetDao.queryTotal(map);
 	}

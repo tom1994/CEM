@@ -18,6 +18,8 @@ public interface CountyService {
 	
 	List<CountyEntity> queryList(Map<String, Object> map);
 
+	List<CountyEntity> queryByProbe(Integer id);
+
 	List<CountyEntity> queryCountyList(Integer id);
 	
 	int queryTotal(Map<String, Object> map);

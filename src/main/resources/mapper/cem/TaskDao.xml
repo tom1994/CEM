@@ -25,6 +25,7 @@
 
 	<select id="queryList" resultType="io.cem.modules.cem.entity.TaskEntity">
 	select * from task
+		WHERE is_ondemand = 0
 	<choose>
 		<when test="sidx != null and sidx.trim() != ''">
 			order by ${sidx} ${order}
@@ -50,6 +51,7 @@
 		ON task.sch_policy_id = schedule_policy.id
 		LEFT JOIN (select count(*) AS count_dispatch, task_id from task_dispatch WHERE task_dispatch.status=1 group by task_id) B
 		ON task.id = B.task_id
+		WHERE is_ondemand = 0
 		<choose>
 			<when test="sidx != null and sidx.trim() != ''">
 				order by ${sidx} ${order}
@@ -64,12 +66,14 @@
 	</select>
 	
  	<select id="queryTotal" resultType="int">
-		select count(*) from task 
+		select count(*) from task
+		WHERE is_ondemand = 0
 	</select>
 
 	<select id="infoByService" resultMap="taskMap">
 		select * from task
 		where service_type = #{value}
+		and is_ondemand = 0
 		order by id
 	</select>
 

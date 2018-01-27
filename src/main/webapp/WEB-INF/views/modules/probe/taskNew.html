@@ -61,7 +61,7 @@
     </div>
     <!-- 删除确认模态框（Modal） -->
     <div class="modal fade" id="myModal_delete" tabindex="-1" role="dialog"
-         aria-labelledby="myModalLabel" aria-hidden="true" >
+         aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -90,7 +90,7 @@
     <div class="modal fade col-lg-12 col-md-12 col-sm-12" id="task_dispatch" tabindex="-1" role="dialog"
          aria-labelledby="myModalLabel"
          aria-hidden="true">
-        <div class="col-lg-8 col-md-8 col-sm-8">
+        <div class="col-lg-12 col-md-12 col-sm-12">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
@@ -98,7 +98,7 @@
                     </button>
                     <h3 class="modal-title myModalLabel">任务下发</h3>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" style="padding-bottom: 5px">
                     <form class="form-horizontal" id="dispatch_probe" role="form">
                         <div class="row">
                             <div>
@@ -115,13 +115,13 @@
                             </div>
                         </div>
                         <div class="row" id="probeselected">
-                            <div class="ue-container">
+                            <div class="multi-container">
                                 <select multiple="multiple" size="10" id="selectprobe" name="probeId">
                                 </select>
                             </div>
                         </div>
                         <div class="row" id="probegroupselected" style="display: none">
-                            <div class="ue-container">
+                            <div class="multi-container">
                                 <select multiple="multiple" size="10" id="selectprobegroup" name="probeGroupId">
                                 </select>
                             </div>
@@ -129,7 +129,6 @@
                     </form>
                     <form class="form-horizontal" id="dispatch_target" role="form">
                         <div class="row">
-                            <div style="padding-top: 2%;">
                                 <label>
                                     <input type="radio" name="choosetarget"
                                            onclick="$('#targetselected').removeAttr('style', 'display:none');$('#targetgroupselected').attr('style', 'display:none')"
@@ -140,19 +139,18 @@
                                            onclick="$('#targetgroupselected').removeAttr('style', 'display:none');$('#targetselected').attr('style', 'display:none')"
                                            value="0">选择测试目标组
                                 </label>
-                            </div>
                         </div>
                         <div style="display: none">
                             <input type="text" id="taskId" name="taskId" readonly="readonly" unselectable="on">
                         </div>
                         <div class="row" id="targetselected">
-                            <div class="ue-container">
+                            <div class="multi-container">
                                 <select multiple="multiple" size="10" name="targetId" id="selecttarget">
                                 </select>
                             </div>
                         </div>
                         <div class="row" id="targetgroupselected" style="display: none">
-                            <div class="ue-container">
+                            <div class="multi-container">
                                 <select multiple="multiple" size="10" name="targetGroupId" id="selecttargetgroup">
                                 </select>
                             </div>
@@ -173,7 +171,7 @@
         <div class="modal-dialog" style="width:800px">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    <button type="button" class="close" v-on:click="cancel" aria-hidden="true">
                         &times;
                     </button>
                     <h3 class="modal-title myModalLabel">任务详情</h3>
@@ -184,7 +182,7 @@
                             <div class="form-group row">
                                 <label for="id"
                                        class="col-lg-2 col-md-2 col-sm-2"
-                                       style="display: none">id:</label>
+                                       style="display: none">id</label>
                                 <div class="col-lg-2 col-md-2 col-sm-2 "
                                      style="display: none">
                                     <input type="text" class="form-control" id="id" name="id"
@@ -192,7 +190,7 @@
                                 </div>
                                 <label for="taskname"
                                        class="col-lg-3 col-md-3 col-sm-3 form_border"
-                                       style="font-size: medium">任务名称:</label>
+                                       style="font-size: medium">任务名称</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <input type="text" class="form-control" id="taskname"
                                            name="taskName" readonly="readonly" unselectable="on"
@@ -200,7 +198,7 @@
                                 </div>
                                 <label for="servicetype"
                                        class="col-lg-3 col-md-3 col-sm-3 form_border"
-                                       style="font-size: medium">任务类型:</label>
+                                       style="font-size: medium">任务类型</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <select id="servicetype" disabled="disabled" v-on:change="servicechange()"
                                             class="form-control"
@@ -241,7 +239,7 @@
                             <div class="form-group row">
                                 <label for="schpolicy"
                                        class="col-lg-3 col-md-3 col-sm-3 form_border"
-                                       style="font-size: medium">调度策略:</label>
+                                       style="font-size: medium">调度策略</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <select id="schpolicy" class="form-control" disabled="disabled" name="schPolicyId">
                                         <option value="">---请选择---</option>
@@ -252,7 +250,7 @@
                                 </div>
                                 <label for="alarmtemplate"
                                        class="col-lg-3 col-md-3 col-sm-3 form_border"
-                                       style="font-size: medium">告警模板:</label>
+                                       style="font-size: medium">告警模板</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <select id="alarmtemplate" disabled="disabled" class="form-control"
                                             name="alarmTemplateId">
@@ -264,7 +262,7 @@
                                 </div>
                             </div>
                         </form>
-                        <form class="form-horizontal" id="taskform_param" role="form">
+                        <form class="form-horizontal" id="pingicmp_param" role="form">
                             <div class="service service_unselected" id="pingicmp">
                                 <div class="form-group row">
                                     <label for="count"
@@ -290,34 +288,33 @@
                                            style="font-size: medium">负载大小(byte)</label>
                                     <div class="col-lg-3 col-md-3 col-sm-3">
                                         <input type="text" class="form-control" id="size"
-                                               value="100" disabled="disabled" name="size" placeholder="">
+                                               value="32" disabled="disabled" name="size" placeholder="">
                                     </div>
                                     <label for="payload"
                                            class="col-lg-3 col-md-3 col-sm-3 form_border"
                                            style="font-size: medium">负载内容</label>
                                     <div class="col-lg-3 col-md-3 col-sm-3">
                                         <input type="text" class="form-control" id="payload"
-                                               value="32" disabled="disabled" name="payload"
-                                               placeholder="请输入备注">
+                                               value="0" disabled="disabled" name="payload">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="ttl"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                           style="font-size: medium">TTL(次）:</label>
+                                           style="font-size: medium">TTL(次)</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text" class="form-control" id="ttl"
-                                               name="ttl" disabled="disabled" value="255" placeholder="请输入备注">
+                                               name="ttl" disabled="disabled" value="255" placeholder="">
                                     </div>
                                     <label for="tos"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                           style="font-size: medium">IP服务类型:</label>
+                                           style="font-size: medium">IP服务类型</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <select name="tos" disabled="disabled" id="tos" class="form-control">
-                                            <option value="000">普通</option>
-                                            <option value="001">优先</option>
-                                            <option value="010">快速</option>
-                                            <option value="011">闪速</option>
+                                            <option value="0">普通</option>
+                                            <option value="1">优先</option>
+                                            <option value="10">快速</option>
+                                            <option value="11">闪速</option>
                                             <option value="100">疾速</option>
                                             <option value="101">关键</option>
                                             <option value="110">网间控制</option>
@@ -326,21 +323,679 @@
                                     </div>
                                     <label for="timeout"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                           style="font-size: medium">超出时间（s):</label>
+                                           style="font-size: medium">超时时间(s)</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text" class="form-control" id="timeout"
-                                               name="timeout" disabled="disabled" value="5" placeholder="请输入备注">
+                                               name="timeout" disabled="disabled" value="5" placeholder="">
                                     </div>
                                 </div>
                             </div>
-                            <div class="service form-group row service_unselected" id="pingtcp">
-                                <label for="param2"
-                                       class="col-lg-3 col-md-3 col-sm-3 form_border"
-                                       style="font-size: medium">param:</label>
-                                <div class="col-lg-3 col-md-3 col-sm-3">
-                                    <input type="text" class="form-control" id="param2"
-                                           name="param2" disabled="disabled"
-                                           placeholder="请输入备注">
+                        </form>
+                        <form class="form-horizontal" id="pingtcp_param" role="form">
+                            <div class="service service_unselected" id="pingtcp">
+                                <div class="form-group row">
+                                    <label for="pt_count"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">发包个数</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="pt_count"
+                                               value="10" disabled="disabled" name="count"
+                                               placeholder="">
+                                    </div>
+                                    <label for="pt_interval"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">发包间隔(ms)</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="pt_interval"
+                                               value="100" disabled="disabled" name="interval"
+                                               placeholder="">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="pt_ttl"
+                                           class="col-lg-2 col-md-2 col-sm-2 form_border"
+                                           style="font-size: medium">TTL(次)</label>
+                                    <div class="col-lg-2 col-md-2 col-sm-2">
+                                        <input type="text" class="form-control" id="pt_ttl"
+                                               name="ttl" disabled="disabled" value="255" placeholder="">
+                                    </div>
+                                    <label for="pt_tos"
+                                           class="col-lg-2 col-md-2 col-sm-2 form_border"
+                                           style="font-size: medium">IP服务类型</label>
+                                    <div class="col-lg-2 col-md-2 col-sm-2">
+                                        <select name="tos" disabled="disabled" id="pt_tos" class="form-control">
+                                            <option value="0">普通</option>
+                                            <option value="1">优先</option>
+                                            <option value="10">快速</option>
+                                            <option value="11">闪速</option>
+                                            <option value="100">疾速</option>
+                                            <option value="101">关键</option>
+                                            <option value="110">网间控制</option>
+                                            <option value="111">网络控制</option>
+                                        </select>
+                                    </div>
+                                    <label for="pt_timeout"
+                                           class="col-lg-2 col-md-2 col-sm-2 form_border"
+                                           style="font-size: medium">超出时间(s)</label>
+                                    <div class="col-lg-2 col-md-2 col-sm-2">
+                                        <input type="text" class="form-control" id="pt_timeout"
+                                               name="timeout" disabled="disabled" value="5" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <form class="form-horizontal" id="tracert_param" role="form">
+                            <div class="service service_unselected" id="tracert">
+                                <div class="form-group row">
+                                    <label for="tr_count"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">单跳发包个数</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="tr_count"
+                                               value="3" disabled="disabled" name="count"
+                                               placeholder="">
+                                    </div>
+                                    <label for="tr_interval"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">发包间隔(ms)</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="tr_interval"
+                                               value="20" disabled="disabled" name="interval"
+                                               placeholder="">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="tr_size"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">负载大小(byte)</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="tr_size"
+                                               value="32" disabled="disabled" name="size" placeholder="">
+                                    </div>
+                                    <label for="tr_tos"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">IP服务类型</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <select name="tos" disabled="disabled" id="tr_tos" class="form-control">
+                                            <option value="0">普通</option>
+                                            <option value="1">优先</option>
+                                            <option value="10">快速</option>
+                                            <option value="11">闪速</option>
+                                            <option value="100">疾速</option>
+                                            <option value="101">关键</option>
+                                            <option value="110">网间控制</option>
+                                            <option value="111">网络控制</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="tr_timeout"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">超出时间(s)</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="tr_timeout"
+                                               name="timeout" disabled="disabled" value="5" placeholder="">
+                                    </div>
+                                    <label for="max_hop"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">最大跳数</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="max_hop"
+                                               name="max_hop" disabled="disabled" value="32" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <form class="form-horizontal" id="sla_param" role="form">
+                            <div class="service service_unselected" id="sla">
+                                <div class="form-group row">
+                                    <label for="sla_count"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">发包个数</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="sla_count"
+                                               value="10" disabled="disabled" name="count"
+                                               placeholder="">
+                                    </div>
+                                    <label for="sla_interval"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">发包间隔(ms)</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="sla_interval"
+                                               value="100" disabled="disabled" name="interval"
+                                               placeholder="">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="sla_size"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">负载大小(byte)</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="sla_size"
+                                               value="32" disabled="disabled" name="size" placeholder="">
+                                    </div>
+                                    <label for="sla_payload"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">负载内容</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="sla_payload"
+                                               value="0" disabled="disabled" name="payload"
+                                               placeholder="">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="sla_ttl"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">TTL(次)</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="sla_ttl"
+                                               name="ttl" disabled="disabled" value="255" placeholder="">
+                                    </div>
+                                    <label for="sla_timeout"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">超时时间(s)</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="sla_timeout"
+                                               name="timeout" disabled="disabled" value="5" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <form class="form-horizontal" id="dhcp_param" role="form">
+                            <div class="service service_unselected" id="dhcp">
+                                <div class="form-group row">
+                                    <label for="times"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">IP分配次数</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="times"
+                                               value="1" disabled="disabled" name="times"
+                                               placeholder="">
+                                    </div>
+                                    <label for="dhcp_timeout"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">超时时间(ms)</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="dhcp_timeout"
+                                               value="500" disabled="disabled" name="timeout"
+                                               placeholder="">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="is_renew"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">是否使用原IP</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <select name="is_renew" disabled="disabled" id="is_renew"
+                                                class="form-control">
+                                            <option value="1">是</option>
+                                            <option value="0">否</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <form class="form-horizontal" id="dns_param" role="form">
+                            <div class="service service_unselected" id="dns">
+                                <div class="form-group row">
+                                    <label for="dns_times"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">查询次数</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="dns_times"
+                                               value="1" disabled="disabled" name="times"
+                                               placeholder="">
+                                    </div>
+                                    <label for="dns_interval"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">查询间隔(ms)</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="dns_interval"
+                                               value="20" disabled="disabled" name="interval"
+                                               placeholder="">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="dns_count"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">单次发包次数</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="dns_count"
+                                               value="1" disabled="disabled" name="count" placeholder="">
+                                    </div>
+                                    <label for="dns_timeout"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">超时时间(s)</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="dns_timeout"
+                                               value="5" disabled="disabled" name="timeout">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="domains"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">待查询域名</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="domains"
+                                               name="domains" disabled="disabled">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <form class="form-horizontal" id="pppoe_param" role="form">
+                            <div class="service service_unselected" id="pppoe">
+                                <div class="form-group row">
+                                    <label for="username"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">用户名</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="username"
+                                               value="1" disabled="disabled" name="username"
+                                               placeholder="">
+                                    </div>
+                                    <label for="password"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">密码</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="password"
+                                               value="20" disabled="disabled" name="password"
+                                               placeholder="">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="pppoe_times"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">拨号请求次数</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="pppoe_times"
+                                               value="5" disabled="disabled" name="times">
+                                    </div>
+                                    <label for="pppoe_interval"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">拨号时间间隔(ms)</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="pppoe_interval"
+                                               value="3000" disabled="disabled" name="interval">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="online_time"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">用户在线时长(s)</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="online_time"
+                                               name="online_time" disabled="disabled" value="20">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <form class="form-horizontal" id="radius_param" role="form">
+                            <div class="service service_unselected" id="radius">
+                                <div class="form-group row">
+                                    <label for="auth_port"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">服务器认证端口</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="auth_port"
+                                               value="1812" disabled="disabled" name="auth_port">
+                                    </div>
+                                    <label for="nas_port"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">NAS端口</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="nas_port"
+                                               value="0" disabled="disabled" name="nas_port">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="secret"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">共享密钥</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="secret"
+                                               disabled="disabled" name="secret">
+                                    </div>
+                                    <label for="radius_username"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">用户名</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="radius_username"
+                                               disabled="disabled" name="username">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="radius_password"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">密码</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="radius_password"
+                                               disabled="disabled" name="password">
+                                    </div>
+                                    <label for="radius_times"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">测试次数</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="radius_times"
+                                               value="1" disabled="disabled" name="times">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="radius_interval"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">测试间隔(ms)</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="radius_interval"
+                                               value="1000" disabled="disabled" name="interval">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <form class="form-horizontal" id="ftp_upload_param" role="form">
+                            <div class="service service_unselected" id="ftp_upload">
+                                <div class="form-group row">
+                                    <label for="port"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">服务器端口</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="port"
+                                               value="21" disabled="disabled" name="port">
+                                    </div>
+                                    <label for="filename"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">文件名称</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="filename"
+                                               disabled="disabled" name="filename">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="lasting_time"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">持续时长(s)</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="lasting_time"
+                                               value="20" disabled="disabled" name="lasting_time">
+                                    </div>
+                                    <label for="upload_size"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">上传文件大小(KB)</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="upload_size"
+                                               value="1024" disabled="disabled" name="upload_size">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="is_delete"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">是否删除文件</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <select name="is_delete" disabled="disabled" id="is_delete"
+                                                class="form-control">
+                                            <option value="1">是</option>
+                                            <option value="0">否</option>
+                                        </select>
+                                    </div>
+                                    <label for="is_anonymous"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">是否匿名</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <select name="is_anonymous" disabled="disabled" id="is_anonymous"
+                                                class="form-control">
+                                            <option value="1">是</option>
+                                            <option value="0">否</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="ftpup_username"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">用户名</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="ftpup_username"
+                                               disabled="disabled" name="username">
+                                    </div>
+                                    <label for="ftpup_password"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">密码</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="ftpup_password"
+                                               disabled="disabled" name="password">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <form class="form-horizontal" id="ftp_download_param" role="form">
+                            <div class="service service_unselected" id="ftp_download">
+                                <div class="form-group row">
+                                    <label for="ftpdown_port"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">服务器端口</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="ftpdown_port"
+                                               value="21" disabled="disabled" name="port">
+                                    </div>
+                                    <label for="ftpdown_filename"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">文件名称</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="ftpdown_filename"
+                                               disabled="disabled" name="filename">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="ftpdown_lasting_time"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">持续时长(s)</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="ftpdown_lasting_time"
+                                               value="20" disabled="disabled" name="lasting_time">
+                                    </div>
+                                    <label for="download_size"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">上传文件大小(KB)</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="download_size"
+                                               value="1024" disabled="disabled" name="download_size">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="ftpdown_is_anonymous"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">是否匿名</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <select name="is_anonymous" disabled="disabled" id="ftpdown_is_anonymous"
+                                                class="form-control">
+                                            <option value="1">是</option>
+                                            <option value="0">否</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="ftpdown_username"
+                                               class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                               style="font-size: medium">用户名</label>
+                                        <div class="col-lg-3 col-md-3 col-sm-3">
+                                            <input type="text" class="form-control" id="ftpdown_username"
+                                                   disabled="disabled" name="username">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="ftpdown_password"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">密码</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="ftpdown_password"
+                                               disabled="disabled" name="password">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <form class="form-horizontal" id="web_download_param" role="form">
+                            <div class="service service_unselected" id="web_download">
+                                <div class="form-group row">
+                                    <label for="web_lasting_time"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">持续时长(s)</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="web_lasting_time"
+                                               value="200" disabled="disabled" name="lasting_time">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <form class="form-horizontal" id="webpage_param" role="form">
+                            <div class="service service_unselected" id="webpage">
+                                <div class="form-group row">
+                                    <label for="max_element"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">最多下载元素</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="max_element"
+                                               value="500" disabled="disabled" name="max_element">
+                                    </div>
+                                    <label for="element_timeout"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">元素超时时长(s)</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="element_timeout"
+                                               value="30" disabled="disabled" name="element_timeout">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="page_timeout"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">页面超时时长(s)</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="page_timeout"
+                                               value="30" disabled="disabled" name="page_timeout">
+                                    </div>
+                                    <label for="max_size"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">最大下载容量(KB)</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="max_size"
+                                               value="2000" disabled="disabled" name="max_size">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="user_agent"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">User-Agent</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="user_agent"
+                                               disabled="disabled" name="user_agent">
+                                    </div>
+                                    <label for="is_http_proxy"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">是否使用HTTP代理</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <select name="is_http_proxy" disabled="disabled" id="is_http_proxy"
+                                                class="form-control">
+                                            <option value="1">是</option>
+                                            <option value="0">否</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="address"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">地址</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="address"
+                                               disabled="disabled" name="address">
+                                    </div>
+                                    <label for="webpage_port"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">端口</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="webpage_port"
+                                               disabled="disabled" name="port">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="username"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">用户名</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="uername"
+                                               disabled="disabled" name="username">
+                                    </div>
+                                    <label for="webpage_password"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">密码</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="webpage_password"
+                                               disabled="disabled" name="password">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <form class="form-horizontal" id="online_video_param" role="form">
+                            <div class="service service_unselected" id="online_video">
+                                <div class="form-group row">
+                                    <label for="video_quality"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">视频质量</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <select name="video_quality" disabled="disabled" id="video_quality"
+                                                class="form-control">
+                                            <option value="1">标清</option>
+                                            <option value="2">高清</option>
+                                            <option value="3">超清</option>
+                                        </select>
+                                    </div>
+                                    <label for="video_lasting_time"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">持续时长(s)</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="video_lasting_time"
+                                               value="30" disabled="disabled" name="lasting_time">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="first_buffer_time"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">首次缓冲时长(s)</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="first_buffer_time"
+                                               value="10" disabled="disabled" name="first_buffer_time">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <form class="form-horizontal" id="game_param" role="form">
+                            <div class="service service_unselected" id="game">
+                                <div class="form-group row">
+                                    <label for="game_count"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">发包个数</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="game_count"
+                                               value="10" disabled="disabled" name="count">
+                                    </div>
+                                    <label for="game_interval"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">发包间隔(ms)</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="game_interval"
+                                               value="100" disabled="disabled" name="interval">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="game_size"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">负载大小(byte)</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="game_size"
+                                               value="10" disabled="disabled" name="size">
+                                    </div>
+                                    <label for="game_timeout"
+                                           class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                           style="font-size: medium">超时时间(s)</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <input type="text" class="form-control" id="game_timeout"
+                                               value="10" disabled="disabled" name="timeout">
+                                    </div>
                                 </div>
                             </div>
                         </form>

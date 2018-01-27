@@ -68,6 +68,12 @@ public class ProbeGroupController {
 	@RequiresPermissions("probegroup:list")
 	public R searchlist(String groupdata, Integer page, Integer limit) throws Exception {
 		Map<String, Object> map = new HashMap<>();
+		JSONObject groupdata_jsonobject = JSONObject.parseObject(groupdata);
+		try {
+			map.putAll(JSONUtils.jsonToMap(groupdata_jsonobject));
+		} catch (RuntimeException e) {
+			throw new RRException("内部参数错误，请重试！");
+		}
 		int total = 0;
 		if(page==null) {              /*没有传入page,则取全部值*/
 			map.put("offset", null);

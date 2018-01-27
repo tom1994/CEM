@@ -43,6 +43,16 @@ public class RecordHourDhcpEntity implements Serializable {
 	private Double successRate;
 	//备注
 	private String remark;
+	//地市名称
+	private String cityName;
+	//区县名称
+	private String areaName;
+	//探针名称
+	private String probeName;
+	//测试目标名称
+	private String targetName;
+
+	private Integer accessLayer;
 
 	/**
 	 * 设置：记录ID
@@ -211,5 +221,45 @@ public class RecordHourDhcpEntity implements Serializable {
 	 */
 	public String getRemark() {
 		return remark;
+	}
+
+	public String getCityName() {
+		return cityName;
+	}
+
+	public void setCityName(String cityName) {
+		this.cityName = cityName;
+	}
+
+	public String getAreaName() {
+		return areaName;
+	}
+
+	public void setAreaName(String areaName) {
+		this.areaName = areaName;
+	}
+
+	public String getProbeName() {
+		return probeName;
+	}
+
+	public void setProbeName(String probeName) {
+		this.probeName = probeName;
+	}
+
+	public String getTargetName() {
+		return targetName;
+	}
+
+	public void setTargetName(String targetName) {
+		this.targetName = targetName;
+	}
+
+	public Integer getAccessLayer() {
+		return accessLayer;
+	}
+
+	public void setAccessLayer(Integer accessLayer) {
+		accessLayer = accessLayer;
 	}
 }

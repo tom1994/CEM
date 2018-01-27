@@ -36,6 +36,8 @@ public interface BaseDao<T> {
 	
 	List<T> queryList(Map<String, Object> map);
 
+	List<T> queryByTgNameList(Map<String, Object> map);
+
 	List<T> queryPingList(Map<String, Object> map);
 
 	List<T> queryTracertList(Map<String, Object> map);

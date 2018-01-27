@@ -96,36 +96,18 @@ public class RecordHourPingController {
 		//查询天表
 		if (dateDifferent>5){
 			if (service == 0){
-				List<RecordHourPingEntity> pingList = recordHourPingService.queryDayList(map);
-				List<RecordHourTracertEntity> tracertList = recordHourTracertService.queryDayList(map);
-				List<ScoreEntity> connection = recordHourPingService.calculateService1(pingList, tracertList);
-
-				List<RecordHourSlaEntity> slaList = recordHourSlaService.queryDayList(map);
-				List<RecordHourDnsEntity> dnsList = recordHourDnsService.queryDayList(map);
-				List<RecordHourDhcpEntity> dhcpList = recordHourDhcpService.queryDayList(map);
-				List<RecordHourPppoeEntity> pppoeList = recordHourPppoeService.queryDayList(map);
-				List<RecordHourRadiusEntity> radiusList = recordHourRadiusService.queryDayList(map);
-				List<ScoreEntity> quality = recordHourSlaService.calculateService2(slaList, dnsList, dhcpList, pppoeList, radiusList);
-
-				List<RecordHourWebPageEntity> webPageList = recordHourWebPageService.queryDayList(map);
-				List<ScoreEntity> broswer = recordHourWebPageService.calculateService3(webPageList);
-
-				List<RecordHourWebDownloadEntity> webDownloadList = recordHourWebDownloadService.queryDayList(map);
-				List<RecordHourFtpEntity> ftpList = recordHourFtpService.queryDayList(map);
-				List<ScoreEntity> download = recordHourWebDownloadService.calculateService4(webDownloadList, ftpList);
-
-				List<RecordHourWebVideoEntity> videoList = recordHourWebVideoService.queryDayList(map);
-				List<ScoreEntity> video = recordHourWebVideoService.calculateService5(videoList);
-
-				List<RecordHourGameEntity> gameList = recordHourGameService.queryDayList(map);
-				List<ScoreEntity> game = recordHourGameService.calculateService6(gameList);
-
-				scoreList = recordHourTracertService.calculateService0(connection, quality, broswer, download, video, game);
 			}
 			else if (service==1){
 				List<RecordHourPingEntity> pingList = recordHourPingService.queryDayList(map);
 				List<RecordHourTracertEntity> tracertList = recordHourTracertService.queryDayList(map);
-				scoreList = recordHourPingService.calculateService1(pingList, tracertList);
+
+				List<ScoreEntity> pingIcmp = recordHourPingService.calculatePingIcmp(pingList);
+				List<ScoreEntity> pingTcp = recordHourPingService.calculatePingTcp(pingList);
+				List<ScoreEntity> pingUdp = recordHourPingService.calculatePingUdp(pingList);
+				List<ScoreEntity> tracertIcmp = recordHourPingService.calculateTracertIcmp(tracertList);
+				List<ScoreEntity> tracertUdp = recordHourPingService.calculateTracertUdp(tracertList);
+
+				scoreList = recordHourPingService.calculateService1(pingIcmp,pingTcp,pingUdp,tracertIcmp,tracertUdp);
 			}
 			else if (service==2){
 				List<RecordHourSlaEntity> slaList = recordHourSlaService.queryDayList(map);
@@ -133,7 +115,15 @@ public class RecordHourPingController {
 				List<RecordHourDhcpEntity> dhcpList = recordHourDhcpService.queryDayList(map);
 				List<RecordHourPppoeEntity> pppoeList = recordHourPppoeService.queryDayList(map);
 				List<RecordHourRadiusEntity> radiusList = recordHourRadiusService.queryDayList(map);
-				scoreList = recordHourSlaService.calculateService2(slaList, dnsList, dhcpList, pppoeList, radiusList);
+
+				List<ScoreEntity> slaTcp = recordHourSlaService.calculateSlaTcp(slaList);
+				List<ScoreEntity> slaUdp = recordHourSlaService.calculateSlaUdp(slaList);
+				List<ScoreEntity> dns = recordHourSlaService.calculateDns(dnsList);
+				List<ScoreEntity> dhcp = recordHourSlaService.calculateDhcp(dhcpList);
+				List<ScoreEntity> pppoe = recordHourSlaService.calculatePppoe(pppoeList);
+				List<ScoreEntity> radius = recordHourSlaService.calculateRadius(radiusList);
+
+				scoreList = recordHourSlaService.calculateService2(slaTcp,slaUdp,dns,dhcp,pppoe,radius);
 			}
 			else if (service==3){
 				List<RecordHourWebPageEntity> webPageList = recordHourWebPageService.queryDayList(map);
@@ -157,43 +147,32 @@ public class RecordHourPingController {
 		//查询小时表
         else {
 			if (service == 0) {
-				List<RecordHourPingEntity> pingList = recordHourPingService.queryPingList(map);
-				List<RecordHourTracertEntity> tracertList = recordHourTracertService.queryTracertList(map);
-				List<ScoreEntity> connection = recordHourPingService.calculateService1(pingList, tracertList);
-
-				List<RecordHourSlaEntity> slaList = recordHourSlaService.querySlaList(map);
-				List<RecordHourDnsEntity> dnsList = recordHourDnsService.queryDnsList(map);
-				List<RecordHourDhcpEntity> dhcpList = recordHourDhcpService.queryDhcpList(map);
-				List<RecordHourPppoeEntity> pppoeList = recordHourPppoeService.queryPppoeList(map);
-				List<RecordHourRadiusEntity> radiusList = recordHourRadiusService.queryRadiusList(map);
-				List<ScoreEntity> quality = recordHourSlaService.calculateService2(slaList, dnsList, dhcpList, pppoeList, radiusList);
-
-				List<RecordHourWebPageEntity> webPageList = recordHourWebPageService.queryWebList(map);
-				List<ScoreEntity> broswer = recordHourWebPageService.calculateService3(webPageList);
-
-				List<RecordHourWebDownloadEntity> webDownloadList = recordHourWebDownloadService.queryWebDownloadList(map);
-				List<RecordHourFtpEntity> ftpList = recordHourFtpService.queryFtpList(map);
-				List<ScoreEntity> download = recordHourWebDownloadService.calculateService4(webDownloadList, ftpList);
-
-				List<RecordHourWebVideoEntity> videoList = recordHourWebVideoService.queryVideoList(map);
-				List<ScoreEntity> video = recordHourWebVideoService.calculateService5(videoList);
-
-				List<RecordHourGameEntity> gameList = recordHourGameService.queryGameList(map);
-				List<ScoreEntity> game = recordHourGameService.calculateService6(gameList);
-
-				scoreList = recordHourTracertService.calculateService0(connection, quality, broswer, download, video, game);
 
 			} else if (service == 1) {
 				List<RecordHourPingEntity> pingList = recordHourPingService.queryPingList(map);
 				List<RecordHourTracertEntity> tracertList = recordHourTracertService.queryTracertList(map);
-				scoreList = recordHourPingService.calculateService1(pingList, tracertList);
+
+				List<ScoreEntity> pingIcmp = recordHourPingService.calculatePingIcmp(pingList);
+				List<ScoreEntity> pingTcp = recordHourPingService.calculatePingTcp(pingList);
+				List<ScoreEntity> pingUdp = recordHourPingService.calculatePingUdp(pingList);
+				List<ScoreEntity> tracertIcmp = recordHourPingService.calculateTracertIcmp(tracertList);
+				List<ScoreEntity> tracertUdp = recordHourPingService.calculateTracertUdp(tracertList);
+
+				scoreList = recordHourPingService.calculateService1(pingIcmp,pingTcp,pingUdp,tracertIcmp,tracertUdp);
 			} else if (service == 2) {
 				List<RecordHourSlaEntity> slaList = recordHourSlaService.querySlaList(map);
 				List<RecordHourDnsEntity> dnsList = recordHourDnsService.queryDnsList(map);
 				List<RecordHourDhcpEntity> dhcpList = recordHourDhcpService.queryDhcpList(map);
 				List<RecordHourPppoeEntity> pppoeList = recordHourPppoeService.queryPppoeList(map);
 				List<RecordHourRadiusEntity> radiusList = recordHourRadiusService.queryRadiusList(map);
-				scoreList = recordHourSlaService.calculateService2(slaList, dnsList, dhcpList, pppoeList, radiusList);
+
+				List<ScoreEntity> slaTcp = recordHourSlaService.calculateSlaTcp(slaList);
+				List<ScoreEntity> slaUdp = recordHourSlaService.calculateSlaUdp(slaList);
+				List<ScoreEntity> dns = recordHourSlaService.calculateDns(dnsList);
+				List<ScoreEntity> dhcp = recordHourSlaService.calculateDhcp(dhcpList);
+				List<ScoreEntity> pppoe = recordHourSlaService.calculatePppoe(pppoeList);
+				List<ScoreEntity> radius = recordHourSlaService.calculateRadius(radiusList);
+				scoreList = recordHourSlaService.calculateService2(slaTcp,slaUdp,dns,dhcp,pppoe,radius);
 			} else if (service == 3) {
 				List<RecordHourWebPageEntity> webPageList = recordHourWebPageService.queryWebList(map);
 				scoreList = recordHourWebPageService.calculateService3(webPageList);
@@ -263,7 +242,12 @@ public class RecordHourPingController {
 			//网络连通性业务
 			List<RecordHourPingEntity> pingList = recordHourPingService.queryDayList(map);
 			List<RecordHourTracertEntity> tracertList = recordHourTracertService.queryDayList(map);
-			List<ScoreEntity> connectionList = recordHourPingService.calculateServiceDate1(pingList, tracertList);
+			List<ScoreEntity> pingIcmp = recordHourPingService.calculatePingIcmp(pingList);
+			List<ScoreEntity> pingTcp = recordHourPingService.calculatePingTcp(pingList);
+			List<ScoreEntity> pingUdp = recordHourPingService.calculatePingUdp(pingList);
+			List<ScoreEntity> tracertIcmp = recordHourPingService.calculateTracertIcmp(tracertList);
+			List<ScoreEntity> tracertUdp = recordHourPingService.calculateTracertUdp(tracertList);
+			List<ScoreEntity> connectionList = recordHourPingService.calculateDate1(pingIcmp,pingTcp,pingUdp,tracertIcmp,tracertUdp);
 			if(connectionList.size()!=0) {
 				double maxConnection = connectionList.get(0).getScore();
 				double averageConnection = 0;
@@ -301,7 +285,13 @@ public class RecordHourPingController {
 			List<RecordHourDhcpEntity> dhcpList = recordHourDhcpService.queryDayList(map);
 			List<RecordHourPppoeEntity> pppoeList = recordHourPppoeService.queryDayList(map);
 			List<RecordHourRadiusEntity> radiusList = recordHourRadiusService.queryDayList(map);
-			List<ScoreEntity> qualityList = recordHourSlaService.calculateServiceDate2(slaList, dnsList, dhcpList, pppoeList, radiusList);
+			List<ScoreEntity> slaTcp = recordHourSlaService.calculateSlaTcp(slaList);
+			List<ScoreEntity> slaUdp = recordHourSlaService.calculateSlaUdp(slaList);
+			List<ScoreEntity> dns = recordHourSlaService.calculateDns(dnsList);
+			List<ScoreEntity> dhcp = recordHourSlaService.calculateDhcp(dhcpList);
+			List<ScoreEntity> pppoe = recordHourSlaService.calculatePppoe(pppoeList);
+			List<ScoreEntity> radius = recordHourSlaService.calculateRadius(radiusList);
+			List<ScoreEntity> qualityList = recordHourSlaService.calculateDate2(slaTcp,slaUdp,dns,dhcp,pppoe,radius);
 			if(qualityList.size()!=0) {
 				double maxQuality = qualityList.get(0).getScore();
 				double averageQuality = 0;
@@ -477,7 +467,12 @@ public class RecordHourPingController {
 			//网络连通性业务
 			List<RecordHourPingEntity> pingList = recordHourPingService.queryPingList(map);
 			List<RecordHourTracertEntity> tracertList = recordHourTracertService.queryTracertList(map);
-			List<ScoreEntity> connectionList = recordHourPingService.calculateServiceDate1(pingList, tracertList);
+			List<ScoreEntity> pingIcmp = recordHourPingService.calculatePingIcmp(pingList);
+			List<ScoreEntity> pingTcp = recordHourPingService.calculatePingTcp(pingList);
+			List<ScoreEntity> pingUdp = recordHourPingService.calculatePingUdp(pingList);
+			List<ScoreEntity> tracertIcmp = recordHourPingService.calculateTracertIcmp(tracertList);
+			List<ScoreEntity> tracertUdp = recordHourPingService.calculateTracertUdp(tracertList);
+			List<ScoreEntity> connectionList = recordHourPingService.calculateDate1(pingIcmp,pingTcp,pingUdp,tracertIcmp,tracertUdp);
 			if (connectionList.size()!=0) {
 				double maxConnection = connectionList.get(0).getScore();
 				double averageConnection = 0;
@@ -515,7 +510,13 @@ public class RecordHourPingController {
 			List<RecordHourDhcpEntity> dhcpList = recordHourDhcpService.queryDhcpList(map);
 			List<RecordHourPppoeEntity> pppoeList = recordHourPppoeService.queryPppoeList(map);
 			List<RecordHourRadiusEntity> radiusList = recordHourRadiusService.queryRadiusList(map);
-			List<ScoreEntity> qualityList = recordHourSlaService.calculateServiceDate2(slaList, dnsList, dhcpList, pppoeList, radiusList);
+			List<ScoreEntity> slaTcp = recordHourSlaService.calculateSlaTcp(slaList);
+			List<ScoreEntity> slaUdp = recordHourSlaService.calculateSlaUdp(slaList);
+			List<ScoreEntity> dns = recordHourSlaService.calculateDns(dnsList);
+			List<ScoreEntity> dhcp = recordHourSlaService.calculateDhcp(dhcpList);
+			List<ScoreEntity> pppoe = recordHourSlaService.calculatePppoe(pppoeList);
+			List<ScoreEntity> radius = recordHourSlaService.calculateRadius(radiusList);
+			List<ScoreEntity> qualityList = recordHourSlaService.calculateDate2(slaTcp,slaUdp,dns,dhcp,pppoe,radius);
 			if (qualityList.size()!=0) {
 				double maxQuality = qualityList.get(0).getScore();
 				double averageQuality = 0;
@@ -779,13 +780,23 @@ public class RecordHourPingController {
 		if (dateDifferent > 5) {
 			List<RecordHourPingEntity> pingList = recordHourPingService.queryDayList(map);
 			List<RecordHourTracertEntity> tracertList = recordHourTracertService.queryDayList(map);
-			scoreList = recordHourPingService.calculateService1(pingList, tracertList);
+			List<ScoreEntity> pingIcmp = recordHourPingService.calculatePingIcmp(pingList);
+			List<ScoreEntity> pingTcp = recordHourPingService.calculatePingTcp(pingList);
+			List<ScoreEntity> pingUdp = recordHourPingService.calculatePingUdp(pingList);
+			List<ScoreEntity> tracertIcmp = recordHourPingService.calculateTracertIcmp(tracertList);
+			List<ScoreEntity> tracertUdp = recordHourPingService.calculateTracertUdp(tracertList);
+			scoreList = recordHourPingService.calculateService1(pingIcmp,pingTcp,pingUdp,tracertIcmp,tracertUdp);
 		}
 		//查询小时表
 		else {
 			List<RecordHourPingEntity> pingList = recordHourPingService.queryPingList(map);
 			List<RecordHourTracertEntity> tracertList = recordHourTracertService.queryTracertList(map);
-			scoreList = recordHourPingService.calculateService1(pingList, tracertList);
+			List<ScoreEntity> pingIcmp = recordHourPingService.calculatePingIcmp(pingList);
+			List<ScoreEntity> pingTcp = recordHourPingService.calculatePingTcp(pingList);
+			List<ScoreEntity> pingUdp = recordHourPingService.calculatePingUdp(pingList);
+			List<ScoreEntity> tracertIcmp = recordHourPingService.calculateTracertIcmp(tracertList);
+			List<ScoreEntity> tracertUdp = recordHourPingService.calculateTracertUdp(tracertList);
+			scoreList = recordHourPingService.calculateService1(pingIcmp,pingTcp,pingUdp,tracertIcmp,tracertUdp);
 		}
 		System.out.println(scoreList);
 		return R.ok().put("scoreList", scoreList);

@@ -24,6 +24,8 @@ public class CountyEntity implements Serializable {
 	//
 	private String cityId;
 
+	private Integer areaId;
+
 	/**
 	 * 设置：
 	 */
@@ -72,4 +74,9 @@ public class CountyEntity implements Serializable {
 	public String getCityId() {
 		return cityId;
 	}
+
+	public Integer getAreaId() { return areaId; }
+
+	public void setAreaId(Integer areaId) { this.areaId = areaId; }
+
 }

@@ -15,4 +15,5 @@ public interface TargetDao extends BaseDao<TargetEntity> {
     List<TargetEntity> infoBatch(Integer serviceId);
     List<TargetEntity> queryTgByTList(Map<String,Object> map);
     List<TargetEntity> queryTargetList(Integer id);
+    List<TargetEntity> queryTargetListByGroup(Integer id);
 }

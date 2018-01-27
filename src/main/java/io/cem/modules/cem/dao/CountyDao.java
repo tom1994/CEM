@@ -14,4 +14,5 @@ import java.util.List;
  */
 public interface CountyDao extends BaseDao<CountyEntity> {
     List<CountyEntity> queryCountyList(Integer id);
+    List<CountyEntity> queryByProbe(Integer id);
 }

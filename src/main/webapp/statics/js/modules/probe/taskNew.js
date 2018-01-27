@@ -11,17 +11,48 @@ st.set(3, "PING(UDP Echo)");
 st.set(4, "TraceRoute(ICMP)");
 st.set(5, "TraceRoute(UDP)");
 st.set(10, "SLA(TCP)");
-var stid = new Map();
+st.set(11, "SLA(UDP)");
+st.set(12, "ADSL接入");
+st.set(13, "DHCP");
+st.set(14, "DNS");
+st.set(15, "Radius认证");
+st.set(20, "WEB页面访问");
+st.set(30, "WEB下载");
+st.set(31, "FTP下载");
+st.set(32, "FTP上传");
+st.set(40, "在线视频");
+st.set(50, "网络游戏");
+var stid = new Map();//新建或编辑servicetype参数的id字典，用于根据select的业务类型变更来改变展示的参数。
 stid.set(1, "pingicmp");
 stid.set(2, "pingtcp");
-//新建或编辑servicetype参数的id字典，用于根据select的业务类型变更来改变展示的参数。
+stid.set(3, "pingicmp");
+stid.set(4, "tracert");
+stid.set(5, "tracert");
+stid.set(10, "sla");
+stid.set(11, "sla");
+stid.set(12, "pppoe");
+stid.set(13, "dhcp");
+stid.set(14, "dns");
+stid.set(15, "radius");
+stid.set(20, "webpage");
+stid.set(30, "web_download");
+stid.set(31, "ftp_download");
+stid.set(32, "ftp_upload");
+stid.set(40, "online_video");
+stid.set(50, "game");
 var spst = new Map();
-for(let i=1; i<7; i++){
-    spst.set(i,1)
-};
-for(let i=10; i<17; i++){
-    spst.set(i,2)
-};
+for (let i = 1; i < 6; i++) {
+    spst.set(i, 1)
+}
+for (let i = 10; i < 16; i++) {
+    spst.set(i, 2)
+}
+spst.set(20, 3);
+for (let i = 30; i < 33; i++) {
+    spst.set(i, 4)
+}
+spst.set(40, 5);
+spst.set(50, 6);
 
 var task_handle = new Vue({
     el: '#handle',
@@ -49,7 +80,11 @@ var task_handle = new Vue({
             $('#taskform_data input[type=text]').prop("disabled", false);
             $('#taskform_data select').prop("disabled", false);
             $('#taskform_data input[type=text]').prop("readonly", false);
-            $('#taskform_data input[type=text]').prop("unselectable", 'off');
+            $('#taskname').removeAttr('unselectable');
+            $('.service input[type=text]').removeAttr('unselectable');
+            $('.service').prop("readonly", false);
+            $('.service').removeAttr('unselectable');
+            $('.service').prop("disabled", false);
             taskform_data.modaltitle = "新建任务";
             /*修改模态框标题*/
             for (let i = 0; i < 3; i++) {
@@ -60,8 +95,7 @@ var task_handle = new Vue({
             $('#viewfooter').attr('style', 'display:none');
             $('#newfooter').removeAttr('style', 'display:none');
             $('#myModal_edit').modal('show');
-        },
-
+        }
     }
 });
 
@@ -86,7 +120,6 @@ function view_this(obj) {     /*监听详情触发事件*/
 
 function get_viewModal(update_data_id) {
     var taskforms = $('#taskform_data .form-control');
-    var paramforms = $('#taskform_param .form-control');
     var servicetypeid = 0;
     $.ajax({
         type: "POST", /*GET会乱码*/
@@ -97,24 +130,127 @@ function get_viewModal(update_data_id) {
         success: function (result) {
             var param = JSON.parse(result.task.parameter);
             servicetypeid = result.task.serviceType;
+            var paramforms = $('#'+stid.get(servicetypeid)+'_param'+' .form-control');
             taskforms[0].value = result.task.id;
             taskforms[1].value = result.task.taskName;
             taskforms[2].value = result.task.serviceType;
             taskforms[3].value = result.task.schPolicyId;
             taskforms[4].value = result.task.alarmTemplateId;
-            paramforms[0].value = param.count;
-            paramforms[1].value = param.interval;
-            paramforms[2].value = param.size;
-            paramforms[3].value = param.payload;
-            paramforms[4].value = param.ttl;
-            paramforms[5].value = param.tos;
-            paramforms[6].value = param.timeout;
+            if (stid.get(servicetypeid) == "pingicmp") {
+                paramforms[0].value = param.count;
+                paramforms[1].value = param.interval;
+                paramforms[2].value = param.size;
+                paramforms[3].value = param.payload;
+                paramforms[4].value = param.ttl;
+                paramforms[5].value = param.tos;
+                paramforms[6].value = param.timeout;
+            }
+            if (stid.get(servicetypeid) == "pingtcp") {
+                paramforms[0].value= param.count;
+                paramforms[1].value= param.interval;
+                paramforms[2].value= param.ttl;
+                paramforms[3].value = param.tos;
+                paramforms[4].value = param.timeout;
+            }
+            if (stid.get(servicetypeid) == "tracert") {
+                paramforms[0].value = param.count;
+                paramforms[1].value = param.interval;
+                paramforms[2].value = param.size;
+                paramforms[3].value = param.tos;
+                paramforms[4].value = param.timeout;
+                paramforms[5].value = param.max_hop;
+            }
+            if (stid.get(servicetypeid) == "sla") {
+                paramforms[0].value = param.count;
+                paramforms[1].value = param.interval;
+                paramforms[2].value = param.size;
+                paramforms[3].value = param.payload;
+                paramforms[4].value = param.ttl;
+                paramforms[5].value = param.timeout;
+            }
+            if (stid.get(servicetypeid) == "dhcp") {
+                paramforms[0].value = param.times;
+                paramforms[1].value = param.timeout;
+                paramforms[2].value = param.is_renew;
+            }
+            if (stid.get(servicetypeid) == "dns") {
+                paramforms[0].value = param.times;
+                paramforms[1].value = param.interval;
+                paramforms[2].value = param.count;
+                paramforms[3].value = param.timeout;
+                paramforms[4].value = param.domains;
+            }
+            if (stid.get(servicetypeid) == "pppoe") {
+                paramforms[0].value = param.username;
+                paramforms[1].value = param.password;
+                paramforms[2].value = param.times;
+                paramforms[3].value = param.interval;
+                paramforms[4].value = param.online_time;
+            }
+            if (stid.get(servicetypeid) == "radius") {
+                paramforms[0].value = param.auth_port;
+                paramforms[1].value = param.nas_port;
+                paramforms[2].value = param.secret;
+                paramforms[3].value = param.username;
+                paramforms[4].value = param.password;
+                paramforms[5].value = param.times;
+                paramforms[6].value = param.interval;
+            }
+            if (stid.get(servicetypeid) == "ftp_upload") {
+                paramforms[0].value = param.port;
+                paramforms[1].value = param.filename;
+                paramforms[2].value = param.lasting_time;
+                paramforms[3].value = param.upload_size;
+                paramforms[4].value = param.is_delete;
+                paramforms[5].value = param.is_anonymous;
+                paramforms[6].value = param.username;
+                paramforms[7].value = param.password;
+            }
+            if (stid.get(servicetypeid) == "ftp_download") {
+                paramforms[0].value = param.port;
+                paramforms[1].value = param.filename;
+                paramforms[2].value = param.lasting_name;
+                paramforms[3].value = param.download_size;
+                paramforms[4].value = param.is_delete;
+                paramforms[5].value = param.is_anonymous;
+                paramforms[6].value = param.username;
+                paramforms[7].value = param.password;
+            }
+            if (stid.get(servicetypeid) == "web_download") {
+                paramforms[0].value = param.lasting_time;
+            }
+            if (stid.get(servicetypeid) == "webpage") {
+                paramforms[0].value = param.max_element;
+                paramforms[1].value = param.element_timeout;
+                paramforms[2].value = param.page_timeout;
+                paramforms[3].value = param.max_size;
+                paramforms[4].value = param.user_agent;
+                paramforms[5].value = param.is_http_proxy;
+                paramforms[6].value = param.address;
+                paramforms[7].value = param.port;
+                paramforms[8].value = param.username;
+                paramforms[9].value = param.password;
+            }
+            if (stid.get(servicetypeid) == "online_video") {
+                paramforms[0].value = param.video_quality;
+                paramforms[1].value = param.lasting_time;
+                paramforms[2].value = param.first_buffer_time;
+            }
+            if (stid.get(servicetypeid) == "game") {
+                paramforms[0].value = param.count;
+                paramforms[1].value = param.interval;
+                paramforms[2].value = param.size;
+                paramforms[3].value = param.timeout;
+            }
             $("#" + stid.get(servicetypeid)).removeClass("service_unselected");
             $('#newfooter').attr('style', 'display:none');
             $('#viewfooter').removeAttr('style', 'display:none');
-            $("#taskform_data input[type=text]").attr('disabled', 'disabled');
+            // $("#taskform_data input[type=text]").removeAttr("readonly");
             $("#taskform_data select").attr('disabled', 'disabled');
+            $("#taskform_data input[type=text]").attr('disabled', 'disabled');
+            $("#taskform_data input[type=text]").attr('unselectable', 'on');
             $(".service input[type=text]").attr('disabled', 'disabled');
+            $(".service input[type=text]").attr('unselectable', 'on');
             $(".service select").attr('disabled', 'disabled');
             $('#myModal_edit').modal('show');
         }
@@ -145,7 +281,6 @@ function delete_this(obj) {
     delete_data.show_deleteModal();
     delete_data.id = parseInt(obj.id);
     /*获取当前行探针数据id*/
-    console.log(delete_data.id);
 }
 
 var delete_data = new Vue({
@@ -285,79 +420,152 @@ function task_assign(obj) {
         }
     });
 }
+
 //a=1 选择探针 a=0 选择探针组 b=1 测试目标 b=0 测试目标组
 function submit_dispatch() {
     var a = parseInt($('input[name=chooseprobe]:checked', '#dispatch_probe').val());
     var b = parseInt($('input[name=choosetarget]:checked', '#dispatch_target').val());
-    var probeList = getFormJson($('#dispatch_probe'));
-    var targetList = getFormJson($('#dispatch_target'));
+    var probeList = getFormJson2($('#dispatch_probe'));
+    var targetList = getFormJson2($('#dispatch_target'));
     if (a == 1) {
         let taskDispatch = {};
-        taskDispatch.probePort = 1;
+        taskDispatch.probePort = "port1";
         taskDispatch.status = 1;
-        // 其他提取select值的方案
-        // console.log(document.getElementById("bootstrap-duallistbox-selected-list_probeId").value);
-        // console.log($("#bootstrap-duallistbox-selected-list_probeId").find("option:selected").text());
-        // console.log($("#bootstrap-duallistbox-selected-list_probeId").val());
-        // let c = $("#bootstrap-duallistbox-selected-list_targetId").val();
-        // let b = parseInt(c[0]);
-        // console.log(b);
-        if(b == 1){
-            taskDispatch.target = targetList.targetId;
-        }else if(b == 0){
-            taskDispatch.targetGroup = targetList.targetGroupId;
-        }else {
-            toastr.info('无该选项，请联系管理员');
+        if (b == 1) {
+            taskDispatch.targetIds = targetList.targetId;
+            if (typeof taskDispatch.targetIds == "number") {
+                taskDispatch.targetIds = "[" + taskDispatch.targetIds + "]"
+            }
+        } else if (b == 0) {
+            taskDispatch.targetGroupIds = targetList.targetGroupId;
+            if (typeof taskDispatch.targetGroupIds == "number") {
+                taskDispatch.targetGroupIds = "[" + taskDispatch.targetGroupIds + "]"
+            }
         }
         taskDispatch.taskId = targetList.taskId;
         taskDispatch.isOndemand = 0;
         taskDispatch.probeIds = probeList.probeId;
-        taskDispatch.testNumber = taskDispatch.probeIds.length;
+        taskDispatch.testNumber = 0;
         console.log(taskDispatch);
-        $.ajax({
-            type: "POST", /*GET会乱码*/
-            url: "../../cem/taskdispatch/saveAll",
-            cache: false,  //禁用缓存
-            data: JSON.stringify(taskDispatch),
-            dataType: "json",
-            contentType: "application/json", /*必须要,不可少*/
-            success: function (result) {
-                toastr.success("任务下发成功!");
-                $('#task_dispatch').modal('hide');
-                task_table.currReset();
-            }
-        });
+        if (typeof taskDispatch.probeIds == "number") {
+            // console.log('success');
+            // taskDispatch.probeId = taskDispatch.probeIds;
+            // $.ajax({
+            //     type: "POST", /*GET会乱码*/
+            //     url: "../../cem/taskdispatch/save",
+            //     cache: false,  //禁用缓存
+            //     data: JSON.stringify(taskDispatch),
+            //     dataType: "json",
+            //     contentType: "application/json", /*必须要,不可少*/
+            //     success: function (result) {
+            //         toastr.success("任务下发成功!");
+            //         $('#task_dispatch').modal('hide');
+            //         task_table.currReset();
+            //     }
+            // });
+            taskDispatch.probeIds = "[" + taskDispatch.probeIds + "]"
+        }
+        if (typeof taskDispatch.probeIds == "undefined"){
+            toastr.warning("请选择探针！");
+        } else if (b == 1 && typeof taskDispatch.targetIds == "undefined") {
+            toastr.warning("请选择测试目标！");
+        } else if (b == 0 && typeof taskDispatch.targetGroupIds == "undefined") {
+            toastr.warning("请选择测试目标组！");
+        } else {
+            $.ajax({
+                type: "POST", /*GET会乱码*/
+                url: "../../cem/taskdispatch/saveAll",
+                cache: false,  //禁用缓存
+                data: JSON.stringify(taskDispatch),
+                dataType: "json",
+                contentType: "application/json", /*必须要,不可少*/
+                success: function (result) {
+                    toastr.success("任务下发成功!");
+                    $('#task_dispatch').modal('hide');
+                    task_table.currReset();
+                }
+            });
+        }
+
     } else if (a == 0) {
         let taskDispatch = {};
-        taskDispatch.probePort = 1;
+        taskDispatch.probePort = "port1";
         taskDispatch.status = 1;
-        if(b == 1){
-            taskDispatch.target = targetList.targetId;
-        }else if(b == 0){
-            taskDispatch.targetGroup = targetList.targetGroupId;
-        }else {
-            toastr.info('无该选项，请联系管理员');
+        if (b == 1) {
+            taskDispatch.targetIds = targetList.targetId;
+            if (typeof taskDispatch.targetIds == "number") {
+                taskDispatch.targetIds = "[" + taskDispatch.targetIds + "]"
+            }
+        } else if (b == 0) {
+            taskDispatch.targetGroupIds = targetList.targetGroupId;
+            if (typeof taskDispatch.targetGroupIds == "number") {
+                taskDispatch.targetGroupIds = "[" + taskDispatch.targetGroupIds + "]"
+            }
         }
         taskDispatch.taskId = targetList.taskId;
         taskDispatch.isOndemand = 0;
         taskDispatch.probeGroupIds = probeList.probeGroupId;
         console.log(taskDispatch);
-        $.ajax({
-            type: "POST", /*GET会乱码*/
-            url: "../../cem/taskdispatch/saveAll",
-            cache: false,  //禁用缓存
-            data: JSON.stringify(taskDispatch),
-            dataType: "json",
-            contentType: "application/json", /*必须要,不可少*/
-            success: function (result) {
-                if(R.ok.code=0){
-                    console.log(R.ok.code=0);
+        if (typeof taskDispatch.probeGroupIds == "number") {
+            // taskDispatch.probeGroupId = taskDispatch.probeGroupIds;
+            // $.ajax({
+            //     type: "POST", /*GET会乱码*/
+            //     url: "../../cem/taskdispatch/save",
+            //     cache: false,  //禁用缓存
+            //     data: JSON.stringify(taskDispatch),
+            //     dataType: "json",
+            //     contentType: "application/json", /*必须要,不可少*/
+            //     success: function (result) {
+            //         if (R.ok.code = 0) {
+            //             console.log(R.ok.code = 0);
+            //         }
+            //         toastr.success("任务下发成功!");
+            //         $('#task_dispatch').modal('hide');
+            //         task_table.currReset();
+            //     }
+            // });
+            taskDispatch.probeGroupIds = "[" + taskDispatch.probeGroupIds + "]"
+        }
+        if (typeof taskDispatch.probeIds == "number") {
+            // console.log('success');
+            // taskDispatch.probeId = taskDispatch.probeIds;
+            // $.ajax({
+            //     type: "POST", /*GET会乱码*/
+            //     url: "../../cem/taskdispatch/save",
+            //     cache: false,  //禁用缓存
+            //     data: JSON.stringify(taskDispatch),
+            //     dataType: "json",
+            //     contentType: "application/json", /*必须要,不可少*/
+            //     success: function (result) {
+            //         toastr.success("任务下发成功!");
+            //         $('#task_dispatch').modal('hide');
+            //         task_table.currReset();
+            //     }
+            // });
+            taskDispatch.probeIds = "[" + taskDispatch.probeIds + "]"
+        }
+        if (typeof taskDispatch.probeGroupIds == "undefined"){
+            toastr.warning("请选择探针组！");
+        } else if (b == 1 && typeof taskDispatch.targetIds == "undefined") {
+            toastr.warning("请选择测试目标！");
+        } else if (b == 0 && typeof taskDispatch.targetGroupIds == "undefined") {
+            toastr.warning("请选择测试目标组！");
+        } else {
+            $.ajax({
+                type: "POST", /*GET会乱码*/
+                url: "../../cem/taskdispatch/saveAll",
+                cache: false,  //禁用缓存
+                data: JSON.stringify(taskDispatch),
+                dataType: "json",
+                contentType: "application/json", /*必须要,不可少*/
+                success: function (result) {
+                    toastr.success("任务下发成功!");
+                    $('#task_dispatch').modal('hide');
+                    task_table.currReset();
                 }
-                toastr.success("任务下发成功!");
-                $('#task_dispatch').modal('hide');
-                task_table.currReset();
-            }
-        });
+            });
+        }
+
     }
 }
 
@@ -434,55 +642,65 @@ var taskform_data = new Vue({
         submit: function () {
             var oDate = new Date();
             var tasknewJson = getFormJson($('#taskform_data'));
-            var paramnewJson = getFormJson($('#taskform_param'));
-            console.log(paramnewJson);
-            tasknewJson.parameter = paramnewJson;
-            tasknewJson.isDeleted = 0;
-            tasknewJson.createTime = oDate.getDate();
+            var paramnewJson = getFormJson2($('#' + stid.get(parseInt(tasknewJson.serviceType)) + '_param'));
+            var paramnew = JSON.stringify(paramnewJson);
+            tasknewJson.parameter = paramnew;
+            tasknewJson.isDeleted = "0";
+            tasknewJson.alarmTemplateId = "0";
+            tasknewJson.createTime = oDate.Format("yyyy-MM-dd hh:mm:ss");
             tasknewJson.remark = "无";
-            console.log(tasknewJson);
             var tasknew = JSON.stringify(tasknewJson);
-            $.ajax({
-                type: "POST", /*GET会乱码*/
-                url: "../../cem/task/save",
-                cache: false,  //禁用缓存
-                data: tasknew,  //传入组装的参数
-                dataType: "json",
-                contentType: "application/json", /*必须要,不可少*/
-                success: function (result) {
-                    let code = result.code;
-                    let msg = result.msg;
-                    // console.log(result);
-                    if (status == 0) {
-                        switch (code) {
-                            case 0:
-                                toastr.success("新增成功!");
-                                $('#myModal_edit').modal('hide');    //jQuery选定
-                                break;
-                            case 403:
-                                toastr.error(msg);
-                                break;
-                            default:
-                                toastr.error("未知错误");
-                                break
+            if (tasknewJson.taskName == "") {
+                toastr.warning("请输入任务名称！");
+            } else if (tasknewJson.serviceType == "") {
+                toastr.warning("请选择任务类型！");
+            } else if (tasknewJson.schPolicyId == ""){
+                toastr.warning("请选择调度策略！");
+            } else {
+                var tasknew = JSON.stringify(tasknewJson);
+                console.log(tasknewJson);
+                $.ajax({
+                    type: "POST", /*GET会乱码*/
+                    url: "../../cem/task/save",
+                    cache: false,  //禁用缓存
+                    data: tasknew,  //传入组装的参数
+                    dataType: "json",
+                    contentType: "application/json", /*必须要,不可少*/
+                    success: function (result) {
+                        let code = result.code;
+                        let msg = result.msg;
+                        // console.log(result);
+                        if (status == 0) {
+                            switch (code) {
+                                case 0:
+                                    toastr.success("修改成功!");
+                                    $('#myModal_edit').modal('hide');    //jQuery选定
+                                    break;
+                                case 403:
+                                    toastr.error(msg);
+                                    break;
+                                default:
+                                    toastr.error("未知错误");
+                                    break
+                            }
+                        } else if (status == 1) {
+                            switch (code) {
+                                case 0:
+                                    toastr.success("新建成功!");
+                                    $('#myModal_edit').modal('hide');
+                                    break;
+                                case 403:
+                                    toastr.error(msg);
+                                    break;
+                                default:
+                                    toastr.error("未知错误");
+                                    break
+                            }
                         }
-                    } else if (status == 1) {
-                        switch (code) {
-                            case 0:
-                                toastr.success("修改成功!");
-                                $('#myModal_edit').modal('hide');
-                                break;
-                            case 403:
-                                toastr.error(msg);
-                                break;
-                            default:
-                                toastr.error("未知错误");
-                                break
-                        }
+                        task_table.currReset();
                     }
-                    task_table.currReset();
-                }
-            });
+                });
+            }
         },
         cancel: function () {
             $(this.$el).modal('hide');
@@ -498,39 +716,28 @@ var taskform_data = new Vue({
             $(selectst).removeClass("service_unselected");
             $(selectst + " input[type=text]").prop("disabled", false);
             $(selectst + " select").prop("disabled", false);
-            this.getalarmtemplates(this.servicetype);
+            getalarmtemplates(this.servicetype);
         },
-        getalarmtemplates: function (servicetypeid) {
-            $.ajax({
-                type: "POST", /*GET会乱码*/
-                url: "../../cem/alarmtemplate/info/" + servicetypeid,
-                cache: false,  //禁用缓存
-                dataType: "json",
-                success: function (result) {
-                    taskform_data.atemplates = [];
-                    for (var i = 0; i < result.atList.length; i++) {
-                        taskform_data.atemplates.push({message: result.atList[i]});
-                    }
-                }
-            });
-        }
     }
 });
 
-// function getDispatch(taskid) {
-//     var countDispatch = 0;
-//     $.ajax({
-//         type: "POST", /*GET会乱码*/
-//         url: "../../cem/taskdispatch/info/" + taskid,
-//         cache: false,  //禁用缓存
-//         dataType: "json",
-//         async: false,
-//         success: function (result) {
-//             countDispatch = result.page.list.length;
-//         }
-//     });
-//     return countDispatch;
-// }
+var getalarmtemplates = function (servicetypeid) {
+    console.log(servicetypeid);
+    $.ajax({
+        type: "POST", /*GET会乱码*/
+        url: "../../cem/alarmtemplate/infoByService/" + servicetypeid,
+        cache: false,  //禁用缓存
+        dataType: "json",
+        success: function (result) {
+            console.log(result);
+            taskform_data.atemplates = [];
+            for (var i = 0; i < result.atList.length; i++) {
+                taskform_data.atemplates.push({message: result.atList[i]});
+            }
+            console.log(taskform_data.atemplates);
+        }
+    });
+}
 
 function getFormJson(form) {      /*将表单对象变为json对象*/
     var o = {};
@@ -543,6 +750,27 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
             o[this.name].push(this.value || '');
         } else {
             o[this.name] = this.value || '';
+        }
+    });
+    return o;
+}
+
+function getFormJson2(form) {      /*将表单对象变为json对象*/
+    var o = {};
+    var a = $(form).serializeArray();
+    for (let i = 0; i < a.length; i++) {
+        if (a[i].value != null && a[i].value != "") {
+            a[i].value = parseInt(a[i].value);
+        }
+    }
+    $.each(a, function () {
+        if (o[this.name] !== undefined) {
+            if (!o[this.name].push) {
+                o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value);
+        } else {
+            o[this.name] = this.value;
         }
     });
     return o;
@@ -690,7 +918,7 @@ var task_table = new Vue({
                         let rows = [];
                         var i = param.start + 1;
                         result.page.list.forEach(function (item) {
-                            if(item.countDispatch == null){
+                            if (item.countDispatch == null) {
                                 item.countDispatch = 0;
                             }
                             let row = [];
@@ -845,8 +1073,8 @@ var dispatch_table = new Vue({
 });
 
 $(document).on('hidden.bs.modal', '.modal', function (e) {
-    $('.modal-dialog').css({'top': '0px', 'left': '0px'})
-    $('body').removeClass('select')
+    $('.modal-dialog').css({'top': '0px', 'left': '0px'});
+    $('body').removeClass('select');
     document.body.onselectstart = document.body.ondrag = null;
 })
 
@@ -857,4 +1085,8 @@ $(document).ready(function () {
     $("#task_dispatch").draggable();
     $("#task_dispatch").css("overflow", "visible");//禁止模态对话框的半透明背景滚动
 
-})
+});
+$('#myModal_edit').on('hide.bs.modal', function () {
+    $(".service").addClass("service_unselected");
+    $(".service").attr('disabled', 'disabled');
+});

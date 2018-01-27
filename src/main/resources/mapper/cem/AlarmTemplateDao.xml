@@ -39,14 +39,19 @@
 
 	<select id="queryatList" resultType="io.cem.modules.cem.entity.AlarmTemplateEntity">
 		select alarm_template.* ,
-		a.data_name        AS service_name
+		a.data_name  AS service_name
 		FROM alarm_template
 		LEFT JOIN dic_data a
 		ON (alarm_template.service_type = a.data_id AND a.dic_type_id = 5)
 		WHERE alarm_template.id = #{value}
-		order by id
 	</select>
-	
+
+	<select id="queryAtByService" resultType="io.cem.modules.cem.entity.AlarmTemplateEntity">
+		select alarm_template.*
+		FROM alarm_template
+		WHERE service_type = #{value}
+	</select>
+
  	<select id="queryTotal" resultType="int">
 		select count(*) from alarm_template 
 	</select>

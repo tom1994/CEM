@@ -78,7 +78,7 @@
 		SELECT count(*) FROM task_dispatch
 		WHERE id = #{value}
 		AND is_ondemand = 1
-		AND status=2
+		AND status>1
 	</select>
 
 	<select id="taskQueryDispatchTotal" resultType="int">
@@ -112,6 +112,35 @@
 			#{testInterval}, 
 			#{status}, 
 			#{remark}
+		)
+	</insert>
+
+	<insert id="saveAndReturn" parameterType="io.cem.modules.cem.entity.TaskDispatchEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into task_dispatch
+		(
+		`task_id`,
+		`probe_id`,
+		`probe_port`,
+		`target`,
+		`target_group`,
+		`is_ondemand`,
+		`test_number`,
+		`test_interval`,
+		`status`,
+		`remark`
+		)
+		values
+		(
+		#{taskId},
+		#{probeId},
+		#{probePort},
+		#{target},
+		#{targetGroup},
+		#{isOndemand},
+		#{testNumber},
+		#{testInterval},
+		#{status},
+		#{remark}
 		)
 	</insert>
 

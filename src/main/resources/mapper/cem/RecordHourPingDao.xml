@@ -186,6 +186,7 @@
 		WHERE
 		rhp.record_date BETWEEN #{startDate} AND #{terminalDate}
 		AND time_format(record_time,'%H') between #{startTime} AND #{terminalTime}
+		AND record_time between #{start_time} AND #{end_time}
 		<if test="task_id != null and task_id != ''">
 			AND rhp.task_id = #{task_id}
 		</if>
@@ -196,6 +197,7 @@
 			AND rhp.probe_id = #{probe_id}
 		</if>
 		GROUP BY rhp.service_type,rhp.target_id,rhp.task_id,rhp.probe_id,date_format(rhp.record_date,'%Y-%m-%d'),time_format(record_time, '%H');
+
 	</select>
 
  	<select id="queryTotal" resultType="int">

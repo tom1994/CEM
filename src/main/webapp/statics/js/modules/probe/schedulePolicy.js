@@ -159,12 +159,16 @@ var spform_data = new Vue({
         submit: function () {
             var spJson = getFormJson($('#spform_data'));
             console.log(spJson);
-            if ($("#everyday").checked == true){
+            var datevalue =$('input:radio[name="choosedate"]:checked').val();
+            console.log(datevalue);
+            if (datevalue == 1){
                 spJson.startDate = new Date().Format("yyyy-MM-dd hh:mm:ss");
                 spJson.endDate = "2070-12-31";
+                $('#startDate input[type=text]').attr('readonly','readonly');
+                $('#endDate input[type=text]').attr('readonly','readonly');
             }
-            if (typeof(spJson["spName"]) == "undefined") {
-                toastr.warning("请添加策略名称");
+            if (spJson.spName == "") {
+                toastr.warning("请输入策略名称");
             } else {
                 spJson.createTime = new Date().Format("yyyy-MM-dd hh:mm:ss");        //获取日期与时间
                 var scheduler = '{"start_time":"00:00:00", "end_time":"23:59:00", "interval":"0"}';
@@ -193,14 +197,14 @@ var spform_data = new Vue({
                         if (status == 0) {
                             switch (code) {
                                 case 0:
-                                    toastr.success("策略新增成功!");
+                                    toastr.success("任务创建成功!");
                                     $('#myModal_sp').modal('hide');    //jQuery选定
                                     break;
                                 case 403:
                                     toastr.error(msg);
                                     break;
                                 default:
-                                    toastr.error("未知错误");
+                                    toastr.error("创建出现未知错误");
                                     break
                             }
                         } else if (status == 1) {
@@ -286,7 +290,7 @@ var sptable = new Vue({
             {title: '<div style="width:15px"></div>'},
             {title: '<div style="width:142px">策略名称</div>'},
             {title: '<div style="width:180px">起止日期</div>'},
-            {title: '<div style="width:90px">时间间隔(分钟)</div>'},
+            {title: '<div style="width:120px">时间间隔(分钟)</div>'},
             {title: '<div style="width:160px">备注</div>'},
             {title: '<div style="width:100px">创建时间</div>'},
             {title: '<div style="width:40px">操作</div>'}
