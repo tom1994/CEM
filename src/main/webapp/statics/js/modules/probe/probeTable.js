@@ -447,6 +447,7 @@ function update_this (obj) {     /*监听修改触发事件*/
             forms[25].value = result.probe.lastReportTime;
             forms[26].value = result.probe.lastUpdateTime;
             forms[27].value = result.probe.portIp;
+            console.log(forms[5].value);
         }
     });
     probeform_data.modaltitle = "详细信息";

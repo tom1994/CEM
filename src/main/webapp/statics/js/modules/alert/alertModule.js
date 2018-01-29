@@ -58,9 +58,11 @@ var taskform_data = new Vue({
     methods: {
         submit: function () {
             var tasknewJson = getFormJson($('#taskform_data'));
-            var paramnewJson = getFormJson($('#taskform_param'));
+            var paramnewJson = getFormJson2($('#taskform_param'));
+            var paramnew = JSON.stringify(paramnewJson);
             console.log(paramnewJson);
-            tasknewJson.value = paramnewJson;
+            tasknewJson.value = paramnew;
+            console.log(tasknewJson.value);
             tasknewJson.createTime = (new Date()).Format("yyyy-MM-dd hh:mm:ss");
             tasknewJson.remark = "无";
             console.log(tasknewJson);
@@ -145,6 +147,27 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
             o[this.name].push(this.value || '');
         } else {
             o[this.name] = this.value || '';
+        }
+    });
+    return o;
+}
+
+function getFormJson2(form) {      /*将表单对象变为json对象*/
+    var o = {};
+    var a = $(form).serializeArray();
+    for (let i = 0; i < a.length; i++) {
+        if (a[i].value != null && a[i].value != "") {
+            a[i].value = parseInt(a[i].value);
+        }
+    }
+    $.each(a, function () {
+        if (o[this.name] !== undefined) {
+            if (!o[this.name].push) {
+                o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value);
+        } else {
+            o[this.name] = this.value;
         }
     });
     return o;
