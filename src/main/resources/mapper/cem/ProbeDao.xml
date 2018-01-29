@@ -49,13 +49,13 @@
     <select id="queryObject" resultMap="probeMap">
         SELECT
             probe.*,
-            city.city_name      AS city_name,
-            county.county_name  AS area_name,
-            a.data_name         AS type_name,
-            b.data_name         AS status_name,
-            c.data_name         AS iptype_name,
-            layer.layer_name    AS layer_name,
-            parent.parent_name  AS upstream_name
+            city.city_name     AS city_name,
+            county.county_name AS area_name,
+            a.data_name        AS type_name,
+            b.data_name        AS status_name,
+            c.data_name        AS iptype_name,
+            layer.layer_name   AS layer_name,
+            parent.parent_name AS upstream_name
         FROM probe
             LEFT JOIN city
                 ON probe.city_id = city.city_id
@@ -71,7 +71,7 @@
                 ON probe.access_layer = layer.layer_tag
             LEFT JOIN (SELECT
                            probe.probe_name AS parent_name,
-                           probe.id AS parent_id
+                           probe.id         AS parent_id
                        FROM probe
                        WHERE id IN (SELECT upstream_id
                                     FROM probe)) parent
@@ -193,13 +193,14 @@
     </select>
 
     <select id="queryProbeByLayer" resultType="io.cem.modules.cem.entity.ProbeEntity">
-        SELECT probe.id,
-        probe_name,
-        upstream_id AS upstream,
-        access_layer
+        SELECT
+            probe.id,
+            probe_name,
+            upstream_id AS upstream,
+            access_layer
         FROM probe
-        INNER JOIN layer
-        ON access_layer = layer.layer_tag
+            INNER JOIN layer
+                ON access_layer = layer.layer_tag
         WHERE probe.id = #{value}
     </select>
 
@@ -269,6 +270,12 @@
                 #{createTime}
             )
     </insert>
+
+    <update id="updateUpstream">
+        UPDATE probe
+        SET upstream_id = 0
+        WHERE upstream_id = #{value}
+    </update>
 
     <update id="update" parameterType="io.cem.modules.cem.entity.ProbeEntity">
         update probe
