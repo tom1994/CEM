@@ -146,8 +146,7 @@
                                                        class="col-lg-3 col-md-3 col-sm-3 input-label form_border">测试目标名:</label>
                                                 <div class="form_border col-lg-4 col-md-4 col-sm-4">
                                                     <input type="text" class="form-control" id="targetname"
-                                                           name="targetname"
-                                                           style="width: 100%" placeholder="请输入">
+                                                           name="targetname" style="width: 100%" placeholder="请输入">
                                                 </div>
                                             </div>
 
@@ -156,8 +155,7 @@
                                                        class="col-lg-3 col-md-3 col-sm-3 input-label form_border">测试目标地址:</label>
                                                 <div class="form_border col-lg-4 col-md-4 col-sm-4">
                                                     <input type="text" class="form-control" id="value" name="value"
-                                                           style="width: 100%"
-                                                           placeholder="请输入">
+                                                           style="width: 100%" placeholder="请输入">
                                                 </div>
                                             </div>
 
@@ -167,6 +165,7 @@
                                                 <div class="form_border col-lg-4 col-md-4 col-sm-4">
                                                     <select id="superservicetype" class="form-control"
                                                             name="superservicetype" style="width: 100%">  <!--VUE列表渲染-->
+                                                        <option value=""></option>
                                                         <option value="0">综合业务</option>
                                                         <option value="1">网络连通性测试业务</option>
                                                         <option value="2">网络层质量测试业务</option>
@@ -183,6 +182,7 @@
                                                        class="col-lg-3 col-md-3 col-sm-3 input-label form_border">测试目标组:</label>
                                                 <div class="form_border col-lg-4 col-md-4 col-sm-4">
                                                     <select id="groupid" class="form-control" name="groupId" style="width: 100%">  <!--VUE列表渲染-->
+                                                        <option value=""></option>
                                                         <option v-for="item in groupNames" v-bind:value="item.message.id">
                                                             {{ item.message.tgName }}
                                                         </option>
@@ -344,6 +344,7 @@
                                         <div class="form_border col-lg-4 col-md-4 col-sm-4">
                                             <select id="tgsuperservicetype" class="form-control" name="superserviceType"
                                                     style="width: 100%">  <!--VUE列表渲染-->
+                                                <option value=""></option>
                                                 <option value="0">综合业务</option>
                                                 <option value="1">网络连通性测试业务</option>
                                                 <option value="2">网络层质量测试业务</option>

@@ -117,8 +117,8 @@ var search_data = new Vue({
             var data = getFormJson($('#resultsearch .selectdata'));
             /*得到查询条件*/
             /*获取表单元素的值*/
-            var starttemp = data.startTime;
-            var termtemp = data.terminalTime;
+            var starttemp = data.start_time;
+            var termtemp = data.end_time;
 
             /*if((data.startDate="") && (data.terminalDate=""))
              {
@@ -128,10 +128,10 @@ var search_data = new Vue({
 
             /*可直接在json对象中添加键值对*/
             if(starttemp != ""){
-                data.startTime = starttemp + ":00";
+                data.start_time = starttemp + ":00";
             }
             if(termtemp != ""){
-                data.terminalTime = termtemp + ":00";
+                data.end_time = termtemp + ":00";
             }
 
             if(data.interval == "") {
@@ -154,6 +154,11 @@ var search_data = new Vue({
 
         },
         reset: function () {    /*重置*/
+            if(recordtag == "ping"){
+                pingresulttable.reset();
+            } else if(recordtag == "tracert") {
+                tracertresulttable.reset();
+            }
             document.getElementById("resultsearch").reset();
         }
     }
@@ -275,11 +280,11 @@ var pingresulttable = new Vue({
             {title: '<div style="width:90px">测试目标IP</div>'},
             {title: '<div style="width:50px">时延(秒)</div>'},
             {title: '<div style="width:90px">时延标准差(秒)</div>'},
-            {title: '<div style="width:75px">时延方差(秒)</div>'},
+            {title: '<div style="width:80px">时延方差(秒)</div>'},
             {title: '<div style="width:50px">抖动(秒)</div>'},
             {title: '<div style="width:90px">抖动标准差(秒)</div>'},
-            {title: '<div style="width:75px">抖动方差(秒)</div>'},
-            {title: '<div style="width:60px">丢包率(%)</div>'},
+            {title: '<div style="width:80px">抖动方差(秒)</div>'},
+            {title: '<div style="width:70px">丢包率(%)</div>'},
             {title: '<div style="width:130px">记录时间</div>'},
             {title: '<div style="width:130px">统计时间</div>'},
             {title: '<div style="width:90px">备注</div>'}
@@ -287,13 +292,13 @@ var pingresulttable = new Vue({
         rows: [],
         dtHandle: null,
         resultdata: {startDate:today.Format("yyyy-MM-dd"), terminalDate:(new Date()).Format("yyyy-MM-dd"),interval: "",
-            probe_id:'16', task_id:'2201', target_id:'1068', startTime:"00:00:00", terminalTime:"19:00:00", queryType: "1"}
+            probe_id:'42', task_id:'1000', target_id:'1022', start_time:"00:00:00", end_time:"24:00:00", queryType: "1"}
     },
     methods: {
         reset: function () {
             let vm = this;
             vm.resultdata = {};
-            /*清空probedata*/
+            /*清空resultdata*/
             vm.dtHandle.clear();
             console.log("重置");
             vm.dtHandle.draw();
