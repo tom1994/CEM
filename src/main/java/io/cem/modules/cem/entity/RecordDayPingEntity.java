@@ -1,7 +1,6 @@
 package io.cem.modules.cem.entity;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 
 
@@ -11,9 +10,9 @@ import java.util.Date;
  * 
  * @author ${author}
  * @email ${email}
- * @date 2017-12-02 14:35:31
+ * @date 2018-01-30 12:10:16
  */
-public class RecordHourPingEntity implements Serializable {
+public class RecordDayPingEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	//记录ID
@@ -28,14 +27,8 @@ public class RecordHourPingEntity implements Serializable {
 	private String port;
 	//任务ID
 	private Integer taskId;
-
-	private String taskName;
-
 	//子业务类型
 	private Integer serviceType;
-
-	private String servicetypeName;
-
 	//测试目标ID
 	private Integer targetId;
 	//测试目标IP
@@ -60,20 +53,6 @@ public class RecordHourPingEntity implements Serializable {
 	private Double lossRate;
 	//备注
 	private String remark;
-	//地市名称
-	private String cityName;
-	//区县名称
-	private String areaName;
-	//探针名称
-	private String probeName;
-	//测试目标名称
-	private String targetName;
-
-	private Integer accessLayer;
-
-	private String targetipName;
-
-	private String timeRange;
 
 	/**
 	 * 设置：记录ID
@@ -303,62 +282,4 @@ public class RecordHourPingEntity implements Serializable {
 	public String getRemark() {
 		return remark;
 	}
-
-	public String getCityName() {
-		return cityName;
-	}
-
-	public void setCityName(String cityName) {
-		this.cityName = cityName;
-	}
-
-	public String getAreaName() {
-		return areaName;
-	}
-
-	public void setAreaName(String areaName) {
-		this.areaName = areaName;
-	}
-
-	public String getProbeName() {
-		return probeName;
-	}
-
-	public void setProbeName(String probeName) {
-		this.probeName = probeName;
-	}
-
-	public String getTargetName() {
-		return targetName;
-	}
-
-	public void setTargetName(String targetName) {
-		this.targetName = targetName;
-	}
-
-	public Integer getAccessLayer() {
-		return accessLayer;
-	}
-
-	public void setAccessLayer(Integer accessLayer) {
-		this.accessLayer = accessLayer;
-	}
-
-	public String getTargetipName() {return targetipName;}
-
-	public void setTargetipName(String targetipName) {this.targetipName = targetipName;}
-
-	public String getServicetypeName() {return servicetypeName;}
-
-	public void setServicetypeName(String servicetypeName) {this.servicetypeName = servicetypeName;}
-
-	public String getTimeRange() {
-		return timeRange;
-	}
-
-	public void setTimeRange(String timeRange) {this.timeRange = timeRange;}
-
-	public String getTaskName() {return taskName;}
-
-	public void setTaskName(String taskName) {this.taskName = taskName;}
 }

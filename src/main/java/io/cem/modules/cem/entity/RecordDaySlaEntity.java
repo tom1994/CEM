@@ -1,7 +1,6 @@
 package io.cem.modules.cem.entity;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 
 
@@ -11,9 +10,9 @@ import java.util.Date;
  * 
  * @author ${author}
  * @email ${email}
- * @date 2017-12-02 14:35:31
+ * @date 2018-01-30 12:10:16
  */
-public class RecordHourPingEntity implements Serializable {
+public class RecordDaySlaEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	//记录ID
@@ -28,52 +27,56 @@ public class RecordHourPingEntity implements Serializable {
 	private String port;
 	//任务ID
 	private Integer taskId;
-
-	private String taskName;
-
 	//子业务类型
 	private Integer serviceType;
-
-	private String servicetypeName;
-
 	//测试目标ID
 	private Integer targetId;
 	//测试目标IP
-	private Long targetIp;
+	private Integer targetIp;
 	//记录日期
 	private Date recordDate;
 	//记录时间
 	private String recordTime;
 	//时延平均值
 	private Double delay;
+	//往向时延
+	private Double gDelay;
+	//返向时延
+	private Double rDelay;
 	//时延标准差
 	private Double delayStd;
+	//往向时延标准差
+	private Double gDelayStd;
+	//返向时延标准差
+	private Double rDelayStd;
 	//时延方差
 	private Double delayVar;
+	//往向时延方差
+	private Double gDelayVar;
+	//返向时延方差
+	private Double rDelayVar;
 	//抖动平均值
 	private Double jitter;
+	//往向抖动
+	private Double gJitter;
+	//返向抖动
+	private Double rJitter;
 	//抖动标准差
 	private Double jitterStd;
+	//往向抖动标准差
+	private Double gJitterStd;
+	//返向抖动标准差
+	private Double rJitterStd;
 	//抖动方差
 	private Double jitterVar;
+	//往向抖动方差
+	private Double gJitterVar;
+	//返向抖动方差
+	private Double rJitterVar;
 	//丢包率
 	private Double lossRate;
 	//备注
 	private String remark;
-	//地市名称
-	private String cityName;
-	//区县名称
-	private String areaName;
-	//探针名称
-	private String probeName;
-	//测试目标名称
-	private String targetName;
-
-	private Integer accessLayer;
-
-	private String targetipName;
-
-	private String timeRange;
 
 	/**
 	 * 设置：记录ID
@@ -174,13 +177,13 @@ public class RecordHourPingEntity implements Serializable {
 	/**
 	 * 设置：测试目标IP
 	 */
-	public void setTargetIp(Long targetIp) {
+	public void setTargetIp(Integer targetIp) {
 		this.targetIp = targetIp;
 	}
 	/**
 	 * 获取：测试目标IP
 	 */
-	public Long getTargetIp() {
+	public Integer getTargetIp() {
 		return targetIp;
 	}
 	/**
@@ -220,6 +223,30 @@ public class RecordHourPingEntity implements Serializable {
 		return delay;
 	}
 	/**
+	 * 设置：往向时延
+	 */
+	public void setGDelay(Double gDelay) {
+		this.gDelay = gDelay;
+	}
+	/**
+	 * 获取：往向时延
+	 */
+	public Double getGDelay() {
+		return gDelay;
+	}
+	/**
+	 * 设置：返向时延
+	 */
+	public void setRDelay(Double rDelay) {
+		this.rDelay = rDelay;
+	}
+	/**
+	 * 获取：返向时延
+	 */
+	public Double getRDelay() {
+		return rDelay;
+	}
+	/**
 	 * 设置：时延标准差
 	 */
 	public void setDelayStd(Double delayStd) {
@@ -230,6 +257,30 @@ public class RecordHourPingEntity implements Serializable {
 	 */
 	public Double getDelayStd() {
 		return delayStd;
+	}
+	/**
+	 * 设置：往向时延标准差
+	 */
+	public void setGDelayStd(Double gDelayStd) {
+		this.gDelayStd = gDelayStd;
+	}
+	/**
+	 * 获取：往向时延标准差
+	 */
+	public Double getGDelayStd() {
+		return gDelayStd;
+	}
+	/**
+	 * 设置：返向时延标准差
+	 */
+	public void setRDelayStd(Double rDelayStd) {
+		this.rDelayStd = rDelayStd;
+	}
+	/**
+	 * 获取：返向时延标准差
+	 */
+	public Double getRDelayStd() {
+		return rDelayStd;
 	}
 	/**
 	 * 设置：时延方差
@@ -244,6 +295,30 @@ public class RecordHourPingEntity implements Serializable {
 		return delayVar;
 	}
 	/**
+	 * 设置：往向时延方差
+	 */
+	public void setGDelayVar(Double gDelayVar) {
+		this.gDelayVar = gDelayVar;
+	}
+	/**
+	 * 获取：往向时延方差
+	 */
+	public Double getGDelayVar() {
+		return gDelayVar;
+	}
+	/**
+	 * 设置：返向时延方差
+	 */
+	public void setRDelayVar(Double rDelayVar) {
+		this.rDelayVar = rDelayVar;
+	}
+	/**
+	 * 获取：返向时延方差
+	 */
+	public Double getRDelayVar() {
+		return rDelayVar;
+	}
+	/**
 	 * 设置：抖动平均值
 	 */
 	public void setJitter(Double jitter) {
@@ -254,6 +329,30 @@ public class RecordHourPingEntity implements Serializable {
 	 */
 	public Double getJitter() {
 		return jitter;
+	}
+	/**
+	 * 设置：往向抖动
+	 */
+	public void setGJitter(Double gJitter) {
+		this.gJitter = gJitter;
+	}
+	/**
+	 * 获取：往向抖动
+	 */
+	public Double getGJitter() {
+		return gJitter;
+	}
+	/**
+	 * 设置：返向抖动
+	 */
+	public void setRJitter(Double rJitter) {
+		this.rJitter = rJitter;
+	}
+	/**
+	 * 获取：返向抖动
+	 */
+	public Double getRJitter() {
+		return rJitter;
 	}
 	/**
 	 * 设置：抖动标准差
@@ -268,6 +367,30 @@ public class RecordHourPingEntity implements Serializable {
 		return jitterStd;
 	}
 	/**
+	 * 设置：往向抖动标准差
+	 */
+	public void setGJitterStd(Double gJitterStd) {
+		this.gJitterStd = gJitterStd;
+	}
+	/**
+	 * 获取：往向抖动标准差
+	 */
+	public Double getGJitterStd() {
+		return gJitterStd;
+	}
+	/**
+	 * 设置：返向抖动标准差
+	 */
+	public void setRJitterStd(Double rJitterStd) {
+		this.rJitterStd = rJitterStd;
+	}
+	/**
+	 * 获取：返向抖动标准差
+	 */
+	public Double getRJitterStd() {
+		return rJitterStd;
+	}
+	/**
 	 * 设置：抖动方差
 	 */
 	public void setJitterVar(Double jitterVar) {
@@ -278,6 +401,30 @@ public class RecordHourPingEntity implements Serializable {
 	 */
 	public Double getJitterVar() {
 		return jitterVar;
+	}
+	/**
+	 * 设置：往向抖动方差
+	 */
+	public void setGJitterVar(Double gJitterVar) {
+		this.gJitterVar = gJitterVar;
+	}
+	/**
+	 * 获取：往向抖动方差
+	 */
+	public Double getGJitterVar() {
+		return gJitterVar;
+	}
+	/**
+	 * 设置：返向抖动方差
+	 */
+	public void setRJitterVar(Double rJitterVar) {
+		this.rJitterVar = rJitterVar;
+	}
+	/**
+	 * 获取：返向抖动方差
+	 */
+	public Double getRJitterVar() {
+		return rJitterVar;
 	}
 	/**
 	 * 设置：丢包率
@@ -303,62 +450,4 @@ public class RecordHourPingEntity implements Serializable {
 	public String getRemark() {
 		return remark;
 	}
-
-	public String getCityName() {
-		return cityName;
-	}
-
-	public void setCityName(String cityName) {
-		this.cityName = cityName;
-	}
-
-	public String getAreaName() {
-		return areaName;
-	}
-
-	public void setAreaName(String areaName) {
-		this.areaName = areaName;
-	}
-
-	public String getProbeName() {
-		return probeName;
-	}
-
-	public void setProbeName(String probeName) {
-		this.probeName = probeName;
-	}
-
-	public String getTargetName() {
-		return targetName;
-	}
-
-	public void setTargetName(String targetName) {
-		this.targetName = targetName;
-	}
-
-	public Integer getAccessLayer() {
-		return accessLayer;
-	}
-
-	public void setAccessLayer(Integer accessLayer) {
-		this.accessLayer = accessLayer;
-	}
-
-	public String getTargetipName() {return targetipName;}
-
-	public void setTargetipName(String targetipName) {this.targetipName = targetipName;}
-
-	public String getServicetypeName() {return servicetypeName;}
-
-	public void setServicetypeName(String servicetypeName) {this.servicetypeName = servicetypeName;}
-
-	public String getTimeRange() {
-		return timeRange;
-	}
-
-	public void setTimeRange(String timeRange) {this.timeRange = timeRange;}
-
-	public String getTaskName() {return taskName;}
-
-	public void setTaskName(String taskName) {this.taskName = taskName;}
 }
