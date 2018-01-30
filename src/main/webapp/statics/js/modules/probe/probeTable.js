@@ -11,6 +11,25 @@ var typeNames = new Array();
 var statusNames = new Array();
 var probegroup_names = new Array();
 
+var st = new Map();//servicetype字典，可通过get方法查对应字符串。
+st.set(1, "PING(ICMP Echo)");
+st.set(2, "PING(TCP Echo)");
+st.set(3, "PING(UDP Echo)");
+st.set(4, "TraceRoute(ICMP)");
+st.set(5, "TraceRoute(UDP)");
+st.set(10, "SLA(TCP)");
+st.set(11, "SLA(UDP)");
+st.set(12, "ADSL接入");
+st.set(13, "DHCP");
+st.set(14, "DNS");
+st.set(15, "Radius认证");
+st.set(20, "WEB页面访问");
+st.set(30, "WEB下载");
+st.set(31, "FTP下载");
+st.set(32, "FTP上传");
+st.set(40, "在线视频");
+st.set(50, "网络游戏");
+
 var probedata_handle = new Vue({
     el: '#probehandle',
     data: {},
@@ -240,7 +259,7 @@ var dispatch_table = new Vue({
             //{title: '<div style="width:108px">位置</div>'},
             //{title: '<div style="width:37px">层级</div>'},
             {title: '<div style="width:117px">任务名称</div>'},
-            {title: '<div style="width:160px">测试目标</div>'},
+            {title: '<div style="width:160px">调度策略</div>'},
             //{title: '<div style="width:67px">操作</div>'}
         ],
         rows: [],
@@ -331,9 +350,10 @@ var dispatch_table = new Vue({
                             row.push(i++);
                             //row.push(item.probeName);
                             //row.push(item.location);
-                            //row.push(item.accessLayer);
+                            row.push(st.get(item.serviceType));
                             row.push(item.taskName);
-                            row.push('<span title="' + item.targetName + '" style="white-space: nowrap">' + transString(item.targetName,0,25)+ '</span>');
+                            row.push(item.spName);
+                            // row.push('<span title="' + item.targetName + '" style="white-space: nowrap">' + transString(item.targetName,0,25)+ '</span>');
                             //row.push('<a class="fontcolor" onclick="cancel_task(this)" id=' + item.id + '>取消任务</a>');
                             rows.push(row);
                         });

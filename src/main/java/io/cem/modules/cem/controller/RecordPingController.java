@@ -86,11 +86,11 @@ public class RecordPingController {
     }
 
     @RequestMapping("/diagnose")
-    public R diagnose(String resultdata, Integer page, Integer limit, Integer[] dispatchId) throws Exception {
+    public R diagnose(@RequestBody Integer[] dispatchId, Integer page, Integer limit) throws Exception {
         Map<String, Object> map = new HashMap<>();
-        JSONObject resultdata_jsonobject = JSONObject.parseObject(resultdata);
+//        JSONObject resultdata_jsonobject = JSONObject.parseObject(resultdata);
         try {
-            map.putAll(JSONUtils.jsonToMap(resultdata_jsonobject));
+//            map.putAll(JSONUtils.jsonToMap(resultdata_jsonobject));
         } catch (RuntimeException e) {
             throw new RRException("内部参数错误，请重试！");
         }
