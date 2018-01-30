@@ -113,10 +113,13 @@
 
                                             <div class="input-group searchspan">
                                                 <span class="searchname" style="width: 55px">统计粒度(小时)</span>
-                                                <input type="text" id="interval" class="form-control selectdata"
-                                                       name="interval"
-                                                       style="width: 30px"
-                                                       value="">
+                                                <select id="interval" class="form-control selectdata" name="interval"
+                                                    style="width:70px">
+                                                    <option value="">原始</option>
+                                                    <option value="2">两小时</option>
+                                                    <option value="3">三小时</option>
+                                                    <option value="24">一天</option>
+                                                </select>
                                             </div>
 
                                             <div class="input-group searchspan">

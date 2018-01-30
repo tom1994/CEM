@@ -84,6 +84,7 @@ var target_search = new Vue({
                 /*根据查询条件重绘*/
         },
         reset: function () {    /*重置*/
+            document.getElementById("targetsearch").reset();
             target_table.reset();
         }
     }
@@ -333,11 +334,22 @@ var targetform_data = new Vue({
     methods: {
         submit: function () {
             var targetJson = getFormJson($('#targetform_data'));
-            if (typeof(targetJson["targetname"]) == "undefined") {
-                toastr.warning("请录入测试目标名!");
+            console.log(targetJson);
+            var reg = /^(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\/])+$/;
+            if (targetJson.targetname == "") {
+                toastr.warning("请输入名称!");
+            } else if (targetJson.value == "") {
+                toastr.warning("请输入目标地址!")
+            } else if (! reg.test(targetJson.value)) {
+                toastr.warning("请输入合法的网址!");
+            } else if (targetJson.superservicetype == "") {
+                toastr.warning("请选择业务类型!");
             } else {
+                if (targetJson.groupId == "") {
+                    targetJson.groupId = 0;
+                }
                 var d = new Date().Format("yyyy-MM-dd hh:mm:ss");        //获取日期与时间
-                targetJson["createTime"] = d;
+                targetJson.createTime = d;
                 var target = JSON.stringify(targetJson);
                 console.log(target);
                 var mapstr;
@@ -360,7 +372,7 @@ var targetform_data = new Vue({
                         if (status == 0) {
                             switch (code) {
                                 case 0:
-                                    toastr.success("业务信息录入成功!");
+                                    toastr.success("新增成功!");
                                     $('#myModal_update').modal('hide');
                                     break;
                                 case 403:
@@ -373,7 +385,7 @@ var targetform_data = new Vue({
                         } else if (status == 1) {
                             switch (code) {
                                 case 0:
-                                    toastr.success("业务信息更新成功!");
+                                    toastr.success("修改成功!");
                                     $('#myModal_update').modal('hide');
                                     break;
                                 case 403:
@@ -388,8 +400,6 @@ var targetform_data = new Vue({
                     }
                 });
             }
-
-
         }
     }
 });
@@ -405,8 +415,10 @@ var tgform_data = new Vue({
         submit: function () {
             var tgJson = getFormJson($('#tgform_data'));
             console.log(tgJson);
-            if (typeof(tgJson["tgName"]) == "undefined") {                  /*3个select必选*/
-                toastr.warning("测试目标组名不能为空！");
+            if (tgJson.tgName == "") {
+                toastr.warning("请输入名称!");
+            } else if (tgJson.superserviceType == "") {
+                toastr.warning("请选择业务类型!");
             } else {
                 var dd = new Date().Format("yyyy-MM-dd hh:mm:ss");        //获取日期与时间
                 tgJson["createTime"] = dd;

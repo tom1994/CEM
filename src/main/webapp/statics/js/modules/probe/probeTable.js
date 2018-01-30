@@ -722,8 +722,8 @@ var groupform_data = new Vue({
     methods: {
         submit: function () {
             var probegroupJson = getFormJson($('#groupform_data'));
-            if (typeof(probegroupJson["name"]) == "undefined") {                  /*3个select必选*/
-                toastr.warning("探针组名不能为空！");
+            if (probegroupJson.name == "") {
+                toastr.warning("请输入名称!");
             } else {
                 probegroupJson.createTime = new Date().Format("yyyy-MM-dd hh:mm:ss");
                 var probegroup = JSON.stringify(probegroupJson);
@@ -750,7 +750,7 @@ var groupform_data = new Vue({
                         if (status == 0) {
                             switch (code) {
                                 case 0:
-                                    toastr.success("业务信息录入成功!");
+                                    toastr.success("录入成功!");
                                     $('#groupModal').modal('hide');
                                     break;
                                 case 403:
@@ -763,7 +763,7 @@ var groupform_data = new Vue({
                         } else if (status == 1) {
                             switch (code) {
                                 case 0:
-                                    toastr.success("业务信息更新成功!");
+                                    toastr.success("修改成功!");
                                     $('#groupModal').modal('hide');
                                     break;
                                 case 403:
@@ -774,13 +774,10 @@ var groupform_data = new Vue({
                                     break
                             }
                         }
-
                         grouptable.currReset();
                     }
                 });
             }
-
-
         }
     }
 });

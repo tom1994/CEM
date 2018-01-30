@@ -466,11 +466,11 @@ function submit_dispatch() {
             taskDispatch.probeIds = "[" + taskDispatch.probeIds + "]"
         }
         if (typeof taskDispatch.probeIds == "undefined"){
-            toastr.warning("请选择探针！");
+            toastr.warning("请选择探针!");
         } else if (b == 1 && typeof taskDispatch.targetIds == "undefined") {
-            toastr.warning("请选择测试目标！");
+            toastr.warning("请选择测试目标!");
         } else if (b == 0 && typeof taskDispatch.targetGroupIds == "undefined") {
-            toastr.warning("请选择测试目标组！");
+            toastr.warning("请选择测试目标组!");
         } else {
             $.ajax({
                 type: "POST", /*GET会乱码*/
@@ -545,11 +545,11 @@ function submit_dispatch() {
             taskDispatch.probeIds = "[" + taskDispatch.probeIds + "]"
         }
         if (typeof taskDispatch.probeGroupIds == "undefined"){
-            toastr.warning("请选择探针组！");
+            toastr.warning("请选择探针组!");
         } else if (b == 1 && typeof taskDispatch.targetIds == "undefined") {
-            toastr.warning("请选择测试目标！");
+            toastr.warning("请选择测试目标!");
         } else if (b == 0 && typeof taskDispatch.targetGroupIds == "undefined") {
-            toastr.warning("请选择测试目标组！");
+            toastr.warning("请选择测试目标组!");
         } else {
             $.ajax({
                 type: "POST", /*GET会乱码*/
@@ -651,11 +651,11 @@ var taskform_data = new Vue({
             tasknewJson.remark = "无";
             var tasknew = JSON.stringify(tasknewJson);
             if (tasknewJson.taskName == "") {
-                toastr.warning("请输入任务名称！");
+                toastr.warning("请输入任务名称!");
             } else if (tasknewJson.serviceType == "") {
-                toastr.warning("请选择任务类型！");
+                toastr.warning("请选择任务类型!");
             } else if (tasknewJson.schPolicyId == ""){
-                toastr.warning("请选择调度策略！");
+                toastr.warning("请选择调度策略!");
             } else {
                 var tasknew = JSON.stringify(tasknewJson);
                 console.log(tasknewJson);
