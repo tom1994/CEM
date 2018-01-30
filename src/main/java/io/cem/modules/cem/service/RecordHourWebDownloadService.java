@@ -17,6 +17,8 @@ import java.util.Map;
 public interface RecordHourWebDownloadService {
 	
 	RecordHourWebDownloadEntity queryObject(Integer id);
+
+	List<RecordHourWebDownloadEntity> queryWebDownload(Map<String,Object> map);
 	
 	List<RecordHourWebDownloadEntity> queryList(Map<String, Object> map);
 

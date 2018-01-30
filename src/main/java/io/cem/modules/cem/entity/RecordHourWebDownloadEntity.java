@@ -32,7 +32,7 @@ public class RecordHourWebDownloadEntity implements Serializable {
 	//测试目标ID
 	private Integer targetId;
 	//测试目标IP
-	private Integer targetIp;
+	private Long targetIp;
 	//记录日期
 	private Date recordDate;
 	//记录时间
@@ -155,13 +155,13 @@ public class RecordHourWebDownloadEntity implements Serializable {
 	/**
 	 * 设置：测试目标IP
 	 */
-	public void setTargetIp(Integer targetIp) {
+	public void setTargetIp(Long targetIp) {
 		this.targetIp = targetIp;
 	}
 	/**
 	 * 获取：测试目标IP
 	 */
-	public Integer getTargetIp() {
+	public Long getTargetIp() {
 		return targetIp;
 	}
 	/**

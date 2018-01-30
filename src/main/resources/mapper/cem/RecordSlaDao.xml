@@ -42,6 +42,78 @@
         <result property="remark" column="remark"/>
     </resultMap>
 
+	<resultMap type="io.cem.modules.cem.entity.RecordHourSlaEntity" id="recordHourSlaMap">
+		<result property="id" column="id"/>
+		<result property="cityId" column="city_id"/>
+		<result property="countyId" column="county_id"/>
+		<result property="probeId" column="probe_id"/>
+		<result property="port" column="port"/>
+		<result property="taskId" column="task_id"/>
+		<result property="serviceType" column="service_type"/>
+		<result property="targetId" column="target_id"/>
+		<result property="targetIp" column="target_ip"/>
+		<result property="recordDate" column="record_date"/>
+		<result property="recordTime" column="record_time"/>
+		<result property="delay" column="delay"/>
+		<result property="gDelay" column="g_delay"/>
+		<result property="rDelay" column="r_delay"/>
+		<result property="delayStd" column="delay_std"/>
+		<result property="gDelayStd" column="g_delay_std"/>
+		<result property="rDelayStd" column="r_delay_std"/>
+		<result property="delayVar" column="delay_var"/>
+		<result property="gDelayVar" column="g_delay_var"/>
+		<result property="rDelayVar" column="r_delay_var"/>
+		<result property="jitter" column="jitter"/>
+		<result property="gJitter" column="g_jitter"/>
+		<result property="rJitter" column="r_jitter"/>
+		<result property="jitterStd" column="jitter_std"/>
+		<result property="gJitterStd" column="g_jitter_std"/>
+		<result property="rJitterStd" column="r_jitter_std"/>
+		<result property="jitterVar" column="jitter_var"/>
+		<result property="gJitterVar" column="g_jitter_var"/>
+		<result property="rJitterVar" column="r_jitter_var"/>
+		<result property="lossRate" column="loss_rate"/>
+		<result property="remark" column="remark"/>
+		<result property="cityName" column="city_name"/>
+		<result property="areaName" column="area_name"/>
+		<result property="probeName" column="probe_name"/>
+		<result property="targetName" column="target_name"/>
+	</resultMap>
+
+	<resultMap type="io.cem.modules.cem.entity.RecordDaySlaEntity" id="recordDaySlaMap">
+		<result property="id" column="id"/>
+		<result property="cityId" column="city_id"/>
+		<result property="countyId" column="county_id"/>
+		<result property="probeId" column="probe_id"/>
+		<result property="port" column="port"/>
+		<result property="taskId" column="task_id"/>
+		<result property="serviceType" column="service_type"/>
+		<result property="targetId" column="target_id"/>
+		<result property="targetIp" column="target_ip"/>
+		<result property="recordDate" column="record_date"/>
+		<result property="recordTime" column="record_time"/>
+		<result property="delay" column="delay"/>
+		<result property="gDelay" column="g_delay"/>
+		<result property="rDelay" column="r_delay"/>
+		<result property="delayStd" column="delay_std"/>
+		<result property="gDelayStd" column="g_delay_std"/>
+		<result property="rDelayStd" column="r_delay_std"/>
+		<result property="delayVar" column="delay_var"/>
+		<result property="gDelayVar" column="g_delay_var"/>
+		<result property="rDelayVar" column="r_delay_var"/>
+		<result property="jitter" column="jitter"/>
+		<result property="gJitter" column="g_jitter"/>
+		<result property="rJitter" column="r_jitter"/>
+		<result property="jitterStd" column="jitter_std"/>
+		<result property="gJitterStd" column="g_jitter_std"/>
+		<result property="rJitterStd" column="r_jitter_std"/>
+		<result property="jitterVar" column="jitter_var"/>
+		<result property="gJitterVar" column="g_jitter_var"/>
+		<result property="rJitterVar" column="r_jitter_var"/>
+		<result property="lossRate" column="loss_rate"/>
+		<result property="remark" column="remark"/>
+	</resultMap>
+
 	<select id="queryObject" resultType="io.cem.modules.cem.entity.RecordSlaEntity">
 		select * from record_sla where id = #{value}
 	</select>
@@ -59,6 +131,85 @@
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
+	</select>
+
+	<select id="querySla" resultType="io.cem.modules.cem.entity.RecordHourSlaEntity">
+		select rs.probe_id AS probe_id,
+		rs.port AS port,
+		rs.task_id AS task_id,
+		rs.service_type AS service_type,
+		rs.target_id AS target_id,
+		rs.target_ip AS target_ip,
+		rs.record_time AS record_time,
+		rs.record_date AS record_date,
+		probe.city_id AS city_id,
+		probe.county_id AS county_id,
+		AVG(rs.delay) AS delay,
+        AVG(rs.g_delay) AS g_delay,
+        AVG(rs.r_delay) AS r_delay,
+		AVG(rs.delay_std) AS delay_std,
+        AVG(rs.g_delay_std) AS g_delay_std,
+        AVG(rs.r_delay_std) AS r_delay_std,
+		AVG(rs.delay_var) AS delay_var,
+        AVG(rs.g_delay_var) AS g_delay_var,
+        AVG(rs.r_delay_var) AS r_delay_var,
+		AVG(rs.jitter) AS jitter,
+        AVG(rs.g_jitter) AS g_jitter,
+        AVG(rs.r_jitter) AS r_jitter,
+		AVG(rs.jitter_std) AS jitter_std,
+        AVG(rs.g_jitter_std) AS g_jitter_std,
+        AVG(rs.r_jitter_std) AS r_jitter_std,
+		AVG(rs.jitter_var) AS jitter_var,
+        AVG(rs.g_jitter_var) AS g_jitter_var,
+        AVG(rs.r_jitter_var) AS r_jitter_var,
+		AVG(rs.loss_rate) AS loss_rate,
+		rs.remark AS remark
+		FROM record_sla rs
+		LEFT JOIN probe
+		ON  rs.probe_id =probe.id
+		WHERE rs.record_date = #{record_date}
+		AND rs.record_time BETWEEN #{start_time} AND #{terminal_time}
+		AND rs.state = 0
+		GROUP BY rs.port,rs.service_type,rs.target_id,rs.task_id,rs.probe_id;
+	</select>
+
+	<select id="queryDay" resultType="io.cem.modules.cem.entity.RecordDayPingEntity">
+		select rs.probe_id AS probe_id,
+		rs.port AS port,
+		rs.task_id AS task_id,
+		rs.service_type AS service_type,
+		rs.target_id AS target_id,
+		rs.target_ip AS target_ip,
+		rs.record_time AS record_time,
+		rs.record_date AS record_date,
+		probe.city_id AS city_id,
+		probe.county_id AS county_id,
+		AVG(rs.delay) AS delay,
+        AVG(rs.g_delay) AS g_delay,
+        AVG(rs.r_delay) AS r_delay,
+		AVG(rs.delay_std) AS delay_std,
+        AVG(rs.g_delay_std) AS g_delay_std,
+        AVG(rs.r_delay_std) AS r_delay_std,
+		AVG(rs.delay_var) AS delay_var,
+        AVG(rs.g_delay_var) AS g_delay_var,
+        AVG(rs.r_delay_var) AS r_delay_var,
+		AVG(rs.jitter) AS jitter,
+        AVG(rs.g_jitter) AS g_jitter,
+        AVG(rs.r_jitter) AS r_jitter,
+		AVG(rs.jitter_std) AS jitter_std,
+        AVG(rs.g_jitter_std) AS g_jitter_std,
+        AVG(rs.r_jitter_std) AS r_jitter_std,
+		AVG(rs.jitter_var) AS jitter_var,
+        AVG(rs.g_jitter_var) AS g_jitter_var,
+        AVG(rs.r_jitter_var) AS r_jitter_var,
+		AVG(rs.loss_rate) AS loss_rate,
+		rs.remark AS remark
+		FROM record_sla rs
+		LEFT JOIN probe
+		ON  rs.probe_id =probe.id
+		WHERE rs.record_date = #{record_date}
+		AND rs.state = 0
+		GROUP BY rs.port,rs.service_type,rs.target_id,rs.task_id,rs.probe_id;
 	</select>
 
 	<select id="querySlaTest" resultType="io.cem.modules.cem.entity.RecordSlaEntity">

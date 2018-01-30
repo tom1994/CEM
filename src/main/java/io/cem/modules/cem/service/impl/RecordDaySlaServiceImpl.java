@@ -1,5 +1,6 @@
 package io.cem.modules.cem.service.impl;
 
+import io.cem.modules.cem.dao.RecordSlaDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,8 @@ import io.cem.modules.cem.service.RecordDaySlaService;
 public class RecordDaySlaServiceImpl implements RecordDaySlaService {
 	@Autowired
 	private RecordDaySlaDao recordDaySlaDao;
+	@Autowired
+	private RecordSlaDao recordSlaDao;
 	
 	@Override
 	public RecordDaySlaEntity queryObject(Integer id){
@@ -26,7 +29,10 @@ public class RecordDaySlaServiceImpl implements RecordDaySlaService {
 	public List<RecordDaySlaEntity> queryList(Map<String, Object> map){
 		return recordDaySlaDao.queryList(map);
 	}
-	
+
+	@Override
+	public List<RecordDaySlaEntity> queryDay(Map<String,Object> map) {return recordSlaDao.queryDay(map);}
+
 	@Override
 	public int queryTotal(Map<String, Object> map){
 		return recordDaySlaDao.queryTotal(map);

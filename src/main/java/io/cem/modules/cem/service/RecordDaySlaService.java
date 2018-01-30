@@ -17,6 +17,8 @@ public interface RecordDaySlaService {
 	RecordDaySlaEntity queryObject(Integer id);
 	
 	List<RecordDaySlaEntity> queryList(Map<String, Object> map);
+
+	List<RecordDaySlaEntity> queryDay(Map<String,Object> map);
 	
 	int queryTotal(Map<String, Object> map);
 	

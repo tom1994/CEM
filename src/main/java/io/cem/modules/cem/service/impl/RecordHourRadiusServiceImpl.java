@@ -1,5 +1,6 @@
 package io.cem.modules.cem.service.impl;
 
+import io.cem.modules.cem.dao.RecordRadiusDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,12 +17,19 @@ import io.cem.modules.cem.service.RecordHourRadiusService;
 public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 	@Autowired
 	private RecordHourRadiusDao recordHourRadiusDao;
+	@Autowired
+	private RecordRadiusDao recordRadiusDao;
 	
 	@Override
 	public RecordHourRadiusEntity queryObject(Integer id){
 		return recordHourRadiusDao.queryObject(id);
 	}
-	
+
+	@Override
+	public List<RecordHourRadiusEntity> queryRadius(Map<String, Object> map){
+		return recordRadiusDao.queryRadius(map);
+	}
+
 	@Override
 	public List<RecordHourRadiusEntity> queryList(Map<String, Object> map){
 		return recordHourRadiusDao.queryList(map);

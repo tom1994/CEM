@@ -17,6 +17,8 @@ public interface RecordDayWebDownloadService {
 	RecordDayWebDownloadEntity queryObject(Integer id);
 	
 	List<RecordDayWebDownloadEntity> queryList(Map<String, Object> map);
+
+	List<RecordDayWebDownloadEntity> queryDay(Map<String,Object> map);
 	
 	int queryTotal(Map<String, Object> map);
 	

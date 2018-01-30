@@ -19,6 +19,8 @@ public interface RecordHourWebVideoService {
 	
 	List<RecordHourWebVideoEntity> queryList(Map<String, Object> map);
 
+	List<RecordHourWebVideoEntity> queryWebVideo(Map<String,Object> map);
+
 	List<RecordHourWebVideoEntity> queryVideoList(Map<String, Object> map);
 
 	List<RecordHourWebVideoEntity> queryDayList(Map<String, Object> map);

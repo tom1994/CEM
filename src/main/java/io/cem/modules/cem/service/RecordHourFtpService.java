@@ -17,6 +17,7 @@ public interface RecordHourFtpService {
 	RecordHourFtpEntity queryObject(Integer id);
 	
 	List<RecordHourFtpEntity> queryList(Map<String, Object> map);
+	List<RecordHourFtpEntity> queryFtp(Map<String,Object> map);
 
 	List<RecordHourFtpEntity> queryFtpList(Map<String, Object> map);
 

@@ -18,6 +18,8 @@ public interface RecordHourDnsService {
 	
 	List<RecordHourDnsEntity> queryList(Map<String, Object> map);
 
+	List<RecordHourDnsEntity> queryDns(Map<String,Object> map);
+
 	List<RecordHourDnsEntity> queryDnsList(Map<String, Object> map);
 
 	List<RecordHourDnsEntity> queryDayList(Map<String, Object> map);

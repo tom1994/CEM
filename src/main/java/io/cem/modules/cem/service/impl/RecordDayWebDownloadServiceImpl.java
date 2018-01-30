@@ -1,5 +1,6 @@
 package io.cem.modules.cem.service.impl;
 
+import io.cem.modules.cem.dao.RecordWebDownloadDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,8 @@ import io.cem.modules.cem.service.RecordDayWebDownloadService;
 public class RecordDayWebDownloadServiceImpl implements RecordDayWebDownloadService {
 	@Autowired
 	private RecordDayWebDownloadDao recordDayWebDownloadDao;
+	@Autowired
+	private RecordWebDownloadDao recordWebDownloadDao;
 	
 	@Override
 	public RecordDayWebDownloadEntity queryObject(Integer id){
@@ -26,7 +29,11 @@ public class RecordDayWebDownloadServiceImpl implements RecordDayWebDownloadServ
 	public List<RecordDayWebDownloadEntity> queryList(Map<String, Object> map){
 		return recordDayWebDownloadDao.queryList(map);
 	}
-	
+
+	@Override
+	public List<RecordDayWebDownloadEntity> queryDay(Map<String,Object> map) {return recordWebDownloadDao.queryDay(map);}
+
+
 	@Override
 	public int queryTotal(Map<String, Object> map){
 		return recordDayWebDownloadDao.queryTotal(map);
