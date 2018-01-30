@@ -15,4 +15,5 @@ public interface ProbeDao extends BaseDao<ProbeEntity> {
     ProbeEntity queryDetail(Integer id);
     ProbeEntity queryProbeByLayer(Integer id);
     List<ProbeEntity> queryProbeListByGroup(Integer id);
+    void updateUpstream(Integer id);
 }

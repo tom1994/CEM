@@ -33,4 +33,6 @@ public interface ProbeService {
 	void delete(Integer id);
 	
 	void deleteBatch(Integer[] ids);
+
+	void updateUpstream(Integer id);
 }

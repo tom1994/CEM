@@ -48,6 +48,7 @@
     <select id="queryTargetList" resultType="io.cem.modules.cem.entity.TargetEntity">
 		select * from target
 		WHERE superservice_type = #{value}
+		OR superservice_type = 0
 		order by id
 	</select>
 
