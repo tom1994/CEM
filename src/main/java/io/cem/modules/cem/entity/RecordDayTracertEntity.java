@@ -1,7 +1,6 @@
 package io.cem.modules.cem.entity;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 
 
@@ -11,12 +10,12 @@ import java.util.Date;
  * 
  * @author ${author}
  * @email ${email}
- * @date 2017-12-02 14:35:31
+ * @date 2018-01-30 12:10:16
  */
-public class RecordHourPingEntity implements Serializable {
+public class RecordDayTracertEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	//记录ID
+	//测试记录ID
 	private Integer id;
 	//地市
 	private Integer cityId;
@@ -28,18 +27,12 @@ public class RecordHourPingEntity implements Serializable {
 	private String port;
 	//任务ID
 	private Integer taskId;
-
-	private String taskName;
-
 	//子业务类型
 	private Integer serviceType;
-
-	private String servicetypeName;
-
 	//测试目标ID
 	private Integer targetId;
 	//测试目标IP
-	private Long targetIp;
+	private Integer targetIp;
 	//记录日期
 	private Date recordDate;
 	//记录时间
@@ -58,31 +51,19 @@ public class RecordHourPingEntity implements Serializable {
 	private Double jitterVar;
 	//丢包率
 	private Double lossRate;
+	//单跳测试结果
+	private String hopRecord;
 	//备注
 	private String remark;
-	//地市名称
-	private String cityName;
-	//区县名称
-	private String areaName;
-	//探针名称
-	private String probeName;
-	//测试目标名称
-	private String targetName;
-
-	private Integer accessLayer;
-
-	private String targetipName;
-
-	private String timeRange;
 
 	/**
-	 * 设置：记录ID
+	 * 设置：测试记录ID
 	 */
 	public void setId(Integer id) {
 		this.id = id;
 	}
 	/**
-	 * 获取：记录ID
+	 * 获取：测试记录ID
 	 */
 	public Integer getId() {
 		return id;
@@ -174,13 +155,13 @@ public class RecordHourPingEntity implements Serializable {
 	/**
 	 * 设置：测试目标IP
 	 */
-	public void setTargetIp(Long targetIp) {
+	public void setTargetIp(Integer targetIp) {
 		this.targetIp = targetIp;
 	}
 	/**
 	 * 获取：测试目标IP
 	 */
-	public Long getTargetIp() {
+	public Integer getTargetIp() {
 		return targetIp;
 	}
 	/**
@@ -292,6 +273,18 @@ public class RecordHourPingEntity implements Serializable {
 		return lossRate;
 	}
 	/**
+	 * 设置：单跳测试结果
+	 */
+	public void setHopRecord(String hopRecord) {
+		this.hopRecord = hopRecord;
+	}
+	/**
+	 * 获取：单跳测试结果
+	 */
+	public String getHopRecord() {
+		return hopRecord;
+	}
+	/**
 	 * 设置：备注
 	 */
 	public void setRemark(String remark) {
@@ -303,62 +296,4 @@ public class RecordHourPingEntity implements Serializable {
 	public String getRemark() {
 		return remark;
 	}
-
-	public String getCityName() {
-		return cityName;
-	}
-
-	public void setCityName(String cityName) {
-		this.cityName = cityName;
-	}
-
-	public String getAreaName() {
-		return areaName;
-	}
-
-	public void setAreaName(String areaName) {
-		this.areaName = areaName;
-	}
-
-	public String getProbeName() {
-		return probeName;
-	}
-
-	public void setProbeName(String probeName) {
-		this.probeName = probeName;
-	}
-
-	public String getTargetName() {
-		return targetName;
-	}
-
-	public void setTargetName(String targetName) {
-		this.targetName = targetName;
-	}
-
-	public Integer getAccessLayer() {
-		return accessLayer;
-	}
-
-	public void setAccessLayer(Integer accessLayer) {
-		this.accessLayer = accessLayer;
-	}
-
-	public String getTargetipName() {return targetipName;}
-
-	public void setTargetipName(String targetipName) {this.targetipName = targetipName;}
-
-	public String getServicetypeName() {return servicetypeName;}
-
-	public void setServicetypeName(String servicetypeName) {this.servicetypeName = servicetypeName;}
-
-	public String getTimeRange() {
-		return timeRange;
-	}
-
-	public void setTimeRange(String timeRange) {this.timeRange = timeRange;}
-
-	public String getTaskName() {return taskName;}
-
-	public void setTaskName(String taskName) {this.taskName = taskName;}
 }

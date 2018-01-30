@@ -19,8 +19,14 @@ import java.util.Map;
 public interface RecordHourPingService {
 	
 	RecordHourPingEntity queryObject(Integer id);
+
+	Map queryTime();
+
+	Map queryDay();
 	
 	List<RecordHourPingEntity> queryList(Map<String, Object> map);
+
+	List<RecordHourPingEntity> queryPing(Map<String, Object> map);
 
 	List<RecordHourPingEntity> queryPingList(Map<String, Object> map);
 

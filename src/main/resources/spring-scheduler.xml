@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="
-        http://www.springframework.org/schema/beans 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
 
-	<bean id="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+    <bean id="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
         <property name="dataSource" ref="dataSource" />
         <property name="quartzProperties">
             <props>
@@ -21,9 +21,9 @@
                 <prop key="org.quartz.jobStore.isClustered">true</prop>
                 <prop key="org.quartz.jobStore.clusterCheckinInterval">15000</prop>
                 <prop key="org.quartz.jobStore.maxMisfiresToHandleAtATime">1</prop>
-                
+
                 <prop key="org.quartz.jobStore.misfireThreshold">12000</prop>
-				<!-- 表前缀 -->
+                <!-- 表前缀 -->
                 <prop key="org.quartz.jobStore.tablePrefix">QRTZ_</prop>
             </props>
         </property>
@@ -42,5 +42,5 @@
         <property name="autoStartup" value="true" />
 
     </bean>
-	
 </beans>
+
