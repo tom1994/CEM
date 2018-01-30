@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.cem.modules.cem.dao.RecordDayTracertDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.cem.modules.cem.entity.RecordDayTracertEntity" id="recordDayTracertMap">
+        <result property="id" column="id"/>
+        <result property="cityId" column="city_id"/>
+        <result property="countyId" column="county_id"/>
+        <result property="probeId" column="probe_id"/>
+        <result property="port" column="port"/>
+        <result property="taskId" column="task_id"/>
+        <result property="serviceType" column="service_type"/>
+        <result property="targetId" column="target_id"/>
+        <result property="targetIp" column="target_ip"/>
+        <result property="recordDate" column="record_date"/>
+        <result property="recordTime" column="record_time"/>
+        <result property="delay" column="delay"/>
+        <result property="delayStd" column="delay_std"/>
+        <result property="delayVar" column="delay_var"/>
+        <result property="jitter" column="jitter"/>
+        <result property="jitterStd" column="jitter_std"/>
+        <result property="jitterVar" column="jitter_var"/>
+        <result property="lossRate" column="loss_rate"/>
+        <result property="hopRecord" column="hop_record"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="io.cem.modules.cem.entity.RecordDayTracertEntity">
+		select * from record_day_tracert where id = #{value}
+	</select>
+
+	<select id="queryList" resultType="io.cem.modules.cem.entity.RecordDayTracertEntity">
+		select * from record_day_tracert
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from record_day_tracert 
+	</select>
+	 
+	<insert id="save" parameterType="io.cem.modules.cem.entity.RecordDayTracertEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into record_day_tracert
+		(
+			`city_id`, 
+			`county_id`, 
+			`probe_id`, 
+			`port`, 
+			`task_id`, 
+			`service_type`, 
+			`target_id`, 
+			`target_ip`, 
+			`record_date`, 
+			`record_time`, 
+			`delay`, 
+			`delay_std`, 
+			`delay_var`, 
+			`jitter`, 
+			`jitter_std`, 
+			`jitter_var`, 
+			`loss_rate`, 
+			`hop_record`, 
+			`remark`
+		)
+		values
+		(
+			#{cityId}, 
+			#{countyId}, 
+			#{probeId}, 
+			#{port}, 
+			#{taskId}, 
+			#{serviceType}, 
+			#{targetId}, 
+			#{targetIp}, 
+			#{recordDate}, 
+			#{recordTime}, 
+			#{delay}, 
+			#{delayStd}, 
+			#{delayVar}, 
+			#{jitter}, 
+			#{jitterStd}, 
+			#{jitterVar}, 
+			#{lossRate}, 
+			#{hopRecord}, 
+			#{remark}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="io.cem.modules.cem.entity.RecordDayTracertEntity">
+		update record_day_tracert 
+		<set>
+			<if test="cityId != null">`city_id` = #{cityId}, </if>
+			<if test="countyId != null">`county_id` = #{countyId}, </if>
+			<if test="probeId != null">`probe_id` = #{probeId}, </if>
+			<if test="port != null">`port` = #{port}, </if>
+			<if test="taskId != null">`task_id` = #{taskId}, </if>
+			<if test="serviceType != null">`service_type` = #{serviceType}, </if>
+			<if test="targetId != null">`target_id` = #{targetId}, </if>
+			<if test="targetIp != null">`target_ip` = #{targetIp}, </if>
+			<if test="recordDate != null">`record_date` = #{recordDate}, </if>
+			<if test="recordTime != null">`record_time` = #{recordTime}, </if>
+			<if test="delay != null">`delay` = #{delay}, </if>
+			<if test="delayStd != null">`delay_std` = #{delayStd}, </if>
+			<if test="delayVar != null">`delay_var` = #{delayVar}, </if>
+			<if test="jitter != null">`jitter` = #{jitter}, </if>
+			<if test="jitterStd != null">`jitter_std` = #{jitterStd}, </if>
+			<if test="jitterVar != null">`jitter_var` = #{jitterVar}, </if>
+			<if test="lossRate != null">`loss_rate` = #{lossRate}, </if>
+			<if test="hopRecord != null">`hop_record` = #{hopRecord}, </if>
+			<if test="remark != null">`remark` = #{remark}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from record_day_tracert where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from record_day_tracert where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

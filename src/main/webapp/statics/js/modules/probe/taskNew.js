@@ -645,6 +645,7 @@ var taskform_data = new Vue({
             var paramnewJson = getFormJson2($('#' + stid.get(parseInt(tasknewJson.serviceType)) + '_param'));
             var paramnew = JSON.stringify(paramnewJson);
             tasknewJson.parameter = paramnew;
+            console.log(tasknewJson.parameter);
             tasknewJson.isDeleted = "0";
             tasknewJson.alarmTemplateId = "0";
             tasknewJson.createTime = oDate.Format("yyyy-MM-dd hh:mm:ss");

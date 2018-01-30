@@ -46,6 +46,11 @@ public class ProbeServiceImpl implements ProbeService {
     }
 
     @Override
+    public void updateUpstream(Integer id) {
+         probeDao.updateUpstream(id);
+    }
+
+    @Override
     public List<ProbeEntity> queryProbe(Integer id) {
         return probeDao.queryProbe(id);
     }

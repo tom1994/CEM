@@ -91,6 +91,7 @@ public class RecordHourPingController {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
+		System.out.println("map!!!!!"+map);
 
 		List<ScoreEntity> scoreList = new ArrayList<>();
 		//查询天表
