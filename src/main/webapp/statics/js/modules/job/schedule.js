@@ -98,12 +98,14 @@ var vm = new Vue({
 			}
 			
 			confirm('确定要删除选中的记录？', function(){
+				console.log('success');
 				$.ajax({
 					type: "POST",
 				    url: baseURL + "sys/schedule/delete",
                     contentType: "application/json",
 				    data: JSON.stringify(jobIds),
 				    success: function(r){
+						console.log('success');
 						if(r.code == 0){
 							alert('操作成功', function(index){
 								vm.reload();
