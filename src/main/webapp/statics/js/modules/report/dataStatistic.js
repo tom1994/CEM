@@ -272,18 +272,18 @@ var pingresulttable = new Vue({
     data: {
         headers: [
             {title: '<div style="width:10px"></div>'},
-            {title: '<div style="width:70px">探针名</div>'},
+            {title: '<div style="width:90px">探针名</div>'},
             {title: '<div style="width:60px">探针端口</div>'},
             {title: '<div style="width:110px">业务类型</div>'},
             {title: '<div style="width:110px">测试任务名称</div>'},
             {title: '<div style="width:110px">测试目标</div>'},
             {title: '<div style="width:90px">测试目标IP</div>'},
-            {title: '<div style="width:65px">时延(毫秒)</div>'},
-            {title: '<div style="width:100px">时延标准差(毫秒)</div>'},
-            {title: '<div style="width:90px">时延方差(毫秒)</div>'},
-            {title: '<div style="width:65px">抖动(毫秒)</div>'},
-            {title: '<div style="width:100px">抖动标准差(毫秒)</div>'},
-            {title: '<div style="width:90px">抖动方差(毫秒)</div>'},
+            {title: '<div style="width:65px">时延(ms)</div>'},
+            {title: '<div style="width:100px">时延标准差(ms)</div>'},
+            {title: '<div style="width:90px">时延方差(ms)</div>'},
+            {title: '<div style="width:65px">抖动(ms)</div>'},
+            {title: '<div style="width:100px">抖动标准差(ms)</div>'},
+            {title: '<div style="width:90px">抖动方差(ms)</div>'},
             {title: '<div style="width:70px">丢包率(%)</div>'},
             {title: '<div style="width:130px">记录时间</div>'},
             {title: '<div style="width:150px">统计时间</div>'},
@@ -291,8 +291,9 @@ var pingresulttable = new Vue({
         ],
         rows: [],
         dtHandle: null,
-        resultdata: {startDate:today.Format("yyyy-MM-dd"), terminalDate:(new Date()).Format("yyyy-MM-dd"),interval: "",
-            probe_id:'42', task_id:'1000', target_id:'1022', start_time:"00:00:00", end_time:"24:00:00", queryType: "1"}
+        resultdata: {service_type:"1", interval: "",probe_id:"42", task_id:"1000", target_id:"1022",
+            startDate:today.Format("yyyy-MM-dd"), terminalDate:(new Date()).Format("yyyy-MM-dd"),
+            start_time:"00:00:00", end_time:"24:00:00", queryType:"1"}
     },
     methods: {
         reset: function () {

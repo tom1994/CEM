@@ -237,7 +237,8 @@
         LEFT JOIN dic_data
         ON dic_data.dic_type_id = 5 AND rhp.service_type = dic_data.data_id
         WHERE
-        rhp.record_date BETWEEN #{startDate} AND #{terminalDate}
+        rhp.service_type = #{service_type}
+        AND rhp.record_date BETWEEN #{startDate} AND #{terminalDate}
         AND (time_format(rhp.record_time,'%H') BETWEEN #{startTime} AND #{terminalTime})
         AND rhp.record_time BETWEEN #{start_time} AND #{end_time}
         <if test="task_id != null and task_id != ''">
@@ -250,8 +251,7 @@
             AND rhp.probe_id = #{probe_id}
         </if>
         GROUP BY
-        rhp.service_type,rhp.target_id,rhp.task_id,rhp.probe_id,date_format(rhp.record_date,'%Y-%m-%d'),time_format(record_time,
-        '%H')
+        rhp.service_type,rhp.target_id,rhp.task_id,rhp.probe_id,date_format(rhp.record_date,'%Y-%m-%d'),time_format(record_time,'%H')
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
                 order by ${sidx} ${order}
