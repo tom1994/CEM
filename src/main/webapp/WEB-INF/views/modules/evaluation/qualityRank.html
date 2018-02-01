@@ -4,7 +4,7 @@
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -52,9 +52,8 @@
                                                             style="width: 110px">
                                                         <option value="">所有区县</option>
                                                         <option v-for="item in areas"
-                                                                v-bind:value="item.message.countyId">{{
-                                                            item.message.countyName
-                                                            }}
+                                                                v-bind:value="item.message.countyId">
+                                                            {{ item.message.countyName }}
                                                         </option>
                                                     </select>
                                                 </div>
@@ -112,6 +111,11 @@
                                                     v-on:click="testagentListsearch"><span
                                                     class="glyphicon glyphicon-zoom-in"></span>查询
                                             </button>
+                                            <button type="button" class="btn btn-sm btn-success"
+                                                    style="margin-right: 5px;position: relative;top: 50%;"
+                                                    v-on:click="reset"><span
+                                                    class="glyphicon glyphicon-refresh"></span>重置
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -139,11 +143,6 @@
                             </div>
                         </div>
                     </div>
-
-
-
-
-
                 </div>
             </div>
 
@@ -228,6 +227,11 @@
                                                     style="margin-right: 5px;position: relative;top: 50%;"
                                                     v-on:click="testagentListsearch"><span
                                                     class="glyphicon glyphicon-zoom-in"></span>查询
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-success"
+                                                    style="margin-right: 5px;position: relative;top: 50%;"
+                                                    v-on:click="reset"><span
+                                                    class="glyphicon glyphicon-refresh"></span>重置
                                             </button>
                                         </div>
                                     </div>

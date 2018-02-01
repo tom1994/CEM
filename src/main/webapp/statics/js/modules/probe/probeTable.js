@@ -235,6 +235,7 @@ var probegroup_handle = new Vue({
             }
         },
         reset: function () {    /*重置*/
+            document.getElementById("groupsearchdata").reset();
             grouptable.reset();
         }
 

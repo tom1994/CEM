@@ -11,6 +11,9 @@ var targetNames = new Array();
 var probeNames = new Array();
 var typeNames = new Array();
 var statusNames = new Array();
+var today = new Date();
+today.setDate(today.getDate() - 1); //显示近一天内的数据
+
 
 var st = new Map();//servicetype字典，可通过get方法查对应字符串。
 st.set(0, "综合业务");
@@ -168,34 +171,30 @@ var getAreaService = function (serviceId) {
 
 var search_service = new Vue({
     el: '#search',
-    data: {
-        /*name: [],
-        scheduler: [],
-        remark: []*/
-    },
+    data: {},
     // 在 `methods` 对象中定义方法
     methods: {
         testagentListsearch: function () {
             var searchJson = getFormJson($('#probesearch'));
-            if((searchJson.startDate)>(searchJson.terminalDate)){
+            if ((searchJson.startDate) > (searchJson.terminalDate)) {
                 console.log("时间选择有误，请重新选择！");
                 $('#nonavailable_time').modal('show');
-            }else{
-                var ava_start=searchJson.startDate.substr(0,10);
-                var ava_terminal=searchJson.terminalDate.substr(0,10);
-                var startTime=searchJson.startDate.substr(11,15);
-                var terminalTime=searchJson.startDate.substr(11,15);
+            } else {
+                var ava_start = searchJson.startDate.substr(0, 10);
+                var ava_terminal = searchJson.terminalDate.substr(0, 10);
+                var startTime = searchJson.startDate.substr(11, 15);
+                var terminalTime = searchJson.startDate.substr(11, 15);
                 var search = new Object();
                 search.city_id = searchJson.city_id;
                 search.couty_id = searchJson.county_id;
                 search.service = searchJson.service_type;
                 search.target_id = searchJson.target_id;
-                if(ava_start.length!=0&&ava_terminal.length!=0&&startTime.length!=0&&terminalTime.length!=0) {
+                if (ava_start.length != 0 && ava_terminal.length != 0 && startTime.length != 0 && terminalTime.length != 0) {
                     search.ava_start = ava_start;
                     search.ava_terminal = ava_terminal;
                     search.starTime = startTime;
                     search.terminalTime = terminalTime;
-                }else{
+                } else {
                     search.ava_start = (new Date()).Format("yyyy-MM-dd");
                     search.ava_terminal = (new Date()).Format("yyyy-MM-dd");
                 }
@@ -203,8 +202,14 @@ var search_service = new Vue({
                 console.log(schedulepolicy);
                 probetable.probedata = search;
                 probetable.redraw();
-
             }
+        },
+        reset: function () {    /*重置*/
+            document.getElementById("probesearch").reset();
+            var data = {city_id:"110100",couty_id:"110108",target_id:"1022",ava_start:today.Format("yyyy-MM-dd"),
+                ava_terminal:(new Date()).Format("yyyy-MM-dd"),service:'1'};
+            probetable.probedata = data;
+            probetable.redraw();
         }
     }
 });
@@ -241,6 +246,13 @@ var search_area_service = new Vue({
 
 
             }
+        },
+        reset: function () {    /*重置*/
+            document.getElementById("areasearch").reset();
+            var data = {city_id:"110100",couty_id:"110108",target_id:"1022",ava_start:today.Format("yyyy-MM-dd"),
+                ava_terminal:(new Date()).Format("yyyy-MM-dd"),service:'1'};
+            areatable.probedata = data;
+            areatable.redraw();
         }
     }
 });
@@ -310,7 +322,7 @@ var probetable = new Vue({
         ],
         rows: [],
         dtHandle: null,
-        probedata: {ava_start:(new Date()).Format("yyyy-MM-dd"), ava_terminal:(new Date()).Format("yyyy-MM-dd"),service:'0'}
+        probedata: {city_id:"110100",couty_id:"110108",target_id:"1022",ava_start:today.Format("yyyy-MM-dd"), ava_terminal:(new Date()).Format("yyyy-MM-dd"),service:'1'}
 
     },
     methods: {
@@ -385,6 +397,7 @@ var probetable = new Vue({
                         returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
                         returnData.data = result.page.list;//返回的数据列表
                         // 重新整理返回数据以匹配表格
+                        console.log(returnData);
                         let rows = [];
                         var i = param.start+1;
                         result.page.list.forEach(function (item) {
@@ -425,7 +438,7 @@ var probetable = new Vue({
     }
 });
 
-// 探针排名列表
+// 区域排名列表
 var areatable = new Vue({
     el: '#areadata_table',
     data: {
@@ -441,8 +454,9 @@ var areatable = new Vue({
         ],
         rows: [],
         dtHandle: null,
-        probedata: {ava_start:(new Date()).Format("yyyy-MM-dd"), ava_terminal:(new Date()).Format("yyyy-MM-dd"),service:'0'}
-
+        //probedata: {ava_start:(new Date()).Format("yyyy-MM-dd"), ava_terminal:(new Date()).Format("yyyy-MM-dd"),service:'0'}
+        probedata:{ city_id:"110100",couty_id:"110108",target_id:"1022",ava_start:today.Format("yyyy-MM-dd"),
+        ava_terminal:(new Date()).Format("yyyy-MM-dd"),service:'1'}
     },
     methods: {
         reset: function () {
@@ -499,7 +513,7 @@ var areatable = new Vue({
                 param.page = (data.start / data.length) + 1;//当前页码
                 param.probedata = JSON.stringify(vm.probedata);
                 /*用于查询probe数据*/
-                console.log(param);
+                //console.log(param);
                 //ajax请求数据
                 $.ajax({
                     type: "POST", /*GET会乱码*/
@@ -508,7 +522,7 @@ var areatable = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                        console.log(result);
+                        //console.log(result);
                         //封装返回数据
                         let returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -533,7 +547,7 @@ var areatable = new Vue({
                             rows.push(row);
                         });
                         returnData.data = rows;
-                        console.log(returnData);
+                        //console.log(returnData);
                         //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);

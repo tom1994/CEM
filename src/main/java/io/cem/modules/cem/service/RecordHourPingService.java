@@ -51,6 +51,8 @@ public interface RecordHourPingService {
 	int differentDays(Date date1, Date date2);
 
 	int queryTotal(Map<String, Object> map);
+
+	int pingListTotal(Map<String, Object> map);
 	
 	void save(RecordHourPingEntity recordHourPing);
 	
