@@ -27,14 +27,13 @@ function dispatchId(array, leftIndex, rightIndex) {
         return array;
     }
 }
-
 //ping_Table
 var pingTable = new Vue({
     el: '#ping_table',
     data: {
         headers: [
-            {title: '<div style="width:10px"></div>'},
-            {title: '<div style="width:70px">探针名</div>'},
+            {title: '<div style="width:10px" ></div>'},
+            {title: '<div style="width:110px">探针名</div>'},
             {title: '<div style="width:60px">探针端口</div>'},
             {title: '<div style="width:75px">时延(秒)</div>'},
             {title: '<div style="width:100px">时延标准差(秒)</div>'},
@@ -95,6 +94,8 @@ var pingTable = new Vue({
             /*bLengthChange: false,*/    /*禁用Show entries*/
             scroll: false,
             oLanguage: {
+                // 没有数据的时候
+                sEmptyTable:"No Data!",
                 sLengthMenu: "每页 _MENU_ 行数据",
                 oPaginate: {
                     sNext: '<i class="fa fa-chevron-right" ></i>', /*图标替换上一页,下一页*/
@@ -111,9 +112,9 @@ var pingTable = new Vue({
                 param.page = (data.start / data.length) + 1;//当前页码
                 param.resultdata = JSON.stringify(vm.resultdata);
                 //传入的id
-                let ping = RequestJson.ping;
+                // let ping = RequestJson.ping;
                 // param.dispatchId = dispatchId(ping, 0, 6);
-                console.log(param.dispatchId,'ping');
+                // console.log(param.dispatchId,'ping');
                 //ajax请求数据
                 $('.warning').text('正在处理，请稍等');
                 $.ajax({
@@ -126,52 +127,50 @@ var pingTable = new Vue({
                     dataType: "json",
                     // contentType:"application/json",
                     success: function (result) {
-                        console.log(result)
-                        $('.warning').css('display', 'none')
+                        console.log(result);
+                        $('.warning').css('display', 'none');
                         $('.loader').hide();
+                        //  console.log(result.page.list)
                         // //封装返回数据
-                        // let returnData = {};
-                        // returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
-                        // returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
-                        // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
-                        // returnData.data = result.page.list;//返回的数据列表
-                        // // 重新整理返回数据以匹配表格
-                        // let rows = [];
-                        // var i = param.start + 1;
-                        // result.page.list.forEach(function (item) {
-                        //     let row = [];
-                        //     row.push(i++);
-                        //     row.push(item.probeName);
-                        //     row.push(item.port);
-                        //     row.push(item.servicetypeName);
-                        //     row.push(item.tasktypeName);
-                        //     row.push(item.taskName);
-                        //     row.push(item.targettypeName);
-                        //     row.push(item.targetName);
-                        //     row.push(item.targetipName);
-                        //     row.push(item.stateName);
-                        //     row.push(item.delay);
-                        //     row.push(item.delayStd);
-                        //     row.push(item.delayVar);
-                        //     row.push(item.jitter);
-                        //     row.push(item.jitterStd);
-                        //     row.push(item.jitterVar);
-                        //     row.push(item.lossRate);
-                        //     row.push((item.recordDate).substr(0, 10) + "&nbsp;" + item.recordTime);
-                        //     row.push(item.remark);
-                        //     rows.push(row);
-                        // });
-                        // returnData.data = rows;
-                        // //console.log(returnData);
-                        // //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
-                        // //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
-                        // callback(returnData);
-                       // $("#pingdata_table").colResizable({
-                       //      liveDrag: true,
-                       //      gripInnerHtml: "<div class='grip'></div>",
-                       //      draggingClass: "dragging",
-                       //      resizeMode: 'overflow',
-                       //  });
+                        let returnData = {};
+                        returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
+                        returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
+                        returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
+                        returnData.data = result.page.list;//返回的数据列表
+                        // 重新整理返回数据以匹配表格
+                        let rows = [];
+                        var i = param.start + 1;
+                        result.page.list.forEach(function (item) {
+                            let row = [];
+                            row.push(i++);
+                            row.push(item.probeName);
+                            row.push(item.port);
+                            row.push(item.delay);
+                            row.push(item.delayStd);
+                            row.push(item.delayVar);
+                            row.push(item.jitter);
+                            row.push(item.jitterStd);
+                            row.push(item.jitterVar);
+                            row.push(item.lossRate);
+                            row.push(item.targetId);
+                            row.push(item.targetIp);
+                            row.push(item.targetLoc);
+                            row.push(item.state);
+                            //row.push((item.recordDate).substr(0, 10) + "&nbsp;" + item.recordTime);
+                            row.push(item.remark);
+                            rows.push(row);
+                        });
+                        returnData.data = rows;
+                        //console.log(returnData);
+                        //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
+                        //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
+                        callback(returnData);
+                        $("#ping_table").colResizable({
+                            liveDrag: true,//当设置为true时，将在拖动列锚点时更新表格布局。
+                            gripInnerHtml: "<div class='grip'></div>",
+                            draggingClass: "dragging",
+                            resizeMode :'overflow',//调整大小
+                        });
                     }
                 });
             }

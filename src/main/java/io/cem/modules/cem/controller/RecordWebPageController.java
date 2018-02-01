@@ -88,7 +88,7 @@ public class RecordWebPageController {
 			if (taskDispatchService.queryTestStatus(dispatchId) > 0) {
 				break;
 			} else {
-				sleep(5000);
+				sleep(20000);
 			}
 		}
 		List<RecordWebPageEntity> resultList = new ArrayList<>();
