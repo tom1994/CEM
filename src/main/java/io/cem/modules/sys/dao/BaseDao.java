@@ -46,5 +46,11 @@ public interface BaseDao<T> {
 	
 	int queryTotal(Map<String, Object> map);
 
+	int pingListTotal(Map<String, Object> map);
+
+	int queryPingTotal(Map<String, Object> map);
+
+	int queryIntervalTotal(Map<String, Object> map);
+
 	int queryTotal();
 }

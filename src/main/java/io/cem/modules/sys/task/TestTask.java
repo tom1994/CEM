@@ -56,22 +56,22 @@ public class TestTask {
 		logger.info("我是不带参数的test2方法，正在被执行");
 	}
 
-	public void pingHour(){
-		Map<String,Object> map = recordHourPingService.queryTime();
-		System.out.println(map);
-		List<RecordHourPingEntity> list = recordHourPingService.queryPing(map);
-		for(int i=0;i<list.size();i++){
-			recordHourPingService.save(list.get(i));
-		}
-	}
-
-	public void pingDay(){
-		Map<String,Object> map = recordHourPingService.queryDay();
-		System.out.println(map);
-		List<RecordDayPingEntity> list = recordDayPingService.queryDay(map);
-		for(int i=0;i<list.size();i++){
-			recordDayPingService.save(list.get(i));
-		}
-	}
+//	public void pingHour(){
+//		Map<String,Object> map = recordHourPingService.queryTime();
+//		System.out.println(map);
+//		List<RecordHourPingEntity> list = recordHourPingService.queryPing(map);
+//		for(int i=0;i<list.size();i++){
+//			recordHourPingService.save(list.get(i));
+//		}
+//	}
+//
+//	public void pingDay(){
+//		Map<String,Object> map = recordHourPingService.queryDay();
+//		System.out.println(map);
+//		List<RecordDayPingEntity> list = recordDayPingService.queryDay(map);
+//		for(int i=0;i<list.size();i++){
+//			recordDayPingService.save(list.get(i));
+//		}
+//	}
 
 }

@@ -93,6 +93,18 @@ public class RecordHourPingController {
 		}
 		System.out.println("map!!!!!"+map);
 
+		/*int total = 0;
+		if(page==null) {              *//*没有传入page,则取全部值*//*
+			map.put("offset", null);
+			map.put("limit", null);
+			page = 0;
+			limit = 0;
+		}else {
+			map.put("offset", (page - 1) * limit);
+			map.put("limit", limit);
+			//total = scoreList.size();
+		}*/
+
 		List<ScoreEntity> scoreList = new ArrayList<>();
 		//查询天表
 		if (dateDifferent>5){
@@ -160,6 +172,7 @@ public class RecordHourPingController {
 				List<ScoreEntity> tracertUdp = recordHourPingService.calculateTracertUdp(tracertList);
 
 				scoreList = recordHourPingService.calculateService1(pingIcmp,pingTcp,pingUdp,tracertIcmp,tracertUdp);
+				//total = recordHourPingService.pingListTotal(map);
 			} else if (service == 2) {
 				List<RecordHourSlaEntity> slaList = recordHourSlaService.querySlaList(map);
 				List<RecordHourDnsEntity> dnsList = recordHourDnsService.queryDnsList(map);
@@ -203,6 +216,9 @@ public class RecordHourPingController {
 			total = scoreList.size();
 		}
 		//List<RecordHourPingEntity> probeList = recordHourPingService.queryList(map);
+		/*if (service == 1) {
+			total = recordHourPingService.pingListTotal(map);
+		}*/
 		PageUtils pageUtil = new PageUtils(scoreList, total, limit, page);
 		return R.ok().put("page", pageUtil);
 	}

@@ -200,10 +200,10 @@
 			AND probe_id = #{probe_id}
 		</if>
 		<if test="startDate != null and startDate != '' and terminalDate != null and terminalDate != '' ">
-			AND (record_date BETWEEN #{startDate} AND #{terminalDate})
+			AND record_date BETWEEN #{startDate} AND #{terminalDate}
 		</if>
 		<if test="start_time != null and start_time != '' and end_time != null and end_time != '' ">
-			AND (record_time BETWEEN #{start_time} AND #{end_time})
+			AND record_time BETWEEN #{start_time} AND #{end_time}
 		</if>
 		<choose>
 			<when test="sidx != null and sidx.trim() != ''">
@@ -216,6 +216,27 @@
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
+	</select>
+
+	<select id="queryPingTotal" resultType="int">
+	select count(*) FROM record_ping
+	WHERE
+	record_ping.id >= 0
+	<if test="task_id != null and task_id != ''">
+		AND task_id = #{task_id}
+	</if>
+	<if test="target_id != null and target_id != ''">
+		AND target_id = #{target_id}
+	</if>
+	<if test="probe_id != null and probe_id != ''">
+		AND probe_id = #{probe_id}
+	</if>
+	<if test="startDate != null and startDate != '' and terminalDate != null and terminalDate != '' ">
+		AND record_date BETWEEN #{startDate} AND #{terminalDate}
+	</if>
+	<if test="start_time != null and start_time != '' and end_time != null and end_time != '' ">
+		AND record_time BETWEEN #{start_time} AND #{end_time}
+	</if>
 	</select>
 
 	<select id="queryPingTest" resultType="io.cem.modules.cem.entity.RecordPingEntity">
