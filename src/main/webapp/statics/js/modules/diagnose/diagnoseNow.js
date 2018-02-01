@@ -220,14 +220,14 @@ $(document).ready(function () {
     });
     $.ajax({
         type: "POST", /*GET会乱码*/
-        url: "../../target/list",
+        url: "../../target/infoList/" + 0,
         cache: false,  //禁用缓存
         dataType: "json",
         success: function (result) {
             var targets = [];
             // console.log(result);
-            for (var i = 0; i < result.page.list.length; i++) {
-                targets[i] = {message: result.page.list[i]}
+            for (var i = 0; i < result.target.length; i++) {
+                targets[i] = {message: result.target[i]}
             }
             target_data.target = targets;
             setTimeout(function () {
@@ -296,8 +296,7 @@ function diagnose() {
                 console.log(JSON.stringify(dispatch));
                 var url = "information.html";
                 var dispatchString = JSON.stringify(dispatch);
-                console.log(dispatchString);
-                url = url + "?dispatch=" + dispatchString;
+                url = url + "?dispatch=" + dispatchString.substring(1,dispatchString.length-1);
                 console.log(url);
                 document.getElementById("diagnose").href = url;
                 document.getElementById("diagnose").click();

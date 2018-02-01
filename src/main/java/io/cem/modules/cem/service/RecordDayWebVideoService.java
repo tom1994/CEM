@@ -17,6 +17,8 @@ public interface RecordDayWebVideoService {
 	RecordDayWebVideoEntity queryObject(Integer id);
 	
 	List<RecordDayWebVideoEntity> queryList(Map<String, Object> map);
+
+	List<RecordDayWebVideoEntity> queryDay(Map<String,Object> map);
 	
 	int queryTotal(Map<String, Object> map);
 	

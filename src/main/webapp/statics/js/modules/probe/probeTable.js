@@ -11,6 +11,25 @@ var typeNames = new Array();
 var statusNames = new Array();
 var probegroup_names = new Array();
 
+var st = new Map();//servicetype字典，可通过get方法查对应字符串。
+st.set(1, "PING(ICMP Echo)");
+st.set(2, "PING(TCP Echo)");
+st.set(3, "PING(UDP Echo)");
+st.set(4, "TraceRoute(ICMP)");
+st.set(5, "TraceRoute(UDP)");
+st.set(10, "SLA(TCP)");
+st.set(11, "SLA(UDP)");
+st.set(12, "ADSL接入");
+st.set(13, "DHCP");
+st.set(14, "DNS");
+st.set(15, "Radius认证");
+st.set(20, "WEB页面访问");
+st.set(30, "WEB下载");
+st.set(31, "FTP下载");
+st.set(32, "FTP上传");
+st.set(40, "在线视频");
+st.set(50, "网络游戏");
+
 var probedata_handle = new Vue({
     el: '#probehandle',
     data: {},
@@ -239,9 +258,9 @@ var dispatch_table = new Vue({
             {title: '<div style="width:17px"></div>'},
             //{title: '<div style="width:77px">探针名称</div>'},
             //{title: '<div style="width:108px">位置</div>'},
-            //{title: '<div style="width:37px">层级</div>'},
+            {title: '<div style="width:117px">任务类型</div>'},
             {title: '<div style="width:117px">任务名称</div>'},
-            {title: '<div style="width:160px">测试目标</div>'},
+            {title: '<div style="width:160px">调度策略</div>'},
             //{title: '<div style="width:67px">操作</div>'}
         ],
         rows: [],
@@ -332,9 +351,10 @@ var dispatch_table = new Vue({
                             row.push(i++);
                             //row.push(item.probeName);
                             //row.push(item.location);
-                            //row.push(item.accessLayer);
+                            row.push(st.get(item.serviceType));
                             row.push(item.taskName);
-                            row.push('<span title="' + item.targetName + '" style="white-space: nowrap">' + transString(item.targetName,0,25)+ '</span>');
+                            row.push(item.spName);
+                            // row.push('<span title="' + item.targetName + '" style="white-space: nowrap">' + transString(item.targetName,0,25)+ '</span>');
                             //row.push('<a class="fontcolor" onclick="cancel_task(this)" id=' + item.id + '>取消任务</a>');
                             rows.push(row);
                         });
@@ -1160,70 +1180,80 @@ var grouptable = new Vue({
     }
 });
 
-var dragModal = {
-    mouseStartPoint: {"left": 0, "top": 0},
-    mouseEndPoint: {"left": 0, "top": 0},
-    mouseDragDown: false,
-    basePoint: {"left": 0, "top": 0},
-    moveTarget: null,
-    topleng: 0
-}
-$(document).on("mousedown", ".modal-header", function (e) {
-    //webkit内核和火狐禁止文字被选中
-    $('body').addClass('select')
-    //ie浏览器禁止文字选中
-    document.body.onselectstart = document.body.ondrag = function () {
-        return false;
-    }
-    if ($(e.target).hasClass("close"))//点关闭按钮不能移动对话框
-        return;
-    dragModal.mouseDragDown = true;
-    dragModal.moveTarget = $(this).parent().parent();
-    dragModal.mouseStartPoint = {"left": e.clientX, "top": e.pageY};
-    dragModal.basePoint = dragModal.moveTarget.offset();
-    dragModal.topLeng = e.pageY - e.clientY;
-});
-$(document).on("mouseup", function (e) {
-    dragModal.mouseDragDown = false;
-    dragModal.moveTarget = undefined;
-    dragModal.mouseStartPoint = {"left": 0, "top": 0};
-    dragModal.basePoint = {"left": 0, "top": 0};
-});
-$(document).on("mousemove", function (e) {
-    if (!dragModal.mouseDragDown || dragModal.moveTarget == undefined) return;
-    var mousX = e.clientX;
-    var mousY = e.pageY;
-    if (mousX < 0) mousX = 0;
-    if (mousY < 0) mousY = 25;
-    dragModal.mouseEndPoint = {"left": mousX, "top": mousY};
-    var width = dragModal.moveTarget.width();
-    var height = dragModal.moveTarget.height();
-    var clientWidth = document.body.clientWidth
-    var clientHeight = document.body.clientHeight;
-    if (dragModal.mouseEndPoint.left < dragModal.mouseStartPoint.left - dragModal.basePoint.left) {
-        dragModal.mouseEndPoint.left = 0;
-    }
-    else if (dragModal.mouseEndPoint.left >= clientWidth - width + dragModal.mouseStartPoint.left - dragModal.basePoint.left) {
-        dragModal.mouseEndPoint.left = clientWidth - width - 38;
-    } else {
-        dragModal.mouseEndPoint.left = dragModal.mouseEndPoint.left - (dragModal.mouseStartPoint.left - dragModal.basePoint.left);//移动修正，更平滑
+$(document).ready(function () {
+    $("#myModal_delete").draggable();//为模态对话框添加拖拽
+    $("#myModal_groupdelete").draggable();
+    $("#myModal_update").draggable();
+    $("#myModal_dispatch").draggable();
+    // $("#task_dispatch").draggable();
+    $("#myModal_dispatch").css("overflow", "visible");//禁止模态对话框的半透明背景滚动
 
-    }
-    if (dragModal.mouseEndPoint.top - (dragModal.mouseStartPoint.top - dragModal.basePoint.top) < dragModal.topLeng) {
-        dragModal.mouseEndPoint.top = dragModal.topLeng;
-    } else if (dragModal.mouseEndPoint.top - dragModal.topLeng > clientHeight - height + dragModal.mouseStartPoint.top - dragModal.basePoint.top) {
-        dragModal.mouseEndPoint.top = clientHeight - height - 38 + dragModal.topLeng;
-    }
-    else {
-        dragModal.mouseEndPoint.top = dragModal.mouseEndPoint.top - (dragModal.mouseStartPoint.top - dragModal.basePoint.top);
-    }
-    dragModal.moveTarget.offset(dragModal.mouseEndPoint);
 });
-$(document).on('hidden.bs.modal', '.modal', function (e) {
-    $('.modal-dialog').css({'top': '0px', 'left': '0px'})
-    $('body').removeClass('select')
-    document.body.onselectstart = document.body.ondrag = null;
 
-})
+// var dragModal = {
+//     mouseStartPoint: {"left": 0, "top": 0},
+//     mouseEndPoint: {"left": 0, "top": 0},
+//     mouseDragDown: false,
+//     basePoint: {"left": 0, "top": 0},
+//     moveTarget: null,
+//     topleng: 0
+// }
+// $(document).on("mousedown", ".modal-header", function (e) {
+//     //webkit内核和火狐禁止文字被选中
+//     $('body').addClass('select')
+//     //ie浏览器禁止文字选中
+//     document.body.onselectstart = document.body.ondrag = function () {
+//         return false;
+//     }
+//     if ($(e.target).hasClass("close"))//点关闭按钮不能移动对话框
+//         return;
+//     dragModal.mouseDragDown = true;
+//     dragModal.moveTarget = $(this).parent().parent();
+//     dragModal.mouseStartPoint = {"left": e.clientX, "top": e.pageY};
+//     dragModal.basePoint = dragModal.moveTarget.offset();
+//     dragModal.topLeng = e.pageY - e.clientY;
+// });
+// $(document).on("mouseup", function (e) {
+//     dragModal.mouseDragDown = false;
+//     dragModal.moveTarget = undefined;
+//     dragModal.mouseStartPoint = {"left": 0, "top": 0};
+//     dragModal.basePoint = {"left": 0, "top": 0};
+// });
+// $(document).on("mousemove", function (e) {
+//     if (!dragModal.mouseDragDown || dragModal.moveTarget == undefined) return;
+//     var mousX = e.clientX;
+//     var mousY = e.pageY;
+//     if (mousX < 0) mousX = 0;
+//     if (mousY < 0) mousY = 25;
+//     dragModal.mouseEndPoint = {"left": mousX, "top": mousY};
+//     var width = dragModal.moveTarget.width();
+//     var height = dragModal.moveTarget.height();
+//     var clientWidth = document.body.clientWidth
+//     var clientHeight = document.body.clientHeight;
+//     if (dragModal.mouseEndPoint.left < dragModal.mouseStartPoint.left - dragModal.basePoint.left) {
+//         dragModal.mouseEndPoint.left = 0;
+//     }
+//     else if (dragModal.mouseEndPoint.left >= clientWidth - width + dragModal.mouseStartPoint.left - dragModal.basePoint.left) {
+//         dragModal.mouseEndPoint.left = clientWidth - width - 38;
+//     } else {
+//         dragModal.mouseEndPoint.left = dragModal.mouseEndPoint.left - (dragModal.mouseStartPoint.left - dragModal.basePoint.left);//移动修正，更平滑
+//
+//     }
+//     if (dragModal.mouseEndPoint.top - (dragModal.mouseStartPoint.top - dragModal.basePoint.top) < dragModal.topLeng) {
+//         dragModal.mouseEndPoint.top = dragModal.topLeng;
+//     } else if (dragModal.mouseEndPoint.top - dragModal.topLeng > clientHeight - height + dragModal.mouseStartPoint.top - dragModal.basePoint.top) {
+//         dragModal.mouseEndPoint.top = clientHeight - height - 38 + dragModal.topLeng;
+//     }
+//     else {
+//         dragModal.mouseEndPoint.top = dragModal.mouseEndPoint.top - (dragModal.mouseStartPoint.top - dragModal.basePoint.top);
+//     }
+//     dragModal.moveTarget.offset(dragModal.mouseEndPoint);
+// });
+// $(document).on('hidden.bs.modal', '.modal', function (e) {
+//     $('.modal-dialog').css({'top': '0px', 'left': '0px'})
+//     $('body').removeClass('select')
+//     document.body.onselectstart = document.body.ondrag = null;
+//
+// })
 
 

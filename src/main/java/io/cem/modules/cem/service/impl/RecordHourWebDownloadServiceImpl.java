@@ -1,6 +1,7 @@
 package io.cem.modules.cem.service.impl;
 
 import io.cem.common.utils.PropertiesUtils;
+import io.cem.modules.cem.dao.RecordWebDownloadDao;
 import io.cem.modules.cem.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,8 @@ import io.cem.modules.cem.service.RecordHourWebDownloadService;
 public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadService {
 	@Autowired
 	private RecordHourWebDownloadDao recordHourWebDownloadDao;
+	@Autowired
+	private RecordWebDownloadDao recordWebDownloadDao;
 	
 	@Override
 	public RecordHourWebDownloadEntity queryObject(Integer id){
@@ -27,6 +30,11 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 	public List<RecordHourWebDownloadEntity> queryList(Map<String, Object> map){
 		return recordHourWebDownloadDao.queryList(map);
 	}
+	@Override
+	public List<RecordHourWebDownloadEntity> queryWebDownload(Map<String, Object> map){
+		return recordWebDownloadDao.queryWebDownload(map);
+	}
+
 
 	@Override
 	public List<RecordHourWebDownloadEntity> queryWebDownloadList(Map<String, Object> map){

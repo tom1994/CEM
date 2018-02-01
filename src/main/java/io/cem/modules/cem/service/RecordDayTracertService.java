@@ -17,6 +17,8 @@ public interface RecordDayTracertService {
 	RecordDayTracertEntity queryObject(Integer id);
 	
 	List<RecordDayTracertEntity> queryList(Map<String, Object> map);
+
+	List<RecordDayTracertEntity> queryDay(Map<String,Object> map);
 	
 	int queryTotal(Map<String, Object> map);
 	

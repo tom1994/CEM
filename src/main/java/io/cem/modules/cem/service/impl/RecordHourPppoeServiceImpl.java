@@ -1,5 +1,6 @@
 package io.cem.modules.cem.service.impl;
 
+import io.cem.modules.cem.dao.RecordPppoeDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,12 +17,19 @@ import io.cem.modules.cem.service.RecordHourPppoeService;
 public class RecordHourPppoeServiceImpl implements RecordHourPppoeService {
 	@Autowired
 	private RecordHourPppoeDao recordHourPppoeDao;
+	@Autowired
+	private RecordPppoeDao recordPppoeDao;
 	
 	@Override
 	public RecordHourPppoeEntity queryObject(Integer id){
 		return recordHourPppoeDao.queryObject(id);
 	}
-	
+
+	@Override
+	public List<RecordHourPppoeEntity> queryPppoe(Map<String, Object> map){
+		return recordPppoeDao.queryPppoe(map);
+	}
+
 	@Override
 	public List<RecordHourPppoeEntity> queryList(Map<String, Object> map){
 		return recordHourPppoeDao.queryList(map);

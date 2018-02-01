@@ -57,7 +57,7 @@
 				order by ${sidx} ${order}
 			</when>
 			<otherwise>
-				order by id
+				order by id DESC
 			</otherwise>
 		</choose>
 		<if test="offset != null and limit != null">

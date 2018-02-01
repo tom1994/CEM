@@ -18,6 +18,8 @@ public interface RecordHourPppoeService {
 	
 	List<RecordHourPppoeEntity> queryList(Map<String, Object> map);
 
+	List<RecordHourPppoeEntity> queryPppoe(Map<String,Object> map);
+
 	List<RecordHourPppoeEntity> queryPppoeList(Map<String, Object> map);
 
 	List<RecordHourPppoeEntity> queryDayList(Map<String, Object> map);

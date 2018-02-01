@@ -1,5 +1,6 @@
 package io.cem.modules.cem.service.impl;
 
+import io.cem.modules.cem.dao.RecordDnsDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,12 +17,19 @@ import io.cem.modules.cem.service.RecordHourDnsService;
 public class RecordHourDnsServiceImpl implements RecordHourDnsService {
 	@Autowired
 	private RecordHourDnsDao recordHourDnsDao;
+	@Autowired
+	private RecordDnsDao recordDnsDao;
 	
 	@Override
 	public RecordHourDnsEntity queryObject(Integer id){
 		return recordHourDnsDao.queryObject(id);
 	}
-	
+
+	@Override
+	public List<RecordHourDnsEntity> queryDns(Map<String, Object> map){
+		return recordDnsDao.queryDns(map);
+	}
+
 	@Override
 	public List<RecordHourDnsEntity> queryList(Map<String, Object> map){
 		return recordHourDnsDao.queryList(map);

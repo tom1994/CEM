@@ -17,6 +17,8 @@ public interface RecordDayFtpService {
 	RecordDayFtpEntity queryObject(Integer id);
 	
 	List<RecordDayFtpEntity> queryList(Map<String, Object> map);
+
+	List<RecordDayFtpEntity> queryDay(Map<String,Object> map);
 	
 	int queryTotal(Map<String, Object> map);
 	

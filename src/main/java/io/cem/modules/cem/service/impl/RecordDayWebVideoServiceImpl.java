@@ -1,5 +1,6 @@
 package io.cem.modules.cem.service.impl;
 
+import io.cem.modules.cem.dao.RecordWebVideoDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,12 +17,17 @@ import io.cem.modules.cem.service.RecordDayWebVideoService;
 public class RecordDayWebVideoServiceImpl implements RecordDayWebVideoService {
 	@Autowired
 	private RecordDayWebVideoDao recordDayWebVideoDao;
+	@Autowired
+	private RecordWebVideoDao recordWebVideoDao;
 	
 	@Override
 	public RecordDayWebVideoEntity queryObject(Integer id){
 		return recordDayWebVideoDao.queryObject(id);
 	}
-	
+
+	@Override
+	public List<RecordDayWebVideoEntity> queryDay(Map<String,Object> map) {return recordWebVideoDao.queryDay(map);}
+
 	@Override
 	public List<RecordDayWebVideoEntity> queryList(Map<String, Object> map){
 		return recordDayWebVideoDao.queryList(map);

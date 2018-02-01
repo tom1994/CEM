@@ -41,14 +41,14 @@ stid.set(32, "ftp_upload");
 stid.set(40, "online_video");
 stid.set(50, "game");
 var spst = new Map();
-for (let i = 1; i < 6; i++) {
+for (var i = 1; i < 6; i++) {
     spst.set(i, 1)
 }
-for (let i = 10; i < 16; i++) {
+for (var i = 10; i < 16; i++) {
     spst.set(i, 2)
 }
 spst.set(20, 3);
-for (let i = 30; i < 33; i++) {
+for (var i = 30; i < 33; i++) {
     spst.set(i, 4)
 }
 spst.set(40, 5);
@@ -65,7 +65,7 @@ var task_handle = new Vue({
             dataType: "json",
             contentType: "application/json",
             success: function (result) {
-                for (let i = 0; i < result.page.list.length; i++) {
+                for (var i = 0; i < result.page.list.length; i++) {
                     schedulepolicies[i] = {message: result.page.list[i]}
                 }
                 taskform_data.schpolicies = schedulepolicies;
@@ -87,7 +87,7 @@ var task_handle = new Vue({
             $('.service').prop("disabled", false);
             taskform_data.modaltitle = "新建任务";
             /*修改模态框标题*/
-            for (let i = 0; i < 3; i++) {
+            for (var i = 0; i < 3; i++) {
                 forms[i].value = ""
             }
             $(".service").addClass("service_unselected");
@@ -130,7 +130,7 @@ function get_viewModal(update_data_id) {
         success: function (result) {
             var param = JSON.parse(result.task.parameter);
             servicetypeid = result.task.serviceType;
-            var paramforms = $('#'+stid.get(servicetypeid)+'_param'+' .form-control');
+            var paramforms = $('#' + stid.get(servicetypeid) + '_param' + ' .form-control');
             taskforms[0].value = result.task.id;
             taskforms[1].value = result.task.taskName;
             taskforms[2].value = result.task.serviceType;
@@ -146,9 +146,9 @@ function get_viewModal(update_data_id) {
                 paramforms[6].value = param.timeout;
             }
             if (stid.get(servicetypeid) == "pingtcp") {
-                paramforms[0].value= param.count;
-                paramforms[1].value= param.interval;
-                paramforms[2].value= param.ttl;
+                paramforms[0].value = param.count;
+                paramforms[1].value = param.interval;
+                paramforms[2].value = param.ttl;
                 paramforms[3].value = param.tos;
                 paramforms[4].value = param.timeout;
             }
@@ -425,48 +425,108 @@ function task_assign(obj) {
 function submit_dispatch() {
     var a = parseInt($('input[name=chooseprobe]:checked', '#dispatch_probe').val());
     var b = parseInt($('input[name=choosetarget]:checked', '#dispatch_target').val());
+    console.log(a, b);
     var probeList = getFormJson2($('#dispatch_probe'));
     var targetList = getFormJson2($('#dispatch_target'));
     if (a == 1) {
-        let taskDispatch = {};
+        var taskDispatch = {};
         taskDispatch.probePort = "port1";
-        taskDispatch.status = 1;
+        taskDispatch.status = 0;
         if (b == 1) {
-            taskDispatch.targetIds = targetList.targetId;
-            if (typeof taskDispatch.targetIds == "number") {
-                taskDispatch.targetIds = "[" + taskDispatch.targetIds + "]"
+            if (typeof targetList.targetId == "number") {
+                taskDispatch.targetIds = [];
+                taskDispatch.targetIds.push(targetList.targetId)
+            } else {
+                taskDispatch.targetIds = targetList.targetId
             }
         } else if (b == 0) {
-            taskDispatch.targetGroupIds = targetList.targetGroupId;
-            if (typeof taskDispatch.targetGroupIds == "number") {
-                taskDispatch.targetGroupIds = "[" + taskDispatch.targetGroupIds + "]"
+            if (typeof targetList.targetGroupId == "number") {
+                taskDispatch.targetGroupIds = [];
+                taskDispatch.targetGroupIds.push(targetList.targetGroupId)
+            } else {
+                taskDispatch.targetGroupIds = targetList.targetGroupId
             }
         }
         taskDispatch.taskId = targetList.taskId;
         taskDispatch.isOndemand = 0;
-        taskDispatch.probeIds = probeList.probeId;
+        // taskDispatch.probeIds = probeList.probeId;
         taskDispatch.testNumber = 0;
-        console.log(taskDispatch);
-        if (typeof taskDispatch.probeIds == "number") {
-            // console.log('success');
-            // taskDispatch.probeId = taskDispatch.probeIds;
-            // $.ajax({
-            //     type: "POST", /*GET会乱码*/
-            //     url: "../../cem/taskdispatch/save",
-            //     cache: false,  //禁用缓存
-            //     data: JSON.stringify(taskDispatch),
-            //     dataType: "json",
-            //     contentType: "application/json", /*必须要,不可少*/
-            //     success: function (result) {
-            //         toastr.success("任务下发成功!");
-            //         $('#task_dispatch').modal('hide');
-            //         task_table.currReset();
-            //     }
-            // });
-            taskDispatch.probeIds = "[" + taskDispatch.probeIds + "]"
+        if (typeof probeList.probeId == "number") {
+            taskDispatch.probeIds = [];
+            taskDispatch.probeIds.push(probeList.probeId);
+        } else {
+            taskDispatch.probeIds = probeList.probeId;
         }
-        if (typeof taskDispatch.probeIds == "undefined"){
+        console.log(taskDispatch);
+        if (typeof taskDispatch.probeIds == "undefined") {
             toastr.warning("请选择探针!");
+        } else if (b == 1 && typeof taskDispatch.targetIds == "undefined") {
+            toastr.warning("请选择测试目标!");
+        } else if (b == 0 && typeof taskDispatch.targetGroupIds == "undefined") {
+            toastr.warning("请选择测试目标组!");
+        } else {
+            console.log(taskDispatch);
+            $.ajax({
+                type: "POST", /*GET会乱码*/
+                url: "../../cem/taskdispatch/saveAll",
+                cache: false,  //禁用缓存
+                data: JSON.stringify(taskDispatch),
+                dataType: "json",
+                contentType: "application/json", /*必须要,不可少*/
+                success: function (result) {
+                    toastr.success("任务下发成功!");
+                    $('#task_dispatch').modal('hide');
+                    task_table.currReset();
+                }
+            });
+            // var invocation = new XMLHttpRequest();
+            // var url = "https://114.236.91.16:23456/web/v1/tasks/" + targetList.taskId;
+            // invocation.open('post', url, true);
+            // invocation.setRequestHeader("Authorization","Bearer 8dd1cac5-7e95-4611-ac31-fc66d94eaefa");
+            // //invocation.onreadystatechange = handler;
+            // invocation.send();
+            $.ajax({
+                type: "POST", /*GET会乱码*/
+                url: "https://114.236.91.16:23456/web/v1/tasks/" + targetList.taskId,
+                headers: {
+                    "Authorization":"Bearer 8dd1cac5-7e95-4611-ac31-fc66d94eaefa"
+                },
+                success : function (result) {
+                    console.log(result);
+                }
+            });
+
+        }
+
+    } else if (a == 0) {
+        var taskDispatch = {};
+        taskDispatch.probePort = "port1";
+        taskDispatch.status = 0;
+        if (b == 1) {
+            if (typeof targetList.targetId == "number") {
+                taskDispatch.targetIds = [];
+                taskDispatch.targetIds.push(targetList.targetId);
+            } else {
+                taskDispatch.targetIds = targetList.targetId
+            }
+        } else if (b == 0) {
+            if (typeof targetList.targetGroupId == "number") {
+                taskDispatch.targetGroupIds = [];
+                taskDispatch.targetGroupIds.push(targetList.targetGroupId);
+            } else {
+                taskDispatch.targetGroupIds = targetList.targetGroupId
+            }
+        }
+        taskDispatch.taskId = targetList.taskId;
+        taskDispatch.isOndemand = 0;
+        if (typeof probeList.probeGroupId == "number") {
+            taskDispatch.probeGroupIds = [];
+            taskDispatch.probeGroupIds.push(probeList.probeGroupId);
+        } else {
+            taskDispatch.probeGroupIds = probeList.probeGroupId;
+        }
+        if (typeof taskDispatch.probeGroupIds == "undefined") {
+            toastr.warning("请选择探针组!");
         } else if (b == 1 && typeof taskDispatch.targetIds == "undefined") {
             toastr.warning("请选择测试目标!");
         } else if (b == 0 && typeof taskDispatch.targetGroupIds == "undefined") {
@@ -485,83 +545,15 @@ function submit_dispatch() {
                     task_table.currReset();
                 }
             });
-        }
-
-    } else if (a == 0) {
-        let taskDispatch = {};
-        taskDispatch.probePort = "port1";
-        taskDispatch.status = 1;
-        if (b == 1) {
-            taskDispatch.targetIds = targetList.targetId;
-            if (typeof taskDispatch.targetIds == "number") {
-                taskDispatch.targetIds = "[" + taskDispatch.targetIds + "]"
-            }
-        } else if (b == 0) {
-            taskDispatch.targetGroupIds = targetList.targetGroupId;
-            if (typeof taskDispatch.targetGroupIds == "number") {
-                taskDispatch.targetGroupIds = "[" + taskDispatch.targetGroupIds + "]"
-            }
-        }
-        taskDispatch.taskId = targetList.taskId;
-        taskDispatch.isOndemand = 0;
-        taskDispatch.probeGroupIds = probeList.probeGroupId;
-        console.log(taskDispatch);
-        if (typeof taskDispatch.probeGroupIds == "number") {
-            // taskDispatch.probeGroupId = taskDispatch.probeGroupIds;
-            // $.ajax({
-            //     type: "POST", /*GET会乱码*/
-            //     url: "../../cem/taskdispatch/save",
-            //     cache: false,  //禁用缓存
-            //     data: JSON.stringify(taskDispatch),
-            //     dataType: "json",
-            //     contentType: "application/json", /*必须要,不可少*/
-            //     success: function (result) {
-            //         if (R.ok.code = 0) {
-            //             console.log(R.ok.code = 0);
-            //         }
-            //         toastr.success("任务下发成功!");
-            //         $('#task_dispatch').modal('hide');
-            //         task_table.currReset();
-            //     }
-            // });
-            taskDispatch.probeGroupIds = "[" + taskDispatch.probeGroupIds + "]"
-        }
-        if (typeof taskDispatch.probeIds == "number") {
-            // console.log('success');
-            // taskDispatch.probeId = taskDispatch.probeIds;
-            // $.ajax({
-            //     type: "POST", /*GET会乱码*/
-            //     url: "../../cem/taskdispatch/save",
-            //     cache: false,  //禁用缓存
-            //     data: JSON.stringify(taskDispatch),
-            //     dataType: "json",
-            //     contentType: "application/json", /*必须要,不可少*/
-            //     success: function (result) {
-            //         toastr.success("任务下发成功!");
-            //         $('#task_dispatch').modal('hide');
-            //         task_table.currReset();
-            //     }
-            // });
-            taskDispatch.probeIds = "[" + taskDispatch.probeIds + "]"
-        }
-        if (typeof taskDispatch.probeGroupIds == "undefined"){
-            toastr.warning("请选择探针组!");
-        } else if (b == 1 && typeof taskDispatch.targetIds == "undefined") {
-            toastr.warning("请选择测试目标!");
-        } else if (b == 0 && typeof taskDispatch.targetGroupIds == "undefined") {
-            toastr.warning("请选择测试目标组!");
-        } else {
             $.ajax({
                 type: "POST", /*GET会乱码*/
-                url: "../../cem/taskdispatch/saveAll",
+                url: "https://127.0.0.1:23456/web/v1/tasks/" + targetList.taskid,
                 cache: false,  //禁用缓存
-                data: JSON.stringify(taskDispatch),
-                dataType: "json",
-                contentType: "application/json", /*必须要,不可少*/
+                headers: {
+                    Authorization: "Bearer 6b7544ae-63d3-4db6-9cc8-1dc95a991d50"
+                },
                 success: function (result) {
-                    toastr.success("任务下发成功!");
-                    $('#task_dispatch').modal('hide');
-                    task_table.currReset();
+                    console.log(result);
                 }
             });
         }
@@ -655,7 +647,7 @@ var taskform_data = new Vue({
                 toastr.warning("请输入任务名称!");
             } else if (tasknewJson.serviceType == "") {
                 toastr.warning("请选择任务类型!");
-            } else if (tasknewJson.schPolicyId == ""){
+            } else if (tasknewJson.schPolicyId == "") {
                 toastr.warning("请选择调度策略!");
             } else {
                 var tasknew = JSON.stringify(tasknewJson);
@@ -668,8 +660,8 @@ var taskform_data = new Vue({
                     dataType: "json",
                     contentType: "application/json", /*必须要,不可少*/
                     success: function (result) {
-                        let code = result.code;
-                        let msg = result.msg;
+                        var code = result.code;
+                        var msg = result.msg;
                         // console.log(result);
                         if (status == 0) {
                             switch (code) {
@@ -759,7 +751,7 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
 function getFormJson2(form) {      /*将表单对象变为json对象*/
     var o = {};
     var a = $(form).serializeArray();
-    for (let i = 0; i < a.length; i++) {
+    for (var i = 0; i < a.length; i++) {
         if (a[i].value != null && a[i].value != "") {
             a[i].value = parseInt(a[i].value);
         }
@@ -846,7 +838,7 @@ var task_table = new Vue({
 
     methods: {
         reset: function () {
-            let vm = this;
+            var vm = this;
             vm.taskdata = {};
             /*清空taskdata*/
             vm.dtHandle.clear();
@@ -855,14 +847,14 @@ var task_table = new Vue({
             /*重置*/
         },
         currReset: function () {
-            let vm = this;
+            var vm = this;
             vm.dtHandle.clear();
             console.log("当前页面重绘");
             vm.dtHandle.draw(false);
             /*当前页面重绘*/
         },
         redraw: function () {
-            let vm = this;
+            var vm = this;
             vm.dtHandle.clear();
             console.log("页面重绘");
             vm.dtHandle.draw();
@@ -870,7 +862,7 @@ var task_table = new Vue({
         }
     },
     mounted: function () {
-        let vm = this;
+        var vm = this;
         // Instantiate the datatable and store the reference to the instance in our dtHandle element.
         vm.dtHandle = $(this.$el).DataTable({
             // Specify whatever options you want, at a minimum these:
@@ -895,7 +887,7 @@ var task_table = new Vue({
             sDom: 'Rfrtlip', /*显示在左下角*/
             ajax: function (data, callback, settings) {
                 //封装请求参数
-                let param = {};
+                var param = {};
                 param.limit = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
                 param.start = data.start;//开始的记录序号
                 param.page = (data.start / data.length) + 1;//当前页码
@@ -910,19 +902,19 @@ var task_table = new Vue({
                     dataType: "json",
                     success: function (result) {
                         //封装返回数据
-                        let returnData = {};
+                        var returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
                         returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
                         returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
                         // returnData.data = result.page.list;//返回的数据列表
                         // 重新整理返回数据以匹配表格
-                        let rows = [];
+                        var rows = [];
                         var i = param.start + 1;
                         result.page.list.forEach(function (item) {
                             if (item.countDispatch == null) {
                                 item.countDispatch = 0;
                             }
-                            let row = [];
+                            var row = [];
                             row.push(i++);
                             row.push('<a onclick="view_this(this)" id=' + item.id + '><span style="color: black;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">' + item.taskName + '</span></a>');
                             row.push(st.get(item.serviceType));
@@ -979,7 +971,7 @@ var dispatch_table = new Vue({
 
     methods: {
         reset: function () {
-            let vm = this;
+            var vm = this;
             vm.taskdata = {};
             /*清空taskdata*/
             vm.dtHandle.clear();
@@ -988,14 +980,14 @@ var dispatch_table = new Vue({
             /*重置*/
         },
         currReset: function () {
-            let vm = this;
+            var vm = this;
             vm.dtHandle.clear();
             console.log("当前页面重绘");
             vm.dtHandle.draw(false);
             /*当前页面重绘*/
         },
         redraw: function () {
-            let vm = this;
+            var vm = this;
             vm.dtHandle.clear();
             console.log("页面重绘");
             vm.dtHandle.draw();
@@ -1007,7 +999,7 @@ var dispatch_table = new Vue({
         },
     },
     mounted: function () {
-        let vm = this;
+        var vm = this;
         // console.log(this.$data.taskid);
         vm.dtHandle = $(this.$el).DataTable({
             columns: vm.headers,
@@ -1028,7 +1020,7 @@ var dispatch_table = new Vue({
             sDom: 'Rfrtlip', /*显示在左下角*/
             ajax: function (data, callback, settings) {
                 //封装请求参数
-                let param = {};
+                var param = {};
                 param.limit = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
                 param.start = data.start;//开始的记录序号
                 param.page = (data.start / data.length) + 1;//当前页码
@@ -1044,17 +1036,17 @@ var dispatch_table = new Vue({
                     dataType: "json",
                     success: function (result) {
                         //封装返回数据
-                        let returnData = {};
+                        var returnData = {};
                         returnData.draw = result.page.draw;//这里直接自行返回了draw计数器,应该由后台返回
                         returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
                         returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
                         // returnData.data = result.page.list;//返回的数据列表
                         // 重新整理返回数据以匹配表格
-                        let rows = [];
+                        var rows = [];
                         var i = param.start + 1;
                         result.page.list.forEach(function (item) {
                             console.log(item);
-                            let row = [];
+                            var row = [];
                             row.push(i++);
                             row.push(item.probeName);
                             row.push('<span title="' + item.location + '" style="white-space: nowrap">' + (item.location).substr(0, 10) + '</span>');

@@ -1,5 +1,6 @@
 package io.cem.modules.cem.service.impl;
 
+import io.cem.modules.cem.dao.RecordTracertDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,8 @@ import io.cem.modules.cem.service.RecordDayTracertService;
 public class RecordDayTracertServiceImpl implements RecordDayTracertService {
 	@Autowired
 	private RecordDayTracertDao recordDayTracertDao;
+	@Autowired
+	private RecordTracertDao recordTracertDao;
 	
 	@Override
 	public RecordDayTracertEntity queryObject(Integer id){
@@ -26,7 +29,10 @@ public class RecordDayTracertServiceImpl implements RecordDayTracertService {
 	public List<RecordDayTracertEntity> queryList(Map<String, Object> map){
 		return recordDayTracertDao.queryList(map);
 	}
-	
+
+	@Override
+	public List<RecordDayTracertEntity> queryDay(Map<String,Object> map) {return recordTracertDao.queryDay(map);}
+
 	@Override
 	public int queryTotal(Map<String, Object> map){
 		return recordDayTracertDao.queryTotal(map);

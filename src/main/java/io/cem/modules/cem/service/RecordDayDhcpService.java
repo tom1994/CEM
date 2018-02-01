@@ -17,6 +17,8 @@ public interface RecordDayDhcpService {
 	RecordDayDhcpEntity queryObject(Integer id);
 	
 	List<RecordDayDhcpEntity> queryList(Map<String, Object> map);
+
+	List<RecordDayDhcpEntity> queryDay(Map<String,Object> map);
 	
 	int queryTotal(Map<String, Object> map);
 	

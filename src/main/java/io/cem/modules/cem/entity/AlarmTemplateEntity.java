@@ -6,11 +6,7 @@ import java.util.Date;
 
 
 /**
- * 
- * 
- * @author ${author}
- * @email ${email}
- * @date 2017-11-05 20:56:26
+ *
  */
 public class AlarmTemplateEntity implements Serializable {
 	private static final long serialVersionUID = 1L;

@@ -19,6 +19,8 @@ public interface RecordHourWebPageService {
 	
 	List<RecordHourWebPageEntity> queryList(Map<String, Object> map);
 
+	List<RecordHourWebPageEntity> queryWebPage(Map<String,Object> map);
+
 	List<RecordHourWebPageEntity> queryWebList(Map<String, Object> map);
 
 	List<RecordHourWebPageEntity> queryDayList(Map<String, Object> map);

@@ -17,6 +17,8 @@ public interface RecordDayGameService {
 	RecordDayGameEntity queryObject(Integer id);
 	
 	List<RecordDayGameEntity> queryList(Map<String, Object> map);
+
+	List<RecordDayGameEntity> queryDay(Map<String,Object> map);
 	
 	int queryTotal(Map<String, Object> map);
 	
