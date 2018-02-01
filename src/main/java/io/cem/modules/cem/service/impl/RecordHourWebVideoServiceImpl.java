@@ -1,7 +1,9 @@
 package io.cem.modules.cem.service.impl;
 
 import io.cem.common.utils.PropertiesUtils;
+import io.cem.modules.cem.dao.RecordWebVideoDao;
 import io.cem.modules.cem.entity.ScoreEntity;
+import io.cem.modules.cem.service.RecordWebVideoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,8 @@ import io.cem.modules.cem.service.RecordHourWebVideoService;
 public class RecordHourWebVideoServiceImpl implements RecordHourWebVideoService {
 	@Autowired
 	private RecordHourWebVideoDao recordHourWebVideoDao;
+	@Autowired
+	private RecordWebVideoDao recordWebVideoDao;
 	
 	@Override
 	public RecordHourWebVideoEntity queryObject(Integer id){
@@ -30,6 +34,11 @@ public class RecordHourWebVideoServiceImpl implements RecordHourWebVideoService 
 	public List<RecordHourWebVideoEntity> queryList(Map<String, Object> map){
 		return recordHourWebVideoDao.queryList(map);
 	}
+	@Override
+	public List<RecordHourWebVideoEntity> queryWebVideo(Map<String, Object> map){
+		return recordWebVideoDao.queryWebVideo(map);
+	}
+
 
 	@Override
 	public List<RecordHourWebVideoEntity> queryVideoList(Map<String, Object> map){

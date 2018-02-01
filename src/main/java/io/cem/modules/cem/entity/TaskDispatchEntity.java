@@ -60,6 +60,10 @@ public class TaskDispatchEntity implements Serializable {
 
 	private String layerName;
 
+	private Integer serviceType;
+
+	private String spName;
+
 	/**
 	 * 设置：
 	 */
@@ -279,5 +283,21 @@ public class TaskDispatchEntity implements Serializable {
 
 	public void setTargetGroupIds(int[] targetGroupIds) {
 		this.targetGroupIds = targetGroupIds;
+	}
+
+	public Integer getServiceType() {
+		return serviceType;
+	}
+
+	public void setServiceType(Integer serviceType) {
+		this.serviceType = serviceType;
+	}
+
+	public String getSpName() {
+		return spName;
+	}
+
+	public void setSpName(String spName) {
+		this.spName = spName;
 	}
 }

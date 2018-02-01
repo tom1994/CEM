@@ -185,8 +185,8 @@
 		ON dic_data.dic_type_id = 5 AND rhp.service_type = dic_data.data_id
 		WHERE
 		rhp.record_date BETWEEN #{startDate} AND #{terminalDate}
-		AND time_format(record_time,'%H') between #{startTime} AND #{terminalTime}
-		AND record_time between #{start_time} AND #{end_time}
+		AND (time_format(record_time,'%H') between #{startTime} AND #{terminalTime})
+		AND (record_time between #{start_time} AND #{end_time})
 		<if test="task_id != null and task_id != ''">
 			AND rhp.task_id = #{task_id}
 		</if>

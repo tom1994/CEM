@@ -248,9 +248,10 @@ public class TaskDispatchController {
             for (int i = 0; i < targetGroupIds.length; i++) {
                 List<TargetEntity> targetEntities = targetService.queryTargetListByGroup(targetGroupIds[i]);
                 for (int j = 0; j < targetEntities.size(); j++) {
-                    targetjson.put("target_id", targetEntities.get(j).getId());
-                    targetjson.put("target_value", targetEntities.get(j).getValue());
-                    target.add(JSON.toJSONString(targetjson));
+                    JSONObject targetObject = CloneUtils.clone(targetjson);
+                    targetObject.put("target_id", targetEntities.get(j).getId());
+                    targetObject.put("target_value", targetEntities.get(j).getValue());
+                    target.add(JSON.toJSONString(targetObject));
                 }
             }
             taskDispatch.setTarget(target.toString());
@@ -261,10 +262,11 @@ public class TaskDispatchController {
             targetjson.put("target_port", "");
             targetjson.put("target_type", 1);
             for (int targetId : targetIds) {
+                JSONObject targetObject = CloneUtils.clone(targetjson);
                 TargetEntity targetEntity = targetService.queryObject(targetId);
-                targetjson.put("target_id", targetEntity.getId());
-                targetjson.put("target_value", targetEntity.getValue());
-                target.add(JSON.toJSON(targetjson));
+                targetObject.put("target_id", targetEntity.getId());
+                targetObject.put("target_value", targetEntity.getValue());
+                target.add(JSON.toJSON(targetObject));
             }
             taskDispatch.setTarget(target.toString());
         }

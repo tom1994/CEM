@@ -20,6 +20,8 @@ public interface RecordHourTracertService {
 	
 	List<RecordHourTracertEntity> queryList(Map<String, Object> map);
 
+	List<RecordHourTracertEntity> queryTracert(Map<String,Object> map);
+
 	List<RecordHourTracertEntity> queryTracertList(Map<String, Object> map);
 
 	List<RecordHourTracertEntity> queryDayList(Map<String, Object> map);

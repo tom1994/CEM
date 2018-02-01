@@ -17,6 +17,8 @@ public interface RecordDayDnsService {
 	RecordDayDnsEntity queryObject(Integer id);
 	
 	List<RecordDayDnsEntity> queryList(Map<String, Object> map);
+
+	List<RecordDayDnsEntity> queryDay(Map<String,Object> map);
 	
 	int queryTotal(Map<String, Object> map);
 	

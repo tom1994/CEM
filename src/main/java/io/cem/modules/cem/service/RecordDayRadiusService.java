@@ -17,6 +17,7 @@ public interface RecordDayRadiusService {
 	RecordDayRadiusEntity queryObject(Integer id);
 	
 	List<RecordDayRadiusEntity> queryList(Map<String, Object> map);
+	List<RecordDayRadiusEntity> queryDay(Map<String,Object> map);
 	
 	int queryTotal(Map<String, Object> map);
 	
