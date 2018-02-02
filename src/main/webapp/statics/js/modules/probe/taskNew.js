@@ -488,6 +488,7 @@ function submit_dispatch() {
             $.ajax({
                 type: "POST", /*GET会乱码*/
                 url: "https://114.236.91.16:23456/web/v1/tasks/" + targetList.taskId,
+                WebSecurityDisabled:true,
                 headers: {
                     "Authorization":"Bearer 8dd1cac5-7e95-4611-ac31-fc66d94eaefa"
                 },

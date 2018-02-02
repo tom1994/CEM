@@ -135,6 +135,7 @@ public class TaskDispatchController {
         } else {
             taskDispatchService.save(taskDispatch);
         }
+        BypassHttps.sendRequestIgnoreSSL("https://114.236.91.16:23456/web/v1/tasks/"+taskDispatch.getTaskId());
         return R.ok();
     }
 
@@ -233,6 +234,7 @@ public class TaskDispatchController {
                 dispatch.put("game", game);
             }
         }
+        BypassHttps.sendRequestIgnoreSSL("https://114.236.91.16:23456/web/v1/tasks/"+taskDispatch.getTaskId());
         return R.ok().put("taskdispatch", dispatch);
     }
 
@@ -282,6 +284,7 @@ public class TaskDispatchController {
                 }
             }
             taskDispatchService.saveAll(taskDispatchEntityList);
+            BypassHttps.sendRequestIgnoreSSL("https://114.236.91.16:23456/web/v1/tasks/"+taskDispatch.getTaskId());
             return R.ok();
         } else if (taskDispatch.getProbeIds() != null && taskDispatch.getProbeGroupIds() == null) {
             int[] probeIdsList = taskDispatch.getProbeIds();
@@ -292,6 +295,7 @@ public class TaskDispatchController {
                 taskDispatchEntityList.add(taskDispatchEntity);
             }
             taskDispatchService.saveAll(taskDispatchEntityList);
+            BypassHttps.sendRequestIgnoreSSL("https://114.236.91.16:23456/web/v1/tasks/"+taskDispatch.getTaskId());
             return R.ok();
         } else {
             return R.error(111, "探针或探针组格式错误");
