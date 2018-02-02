@@ -67,7 +67,7 @@
 		INNER JOIN task
 		ON task_dispatch.task_id = task.id
 		LEFT JOIN schedule_policy ON task.sch_policy_id = schedule_policy.id
-		WHERE probe_id = #{value}
+		WHERE probe_id = #{probeid}
 		<choose>
 			<when test="sidx != null and sidx.trim() != ''">
 				order by ${sidx} ${order}
@@ -96,7 +96,10 @@
 
 	<select id="taskQueryDispatchTotal" resultType="int">
 		select count(*) from task_dispatch
-		WHERE probe_id = #{value}
+		WHERE probe_id = #{probeid}
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
 	</select>
 
 	<insert id="save" parameterType="io.cem.modules.cem.entity.TaskDispatchEntity" useGeneratedKeys="true" keyProperty="id">

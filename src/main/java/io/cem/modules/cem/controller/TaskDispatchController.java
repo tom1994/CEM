@@ -95,6 +95,7 @@ public class TaskDispatchController {
     @RequiresPermissions("taskdispatch:infoTask")
     public R task(@PathVariable("id") Integer id, Integer page, Integer limit) throws Exception {
         Map<String, Object> map = new HashMap<>();
+        map.put("probeid", id);
         int total = 0;
         if (page == null) {              /*没有传入page,则取全部值*/
             map.put("offset", null);
@@ -106,6 +107,7 @@ public class TaskDispatchController {
             map.put("limit", limit);
             total = taskDispatchService.taskQueryDispatchTotal(map);
         }
+
         List<TaskDispatchEntity> dispatchList = taskDispatchService.taskQueryDispatchList(map);
 //        String[] targetList = new String[dispatchList.size()];
 //        for (int i = 0; i < dispatchList.size(); i++) {
