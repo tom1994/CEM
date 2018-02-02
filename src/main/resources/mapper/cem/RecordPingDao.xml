@@ -188,8 +188,7 @@
 		ON (c.dic_type_id = 9 AND record_ping.state = c.data_id)
 		LEFT JOIN dic_data d
 		ON (d.dic_type_id = 5 AND record_ping.service_type = d.data_id)
-		WHERE
-		record_ping.id >= 0
+		WHERE service_type = #{service_type}
 		<if test="task_id != null and task_id != ''">
 			AND task_id = #{task_id}
 		</if>

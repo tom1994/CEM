@@ -103,7 +103,7 @@ var probedata_handle = new Vue({
             var data = getFormJson($('#probesearch'));
             /*得到查询条件*/
             /*获取表单元素的值*/
-            console.log(data);
+            //console.log(data);
             probetable.probedata = data;
             probetable.redraw();
             /*根据查询条件重绘*/
@@ -157,7 +157,7 @@ var search_list = new Vue({
             var data = getFormJson($('#probesearch'));
             /*得到查询条件*/
             /*获取表单元素的值*/
-            console.log(data);
+            //console.log(data);
             probetable.probedata = data;
             probetable.redraw();
             /*根据查询条件重绘*/
@@ -180,7 +180,7 @@ var probegroupdata_handle = new Vue({
             var data = getFormJson($('#groupsearchdata'));
             /*得到查询条件*/
             /*获取表单元素的值*/
-            console.log(data);
+            //console.log(data);
             grouptable.groupdata = data;
             grouptable.redraw();
             /*根据查询条件重绘*/
@@ -245,7 +245,7 @@ var probegroup_handle = new Vue({
 /*查看任务*/
 function dispatch_info (obj) {
     dispatch_table.probeid = parseInt(obj.id);
-    console.log(obj.id)
+    //console.log(obj.id)
     /*获取当前行探针数据id*/
     dispatch_table.redraw();
     $('#myModal_dispatch').modal('show');
@@ -256,12 +256,9 @@ var dispatch_table = new Vue({
     data: {
         headers: [
             {title: '<div style="width:17px"></div>'},
-            //{title: '<div style="width:77px">探针名称</div>'},
-            //{title: '<div style="width:108px">位置</div>'},
             {title: '<div style="width:117px">任务类型</div>'},
             {title: '<div style="width:117px">任务名称</div>'},
-            {title: '<div style="width:160px">调度策略</div>'},
-            //{title: '<div style="width:67px">操作</div>'}
+            {title: '<div style="width:160px">调度策略</div>'}
         ],
         rows: [],
         dtHandle: null,
@@ -326,7 +323,7 @@ var dispatch_table = new Vue({
                 param.start = data.start;//开始的记录序号
                 param.page = (data.start / data.length) + 1;//当前页码
                 param.taskdata = JSON.stringify(vm.taskdata);
-                // console.log(param);
+                console.log(param);
                 //ajax请求数据
                 $.ajax({
                     type: "POST", /*GET会乱码*/
@@ -336,7 +333,7 @@ var dispatch_table = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                        console.log(result);
+                        //console.log(result);
                         //封装返回数据
                         let returnData = {};
                         returnData.draw = result.page.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -382,7 +379,7 @@ function update_this (obj) {     /*监听修改触发事件*/
         dataType: "json",
         contentType: "application/json",
         success: function (result_county) {
-            console.log(result_county);
+            //console.log(result_county);
             var areaNames = [];
             for(var i=0;i<result_county.county.length;i++){
                 areaNames[i] = {message: result_county.county[i]}
@@ -395,7 +392,7 @@ function update_this (obj) {     /*监听修改触发事件*/
                 dataType: "json",
                 // contentType: "application/json", /*必须要,不可少*/
                 success: function (result) {
-                    console.log(result.probe);
+                    //console.log(result.probe);
                     forms[0].value = result.probe.id;
                     forms[1].value = result.probe.name;
                     forms[2].value = result.probe.serialNumber;

@@ -50,27 +50,33 @@ var taskform_data = new Vue({
     el: '#myModal_edit',
     data: {
         modaltitle: "", /*定义模态框标题*/
-        servicetype: 0,
-        schpolicies: [],
-        atemplates: []
     },
     // 在 `methods` 对象中定义方法
     methods: {
         submit: function () {
+            $("#serviceType").removeAttr("disabled");
             var tasknewJson = getFormJson($('#taskform_data'));
+            $("#serviceType").attr("disabled","disabled");
             var paramnewJson = getFormJson2($('#taskform_param'));
             var paramnew = JSON.stringify(paramnewJson);
-            console.log(paramnewJson);
+            //console.log(tasknewJson);
+            //console.log(paramnew);
             tasknewJson.value = paramnew;
-            //console.log(tasknewJson.value);
+            console.log(tasknewJson.serviceType);
             tasknewJson.createTime = (new Date()).Format("yyyy-MM-dd hh:mm:ss");
             tasknewJson.remark = "无";
             //console.log(tasknewJson);
             var tasknew = JSON.stringify(tasknewJson);
             console.log(tasknew);
+            var mapstr;
+            if (status == 0) {
+                mapstr = "save";
+            } else if (status == 1) {
+                mapstr = "update"
+            }
             $.ajax({
                 type: "POST", /*GET会乱码*/
-                url: "../../cem/alarmtemplate/save",
+                url: "../../cem/alarmtemplate/" + mapstr,
                 cache: false,  //禁用缓存
                 data: tasknew,  //传入组装的参数
                 dataType: "json",
@@ -83,7 +89,7 @@ var taskform_data = new Vue({
                         switch (code) {
                             case 0:
                                 toastr.success("新增成功!");
-                                $('#myModal_edit').modal('hide');    //jQuery选定
+                                $('#myModal_edit').modal('hide');
                                 break;
                             case 403:
                                 toastr.error(msg);
@@ -97,12 +103,14 @@ var taskform_data = new Vue({
                             case 0:
                                 toastr.success("修改成功!");
                                 $('#myModal_edit').modal('hide');
+                                //$("#serviceType").attr("disabled","disabled");
                                 break;
                             case 403:
                                 toastr.error(msg);
                                 break;
                             default:
                                 toastr.error("未知错误");
+                                $("#serviceType").attr("disabled","disabled");
                                 break
                         }
                     }
@@ -261,7 +269,7 @@ function delete_ajax() {
     });
 }
 
-/*列表详情功能*/
+/*列表编辑功能*/
 function update_this (obj) {     /*监听修改触发事件*/
     update_data_id = parseInt(obj.id);
     /*获取当前行探针数据id*/
@@ -369,8 +377,7 @@ function update_this (obj) {     /*监听修改触发事件*/
                 formparam[67].value = param.packet_delay;
                 formparam[68].value = param.packet_jitter;
                 formparam[69].value = param.packet_loss_rate;
-            }else{}
-
+            }
 
         }
     });
@@ -410,7 +417,7 @@ var alert_table = new Vue({
             let vm = this;
             vm.dtHandle.clear();
             console.log("当前页面重绘");
-            vm.dtHandle.draw(false);
+            vm.dtHandle.draw();
             /*当前页面重绘*/
         },
         redraw: function () {
