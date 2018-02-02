@@ -7,11 +7,6 @@ import java.util.Date;
 
 
 /**
- * 
- * 
- * @author ${author}
- * @email ${email}
- * @date 2017-12-02 14:35:31
  */
 public class RecordHourPingEntity implements Serializable {
 	private static final long serialVersionUID = 1L;

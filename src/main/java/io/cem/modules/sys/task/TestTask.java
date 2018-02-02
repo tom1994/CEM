@@ -87,8 +87,6 @@ public class TestTask {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-
-
 	}
 
 	public void test2(){

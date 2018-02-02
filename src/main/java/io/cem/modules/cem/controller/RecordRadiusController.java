@@ -74,7 +74,7 @@ public class RecordRadiusController {
 			if (taskDispatchService.queryTestStatus(dispatchId) > 0) {
 				break;
 			} else {
-				sleep(5000);
+				sleep(20000);
 			}
 		}
 		List<RecordRadiusEntity> resultList = new ArrayList<>();

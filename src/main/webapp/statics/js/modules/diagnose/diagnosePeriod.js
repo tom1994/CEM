@@ -227,6 +227,7 @@ var new_search = new Vue({
                 search.city_id = searchJson.cityid;
                 search.county_id = searchJson.countyid;
                 search.probe_id = searchJson.probeid;
+                // search.target_id = searchJson.targetid;
                 search.ava_start = searchJson.startDate.substr(0, 10);
                 search.ava_terminal = searchJson.terminalDate.substr(0, 10);
                 search.starTime = searchJson.startDate.substr(11, 15);
