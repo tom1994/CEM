@@ -262,7 +262,7 @@ var dispatch_table = new Vue({
         ],
         rows: [],
         dtHandle: null,
-        //taskdata: {},
+        taskdata: {},
         //taskid: 1,
         probeid:1,
     },
@@ -322,7 +322,7 @@ var dispatch_table = new Vue({
                 param.limit = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
                 param.start = data.start;//开始的记录序号
                 param.page = (data.start / data.length) + 1;//当前页码
-                //param.taskdata = JSON.stringify(vm.taskdata);
+                param.taskdata = JSON.stringify(vm.taskdata);
                 console.log(param);
                 //ajax请求数据
                 $.ajax({

@@ -104,9 +104,9 @@ public class TaskDispatchController {
         } else {
             map.put("offset", (page - 1) * limit);
             map.put("limit", limit);
-            total = taskDispatchService.taskQueryDispatchTotal(id);
+            total = taskDispatchService.taskQueryDispatchTotal(map);
         }
-        List<TaskDispatchEntity> dispatchList = taskDispatchService.taskQueryDispatchList(id);
+        List<TaskDispatchEntity> dispatchList = taskDispatchService.taskQueryDispatchList(map);
 //        String[] targetList = new String[dispatchList.size()];
 //        for (int i = 0; i < dispatchList.size(); i++) {
 //            targetList[i] = dispatchList.get(i).getTarget();
