@@ -333,7 +333,7 @@ var weightHandle = new Vue ({
                 + parseFloat(weightJson.radius);
             var totalsecondweight3 = parseFloat(weightJson.ftp_upload) + parseFloat(weightJson.ftp_download)
                 + parseFloat(weightJson.web_download);
-            console.log(weightJson.connectionweight);
+            //console.log(weightJson.connectionweight);
             for (var prop in weightJson)
             {
                 if (weightJson[prop] == "") {
@@ -341,6 +341,7 @@ var weightHandle = new Vue ({
                     break;
                 }
             }
+            console.log(totalsecondweight1);
             if (totalweight.toFixed(5) != 1) {
                 toastr.warning("业务权重设置有误!");
             } else if (totalsecondweight1 != 1) {
@@ -428,6 +429,7 @@ var piform_data = new Vue ({
             var piTotalWeight = parseFloat(piJson.pingI21) + parseFloat(piJson.pingI31) + parseFloat(piJson.pingI41)
                 + parseFloat(piJson.pingI51) + parseFloat(piJson.pingI61) + parseFloat(piJson.pingI71)
                 + parseFloat(piJson.pingI81);
+            console.log(piTotalWeight.toFixed(5));
             for (var prop in piJson)
             {
                 if (piJson[prop] == "") {
@@ -435,7 +437,7 @@ var piform_data = new Vue ({
                     break;
                 }
             }
-            if (piTotalWeight != 1){
+            if (piTotalWeight.toFixed(5) != 1){
                 toastr.warning("权重设置有误！");
             } else {
                 var pi_new = JSON.stringify(piJson);
@@ -487,7 +489,7 @@ var ptform_data = new Vue ({
                     break;
                 }
             }
-            if (ptTotalWeight != 1){
+            if (ptTotalWeight.toFixed(5) != 1){
                 toastr.warning("权重设置有误！");
             } else {
                 var pt_new = JSON.stringify(ptJson);
@@ -538,7 +540,7 @@ var puform_data = new Vue ({
                     break;
                 }
             }
-            if (puTotalWeight != 1) {
+            if (puTotalWeight.toFixed(5) != 1) {
                 toastr.warning("权重设置有误！");
             } else {
                 var pu_new = JSON.stringify(puJson);
@@ -588,7 +590,7 @@ var triform_data = new Vue ({
                     break;
                 }
             }
-            if (triTotalWeight != 1){
+            if (triTotalWeight.toFixed(5) != 1){
                 toastr.warning("权重设置有误！");
             } else {
                 var tri_new = JSON.stringify(triJson);
@@ -638,7 +640,7 @@ var trtform_data = new Vue ({
                     break;
                 }
             }
-            if (trtTotalWeight != 1){
+            if (trtTotalWeight.toFixed(5) != 1){
                 toastr.warning("权重设置有误！");
             } else {
                 var trt_new = JSON.stringify(trtJson);
@@ -693,7 +695,7 @@ var stform_data = new Vue ({
                     break;
                 }
             }
-            if (stTotalWeight != 1){
+            if (stTotalWeight.toFixed(5) != 1){
                 toastr.warning("权重设置有误!");
             } else {
                 var st_new = JSON.stringify(stJson);
@@ -746,7 +748,7 @@ var suform_data = new Vue ({
                     break;
                 }
             }
-            if (suTotalWeight != 1) {
+            if (suTotalWeight.toFixed(5) != 1) {
                 toastr.warning("权重设置有误!");
             } else {
                 var su_new = JSON.stringify(suJson);
@@ -793,7 +795,7 @@ var dnsform_data = new Vue ({
                     break;
                 }
             }
-            if (dnsTotalWeight != 1) {
+            if (dnsTotalWeight.toFixed(5) != 1) {
                 toastr.warning("权重设置有误!")
             } else {
                 var dns_new = JSON.stringify(dnsJson);
@@ -840,7 +842,7 @@ var dhcpform_data = new Vue ({
                     break;
                 }
             }
-            if (dhcpTotalWeight != 1) {
+            if (dhcpTotalWeight.toFixed(5) != 1) {
                 toastr.warning("权重设置有误!")
             } else {
                 var dhcp_new = JSON.stringify(dhcpJson);
@@ -887,7 +889,7 @@ var adslform_data = new Vue ({
                     break;
                 }
             }
-            if (adslTotalWeight != 1) {
+            if (adslTotalWeight.toFixed(5) != 1) {
                 toastr.warning("权重设置有误!")
             } else {
                 var adsl_new = JSON.stringify(adslJson);
@@ -934,7 +936,7 @@ var radiusform_data = new Vue ({
                     break;
                 }
             }
-            if (radiusTotalWeight != 1) {
+            if (radiusTotalWeight.toFixed(5) != 1) {
                 toastr.warning("权重设置有误!")
             } else {
                 var radius_new = JSON.stringify(radiusJson);
@@ -982,7 +984,7 @@ var fuform_data = new Vue ({
                     break;
                 }
             }
-            if (fuTotalWeight != 1) {
+            if (fuTotalWeight.toFixed(5) != 1) {
                 toastr.warning("权重设置有误!")
             } else {
                 var fu_new = JSON.stringify(fuJson);
@@ -1030,7 +1032,7 @@ var fdform_data = new Vue ({
                     break;
                 }
             }
-            if (fdTotalWeight != 1) {
+            if (fdTotalWeight.toFixed(5) != 1) {
                 toastr.warning("权重设置有误!")
             } else {
                 var fd_new = JSON.stringify(fdJson);
@@ -1078,7 +1080,7 @@ var wdform_data = new Vue ({
                     break;
                 }
             }
-            if (wdTotalWeight != 1) {
+            if (wdTotalWeight.toFixed(5) != 1) {
                 toastr.warning("权重设置有误!")
             } else {
                 var wd_new = JSON.stringify(wdJson);
@@ -1127,7 +1129,7 @@ var wpform_data = new Vue ({
                     break;
                 }
             }
-            if (wpTotalWeight != 1) {
+            if (wpTotalWeight.toFixed(5) != 1) {
                 toastr.warning("权重设置有误!")
             } else {
                 var webpage_new = JSON.stringify(webpageJson);
@@ -1177,7 +1179,7 @@ var videoform_data = new Vue ({
                     break;
                 }
             }
-            if (videoTotalWeight != 1) {
+            if (videoTotalWeight.toFixed(5) != 1) {
                 toastr.warning("权重设置有误!")
             } else {
                 var video_new = JSON.stringify(videoJson);
@@ -1225,7 +1227,7 @@ var gameform_data = new Vue ({
                     break;
                 }
             }
-            if (gameTotalWeight != 1) {
+            if (gameTotalWeight.toFixed(5) != 1) {
                 toastr.warning("权重设置有误!")
             } else {
                 var game_new = JSON.stringify(gameJson);
