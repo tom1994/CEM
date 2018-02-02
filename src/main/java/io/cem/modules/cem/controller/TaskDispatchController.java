@@ -135,7 +135,8 @@ public class TaskDispatchController {
         } else {
             taskDispatchService.save(taskDispatch);
         }
-        BypassHttps.sendRequestIgnoreSSL("https://114.236.91.16:23456/web/v1/tasks/"+taskDispatch.getTaskId());
+        BypassHttps.sendRequestIgnoreSSL("https://114.236.91.16:23456/web/v1/tasks/" + taskDispatch.getTaskId());
+
         return R.ok();
     }
 
@@ -179,8 +180,8 @@ public class TaskDispatchController {
         for (int i = 0; i < size; i++) {
             taskDispatch.setProbeId(probeList.get(i).getId());
             if (map.containsKey("ping")) {
-                taskDispatch.setTestNumber(3);
-                taskDispatch.setTestInterval(30);
+                taskDispatch.setTestNumber(1);
+                taskDispatch.setTestInterval(10);
                 for (int a = 0; a < 5; a++) {
                     taskDispatch.setTaskId(a + 1);
                     taskDispatchService.saveAndReturn(taskDispatch);
@@ -189,8 +190,8 @@ public class TaskDispatchController {
                 dispatch.put("ping", ping);
             }
             if (map.containsKey("sla")) {
-                taskDispatch.setTestNumber(3);
-                taskDispatch.setTestInterval(30);
+                taskDispatch.setTestNumber(1);
+                taskDispatch.setTestInterval(10);
                 taskDispatch.setTaskId(2);
                 for (int b = 0; b < 6; b++) {
                     taskDispatch.setTaskId(b + 20);
@@ -200,16 +201,16 @@ public class TaskDispatchController {
                 dispatch.put("sla", sla);
             }
             if (map.containsKey("web")) {
-                taskDispatch.setTestNumber(3);
-                taskDispatch.setTestInterval(30);
+                taskDispatch.setTestNumber(1);
+                taskDispatch.setTestInterval(10);
                 taskDispatch.setTaskId(20);
                 taskDispatchService.saveAndReturn(taskDispatch);
                 web[i] = taskDispatch.getId();
                 dispatch.put("web", web);
             }
             if (map.containsKey("download")) {
-                taskDispatch.setTestNumber(3);
-                taskDispatch.setTestInterval(30);
+                taskDispatch.setTestNumber(1);
+                taskDispatch.setTestInterval(10);
                 for (int d = 0; d < 3; d++) {
                     taskDispatch.setTaskId(d + 30);
                     taskDispatchService.saveAndReturn(taskDispatch);
@@ -218,23 +219,46 @@ public class TaskDispatchController {
                 dispatch.put("download", download);
             }
             if (map.containsKey("video")) {
-                taskDispatch.setTestNumber(3);
-                taskDispatch.setTestInterval(30);
+                taskDispatch.setTestNumber(1);
+                taskDispatch.setTestInterval(10);
                 taskDispatch.setTaskId(40);
                 taskDispatchService.saveAndReturn(taskDispatch);
                 video[i] = taskDispatch.getId();
                 dispatch.put("video", video);
             }
             if (map.containsKey("game")) {
-                taskDispatch.setTestNumber(3);
-                taskDispatch.setTestInterval(30);
+                taskDispatch.setTestNumber(1);
+                taskDispatch.setTestInterval(10);
                 taskDispatch.setTaskId(50);
                 taskDispatchService.saveAndReturn(taskDispatch);
                 game[i] = taskDispatch.getId();
                 dispatch.put("game", game);
             }
         }
-        BypassHttps.sendRequestIgnoreSSL("https://114.236.91.16:23456/web/v1/tasks/"+taskDispatch.getTaskId());
+        if (map.containsKey("ping")) {
+            for (int i = 1; i < 6; i++) {
+                BypassHttps.sendRequestIgnoreSSL("https://114.236.91.16:23456/web/v1/tasks/" + i);
+            }
+        }
+        if (map.containsKey("sla")) {
+            for (int i = 10; i < 16; i++) {
+                BypassHttps.sendRequestIgnoreSSL("https://114.236.91.16:23456/web/v1/tasks/" + i);
+            }
+        }
+        if (map.containsKey("web")) {
+            BypassHttps.sendRequestIgnoreSSL("https://114.236.91.16:23456/web/v1/tasks/" + 20);
+        }
+        if (map.containsKey("download")) {
+            for (int i = 30; i < 33; i++) {
+                BypassHttps.sendRequestIgnoreSSL("https://114.236.91.16:23456/web/v1/tasks/" + i);
+            }
+        }
+        if (map.containsKey("video")) {
+            BypassHttps.sendRequestIgnoreSSL("https://114.236.91.16:23456/web/v1/tasks/" + 40);
+        }
+        if (map.containsKey("game")) {
+                BypassHttps.sendRequestIgnoreSSL("https://114.236.91.16:23456/web/v1/tasks/" + 50);
+        }
         return R.ok().put("taskdispatch", dispatch);
     }
 
@@ -284,7 +308,7 @@ public class TaskDispatchController {
                 }
             }
             taskDispatchService.saveAll(taskDispatchEntityList);
-            BypassHttps.sendRequestIgnoreSSL("https://114.236.91.16:23456/web/v1/tasks/"+taskDispatch.getTaskId());
+            BypassHttps.sendRequestIgnoreSSL("https://114.236.91.16:23456/web/v1/tasks/" + taskDispatch.getTaskId());
             return R.ok();
         } else if (taskDispatch.getProbeIds() != null && taskDispatch.getProbeGroupIds() == null) {
             int[] probeIdsList = taskDispatch.getProbeIds();
@@ -295,7 +319,7 @@ public class TaskDispatchController {
                 taskDispatchEntityList.add(taskDispatchEntity);
             }
             taskDispatchService.saveAll(taskDispatchEntityList);
-            BypassHttps.sendRequestIgnoreSSL("https://114.236.91.16:23456/web/v1/tasks/"+taskDispatch.getTaskId());
+            BypassHttps.sendRequestIgnoreSSL("https://114.236.91.16:23456/web/v1/tasks/" + taskDispatch.getTaskId());
             return R.ok();
         } else {
             return R.error(111, "探针或探针组格式错误");

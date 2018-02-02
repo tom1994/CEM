@@ -84,6 +84,7 @@ var button_change = new Vue({
     methods: {
         ping: function () {
             status = 1;
+            changeStatus(1);
             console.log("连通性");
             options.title = this.option_ping.title;
             new_search.search();
@@ -92,6 +93,7 @@ var button_change = new Vue({
         },
         sla: function () {
             status = 2;
+            changeStatus(2);
             console.log("网络层");
             options.title = this.option_sla.title;
             new_search.search();
@@ -99,6 +101,7 @@ var button_change = new Vue({
         },
         web: function () {
             status = 3;
+            changeStatus(3);
             console.log("web");
             options.title = this.option_web.title;
             new_search.search();
@@ -106,6 +109,7 @@ var button_change = new Vue({
         },
         download: function () {
             status = 4;
+            changeStatus(4);
             options.title = this.option_web.title;
             new_search.search();
             var chart = new Highcharts.Chart('container', options)
@@ -113,6 +117,7 @@ var button_change = new Vue({
         },
         video: function () {
             status = 5;
+            changeStatus(5);
             options.title = this.option_ping.title;
             new_search.search();
             var chart = new Highcharts.Chart('container', options)
@@ -120,6 +125,7 @@ var button_change = new Vue({
         },
         game: function () {
             status = 6;
+            changeStatus(6);
             options.title = this.option_ping.title;
             new_search.search();
             var chart = new Highcharts.Chart('container', options)
@@ -227,7 +233,7 @@ var new_search = new Vue({
                 search.city_id = searchJson.cityid;
                 search.county_id = searchJson.countyid;
                 search.probe_id = searchJson.probeid;
-                // search.target_id = searchJson.targetid;
+                search.target_id = searchJson.targetid;
                 search.ava_start = searchJson.startDate.substr(0, 10);
                 search.ava_terminal = searchJson.terminalDate.substr(0, 10);
                 search.starTime = searchJson.startDate.substr(11, 15);
@@ -572,8 +578,7 @@ Vue.component('data-table', {
             /*bInfo: false,*/
             bLengthChange: false, /*禁用Show entries*/
         });
-
-
+        changeStatus(status);
     }
 });
 
@@ -620,4 +625,20 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
         }
     });
     return o;
-};
+}
+
+function changeStatus(i) {
+    $.ajax({
+        type: "POST", /*GET会乱码*/
+        url: "../../target/infoList/"+i,
+        cache: false,  //禁用缓存
+        dataType: "json",
+        success: function (result) {
+            var targets = [];
+            for (var i = 0; i < result.target.length; i++) {
+                targets[i] = {message: result.target[i]}
+            }
+            search_data.target = targets;
+        }
+    });
+}

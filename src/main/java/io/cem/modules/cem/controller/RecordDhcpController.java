@@ -81,8 +81,7 @@ public class RecordDhcpController {
 		map.put("offset", (page - 1) * limit);
 		map.put("limit", limit);
 		int total = recordDhcpService.queryTotal(map);
-		while (true) {
-
+		for (int i = 0; i < 20; i++){
 			if (taskDispatchService.queryTestStatus(dispatchId) > 0) {
 				break;
 			} else {

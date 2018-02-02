@@ -65,8 +65,11 @@ public class TaskDispatchServiceImpl implements TaskDispatchService {
 
 	@Override
 	public int queryTestStatus(Integer[] ids){
-		for (Integer id : ids) {
-			if (taskDispatchDao.queryTestStatus(id) > 0) {
+		int status = 0;
+		for (int j=0;j<ids.length;j++) {
+			status = taskDispatchDao.queryTestStatus(ids[j]);
+			System.out.println(status);
+			if (status > 0) {
 			} else {
 				return 0;
 			}
