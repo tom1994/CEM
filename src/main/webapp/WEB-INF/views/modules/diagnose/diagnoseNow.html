@@ -13,9 +13,9 @@
 
 <body>
 <div class="ibox-content" style="padding-bottom: 0 !important;">
-    <div class="row">
-        <form class="col-lg-9 col-md-9 col-sm-9 form-horizontal" id="probesearch"
-              role="form">
+    <div class="row" id="probesearch">
+        <form class="col-lg-6 col-md-6 col-sm-6 form-horizontal"
+              role="form" style="display: inline-block">
             <div class="form-group row">
                 <div class="input-group searchspan">
                     <span class="searchname" title="" style="width: 70px">选择探针：</span>
@@ -41,73 +41,51 @@
                         </option>
                     </select>
                 </div>
-                <div class="input-group searchspan">
-                    <span class="searchname" title="探针" style="width: 40px">探针</span>
-                    <!--<div class="jq22">-->
-                    <!--<select name="probeid"  style="width: 110px" >-->
-                    <!--<option value="">-&#45;&#45;请选择-&#45;&#45;</option>-->
-                    <!--<option v-for="item in probe" v-bind:value="item.message.id">{{ item.message.name}}</option>-->
-                    <!--</select>-->
-                    <!--</div>-->
-                    <select name="probeid" class="form-control" style="width: 110px">
-                        <option value="">---请选择---</option>
-                        <option v-for="item in probe" v-bind:value="item.message.id">{{ item.message.name}}</option>
-                    </select>
-                </div>
             </div>
         </form>
+        <div class="col-lg-3 col-md-3 col-sm-3" id="probe" style="display: inline-block; position: absolute; top: 0px">
+            <div class="jq22">
+                <select class="form-control" name="probeid" style="display: none">
+                    <option value="">选择探针</option>
+                    <option v-for="item in probe" v-bind:value="item.message.id">{{ item.message.name}}</option>
+                </select>
+            </div>
+        </div>
     </div>
     <div class="row">
-        <form id="superservice" role="form">
+        <form id="superservice" style="margin: 3px" role="form">
             <div class="row col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                <input type="checkbox" id="ping" class="" name="ping" value="1" onclick="getTarget()">
+                <input type="checkbox" id="ping" class="" name="ping" value="1" onclick="getTarget()" checked>
                 <label for="ping">网络连通性</label>
-                <input type="checkbox" id="sla" class="" name="sla" value="2" onclick="getTarget()">
+                <input type="checkbox" id="sla" class="" name="sla" value="2" onclick="getTarget()" checked>
                 <label for="sla">网络层质量</label>
-                <input type="checkbox" id="web" class="" name="web" value="3" onclick="getTarget()">
+                <input type="checkbox" id="web" class="" name="web" value="3" onclick="getTarget()" checked>
                 <label for="web">Web浏览</label>
-                <input type="checkbox" id="download" class="" name="download" value="4" onclick="getTarget()">
+                <input type="checkbox" id="download" class="" name="download" value="4" onclick="getTarget()" checked>
                 <label for="download">文件下载</label>
-                <input type="checkbox" id="video" class="" name="video" value="5" onclick="getTarget()">
+                <input type="checkbox" id="video" class="" name="video" value="5" onclick="getTarget()" checked>
                 <label for="video">在线视频</label>
-                <input type="checkbox" id="game" class="" name="game" value="6" onclick="getTarget()">
+                <input type="checkbox" id="game" class="" name="game" value="6" onclick="getTarget()" checked>
                 <label for="game">网络游戏</label>
             </div>
         </form>
     </div>
-
-    <div class="input-group searchspan" id="target">
-        <form id="targetsearch" role="form">
-        <span class="searchname" title="测试目标" style="width: 40px">目标</span>
-        <select class="form-control " name="targetid" style="width: 110px">
-            <option value="">---请选择---</option>
-            <option v-for="item in target" v-bind:value="item.message.id">{{ item.message.targetName}}</option>
-        </select>
-        </form>
-        <a id="diagnose" target="_blank" href="" style="display: none">  </a>
+    <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-3" id="target" style="display: inline-block">
+            <div class="input-group searchspan jq22">
+                <select class="" name="targetid" style="display: none">
+                    <option value="">选择目标</option>
+                    <option v-for="item in target" v-bind:value="item.message.id">{{ item.message.targetName}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-3" style="display: inline-block">
+            <a id="diagnose" target="_blank" href="" style="display: none"> </a>
             <button type="button" class="btn btn-success" onclick="diagnose()">开始测试
             </button>
-
+        </div>
     </div>
 
-</div>
-
-<div class="jq22">
-<select>
-<option value="">月份</option>
-<option value="一月">一月</option>
-<option value="二月">二月</option>
-<option value="三月">三月</option>
-<option value="四月">四月</option>
-<option value="五月">五月</option>
-<option value="六月">六月</option>
-<option value="七月">七月</option>
-<option value="八月">八月</option>
-<option value="九月">九月</option>
-<option value="十月">十月</option>
-<option value="十一月">十一月</option>
-<option value="十二月">十二月</option>
-</select>
 </div>
 
 

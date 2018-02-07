@@ -2,6 +2,7 @@ package io.cem.modules.cem.service.impl;
 
 import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import io.cem.common.utils.PropertiesUtils;
+import io.cem.modules.cem.dao.RecordSlaDao;
 import io.cem.modules.cem.entity.*;
 import io.cem.modules.cem.service.RecordHourPingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ import io.cem.modules.cem.service.RecordHourSlaService;
 public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 	@Autowired
 	private RecordHourSlaDao recordHourSlaDao;
+	@Autowired
+	private RecordSlaDao recordSlaDao;
 	
 	@Override
 	public RecordHourSlaEntity queryObject(Integer id){
@@ -28,6 +31,11 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 	@Override
 	public List<RecordHourSlaEntity> queryList(Map<String, Object> map){
 		return recordHourSlaDao.queryList(map);
+	}
+
+	@Override
+	public List<RecordHourSlaEntity> querySla(Map<String, Object> map){
+		return recordSlaDao.querySla(map);
 	}
 
 	@Override

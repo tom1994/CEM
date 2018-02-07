@@ -23,6 +23,8 @@ public interface RecordPingService {
 
 	int queryTotal(Map<String, Object> map);
 
+	int queryPingTotal(Map<String, Object> map);
+
 	int queryIntervalTotal(Map<String, Object> map);
 	
 	void save(RecordPingEntity recordPing);

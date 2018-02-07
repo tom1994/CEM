@@ -6,11 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 
- * 
- * @author ${author}
- * @email ${email}
- * @date 2017-11-13 11:01:11
+
  */
 public interface TaskDispatchService {
 	
@@ -20,7 +16,7 @@ public interface TaskDispatchService {
 
 	List<TaskDispatchEntity> queryDispatchList(Integer id);
 
-	List<TaskDispatchEntity> taskQueryDispatchList(Integer id);
+	List<TaskDispatchEntity> taskQueryDispatchList(Map<String, Object> map);
 
 	int saveAndReturn(TaskDispatchEntity taskDispatch);
 
@@ -30,7 +26,7 @@ public interface TaskDispatchService {
 
 	int queryDispatchTotal(Integer id);
 
-	int taskQueryDispatchTotal(Integer id);
+	int taskQueryDispatchTotal(Map<String, Object> map);
 	
 	void save(TaskDispatchEntity taskDispatch);
 

@@ -18,6 +18,8 @@ public interface RecordHourSlaService {
 	
 	List<RecordHourSlaEntity> queryList(Map<String, Object> map);
 
+	List<RecordHourSlaEntity> querySla(Map<String,Object> map);
+
 	List<RecordHourSlaEntity> querySlaList(Map<String, Object> map);
 
 	List<RecordHourSlaEntity> queryDayList(Map<String, Object> map);

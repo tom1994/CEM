@@ -45,7 +45,7 @@ public class RecordTracertEntity implements Serializable {
 	//测试目标名称
 	private String targetName;
 	//测试目标IP代号
-	private Integer targetIp;
+	private Long targetIp;
 	//测试目标IP
 	private String targetipName;
 	//测试目标归属地
@@ -217,15 +217,16 @@ public class RecordTracertEntity implements Serializable {
 	/**
 	 * 设置：测试目标IP
 	 */
-	public void setTargetIp(Integer targetIp) {
+	public void setTargetIp(Long targetIp) {
 		this.targetIp = targetIp;
 	}
 	/**
 	 * 获取：测试目标IP
 	 */
-	public Integer getTargetIp() {
+	public Long getTargetIp() {
 		return targetIp;
 	}
+
 	public String getTargetipName() {
 		return targetipName;
 	}

@@ -3,6 +3,7 @@ package io.cem.modules.cem.service.impl;
 
 import io.cem.common.utils.PropertiesUtils;
 import io.cem.common.utils.*;
+import io.cem.modules.cem.dao.RecordPingDao;
 import io.cem.modules.cem.entity.*;
 import io.cem.modules.cem.service.RecordHourTracertService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import io.cem.modules.cem.dao.RecordHourPingDao;
@@ -21,6 +23,8 @@ import io.cem.modules.cem.service.RecordHourPingService;
 public class RecordHourPingServiceImpl implements RecordHourPingService {
 	@Autowired
 	private RecordHourPingDao recordHourPingDao;
+	@Autowired
+	private RecordPingDao recordPingDao;
 	
 	@Override
 	public RecordHourPingEntity queryObject(Integer id){
@@ -30,6 +34,11 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 	@Override
 	public List<RecordHourPingEntity> queryList(Map<String, Object> map){
 		return recordHourPingDao.queryList(map);
+	}
+
+	@Override
+	public List<RecordHourPingEntity> queryPing(Map<String, Object> map){
+		return recordPingDao.queryPing(map);
 	}
 
 	@Override
@@ -1578,8 +1587,40 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 	}
 
 	@Override
+	public Map queryTime(){
+		Map<String,Object> map = new HashMap<String,Object>();
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+		System.out.println("正在执行"+df.format(new Date()));// new Date()为获取当前系统时间
+		Calendar calendar = Calendar.getInstance();
+        /* HOUR_OF_DAY 指示一天中的小时 */
+		calendar.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR_OF_DAY) - 1);
+		SimpleDateFormat df2 = new SimpleDateFormat("HH:mm:ss");
+		System.out.println("一个小时前的时间：" + df2.format(calendar.getTime()));
+		System.out.println("当前的时间：" + df2.format(new Date()));
+
+		map.put("start_time",df2.format(calendar.getTime()));
+		map.put("terminal_time",df2.format(new Date()));
+		map.put("record_date",df.format(new Date()));
+		return map;
+	}
+
+	@Override
+	public Map queryDay() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+		System.out.println("正在执行" + df.format(new Date()));// new Date()为获取当前系统时间
+		map.put("record_date",df.format(new Date()));
+		return map;
+	}
+
+	@Override
 	public int queryTotal(Map<String, Object> map){
 		return recordHourPingDao.queryTotal(map);
+	}
+
+	@Override
+	public int pingListTotal(Map<String, Object> map){
+		return recordHourPingDao.pingListTotal(map);
 	}
 	
 	@Override

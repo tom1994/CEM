@@ -18,6 +18,8 @@ public interface RecordHourDhcpService {
 	
 	List<RecordHourDhcpEntity> queryList(Map<String, Object> map);
 
+	List<RecordHourDhcpEntity> queryDhcp(Map<String,Object> map);
+
 	List<RecordHourDhcpEntity> queryDhcpList(Map<String, Object> map);
 
 	List<RecordHourDhcpEntity> queryDayList(Map<String, Object> map);

@@ -18,6 +18,7 @@ public interface RecordHourGameService {
 	RecordHourGameEntity queryObject(Integer id);
 	
 	List<RecordHourGameEntity> queryList(Map<String, Object> map);
+	List<RecordHourGameEntity> queryGame(Map<String,Object> map);
 
 	List<RecordHourGameEntity> queryGameList(Map<String, Object> map);
 

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.cem.modules.cem.dao.RecordDayWebVideoDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.cem.modules.cem.entity.RecordDayWebVideoEntity" id="recordDayWebVideoMap">
+        <result property="id" column="id"/>
+        <result property="cityId" column="city_id"/>
+        <result property="countyId" column="county_id"/>
+        <result property="probeId" column="probe_id"/>
+        <result property="port" column="port"/>
+        <result property="taskId" column="task_id"/>
+        <result property="serviceType" column="service_type"/>
+        <result property="targetId" column="target_id"/>
+        <result property="targetIp" column="target_ip"/>
+        <result property="recordDate" column="record_date"/>
+        <result property="recordTime" column="record_time"/>
+        <result property="dnsDelay" column="dns_delay"/>
+        <result property="wsConnDelay" column="ws_conn_delay"/>
+        <result property="webPageDelay" column="web_page_delay"/>
+        <result property="ssConnDelay" column="ss_conn_delay"/>
+        <result property="addressDelay" column="address_delay"/>
+        <result property="msConnDelay" column="ms_conn_delay"/>
+        <result property="headFrameDelay" column="head_frame_delay"/>
+        <result property="initBufferDelay" column="init_buffer_delay"/>
+        <result property="loadDelay" column="load_delay"/>
+        <result property="totalBufferDelay" column="total_buffer_delay"/>
+        <result property="downloadRate" column="download_rate"/>
+        <result property="bufferTime" column="buffer_time"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="io.cem.modules.cem.entity.RecordDayWebVideoEntity">
+		select * from record_day_web_video where id = #{value}
+	</select>
+
+	<select id="queryList" resultType="io.cem.modules.cem.entity.RecordDayWebVideoEntity">
+		select * from record_day_web_video
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from record_day_web_video 
+	</select>
+	 
+	<insert id="save" parameterType="io.cem.modules.cem.entity.RecordDayWebVideoEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into record_day_web_video
+		(
+			`city_id`, 
+			`county_id`, 
+			`probe_id`, 
+			`port`, 
+			`task_id`, 
+			`service_type`, 
+			`target_id`, 
+			`target_ip`, 
+			`record_date`, 
+			`record_time`, 
+			`dns_delay`, 
+			`ws_conn_delay`, 
+			`web_page_delay`, 
+			`ss_conn_delay`, 
+			`address_delay`, 
+			`ms_conn_delay`, 
+			`head_frame_delay`, 
+			`init_buffer_delay`, 
+			`load_delay`, 
+			`total_buffer_delay`, 
+			`download_rate`, 
+			`buffer_time`, 
+			`remark`
+		)
+		values
+		(
+			#{cityId}, 
+			#{countyId}, 
+			#{probeId}, 
+			#{port}, 
+			#{taskId}, 
+			#{serviceType}, 
+			#{targetId}, 
+			#{targetIp}, 
+			#{recordDate}, 
+			#{recordTime}, 
+			#{dnsDelay}, 
+			#{wsConnDelay}, 
+			#{webPageDelay}, 
+			#{ssConnDelay}, 
+			#{addressDelay}, 
+			#{msConnDelay}, 
+			#{headFrameDelay}, 
+			#{initBufferDelay}, 
+			#{loadDelay}, 
+			#{totalBufferDelay}, 
+			#{downloadRate}, 
+			#{bufferTime}, 
+			#{remark}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="io.cem.modules.cem.entity.RecordDayWebVideoEntity">
+		update record_day_web_video 
+		<set>
+			<if test="cityId != null">`city_id` = #{cityId}, </if>
+			<if test="countyId != null">`county_id` = #{countyId}, </if>
+			<if test="probeId != null">`probe_id` = #{probeId}, </if>
+			<if test="port != null">`port` = #{port}, </if>
+			<if test="taskId != null">`task_id` = #{taskId}, </if>
+			<if test="serviceType != null">`service_type` = #{serviceType}, </if>
+			<if test="targetId != null">`target_id` = #{targetId}, </if>
+			<if test="targetIp != null">`target_ip` = #{targetIp}, </if>
+			<if test="recordDate != null">`record_date` = #{recordDate}, </if>
+			<if test="recordTime != null">`record_time` = #{recordTime}, </if>
+			<if test="dnsDelay != null">`dns_delay` = #{dnsDelay}, </if>
+			<if test="wsConnDelay != null">`ws_conn_delay` = #{wsConnDelay}, </if>
+			<if test="webPageDelay != null">`web_page_delay` = #{webPageDelay}, </if>
+			<if test="ssConnDelay != null">`ss_conn_delay` = #{ssConnDelay}, </if>
+			<if test="addressDelay != null">`address_delay` = #{addressDelay}, </if>
+			<if test="msConnDelay != null">`ms_conn_delay` = #{msConnDelay}, </if>
+			<if test="headFrameDelay != null">`head_frame_delay` = #{headFrameDelay}, </if>
+			<if test="initBufferDelay != null">`init_buffer_delay` = #{initBufferDelay}, </if>
+			<if test="loadDelay != null">`load_delay` = #{loadDelay}, </if>
+			<if test="totalBufferDelay != null">`total_buffer_delay` = #{totalBufferDelay}, </if>
+			<if test="downloadRate != null">`download_rate` = #{downloadRate}, </if>
+			<if test="bufferTime != null">`buffer_time` = #{bufferTime}, </if>
+			<if test="remark != null">`remark` = #{remark}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from record_day_web_video where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from record_day_web_video where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

@@ -6,11 +6,6 @@ import java.util.Date;
 
 
 /**
- * 
- * 
- * @author ${author}
- * @email ${email}
- * @date 2017-11-13 11:01:11
  */
 public class TaskDispatchEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -59,6 +54,10 @@ public class TaskDispatchEntity implements Serializable {
 	private String taskName;
 
 	private String layerName;
+
+	private Integer serviceType;
+
+	private String spName;
 
 	/**
 	 * 设置：
@@ -279,5 +278,21 @@ public class TaskDispatchEntity implements Serializable {
 
 	public void setTargetGroupIds(int[] targetGroupIds) {
 		this.targetGroupIds = targetGroupIds;
+	}
+
+	public Integer getServiceType() {
+		return serviceType;
+	}
+
+	public void setServiceType(Integer serviceType) {
+		this.serviceType = serviceType;
+	}
+
+	public String getSpName() {
+		return spName;
+	}
+
+	public void setSpName(String spName) {
+		this.spName = spName;
 	}
 }

@@ -3,7 +3,7 @@
 
 <mapper namespace="io.cem.modules.cem.dao.RecordHourPingDao">
 
-	<!-- 可根据自己的需求，是否要使用 -->
+    <!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="io.cem.modules.cem.entity.RecordHourPingEntity" id="recordHourPingMap">
         <result property="id" column="id"/>
         <result property="cityId" column="city_id"/>
@@ -11,9 +11,9 @@
         <result property="probeId" column="probe_id"/>
         <result property="port" column="port"/>
         <result property="taskId" column="task_id"/>
-		<result property="taskName" column="task_name"/>
+        <result property="taskName" column="task_name"/>
         <result property="serviceType" column="service_type"/>
-		<result property="servicetypeName" column="servicetype_name"/>
+        <result property="servicetypeName" column="servicetype_name"/>
         <result property="targetId" column="target_id"/>
         <result property="targetIp" column="target_ip"/>
         <result property="recordDate" column="record_date"/>
@@ -26,185 +26,286 @@
         <result property="jitterVar" column="jitter_var"/>
         <result property="lossRate" column="loss_rate"/>
         <result property="remark" column="remark"/>
-		<result property="cityName" column="city_name"/>
-		<result property="areaName" column="area_name"/>
-		<result property="probeName" column="probe_name"/>
-		<result property="targetName" column="target_name"/>
-		<result property="targetipName" column="targetip_name"/>
-		<result property="accessLayer" column="access_layer"/>
+        <result property="cityName" column="city_name"/>
+        <result property="areaName" column="area_name"/>
+        <result property="probeName" column="probe_name"/>
+        <result property="targetName" column="target_name"/>
+        <result property="targetipName" column="targetip_name"/>
+        <result property="accessLayer" column="access_layer"/>
     </resultMap>
 
-	<select id="queryObject" resultType="io.cem.modules.cem.entity.RecordHourPingEntity">
+    <select id="queryObject" resultType="io.cem.modules.cem.entity.RecordHourPingEntity">
 		select * from record_hour_ping where id = #{value}
 	</select>
 
-	<select id="queryList" resultType="io.cem.modules.cem.entity.RecordHourPingEntity">
-		select
-		    record_hour_ping.* ,
-		    city.city_name     AS city_name,
-		    county.county_name AS area_name,
-		    probe.probe_name AS probe_name,
-		    probe.access_layer,
-		    target.target_name AS target_name
-		FROM record_hour_ping rhp
-		LEFT JOIN city
-		ON rhp.city_id = city.city_id
-		LEFT JOIN county
-		ON rhp.county_id = county.county_id
-		LEFT JOIN probe
-		ON rhp.probe_id = probe.id
-		LEFT JOIN target
-		ON rhp.target_id = target.id
-		WHERE rhp.record_date BETWEEN #{ava_start} AND #{ava_terminal}
-		<if test="city_id != null and city_id != ''">
-			AND record_hour_ping.city_id = #{city_id}
-		</if>
-		<if test="county_id != null and county_id != ''">
-			AND record_hour_ping.county_id = #{county_id}
-		</if>
-		<if test="target_id != null and target_id != ''">
-			AND record_hour_ping.target_id = #{target_id}
-		</if>
-		<if test="probe_id != null and probe_id != ''">
-			AND record_hour_ping.probe_id = #{probe_id}
-		</if>
-		<choose>
-			<when test="sidx != null and sidx.trim() != ''">
-				order by ${sidx} ${order}
-			</when>
-			<otherwise>
-				order by id desc
-			</otherwise>
-		</choose>
-	</select>
+    <select id="queryList" resultType="io.cem.modules.cem.entity.RecordHourPingEntity">
+        select
+        record_hour_ping.* ,
+        city.city_name AS city_name,
+        county.county_name AS area_name,
+        probe.probe_name AS probe_name,
+        probe.access_layer,
+        target.target_name AS target_name
+        FROM record_hour_ping rhp
+        LEFT JOIN city
+        ON rhp.city_id = city.city_id
+        LEFT JOIN county
+        ON rhp.county_id = county.county_id
+        LEFT JOIN probe
+        ON rhp.probe_id = probe.id
+        LEFT JOIN target
+        ON rhp.target_id = target.id
+        WHERE rhp.record_date BETWEEN #{ava_start} AND #{ava_terminal}
+        <if test="city_id != null and city_id != ''">
+            AND record_hour_ping.city_id = #{city_id}
+        </if>
+        <if test="county_id != null and county_id != ''">
+            AND record_hour_ping.county_id = #{county_id}
+        </if>
+        <if test="target_id != null and target_id != ''">
+            AND record_hour_ping.target_id = #{target_id}
+        </if>
+        <if test="probe_id != null and probe_id != ''">
+            AND record_hour_ping.probe_id = #{probe_id}
+        </if>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+            <otherwise>
+                order by id desc
+            </otherwise>
+        </choose>
+    </select>
 
-	<select id="queryPingList" resultType="io.cem.modules.cem.entity.RecordHourPingEntity">
-		select rhp.id,rhp.city_id,rhp.county_id,rhp.probe_id,rhp.port,rhp.task_id,rhp.service_type,rhp.target_id,rhp.target_ip,rhp.record_date,rhp.remark,
-		city.city_name AS city_name,
-		county.county_name AS area_name,
-		probe.probe_name AS probe_name,
-		probe.access_layer,
-		target.target_name AS target_name,
-		time_format(record_time, '%H') AS record_time,
-		AVG(rhp.delay) AS delay,
-		AVG(rhp.delay_std) AS delay_std,
-		AVG(rhp.delay_var) AS delay_var,
-		AVG(rhp.jitter) AS jitter,
-		AVG(rhp.jitter_std) AS jitter_std,
-		AVG(rhp.jitter_var) AS jitter_var,
-		AVG(rhp.loss_rate) AS loss_rate
-		FROM record_hour_ping rhp
-		LEFT JOIN city
-		ON rhp.city_id = city.city_id
-		LEFT JOIN county
-		ON rhp.county_id = county.county_id
-		LEFT JOIN probe
-		ON rhp.probe_id = probe.id
-		LEFT JOIN target
-		ON rhp.target_id = target.id
-		WHERE rhp.record_date BETWEEN #{ava_start} AND #{ava_terminal}
-		<if test="city_id != null and city_id != ''">
-			AND rhp.city_id = #{city_id}
-		</if>
-		<if test="county_id != null and county_id != ''">
-			AND rhp.county_id = #{county_id}
-		</if>
-		<if test="target_id != null and target_id != ''">
-			AND rhp.target_id = #{target_id}
-		</if>
-		<if test="probe_id != null and probe_id != ''">
-			AND rhp.probe_id = #{probe_id}
-		</if>
-		GROUP BY rhp.city_id,rhp.county_id,rhp.service_type,rhp.target_id,rhp.probe_id,date_format(rhp.record_date,'%Y-%m-%d'),time_format(record_time, '%H');
-</select>
+    <select id="queryPingList" resultType="io.cem.modules.cem.entity.RecordHourPingEntity">
+        select
+        rhp.id,rhp.city_id,rhp.county_id,rhp.probe_id,rhp.port,rhp.task_id,rhp.service_type,rhp.target_id,rhp.target_ip,rhp.record_date,rhp.remark,
+        city.city_name AS city_name,
+        county.county_name AS area_name,
+        probe.probe_name AS probe_name,
+        probe.access_layer,
+        target.target_name AS target_name,
+        time_format(record_time, '%H') AS record_time,
+        AVG(rhp.delay) AS delay,
+        AVG(rhp.delay_std) AS delay_std,
+        AVG(rhp.delay_var) AS delay_var,
+        AVG(rhp.jitter) AS jitter,
+        AVG(rhp.jitter_std) AS jitter_std,
+        AVG(rhp.jitter_var) AS jitter_var,
+        AVG(rhp.loss_rate) AS loss_rate
+        FROM record_hour_ping rhp
+        LEFT JOIN city
+        ON rhp.city_id = city.city_id
+        LEFT JOIN county
+        ON rhp.county_id = county.county_id
+        LEFT JOIN probe
+        ON rhp.probe_id = probe.id
+        LEFT JOIN target
+        ON rhp.target_id = target.id
+        WHERE rhp.record_date BETWEEN #{ava_start} AND #{ava_terminal}
+        <if test="city_id != null and city_id != ''">
+            AND rhp.city_id = #{city_id}
+        </if>
+        <if test="county_id != null and county_id != ''">
+            AND rhp.county_id = #{county_id}
+        </if>
+        <if test="target_id != null and target_id != ''">
+            AND rhp.target_id = #{target_id}
+        </if>
+        <if test="probe_id != null and probe_id != ''">
+            AND rhp.probe_id = #{probe_id}
+        </if>
+        GROUP BY
+        rhp.city_id,rhp.county_id,rhp.service_type,rhp.target_id,rhp.probe_id,date_format(rhp.record_date,'%Y-%m-%d'),time_format(record_time,
+        '%H')
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
 
-	<select id="queryDayList" resultType="io.cem.modules.cem.entity.RecordHourPingEntity">
-		select rhp.id,rhp.city_id,rhp.county_id,rhp.probe_id,rhp.port,rhp.task_id,rhp.service_type,rhp.target_id,rhp.target_ip,rhp.record_date,rhp.remark,
-		city.city_name AS city_name,
-		county.county_name AS area_name,
-		probe.probe_name AS probe_name,
-		probe.access_layer,
-		target.target_name AS target_name,
-		time_format(record_time, '%H') AS record_time,
-		AVG(rhp.delay) AS delay,
-		AVG(rhp.delay_std) AS delay_std,
-		AVG(rhp.delay_var) AS delay_var,
-		AVG(rhp.jitter) AS jitter,
-		AVG(rhp.jitter_std) AS jitter_std,
-		AVG(rhp.jitter_var) AS jitter_var,
-		AVG(rhp.loss_rate) AS loss_rate
-		FROM record_day_ping rhp
-		LEFT JOIN city
-		ON rhp.city_id = city.city_id
-		LEFT JOIN county
-		ON rhp.county_id = county.county_id
-		LEFT JOIN probe
-		ON rhp.probe_id = probe.id
-		LEFT JOIN target
-		ON rhp.target_id = target.id
-		WHERE rhp.record_date BETWEEN #{ava_start} AND #{ava_terminal}
-		<if test="city_id != null and city_id != ''">
-			AND rhp.city_id = #{city_id}
-		</if>
-		<if test="county_id != null and county_id != ''">
-			AND rhp.county_id = #{county_id}
-		</if>
-		<if test="target_id != null and target_id != ''">
-			AND rhp.target_id = #{target_id}
-		</if>
-		<if test="probe_id != null and probe_id != ''">
-			AND rhp.probe_id = #{probe_id}
-		</if>
-		GROUP BY rhp.city_id,rhp.county_id,rhp.service_type,rhp.target_id,rhp.probe_id,date_format(rhp.record_date,'%Y-%m-%d'),time_format(record_time, '%H');
-	</select>
+    <!--质量排名获取总记录条数(queryPingList的count)-->
+    <select id="pingListTotal" resultType="int">
+        select count(*) FROM (
+        SELECT rhp.id,rhp.city_id,rhp.county_id,rhp.probe_id,rhp.port,rhp.task_id,rhp.service_type,rhp.target_id,rhp.target_ip,rhp.record_date,rhp.remark,
+        AVG(rhp.delay) AS delay,
+        AVG(rhp.delay_std) AS delay_std,
+        AVG(rhp.delay_var) AS delay_var,
+        AVG(rhp.jitter) AS jitter,
+        AVG(rhp.jitter_std) AS jitter_std,
+        AVG(rhp.jitter_var) AS jitter_var,
+        AVG(rhp.loss_rate) AS loss_rate
+        FROM record_hour_ping rhp
+        LEFT JOIN city
+        ON rhp.city_id = city.city_id
+        LEFT JOIN county
+        ON rhp.county_id = county.county_id
+        LEFT JOIN probe
+        ON rhp.probe_id = probe.id
+        LEFT JOIN target
+        ON rhp.target_id = target.id
+        WHERE rhp.record_date BETWEEN #{ava_start} AND #{ava_terminal}
+        <if test="city_id != null and city_id != ''">
+            AND rhp.city_id = #{city_id}
+        </if>
+        <if test="county_id != null and county_id != ''">
+            AND rhp.county_id = #{county_id}
+        </if>
+        <if test="target_id != null and target_id != ''">
+            AND rhp.target_id = #{target_id}
+        </if>
+        <if test="probe_id != null and probe_id != ''">
+            AND rhp.probe_id = #{probe_id}
+        </if>
+        GROUP BY
+        rhp.city_id,rhp.county_id,rhp.service_type,rhp.target_id,rhp.probe_id,date_format(rhp.record_date,'%Y-%m-%d'),time_format(record_time,'%H')) a
+    </select>
 
-	 <!--根据统计粒度查询小时表-->
-	<select id="queryIntervalList" resultType="io.cem.modules.cem.entity.RecordHourPingEntity">
-		select rhp.id,rhp.probe_id,rhp.port,rhp.task_id,rhp.service_type,rhp.target_id,rhp.target_ip,rhp.record_date,rhp.record_time,rhp.remark,
-		probe.probe_name AS probe_name,
-		task.task_name AS task_name,
-		target.target_name AS target_name,
-		target.value AS targetip_name,
-		dic_data.data_name AS servicetype_name,
-		time_format(record_time, '%H') AS record_time,
-		AVG(rhp.delay) AS delay,
-		AVG(rhp.delay_std) AS delay_std,
-		AVG(rhp.delay_var) AS delay_var,
-		AVG(rhp.jitter) AS jitter,
-		AVG(rhp.jitter_std) AS jitter_std,
-		AVG(rhp.jitter_var) AS jitter_var,
-		AVG(rhp.loss_rate) AS loss_rate
-		FROM record_hour_ping rhp
-		LEFT JOIN probe
-		ON rhp.probe_id = probe.id
-		LEFT JOIN task
-		ON rhp.task_id = task.id
-		LEFT JOIN target
-		ON rhp.target_id = target.id
-		LEFT JOIN dic_data
-		ON dic_data.dic_type_id = 5 AND rhp.service_type = dic_data.data_id
-		WHERE
-		rhp.record_date BETWEEN #{startDate} AND #{terminalDate}
-		AND time_format(record_time,'%H') between #{startTime} AND #{terminalTime}
-		AND record_time between #{start_time} AND #{end_time}
-		<if test="task_id != null and task_id != ''">
-			AND rhp.task_id = #{task_id}
-		</if>
-		<if test="target_id != null and target_id != ''">
-			AND rhp.target_id = #{target_id}
-		</if>
-		<if test="probe_id != null and probe_id != ''">
-			AND rhp.probe_id = #{probe_id}
-		</if>
-		GROUP BY rhp.service_type,rhp.target_id,rhp.task_id,rhp.probe_id,date_format(rhp.record_date,'%Y-%m-%d'),time_format(record_time, '%H');
+    <select id="queryDayList" resultType="io.cem.modules.cem.entity.RecordHourPingEntity">
+        select
+        rhp.id,rhp.city_id,rhp.county_id,rhp.probe_id,rhp.port,rhp.task_id,rhp.service_type,rhp.target_id,rhp.target_ip,rhp.record_date,rhp.remark,
+        city.city_name AS city_name,
+        county.county_name AS area_name,
+        probe.probe_name AS probe_name,
+        probe.access_layer,
+        target.target_name AS target_name,
+        time_format(record_time, '%H') AS record_time,
+        AVG(rhp.delay) AS delay,
+        AVG(rhp.delay_std) AS delay_std,
+        AVG(rhp.delay_var) AS delay_var,
+        AVG(rhp.jitter) AS jitter,
+        AVG(rhp.jitter_std) AS jitter_std,
+        AVG(rhp.jitter_var) AS jitter_var,
+        AVG(rhp.loss_rate) AS loss_rate
+        FROM record_day_ping rhp
+        LEFT JOIN city
+        ON rhp.city_id = city.city_id
+        LEFT JOIN county
+        ON rhp.county_id = county.county_id
+        LEFT JOIN probe
+        ON rhp.probe_id = probe.id
+        LEFT JOIN target
+        ON rhp.target_id = target.id
+        WHERE rhp.record_date BETWEEN #{ava_start} AND #{ava_terminal}
+        <if test="city_id != null and city_id != ''">
+            AND rhp.city_id = #{city_id}
+        </if>
+        <if test="county_id != null and county_id != ''">
+            AND rhp.county_id = #{county_id}
+        </if>
+        <if test="target_id != null and target_id != ''">
+            AND rhp.target_id = #{target_id}
+        </if>
+        <if test="probe_id != null and probe_id != ''">
+            AND rhp.probe_id = #{probe_id}
+        </if>
+        GROUP BY
+        rhp.city_id,rhp.county_id,rhp.service_type,rhp.target_id,rhp.probe_id,date_format(rhp.record_date,'%Y-%m-%d'),time_format(record_time,
+        '%H');
 
-	</select>
+    </select>
 
- 	<select id="queryTotal" resultType="int">
+    <!--根据统计粒度查询小时表-->
+    <select id="queryIntervalList" resultType="io.cem.modules.cem.entity.RecordHourPingEntity">
+        select
+        rhp.id,rhp.probe_id,rhp.port,rhp.task_id,rhp.service_type,rhp.target_id,rhp.target_ip,rhp.record_date,rhp.remark,
+        probe.probe_name AS probe_name,
+        task.task_name AS task_name,
+        target.target_name AS target_name,
+        target.value AS targetip_name,
+        dic_data.data_name AS servicetype_name,
+        time_format(record_time, '%H') AS record_time,
+        AVG(rhp.delay) AS delay,
+        AVG(rhp.delay_std) AS delay_std,
+        AVG(rhp.delay_var) AS delay_var,
+        AVG(rhp.jitter) AS jitter,
+        AVG(rhp.jitter_std) AS jitter_std,
+        AVG(rhp.jitter_var) AS jitter_var,
+        AVG(rhp.loss_rate) AS loss_rate
+        FROM record_hour_ping rhp
+        LEFT JOIN probe
+        ON rhp.probe_id = probe.id
+        LEFT JOIN task
+        ON rhp.task_id = task.id
+        LEFT JOIN target
+        ON rhp.target_id = target.id
+        LEFT JOIN dic_data
+        ON dic_data.dic_type_id = 5 AND rhp.service_type = dic_data.data_id
+        WHERE
+        rhp.service_type = #{service_type}
+        AND rhp.record_date BETWEEN #{startDate} AND #{terminalDate}
+        AND (time_format(rhp.record_time,'%H') BETWEEN #{startTime} AND #{terminalTime})
+        AND rhp.record_time BETWEEN #{start_time} AND #{end_time}
+        <if test="task_id != null and task_id != ''">
+            AND rhp.task_id = #{task_id}
+        </if>
+        <if test="target_id != null and target_id != ''">
+            AND rhp.target_id = #{target_id}
+        </if>
+        <if test="probe_id != null and probe_id != ''">
+            AND rhp.probe_id = #{probe_id}
+        </if>
+        GROUP BY
+        rhp.service_type,rhp.target_id,rhp.task_id,rhp.probe_id,date_format(rhp.record_date,'%Y-%m-%d'),time_format(record_time,'%H')
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="queryTotal" resultType="int">
 		select count(*) from record_hour_ping 
 	</select>
-	 
-	<insert id="save" parameterType="io.cem.modules.cem.entity.RecordHourPingEntity" useGeneratedKeys="true" keyProperty="id">
+
+    <select id="queryIntervalTotal" resultType="int">
+        SELECT count(*) FROM (
+        select
+        rhp.id,rhp.probe_id,rhp.port,rhp.task_id,rhp.service_type,rhp.target_id,rhp.target_ip,rhp.record_date,
+        AVG(rhp.delay) AS delay,
+        AVG(rhp.delay_std) AS delay_std,
+        AVG(rhp.delay_var) AS delay_var,
+        AVG(rhp.jitter) AS jitter,
+        AVG(rhp.jitter_std) AS jitter_std,
+        AVG(rhp.jitter_var) AS jitter_var,
+        AVG(rhp.loss_rate) AS loss_rate
+        FROM record_hour_ping rhp
+        LEFT JOIN probe
+        ON rhp.probe_id = probe.id
+        LEFT JOIN task
+        ON rhp.task_id = task.id
+        LEFT JOIN target
+        ON rhp.target_id = target.id
+        LEFT JOIN dic_data
+        ON dic_data.dic_type_id = 5 AND rhp.service_type = dic_data.data_id
+        WHERE
+        rhp.record_date BETWEEN #{startDate} AND #{terminalDate}
+        AND (time_format(rhp.record_time,'%H') BETWEEN #{startTime} AND #{terminalTime})
+        AND rhp.record_time BETWEEN #{start_time} AND #{end_time}
+        <if test="task_id != null and task_id != ''">
+            AND rhp.task_id = #{task_id}
+        </if>
+        <if test="target_id != null and target_id != ''">
+            AND rhp.target_id = #{target_id}
+        </if>
+        <if test="probe_id != null and probe_id != ''">
+            AND rhp.probe_id = #{probe_id}
+        </if>
+        GROUP BY
+        rhp.service_type,rhp.target_id,rhp.task_id,rhp.probe_id,date_format(rhp.record_date,'%Y-%m-%d'),time_format(rhp.record_time,
+        '%H')) t
+    </select>
+
+    <insert id="save" parameterType="io.cem.modules.cem.entity.RecordHourPingEntity" useGeneratedKeys="true"
+            keyProperty="id">
 		insert into record_hour_ping
 		(
 			`city_id`, 
@@ -248,41 +349,41 @@
 			#{remark}
 		)
 	</insert>
-	 
-	<update id="update" parameterType="io.cem.modules.cem.entity.RecordHourPingEntity">
-		update record_hour_ping 
-		<set>
-			<if test="cityId != null">`city_id` = #{cityId}, </if>
-			<if test="countyId != null">`county_id` = #{countyId}, </if>
-			<if test="probeId != null">`probe_id` = #{probeId}, </if>
-			<if test="port != null">`port` = #{port}, </if>
-			<if test="taskId != null">`task_id` = #{taskId}, </if>
-			<if test="serviceType != null">`service_type` = #{serviceType}, </if>
-			<if test="targetId != null">`target_id` = #{targetId}, </if>
-			<if test="targetIp != null">`target_ip` = #{targetIp}, </if>
-			<if test="recordDate != null">`record_date` = #{recordDate}, </if>
-			<if test="recordTime != null">`record_time` = #{recordTime}, </if>
-			<if test="delay != null">`delay` = #{delay}, </if>
-			<if test="delayStd != null">`delay_std` = #{delayStd}, </if>
-			<if test="delayVar != null">`delay_var` = #{delayVar}, </if>
-			<if test="jitter != null">`jitter` = #{jitter}, </if>
-			<if test="jitterStd != null">`jitter_std` = #{jitterStd}, </if>
-			<if test="jitterVar != null">`jitter_var` = #{jitterVar}, </if>
-			<if test="lossRate != null">`loss_rate` = #{lossRate}, </if>
-			<if test="remark != null">`remark` = #{remark}</if>
-		</set>
-		where id = #{id}
-	</update>
-	
-	<delete id="delete">
+
+    <update id="update" parameterType="io.cem.modules.cem.entity.RecordHourPingEntity">
+        update record_hour_ping
+        <set>
+            <if test="cityId != null">`city_id` = #{cityId},</if>
+            <if test="countyId != null">`county_id` = #{countyId},</if>
+            <if test="probeId != null">`probe_id` = #{probeId},</if>
+            <if test="port != null">`port` = #{port},</if>
+            <if test="taskId != null">`task_id` = #{taskId},</if>
+            <if test="serviceType != null">`service_type` = #{serviceType},</if>
+            <if test="targetId != null">`target_id` = #{targetId},</if>
+            <if test="targetIp != null">`target_ip` = #{targetIp},</if>
+            <if test="recordDate != null">`record_date` = #{recordDate},</if>
+            <if test="recordTime != null">`record_time` = #{recordTime},</if>
+            <if test="delay != null">`delay` = #{delay},</if>
+            <if test="delayStd != null">`delay_std` = #{delayStd},</if>
+            <if test="delayVar != null">`delay_var` = #{delayVar},</if>
+            <if test="jitter != null">`jitter` = #{jitter},</if>
+            <if test="jitterStd != null">`jitter_std` = #{jitterStd},</if>
+            <if test="jitterVar != null">`jitter_var` = #{jitterVar},</if>
+            <if test="lossRate != null">`loss_rate` = #{lossRate},</if>
+            <if test="remark != null">`remark` = #{remark}</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="delete">
 		delete from record_hour_ping where id = #{value}
 	</delete>
-	
-	<delete id="deleteBatch">
-		delete from record_hour_ping where id in 
-		<foreach item="id" collection="array" open="(" separator="," close=")">
-			#{id}
-		</foreach>
-	</delete>
+
+    <delete id="deleteBatch">
+        delete from record_hour_ping where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
 
 </mapper>

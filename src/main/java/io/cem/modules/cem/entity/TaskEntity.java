@@ -6,11 +6,6 @@ import java.util.Date;
 
 
 /**
- * 
- * 
- * @author ${author}
- * @email ${email}
- * @date 2017-11-13 11:01:11
  */
 public class TaskEntity implements Serializable {
 	private static final long serialVersionUID = 1L;

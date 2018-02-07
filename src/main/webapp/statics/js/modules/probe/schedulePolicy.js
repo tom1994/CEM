@@ -151,31 +151,38 @@ var spform_data = new Vue({
     data: {
         modaltitle: "", /*定义模态框标题*/
         /*name: [],
-        scheduler: [],
-        remark: []*/
+         scheduler: [],
+         remark: []*/
     },
     // 在 `methods` 对象中定义方法
     methods: {
         submit: function () {
             var spJson = getFormJson($('#spform_data'));
             console.log(spJson);
-            var datevalue =$('input:radio[name="choosedate"]:checked').val();
+            var datevalue = $('input:radio[name="choosedate"]:checked').val();
             console.log(datevalue);
-            if (datevalue == 1){
+            if (datevalue == 1) {
                 spJson.startDate = new Date().Format("yyyy-MM-dd hh:mm:ss");
                 spJson.endDate = "2070-12-31";
-                $('#startDate input[type=text]').attr('readonly','readonly');
-                $('#endDate input[type=text]').attr('readonly','readonly');
+                $('#startDate').attr('readonly', 'readonly');
+                $('#endDate').attr('readonly', 'readonly');
             }
             if (spJson.spName == "") {
-                toastr.warning("请输入策略名称");
+                toastr.warning("请输入名称!");
+            } else if (datevalue != 0 && datevalue != 1) {
+                toastr.warning("请选择起止日期!");
+            } else if (spJson.interval == "") {
+                toastr.warning("请输入时间间隔!");
+            } else if (parseFloat(spJson.interval) < 15) {
+                toastr.warning("时间间隔不得小于15分钟!");
             } else {
                 spJson.createTime = new Date().Format("yyyy-MM-dd hh:mm:ss");        //获取日期与时间
                 var scheduler = '{"start_time":"00:00:00", "end_time":"23:59:00", "interval":"0"}';
                 var schedulerObj = JSON.parse(scheduler);
-                schedulerObj.interval = spJson.interval;
-                spJson.scheduler = JSON.stringify(schedulerObj);
-                var sp = JSON.stringify(spJson);/*封装成json数组*/
+                schedulerObj.interval = parseInt(spJson.interval);
+                spJson.scheduler = "["+JSON.stringify(schedulerObj)+"]";
+                var sp = JSON.stringify(spJson);
+                /*封装成json数组*/
                 console.log(sp);
                 var mapstr;
                 if (status == 0) {
@@ -225,8 +232,7 @@ var spform_data = new Vue({
                     }
                 });
             }
-        },
-
+        }
     }
 });
 
@@ -386,7 +392,7 @@ var sptable = new Vue({
                             row.push(i++);
                             row.push(item.spName);
                             row.push(dateDisplay);
-                            row.push((JSON.parse(scheduler)).interval);
+                            row.push((JSON.parse(scheduler.substr(1,scheduler.length-2))).interval);
                             row.push(item.remark);
                             row.push(item.createTime);
                             row.push('<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>');

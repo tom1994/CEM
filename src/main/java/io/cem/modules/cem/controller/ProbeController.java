@@ -159,7 +159,9 @@ public class ProbeController {
 	@RequiresPermissions("probe:delete")
 	public R delete(@RequestBody Integer[] ids){
 		probeService.deleteBatch(ids);
-		
+		for(int id : ids){
+			probeService.updateUpstream(id);
+		}
 		return R.ok();
 	}
 	

@@ -41,8 +41,9 @@ public class RecordPingEntity implements Serializable {
 	private String targetName;
 	//任务名称
 	private String taskName;
+
 	//测试目标IP
-	private Integer targetIp;
+	private Long targetIp;
 	private String targetipName;
 	//测试目标归属地
 	private String targetLoc;
@@ -212,18 +213,11 @@ public class RecordPingEntity implements Serializable {
 	public Integer getTargetId() {
 		return targetId;
 	}
-	/**
-	 * 设置：测试目标IP
-	 */
-	public void setTargetIp(Integer targetIp) {
-		this.targetIp = targetIp;
-	}
-	/**
-	 * 获取：测试目标IP
-	 */
-	public Integer getTargetIp() {
-		return targetIp;
-	}
+
+
+	public Long getTargetIp() { return targetIp; }
+
+	public void setTargetIp(Long targetIp) { this.targetIp = targetIp; }
 
 	public String getTargetipName() {
 		return targetipName;

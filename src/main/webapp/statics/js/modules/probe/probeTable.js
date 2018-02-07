@@ -11,6 +11,25 @@ var typeNames = new Array();
 var statusNames = new Array();
 var probegroup_names = new Array();
 
+var st = new Map();//servicetype字典，可通过get方法查对应字符串。
+st.set(1, "PING(ICMP Echo)");
+st.set(2, "PING(TCP Echo)");
+st.set(3, "PING(UDP Echo)");
+st.set(4, "TraceRoute(ICMP)");
+st.set(5, "TraceRoute(UDP)");
+st.set(10, "SLA(TCP)");
+st.set(11, "SLA(UDP)");
+st.set(12, "ADSL接入");
+st.set(13, "DHCP");
+st.set(14, "DNS");
+st.set(15, "Radius认证");
+st.set(20, "WEB页面访问");
+st.set(30, "WEB下载");
+st.set(31, "FTP下载");
+st.set(32, "FTP上传");
+st.set(40, "在线视频");
+st.set(50, "网络游戏");
+
 var probedata_handle = new Vue({
     el: '#probehandle',
     data: {},
@@ -84,7 +103,7 @@ var probedata_handle = new Vue({
             var data = getFormJson($('#probesearch'));
             /*得到查询条件*/
             /*获取表单元素的值*/
-            console.log(data);
+            //console.log(data);
             probetable.probedata = data;
             probetable.redraw();
             /*根据查询条件重绘*/
@@ -138,7 +157,7 @@ var search_list = new Vue({
             var data = getFormJson($('#probesearch'));
             /*得到查询条件*/
             /*获取表单元素的值*/
-            console.log(data);
+            //console.log(data);
             probetable.probedata = data;
             probetable.redraw();
             /*根据查询条件重绘*/
@@ -161,7 +180,7 @@ var probegroupdata_handle = new Vue({
             var data = getFormJson($('#groupsearchdata'));
             /*得到查询条件*/
             /*获取表单元素的值*/
-            console.log(data);
+            //console.log(data);
             grouptable.groupdata = data;
             grouptable.redraw();
             /*根据查询条件重绘*/
@@ -216,6 +235,7 @@ var probegroup_handle = new Vue({
             }
         },
         reset: function () {    /*重置*/
+            document.getElementById("groupsearchdata").reset();
             grouptable.reset();
         }
 
@@ -225,7 +245,7 @@ var probegroup_handle = new Vue({
 /*查看任务*/
 function dispatch_info (obj) {
     dispatch_table.probeid = parseInt(obj.id);
-    console.log(obj.id)
+    //console.log(obj.id)
     /*获取当前行探针数据id*/
     dispatch_table.redraw();
     $('#myModal_dispatch').modal('show');
@@ -236,12 +256,9 @@ var dispatch_table = new Vue({
     data: {
         headers: [
             {title: '<div style="width:17px"></div>'},
-            //{title: '<div style="width:77px">探针名称</div>'},
-            //{title: '<div style="width:108px">位置</div>'},
-            //{title: '<div style="width:37px">层级</div>'},
+            {title: '<div style="width:117px">任务类型</div>'},
             {title: '<div style="width:117px">任务名称</div>'},
-            {title: '<div style="width:160px">测试目标</div>'},
-            //{title: '<div style="width:67px">操作</div>'}
+            {title: '<div style="width:160px">调度策略</div>'}
         ],
         rows: [],
         dtHandle: null,
@@ -306,7 +323,7 @@ var dispatch_table = new Vue({
                 param.start = data.start;//开始的记录序号
                 param.page = (data.start / data.length) + 1;//当前页码
                 param.taskdata = JSON.stringify(vm.taskdata);
-                // console.log(param);
+                console.log(param);
                 //ajax请求数据
                 $.ajax({
                     type: "POST", /*GET会乱码*/
@@ -316,7 +333,7 @@ var dispatch_table = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                        console.log(result);
+                        //console.log(result);
                         //封装返回数据
                         let returnData = {};
                         returnData.draw = result.page.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -331,9 +348,10 @@ var dispatch_table = new Vue({
                             row.push(i++);
                             //row.push(item.probeName);
                             //row.push(item.location);
-                            //row.push(item.accessLayer);
+                            row.push(st.get(item.serviceType));
                             row.push(item.taskName);
-                            row.push('<span title="' + item.targetName + '" style="white-space: nowrap">' + transString(item.targetName,0,25)+ '</span>');
+                            row.push(item.spName);
+                            // row.push('<span title="' + item.targetName + '" style="white-space: nowrap">' + transString(item.targetName,0,25)+ '</span>');
                             //row.push('<a class="fontcolor" onclick="cancel_task(this)" id=' + item.id + '>取消任务</a>');
                             rows.push(row);
                         });
@@ -361,7 +379,7 @@ function update_this (obj) {     /*监听修改触发事件*/
         dataType: "json",
         contentType: "application/json",
         success: function (result_county) {
-            console.log(result_county);
+            //console.log(result_county);
             var areaNames = [];
             for(var i=0;i<result_county.county.length;i++){
                 areaNames[i] = {message: result_county.county[i]}
@@ -374,7 +392,7 @@ function update_this (obj) {     /*监听修改触发事件*/
                 dataType: "json",
                 // contentType: "application/json", /*必须要,不可少*/
                 success: function (result) {
-                    console.log(result.probe);
+                    //console.log(result.probe);
                     forms[0].value = result.probe.id;
                     forms[1].value = result.probe.name;
                     forms[2].value = result.probe.serialNumber;
@@ -722,8 +740,8 @@ var groupform_data = new Vue({
     methods: {
         submit: function () {
             var probegroupJson = getFormJson($('#groupform_data'));
-            if (typeof(probegroupJson["name"]) == "undefined") {                  /*3个select必选*/
-                toastr.warning("探针组名不能为空！");
+            if (probegroupJson.name == "") {
+                toastr.warning("请输入名称!");
             } else {
                 probegroupJson.createTime = new Date().Format("yyyy-MM-dd hh:mm:ss");
                 var probegroup = JSON.stringify(probegroupJson);
@@ -750,7 +768,7 @@ var groupform_data = new Vue({
                         if (status == 0) {
                             switch (code) {
                                 case 0:
-                                    toastr.success("业务信息录入成功!");
+                                    toastr.success("录入成功!");
                                     $('#groupModal').modal('hide');
                                     break;
                                 case 403:
@@ -763,7 +781,7 @@ var groupform_data = new Vue({
                         } else if (status == 1) {
                             switch (code) {
                                 case 0:
-                                    toastr.success("业务信息更新成功!");
+                                    toastr.success("修改成功!");
                                     $('#groupModal').modal('hide');
                                     break;
                                 case 403:
@@ -774,13 +792,10 @@ var groupform_data = new Vue({
                                     break
                             }
                         }
-
                         grouptable.currReset();
                     }
                 });
             }
-
-
         }
     }
 });
@@ -1162,70 +1177,80 @@ var grouptable = new Vue({
     }
 });
 
-var dragModal = {
-    mouseStartPoint: {"left": 0, "top": 0},
-    mouseEndPoint: {"left": 0, "top": 0},
-    mouseDragDown: false,
-    basePoint: {"left": 0, "top": 0},
-    moveTarget: null,
-    topleng: 0
-}
-$(document).on("mousedown", ".modal-header", function (e) {
-    //webkit内核和火狐禁止文字被选中
-    $('body').addClass('select')
-    //ie浏览器禁止文字选中
-    document.body.onselectstart = document.body.ondrag = function () {
-        return false;
-    }
-    if ($(e.target).hasClass("close"))//点关闭按钮不能移动对话框
-        return;
-    dragModal.mouseDragDown = true;
-    dragModal.moveTarget = $(this).parent().parent();
-    dragModal.mouseStartPoint = {"left": e.clientX, "top": e.pageY};
-    dragModal.basePoint = dragModal.moveTarget.offset();
-    dragModal.topLeng = e.pageY - e.clientY;
-});
-$(document).on("mouseup", function (e) {
-    dragModal.mouseDragDown = false;
-    dragModal.moveTarget = undefined;
-    dragModal.mouseStartPoint = {"left": 0, "top": 0};
-    dragModal.basePoint = {"left": 0, "top": 0};
-});
-$(document).on("mousemove", function (e) {
-    if (!dragModal.mouseDragDown || dragModal.moveTarget == undefined) return;
-    var mousX = e.clientX;
-    var mousY = e.pageY;
-    if (mousX < 0) mousX = 0;
-    if (mousY < 0) mousY = 25;
-    dragModal.mouseEndPoint = {"left": mousX, "top": mousY};
-    var width = dragModal.moveTarget.width();
-    var height = dragModal.moveTarget.height();
-    var clientWidth = document.body.clientWidth
-    var clientHeight = document.body.clientHeight;
-    if (dragModal.mouseEndPoint.left < dragModal.mouseStartPoint.left - dragModal.basePoint.left) {
-        dragModal.mouseEndPoint.left = 0;
-    }
-    else if (dragModal.mouseEndPoint.left >= clientWidth - width + dragModal.mouseStartPoint.left - dragModal.basePoint.left) {
-        dragModal.mouseEndPoint.left = clientWidth - width - 38;
-    } else {
-        dragModal.mouseEndPoint.left = dragModal.mouseEndPoint.left - (dragModal.mouseStartPoint.left - dragModal.basePoint.left);//移动修正，更平滑
+$(document).ready(function () {
+    $("#myModal_delete").draggable();//为模态对话框添加拖拽
+    $("#myModal_groupdelete").draggable();
+    $("#myModal_update").draggable();
+    $("#myModal_dispatch").draggable();
+    // $("#task_dispatch").draggable();
+    $("#myModal_dispatch").css("overflow", "visible");//禁止模态对话框的半透明背景滚动
 
-    }
-    if (dragModal.mouseEndPoint.top - (dragModal.mouseStartPoint.top - dragModal.basePoint.top) < dragModal.topLeng) {
-        dragModal.mouseEndPoint.top = dragModal.topLeng;
-    } else if (dragModal.mouseEndPoint.top - dragModal.topLeng > clientHeight - height + dragModal.mouseStartPoint.top - dragModal.basePoint.top) {
-        dragModal.mouseEndPoint.top = clientHeight - height - 38 + dragModal.topLeng;
-    }
-    else {
-        dragModal.mouseEndPoint.top = dragModal.mouseEndPoint.top - (dragModal.mouseStartPoint.top - dragModal.basePoint.top);
-    }
-    dragModal.moveTarget.offset(dragModal.mouseEndPoint);
 });
-$(document).on('hidden.bs.modal', '.modal', function (e) {
-    $('.modal-dialog').css({'top': '0px', 'left': '0px'})
-    $('body').removeClass('select')
-    document.body.onselectstart = document.body.ondrag = null;
 
-})
+// var dragModal = {
+//     mouseStartPoint: {"left": 0, "top": 0},
+//     mouseEndPoint: {"left": 0, "top": 0},
+//     mouseDragDown: false,
+//     basePoint: {"left": 0, "top": 0},
+//     moveTarget: null,
+//     topleng: 0
+// }
+// $(document).on("mousedown", ".modal-header", function (e) {
+//     //webkit内核和火狐禁止文字被选中
+//     $('body').addClass('select')
+//     //ie浏览器禁止文字选中
+//     document.body.onselectstart = document.body.ondrag = function () {
+//         return false;
+//     }
+//     if ($(e.target).hasClass("close"))//点关闭按钮不能移动对话框
+//         return;
+//     dragModal.mouseDragDown = true;
+//     dragModal.moveTarget = $(this).parent().parent();
+//     dragModal.mouseStartPoint = {"left": e.clientX, "top": e.pageY};
+//     dragModal.basePoint = dragModal.moveTarget.offset();
+//     dragModal.topLeng = e.pageY - e.clientY;
+// });
+// $(document).on("mouseup", function (e) {
+//     dragModal.mouseDragDown = false;
+//     dragModal.moveTarget = undefined;
+//     dragModal.mouseStartPoint = {"left": 0, "top": 0};
+//     dragModal.basePoint = {"left": 0, "top": 0};
+// });
+// $(document).on("mousemove", function (e) {
+//     if (!dragModal.mouseDragDown || dragModal.moveTarget == undefined) return;
+//     var mousX = e.clientX;
+//     var mousY = e.pageY;
+//     if (mousX < 0) mousX = 0;
+//     if (mousY < 0) mousY = 25;
+//     dragModal.mouseEndPoint = {"left": mousX, "top": mousY};
+//     var width = dragModal.moveTarget.width();
+//     var height = dragModal.moveTarget.height();
+//     var clientWidth = document.body.clientWidth
+//     var clientHeight = document.body.clientHeight;
+//     if (dragModal.mouseEndPoint.left < dragModal.mouseStartPoint.left - dragModal.basePoint.left) {
+//         dragModal.mouseEndPoint.left = 0;
+//     }
+//     else if (dragModal.mouseEndPoint.left >= clientWidth - width + dragModal.mouseStartPoint.left - dragModal.basePoint.left) {
+//         dragModal.mouseEndPoint.left = clientWidth - width - 38;
+//     } else {
+//         dragModal.mouseEndPoint.left = dragModal.mouseEndPoint.left - (dragModal.mouseStartPoint.left - dragModal.basePoint.left);//移动修正，更平滑
+//
+//     }
+//     if (dragModal.mouseEndPoint.top - (dragModal.mouseStartPoint.top - dragModal.basePoint.top) < dragModal.topLeng) {
+//         dragModal.mouseEndPoint.top = dragModal.topLeng;
+//     } else if (dragModal.mouseEndPoint.top - dragModal.topLeng > clientHeight - height + dragModal.mouseStartPoint.top - dragModal.basePoint.top) {
+//         dragModal.mouseEndPoint.top = clientHeight - height - 38 + dragModal.topLeng;
+//     }
+//     else {
+//         dragModal.mouseEndPoint.top = dragModal.mouseEndPoint.top - (dragModal.mouseStartPoint.top - dragModal.basePoint.top);
+//     }
+//     dragModal.moveTarget.offset(dragModal.mouseEndPoint);
+// });
+// $(document).on('hidden.bs.modal', '.modal', function (e) {
+//     $('.modal-dialog').css({'top': '0px', 'left': '0px'})
+//     $('body').removeClass('select')
+//     document.body.onselectstart = document.body.ondrag = null;
+//
+// })
 
 
