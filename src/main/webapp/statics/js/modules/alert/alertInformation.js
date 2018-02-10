@@ -33,6 +33,10 @@ var search_service = new Vue({
                 alerttable.redraw();
 
             }
+        },
+        reset:function () {
+          document.getElementById('probesearch').reset();
+            alerttable.reset();
         }
     }
 });

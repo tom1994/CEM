@@ -42,85 +42,91 @@ Date.prototype.Format = function (fmt) {
 var button_change = new Vue({
     /*实例化Vue*/
     el: '#charts_button',
-    data: {
-        option_ping: {
-            /*设置时延option*/
-            title: {
-                text: '网络连通性'
-            }
-        },
-        option_sla: {
-            /*设置丢包option*/
-            title: {
-                text: '网络层质量'
-            },
-        },
-        option_web: {
-            /*设置web option*/
-            title: {
-                text: 'Web浏览'
-            }
-        },
-        option_download: {
-            /*设置丢包option*/
-            title: {
-                text: '文件下载'
-            },
-        },
-        option_video: {
-            /*设置丢包option*/
-            title: {
-                text: '在线视频'
-            },
-        },
-        option_game: {
-            /*设置丢包option*/
-            title: {
-                text: '网络游戏'
-            },
-        }
-    },
+    // data: {
+    //     option_ping: {
+    //         /*设置时延option*/
+    //         title: {
+    //             text: '网络连通性'
+    //         }
+    //     },
+    //     option_sla: {
+    //         /*设置丢包option*/
+    //         title: {
+    //             text: '网络层质量'
+    //         },
+    //     },
+    //     option_web: {
+    //         /*设置web option*/
+    //         title: {
+    //             text: 'Web浏览'
+    //         }
+    //     },
+    //     option_download: {
+    //         /*设置丢包option*/
+    //         title: {
+    //             text: '文件下载'
+    //         },
+    //     },
+    //     option_video: {
+    //         /*设置丢包option*/
+    //         title: {
+    //             text: '在线视频'
+    //         },
+    //     },
+    //     option_game: {
+    //         /*设置丢包option*/
+    //         title: {
+    //             text: '网络游戏'
+    //         },
+    //     }
+    // },
 
     methods: {
         ping: function () {
             status = 1;
+            changeStatus(1);
             console.log("连通性");
-            options.title = this.option_ping.title;
+            // options.title = this.option_ping.title;
             new_search.search();
             var chart = new Highcharts.Chart('container', options)
             /*重新绘图*/
         },
         sla: function () {
             status = 2;
+            changeStatus(2);
             console.log("网络层");
-            options.title = this.option_sla.title;
+            // options.title = this.option_sla.title;
             new_search.search();
             var chart = new Highcharts.Chart('container', options)
         },
         web: function () {
             status = 3;
+            changeStatus(3);
             console.log("web");
-            options.title = this.option_web.title;
+            // options.title = this.option_web.title;
             new_search.search();
             var chart = new Highcharts.Chart('container', options)
         },
         download: function () {
             status = 4;
-            options.title = this.option_web.title;
+            changeStatus(4);
+            // options.title = this.option_web.title;
             new_search.search();
             var chart = new Highcharts.Chart('container', options)
             /*重新绘图*/
         },
         video: function () {
             status = 5;
-            options.title = this.option_ping.title;
+            changeStatus(5);
+            // options.title = this.option_ping.title;
             new_search.search();
             var chart = new Highcharts.Chart('container', options)
             /*重新绘图*/
         },
         game: function () {
             status = 6;
-            options.title = this.option_ping.title;
+            changeStatus(6);
+            // options.title = this.option_ping.title;
             new_search.search();
             var chart = new Highcharts.Chart('container', options)
             /*重新绘图*/
@@ -227,7 +233,7 @@ var new_search = new Vue({
                 search.city_id = searchJson.cityid;
                 search.county_id = searchJson.countyid;
                 search.probe_id = searchJson.probeid;
-                // search.target_id = searchJson.targetid;
+                search.target_id = searchJson.targetid;
                 search.ava_start = searchJson.startDate.substr(0, 10);
                 search.ava_terminal = searchJson.terminalDate.substr(0, 10);
                 search.starTime = searchJson.startDate.substr(11, 15);
@@ -257,6 +263,9 @@ var new_search = new Vue({
                     }
                 });
             }
+        },
+        reset: function () {    /*重置*/
+            document.getElementById("probesearch").reset();
         }
     }
 });
@@ -572,8 +581,7 @@ Vue.component('data-table', {
             /*bInfo: false,*/
             bLengthChange: false, /*禁用Show entries*/
         });
-
-
+        changeStatus(status);
     }
 });
 
@@ -620,4 +628,20 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
         }
     });
     return o;
-};
+}
+
+function changeStatus(i) {
+    $.ajax({
+        type: "POST", /*GET会乱码*/
+        url: "../../target/infoList/"+i,
+        cache: false,  //禁用缓存
+        dataType: "json",
+        success: function (result) {
+            var targets = [];
+            for (var i = 0; i < result.target.length; i++) {
+                targets[i] = {message: result.target[i]}
+            }
+            search_data.target = targets;
+        }
+    });
+}

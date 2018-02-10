@@ -1,7 +1,8 @@
 var probeSelected = 0;
 var targetSelected = 0;
+
 $.ajax({
-    url: "../../cem/probe/list",
+    url: "../../cem/probe/list",//探针列表
     type: "POST",
     cache: false,  //禁用缓存
     dataType: "json",
@@ -13,17 +14,18 @@ $.ajax({
         }
         search_data.probe = probes;
         setTimeout(function () {
-            $('div#probe .jq22').comboSelect();
-            $('div#probe .option-item').click(function (probe) {
+            $('#probe .jq22').comboSelect();
+            //这个触发条件是先选择测试目标在选择探针的时候触发
+            $('#probe .option-item').click(function (probe) {
                 setTimeout(function () {
-                    var a = $(probe.currentTarget)[0].innerHTML;
+                    var a = $(probe.currentTarget)[0].innerText;
                     probeSelected = $($(probe.currentTarget)[0]).data('value');
-                    console.log(probeSelected);
-                    $('div#probe .combo-input').val(a);
-                    $('div#probe .combo-select select').val(a);
+                    console.log(111)
+                    $('#probe .combo-input').val(a);
+                    $('#probe .combo-select select').val(a);
                 }, 100);
             });
-        }, 300);
+            },300);
     }
 });
 
@@ -65,7 +67,7 @@ var target_data = new Vue({
 
 var getArea = function (cityid) {
     if (cityid != "" && cityid != null) {
-        $.ajax({
+        $.ajax({//区县
             url: "../../cem/county/info/" + cityid,
             type: "POST",
             cache: false,  //禁用缓存
@@ -82,10 +84,10 @@ var getArea = function (cityid) {
         });
     }
 };
-
+//获取城市的时候探针会发生改变
 var getProbeCounty = function (countyid) {
     probeSelected = 0;
-    $.ajax({
+    $.ajax({//探针信息
         url: "../../cem/probe/info/" + countyid,
         type: "POST",
         cache: false,  //禁用缓存
@@ -98,17 +100,18 @@ var getProbeCounty = function (countyid) {
             }
             search_data.probe = probes;
             setTimeout(function () {
-                $('div#probe .jq22').comboSelect();
-                $('div#probe .option-item').click(function (probe) {
+                $('#probe .jq22').comboSelect();
+                $('#probe .option-item').click(function (probe) {
                     setTimeout(function () {
-                        var a = $(probe.currentTarget)[0].innerHTML;
+                        var a = $(probe.currentTarget)[0].innerText;
                         probeSelected = $($(probe.currentTarget)[0]).data('value');
-                        console.log(probeSelected);
-                        $('div#probe .combo-input').val(a);
-                        $('div#probe .combo-select select').val(a);
+                        console.log('22222')
+                        $('#probe .combo-input').val(a);
+                        $('#probe .combo-select select').val(a);
                     }, 100);
                 });
-            }, 300);
+
+                }, 300);
         }
     });
 };
@@ -134,6 +137,7 @@ var getTarget = function () {
     var form = $('#superservice').serializeArray();
     if (form.length > 1) {
         $.ajax({
+            //目标列表
             url: "../../target/infoList/" + 0,
             type: "POST",
             cache: false,  //禁用缓存
@@ -149,9 +153,8 @@ var getTarget = function () {
                     $('div#target .jq22').comboSelect();
                     $('div#target .option-item').click(function (target) {
                         setTimeout(function () {
-                            var a = $(target.currentTarget)[0].innerHTML;
+                            var a = $(target.currentTarget)[0].innerText;
                             targetSelected = $($(target.currentTarget)[0]).data('value');
-                            console.log(targetSelected);
                             $('div#target .combo-input').val(a);
                             $('div#target .combo-select select').val(a);
                         }, 100);
@@ -167,6 +170,7 @@ var getTarget = function () {
             dataType: "json",
             contentType: "application/json",
             success: function (result) {
+                debugger;
                 var targets = [];
                 for (var i = 0; i < result.target.length; i++) {
                     targets[i] = {message: result.target[i]}
@@ -176,9 +180,8 @@ var getTarget = function () {
                     $('div#target .jq22').comboSelect();
                     $('div#target .option-item').click(function (target) {
                         setTimeout(function () {
-                            var a = $(target.currentTarget)[0].innerHTML;
+                            var a = $(target.currentTarget)[0].innerText;
                             targetSelected = $($(target.currentTarget)[0]).data('value');
-                            console.log(targetSelected);
                             $('div#target .combo-input').val(a);
                             $('div#target .combo-select select').val(a);
                         }, 100);
@@ -192,9 +195,8 @@ var getTarget = function () {
             $('div#target .jq22').comboSelect();
             $('div#target .option-item').click(function (target) {
                 setTimeout(function () {
-                    var a = $(target.currentTarget)[0].innerHTML;
+                    var a = $(target.currentTarget)[0].innerText;
                     targetSelected = $($(target.currentTarget)[0]).data('value');
-                    console.log(targetSelected);
                     $('div#target .combo-input').val(a);
                     $('div#target .combo-select select').val(a);
                 }, 100);
@@ -203,11 +205,11 @@ var getTarget = function () {
     }
 };
 
-
+//页面上直接加载
 $(document).ready(function () {
     $.ajax({
         type: "POST", /*GET会乱码*/
-        url: "../../cem/city/list",
+        url: "../../cem/city/list",//c城市列表
         cache: false,  //禁用缓存
         dataType: "json",
         success: function (result) {
@@ -218,14 +220,14 @@ $(document).ready(function () {
             search_data.city = cities;
         }
     });
+    var form = $('#superservice').serializeArray();
     $.ajax({
         type: "POST", /*GET会乱码*/
-        url: "../../target/infoList/" + 0,
+        url: "../../target/infoList/" + form[0].value,
         cache: false,  //禁用缓存
         dataType: "json",
         success: function (result) {
             var targets = [];
-            // console.log(result);
             for (var i = 0; i < result.target.length; i++) {
                 targets[i] = {message: result.target[i]}
             }
@@ -233,10 +235,10 @@ $(document).ready(function () {
             setTimeout(function () {
                 $('div#target .jq22').comboSelect();
                 $('div#target .option-item').click(function (target) {
-                    setTimeout(function () {
-                        var a = $(target.currentTarget)[0].innerHTML;
+                   setTimeout(function () {
+                        var a = $(target.currentTarget)[0].innerText;
                         targetSelected = $($(target.currentTarget)[0]).data('value');
-                        console.log('success')
+                        console.log('success');
                         $('div#target .combo-input').val(a);
                         $('div#target .combo-select select').val(a);
                     }, 100);
@@ -245,7 +247,7 @@ $(document).ready(function () {
         }
     });
     $.ajax({
-        url: "../../cem/probe/list",
+        url: "../../cem/probe/list",//探针列表
         type: "POST",
         cache: false,  //禁用缓存
         dataType: "json",
@@ -257,14 +259,14 @@ $(document).ready(function () {
             }
             search_data.probe = probes;
             setTimeout(function () {
-                $('div#probe .jq22').comboSelect();
-                $('div#probe .option-item').click(function (probe) {
+                $('#probe .jq22').comboSelect();
+                $('#probe .option-item').click(function (probe) {
                     setTimeout(function () {
-                        var a = $(probe.currentTarget)[0].innerHTML;
+                        var a = $(probe.currentTarget)[0].innerText;
                         probeSelected = $($(probe.currentTarget)[0]).data('value');
-                        console.log(probeSelected);
-                        $('div#probe .combo-input').val(a);
-                        $('div#probe .combo-select select').val(a);
+                        console.log('success1');
+                        $('#probe .combo-input').val(a);
+                        $('#probe .combo-select select').val(a);
                     }, 100);
                 });
             }, 300);
@@ -298,7 +300,7 @@ function diagnose() {
                 var dispatchString = JSON.stringify(dispatch);
                 url = url + "?dispatch=" + dispatchString.substring(1,dispatchString.length-1);
                 console.log(url);
-                document.getElementById("diagnose").href = url;
+                document.getElementById("diagnose").href = encodeURI(url);
                 document.getElementById("diagnose").click();
             }
         });

@@ -184,6 +184,10 @@ var probegroupdata_handle = new Vue({
             grouptable.groupdata = data;
             grouptable.redraw();
             /*根据查询条件重绘*/
+        },
+        reset: function () {    /*重置*/
+            document.getElementById("groupsearchdata").reset();
+            probetable.reset();
         }
     }
 });
@@ -415,14 +419,14 @@ function update_this (obj) {     /*监听修改触发事件*/
                     forms[17].value = result.probe.ipType;
                     forms[18].value = result.probe.isp;
                     forms[19].value = result.probe.hbInterval;
-                    forms[20].value = result.probe.taskInterval;
-                    forms[21].value = result.probe.reportInterval;
-                    forms[22].value = result.probe.updateInterval;
-                    forms[23].value = result.probe.lastHbTime;
-                    forms[24].value = result.probe.registerTime;
-                    forms[25].value = result.probe.lastReportTime;
-                    forms[26].value = result.probe.lastUpdateTime;
-                    forms[27].value = result.probe.portIp;
+                    // forms[20].value = result.probe.taskInterval;
+                    forms[20].value = result.probe.reportInterval;
+                    forms[21].value = result.probe.updateInterval;
+                    forms[22].value = result.probe.lastHbTime;
+                    forms[23].value = result.probe.registerTime;
+                    forms[24].value = result.probe.lastReportTime;
+                    forms[25].value = result.probe.lastUpdateTime;
+                    forms[26].value = result.probe.portIp;
                 }
             });
         }
@@ -441,7 +445,7 @@ function update_this (obj) {     /*监听修改触发事件*/
             forms[3].value = result.probe.type;
             forms[4].value = result.probe.city;
             setTimeout( function () {
-            forms[5].value = result.probe.county;
+                forms[5].value = result.probe.county;
             },100);
             forms[6].value = result.probe.location;
             forms[7].value = result.probe.brasName;
@@ -457,14 +461,14 @@ function update_this (obj) {     /*监听修改触发事件*/
             forms[17].value = result.probe.ipType;
             forms[18].value = result.probe.isp;
             forms[19].value = result.probe.hbInterval;
-            forms[20].value = result.probe.taskInterval;
-            forms[21].value = result.probe.reportInterval;
-            forms[22].value = result.probe.updateInterval;
-            forms[23].value = result.probe.lastHbTime;
-            forms[24].value = result.probe.registerTime;
-            forms[25].value = result.probe.lastReportTime;
-            forms[26].value = result.probe.lastUpdateTime;
-            forms[27].value = result.probe.portIp;
+            // forms[20].value = result.probe.taskInterval;
+            forms[20].value = result.probe.reportInterval;
+            forms[21].value = result.probe.updateInterval;
+            forms[22].value = result.probe.lastHbTime;
+            forms[23].value = result.probe.registerTime;
+            forms[24].value = result.probe.lastReportTime;
+            forms[25].value = result.probe.lastUpdateTime;
+            forms[26].value = result.probe.portIp;
             console.log(forms[5].value);
         }
     });
@@ -933,7 +937,7 @@ var probetable = new Vue({
         headers: [
             {title: '<div style="width:10px"></div>'},
             {title: '<div class="checkbox"> <label> <input type="checkbox" id="checkAll"></label> </div>'},
-            {title: '<div style="width:70px">探针名</div>'},
+            {title: '<div style="width:70px">名称</div>'},
             {title: '<div style="width:42px">地市</div>'},
             {title: '<div style="width:42px">区县</div>'},
             {title: '<div style="width:90px">位置</div>'},
@@ -1016,48 +1020,48 @@ var probetable = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                         //console.log(result);
-                         //封装返回数据
-                         let returnData = {};
-                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
-                         returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
-                         returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
-                         returnData.data = result.page.list;//返回的数据列表
-                         //console.log(result.page);
-                         // 重新整理返回数据以匹配表格
-                         let rows = [];
-                         var i = param.start+1;
-                         result.page.list.forEach(function (item) {
-                             let row = [];
-                             row.push(i++);
-                             row.push('<div class="checkbox"> <label> <input type="checkbox" name="selectFlag"></label> </div>');
-                             row.push('<a onclick="update_this(this)" id='+item.id+'><span style="color: black;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">'+item.name+'</span></a>');
-                             row.push(item.cityName);
-                             row.push(item.areaName);
-                             row.push(item.location);
-                             row.push(item.layerName);
-                             row.push(item.upstreamName);
-                             row.push(item.statusName);
-                             row.push(item.typeName);
-                             row.push(item.registerTime);
-                             row.push('<span title="'+item.lastHbTime+'" style="white-space: nowrap">' + transString(item.lastHbTime,0,10) + '</span>');
-                             row.push('<span title="'+item.lastReportTime+'" style="white-space: nowrap">' + transString(item.lastReportTime,0,10) + '</span>');
-                             row.push('<a class="fontcolor" style="white-space: nowrap" onclick="update_this(this)" id='+item.id+'>详情</a>&nbsp;' +
-                                 '<a class="fontcolor" style="white-space: nowrap" onclick="delete_this(this)" id='+item.id+'>删除</a>&nbsp;'+
-                                 '<a class="fontcolor" style="white-space: nowrap" onclick="dispatch_info(this)" id='+item.id+'>查看任务</a>');
-                             rows.push(row);
-                         });
-                         returnData.data = rows;
-                         //console.log(returnData);
-                         //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
-                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
-                         callback(returnData);
-                         $("#probedata_table").colResizable({
-                             liveDrag:true,
-                             gripInnerHtml:"<div class='grip'></div>",
-                             draggingClass:"dragging",
-                             resizeMode:'overflow',
-                         });
+                        //console.log(result);
+                        //封装返回数据
+                        let returnData = {};
+                        returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
+                        returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
+                        returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
+                        returnData.data = result.page.list;//返回的数据列表
+                        //console.log(result.page);
+                        // 重新整理返回数据以匹配表格
+                        let rows = [];
+                        var i = param.start+1;
+                        result.page.list.forEach(function (item) {
+                            let row = [];
+                            row.push(i++);
+                            row.push('<div class="checkbox"> <label> <input type="checkbox" name="selectFlag"></label> </div>');
+                            row.push('<a onclick="update_this(this)" id='+item.id+'><span style="color: black;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">'+item.name+'</span></a>');
+                            row.push(item.cityName);
+                            row.push(item.areaName);
+                            row.push(item.location);
+                            row.push(item.layerName);
+                            row.push(item.upstreamName);
+                            row.push(item.statusName);
+                            row.push(item.typeName);
+                            row.push(item.registerTime);
+                            row.push('<span title="'+item.lastHbTime+'" style="white-space: nowrap">' + transString(item.lastHbTime,0,10) + '</span>');
+                            row.push('<span title="'+item.lastReportTime+'" style="white-space: nowrap">' + transString(item.lastReportTime,0,10) + '</span>');
+                            row.push('<a class="fontcolor" style="white-space: nowrap" onclick="update_this(this)" id='+item.id+'>详情</a>&nbsp;' +
+                                '<a class="fontcolor" style="white-space: nowrap" onclick="delete_this(this)" id='+item.id+'>删除</a>&nbsp;'+
+                                '<a class="fontcolor" style="white-space: nowrap" onclick="dispatch_info(this)" id='+item.id+'>查看任务</a>');
+                            rows.push(row);
+                        });
+                        returnData.data = rows;
+                        //console.log(returnData);
+                        //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
+                        //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
+                        callback(returnData);
+                        $("#probedata_table").colResizable({
+                            liveDrag:true,
+                            gripInnerHtml:"<div class='grip'></div>",
+                            draggingClass:"dragging",
+                            resizeMode:'overflow',
+                        });
                         // $('td').closest('table').find('th').eq(1).attr('style', 'text-align: center;');
                         // $('#probe_table tbody').find('td').eq(1).attr('style', 'text-align: center;');
                         // var trs = $('#probe_table tbody').find('tr');
@@ -1138,7 +1142,7 @@ var grouptable = new Vue({
                 //console.log(param);
                 //ajax请求数据
                 $.ajax({
-                /*用于查询probegroup数据*/
+                    /*用于查询probegroup数据*/
                     type: "POST", /*GET会乱码*/
                     url: "../../cem/probegroup/searchlist",
                     cache: false,  //禁用缓存
@@ -1167,9 +1171,13 @@ var grouptable = new Vue({
                         //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);
-                        $("#probegroup_table").colResizable({
-                            minWidth:40,
-                        });
+                        $("#Section").on("click",function(){
+                            console.log(1111)
+                            $("#probegroup_table").colResizable({
+                                minWidth:40,
+                            });
+                        })
+
                     }
                 });
             }

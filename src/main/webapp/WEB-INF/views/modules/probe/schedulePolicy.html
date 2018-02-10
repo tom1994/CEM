@@ -6,20 +6,41 @@
     <title>调度策略管理</title>
     #parse("cemHeader.html")  <!--导入CSS和js文件-->
     <link href="${rc.contextPath}/statics/css/formStyle.css" rel="stylesheet">  <!--自定义CSS-->
+    <style type="text/css">
+        tr:hover{background:#E5E5E5 }
+
+        .box{
+            padding-bottom: 0px !important;
+            padding: 0px; min-height: 0px;
+        }
+        .Btn{
+            margin-bottom:0px!important;
+        }
+        .input{
+            margin-bottom: -3px;
+            height: 28px;
+            line-height: 28px;
+            /*//text-align: center;*/
+            padding-top: 0px;
+        }
+        .form_border{
+            text-align: right!important;
+        }
+    </style>
 </head>
 <body>
 <div class="row" id="sp_table">
     <div class="col-lg-12 col-md-12 col-sm-12">
         <div class="ibox float-e-margins">
-            <div class="ibox-title fontcolor" id="handle" style="padding-bottom: 0px !important;">
+            <div class="ibox-title fontcolor box" id="handle" style="padding-bottom: 0px !important;">
                 <!--<button type="button" class="btn btn-default ui-button" v-on:click="schedulepolicyadd"><span-->
-                <button type="button" class="btn btn-sm btn-success" v-on:click="spadd"><span
-                        class="glyphicon glyphicon-plus"></span>新增调度策略
+                <button type="button" class="btn btn-sm btn-success Btn" v-on:click="spadd"><span
+                        class="glyphicon glyphicon-plus "></span>新建
                 </button>
             </div>
             <div class="ibox-content">
-                <div class="row " style="overflow-x: scroll">     <!--表格 verflow-x: scroll超出滚动-->
-                    <table class="table table-bordered formStyle" id="spdata_table"></table>
+                <div class="row " style="overflow-x: auto">     <!--表格 verflow-x: scroll超出滚动-->
+                    <table class="table table-bordered formStyle" id="spdata_table" style="margin-top: 2px !important;"></table>
                 </div>
             </div>
         </div>
@@ -43,42 +64,42 @@
                                    style="display: none">id:</label>
                             <div class="col-lg-8 col-md-8 col-sm-8 form_border"
                                  style="display: none">
-                                <input type="text" class="form-control" id="id" name="id"  >
+                                <input type="text" class="form-control input" id="id" name="id"  >
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="name" class="col-lg-3 col-md-3 col-sm-3 control-label form_border"
-                                   style="font-size: 15px">策略名称:</label>
+                               style="line-height: 1.5"    >策略名称:</label>
                             <div class="col-lg-8 col-md-8 col-sm-8">
-                                <input type="text" class="form-control" id="name" name="spName"  >
+                                <input type="text" class="form-control input" id="name" name="spName"  >
                             </div>
                         </div>
                         <div class="form-group row">
-                            <span class="col-lg-3 col-md-3 col-sm-3 form_border"
-                                 style="font-size: 15px; font-weight: bold">起止日期:</span>
-                            <div class="col-lg-9 col-md-9 col-sm-9" style="display: inline-block" id="changescale">
-                                <label><input type="radio" id="everyday" name="choosedate" onclick="" value="1">每天</label>
-                                <label><input type="radio" id="customtime" name="choosedate" value="0">自定义</label>
+                            <label class="col-lg-3 col-md-3 col-sm-3 form_border"
+                                   style="line-height: 1.5">起止日期:</label>
+                            <div class="col-lg-9 col-md-9 col-sm-9" style="display: inline-block;" id="changescale">
+                                <label><input type="radio" id="everyday" name="choosedate" onclick="" value="1" checked="checked">每天</label>
+                                <label><input type="radio" id="customtime" name="choosedate" value="0" >自定义</label>
                                 <input type="text" id="startDate" class=""
-                                       name="startDate" style="width: 85px">
+                                       name="startDate" disabled="disabled" style="width: 85px">
                                 <span style="width: 5px">-</span>
                                 <input type="text" id="endDate" class=""
-                                       name="endDate" style="width: 85px; display: inline-block">
+                                       name="endDate" disabled="disabled" style="width: 85px; display: inline-block">
                                 </span>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="interval" class="col-lg-4 col-md-4 col-sm-4 control-label form_border"
-                                   style="font-size: 15px">时间间隔(分钟):</label>
+                            <label for="interval" class="col-lg-3 col-md-3 col-sm-3 control-label form_border"
+                                   style="line-height: 1.5" >时间间隔(分钟):</label>
                             <div class="col-lg-7 col-md-7 col-sm-7">
-                                <input type="text" class="form-control" id="interval" name="interval"  ><!--Todo:时间间隔只能允许输入15分钟到24小时-->
+                                <input type="text" class="form-control input" id="interval" name="interval" disabled="disabled" style="width: 302px" ><!--Todo:时间间隔只能允许输入15分钟到24小时-->
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="remark" class="col-lg-3 col-md-3 col-sm-3 control-label form_border"
-                                   style="font-size: 15px">备注:</label>
+                                   style="line-height: 1.5"  >备注:</label>
                             <div class="col-lg-8 col-md-8 col-sm-8">
-                                <input type="text" class="form-control" id="remark" name="remark"  >
+                                <input type="text" class="form-control input" id="remark" name="remark"  >
                             </div>
                         </div>
                     </form>
@@ -86,7 +107,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-success" v-on:click="submit">确定</button>
+                <button type="button" class="btn btn-success" v-on:click="submit">保存</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
@@ -122,6 +143,18 @@
 </body>
 
 <script>
+   $('#customtime').click(function () {
+       $('#startDate').removeAttr("disabled");
+       $('#endDate').removeAttr("disabled");
+       $('#interval').removeAttr("disabled");
+   });
+
+   $('#everyday').click(function () {
+       $('#startDate').attr("disabled","disabled");
+       $('#endDate').attr("disabled","disabled");
+       $('#interval').attr("disabled","disabled");
+   })
+
 
     /** 拖拽模态框*/
     var dragModal={

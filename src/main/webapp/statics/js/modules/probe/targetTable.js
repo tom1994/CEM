@@ -51,7 +51,7 @@ var targetgroupdata_handle = new Vue({
             for (var i = 0; i < 4; i++) {
                 forms[i].value = ""
             }
-            tgform_data.modaltitle = "新增测试目标组";
+            tgform_data.modaltitle = "新建测试目标组";
             /*修改模态框标题*/
             $('#myModal_tgupdate').modal('show');
         }
@@ -124,7 +124,7 @@ var targetdata_handle = new Vue({
             for (var i = 0; i < 6; i++) {
                 forms[i].value = ""
             }
-            targetform_data.modaltitle = "新增测试目标";
+            targetform_data.modaltitle = "新建测试目标";
             /*修改模态框标题*/
             $('#myModal_update').modal('show');
         },
@@ -335,12 +335,14 @@ var targetform_data = new Vue({
         submit: function () {
             var targetJson = getFormJson($('#targetform_data'));
             console.log(targetJson);
-            var reg = /^(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\/])+$/;
+            var reg1 = /^(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\/])+$/;
+
+            var reg=/^((https|http|ftp|rtsp|mms)?:\/\/)[^\s]+/;
             if (targetJson.targetname == "") {
                 toastr.warning("请输入名称!");
             } else if (targetJson.value == "") {
                 toastr.warning("请输入目标地址!")
-            } else if (! reg.test(targetJson.value)) {
+            } else if (! reg.test(targetJson.value) && !reg1.test(targetJson.value)) {
                 toastr.warning("请输入合法的网址!");
             } else if (targetJson.superservicetype == "") {
                 toastr.warning("请选择业务类型!");
@@ -476,8 +478,8 @@ var tgform_data = new Vue({
         }
     }
 });
-
-function getFormJson(form) {      /*将表单对象变为json对象*/
+/*将表单对象变为json对象*/
+function getFormJson(form) {
     var o = {};
     var a = $(form).serializeArray();
     $.each(a, function () {
@@ -805,8 +807,7 @@ var tg_table = new Vue({
                         //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);
-                        $("#tg_table").colResizable({
-                        });
+                        $("#tg_table").colResizable({});
                     }
                 });
             }

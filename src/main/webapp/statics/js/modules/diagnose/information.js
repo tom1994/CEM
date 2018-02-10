@@ -89,21 +89,23 @@ theRequest="{"+theRequest.dispatch+"}";
 var RequestJson = JSON.parse(theRequest);
 // console.log(RequestJson)
 function dispatchId(array, leftIndex, rightIndex) {
-    // 如果取数组里的第一个元素，包含一个数组说明是二维数组
+    // 如果取数组里的第一个元素，包含一个数组说明是多维数组
     if (array!=undefined && array[0] instanceof Array) {
-        //将二维数组转换为一维数组传递给后台
-        var oneArrayType = [].concat.apply([], array);
-
-        if(oneArrayType.length > leftIndex && oneArrayType.length < rightIndex){
-            return oneArrayType.slice(leftIndex, oneArrayType.length);
-        }else if(oneArrayType.length < leftIndex){
+        //将多维数组转换为一维数组传递给后台
+        if(array.length > leftIndex && array.length < rightIndex){
+            var OneArray = array.slice(leftIndex, array.length);
+            return [].concat.apply([], OneArray);
+        }else if(array.length < leftIndex){
             return null;
+        }else{
+            var OneArray = array.slice(leftIndex, rightIndex);
+            return [].concat.apply([], OneArray);
         }
-        return oneArrayType.slice(leftIndex, rightIndex);
+        // return oneArrayType.slice(leftIndex, rightIndex);
     } else {
         return array;
     }
-}
+};
 //ping_Table
 var pingTable = new Vue({
     el: '#ping_table',
@@ -183,75 +185,74 @@ var pingTable = new Vue({
             async: false,
             ajax: function (data, callback, settings) {
                 //封装请求参数
-                console.log(data)
                 let param = {};
-                param.limit = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
-                param.start = data.start;//开始的记录序号
-                param.page = (data.start / data.length) + 1;//当前页码
-                param.resultdata = JSON.stringify(vm.resultdata);
-                //传入的id
-                // let ping = RequestJson.ping;
-                // param.dispatchId = dispatchId(ping, 0, 6);
-                // console.log(param.dispatchId,'ping');
-                //ajax请求数据
-                $('.warning').text('正在处理，请稍等');
-                $.ajax({
-                    type: "POST", /*GET会乱码*/
-                    // url: "../../recordping/diagnose" ,
-                    url: "../../recordping/list",
-                    cache: false,  //禁用缓存
-                    // data: JSON.stringify(param),  //传入组装的参数
-                    data :param,
-                    dataType: "json",
-                    // contentType:"application/json",
-                    success: function (result) {
-                        console.log(result);
-                        $('.warning').css('display', 'none');
-                        $('.loader').hide();
-                        //  console.log(result.page.list)
-                        // //封装返回数据
-                        let returnData = {};
-                        returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
-                        returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
-                        returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
-                        returnData.data = result.page.list;//返回的数据列表
-                        // 重新整理返回数据以匹配表格
-                        let rows = [];
-                        var i = param.start + 1;
-                        result.page.list.forEach(function (item) {
-                            let row = [];
-                            row.push(i++);
-                            row.push(item.probeName);
-                            row.push(item.port);
-                            row.push(item.delay);
-                            row.push(item.delayStd);
-                            row.push(item.delayVar);
-                            row.push(item.jitter);
-                            row.push(item.jitterStd);
-                            row.push(item.jitterVar);
-                            row.push(item.lossRate);
-                            row.push(item.targetId);
-                            row.push(item.targetIp);
-                            row.push(item.targetLoc);
-                            row.push(item.state);
-                            //row.push((item.recordDate).substr(0, 10) + "&nbsp;" + item.recordTime);
-                            row.push(item.remark);
-                            rows.push(row);
-                        });
-                        returnData.data = rows;
-                        //console.log(returnData);
-                        //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
-                        //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
-                        callback(returnData);
-                        $("#ping_table").colResizable({
-                            liveDrag: true,//当设置为true时，将在拖动列锚点时更新表格布局。
-                            gripInnerHtml: "<div class='grip'></div>",
-                            draggingClass: "dragging",
-                            resizeMode :'overflow',//调整大小
-                        });
-                    }
-                });
-            }
+                // param.limit = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
+                // param.start = data.start;//开始的记录序号
+                // param.page = (data.start / data.length) + 1;//当前页码
+                // param.resultdata = JSON.stringify(vm.resultdata);
+                // //传入的id
+                let ping = RequestJson.ping;
+                param.dispatchId = dispatchId(ping, 0, 3);
+                console.log(param.dispatchId,'ping');
+                    //ajax请求数据
+                    $('.warning').text('正在处理，请稍等');
+                    $.ajax({
+                        type: "POST", /*GET会乱码*/
+                        url:"../../recordping/diagnose",
+                        // url:'',
+                        cache: false,  //禁用缓存
+                        // data: JSON.stringify(param),  //传入组装的参数
+                        data :param,
+                        // dataType: "json",
+                        contentType:"application/json",
+                        success: function (result) {
+                            // console.log(result);
+                            $('.warning').css('display', 'none');
+                            $('.loader').hide();
+                            //  console.log(result.page.list)
+                            // //封装返回数据
+                            // let returnData = {};
+                            // returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
+                            // returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
+                            // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
+                            // returnData.data = result.page.list;//返回的数据列表
+                            // 重新整理返回数据以匹配表格
+                            // let rows = [];
+                            // var i = param.start + 1;
+                            // result.page.list.forEach(function (item) {
+                            //     let row = [];
+                            //     row.push(i++);
+                            //     row.push(item.probeName);
+                            //     row.push(item.port);
+                            //     row.push(item.delay);
+                            //     row.push(item.delayStd);
+                            //     row.push(item.delayVar);
+                            //     row.push(item.jitter);
+                            //     row.push(item.jitterStd);
+                            //     row.push(item.jitterVar);
+                            //     row.push(item.lossRate);
+                            //     row.push(item.targetId);
+                            //     row.push(item.targetIp);
+                            //     row.push(item.targetLoc);
+                            //     row.push(item.state);
+                            //     row.push(item.remark);
+                            //     rows.push(row);
+                            // });
+                            // returnData.data = rows;
+                            //console.log(returnData);
+                            //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
+                            //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
+                            // callback(returnData);
+                            // $("#ping_table").colResizable({
+                            //     liveDrag: true,//当设置为true时，将在拖动列锚点时更新表格布局。
+                            //     gripInnerHtml: "<div class='grip'></div>",
+                            //     draggingClass: "dragging",
+                            //     resizeMode :'overflow',//调整大小
+                            // });
+                        },
+
+                    });
+                }
         });
     }
 });
@@ -337,16 +338,17 @@ var ROUTETable = new Vue({
                 param.start = data.start;//开始的记录序号
                 param.page = (data.start / data.length) + 1;//当前页码
                 let ping = RequestJson.ping;
-                param.dispatchId = dispatchId(ping, 6, 10);
+                param.dispatchId = dispatchId(ping,3, 5);
                 /*用于查询probe数据*/
                 console.log(param.dispatchId,'router');
                 //ajax请求数据
                 $('.warning').text('正在处理，请稍等');
                 $.ajax({
                     type: "POST", /*GET会乱码*/
-                    url: "../../recordtracert/diagnose",
+                    // url: "../../recordtracert/diagnose",
+                    url:'',
                     cache: false,  //禁用缓存
-                    data: JSON.stringify(param),  //传入组装的参数
+                    // data: JSON.stringify(param),  //传入组装的参数
                     dataType: "json",
                     contentType:"application/json",
                     success: function (result) {
@@ -495,15 +497,16 @@ var SLATable = new Vue({
                 param.start = data.start;//开始的记录序号
                 param.page = (data.start / data.length) + 1;//当前页码
                 let sla = RequestJson.sla;
-                param.dispatchId = dispatchId(sla, 0, 4);
+                param.dispatchId = dispatchId(sla, 0, 2);
                 console.log(param.dispatchId,'sla');
                 //ajax请求数据
                 $('.warning').text('正在处理，请稍等');
                 $.ajax({
                     type: "POST", /*GET会乱码*/
-                    url: "../../recordsla/diagnose",
+                    // url: "../../recordsla/diagnose",
+                    url:'',
                     cache: false,  //禁用缓存
-                    data: JSON.stringify(param),  //传入组装的参数
+                    // data: JSON.stringify(param),  //传入组装的参数
                     dataType: "json",
                     contentType:"application/json",
                     success: function (result) {
@@ -635,16 +638,17 @@ var DHCP_Table = new Vue({
                 param.start = data.start;//开始的记录序号
                 param.page = (data.start / data.length) + 1;//当前页码
                 let sla = RequestJson.sla;
-                param.dispatchId = dispatchId(sla, 6, 8);//获取当前的数组
+                param.dispatchId = dispatchId(sla, 3,4);//获取当前的数组
                 /*用于查询probe数据*/
                 console.log(param.dispatchId,'DHCP');
                 //ajax请求数据
                 $('.warning').text('正在处理，请稍等');
                 $.ajax({
                     type: "POST", /*GET会乱码*/
-                    url: "../../recorddhcp/diagnose",
+                    // url: "../../recorddhcp/diagnose",
+                    url:'',
                     cache: false,  //禁用缓存
-                    data: JSON.stringify(param),  //传入组装的参数
+                    // data: JSON.stringify(param),  //传入组装的参数
                     dataType: "json",
                     contentType:"application/json",
                     success: function (result) {
@@ -776,16 +780,17 @@ var DNSTable = new Vue({
                 param.start = data.start;//开始的记录序号
                 param.page = (data.start / data.length) + 1;//当前页码
                 let sla = RequestJson.sla;
-                param.dispatchId = dispatchId(sla,8, 10);
+                param.dispatchId = dispatchId(sla,4,5);
                 /*用于查询probe数据*/
                 console.log(param.dispatchId,'DNS');
                 //ajax请求数据
                 $('.warning').text('正在处理，请稍等');
                 $.ajax({
                     type: "POST", /*GET会乱码*/
-                    url: "../../recorddns/diagnose",
+                    // url: "../../recorddns/diagnose",
+                    url:'',
                     cache: false,  //禁用缓存
-                    data: JSON.stringify(param),  //传入组装的参数
+                    // data: JSON.stringify(param),  //传入组装的参数
                     dataType: "json",
                     contentType:"application/json",
                     success: function (result) {
@@ -918,21 +923,22 @@ var RadiusTable = new Vue({
                 param.start = data.start;//开始的记录序号
                 param.page = (data.start / data.length) + 1;//当前页码
                 let sla = RequestJson.sla;
-                param.dispatchId = dispatchId(sla, 10, 12);
+                param.dispatchId = dispatchId(sla, 5, 6);
                 /*用于查询probe数据*/
                 console.log(param.dispatchId,'Radius');
-                //ajax请求数据
-                $('.warning').text('正在处理，请稍等');
-                $.ajax({
-                    type: "POST", /*GET会乱码*/
-                    url: "../../recordradius/diagnose",
-                    cache: false,  //禁用缓存
-                    data: JSON.stringify(param),  //传入组装的参数
-                    dataType: "json",
-                    contentType:"application/json",
-                    success: function (result) {
-                        $('.warning').css('display', 'none')
-                        $('.loader').hide();
+                // //ajax请求数据
+                // $('.warning').text('正在处理，请稍等');
+                // $.ajax({
+                //     type: "POST", /*GET会乱码*/
+                //     // url: "../../recordradius/diagnose",
+                //     url:'',
+                //     cache: false,  //禁用缓存
+                //     data: JSON.stringify(param),  //传入组装的参数
+                //     dataType: "json",
+                //     contentType:"application/json",
+                //     success: function (result) {
+                //         $('.warning').css('display', 'none')
+                //         $('.loader').hide();
                         //封装返回数据
                         // let returnData = {};
                         // returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -977,8 +983,8 @@ var RadiusTable = new Vue({
                         //     draggingClass: "dragging",
                         //     resizeMode: 'overflow',
                         // });
-                    }
-                });
+                    // }
+                // });/
             }
         });
     }
@@ -1063,7 +1069,7 @@ var FTPTable = new Vue({
                 param.start = data.start;//开始的记录序号
                 param.page = (data.start / data.length) + 1;//当前页码
                 let download = RequestJson.download;
-                param.dispatchId = dispatchId(download, 2, 6);
+                param.dispatchId = dispatchId(download, 1, 3);
                 console.log(param.dispatchId,'FTP_download')
                 /*用于查询probe数据*/
                 //console.log(param);
@@ -1071,9 +1077,10 @@ var FTPTable = new Vue({
                 $('.warning').text('正在处理，请稍等');
                 $.ajax({
                     type: "POST", /*GET会乱码*/
-                    url: "../../recordftp/diagnose",
+                    // url: "../../recordftp/diagnose",
+                    url:'',
                     cache: false,  //禁用缓存
-                    data: JSON.stringify(param),  //传入组装的参数
+                    // data: JSON.stringify(param),  //传入组装的参数
                     dataType: "json",
                     contentType:"application/json",
                     success: function (result) {
@@ -1207,7 +1214,7 @@ var downloadTable = new Vue({
                 param.start = data.start;//开始的记录序号
                 param.page = (data.start / data.length) + 1;//当前页码
                 let download = RequestJson.download;
-                param.dispatchId = dispatchId(download, 0, 2);
+                param.dispatchId = dispatchId(download, 0, 1);
                 console.log(param.dispatchId,'webdownload')
                 /*用于查询probe数据*/
                 //console.log(param);
@@ -1215,9 +1222,10 @@ var downloadTable = new Vue({
                 $('.warning').text('正在处理，请稍等');
                 $.ajax({
                     type: "POST", /*GET会乱码*/
-                    url: "../../recordwebdownload/diagnose",
+                    // url: "../../recordwebdownload/diagnose",
+                    url:'',
                     cache: false,  //禁用缓存
-                    data: JSON.stringify(param),  //传入组装的参数
+                    // data: JSON.stringify(param),  //传入组装的参数
                     dataType: "json",
                     contentType:"application/json",
                     success: function (result) {
@@ -1285,7 +1293,7 @@ var HTTPTable = new Vue({
             {title: '<div style="width:110px">DNS时延(秒)</div>'},
             {title: '<div style="width:110px">连接时延(秒)</div>'},
             {title: '<div style="width:130px"> 首字节到达时延(秒)</div>'},
-            {title: '<div style="width:110px">   首屏时延(秒)</div>'},
+            {title: '<div style="width:110px">首屏时延(秒)</div>'},
             {title: '<div style="width:90px">下载速率(秒)</div>'},
             {title: '<div style="width:60px">测试目标</div>'},
             {title: '<div style="width:90px">测试目标IP</div>'},
@@ -1355,7 +1363,7 @@ var HTTPTable = new Vue({
                 param.start = data.start;//开始的记录序号
                 param.page = (data.start / data.length) + 1;//当前页码
                 let web = RequestJson.web;
-                param.dispatchId = dispatchId(web, 0, 2);
+                param.dispatchId = dispatchId(web, 0, 1);
                 console.log(param.dispatchId,'web')
                 /*用于查询probe数据*/
                 //console.log(param);
@@ -1363,9 +1371,10 @@ var HTTPTable = new Vue({
                 $('.warning').text('正在处理，请稍等');
                 $.ajax({
                     type: "POST", /*GET会乱码*/
-                    url: "../../recordwebpage/diagnose",
+                    // url: "../../recordwebpage/diagnose",
+                    url:'',
                     cache: false,  //禁用缓存
-                    data: JSON.stringify(param),  //传入组装的参数
+                    // data: JSON.stringify(param),  //传入组装的参数
                     dataType: "json",
                     contentType:"application/json",
                     success: function (result) {
@@ -1507,7 +1516,7 @@ var videoTable = new Vue({
                 param.start = data.start;//开始的记录序号
                 param.page = (data.start / data.length) + 1;//当前页码
                 let video = RequestJson.video;
-                param.dispatchId = dispatchId(video, 0, 2);
+                param.dispatchId = dispatchId(video, 0, 1);
                 console.log(param.dispatchId,'video')
                 /*用于查询probe数据*/
                 //console.log(param);
@@ -1515,9 +1524,10 @@ var videoTable = new Vue({
                 $('.warning').text('正在处理，请稍等');
                 $.ajax({
                     type: "POST", /*GET会乱码*/
-                    url: "../../recordwebvideo/diagnose",
+                    // url: "../../recordwebvideo/diagnose",
+                    url:'',
                     cache: false,  //禁用缓存
-                    data: JSON.stringify(param),  //传入组装的参数
+                    // data: JSON.stringify(param),  //传入组装的参数
                     dataType: "json",
                     contentType:"application/json",
                     success: function (result) {
@@ -1652,7 +1662,7 @@ var gameTable = new Vue({
                 param.start = data.start;//开始的记录序号
                 param.page = (data.start / data.length) + 1;//当前页码
                 let game = RequestJson.game;
-                param.dispatchId = dispatchId(game, 0, 2);
+                param.dispatchId = dispatchId(game, 0, 1);
                 console.log(param.dispatchId,'game');
                 /*用于查询probe数据*/
                 //console.log(param);
@@ -1660,9 +1670,10 @@ var gameTable = new Vue({
                 $('.warning').text('正在处理，请稍等');
                 $.ajax({
                     type: "POST", /*GET会乱码*/
-                    url: "../../recordgame/diagnose",
+                    // url: "../../recordgame/diagnose",
+                    url:'',
                     cache: false,  //禁用缓存
-                    data: JSON.stringify(param),  //传入组装的参数
+                    // data: JSON.stringify(param),  //传入组装的参数
                     dataType: "json",
                     contentType:"application/json",
                     success: function (result) {
