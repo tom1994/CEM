@@ -8,6 +8,34 @@
     <link href="${rc.contextPath}/statics/css/formStyle.css" rel="stylesheet">
     <meta charset="UTF-8">
     <title>数据统计</title>
+    <style>
+
+        tr:hover{background:#E5E5E5 }
+
+
+        .search{
+            margin-top: 0px;
+            text-align: center;
+        }
+        .input{
+            margin-bottom: -3px;
+            height: 28px;
+            line-height: 28px;
+            /*//text-align: center;*/
+            padding-top: 0px;
+        }
+        .left{
+            margin-left:52px;
+        }
+        .box{
+            padding-bottom: 0px !important;
+            padding: 0px; min-height: 0px;
+        }
+        .Btn{
+            margin-bottom:0!important;
+        }
+
+    </style>
 </head>
 <body>
 
@@ -21,10 +49,47 @@
                             <div class="row" id="searchbox" style="border: none !important;">
                                 <form class="col-lg-12 col-md-12 col-sm-12 form-horizontal" id="resultsearch"
                                       role="form">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 form-group row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 form-group row" style="margin-bottom: -5px!important;">
                                         <div class="input-group searchspan">
-                                            <span class="searchname" title="业务类型" style="width: 55px">业务类型</span>
-                                            <select id="selectservice" class="form-control selectdata" name="service_type"
+                                            <span class="searchname search" title="地市" style="width: 30px">地市</span>
+                                            <select id="selectcity" class="form-control  input" name="city_id"
+                                                    v-on:change="citychange()" style="width: 110px">
+                                                <option value="">所有地市</option>
+                                                <option v-for="item in cities"
+                                                        v-bind:value="item.message.cityId">{{ item.message.cityName
+                                                    }}
+                                                </option>
+                                                <!--<option v-for="pitem in parray" v-bind:value="pitem.Id">{{ pitem.Name }}-->
+                                            </select>
+                                        </div>
+
+                                        <div class="input-group searchspan">
+                                            <span class="searchname search" title="区县" style="width: 30px">区县</span>
+                                            <select id="selectarea" class="form-control input" name="county_id"
+                                                    v-on:change="areachange()" style="width: 110px">
+                                                <option value="">所有区县</option>
+                                                <option v-for="item in areas"
+                                                        v-bind:value="item.message.countyId">
+                                                    {{item.message.countyName}}
+                                                </option>
+                                            </select>
+                                        </div>
+
+                                        <div class="input-group searchspan">
+                                            <span class="searchname search" title="探针" style="width: 50px">探针</span>
+                                            <select id="selectprobe" class="form-control selectdata input" name="probe_id"
+                                                    style="width: 110px">
+                                                <option value="">所有探针</option>
+                                                <option v-for="item in probeNames"
+                                                        v-bind:value="item.message.id">
+                                                    {{item.message.name}}
+                                                </option>
+                                            </select>
+                                        </div>
+
+                                        <div class="input-group searchspan">
+                                            <span class="searchname search" title="业务类型" style="width: 55px">业务类型</span>
+                                            <select id="selectservice" class="form-control selectdata input" name="service_type"
                                                     style="width: 150px" v-on:change="servicechange()">
                                                 <optgroup label="网络连通性测试">
                                                     <option value="1">PING(ICMP ECHO)</option>
@@ -59,8 +124,8 @@
                                         </div>
 
                                         <div class="input-group searchspan">
-                                            <span class="searchname" title="测试任务" style="width: 55px">测试任务</span>
-                                            <select id="selecttask" class="form-control selectdata" name="task_id"
+                                            <span class="searchname search " title="测试任务" style="width: 55px">测试任务</span>
+                                            <select id="selecttask" class="form-control selectdata input" name="task_id"
                                                     style="width: 150px">
                                                 <option value="">所有任务</option>
                                                 <option v-for="item in tasks"
@@ -69,51 +134,52 @@
                                                 </option>
                                             </select>
                                         </div>
-
-                                        <div class="input-group searchspan">
-                                            <span class="searchname" title="测试目标" style="width: 55px">测试目标</span>
-                                            <select id="selecttarget" class="form-control selectdata" name="target_id"
-                                                    style="width: 150px">
-                                                <option value="">所有目标</option>
-                                                <option v-for="item in targets"
-                                                        v-bind:value="item.message.id">
-                                                    {{item.message.targetName}}
-                                                </option>
-                                            </select>
-                                        </div>
-
-                                        <div class="input-group searchspan">
-                                            <span class="searchname" title="日期" style="width: 55px">起止日期</span>
-                                            <input type="text" id="start_date" class="form-control selectdata"
-                                                   name="startDate"
-                                                   style="width: 90px"
-                                                   value="">
-                                            <span class="searchname" style="width: 5px">-</span>
-                                            <input type="text" id="terminal_date" class="form-control selectdata"
-                                                   name="terminalDate"
-                                                   style="width: 90px"
-                                                   value="">
-                                        </div>
                                     </div>
-
                                     <div class="form-group row">
-                                        <div class="col-lg-10 col-md-10 col-sm-10 ">
+                                        <div class="col-lg-10 col-md-10 col-sm-10 " style="margin-bottom: -5px!important;">
+
+
                                             <div class="input-group searchspan">
-                                                <span class="searchname" title="时间" style="width: 55px">统计时段</span>
-                                                <input type="text" id="start_time" class="form-control selectdata"
+                                                <span class="searchname search " title="测试目标" style="width: 55px">测试目标</span>
+                                                <select id="selecttarget" class="form-control selectdata input" name="target_id"
+                                                        style="width: 150px">
+                                                    <option value="">所有目标</option>
+                                                    <option v-for="item in targets"
+                                                            v-bind:value="item.message.id">
+                                                        {{item.message.targetName}}
+                                                    </option>
+                                                </select>
+                                            </div>
+
+                                            <div class="input-group searchspan">
+                                                <span class="searchname search" title="日期" style="width: 55px">起止日期</span>
+                                                <input type="text" id="start_date" class="form-control selectdata input"
+                                                       name="startDate"
+                                                       style="width: 90px"
+                                                       value="">
+                                                <span class="searchname search" style="width: 5px">-</span>
+                                                <input type="text" id="terminal_date" class="form-control selectdata input"
+                                                       name="terminalDate"
+                                                       style="width: 83px"
+                                                       value="">
+                                            </div>
+
+                                            <div class="input-group searchspan ">
+                                                <span class="searchname search" title="时间" style="width: 55px">统计时段</span>
+                                                <input type="text" id="start_time" class="form-control selectdata input"
                                                        name="start_time"
                                                        style="width: 50px"
                                                        value="">
-                                                <span class="searchname" style="width: 5px">-</span>
-                                                <input type="text" id="terminal_time" class="form-control selectdata"
+                                                <span class="searchname search " style="width: 5px">-</span>
+                                                <input type="text" id="terminal_time" class="form-control selectdata input"
                                                        name="end_time"
                                                        style="width: 50px"
                                                        value="">
                                             </div>
 
                                             <div class="input-group searchspan">
-                                                <span class="searchname" style="width: 55px">统计粒度(小时)</span>
-                                                <select id="interval" class="form-control selectdata" name="interval"
+                                                <span class="searchname search" style="width: 90px">统计粒度</span>
+                                                <select id="interval" class="form-control selectdata input" name="interval"
                                                     style="width:70px">
                                                     <option value="">原始</option>
                                                     <option value="2">两小时</option>
@@ -122,42 +188,7 @@
                                                 </select>
                                             </div>
 
-                                            <div class="input-group searchspan">
-                                                <span class="searchname" title="地市" style="width: 30px">地市</span>
-                                                <select id="selectcity" class="form-control" name="city_id"
-                                                        v-on:change="citychange()" style="width: 110px">
-                                                    <option value="">所有地市</option>
-                                                    <option v-for="item in cities"
-                                                            v-bind:value="item.message.cityId">{{ item.message.cityName
-                                                        }}
-                                                    </option>
-                                                    <!--<option v-for="pitem in parray" v-bind:value="pitem.Id">{{ pitem.Name }}-->
-                                                </select>
-                                            </div>
 
-                                            <div class="input-group searchspan">
-                                                <span class="searchname" title="区县" style="width: 30px">区县</span>
-                                                <select id="selectarea" class="form-control " name="county_id"
-                                                        v-on:change="areachange()" style="width: 110px">
-                                                    <option value="">所有区县</option>
-                                                    <option v-for="item in areas"
-                                                            v-bind:value="item.message.countyId">
-                                                        {{item.message.countyName}}
-                                                    </option>
-                                                </select>
-                                            </div>
-
-                                            <div class="input-group searchspan">
-                                                <span class="searchname" title="探针名" style="width: 50px">探针名</span>
-                                                <select id="selectprobe" class="form-control selectdata" name="probe_id"
-                                                        style="width: 110px">
-                                                    <option value="">所有探针</option>
-                                                    <option v-for="item in probeNames"
-                                                            v-bind:value="item.message.id">
-                                                        {{item.message.name}}
-                                                    </option>
-                                                </select>
-                                            </div>
                                         </div>
                                         <div class="col-lg-2 col-md-2 col-sm-2 input-group"
                                               style="display: inline-block; padding-bottom: 3px;">
@@ -181,9 +212,9 @@
             <div class="row" id="result_table">
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="ibox float-e-margins">
-                        <div class="ibox-title fontcolor" id="resulthandle" style="padding-bottom: 0px !important;">
+                        <div class="ibox-title fontcolor box" id="resulthandle" style="padding-bottom: 0px !important;">
                             <a href="../../recordping/download">
-                                <button type="button" class="btn btn-sm btn-success">
+                                <button type="button" class="btn btn-sm btn-success Btn">
                                     <span class="glyphicon glyphicon-open"></span>导出
                                 </button>
                             </a>
@@ -192,7 +223,7 @@
                         </div>
                         <div class="record-table ibox-content" id="ping_record">
                             <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
-                                <table class="table table-bordered " id="pingdata_table"></table>
+                                <table class="table table-bordered " id="pingdata_table" style="margin-top: 2px!important;"></table>
                             </div>
                         </div>
                         <div class="record-table ibox-content service_unselected" id="tracert_record">

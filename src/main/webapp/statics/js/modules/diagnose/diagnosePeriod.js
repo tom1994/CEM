@@ -42,51 +42,51 @@ Date.prototype.Format = function (fmt) {
 var button_change = new Vue({
     /*实例化Vue*/
     el: '#charts_button',
-    data: {
-        option_ping: {
-            /*设置时延option*/
-            title: {
-                text: '网络连通性'
-            }
-        },
-        option_sla: {
-            /*设置丢包option*/
-            title: {
-                text: '网络层质量'
-            },
-        },
-        option_web: {
-            /*设置web option*/
-            title: {
-                text: 'Web浏览'
-            }
-        },
-        option_download: {
-            /*设置丢包option*/
-            title: {
-                text: '文件下载'
-            },
-        },
-        option_video: {
-            /*设置丢包option*/
-            title: {
-                text: '在线视频'
-            },
-        },
-        option_game: {
-            /*设置丢包option*/
-            title: {
-                text: '网络游戏'
-            },
-        }
-    },
+    // data: {
+    //     option_ping: {
+    //         /*设置时延option*/
+    //         title: {
+    //             text: '网络连通性'
+    //         }
+    //     },
+    //     option_sla: {
+    //         /*设置丢包option*/
+    //         title: {
+    //             text: '网络层质量'
+    //         },
+    //     },
+    //     option_web: {
+    //         /*设置web option*/
+    //         title: {
+    //             text: 'Web浏览'
+    //         }
+    //     },
+    //     option_download: {
+    //         /*设置丢包option*/
+    //         title: {
+    //             text: '文件下载'
+    //         },
+    //     },
+    //     option_video: {
+    //         /*设置丢包option*/
+    //         title: {
+    //             text: '在线视频'
+    //         },
+    //     },
+    //     option_game: {
+    //         /*设置丢包option*/
+    //         title: {
+    //             text: '网络游戏'
+    //         },
+    //     }
+    // },
 
     methods: {
         ping: function () {
             status = 1;
             changeStatus(1);
             console.log("连通性");
-            options.title = this.option_ping.title;
+            // options.title = this.option_ping.title;
             new_search.search();
             var chart = new Highcharts.Chart('container', options)
             /*重新绘图*/
@@ -95,7 +95,7 @@ var button_change = new Vue({
             status = 2;
             changeStatus(2);
             console.log("网络层");
-            options.title = this.option_sla.title;
+            // options.title = this.option_sla.title;
             new_search.search();
             var chart = new Highcharts.Chart('container', options)
         },
@@ -103,14 +103,14 @@ var button_change = new Vue({
             status = 3;
             changeStatus(3);
             console.log("web");
-            options.title = this.option_web.title;
+            // options.title = this.option_web.title;
             new_search.search();
             var chart = new Highcharts.Chart('container', options)
         },
         download: function () {
             status = 4;
             changeStatus(4);
-            options.title = this.option_web.title;
+            // options.title = this.option_web.title;
             new_search.search();
             var chart = new Highcharts.Chart('container', options)
             /*重新绘图*/
@@ -118,7 +118,7 @@ var button_change = new Vue({
         video: function () {
             status = 5;
             changeStatus(5);
-            options.title = this.option_ping.title;
+            // options.title = this.option_ping.title;
             new_search.search();
             var chart = new Highcharts.Chart('container', options)
             /*重新绘图*/
@@ -126,7 +126,7 @@ var button_change = new Vue({
         game: function () {
             status = 6;
             changeStatus(6);
-            options.title = this.option_ping.title;
+            // options.title = this.option_ping.title;
             new_search.search();
             var chart = new Highcharts.Chart('container', options)
             /*重新绘图*/
@@ -263,6 +263,9 @@ var new_search = new Vue({
                     }
                 });
             }
+        },
+        reset: function () {    /*重置*/
+            document.getElementById("probesearch").reset();
         }
     }
 });

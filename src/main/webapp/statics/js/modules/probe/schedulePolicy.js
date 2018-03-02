@@ -22,7 +22,7 @@ var spdata_handle = new Vue({
             for (var i = 0; i <4; i++) {
                 forms[i].value = "";
             }
-            spform_data.modaltitle = "新增调度策略";
+            spform_data.modaltitle = "新建调度策略";
             /*修改模态框标题*/
             $('#myModal_sp').modal('show');
         }
@@ -416,3 +416,6 @@ var sptable = new Vue({
         });
     }
 });
+
+
+//点击每天禁止自定义

@@ -11,6 +11,38 @@
     <title>质量排名</title>
     #parse("cemHeader.html")  <!--导入CSS和js文件-->
     <link href="${rc.contextPath}/statics/css/formStyle.css" rel="stylesheet">  <!--自定义CSS-->
+    <style type="text/css">
+
+        tr:hover{background:#E5E5E5 }
+
+
+        .search{
+            margin-top: 0px;
+            text-align: center;
+        }
+        .input{
+            margin-bottom: -3px;
+            height: 28px;
+            line-height: 28px;
+            /*//text-align: center;*/
+            padding-top: 0px;
+        }
+        .left{
+            margin-left:52px;
+        }
+        .box{
+            padding-bottom: 0px !important;
+            padding: 0px; min-height: 0px;
+        }
+        .Btn{
+            margin-bottom:0
+        }
+        .btn {
+            margin-bottom: 0px !important;
+        }
+
+    </style>
+
 </head>
 <body>
 <div class="htmleaf-container">
@@ -33,11 +65,11 @@
                                     <div class="row" id="searchbox" style="border: none !important;">
                                         <form class="col-lg-9 col-md-19 col-sm-9 form-horizontal" id="probesearch"
                                               role="form">
-                                            <div class="form-group row">
+                                            <div class="form-group row" style="margin-bottom: -5px">
                                                 <div class="input-group searchspan">
-                                                    <span class="searchname" title="地市" style="width: 40px">地市</span>
-                                                    <select id="selectcity" class="form-control" name="city_id"
-                                                            v-on:change="citychange()" style="width: 110px">
+                                                    <span class="searchname  search " title="地市" style="width: 80px">地&nbsp;&nbsp;&nbsp;&nbsp;市</span>
+                                                    <select id="selectcity" class="form-control input" name="city_id"
+                                                            v-on:change="citychange()" style="width: 140px">
                                                         <option value="">所有地市</option>
                                                         <option v-for="item in cities"
                                                                 v-bind:value="item.message.cityId">{{
@@ -47,9 +79,9 @@
                                                     </select>
                                                 </div>
                                                 <div class="input-group searchspan">
-                                                    <span class="searchname" title="区县" style="width: 40px">区县</span>
-                                                    <select id="selectarea" class="form-control " name="county_id"
-                                                            style="width: 110px">
+                                                    <span class="searchname  search left" title="区县" style="width: 80px">区&nbsp;&nbsp;&nbsp;&nbsp;县</span>
+                                                    <select id="selectarea" class="form-control  input " name="county_id"
+                                                            style="width: 140px">
                                                         <option value="">所有区县</option>
                                                         <option v-for="item in areas"
                                                                 v-bind:value="item.message.countyId">
@@ -59,9 +91,9 @@
                                                 </div>
 
                                                 <div class="input-group searchspan">
-                                                    <span class="searchname" title="业务类型"
+                                                    <span class="searchname search left" title="业务类型"
                                                           style="width: 80px">业务类型</span>
-                                                    <select id="selectservice" class="form-control" name="service_type"
+                                                    <select id="selectservice" class="form-control  input" name="service_type"
                                                             v-on:change="servicechange()" style="width: 140px">
                                                         <option value="0">综合业务</option>
                                                         <option value="1">网络连通性业务</option>
@@ -73,29 +105,29 @@
                                                         <!--<option v-for="pitem in parray" v-bind:value="pitem.Id">{{ pitem.Name }}-->
                                                     </select>
                                                 </div>
+                                            </div>
+
+                                            <div class="form-group row" style="margin-bottom: -5px">
                                                 <div class="input-group searchspan">
-                                                    <span class="searchname" title="目标地址"
+                                                    <span class="searchname search" title="目标地址"
                                                           style="width: 80px">目标地址</span>
-                                                    <select id="select_target" class="form-control " name="target_id"
+                                                    <select id="select_target" class="form-control input" name="target_id"
                                                             style="width: 140px">
                                                         <option value="">所有目标地址</option>
                                                         <option v-for="item in target"
                                                                 v-bind:value="item.message.id">{{ item.message.targetName}}</option>
                                                     </select>
                                                 </div>
-                                            </div>
-
-                                            <div class="form-group row">
                                                 <div class="input-group searchspan">
-                                                    <span class="searchname" title="日期" style="width: 80px">起始时间：</span>
-                                                    <input type="text" id="start_date" class="form-control"
+                                                    <span class="searchname search left" title="日期" style="width: 80px">起始时间</span>
+                                                    <input type="text" id="start_date" class="form-control input"
                                                            name="startDate"
                                                            style="width: 140px"
                                                            value="">
                                                 </div>
                                                 <div class="input-group searchspan">
-                                                    <span class="searchname" title="日期" style="width: 80px">结束时间：</span>
-                                                    <input type="text" id="terminal_date" class="form-control"
+                                                    <span class="searchname search left" title="日期" style="width: 80px">结束时间</span>
+                                                    <input type="text" id="terminal_date" class="form-control input"
                                                            name="terminalDate"
                                                            style="width: 140px"
                                                            value="">
@@ -128,26 +160,23 @@
                 <div class="row" id="test_table">
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="ibox float-e-margins">
-                            <div class="ibox-title fontcolor" id="probehandle" style="padding-bottom: 0px !important;">
+                            <div class="ibox-title fontcolor box" id="probehandle" style="padding-bottom: 0px !important; ">
                                 <a href="../../cem/probe/download">
                                     <button type="button" class="btn btn-sm btn-success"><span
-                                            class="glyphicon glyphicon-open"></span>导出
+                                            class="glyphicon glyphicon-open  Btn"></span>导出
                                     </button>
                                 </a>
                                 <p id="flip" style="position:relative; left:45%;" class="glyphicon glyphicon-menu-up" onClick="toggle1('searchbox')"></p>
                             </div>
                             <div class="ibox-content">
                                 <div class="row " style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
-                                    <table  class="table table-bordered " id="probedata_table" ></table>
+                                    <table  class="table table-bordered " id="probedata_table" style="margin-top: 2px!important;" ></table>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-
-
 
             <div role="tabpanel" class="tab-pane fade" id="Section2">
                 <div class="wrapper wrapper-content">
@@ -159,11 +188,11 @@
 
                                         <form class="col-lg-9 col-md-19 col-sm-9 form-horizontal" id="areasearch"
                                               role="form">
-                                            <div class="form-group row">
+                                            <div class="form-group row" style="margin-bottom: -5px">
 
                                                 <div class="input-group searchspan">
-                                                    <span class="searchname" title="地市" style="width: 40px">地市</span>
-                                                    <select id="area_city" class="form-control" name="city_id" style="width: 110px">
+                                                    <span class="searchname search" title="地市" style="width: 80px">地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;市</span>
+                                                    <select id="area_city" class="form-control input" name="city_id" style="width: 140px">
                                                         <option value="">所有地市</option>
                                                         <option v-for="item in cities"
                                                                 v-bind:value="item.message.cityId">{{ item.message.cityName }}
@@ -173,10 +202,10 @@
                                                 </div>
 
                                                 <div class="input-group searchspan">
-                                                    <span class="searchname" title="业务类型"
+                                                    <span class="searchname search left" title="业务类型"
                                                           style="width: 80px">业务类型</span>
-                                                    <select id="area_service" class="form-control" name="servicetype"
-                                                            v-on:change="servicechange()" style="width: 110px">
+                                                    <select id="area_service" class="form-control input" name="servicetype"
+                                                            v-on:change="servicechange()" style="width: 140px">
                                                         <option value="0">综合业务</option>
                                                         <option value="1">网络连通性业务</option>
                                                         <option value="2">网络层质量业务</option>
@@ -189,10 +218,10 @@
                                                 </div>
 
                                                 <div class="input-group searchspan">
-                                                    <span class="searchname" title="目标地址"
+                                                    <span class="searchname search  left" title="目标地址"
                                                           style="width: 80px">目标地址</span>
-                                                    <select id="area_target" class="form-control " name="target"
-                                                            style="width: 110px">
+                                                    <select id="area_target" class="form-control input " name="target"
+                                                            style="width: 117px">
                                                         <option value="">所有目标地址</option>
                                                         <option v-for="item in target"
                                                                 v-bind:value="item.message.id">{{ item.message.targetName}}</option>
@@ -200,18 +229,18 @@
                                                 </div>
                                             </div>
 
-                                            <div class="form-group row">
+                                            <div class="form-group row" style="margin-bottom: -5px">
                                                 <div class="input-group searchspan">
-                                                    <span class="searchname" title="日期" style="width: 80px">起始时间：</span>
-                                                    <input type="text" id="areastart_date" class="form-control"
+                                                    <span class="searchname search" title="日期" style="width: 80px">起始时间</span>
+                                                    <input type="text" id="areastart_date" class="form-control  input"
                                                            name="startDate"
                                                            style="width: 140px"
                                                            value="">
                                                 </div>
 
                                                 <div class="input-group searchspan">
-                                                    <span class="searchname" title="日期" style="width: 80px">结束时间：</span>
-                                                    <input type="text" id="areaterminal_date" class="form-control"
+                                                    <span class="searchname  search  left " title="日期" style="width: 80px">结束时间</span>
+                                                    <input type="text" id="areaterminal_date" class="form-control  input"
                                                            name="terminalDate"
                                                            style="width: 140px"
                                                            value="">
@@ -245,17 +274,17 @@
                 <div class="row" id="areatest_table">
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="ibox float-e-margins">
-                            <div class="ibox-title fontcolor" id="areahandle" style="padding-bottom: 0px !important;">
+                            <div class="ibox-title fontcolor box" id="areahandle" style="padding-bottom: 0px !important;">
                                 <a href="../../cem/probe/download">
                                     <button type="button" class="btn btn-sm btn-success"><span
-                                            class="glyphicon glyphicon-open"></span>导出
+                                            class="glyphicon glyphicon-open  Btn"></span>导出
                                     </button>
                                 </a>
                                     <p id="area_flip" style="position:relative; left:45%;" class="glyphicon glyphicon-menu-up" onClick="toggle2('area_searchbox')"></p>
                             </div>
                             <div class="ibox-content">
-                                <div class="row " style="overflow:scroll">     <!--表格 verflow-x: scroll超出滚动-->
-                                    <table  class="table table-bordered " id="areadata_table" ></table>
+                                <div class="row " style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                                    <table  class="table table-bordered " id="areadata_table" style="margin-top: 2px!important;" ></table>
                                 </div>
                             </div>
                         </div>

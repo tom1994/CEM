@@ -255,6 +255,7 @@ var weightSet = new Vue({
                     for (var i = 0; i < 28; i++) {
                         forms[i].value = result.webDownload[i];
                     }
+
                     $('#Modal_web_download').modal('show');
                 }
             })
@@ -735,6 +736,7 @@ var suform_data = new Vue ({
     methods:{
         submit: function() {
             var suJson = getFormJson($('#sla_udp_form'));
+
             var suTotalWeight = parseFloat(suJson.slaU11) + parseFloat(suJson.slaU21) + parseFloat(suJson.slaU31)
                 + parseFloat(suJson.slaU41) + parseFloat(suJson.slaU51) + parseFloat(suJson.slaU61)
                 + parseFloat(suJson.slaU71) + parseFloat(suJson.slaU81) + parseFloat(suJson.slaU91)
@@ -761,6 +763,7 @@ var suform_data = new Vue ({
                     data: {"su_new": su_new},
                     dataType: "json",
                     success: function (result) {
+                        console.log(result);
                         let code = result.code;
                         let msg = result.msg;
                         switch (code) {
@@ -1073,7 +1076,7 @@ var wdform_data = new Vue ({
         submit: function(){
             var wdJson = getFormJson($('#web_download_form'));
             var wdTotalWeight = parseFloat(wdJson.webD11) + parseFloat(wdJson.webD21) + parseFloat(wdJson.webD31)
-                + parseFloat(wdJson.webD41) +parseFloat(wdJson.webD51);
+                + parseFloat(wdJson.webD41) ;
             for (var prop in wdJson) {
                 if (wdJson[prop] == "") {
                     toastr.warning("权重及评分标准不能为空!");

@@ -178,7 +178,7 @@ function get_viewModal(update_data_id) {
                 paramforms[1].value = param.interval;
                 paramforms[2].value = param.count;
                 paramforms[3].value = param.timeout;
-                paramforms[4].value = param.domains;
+                paramforms[4].value =JSON.stringify(param.domains);
             }
             if (stid.get(servicetypeid) == "pppoe") {
                 paramforms[0].value = param.username;
@@ -634,23 +634,31 @@ var taskform_data = new Vue({
     methods: {
         submit: function () {
             var oDate = new Date();
-            var tasknewJson = getFormJson($('#taskform_data'));
+            var tasknewJson = getFormJson($('#taskform_data'));//获取到对应的数据
+            console.log(tasknewJson)
             var paramnewJson = getFormJson2($('#' + stid.get(parseInt(tasknewJson.serviceType)) + '_param'));
+            console.log(paramnewJson)//domains 值为nan
             var paramnew = JSON.stringify(paramnewJson);
+            console.log(paramnew)
             tasknewJson.parameter = paramnew;
-            console.log(tasknewJson.parameter);
             tasknewJson.isDeleted = "0";
             tasknewJson.alarmTemplateId = "0";
             tasknewJson.createTime = oDate.Format("yyyy-MM-dd hh:mm:ss");
             tasknewJson.remark = "无";
             var tasknew = JSON.stringify(tasknewJson);
+            console.log(tasknewJson);
+            // var reg= /^(1([38]\d|4[57]|5[0-35-9]|7[06-8])\d{8})(，(1([38]\d|4[57]|5[0-35-9]|7[06-8])\d{8}))*$/;
+            // var reg=/^(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\/])(;(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\/]))+$/;
+
             if (tasknewJson.taskName == "") {
                 toastr.warning("请输入任务名称!");
             } else if (tasknewJson.serviceType == "") {
                 toastr.warning("请选择任务类型!");
             } else if (tasknewJson.schPolicyId == "") {
                 toastr.warning("请选择调度策略!");
-            } else {
+            // } else if(!reg.test(tasknewJson.domains)){
+            //     toastr.warning("输入的域名有误，请重新输入!");
+            // } else {
                 var tasknew = JSON.stringify(tasknewJson);
                 console.log(tasknewJson);
                 $.ajax({
@@ -733,7 +741,8 @@ var getalarmtemplates = function (servicetypeid) {
     });
 }
 
-function getFormJson(form) {      /*将表单对象变为json对象*/
+function getFormJson(form) {
+    /*将表单对象变为json对象*/
     var o = {};
     var a = $(form).serializeArray();
     $.each(a, function () {
@@ -754,8 +763,23 @@ function getFormJson2(form) {      /*将表单对象变为json对象*/
     var a = $(form).serializeArray();
     for (var i = 0; i < a.length; i++) {
         if (a[i].value != null && a[i].value != "") {
-            a[i].value = parseInt(a[i].value);
+            // if(a[i].name=='domains'){
+            //     a[i].domains=JSON.parse(a[i].domains)
+            // }else{
+            //     a[i].value =parseInt(a[i].value);
+            //
+            // }
+
+            switch (a[i].value){
+                case "times":a[i].value =parseInt(a[i].value);
+                case "interval":a[i].value =parseInt(a[i].value);
+                case "count":a[i].value =parseInt(a[i].value);
+                case "timeout":a[i].value =parseInt(a[i].value);
+                case "domains":a[i].value =JSON.parse(a[i].value);
+
+            }
         }
+
     }
     $.each(a, function () {
         if (o[this.name] !== undefined) {
