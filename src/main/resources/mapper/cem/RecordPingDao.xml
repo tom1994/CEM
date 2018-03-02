@@ -127,7 +127,7 @@
 		AVG(rp.loss_rate) AS loss_rate,
 		rp.remark AS remark
 		FROM record_ping rp
-		LEFT JOIN probe
+		INNER JOIN probe
 		ON  rp.probe_id =probe.id
 		WHERE rp.record_date = #{record_date}
 		AND rp.record_time BETWEEN #{start_time} AND #{terminal_time}
@@ -155,7 +155,7 @@
 		AVG(rp.loss_rate) AS loss_rate,
 		rp.remark AS remark
 		FROM record_ping rp
-		LEFT JOIN probe
+		INNER JOIN probe
 		ON  rp.probe_id =probe.id
 		WHERE rp.record_date = #{record_date}
 		AND rp.state = 0
