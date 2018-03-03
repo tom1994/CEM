@@ -49,7 +49,6 @@
 
 <!-- 模态框（Modal） -->
 <div class="modal fade" id="myModal_sp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-
     <div class="modal-dialog" style="width: 500px"> <!--修改bootstrap modal模态框的宽度-->
         <div class="modal-content">
             <div class="modal-header">
@@ -61,7 +60,7 @@
                     <form class="form-horizontal" id="spform_data" role="form">
                         <div class="form-group row">
                             <label for="id" class="col-lg-3 col-md-3 col-sm-3 control-label form_border"
-                                   style="display: none">id:</label>
+                                   style="display: none">id</label>
                             <div class="col-lg-8 col-md-8 col-sm-8 form_border"
                                  style="display: none">
                                 <input type="text" class="form-control input" id="id" name="id"  >
@@ -69,35 +68,35 @@
                         </div>
                         <div class="form-group row">
                             <label for="name" class="col-lg-3 col-md-3 col-sm-3 control-label form_border"
-                               style="line-height: 1.5"    >策略名称:</label>
+                               style="line-height: 1.5"    >策略名称</label>
                             <div class="col-lg-8 col-md-8 col-sm-8">
                                 <input type="text" class="form-control input" id="name" name="spName"  >
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-lg-3 col-md-3 col-sm-3 form_border"
-                                   style="line-height: 1.5">起止日期:</label>
+                                   style="line-height: 2.5">起止日期</label>
                             <div class="col-lg-9 col-md-9 col-sm-9" style="display: inline-block;" id="changescale">
                                 <label><input type="radio" id="everyday" name="choosedate" onclick="" value="1" checked="checked">每天</label>
                                 <label><input type="radio" id="customtime" name="choosedate" value="0" >自定义</label>
                                 <input type="text" id="startDate" class=""
-                                       name="startDate" disabled="disabled" style="width: 85px">
+                                       name="startDate" disabled="disabled" style="width: 98px;height: 28px">
                                 <span style="width: 5px">-</span>
                                 <input type="text" id="endDate" class=""
-                                       name="endDate" disabled="disabled" style="width: 85px; display: inline-block">
+                                       name="endDate" disabled="disabled" style="width: 98px; height: 28px;display: inline-block">
                                 </span>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="interval" class="col-lg-3 col-md-3 col-sm-3 control-label form_border"
-                                   style="line-height: 1.5" >时间间隔(分钟):</label>
+                                   style="line-height: 1.5" >时间间隔(分钟)</label>
                             <div class="col-lg-7 col-md-7 col-sm-7">
-                                <input type="text" class="form-control input" id="interval" name="interval" disabled="disabled" style="width: 302px" ><!--Todo:时间间隔只能允许输入15分钟到24小时-->
+                                <input type="text" class="form-control input" id="interval" name="interval" style="width: 302px" ><!--Todo:时间间隔只能允许输入15分钟到24小时-->
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="remark" class="col-lg-3 col-md-3 col-sm-3 control-label form_border"
-                                   style="line-height: 1.5"  >备注:</label>
+                                   style="line-height: 1.5"  >备注</label>
                             <div class="col-lg-8 col-md-8 col-sm-8">
                                 <input type="text" class="form-control input" id="remark" name="remark"  >
                             </div>
@@ -146,13 +145,11 @@
    $('#customtime').click(function () {
        $('#startDate').removeAttr("disabled");
        $('#endDate').removeAttr("disabled");
-       $('#interval').removeAttr("disabled");
    });
 
    $('#everyday').click(function () {
        $('#startDate').attr("disabled","disabled");
        $('#endDate').attr("disabled","disabled");
-       $('#interval').attr("disabled","disabled");
    })
 
 

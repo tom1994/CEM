@@ -24,6 +24,8 @@ var task_handle = new Vue({
     },
     methods: {
         newTask: function () {
+            $('#title').show();
+            $("#title2").hide();
             status = 0;
             var forms = $('#taskform_data .form-control');
             taskform_data.atemplates = [];
@@ -49,74 +51,78 @@ var task_handle = new Vue({
 var taskform_data = new Vue({
     el: '#myModal_edit',
     data: {
-        modaltitle: "", /*定义模态框标题*/
+        modaltitle: "告警模版详情", /*定义模态框标题*/
     },
     // 在 `methods` 对象中定义方法
     methods: {
         submit: function () {
-            $("#serviceType").removeAttr("disabled");
+            // $("#serviceType").removeAttr("disabled");
             var tasknewJson = getFormJson($('#taskform_data'));
-            $("#serviceType").attr("disabled","disabled");
+            // $("#serviceType").attr("disabled","disabled");
             var paramnewJson = getFormJson2($('#taskform_param'));
             var paramnew = JSON.stringify(paramnewJson);
-            //console.log(tasknewJson);
-            //console.log(paramnew);
             tasknewJson.value = paramnew;
             console.log(tasknewJson.serviceType);
             tasknewJson.createTime = (new Date()).Format("yyyy-MM-dd hh:mm:ss");
             tasknewJson.remark = "无";
-            //console.log(tasknewJson);
             var tasknew = JSON.stringify(tasknewJson);
             console.log(tasknew);
-            var mapstr;
-            if (status == 0) {
-                mapstr = "save";
-            } else if (status == 1) {
-                mapstr = "update"
-            }
-            $.ajax({
-                type: "POST", /*GET会乱码*/
-                url: "../../cem/alarmtemplate/" + mapstr,
-                cache: false,  //禁用缓存
-                data: tasknew,  //传入组装的参数
-                dataType: "json",
-                contentType: "application/json", /*必须要,不可少*/
-                success: function (result) {
-                    let code = result.code;
-                    let msg = result.msg;
-                    // console.log(result);
-                    if (status == 0) {
-                        switch (code) {
-                            case 0:
-                                toastr.success("新增成功!");
-                                $('#myModal_edit').modal('hide');
-                                break;
-                            case 403:
-                                toastr.error(msg);
-                                break;
-                            default:
-                                toastr.error("未知错误");
-                                break
-                        }
-                    } else if (status == 1) {
-                        switch (code) {
-                            case 0:
-                                toastr.success("修改成功!");
-                                $('#myModal_edit').modal('hide');
-                                //$("#serviceType").attr("disabled","disabled");
-                                break;
-                            case 403:
-                                toastr.error(msg);
-                                break;
-                            default:
-                                toastr.error("未知错误");
-                                $("#serviceType").attr("disabled","disabled");
-                                break
-                        }
-                    }
-                    alert_table.currReset();
+            if (tasknewJson.atName == "") {
+                toastr.warning("请输入模板名称!");
+            } else if (tasknewJson.serviceType == "") {
+                toastr.warning("请选择任务类型!");
+            }else {
+                var mapstr;
+                if (status == 0) {
+                    mapstr = "save";
+                } else if (status == 1) {
+                    mapstr = "update"
                 }
-            });
+                $.ajax({
+                    type: "POST", /*GET会乱码*/
+                    url: "../../cem/alarmtemplate/" + mapstr,
+                    cache: false,  //禁用缓存
+                    data: tasknew,  //传入组装的参数
+                    dataType: "json",
+                    contentType: "application/json", /*必须要,不可少*/
+                    success: function (result) {
+                        let code = result.code;
+                        let msg = result.msg;
+
+                        if (status == 0) {
+                            switch (code) {
+                                case 0:
+                                    toastr.success("新增成功!");
+                                    $('#myModal_edit').modal('hide');
+                                    break;
+                                case 403:
+                                    toastr.error(msg);
+                                    break;
+                                default:
+                                    toastr.error("未知错误");
+                                    break
+                            }
+                        } else if (status == 1) {
+                            switch (code) {
+                                case 0:
+                                    toastr.success("修改成功!");
+                                    $('#myModal_edit').modal('hide');
+                                    //$("#serviceType").attr("disabled","disabled");
+                                    break;
+                                case 403:
+                                    toastr.error(msg);
+                                    break;
+                                default:
+                                    toastr.error("未知错误");
+                                    $("#serviceType").attr("disabled","disabled");
+                                    break
+                            }
+                        }
+                        alert_table.currReset();
+                    }
+                });
+            }
+
         },
         cancel: function () {
             $(this.$el).modal('hide');
@@ -271,6 +277,8 @@ function delete_ajax() {
 
 /*列表编辑功能*/
 function update_this (obj) {     /*监听修改触发事件*/
+    $('#title').hide();
+    $("#title2").show();
     update_data_id = parseInt(obj.id);
     /*获取当前行探针数据id*/
     console.log(update_data_id);
@@ -279,7 +287,6 @@ function update_this (obj) {     /*监听修改触发事件*/
     var formparam = $('#taskform_param .form-control');
     /*去除只读状态*/
     //$('#probeform_data input[type=text]').prop("readonly", false);
-
     $.ajax({
         type: "POST", /*GET会乱码*/
         url: "../../cem/alarmtemplate/info/"+update_data_id,
@@ -381,7 +388,6 @@ function update_this (obj) {     /*监听修改触发事件*/
 
         }
     });
-   // probeform_data.modaltitle = "详细信息";
     /*修改模态框标题*/
     $('#myModal_edit').modal('show');
 }
@@ -484,8 +490,8 @@ var alert_table = new Vue({
                             row.push(item.serviceName);
                             row.push(item.createTime);
                             row.push(item.remark);
-                            row.push('<a class="fontcolor" onclick="delete_this(this)" id=' + item.id + '>删除</a>&nbsp;' +
-                                '<a class="fontcolor" onclick="update_this(this)" id=' + item.id + '>编辑</a>');
+                            row.push('<a class="fontcolor" onclick="update_this(this)" id=' + item.id + '>详情</a>&nbsp;'+
+                                '<a class="fontcolor" onclick="delete_this(this)" id=' + item.id + '>删除</a>');
                             rows.push(row);
                         });
                         returnData.data = rows;

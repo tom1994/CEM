@@ -251,7 +251,7 @@ var alerttable = new Vue({
                             row.push(tus.get(item.status));
                             row.push(item.probeName);
                             row.push(item.recordTime);
-                            row.push('<a class="fontcolor" onclick="operate_this(this)" id='+item.id+'>确定</a>&nbsp;' +
+                            row.push('<a class="fontcolor" onclick="operate_this(this)" id='+item.id+'>确认</a>&nbsp;' +
                                 '<a class="fontcolor" onclick="update_this(this)" id='+item.id+'>详情</a>'); //Todo:完成详情与诊断
                             rows.push(row);
                         });

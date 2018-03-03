@@ -108,8 +108,6 @@ a:link {
     color: #010407;
 
 }
-
-
 .ibox-title-upper {
     /*background-color: #EEEEEE;*/
    /* background-color: #f5f8fd;*/
@@ -375,8 +373,8 @@ input:focus {
 /*临时建立的类，为方便提取筛选测试结果的所需条件*/
 .selectdata {}
 
-
-
+/*鼠标移入样式*/
+tr:hover{background:#E5E5E5 }
 
 
 

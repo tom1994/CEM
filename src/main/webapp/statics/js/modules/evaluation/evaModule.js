@@ -334,7 +334,10 @@ var weightHandle = new Vue ({
                 + parseFloat(weightJson.radius);
             var totalsecondweight3 = parseFloat(weightJson.ftp_upload) + parseFloat(weightJson.ftp_download)
                 + parseFloat(weightJson.web_download);
-            //console.log(weightJson.connectionweight);
+            var totalsecondweight4=parseFloat(weightJson.webpage)
+            var totalsecondweight5=parseFloat(weightJson.video)
+            var totalsecondweight6=parseFloat(weightJson.game)
+            console.log(weightJson);
             for (var prop in weightJson)
             {
                 if (weightJson[prop] == "") {
@@ -346,11 +349,17 @@ var weightHandle = new Vue ({
             if (totalweight.toFixed(5) != 1) {
                 toastr.warning("业务权重设置有误!");
             } else if (totalsecondweight1 != 1) {
-                toastr.warning("网络连通性测试业务的权重设置有误!");
+                toastr.warning("网络连通性业务的权重设置有误!");
             } else if (totalsecondweight2 != 1) {
-                toastr.warning("网络层质量测试业务的权重设置有误!");
+                toastr.warning("网络层质量业务的权重设置有误!");
             } else if (totalsecondweight3 != 1) {
-                toastr.warning("文件下载类业务的权重设置有误!");
+                toastr.warning("文件下载业务的权重设置有误!");
+            }else if(totalsecondweight4!=1){
+                toastr.warning("网页浏览业务的权重设置有误!");
+            }else if(totalsecondweight5!=1){
+                toastr.warning("在线视频业务的权重设置有误!");
+            }else if(totalsecondweight6!=1){
+                toastr.warning("网络游戏业务的权重设置有误!");
             } else {
                 var weight_new = JSON.stringify(weightJson);
                 /*封装成json数组*/
@@ -383,6 +392,7 @@ var weightHandle = new Vue ({
 
         },
         reset:function(){
+            debugger;
             $.ajax({
                 type: "POST", /*GET会乱码*/
                 url: "../../cem/allweight/reset",

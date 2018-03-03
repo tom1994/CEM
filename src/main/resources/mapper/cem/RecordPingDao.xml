@@ -174,7 +174,7 @@
 		c.data_name AS state_name,
 		d.data_name AS servicetype_name
 		FROM record_ping
-		LEFT JOIN probe
+		INNER JOIN probe
 		ON  record_ping.probe_id =probe.id
 		LEFT JOIN task
 		ON record_ping.task_id = task.id
@@ -188,7 +188,7 @@
 		ON (c.dic_type_id = 9 AND record_ping.state = c.data_id)
 		LEFT JOIN dic_data d
 		ON (d.dic_type_id = 5 AND record_ping.service_type = d.data_id)
-		WHERE service_type = #{service_type}
+		WHERE record_ping.service_type = #{service_type}
 		<if test="task_id != null and task_id != ''">
 			AND task_id = #{task_id}
 		</if>
@@ -244,7 +244,7 @@
 		target.target_name AS target_name,
 		target.value AS targetip_name
 		FROM record_ping
-		LEFT JOIN probe
+		INNER JOIN probe
 		ON  record_ping.probe_id =probe.id
 		LEFT JOIN target
 		ON record_ping.target_id = target.id

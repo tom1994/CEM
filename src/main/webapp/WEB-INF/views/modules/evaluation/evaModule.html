@@ -10,10 +10,70 @@
     <title>感知评价模型设置</title>
     #parse("cemHeader.html")  <!--导入CSS和js文件-->
     <link href="${rc.contextPath}/statics/css/formStyle.css" rel="stylesheet">  <!--自定义CSS-->
+    <style>
+        html,body{
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        .wrapper_border{
+            border: 1px solid black;
+            border-radius: 0px;
+        }
+        .superservice-input{
+            background-color:#36C6D3 ;
+            color: black;
+        }
+        .modulefont{
+            color: black;
+            font-weight: normal;
+            padding: 0px;
+            font-size: 16px
+        }
+        .color{
+            background: #E6E6FA;
+            /*#0EB690*/
+        }
+        .middle{
+            vertical-align: middle;
+        }
+        .left{
+            padding-right: 0px;
+            padding-left: 7px;
+        }
+        .wrapper-block{
+            margin:1px 0;
+        }
+        .inputset{
+            background:#E6E6FA;
+        }
+        .inputset:focus{
+            border:1px solid   #0EB690 ;
+
+        }
+        .inputset{
+            outline:1px  #0EB690;
+
+        }
+        .superservice-input:focus{
+            border:1px solid  #0EB690 ;
+        }
+        .superservice-input{
+            outline:1px #0EB690;
+        }
+        .form-input:focus{
+            border:1px solid  #0EB690 ;
+        }
+        .form-input{
+            outline:1px #0EB690;
+        }
+
+    </style>
 </head>
-<body onload="prepare()">
+<body>
+
 <!--六大业务权重设置表单-->
-<form id="weight_form">
+<form id="weight_form" style="margin-top: 14px">
     <div class="wrapper wrapper-content">
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12" style="padding-right: 30px;padding-left: 30px;">
@@ -21,46 +81,47 @@
                     <div id="weightset">
                         <div class="row">
                             <!--网络连通性测试业务-->
-                            <div class="col-lg-6 col-md-6 col-sm-6">
-                                <div class="wrapper-block wrapper_border">
-                                    <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
-                                        <span class="modulefont">网络连通性测试业务</span>
+                            <div class="col-lg-5 col-md-5 col-sm-5">
+                                <div class="wrapper-block wrapper_border ">
+                                    <div style="background-color:#36C6D3;">
+                                        <span><img src="../../statics/img/ping.gif" alt="" style="width: 10%;"></span>
+                                        <span class="modulefont middle">网络连通性业务</span>
                                         <div class="tools">
-                                            <label for="connectionweight" style="font-size:15px;color: white">权重：</label>
-                                            <input class="superservice-input" type="text" id="connectionweight"
+                                            <span for="connectionweight" style="font-size:15px;" class="modulefont middle">权重：</span>
+                                            <input class="superservice-input   middle" type="text" id="connectionweight"
                                                    name="connectionweight" size="3"
                                                    onkeyup="value=value.replace(/[^0-9.]/g,'')">
                                             <!--方案2：onblur="testnum(this)"-->
                                         </div>
                                     </div>
 
-                                    <div class="wrapper-block" style="font-size:15px !important">
+                                    <div class="wrapper-block color" style="font-size:15px !important">
                                         <div class="row">
-                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <div class="col-lg-6 col-md-6 col-sm-6  left" >
                                                 <a class="service-font" v-on:click="ping_icmpSet">PING(ICMP Echo):</a>
                                                 <input class="inputset" type="text" id="ping_icmp" name="ping_icmp"
                                                        size="3" onkeyup="value=value.replace(/[^0-9.]/g,'')">
                                             </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <div class="col-lg-6 col-md-6 col-sm-6 left" >
                                                 <a class="service-font" v-on:click="ping_tcpSet">PING(TCP Echo):</a>
                                                 <input class="inputset" type="text" id="ping_tcp" name="ping_tcp"
                                                        size="3" onkeyup="value=value.replace(/[^0-9.]/g,'')">
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <div class="col-lg-6 col-md-6 col-sm-6 left" >
                                                 <a class="service-font" v-on:click="ping_udpSet">PING(UDP Echo):</a>
                                                 <input class="inputset" type="text" id="ping_udp" name="ping_udp"
                                                        size="3" onkeyup="value=value.replace(/[^0-9.]/g,'')">
                                             </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <div class="col-lg-6 col-md-6 col-sm-6 left" >
                                                 <a class="service-font" v-on:click="tr_tcpSet">Trace Route(TCP):</a>
                                                 <input class="inputset" type="text" id="tr_tcp" name="tr_tcp"
                                                        size="3" onkeyup="value=value.replace(/[^0-9.]/g,'')">
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 left" >
                                                 <a class="service-font" v-on:click="tr_icmpSet">Trace Route(ICMP):</a>
                                                 <input class="inputset" type="text" id="tr_icmp" name="tr_icmp"
                                                        size="3" onkeyup="value=value.replace(/[^0-9.]/g,'')">
@@ -69,52 +130,53 @@
                                     </div>
                                 </div>
                             </div>
-
+                            <div class="col-lg-0.5 col-md-0.5 col-sm-0.5"></div>
                             <!--网络层质量测试业务-->
-                            <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="col-lg-5 col-md-5 col-sm-5" >
                                 <div class="wrapper-block wrapper_border">
-                                    <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
-                                        <span class="modulefont">网络层质量测试业务</span>
+                                    <div style="background-color:#36C6D3; ">
+                                        <span><img src="../../statics/img/sla.gif" alt="" style="width: 11%;"></span>
+                                        <span class="modulefont middle">网络层质量业务</span>
                                         <div class="tools">
-                                            <label for="qualityweight" style="font-size:15px;color: white">权重：</label>
-                                            <input class="superservice-input" type="text" id="qualityweight"
+                                            <span for="qualityweight" style="font-size:15px;" class="modulefont middle">权重：</span>
+                                            <input class="superservice-input   middle" type="text" id="qualityweight"
                                                    name="qualityweight" size="3" onkeyup="value=value.replace(/[^0-9.]/g,'')">
                                                    <!--onkeyup="if(! /^d*(?:.d{0,2})?$/.test(this.value)) {this.value=this.value.replace(/[^\d]+/g,'');}"-->     <!--只能输入数字,小数点后保留两位-->
                                         </div>
                                     </div>
 
-                                    <div class="wrapper-block" style="font-size:15px !important;">
+                                    <div class="wrapper-block color" style="font-size:15px !important;">
                                         <div class="row">
-                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <div class="col-lg-6 col-md-6 col-sm-6 left">
                                                 <a class="service-font" v-on:click="sla_tcpSet">SLA(TCP):</a>
                                                 <input class="inputset" type="text" id="sla_tcp" name="sla_tcp"
                                                        size="3" onkeyup="value=value.replace(/[^0-9.]/g,'')">
                                             </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <div class="col-lg-6 col-md-6 col-sm-6 left">
                                                 <a class="service-font" v-on:click="sla_udpSet">SLA(UDP):</a>
                                                 <input class="inputset" type="text" id="sla_udp" name="sla_udp"
                                                        size="3" onkeyup="value=value.replace(/[^0-9.]/g,'')">
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <div class="col-lg-6 col-md-6 col-sm-6 left">
                                                 <a class="service-font" v-on:click="dnsSet">DNS:</a>
                                                 <input class="inputset" type="text" id="dns" name="dns" size="3"
                                                        onkeyup="value=value.replace(/[^0-9.]/g,'')">
                                             </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <div class="col-lg-6 col-md-6 col-sm-6 left">
                                                 <a class="service-font" v-on:click="dhcpSet">DHCP:</a>
                                                 <input class="inputset" type="text" id="dhcp" name="dhcp" size="3"
                                                        onkeyup="value=value.replace(/[^0-9.]/g,'')">
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <div class="row" style="margin-bottom: 1px">
+                                            <div class="col-lg-6 col-md-6 col-sm-6 left">
                                                 <a class="service-font" v-on:click="adslSet">ADSL接入:</a>
                                                 <input class="inputset" type="text" id="adsl" name="adsl" size="3"
                                                        onkeyup="value=value.replace(/[^0-9.]/g,'')">
                                             </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <div class="col-lg-6 col-md-6 col-sm-6 left">
                                                 <a class="service-font" v-on:click="radiusSet">Radius认证:</a>
                                                 <input class="inputset" type="text" id="radius" name="radius" size="3"
                                                        onkeyup="value=value.replace(/[^0-9.]/g,'')">
@@ -124,35 +186,35 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="row">
                             <!--文件下载类业务-->
-                            <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="col-lg-5 col-md-5 col-sm-5">
                                 <div class="wrapper-block wrapper_border">
-                                    <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
-                                        <span class="modulefont">文件下载类业务</span>
+                                    <div style="background-color:#36C6D3; ">
+                                        <span><img src="../../statics/img/download.gif" alt="" style="width: 10%;"></span>
+                                        <span class="modulefont middle">文件下载业务</span>
                                         <div class="tools">
-                                            <label for="downloadweight" style="font-size:15px;color: white">权重：</label>
-                                            <input class="superservice-input" type="text" id="downloadweight"
+                                            <span for="downloadweight" style="font-size:15px;" class="modulefont middle">权重：</span>
+                                            <input class="superservice-input   middle" type="text" id="downloadweight"
                                                    name="downloadweight" size="3" onkeyup="value=value.replace(/[^0-9.]/g,'')">
                                         </div>
                                     </div>
 
-                                    <div class="wrapper-block" style="font-size:15px !important;">
+                                    <div class="wrapper-block color" style="font-size:15px !important;">
                                         <div class="row">
-                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <div class="col-lg-6 col-md-6 col-sm-6 left"  >
                                                 <a class="service-font" v-on:click="ftp_uploadSet">FTP上传:</a>
                                                 <input class="inputset" type="text" id="ftp_upload" name="ftp_upload"
                                                        size="3" onkeyup="value=value.replace(/[^0-9.]/g,'')">
                                             </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <div class="col-lg-6 col-md-6 col-sm-6 left"  >
                                                 <a class="service-font" v-on:click="ftp_downloadSet">FTP下载:</a>
                                                 <input class="inputset" type="text" id="ftp_download"
                                                        name="ftp_download" size="3" onkeyup="value=value.replace(/[^0-9.]/g,'')">
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <div class="col-lg-6 col-md-6 col-sm-6 left"  >
                                                 <a class="service-font" v-on:click="web_downloadSet">WEB下载:</a>
                                                 <input class="inputset" type="text" id="web_download"
                                                        name="web_download" size="3" onkeyup="value=value.replace(/[^0-9.]/g,'')">
@@ -161,25 +223,26 @@
                                     </div>
                                 </div>
                             </div>
-
+                            <div class="col-lg-0.5 col-md-0.5 col-sm-0.5"></div>
                             <!--网页浏览类业务-->
-                            <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="col-lg-5 col-md-5 col-sm-5">
                                 <div class="wrapper-block wrapper_border">
-                                    <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
-                                        <span class="modulefont">网页浏览类业务</span>
+                                    <div style="background-color:#36C6D3; ">
+                                        <span><img src="../../statics/img/web.gif" alt="" style="width: 10%;"></span>
+                                        <span class="modulefont middle">网页浏览业务</span>
                                         <div class="tools">
-                                            <label for="browseweight" style="font-size:15px;color: white">权重：</label>
-                                            <input class="superservice-input" type="text" id="browseweight"
+                                            <span for="browseweight" style="font-size:15px;" class="modulefont middle">权重：</span>
+                                            <input class="superservice-input  middle" type="text" id="browseweight"
                                                    name="browseweight" size="3" onkeyup="value=value.replace(/[^0-9.]/g,'')">
                                         </div>
                                     </div>
 
-                                    <div class="wrapper-block" style="font-size:15px !important;">
+                                    <div class="wrapper-block color" style="font-size:15px !important;">
                                         <div class="row">
-                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <div class="col-lg-6 col-md-6 col-sm-6 left"  >
                                                 <a class="service-font" v-on:click="webpageSet">WEB页面访问:</a>
                                                 <input class="inputset" type="text" id="webpage" name="webpage"
-                                                       size="3" readonly="readonly" onkeyup="value=value.replace(/[^0-9.]/g,'')">
+                                                   size="3" onkeyup="value=value.replace(/[^0-9.]/g,'')">
                                             </div>
                                         </div>
                                     </div>
@@ -189,47 +252,49 @@
 
                         <div class="row">
                             <!--在线视频类业务-->
-                            <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="col-lg-5 col-md-5 col-sm-5">
                                 <div class="wrapper-block wrapper_border">
-                                    <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
-                                        <span class="modulefont">在线视频类业务</span>
+                                    <div style="background-color:#36C6D3;">
+                                        <span><img src="../../statics/img/vedio.gif" alt="" style="width: 10%;"></span>
+                                        <span class="modulefont middle">在线视频业务</span>
                                         <div class="tools">
-                                            <label for="videoweight" style="font-size:15px;color: white">权重：</label>
-                                            <input class="superservice-input" type="text" id="videoweight"
+                                            <span for="videoweight" style="font-size:15px;" class="modulefont middle">权重：</span>
+                                            <input class="superservice-input   middle" type="text" id="videoweight"
                                                    name="videoweight" size="3" onkeyup="value=value.replace(/[^0-9.]/g,'')">
                                         </div>
                                     </div>
 
-                                    <div class="wrapper-block" style="font-size:15px !important;">
+                                    <div class="wrapper-block color" style="font-size:15px !important;">
                                         <div class="row">
-                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <div class="col-lg-6 col-md-6 col-sm-6 left"  >
                                                 <a class="service-font" v-on:click="videoSet">在线视频:</a>
                                                 <input class="inputset" type="text" id="video" name="video" size="3"
-                                                       readonly="readonly">
+                                                      >
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
+                            <div class="col-lg-0.5 col-md-0.5 col-sm-0.5"></div>
                             <!--网络游戏类业务-->
-                            <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="col-lg-5 col-md-5 col-sm-5">
                                 <div class="wrapper-block wrapper_border">
-                                    <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
-                                        <span class="modulefont">网络游戏类业务</span>
+                                    <div style="background-color:#36C6D3; ">
+                                        <span ><img src="../../statics/img/game.gif" alt="" style="width: 10%;"></span>
+                                        <span class="modulefont middle">网络游戏业务</span>
                                         <div class="tools">
-                                            <label for="gameweight" style="font-size:15px;color: white">权重：</label>
-                                            <input class="superservice-input" type="text" id="gameweight"
+                                            <span for="gameweight" style="font-size:15px;" class="modulefont middle">权重：</span>
+                                            <input class="superservice-input   middle" type="text" id="gameweight"
                                                    name="gameweight" size="3" onkeyup="value=value.replace(/[^0-9.]/g,'')">
                                         </div>
                                     </div>
 
-                                    <div class="wrapper-block" style="font-size:15px !important;">
+                                    <div class="wrapper-block color" style="font-size:15px !important;">
                                         <div class="row">
-                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <div class="col-lg-6 col-md-6 col-sm-6 left"  >
                                                 <a class="service-font" v-on:click="gameSet">网络游戏:</a>
                                                 <input class="inputset" type="text" id="game" name="game" size="3"
-                                                       readonly="readonly">
+                                                       >
                                             </div>
                                         </div>
                                     </div>
@@ -237,24 +302,24 @@
                             </div>
                         </div>
                     </div>
-
-                    <div style="float: right" id="weight_handle">
-                        <button type="button" class="btn btn-sm btn-success"
-                                style="margin-right: 5px"
-                                v-on:click="submit"><span
-                                class="glyphicon glyphicon-save"></span>保存
-                        </button>
-                        <button type="button" class="btn btn-sm btn-success"
-                                v-on:click="reset"><span
-                                class="glyphicon glyphicon-refresh"></span>重置
-                        </button>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
 </form>
-
+<div class="row"style="position: relative;right:215px">
+    <div style="float: right" id="weight_handle">
+        <button type="button" class="btn btn-sm btn-success"
+                style="margin-right: 5px"
+                v-on:click="submit"><span
+                class="glyphicon glyphicon-save"></span>保存
+        </button>
+        <button type="button" class="btn btn-sm btn-success"
+                v-on:click="reset"><span
+                class="glyphicon glyphicon-refresh"></span>重置
+        </button>
+    </div>
+</div>
 <!--网络连通性子业务的各项指标设置模态框-->
 <div class="modal fade" id="Modal_ping_icmp" tabindex="-1" role="dialog"
            aria-labelledby="myModalLabel"
@@ -1371,7 +1436,7 @@
      aria-labelledby="myModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" style="width: 850px"> <!--修改bootstrap modal模态框的宽度-->
-        <div class="modal-content">
+        <div class="modal-content" style="height:500px; overflow:auto; !important;">
 
             <div class="modal-header1">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
@@ -1640,7 +1705,7 @@
      aria-labelledby="myModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" style="width: 850px"> <!--修改bootstrap modal模态框的宽度-->
-        <div class="modal-content">
+        <div class="modal-content" style="height:500px ; overflow: auto;">
 
             <div class="modal-header1">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
@@ -2772,7 +2837,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                     &times;
                 </button>
-                <h3 class="modal-title myModalLabel">在线视频指标权重设置</h3>
+                <h3 class="modal-title myModalLabel">网络游戏指标权重设置</h3>
             </div>
 
             <div class="modal-body" style="padding: 0px 30px 0px 30px !important;">
@@ -2930,6 +2995,7 @@
         topleng: 0
     }
     $(document).on("mousedown", ".modal-header1", function (e) {
+
         //webkit内核和火狐禁止文字被选中
         $('body').addClass('select')
         //ie浏览器禁止文字选中
@@ -2951,7 +3017,10 @@
         dragModal.basePoint = {"left": 0, "top": 0};
     });
     $(document).on("mousemove", function (e) {
-        if (!dragModal.mouseDragDown || dragModal.moveTarget == undefined) return;
+
+        if (!dragModal.mouseDragDown || dragModal.moveTarget == undefined){
+            return;
+        }
         var mousX = e.clientX;
         var mousY = e.pageY;
         if (mousX < 0) mousX = 0;
@@ -2990,41 +3059,44 @@
 
 <!--读取properties中用户设置的权重值-->
 <script>
-    function prepare() {
-        $.ajax({
-            type: "POST", /*GET会乱码*/
-            url: "../../cem/allweight/get",
-            cache: false,  //禁用缓存
-            dataType: "json",
-            contentType: "application/json", /*必须要,不可少*/
-            success: function (result) {
-                console.log(result);
-                $('#connectionweight').val(result.weight[0]);
-                $('#qualityweight').val(result.weight[1]);
-                $('#downloadweight').val(result.weight[2]);
-                $('#browseweight').val(result.weight[3]);
-                $('#videoweight').val(result.weight[4]);
-                $('#gameweight').val(result.weight[5]);
-                $('#ping_icmp').val(result.weight[6]);
-                $('#ping_tcp').val(result.weight[7]);
-                $('#ping_udp').val(result.weight[8]);
-                $('#tr_tcp').val(result.weight[9]);
-                $('#tr_icmp').val(result.weight[10]);
-                $('#sla_tcp').val(result.weight[11]);
-                $('#sla_udp').val(result.weight[12]);
-                $('#dns').val(result.weight[13]);
-                $('#dhcp').val(result.weight[14]);
-                $('#adsl').val(result.weight[15]);
-                $('#radius').val(result.weight[16]);
-                $('#ftp_upload').val(result.weight[17]);
-                $('#ftp_download').val(result.weight[18]);
-                $('#web_download').val(result.weight[19]);
-                $('#webpage').val(result.weight[20]);
-                $('#video').val(result.weight[21]);
-                $('#game').val(result.weight[22]);
-            }
-        });
-    }
+   $(function () {
+       prepare()
+       function prepare() {
+           $.ajax({
+               type: "POST", /*GET会乱码*/
+               url: "../../cem/allweight/get",
+               cache: false,  //禁用缓存
+               dataType: "json",
+               contentType: "application/json", /*必须要,不可少*/
+               success: function (result) {
+                   console.log(result);
+                   $('#connectionweight').val(result.weight[0]);
+                   $('#qualityweight').val(result.weight[1]);
+                   $('#downloadweight').val(result.weight[2]);
+                   $('#browseweight').val(result.weight[3]);
+                   $('#videoweight').val(result.weight[4]);
+                   $('#gameweight').val(result.weight[5]);
+                   $('#ping_icmp').val(result.weight[6]);
+                   $('#ping_tcp').val(result.weight[7]);
+                   $('#ping_udp').val(result.weight[8]);
+                   $('#tr_tcp').val(result.weight[9]);
+                   $('#tr_icmp').val(result.weight[10]);
+                   $('#sla_tcp').val(result.weight[11]);
+                   $('#sla_udp').val(result.weight[12]);
+                   $('#dns').val(result.weight[13]);
+                   $('#dhcp').val(result.weight[14]);
+                   $('#adsl').val(result.weight[15]);
+                   $('#radius').val(result.weight[16]);
+                   $('#ftp_upload').val(result.weight[17]);
+                   $('#ftp_download').val(result.weight[18]);
+                   $('#web_download').val(result.weight[19]);
+                   $('#webpage').val(result.weight[20]);
+                   $('#video').val(result.weight[21]);
+                   $('#game').val(result.weight[22]);
+               }
+           });
+       }
+   })
 </script>
 
 </html>

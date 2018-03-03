@@ -16,9 +16,8 @@
         }
         .input{
             margin-bottom: -3px;
-            height: 28px;
-            line-height: 28px;
-            /*//text-align: center;*/
+            height: 31px;
+            line-height: 31px;
             padding-top: 0px;
         }
         .left{
@@ -34,9 +33,35 @@
         .btn {
             margin-bottom: 0px !important;
         }
+        .combo-dropdown{
+            max-height: 170px!important;
+        }
+        .combo-dropdown li{
+            padding: 5px;
+        }
+        .option-item{
+            border-bottom:0px
+        }
+        .combo-arrow::before{
+            border-top: 5px solid 	Gray;
 
+        }
+        .combo-open .combo-arrow{
+            border-color: #0EB690;
+        }
+        .combo-focus input{
+            border-color: #0EB690;
+        }
+        .combo-focus{
+            border-color: #0EB690;
+            box-shadow: none
+        }
+        input:focus {
+            border-color: #0EB690;
+            box-shadow: none;
+        }
     </style>
-    </head>
+</head>
 <body>
 
 <div class="row">
@@ -49,61 +74,74 @@
                             <div class="row" id="searchbox" style="border: none !important;">
                                 <form class="col-lg-9 col-md-19 col-sm-9 form-horizontal" id="probesearch"
                                       role="form">
-                                    <div class="form-group row" style="margin-bottom: -5px">
-                                        <div class="input-group searchspan">
-                                            <span class="searchname search" title="地市" style="width: 40px">地市</span>
-                                            <select id="selectcity" class="form-control input" name="cityid"
-                                                    v-on:change="citychange()" style="width: 120px">
-                                                <option value="">所有地市</option>
-                                                <option v-for="item in cities"
-                                                        v-bind:value="item.message.cityId">{{ item.message.cityName }}
-                                                </option>
-                                                <!--<option v-for="pitem in parray" v-bind:value="pitem.Id">{{ pitem.Name }}-->
-                                            </select>
+                                    <div class="form-group row" style="margin-bottom: 8px">
+                                        <div style="display:inline-block;">
+                                            <span class="searchname" title="地市" style="width:40px; text-align: center">地市</span>
+                                            <div class="input-group searchspan" id="city" >
+                                                <div class="jq22">
+                                                    <select id="selectcity" class="form-control" name="type"  v-on:change="citychange()" style="display: none">
+                                                        <option value="">所有地市</option>
+                                                        <option v-for="item in cities"
+                                                                v-bind:value="item.message.cityId">{{ item.message.cityName }}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="input-group searchspan">
-                                            <span class="searchname  search left" title="区县" style="width: 60px">区县</span>
-                                            <select id="selectarea" class="form-control input " name="countyid"
-                                                    v-on:change="areachange()" style="width: 140px">
-                                                <option value="">所有区县</option>
-                                                <option v-for="item in areas"
-                                                        v-bind:value="item.message.countyId">{{
-                                                    item.message.countyName}}
-                                                </option>
-                                            </select>
+                                        <div style="display: inline-block;">
+                                            <span class="searchname search left" title="区县" style="width: 60px;margin-left: 61px">区县</span>
+                                            <div class="input-group searchspan" id="country">
+                                                <div class="jq22">
+                                                    <select id="selectarea" class="form-control" name="countyid"  v-on:change="areachange()" style="display: none">
+                                                        <option value="">所有区县</option>
+                                                        <option v-for="item in areas"
+                                                                v-bind:value="item.message.countyId">{{item.message.countyName}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="input-group searchspan">
-                                            <span class="searchname search left" title="探针" style="width: 60px">探针</span>
-                                            <select class="form-control input " name="probeid" style="width: 140px">
-                                                <option value="">---请选择---</option>
-                                                <option v-for="item in probe" v-bind:value="item.message.id">{{ item.message.name}}</option>
-                                            </select>
+                                        <div style="display: inline-block;">
+                                            <span class="searchname search left" title="探针" style="width: 60px;margin-left: 68px">探针</span>
+                                            <div class="input-group searchspan" id="probe" >
+                                                <div class="jq22">
+                                                    <select id="selectprobe" class="form-control" name="probeid"  style="display: none">
+                                                        <option value="">---请选择---</option>
+                                                        <option v-for="item in probe" v-bind:value="item.message.id">{{ item.message.name}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
+
                                     </div>
                                     <div class="form-group row" style="margin-bottom: -5px">
-                                        <div class="input-group searchspan">
-                                            <span class="searchname search" title="目标" style="width: 40px">目标</span>
-                                            <select id="select_target" class="form-control input " name="target_id"
-                                                    style="width: 120px">
-                                                <option value="">所有目标地址</option>
-                                                <option v-for="item in target"
-                                                        v-bind:value="item.message.targetId">{{
-                                                    item.message.targetName}}
-                                                </option>
-                                            </select>
+
+                                        <div style="display:inline-block;">
+                                            <span class="searchname" title="目标" style="width:40px; text-align: center;line-height: 14px">目标</span>
+                                            <div class="input-group searchspan" id="target" style="top: -10px;">
+                                                <div class="jq22">
+                                                    <select id="select_target" class="form-control" name="type"  v-on:change="citychange()" style="display: none">
+                                                        <option value="">所有目标地址</option>
+                                                        <option v-for="item in target"
+                                                                v-bind:value="item.message.targetId">{{item.message.targetName}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
+
                                         <div class="input-group searchspan">
-                                            <span class="searchname  search left " title="日期" style="width: 60px">起始时间</span>
+                                            <span class="searchname  search left " title="日期" style="width: 60px;margin-right: 6px">起始时间</span>
                                             <input type="text" id="start_date" class="form-control  input"
                                                    name="startDate"
-                                                   style="width: 140px"
+                                                   style="width: 134px"
                                                    value="">
                                         </div>
                                         <div class="input-group searchspan">
                                             <span class="searchname search left " title="日期" style="width: 60px">结束时间</span>
                                             <input type="text" id="terminal_date" class="form-control input "
                                                    name="terminalDate"
-                                                   style="width: 140px"
+                                                   style="width: 134px"
                                                    value="">
                                         </div>
                                     </div>
@@ -168,5 +206,7 @@
     </div>
 </div>
 <script type="text/javascript" src="${rc.contextPath}/statics/js/modules/diagnose/diagnosePeriod.js?_${date.systemTime}"></script>
+<script>
+</script>
 </body>
 </html>
