@@ -1096,7 +1096,7 @@ public class AllWeightController {
 
     @RequestMapping("/set")
     public R setWeight(String weight_new) {
-        System.out.println(weight_new);
+        System.out.println("weight"+weight_new);
         JSONObject weight_new_jsonobject = JSON.parseObject(weight_new);
         System.out.println(weight_new_jsonobject.get("connectionweight"));
         try {
@@ -1108,6 +1108,7 @@ public class AllWeightController {
             PropertiesUtils.setValue("gameweight",weight_new_jsonobject.get("gameweight").toString());
             PropertiesUtils.setValue("ping_icmp",weight_new_jsonobject.get("ping_icmp").toString());
             PropertiesUtils.setValue("ping_udp",weight_new_jsonobject.get("ping_udp").toString());
+            PropertiesUtils.setValue("ping_tcp",weight_new_jsonobject.get("ping_tcp").toString());
             PropertiesUtils.setValue("tr_tcp",weight_new_jsonobject.get("tr_tcp").toString());
             PropertiesUtils.setValue("tr_icmp",weight_new_jsonobject.get("tr_icmp").toString());
             PropertiesUtils.setValue("sla_tcp",weight_new_jsonobject.get("sla_tcp").toString());
