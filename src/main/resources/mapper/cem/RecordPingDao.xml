@@ -127,7 +127,7 @@
 		AVG(rp.loss_rate) AS loss_rate,
 		rp.remark AS remark
 		FROM record_ping rp
-		LEFT JOIN probe
+		INNER JOIN probe
 		ON  rp.probe_id =probe.id
 		WHERE rp.record_date = #{record_date}
 		AND rp.record_time BETWEEN #{start_time} AND #{terminal_time}
@@ -155,7 +155,7 @@
 		AVG(rp.loss_rate) AS loss_rate,
 		rp.remark AS remark
 		FROM record_ping rp
-		LEFT JOIN probe
+		INNER JOIN probe
 		ON  rp.probe_id =probe.id
 		WHERE rp.record_date = #{record_date}
 		AND rp.state = 0
@@ -174,7 +174,7 @@
 		c.data_name AS state_name,
 		d.data_name AS servicetype_name
 		FROM record_ping
-		LEFT JOIN probe
+		INNER JOIN probe
 		ON  record_ping.probe_id =probe.id
 		LEFT JOIN task
 		ON record_ping.task_id = task.id
@@ -188,8 +188,7 @@
 		ON (c.dic_type_id = 9 AND record_ping.state = c.data_id)
 		LEFT JOIN dic_data d
 		ON (d.dic_type_id = 5 AND record_ping.service_type = d.data_id)
-		WHERE
-		record_ping.id >= 0
+		WHERE record_ping.service_type = #{service_type}
 		<if test="task_id != null and task_id != ''">
 			AND task_id = #{task_id}
 		</if>
@@ -200,10 +199,10 @@
 			AND probe_id = #{probe_id}
 		</if>
 		<if test="startDate != null and startDate != '' and terminalDate != null and terminalDate != '' ">
-			AND (record_date BETWEEN #{startDate} AND #{terminalDate})
+			AND record_date BETWEEN #{startDate} AND #{terminalDate}
 		</if>
 		<if test="start_time != null and start_time != '' and end_time != null and end_time != '' ">
-			AND (record_time BETWEEN #{start_time} AND #{end_time})
+			AND record_time BETWEEN #{start_time} AND #{end_time}
 		</if>
 		<choose>
 			<when test="sidx != null and sidx.trim() != ''">
@@ -218,13 +217,34 @@
 		</if>
 	</select>
 
+	<select id="queryPingTotal" resultType="int">
+	select count(*) FROM record_ping
+	WHERE
+	record_ping.id >= 0
+	<if test="task_id != null and task_id != ''">
+		AND task_id = #{task_id}
+	</if>
+	<if test="target_id != null and target_id != ''">
+		AND target_id = #{target_id}
+	</if>
+	<if test="probe_id != null and probe_id != ''">
+		AND probe_id = #{probe_id}
+	</if>
+	<if test="startDate != null and startDate != '' and terminalDate != null and terminalDate != '' ">
+		AND record_date BETWEEN #{startDate} AND #{terminalDate}
+	</if>
+	<if test="start_time != null and start_time != '' and end_time != null and end_time != '' ">
+		AND record_time BETWEEN #{start_time} AND #{end_time}
+	</if>
+	</select>
+
 	<select id="queryPingTest" resultType="io.cem.modules.cem.entity.RecordPingEntity">
 		select record_ping.*,
 		probe.probe_name AS probe_name,
 		target.target_name AS target_name,
 		target.value AS targetip_name
 		FROM record_ping
-		LEFT JOIN probe
+		INNER JOIN probe
 		ON  record_ping.probe_id =probe.id
 		LEFT JOIN target
 		ON record_ping.target_id = target.id

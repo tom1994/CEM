@@ -11,6 +11,7 @@ import io.cem.common.utils.JSONUtils;
 import io.cem.common.utils.PageUtils;
 import io.cem.common.utils.Query;
 import io.cem.common.utils.R;
+import io.cem.modules.cem.entity.DiagnoseEntity;
 import io.cem.modules.cem.entity.TaskDispatchEntity;
 import io.cem.modules.cem.service.TaskDispatchService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -69,31 +70,24 @@ public class RecordWebPageController {
 	}
 
 	@RequestMapping("/diagnose")
-	public R diagnose(String resultdata, Integer page, Integer limit, Integer[] dispatchId) throws Exception {
+	public R diagnose(@RequestBody DiagnoseEntity diagnoseEntity) throws Exception{
 		Map<String, Object> map = new HashMap<>();
-		JSONObject resultdata_jsonobject = JSONObject.parseObject(resultdata);
-		try {
-			map.putAll(JSONUtils.jsonToMap(resultdata_jsonobject));
-		} catch (RuntimeException e) {
-			throw new RRException("内部参数错误，请重试！");
-		}
-		int total = 0;
-		if (page == null) {              /*没有传入page,则取全部值*/
-			map.put("offset", null);
-			map.put("limit", null);
-			page = 0;
-			limit = 0;
-		} else {
-			map.put("offset", (page - 1) * limit);
-			map.put("limit", limit);
-			total = recordWebPageService.queryTotal(map);
-		}
-		while (true) {
-
+		Integer[] dispatchId = diagnoseEntity.getDispatchId();
+		int page = diagnoseEntity.getPage();
+		int limit = diagnoseEntity.getLimit();
+//        try {
+////            map.putAll(JSONUtils.jsonToMap(resultdata_jsonobject));
+//        } catch (RuntimeException e) {
+//            throw new RRException("内部参数错误，请重试！");
+//        }
+		map.put("offset", (page - 1) * limit);
+		map.put("limit", limit);
+		int total = recordWebPageService.queryTotal(map);
+		for (int i = 0; i < 20; i++){
 			if (taskDispatchService.queryTestStatus(dispatchId) > 0) {
 				break;
 			} else {
-				sleep(5000);
+				sleep(10000);
 			}
 		}
 		List<RecordWebPageEntity> resultList = new ArrayList<>();

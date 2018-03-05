@@ -6,86 +6,159 @@
     #parse("cemHeader.html")  <!--导入CSS和js文件-->
     <link href="${rc.contextPath}/statics/css/formStyle.css" rel="stylesheet">
     <link href="${rc.contextPath}/statics/css/combo.select.css" rel="stylesheet">
-    <!--<link href="${rc.contextPath}/statics/css/bootstrap-multiselect.css" rel="stylesheet">-->
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        html,body{
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        .combo-dropdown{
+            max-height: 170px!important;
+        }
+        .combo-dropdown li{
+            padding: 5px;
+        }
+        .option-item{
+            border-bottom:0px
+        }
+        .combo-arrow:before{
+            border-top: 5px solid 	Gray
+        }
+        .combo-open .combo-arrow{
+            border-color: #0EB690;
+        }
+        .combo-focus input{
+            border-color: #0EB690;
+        }
+        .combo-focus{
+            border-color: #0EB690;
+            box-shadow: none
+        }
+        input:focus {
+            border-color: #0EB690;
+            box-shadow: none;
+        }
+    </style>
 </head>
 
 <body>
 <div class="ibox-content" style="padding-bottom: 0 !important;">
+    <h3 >选择探针</h3>
     <div class="row" id="probesearch">
-        <form class="col-lg-6 col-md-6 col-sm-6 form-horizontal"
+        <form class="col-lg-7 col-md-7 col-sm-7 form-horizontal"
               role="form" style="display: inline-block">
-            <div class="form-group row">
-                <div class="input-group searchspan">
-                    <span class="searchname" title="" style="width: 70px">选择探针：</span>
+            <div class="form-group row" style="margin-left: 8px!important;">
+                <span class="searchname" title="地市" style="width:40px;">地市</span>
+                <div class="input-group searchspan" id="city" style="left: -51px">
+                    <div class="jq22">
+                        <select id="selectcity" class="form-control" name="cityid" style="display: none"
+                                >
+                            <option value="">所有地市</option>
+                            <option v-for="item in city" v-bind:value="item.message.cityId">{{  item.message.cityName}}</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="input-group searchspan">
-                    <span class="searchname" title="地市" style="width: 40px">地市</span>
-                    <select id="selectcity" class="form-control" name="cityid"
-                            v-on:change="citychange()" style="width: 110px">
-                        <option value="">所有地市</option>
-                        <option v-for="item in city"
-                                v-bind:value="item.message.cityId">{{ item.message.cityName }}
-                        </option>
-                    </select>
+
+                <span class="searchname" title="区县" style="width:40px; position: relative; left: 136px;">区县</span>
+                <div class="input-group searchspan" id="country">
+                    <div class="jq22">
+                        <select id="selectarea" class="form-control" name="selectarea" style="display: none">
+                            <option value="">所有区县</option>
+                            <option v-for="item in county" v-bind:value="item.message.countyId">{{item.message.countyName}}</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="input-group searchspan">
-                    <span class="searchname" title="区县" style="width: 40px">区县</span>
-                    <select id="selectarea" class="form-control" name="countyid"
-                            v-on:change="areachange()" style="width: 110px">
-                        <option value="">所有区县</option>
-                        <option v-for="item in county"
-                                v-bind:value="item.message.countyId">{{
-                            item.message.countyName}}
-                        </option>
-                    </select>
+                <span class="searchname" title="" style="width:40px;position: absolute">探针</span>
+                <div class="input-group searchspan" id="probe" style="position: absolute;top: 13px;">
+                    <div class="jq22" style="left: 50px;top: -13px; margin-left: 12px">
+                        <select id="selectProbe"class="form-control" name="probeid" style="display: none">
+                            <option value="">选择探针</option>
+                            <option v-for="item in probe" v-bind:value="item.message.id">{{ item.message.name}}</option>
+                        </select>
+                    </div>
                 </div>
             </div>
         </form>
-        <div class="col-lg-3 col-md-3 col-sm-3" id="probe" style="display: inline-block; position: absolute; top: 0px">
-            <div class="jq22">
-                <select class="form-control" name="probeid" style="display: none">
-                    <option value="">选择探针</option>
-                    <option v-for="item in probe" v-bind:value="item.message.id">{{ item.message.name}}</option>
-                </select>
-            </div>
-        </div>
     </div>
+    <h3 style="margin-top: 26px">选择测试内容</h3>
     <div class="row">
         <form id="superservice" style="margin: 3px" role="form">
-            <div class="row col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                <input type="checkbox" id="ping" class="" name="ping" value="1" onclick="getTarget()" checked>
-                <label for="ping">网络连通性</label>
-                <input type="checkbox" id="sla" class="" name="sla" value="2" onclick="getTarget()" checked>
-                <label for="sla">网络层质量</label>
-                <input type="checkbox" id="web" class="" name="web" value="3" onclick="getTarget()" checked>
-                <label for="web">Web浏览</label>
-                <input type="checkbox" id="download" class="" name="download" value="4" onclick="getTarget()" checked>
-                <label for="download">文件下载</label>
-                <input type="checkbox" id="video" class="" name="video" value="5" onclick="getTarget()" checked>
-                <label for="video">在线视频</label>
-                <input type="checkbox" id="game" class="" name="game" value="6" onclick="getTarget()" checked>
-                <label for="game">网络游戏</label>
+            <div class="row col-lg-8 col-md-8 col-sm-8 col-xs-8" style="margin-top: 10px">
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" >
+                    <img src="../../statics/img/ping.png" alt=""  id="ping_pic" style="width:65%;height: 100%"  >
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2  col-xs-2 "  >
+                    <img src="../../statics/img/sla.png" alt="" id="sla_pic" style="width: 60%;" ><br>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"  >
+                    <img src="../../statics/img/web.png" alt="" id="web_pic" style="width: 65%;height: 100%" >
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"  >
+                    <img src="../../statics/img/download.png" alt="" id="download_pic" style="width: 59%;height: 100%;margin-bottom: 8px" >
+                </div>
+            </div>
+            <div class="row col-lg-8 col-md-8 col-sm-8 col-xs-8" style="margin-bottom: 16px">
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" >
+                    <input type="checkbox" id="ping" class="" name="ping" value="1" onclick="getTarget()" checked>
+                    <span for="ping">网络连通性</span>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2  col-xs-2 "  >
+                    <input type="checkbox" id="sla" class="" name="sla" value="2" onclick="getTarget()">
+                    <span for="sla">网络层质量</span>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"  >
+                    <input type="checkbox" id="web" class="" name="web" value="3" onclick="getTarget()" >
+                    <span for="web">网页浏览</span>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"  >
+                    <input type="checkbox" id="download" class="" name="download" value="4" onclick="getTarget()" >
+                    <span for="download">文件下载</span>
+                </div>
             </div>
         </form>
     </div>
     <div class="row">
+        <form id="superservice1" style="margin: 3px" role="form">
+            <div class="row col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"  >
+                    <img src="../../statics/img/video.png" alt="" id="video_pic" style="width:60%;height: 100%">
+
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"  >
+                    <img src="../../statics/img/game.png" alt="" id="game_pic" style="width: 59%;height: 100%">
+
+                </div>
+            </div>
+            <div class="row col-lg-8 col-md-8 col-sm-8 col-xs-8" style="margin-bottom: 14px">
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"  >
+                    <input type="checkbox" id="video" class="" name="video" value="5" onclick="getTarget()">
+                    <span for="video">在线视频</span>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"  >
+                    <input type="checkbox" id="game" class="" name="game" value="6" onclick="getTarget()" >
+                    <span for="game">网络游戏</span>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="row" style="margin-top: 8px">
         <div class="col-lg-3 col-md-3 col-sm-3" id="target" style="display: inline-block">
-            <div class="input-group searchspan jq22">
-                <select class="" name="targetid" style="display: none">
+            <span class="searchname" title="选择目标" style="width: 70px;position:absolute;">选择目标</span>
+            <div class="input-group searchspan jq22"  style="position:relative;right: -73px;max-width: 172px">
+                <select class="" id = "targetid" name="targetid" style="display: none;height: 100%"  >
                     <option value="">选择目标</option>
                     <option v-for="item in target" v-bind:value="item.message.id">{{ item.message.targetName}}</option>
                 </select>
             </div>
         </div>
-        <div class="col-lg-3 col-md-3 col-sm-3" style="display: inline-block">
+        <div class="col-lg-3 col-md-3 col-sm-3" style="display: inline-block ;position: absolute;left: 319px;">
             <a id="diagnose" target="_blank" href="" style="display: none"> </a>
-            <button type="button" class="btn btn-success" onclick="diagnose()">开始测试
-            </button>
+            <button type="button" class="btn btn-success" onclick="diagnose()">开始测试</button>
         </div>
     </div>
-
 </div>
 
 
@@ -94,7 +167,32 @@
 <script type="text/javascript"
         src="${rc.contextPath}/statics/js/modules/diagnose/diagnoseNow.js?_${date.systemTime}"></script>
 
-<!--<script type="text/javascript"-->
 <!--src="${rc.contextPath}/statics/js/bootstrap-multiselect.js?_${date.systemTime}"></script>-->
+<script type="text/javascript">
+    $('#Selecttype1').comboSelect()
+  <!--模拟点击-->
+    $('#ping_pic').click(function () {
+        $('#ping').click();
+    });
+    $('#sla_pic').click(function () {
+        $('#sla').click();
+    });
+    $('#web_pic').click(function () {
+        $('#web').click();
+    });
+    $('#download_pic').click(function () {
+        $('#download').click();
+    });
+    $('#video_pic').click(function () {
+        $('#video').click();
+    });
+    $('#game_pic').click(function () {
+        $('#game').click();
+    });
+
+</script>
+
 </body>
+
+
 </html>

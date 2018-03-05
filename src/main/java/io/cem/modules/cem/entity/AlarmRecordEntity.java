@@ -6,11 +6,7 @@ import java.util.Date;
 
 
 /**
- * 
- * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2017-10-12 17:12:44
+
  */
 public class AlarmRecordEntity implements Serializable {
 	private static final long serialVersionUID = 1L;

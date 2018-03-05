@@ -1617,6 +1617,11 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 	public int queryTotal(Map<String, Object> map){
 		return recordHourPingDao.queryTotal(map);
 	}
+
+	@Override
+	public int pingListTotal(Map<String, Object> map){
+		return recordHourPingDao.pingListTotal(map);
+	}
 	
 	@Override
 	public void save(RecordHourPingEntity recordHourPing){

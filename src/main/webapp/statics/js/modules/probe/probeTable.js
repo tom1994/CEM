@@ -11,6 +11,25 @@ var typeNames = new Array();
 var statusNames = new Array();
 var probegroup_names = new Array();
 
+var st = new Map();//servicetype字典，可通过get方法查对应字符串。
+st.set(1, "PING(ICMP Echo)");
+st.set(2, "PING(TCP Echo)");
+st.set(3, "PING(UDP Echo)");
+st.set(4, "TraceRoute(ICMP)");
+st.set(5, "TraceRoute(UDP)");
+st.set(10, "SLA(TCP)");
+st.set(11, "SLA(UDP)");
+st.set(12, "ADSL接入");
+st.set(13, "DHCP");
+st.set(14, "DNS");
+st.set(15, "Radius认证");
+st.set(20, "WEB页面访问");
+st.set(30, "WEB下载");
+st.set(31, "FTP下载");
+st.set(32, "FTP上传");
+st.set(40, "在线视频");
+st.set(50, "网络游戏");
+
 var probedata_handle = new Vue({
     el: '#probehandle',
     data: {},
@@ -84,7 +103,7 @@ var probedata_handle = new Vue({
             var data = getFormJson($('#probesearch'));
             /*得到查询条件*/
             /*获取表单元素的值*/
-            console.log(data);
+            //console.log(data);
             probetable.probedata = data;
             probetable.redraw();
             /*根据查询条件重绘*/
@@ -138,7 +157,7 @@ var search_list = new Vue({
             var data = getFormJson($('#probesearch'));
             /*得到查询条件*/
             /*获取表单元素的值*/
-            console.log(data);
+            //console.log(data);
             probetable.probedata = data;
             probetable.redraw();
             /*根据查询条件重绘*/
@@ -161,10 +180,14 @@ var probegroupdata_handle = new Vue({
             var data = getFormJson($('#groupsearchdata'));
             /*得到查询条件*/
             /*获取表单元素的值*/
-            console.log(data);
+            //console.log(data);
             grouptable.groupdata = data;
             grouptable.redraw();
             /*根据查询条件重绘*/
+        },
+        reset: function () {    /*重置*/
+            document.getElementById("groupsearchdata").reset();
+            probetable.reset();
         }
     }
 });
@@ -216,6 +239,7 @@ var probegroup_handle = new Vue({
             }
         },
         reset: function () {    /*重置*/
+            document.getElementById("groupsearchdata").reset();
             grouptable.reset();
         }
 
@@ -225,7 +249,7 @@ var probegroup_handle = new Vue({
 /*查看任务*/
 function dispatch_info (obj) {
     dispatch_table.probeid = parseInt(obj.id);
-    console.log(obj.id)
+    //console.log(obj.id)
     /*获取当前行探针数据id*/
     dispatch_table.redraw();
     $('#myModal_dispatch').modal('show');
@@ -236,12 +260,9 @@ var dispatch_table = new Vue({
     data: {
         headers: [
             {title: '<div style="width:17px"></div>'},
-            //{title: '<div style="width:77px">探针名称</div>'},
-            //{title: '<div style="width:108px">位置</div>'},
-            //{title: '<div style="width:37px">层级</div>'},
+            {title: '<div style="width:117px">任务类型</div>'},
             {title: '<div style="width:117px">任务名称</div>'},
-            {title: '<div style="width:160px">测试目标</div>'},
-            //{title: '<div style="width:67px">操作</div>'}
+            {title: '<div style="width:160px">调度策略</div>'}
         ],
         rows: [],
         dtHandle: null,
@@ -306,7 +327,7 @@ var dispatch_table = new Vue({
                 param.start = data.start;//开始的记录序号
                 param.page = (data.start / data.length) + 1;//当前页码
                 param.taskdata = JSON.stringify(vm.taskdata);
-                // console.log(param);
+                console.log(param);
                 //ajax请求数据
                 $.ajax({
                     type: "POST", /*GET会乱码*/
@@ -316,7 +337,7 @@ var dispatch_table = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                        console.log(result);
+                        //console.log(result);
                         //封装返回数据
                         let returnData = {};
                         returnData.draw = result.page.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -331,9 +352,10 @@ var dispatch_table = new Vue({
                             row.push(i++);
                             //row.push(item.probeName);
                             //row.push(item.location);
-                            //row.push(item.accessLayer);
+                            row.push(st.get(item.serviceType));
                             row.push(item.taskName);
-                            row.push('<span title="' + item.targetName + '" style="white-space: nowrap">' + transString(item.targetName,0,25)+ '</span>');
+                            row.push(item.spName);
+                            // row.push('<span title="' + item.targetName + '" style="white-space: nowrap">' + transString(item.targetName,0,25)+ '</span>');
                             //row.push('<a class="fontcolor" onclick="cancel_task(this)" id=' + item.id + '>取消任务</a>');
                             rows.push(row);
                         });
@@ -361,7 +383,7 @@ function update_this (obj) {     /*监听修改触发事件*/
         dataType: "json",
         contentType: "application/json",
         success: function (result_county) {
-            console.log(result_county);
+            //console.log(result_county);
             var areaNames = [];
             for(var i=0;i<result_county.county.length;i++){
                 areaNames[i] = {message: result_county.county[i]}
@@ -374,7 +396,7 @@ function update_this (obj) {     /*监听修改触发事件*/
                 dataType: "json",
                 // contentType: "application/json", /*必须要,不可少*/
                 success: function (result) {
-                    console.log(result.probe);
+                    //console.log(result.probe);
                     forms[0].value = result.probe.id;
                     forms[1].value = result.probe.name;
                     forms[2].value = result.probe.serialNumber;
@@ -397,14 +419,14 @@ function update_this (obj) {     /*监听修改触发事件*/
                     forms[17].value = result.probe.ipType;
                     forms[18].value = result.probe.isp;
                     forms[19].value = result.probe.hbInterval;
-                    forms[20].value = result.probe.taskInterval;
-                    forms[21].value = result.probe.reportInterval;
-                    forms[22].value = result.probe.updateInterval;
-                    forms[23].value = result.probe.lastHbTime;
-                    forms[24].value = result.probe.registerTime;
-                    forms[25].value = result.probe.lastReportTime;
-                    forms[26].value = result.probe.lastUpdateTime;
-                    forms[27].value = result.probe.portIp;
+                    // forms[20].value = result.probe.taskInterval;
+                    forms[20].value = result.probe.reportInterval;
+                    forms[21].value = result.probe.updateInterval;
+                    forms[22].value = result.probe.lastHbTime;
+                    forms[23].value = result.probe.registerTime;
+                    forms[24].value = result.probe.lastReportTime;
+                    forms[25].value = result.probe.lastUpdateTime;
+                    forms[26].value = result.probe.portIp;
                 }
             });
         }
@@ -423,7 +445,7 @@ function update_this (obj) {     /*监听修改触发事件*/
             forms[3].value = result.probe.type;
             forms[4].value = result.probe.city;
             setTimeout( function () {
-            forms[5].value = result.probe.county;
+                forms[5].value = result.probe.county;
             },100);
             forms[6].value = result.probe.location;
             forms[7].value = result.probe.brasName;
@@ -439,14 +461,14 @@ function update_this (obj) {     /*监听修改触发事件*/
             forms[17].value = result.probe.ipType;
             forms[18].value = result.probe.isp;
             forms[19].value = result.probe.hbInterval;
-            forms[20].value = result.probe.taskInterval;
-            forms[21].value = result.probe.reportInterval;
-            forms[22].value = result.probe.updateInterval;
-            forms[23].value = result.probe.lastHbTime;
-            forms[24].value = result.probe.registerTime;
-            forms[25].value = result.probe.lastReportTime;
-            forms[26].value = result.probe.lastUpdateTime;
-            forms[27].value = result.probe.portIp;
+            // forms[20].value = result.probe.taskInterval;
+            forms[20].value = result.probe.reportInterval;
+            forms[21].value = result.probe.updateInterval;
+            forms[22].value = result.probe.lastHbTime;
+            forms[23].value = result.probe.registerTime;
+            forms[24].value = result.probe.lastReportTime;
+            forms[25].value = result.probe.lastUpdateTime;
+            forms[26].value = result.probe.portIp;
             console.log(forms[5].value);
         }
     });
@@ -915,7 +937,7 @@ var probetable = new Vue({
         headers: [
             {title: '<div style="width:10px"></div>'},
             {title: '<div class="checkbox"> <label> <input type="checkbox" id="checkAll"></label> </div>'},
-            {title: '<div style="width:70px">探针名</div>'},
+            {title: '<div style="width:70px">名称</div>'},
             {title: '<div style="width:42px">地市</div>'},
             {title: '<div style="width:42px">区县</div>'},
             {title: '<div style="width:90px">位置</div>'},
@@ -998,48 +1020,48 @@ var probetable = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                         //console.log(result);
-                         //封装返回数据
-                         let returnData = {};
-                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
-                         returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
-                         returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
-                         returnData.data = result.page.list;//返回的数据列表
-                         //console.log(result.page);
-                         // 重新整理返回数据以匹配表格
-                         let rows = [];
-                         var i = param.start+1;
-                         result.page.list.forEach(function (item) {
-                             let row = [];
-                             row.push(i++);
-                             row.push('<div class="checkbox"> <label> <input type="checkbox" name="selectFlag"></label> </div>');
-                             row.push('<a onclick="update_this(this)" id='+item.id+'><span style="color: black;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">'+item.name+'</span></a>');
-                             row.push(item.cityName);
-                             row.push(item.areaName);
-                             row.push(item.location);
-                             row.push(item.layerName);
-                             row.push(item.upstreamName);
-                             row.push(item.statusName);
-                             row.push(item.typeName);
-                             row.push(item.registerTime);
-                             row.push('<span title="'+item.lastHbTime+'" style="white-space: nowrap">' + transString(item.lastHbTime,0,10) + '</span>');
-                             row.push('<span title="'+item.lastReportTime+'" style="white-space: nowrap">' + transString(item.lastReportTime,0,10) + '</span>');
-                             row.push('<a class="fontcolor" style="white-space: nowrap" onclick="update_this(this)" id='+item.id+'>详情</a>&nbsp;' +
-                                 '<a class="fontcolor" style="white-space: nowrap" onclick="delete_this(this)" id='+item.id+'>删除</a>&nbsp;'+
-                                 '<a class="fontcolor" style="white-space: nowrap" onclick="dispatch_info(this)" id='+item.id+'>查看任务</a>');
-                             rows.push(row);
-                         });
-                         returnData.data = rows;
-                         //console.log(returnData);
-                         //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
-                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
-                         callback(returnData);
-                         $("#probedata_table").colResizable({
-                             liveDrag:true,
-                             gripInnerHtml:"<div class='grip'></div>",
-                             draggingClass:"dragging",
-                             resizeMode:'overflow',
-                         });
+                        //console.log(result);
+                        //封装返回数据
+                        let returnData = {};
+                        returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
+                        returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
+                        returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
+                        returnData.data = result.page.list;//返回的数据列表
+                        //console.log(result.page);
+                        // 重新整理返回数据以匹配表格
+                        let rows = [];
+                        var i = param.start+1;
+                        result.page.list.forEach(function (item) {
+                            let row = [];
+                            row.push(i++);
+                            row.push('<div class="checkbox"> <label> <input type="checkbox" name="selectFlag"></label> </div>');
+                            row.push('<a onclick="update_this(this)" id='+item.id+'><span style="color: black;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">'+item.name+'</span></a>');
+                            row.push(item.cityName);
+                            row.push(item.areaName);
+                            row.push(item.location);
+                            row.push(item.layerName);
+                            row.push(item.upstreamName);
+                            row.push(item.statusName);
+                            row.push(item.typeName);
+                            row.push(item.registerTime);
+                            row.push('<span title="'+item.lastHbTime+'" style="white-space: nowrap">' + transString(item.lastHbTime,0,10) + '</span>');
+                            row.push('<span title="'+item.lastReportTime+'" style="white-space: nowrap">' + transString(item.lastReportTime,0,10) + '</span>');
+                            row.push('<a class="fontcolor" style="white-space: nowrap" onclick="update_this(this)" id='+item.id+'>详情</a>&nbsp;' +
+                                '<a class="fontcolor" style="white-space: nowrap" onclick="delete_this(this)" id='+item.id+'>删除</a>&nbsp;'+
+                                '<a class="fontcolor" style="white-space: nowrap" onclick="dispatch_info(this)" id='+item.id+'>查看任务</a>');
+                            rows.push(row);
+                        });
+                        returnData.data = rows;
+                        //console.log(returnData);
+                        //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
+                        //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
+                        callback(returnData);
+                        $("#probedata_table").colResizable({
+                            liveDrag:true,
+                            gripInnerHtml:"<div class='grip'></div>",
+                            draggingClass:"dragging",
+                            resizeMode:'overflow',
+                        });
                         // $('td').closest('table').find('th').eq(1).attr('style', 'text-align: center;');
                         // $('#probe_table tbody').find('td').eq(1).attr('style', 'text-align: center;');
                         // var trs = $('#probe_table tbody').find('tr');
@@ -1120,7 +1142,7 @@ var grouptable = new Vue({
                 //console.log(param);
                 //ajax请求数据
                 $.ajax({
-                /*用于查询probegroup数据*/
+                    /*用于查询probegroup数据*/
                     type: "POST", /*GET会乱码*/
                     url: "../../cem/probegroup/searchlist",
                     cache: false,  //禁用缓存
@@ -1149,9 +1171,13 @@ var grouptable = new Vue({
                         //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);
-                        $("#probegroup_table").colResizable({
-                            minWidth:40,
-                        });
+                        $("#Section").on("click",function(){
+                            console.log(1111)
+                            $("#probegroup_table").colResizable({
+                                minWidth:40,
+                            });
+                        })
+
                     }
                 });
             }
@@ -1159,70 +1185,80 @@ var grouptable = new Vue({
     }
 });
 
-var dragModal = {
-    mouseStartPoint: {"left": 0, "top": 0},
-    mouseEndPoint: {"left": 0, "top": 0},
-    mouseDragDown: false,
-    basePoint: {"left": 0, "top": 0},
-    moveTarget: null,
-    topleng: 0
-}
-$(document).on("mousedown", ".modal-header", function (e) {
-    //webkit内核和火狐禁止文字被选中
-    $('body').addClass('select')
-    //ie浏览器禁止文字选中
-    document.body.onselectstart = document.body.ondrag = function () {
-        return false;
-    }
-    if ($(e.target).hasClass("close"))//点关闭按钮不能移动对话框
-        return;
-    dragModal.mouseDragDown = true;
-    dragModal.moveTarget = $(this).parent().parent();
-    dragModal.mouseStartPoint = {"left": e.clientX, "top": e.pageY};
-    dragModal.basePoint = dragModal.moveTarget.offset();
-    dragModal.topLeng = e.pageY - e.clientY;
-});
-$(document).on("mouseup", function (e) {
-    dragModal.mouseDragDown = false;
-    dragModal.moveTarget = undefined;
-    dragModal.mouseStartPoint = {"left": 0, "top": 0};
-    dragModal.basePoint = {"left": 0, "top": 0};
-});
-$(document).on("mousemove", function (e) {
-    if (!dragModal.mouseDragDown || dragModal.moveTarget == undefined) return;
-    var mousX = e.clientX;
-    var mousY = e.pageY;
-    if (mousX < 0) mousX = 0;
-    if (mousY < 0) mousY = 25;
-    dragModal.mouseEndPoint = {"left": mousX, "top": mousY};
-    var width = dragModal.moveTarget.width();
-    var height = dragModal.moveTarget.height();
-    var clientWidth = document.body.clientWidth
-    var clientHeight = document.body.clientHeight;
-    if (dragModal.mouseEndPoint.left < dragModal.mouseStartPoint.left - dragModal.basePoint.left) {
-        dragModal.mouseEndPoint.left = 0;
-    }
-    else if (dragModal.mouseEndPoint.left >= clientWidth - width + dragModal.mouseStartPoint.left - dragModal.basePoint.left) {
-        dragModal.mouseEndPoint.left = clientWidth - width - 38;
-    } else {
-        dragModal.mouseEndPoint.left = dragModal.mouseEndPoint.left - (dragModal.mouseStartPoint.left - dragModal.basePoint.left);//移动修正，更平滑
+$(document).ready(function () {
+    $("#myModal_delete").draggable();//为模态对话框添加拖拽
+    $("#myModal_groupdelete").draggable();
+    $("#myModal_update").draggable();
+    $("#myModal_dispatch").draggable();
+    // $("#task_dispatch").draggable();
+    $("#myModal_dispatch").css("overflow", "visible");//禁止模态对话框的半透明背景滚动
 
-    }
-    if (dragModal.mouseEndPoint.top - (dragModal.mouseStartPoint.top - dragModal.basePoint.top) < dragModal.topLeng) {
-        dragModal.mouseEndPoint.top = dragModal.topLeng;
-    } else if (dragModal.mouseEndPoint.top - dragModal.topLeng > clientHeight - height + dragModal.mouseStartPoint.top - dragModal.basePoint.top) {
-        dragModal.mouseEndPoint.top = clientHeight - height - 38 + dragModal.topLeng;
-    }
-    else {
-        dragModal.mouseEndPoint.top = dragModal.mouseEndPoint.top - (dragModal.mouseStartPoint.top - dragModal.basePoint.top);
-    }
-    dragModal.moveTarget.offset(dragModal.mouseEndPoint);
 });
-$(document).on('hidden.bs.modal', '.modal', function (e) {
-    $('.modal-dialog').css({'top': '0px', 'left': '0px'})
-    $('body').removeClass('select')
-    document.body.onselectstart = document.body.ondrag = null;
 
-})
+// var dragModal = {
+//     mouseStartPoint: {"left": 0, "top": 0},
+//     mouseEndPoint: {"left": 0, "top": 0},
+//     mouseDragDown: false,
+//     basePoint: {"left": 0, "top": 0},
+//     moveTarget: null,
+//     topleng: 0
+// }
+// $(document).on("mousedown", ".modal-header", function (e) {
+//     //webkit内核和火狐禁止文字被选中
+//     $('body').addClass('select')
+//     //ie浏览器禁止文字选中
+//     document.body.onselectstart = document.body.ondrag = function () {
+//         return false;
+//     }
+//     if ($(e.target).hasClass("close"))//点关闭按钮不能移动对话框
+//         return;
+//     dragModal.mouseDragDown = true;
+//     dragModal.moveTarget = $(this).parent().parent();
+//     dragModal.mouseStartPoint = {"left": e.clientX, "top": e.pageY};
+//     dragModal.basePoint = dragModal.moveTarget.offset();
+//     dragModal.topLeng = e.pageY - e.clientY;
+// });
+// $(document).on("mouseup", function (e) {
+//     dragModal.mouseDragDown = false;
+//     dragModal.moveTarget = undefined;
+//     dragModal.mouseStartPoint = {"left": 0, "top": 0};
+//     dragModal.basePoint = {"left": 0, "top": 0};
+// });
+// $(document).on("mousemove", function (e) {
+//     if (!dragModal.mouseDragDown || dragModal.moveTarget == undefined) return;
+//     var mousX = e.clientX;
+//     var mousY = e.pageY;
+//     if (mousX < 0) mousX = 0;
+//     if (mousY < 0) mousY = 25;
+//     dragModal.mouseEndPoint = {"left": mousX, "top": mousY};
+//     var width = dragModal.moveTarget.width();
+//     var height = dragModal.moveTarget.height();
+//     var clientWidth = document.body.clientWidth
+//     var clientHeight = document.body.clientHeight;
+//     if (dragModal.mouseEndPoint.left < dragModal.mouseStartPoint.left - dragModal.basePoint.left) {
+//         dragModal.mouseEndPoint.left = 0;
+//     }
+//     else if (dragModal.mouseEndPoint.left >= clientWidth - width + dragModal.mouseStartPoint.left - dragModal.basePoint.left) {
+//         dragModal.mouseEndPoint.left = clientWidth - width - 38;
+//     } else {
+//         dragModal.mouseEndPoint.left = dragModal.mouseEndPoint.left - (dragModal.mouseStartPoint.left - dragModal.basePoint.left);//移动修正，更平滑
+//
+//     }
+//     if (dragModal.mouseEndPoint.top - (dragModal.mouseStartPoint.top - dragModal.basePoint.top) < dragModal.topLeng) {
+//         dragModal.mouseEndPoint.top = dragModal.topLeng;
+//     } else if (dragModal.mouseEndPoint.top - dragModal.topLeng > clientHeight - height + dragModal.mouseStartPoint.top - dragModal.basePoint.top) {
+//         dragModal.mouseEndPoint.top = clientHeight - height - 38 + dragModal.topLeng;
+//     }
+//     else {
+//         dragModal.mouseEndPoint.top = dragModal.mouseEndPoint.top - (dragModal.mouseStartPoint.top - dragModal.basePoint.top);
+//     }
+//     dragModal.moveTarget.offset(dragModal.mouseEndPoint);
+// });
+// $(document).on('hidden.bs.modal', '.modal', function (e) {
+//     $('.modal-dialog').css({'top': '0px', 'left': '0px'})
+//     $('body').removeClass('select')
+//     document.body.onselectstart = document.body.ondrag = null;
+//
+// })
 
 

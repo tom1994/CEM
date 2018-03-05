@@ -612,8 +612,8 @@ body.canvas-menu.mini-navbar nav.navbar-static-side {
   color: #fff;
 }
 .btn-primary {
-  background-color: #1ab394;
-  border-color: #1ab394;
+  /*background-color: #1ab394;*/
+  /*border-color: #1ab394;*/
   color: #FFFFFF;
 }
 .btn-primary:hover,
@@ -625,8 +625,8 @@ body.canvas-menu.mini-navbar nav.navbar-static-side {
 .btn-primary:active:hover,
 .btn-primary.active:hover,
 .btn-primary.active:focus {
-  background-color: #18a689;
-  border-color: #18a689;
+  /*background-color: #18a689;*/
+  /*border-color: #18a689;*/
   color: #FFFFFF;
 }
 .btn-primary:active,
@@ -3343,7 +3343,7 @@ video {
   padding: 20px 30px 30px 30px;
 }
 .inmodal .modal-body {
- background: #f8fafb;
+  background: #f8fafb;
 }
 .inmodal .modal-header {
   padding: 30px 15px;
@@ -3681,8 +3681,7 @@ code {
   background-color: #ffffff;
   border-color: #e7eaec;
   border-image: none;
-  border-style: solid solid none;
-  border-width: 3px 0 0;
+  /*border-style: solid solid none;*/
   color: inherit;
   margin-bottom: 0;
   margin-top: 0px;
@@ -3695,7 +3694,7 @@ code {
   padding: 0px 20px 20px 20px;
   border-color: #e7eaec;
   border-image: none;
-  border-style: solid solid none;
+  border-style: solid  none  none;
   border-width: 0;
 }
 .ibox-footer {

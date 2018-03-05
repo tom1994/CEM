@@ -6,7 +6,10 @@ var serviceArray = [];
 var targetNames = [];
 var probeNames = [];
 var status = 1;
-
+var probeSelected=0;
+var targetSelected=0;
+var citySelected=0
+var countrySelected=0;
 var layers = new Map();
 var layerNames = new Map();
 //格式化日期
@@ -42,85 +45,91 @@ Date.prototype.Format = function (fmt) {
 var button_change = new Vue({
     /*实例化Vue*/
     el: '#charts_button',
-    data: {
-        option_ping: {
-            /*设置时延option*/
-            title: {
-                text: '网络连通性'
-            }
-        },
-        option_sla: {
-            /*设置丢包option*/
-            title: {
-                text: '网络层质量'
-            },
-        },
-        option_web: {
-            /*设置web option*/
-            title: {
-                text: 'Web浏览'
-            }
-        },
-        option_download: {
-            /*设置丢包option*/
-            title: {
-                text: '文件下载'
-            },
-        },
-        option_video: {
-            /*设置丢包option*/
-            title: {
-                text: '在线视频'
-            },
-        },
-        option_game: {
-            /*设置丢包option*/
-            title: {
-                text: '网络游戏'
-            },
-        }
-    },
+    // data: {
+    //     option_ping: {
+    //         /*设置时延option*/
+    //         title: {
+    //             text: '网络连通性'
+    //         }
+    //     },
+    //     option_sla: {
+    //         /*设置丢包option*/
+    //         title: {
+    //             text: '网络层质量'
+    //         },
+    //     },
+    //     option_web: {
+    //         /*设置web option*/
+    //         title: {
+    //             text: 'Web浏览'
+    //         }
+    //     },
+    //     option_download: {
+    //         /*设置丢包option*/
+    //         title: {
+    //             text: '文件下载'
+    //         },
+    //     },
+    //     option_video: {
+    //         /*设置丢包option*/
+    //         title: {
+    //             text: '在线视频'
+    //         },
+    //     },
+    //     option_game: {
+    //         /*设置丢包option*/
+    //         title: {
+    //             text: '网络游戏'
+    //         },
+    //     }
+    // },
 
     methods: {
         ping: function () {
             status = 1;
+            changeStatus(1);
             console.log("连通性");
-            options.title = this.option_ping.title;
+            // options.title = this.option_ping.title;
             new_search.search();
             var chart = new Highcharts.Chart('container', options)
             /*重新绘图*/
         },
         sla: function () {
             status = 2;
+            changeStatus(2);
             console.log("网络层");
-            options.title = this.option_sla.title;
+            // options.title = this.option_sla.title;
             new_search.search();
             var chart = new Highcharts.Chart('container', options)
         },
         web: function () {
             status = 3;
+            changeStatus(3);
             console.log("web");
-            options.title = this.option_web.title;
+            // options.title = this.option_web.title;
             new_search.search();
             var chart = new Highcharts.Chart('container', options)
         },
         download: function () {
             status = 4;
-            options.title = this.option_web.title;
+            changeStatus(4);
+            // options.title = this.option_web.title;
             new_search.search();
             var chart = new Highcharts.Chart('container', options)
             /*重新绘图*/
         },
         video: function () {
             status = 5;
-            options.title = this.option_ping.title;
+            changeStatus(5);
+            // options.title = this.option_ping.title;
             new_search.search();
             var chart = new Highcharts.Chart('container', options)
             /*重新绘图*/
         },
         game: function () {
             status = 6;
-            options.title = this.option_ping.title;
+            changeStatus(6);
+            // options.title = this.option_ping.title;
             new_search.search();
             var chart = new Highcharts.Chart('container', options)
             /*重新绘图*/
@@ -176,8 +185,104 @@ var search_data = new Vue({
         }
     }
 });
+$(document).ready(function () {
+    $('#country .jq22').comboSelect();
+    $('#probe .jq22').comboSelect();
+    citySelected=0
+    $.ajax({
+        type: "POST", /*GET会乱码*/
+        url: "../../cem/city/list",//c城市列表
+        cache: false,  //禁用缓存
+        dataType: "json",
+        success: function (result) {
+            var cities = [];
+            for (var i = 0; i < result.page.list.length; i++) {
+                cities[i] = {message: result.page.list[i]}
+            }
+            search_data.city = cities;
+            setTimeout(function () {
+                $('div#city .jq22').comboSelect();
+                $('.combo-dropdown').css("z-index","3");
+                $('div#city .option-item').click(function (city) {
+                    setTimeout(function () {
+                        var a = $(city.currentTarget)[0].innerText;
+                        clearArea(a);
+                        citySelected = $($(city.currentTarget)[0]).data('value');
+                        getArea(citySelected);
+                        $('div#city .combo-input').val(a);
+                        $('div#city .combo-select select').val(a);
+                    }, 100);
+                });
+                $('#city input[type=text] ').keyup(function (city) {
+                    if( city.keyCode=='13'){
+                        var b = $("#city .option-hover.option-selected").text();
+                        clearArea(b);
+                        var c=($("#city .option-hover.option-selected"));
+                        var c=c[0].dataset
+                        citySelected = c.value;
+                        getArea(citySelected);
+                        $('#city .combo-input').val(b);
+                        $('#city .combo-select select').val(b);
+                    }
 
+                })
+            }, 200);
+        }
+    });
+
+    function clearArea(a) {
+        if(a=="所有地市"){
+            debugger
+            $('#country .combo-input').val("所有区县");
+            $('#country .combo-select select').val("所有区县");
+            search_data.areas = [];
+            $('#country ul').html("");
+            // $('#country ul').append(<li class="option-item option-hover option-selected" data-index="0" data-value="">所有区县</li>);
+            $("#country ul").append("<li class='option-item option-hover option-selected' data-index=='0' data-value=''>"+"所有区县"+"</li>");
+        }
+    }
+
+    $.ajax({
+        url: "../../cem/probe/list",//探针列表
+        type: "POST",
+        cache: false,  //禁用缓存
+        dataType: "json",
+        contentType: "application/json",
+        success: function (result) {
+            debugger
+            var probes = [];
+            for (var i = 0; i < result.page.list.length; i++) {
+                probes[i] = {message: result.page.list[i]}
+            }
+            search_data.probe = probes;
+            setTimeout(function () {
+                $('#probe .jq22').comboSelect();
+                $('.combo-dropdown').css("z-index","3");
+                $('#probe .option-item').click(function (probe) {
+                    setTimeout(function () {
+                        var a = $(probe.currentTarget)[0].innerText;
+                        probeSelected = $($(probe.currentTarget)[0]).data('value');
+                        //console.log($($(probe.currentTarget)[0]));
+                        $('#probe .combo-input').val(a);
+                        $('#probe .combo-select select').val(a);
+                    }, 100);
+                });
+                $('#probe input[type=text] ').keyup(function (probe) {
+                    if( probe.keyCode=='13'){
+                        var b = $("#probe .option-hover.option-selected").text();
+                        probeSelected = $($(probe.currentTarget)[0]).data('value');
+                        $('#probe .combo-input').val(b);
+                        $('#probe .combo-select select').val(b);
+                    }
+
+                })
+            }, 100);
+        }
+    });
+})
+//区域
 var getArea = function (cityid) {
+    countrySeleted=0;
     $.ajax({
         url: "../../cem/county/info/" + cityid,
         type: "POST",
@@ -191,11 +296,36 @@ var getArea = function (cityid) {
                 areaNames[i] = {message: result.county[i]}
             }
             search_data.areas = areaNames;
+            setTimeout(function () {
+                $('#country .jq22').comboSelect();
+                $('.combo-dropdown').css("z-index","3");
+                $('#country .option-item').click(function (areas) {
+                        setTimeout(function () {
+                            var a = $(areas.currentTarget)[0].innerText;
+                            countrySelected = $($(areas.currentTarget)[0]).data('value');
+                            $('#country .combo-input').val(a);
+                            $('#country .combo-select select').val(a);
+                            getProbe(countrySelected);
+                        },20)
+
+                });
+                $('#country input[type=text] ').keyup(function (areas) {
+                    if( areas.keyCode=='13'){
+                        var b = $("#country .option-hover.option-selected").text();
+                        countrySelected = $($(areas.currentTarget)[0]).data('value');
+                        $('#country .combo-input').val(b);
+                        $('#country .combo-select select').val(b);
+                        getProbe(countrySelected);
+                    }
+                })
+            }, 100);
+
         }
     });
 };
-
+//探针
 var getProbe = function (countyid) {
+    probeSelected = 0;
     $.ajax({
         url: "../../cem/probe/info/" + countyid,
         type: "POST",
@@ -203,11 +333,34 @@ var getProbe = function (countyid) {
         dataType: "json",
         contentType: "application/json",
         success: function (result) {
-            console.log(result);
+            // console.log(result);
             for (var i = 0; i < result.probe.length; i++) {
                 probeNames[i] = {message: result.probe[i]}
             }
-            search_data.probe = probeNames;
+            debugger
+            search_data.probe = result.probe;
+
+            setTimeout(function () {
+                $('#probe .jq22').comboSelect();
+                $('.combo-dropdown').css("z-index","3");
+                $('#probe .option-item').click(function (probe) {
+                    setTimeout(function () {
+                        var a = $(probe.currentTarget)[0].innerText;
+                        probeSelected = $($(probe.currentTarget)[0]).data('value');
+                        $('#probe .combo-input').val(a);
+                        $('#probe .combo-select select').val(a);
+                    }, 100);
+                });
+                $('#probe input[type=text] ').keyup(function (probe) {
+                    if( probe.keyCode=='13'){
+                        var b = $("#probe .option-hover.option-selected").text();
+                        probeSelected = $($(probe.currentTarget)[0]).data('value');
+                        $('#probe .combo-input').val(b);
+                        $('#probe .combo-select select').val(b);
+                    }
+
+                })
+            }, 100);
         }
     });
 };
@@ -227,6 +380,7 @@ var new_search = new Vue({
                 search.city_id = searchJson.cityid;
                 search.county_id = searchJson.countyid;
                 search.probe_id = searchJson.probeid;
+                search.target_id = searchJson.targetid;
                 search.ava_start = searchJson.startDate.substr(0, 10);
                 search.ava_terminal = searchJson.terminalDate.substr(0, 10);
                 search.starTime = searchJson.startDate.substr(11, 15);
@@ -256,6 +410,9 @@ var new_search = new Vue({
                     }
                 });
             }
+        },
+        reset: function () {    /*重置*/
+            document.getElementById("probesearch").reset();
         }
     }
 });
@@ -293,7 +450,7 @@ var Reset = new Vue({
                     if (result.page.list.length !== 0) {
                         /*option先回到状态0,注意,不然会出错*/
                         new_data.scoredata = result.page.list;
-                        console.log(new_data.scoredata);
+                        // console.log(new_data.scoredata);
                     } else {
                         toastr.warning('最近4天没有对应数据！');
                     }
@@ -571,8 +728,7 @@ Vue.component('data-table', {
             /*bInfo: false,*/
             bLengthChange: false, /*禁用Show entries*/
         });
-
-
+        changeStatus(status);
     }
 });
 
@@ -619,4 +775,40 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
         }
     });
     return o;
-};
+}
+
+function changeStatus(i) {
+    $.ajax({
+        type: "POST", /*GET会乱码*/
+        url: "../../target/infoList/"+i,
+        cache: false,  //禁用缓存
+        dataType: "json",
+        success: function (result) {
+            var targets = [];
+            for (var i = 0; i < result.target.length; i++) {
+                targets[i] = {message: result.target[i]}
+            }
+            search_data.target = targets;
+            setTimeout(function () {
+                $('div#target .jq22').comboSelect();
+                $('div#target input[type=text]').attr('placeholder','---请选择---');
+                $('div#target .option-item').click(function (target) {
+                    setTimeout(function () {
+                        var a = $(target.currentTarget)[0].innerText;
+                        targetSelected = $($(target.currentTarget)[0]).data('value');
+                        $('div#target .combo-input').val(a);
+                        $('div#target .combo-select select').val(a);
+                    }, 100);
+                });
+                $('#target input[type=text] ').keyup(function (target) {
+                    if( target.keyCode=='13'){
+                        var b = $("#target .option-hover.option-selected").text();
+                        probeSelected = $($(target.currentTarget)[0]).data('value');
+                        $('#target .combo-input').val(b);
+                        $('#target .combo-select select').val(b);
+                    }
+                })
+            }, 300);
+        }
+    });
+}

@@ -4,6 +4,7 @@ import io.cem.modules.cem.entity.TaskDispatchEntity;
 import io.cem.modules.sys.dao.BaseDao;
 
 import java.util.List;
+import java.util.Map;
 
 /***
  * @author ${author}
@@ -23,9 +24,9 @@ public interface TaskDispatchDao extends BaseDao<TaskDispatchEntity> {
 
     String[] queryTargetBatch(String[] targetIdList);
 
-    List<TaskDispatchEntity> taskQueryDispatchList(Integer id);
+    List<TaskDispatchEntity> taskQueryDispatchList(Map<String, Object> map);
 
-    int taskQueryDispatchTotal(Integer id);
+    int taskQueryDispatchTotal(Map<String, Object> map);
 
     int saveAndReturn(TaskDispatchEntity taskDispatchEntity);
 }

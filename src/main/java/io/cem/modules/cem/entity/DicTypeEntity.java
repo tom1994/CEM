@@ -4,11 +4,7 @@ import java.io.Serializable;
 
 
 /**
- * 
- * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2017-10-12 17:12:46
+
  */
 public class DicTypeEntity implements Serializable {
 	private static final long serialVersionUID = 1L;

@@ -20,10 +20,7 @@ import java.util.Map;
  * 测试定时任务(演示Demo，可删除)
  * 
  * testTask为spring bean的名称
- * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2016年11月30日 下午1:34:24
+ *
  */
 @Component("testTask")
 public class TestTask {
@@ -90,15 +87,13 @@ public class TestTask {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-
-
 	}
 
 	public void test2(){
 		logger.info("我是不带参数的test2方法，正在被执行");
 	}
 
-	//ping按1小时压
+//	ping按1小时压
 	public void pingHour(){
 		Map<String,Object> map = recordHourPingService.queryTime();
 		System.out.println(map);
@@ -107,7 +102,7 @@ public class TestTask {
 			recordHourPingService.save(list.get(i));
 		}
 	}
-    //ping按1天压
+	//ping按1天压
 	public void pingDay(){
 		Map<String,Object> map = recordHourPingService.queryDay();
 		System.out.println(map);

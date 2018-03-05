@@ -47,39 +47,24 @@ public class RecordPingServiceImpl implements RecordPingService {
 	@Override
 	public List<RecordHourPingEntity> queryIntervalList(Map<String, Object> map){
 		int interval = Integer.parseInt(map.get("interval").toString());
-//		int start = 0;
-//		Date startTime = new Date();
-//		DateFormat df = new SimpleDateFormat("HH:mm:ss");
-//		try {
-//			startTime = df.parse(st);
-//		} catch (ParseException e) {
-//			e.printStackTrace();
-//			System.out.println("输入有误！！！！");
-//		}
-//		Calendar calendar = Calendar.getInstance();
-//		calendar.setTime(startTime);
 		List<RecordHourPingEntity> recordPingList = new ArrayList<>();
-		for (int i=0; i<=24-interval; i=i+interval){
-			if (i<10){
-				String st = "0"+i;
+		for (int i=0; i<=24-interval; i=i+interval) {
+			if (i<10) {
+				String st = "0" + i;
 				map.put("startTime", st);
-			} else{
+			} else {
 				map.put("startTime",i);
 			}
 			int j = i+interval;
-			if(j<10){
-				String et = "0"+j;
+			if(j<10) {
+				String et = "0" + j;
 				map.put("terminalTime", et);
-			} else{
+			} else {
 				map.put("terminalTime",j);
 			}
-//			map.put("startTime", df.format(calendar));
-//			calendar.add(Calendar.HOUR_OF_DAY, interval);
-//			map.put("terminalTime", df.format(calendar));
-//			int tmp = Integer.parseInt(String.valueOf(st.charAt(1));
 			List<RecordHourPingEntity> recordHourPing = recordHourPingDao.queryIntervalList(map);
-			for(int k=0; k<recordHourPing.size(); k++){
-				recordHourPing.get(k).setTimeRange(i+":00-"+j+":00");
+			for(int k=0; k<recordHourPing.size(); k++) {
+				recordHourPing.get(k).setTimeRange(i + ":00-" + j + ":00");
 			}
 			recordPingList.addAll(recordHourPing);
 		}
@@ -92,8 +77,31 @@ public class RecordPingServiceImpl implements RecordPingService {
 	}
 
 	@Override
+	public int queryPingTotal(Map<String, Object> map){
+		return recordPingDao.queryPingTotal(map);
+	}
+
+	@Override
 	public int queryIntervalTotal(Map<String, Object> map){
-		return recordPingDao.queryTotal(map);
+		int interval = Integer.parseInt(map.get("interval").toString());
+		int total = 0;
+		for (int i=0; i<=24-interval; i=i+interval) {
+			if (i < 10) {
+				String st = "0" + i;
+				map.put("startTime", st);
+			} else {
+				map.put("startTime", i);
+			}
+			int j = i + interval;
+			if (j < 10) {
+				String et = "0" + j;
+				map.put("terminalTime", et);
+			} else {
+				map.put("terminalTime", j);
+			}
+			total = total + recordHourPingDao.queryIntervalTotal(map);
+		}
+		return total;
 	}
 	
 	@Override

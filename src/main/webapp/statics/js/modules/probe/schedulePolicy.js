@@ -22,7 +22,7 @@ var spdata_handle = new Vue({
             for (var i = 0; i <4; i++) {
                 forms[i].value = "";
             }
-            spform_data.modaltitle = "新增调度策略";
+            spform_data.modaltitle = "新建调度策略";
             /*修改模态框标题*/
             $('#myModal_sp').modal('show');
         }
@@ -179,8 +179,8 @@ var spform_data = new Vue({
                 spJson.createTime = new Date().Format("yyyy-MM-dd hh:mm:ss");        //获取日期与时间
                 var scheduler = '{"start_time":"00:00:00", "end_time":"23:59:00", "interval":"0"}';
                 var schedulerObj = JSON.parse(scheduler);
-                schedulerObj.interval = spJson.interval;
-                spJson.scheduler = JSON.stringify(schedulerObj);
+                schedulerObj.interval = parseInt(spJson.interval);
+                spJson.scheduler = "["+JSON.stringify(schedulerObj)+"]";
                 var sp = JSON.stringify(spJson);
                 /*封装成json数组*/
                 console.log(sp);
@@ -392,7 +392,7 @@ var sptable = new Vue({
                             row.push(i++);
                             row.push(item.spName);
                             row.push(dateDisplay);
-                            row.push((JSON.parse(scheduler)).interval);
+                            row.push((JSON.parse(scheduler.substr(1,scheduler.length-2))).interval);
                             row.push(item.remark);
                             row.push(item.createTime);
                             row.push('<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>');
@@ -416,3 +416,6 @@ var sptable = new Vue({
         });
     }
 });
+
+
+//点击每天禁止自定义

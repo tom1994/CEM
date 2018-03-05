@@ -255,6 +255,7 @@ var weightSet = new Vue({
                     for (var i = 0; i < 28; i++) {
                         forms[i].value = result.webDownload[i];
                     }
+
                     $('#Modal_web_download').modal('show');
                 }
             })
@@ -333,7 +334,10 @@ var weightHandle = new Vue ({
                 + parseFloat(weightJson.radius);
             var totalsecondweight3 = parseFloat(weightJson.ftp_upload) + parseFloat(weightJson.ftp_download)
                 + parseFloat(weightJson.web_download);
-            console.log(weightJson.connectionweight);
+            var totalsecondweight4=parseFloat(weightJson.webpage)
+            var totalsecondweight5=parseFloat(weightJson.video)
+            var totalsecondweight6=parseFloat(weightJson.game)
+            console.log(weightJson);
             for (var prop in weightJson)
             {
                 if (weightJson[prop] == "") {
@@ -341,14 +345,21 @@ var weightHandle = new Vue ({
                     break;
                 }
             }
+            console.log(totalsecondweight1);
             if (totalweight.toFixed(5) != 1) {
                 toastr.warning("业务权重设置有误!");
             } else if (totalsecondweight1 != 1) {
-                toastr.warning("网络连通性测试业务的权重设置有误!");
+                toastr.warning("网络连通性业务的权重设置有误!");
             } else if (totalsecondweight2 != 1) {
-                toastr.warning("网络层质量测试业务的权重设置有误!");
+                toastr.warning("网络层质量业务的权重设置有误!");
             } else if (totalsecondweight3 != 1) {
-                toastr.warning("文件下载类业务的权重设置有误!");
+                toastr.warning("文件下载业务的权重设置有误!");
+            }else if(totalsecondweight4!=1){
+                toastr.warning("网页浏览业务的权重设置有误!");
+            }else if(totalsecondweight5!=1){
+                toastr.warning("在线视频业务的权重设置有误!");
+            }else if(totalsecondweight6!=1){
+                toastr.warning("网络游戏业务的权重设置有误!");
             } else {
                 var weight_new = JSON.stringify(weightJson);
                 /*封装成json数组*/
@@ -381,6 +392,7 @@ var weightHandle = new Vue ({
 
         },
         reset:function(){
+            debugger;
             $.ajax({
                 type: "POST", /*GET会乱码*/
                 url: "../../cem/allweight/reset",
@@ -428,6 +440,7 @@ var piform_data = new Vue ({
             var piTotalWeight = parseFloat(piJson.pingI21) + parseFloat(piJson.pingI31) + parseFloat(piJson.pingI41)
                 + parseFloat(piJson.pingI51) + parseFloat(piJson.pingI61) + parseFloat(piJson.pingI71)
                 + parseFloat(piJson.pingI81);
+            console.log(piTotalWeight.toFixed(5));
             for (var prop in piJson)
             {
                 if (piJson[prop] == "") {
@@ -435,7 +448,7 @@ var piform_data = new Vue ({
                     break;
                 }
             }
-            if (piTotalWeight != 1){
+            if (piTotalWeight.toFixed(5) != 1){
                 toastr.warning("权重设置有误！");
             } else {
                 var pi_new = JSON.stringify(piJson);
@@ -487,7 +500,7 @@ var ptform_data = new Vue ({
                     break;
                 }
             }
-            if (ptTotalWeight != 1){
+            if (ptTotalWeight.toFixed(5) != 1){
                 toastr.warning("权重设置有误！");
             } else {
                 var pt_new = JSON.stringify(ptJson);
@@ -538,7 +551,7 @@ var puform_data = new Vue ({
                     break;
                 }
             }
-            if (puTotalWeight != 1) {
+            if (puTotalWeight.toFixed(5) != 1) {
                 toastr.warning("权重设置有误！");
             } else {
                 var pu_new = JSON.stringify(puJson);
@@ -588,7 +601,7 @@ var triform_data = new Vue ({
                     break;
                 }
             }
-            if (triTotalWeight != 1){
+            if (triTotalWeight.toFixed(5) != 1){
                 toastr.warning("权重设置有误！");
             } else {
                 var tri_new = JSON.stringify(triJson);
@@ -638,7 +651,7 @@ var trtform_data = new Vue ({
                     break;
                 }
             }
-            if (trtTotalWeight != 1){
+            if (trtTotalWeight.toFixed(5) != 1){
                 toastr.warning("权重设置有误！");
             } else {
                 var trt_new = JSON.stringify(trtJson);
@@ -693,7 +706,7 @@ var stform_data = new Vue ({
                     break;
                 }
             }
-            if (stTotalWeight != 1){
+            if (stTotalWeight.toFixed(5) != 1){
                 toastr.warning("权重设置有误!");
             } else {
                 var st_new = JSON.stringify(stJson);
@@ -733,6 +746,7 @@ var suform_data = new Vue ({
     methods:{
         submit: function() {
             var suJson = getFormJson($('#sla_udp_form'));
+
             var suTotalWeight = parseFloat(suJson.slaU11) + parseFloat(suJson.slaU21) + parseFloat(suJson.slaU31)
                 + parseFloat(suJson.slaU41) + parseFloat(suJson.slaU51) + parseFloat(suJson.slaU61)
                 + parseFloat(suJson.slaU71) + parseFloat(suJson.slaU81) + parseFloat(suJson.slaU91)
@@ -746,7 +760,7 @@ var suform_data = new Vue ({
                     break;
                 }
             }
-            if (suTotalWeight != 1) {
+            if (suTotalWeight.toFixed(5) != 1) {
                 toastr.warning("权重设置有误!");
             } else {
                 var su_new = JSON.stringify(suJson);
@@ -759,6 +773,7 @@ var suform_data = new Vue ({
                     data: {"su_new": su_new},
                     dataType: "json",
                     success: function (result) {
+                        console.log(result);
                         let code = result.code;
                         let msg = result.msg;
                         switch (code) {
@@ -793,7 +808,7 @@ var dnsform_data = new Vue ({
                     break;
                 }
             }
-            if (dnsTotalWeight != 1) {
+            if (dnsTotalWeight.toFixed(5) != 1) {
                 toastr.warning("权重设置有误!")
             } else {
                 var dns_new = JSON.stringify(dnsJson);
@@ -840,7 +855,7 @@ var dhcpform_data = new Vue ({
                     break;
                 }
             }
-            if (dhcpTotalWeight != 1) {
+            if (dhcpTotalWeight.toFixed(5) != 1) {
                 toastr.warning("权重设置有误!")
             } else {
                 var dhcp_new = JSON.stringify(dhcpJson);
@@ -887,7 +902,7 @@ var adslform_data = new Vue ({
                     break;
                 }
             }
-            if (adslTotalWeight != 1) {
+            if (adslTotalWeight.toFixed(5) != 1) {
                 toastr.warning("权重设置有误!")
             } else {
                 var adsl_new = JSON.stringify(adslJson);
@@ -934,7 +949,7 @@ var radiusform_data = new Vue ({
                     break;
                 }
             }
-            if (radiusTotalWeight != 1) {
+            if (radiusTotalWeight.toFixed(5) != 1) {
                 toastr.warning("权重设置有误!")
             } else {
                 var radius_new = JSON.stringify(radiusJson);
@@ -982,7 +997,7 @@ var fuform_data = new Vue ({
                     break;
                 }
             }
-            if (fuTotalWeight != 1) {
+            if (fuTotalWeight.toFixed(5) != 1) {
                 toastr.warning("权重设置有误!")
             } else {
                 var fu_new = JSON.stringify(fuJson);
@@ -1030,7 +1045,7 @@ var fdform_data = new Vue ({
                     break;
                 }
             }
-            if (fdTotalWeight != 1) {
+            if (fdTotalWeight.toFixed(5) != 1) {
                 toastr.warning("权重设置有误!")
             } else {
                 var fd_new = JSON.stringify(fdJson);
@@ -1071,14 +1086,14 @@ var wdform_data = new Vue ({
         submit: function(){
             var wdJson = getFormJson($('#web_download_form'));
             var wdTotalWeight = parseFloat(wdJson.webD11) + parseFloat(wdJson.webD21) + parseFloat(wdJson.webD31)
-                + parseFloat(wdJson.webD41) +parseFloat(wdJson.webD51);
+                + parseFloat(wdJson.webD41) ;
             for (var prop in wdJson) {
                 if (wdJson[prop] == "") {
                     toastr.warning("权重及评分标准不能为空!");
                     break;
                 }
             }
-            if (wdTotalWeight != 1) {
+            if (wdTotalWeight.toFixed(5) != 1) {
                 toastr.warning("权重设置有误!")
             } else {
                 var wd_new = JSON.stringify(wdJson);
@@ -1127,7 +1142,7 @@ var wpform_data = new Vue ({
                     break;
                 }
             }
-            if (wpTotalWeight != 1) {
+            if (wpTotalWeight.toFixed(5) != 1) {
                 toastr.warning("权重设置有误!")
             } else {
                 var webpage_new = JSON.stringify(webpageJson);
@@ -1177,7 +1192,7 @@ var videoform_data = new Vue ({
                     break;
                 }
             }
-            if (videoTotalWeight != 1) {
+            if (videoTotalWeight.toFixed(5) != 1) {
                 toastr.warning("权重设置有误!")
             } else {
                 var video_new = JSON.stringify(videoJson);
@@ -1225,7 +1240,7 @@ var gameform_data = new Vue ({
                     break;
                 }
             }
-            if (gameTotalWeight != 1) {
+            if (gameTotalWeight.toFixed(5) != 1) {
                 toastr.warning("权重设置有误!")
             } else {
                 var game_new = JSON.stringify(gameJson);

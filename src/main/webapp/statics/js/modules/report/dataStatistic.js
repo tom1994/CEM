@@ -119,14 +119,16 @@ var search_data = new Vue({
             /*获取表单元素的值*/
             var starttemp = data.start_time;
             var termtemp = data.end_time;
-
-            /*if((data.startDate="") && (data.terminalDate=""))
-             {
-             data.startDate = '1900-12-12 00:00:00';
-             data.terminalDate = new Date();
-             }*/
-
-            /*可直接在json对象中添加键值对*/
+            var sd = data.startDate;
+            var td = data.terminalDate;
+            if (sd == "" && td == "") {
+                data.startDate = "1900-01-01";
+                data.terminalDate = (new Date()).Format("yyyy-MM-dd");
+            }
+            if (starttemp == "" && termtemp == "") {
+                data.start_time = "00:00:00";
+                data.end_time = "23:59:59";
+            }
             if(starttemp != ""){
                 data.start_time = starttemp + ":00";
             }
@@ -151,15 +153,13 @@ var search_data = new Vue({
                 tracertresulttable.redraw();
                 /*根据查询条件重绘*/
             }
-
         },
         reset: function () {    /*重置*/
-            if(recordtag == "ping"){
-                pingresulttable.reset();
-            } else if(recordtag == "tracert") {
-                tracertresulttable.reset();
-            }
             document.getElementById("resultsearch").reset();
+            var data = {startDate:today.Format("yyyy-MM-dd"), terminalDate:(new Date()).Format("yyyy-MM-dd"),interval: "",
+                probe_id:'42', task_id:'1000', target_id:'1022', start_time:"00:00:00", end_time:"24:00:00", queryType: "1"};
+            pingresulttable.resultdata = data;
+            pingresulttable.redraw();
         }
     }
 });
@@ -272,27 +272,28 @@ var pingresulttable = new Vue({
     data: {
         headers: [
             {title: '<div style="width:10px"></div>'},
-            {title: '<div style="width:70px">探针名</div>'},
+            {title: '<div style="width:90px">探针名</div>'},
             {title: '<div style="width:60px">探针端口</div>'},
             {title: '<div style="width:110px">业务类型</div>'},
             {title: '<div style="width:110px">测试任务名称</div>'},
             {title: '<div style="width:110px">测试目标</div>'},
             {title: '<div style="width:90px">测试目标IP</div>'},
-            {title: '<div style="width:50px">时延(秒)</div>'},
-            {title: '<div style="width:90px">时延标准差(秒)</div>'},
-            {title: '<div style="width:80px">时延方差(秒)</div>'},
-            {title: '<div style="width:50px">抖动(秒)</div>'},
-            {title: '<div style="width:90px">抖动标准差(秒)</div>'},
-            {title: '<div style="width:80px">抖动方差(秒)</div>'},
+            {title: '<div style="width:65px">时延(ms)</div>'},
+            {title: '<div style="width:100px">时延标准差(ms)</div>'},
+            {title: '<div style="width:90px">时延方差(ms)</div>'},
+            {title: '<div style="width:65px">抖动(ms)</div>'},
+            {title: '<div style="width:100px">抖动标准差(ms)</div>'},
+            {title: '<div style="width:90px">抖动方差(ms)</div>'},
             {title: '<div style="width:70px">丢包率(%)</div>'},
             {title: '<div style="width:130px">记录时间</div>'},
-            {title: '<div style="width:130px">统计时间</div>'},
+            {title: '<div style="width:150px">统计时间</div>'},
             {title: '<div style="width:90px">备注</div>'}
         ],
         rows: [],
         dtHandle: null,
-        resultdata: {startDate:today.Format("yyyy-MM-dd"), terminalDate:(new Date()).Format("yyyy-MM-dd"),interval: "",
-            probe_id:'42', task_id:'1000', target_id:'1022', start_time:"00:00:00", end_time:"24:00:00", queryType: "1"}
+        resultdata: {service_type:"1", interval: "",probe_id:"42", task_id:"1000", target_id:"1022",
+            startDate:today.Format("yyyy-MM-dd"), terminalDate:(new Date()).Format("yyyy-MM-dd"),
+            start_time:"00:00:00", end_time:"24:00:00", queryType:"1"}
     },
     methods: {
         reset: function () {
@@ -348,7 +349,7 @@ var pingresulttable = new Vue({
                 param.start = data.start;//开始的记录序号
                 param.page = (data.start / data.length) + 1;//当前页码
                 param.resultdata = JSON.stringify(vm.resultdata);
-                console.log(param.resultdata);
+                console.log(param);
                 var timeTag = (vm.resultdata).queryType;
                 //console.log((vm.resultdata).queryType);
                 /*用于查询probe数据*/
@@ -367,17 +368,18 @@ var pingresulttable = new Vue({
                         returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
                         returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
                         returnData.data = result.page.list;//返回的数据列表
+                        console.log(returnData);
                         // 重新整理返回数据以匹配表格
                         let rows = [];
                         var i = param.start+1;
                         var recordDateTime = "";
                         var timeRange = "";
                         result.page.list.forEach(function (item) {
-                            console.log(item);
+                            //console.log(item);
                             if(timeTag == "1") {
                                 recordDateTime = (item.recordDate).substr(0, 10) + " " + item.recordTime;
                             } else if(timeTag == "0") {
-                                timeRange = item.timeRange;
+                                timeRange = (item.recordDate).substr(0, 10) + " " + item.timeRange;
                             }
                             //console.log(recordDateTime);
                             let row = [];
@@ -430,12 +432,12 @@ var tracertresulttable = new Vue({
             {title: '<div style="width:110px">测试任务名称</div>'},
             {title: '<div style="width:145px">测试目标</div>'},
             {title: '<div style="width:90px">测试目标IP</div>'},
-            {title: '<div style="width:50px">时延(秒)</div>'},
-            {title: '<div style="width:90px">时延标准差(秒)</div>'},
-            {title: '<div style="width:75px">时延方差(秒)</div>'},
-            {title: '<div style="width:50px">抖动(秒)</div>'},
-            {title: '<div style="width:90px">抖动标准差(秒)</div>'},
-            {title: '<div style="width:75px">抖动方差(秒)</div>'},
+            {title: '<div style="width:50px">时延(毫秒)</div>'},
+            {title: '<div style="width:90px">时延标准差(毫秒)</div>'},
+            {title: '<div style="width:75px">时延方差(毫秒)</div>'},
+            {title: '<div style="width:50px">抖动(毫秒)</div>'},
+            {title: '<div style="width:90px">抖动标准差(毫秒)</div>'},
+            {title: '<div style="width:75px">抖动方差(毫秒)</div>'},
             {title: '<div style="width:60px">丢包率(%)</div>'},
             {title: '<div style="width:130px">单跳测试结果</div>'},
             {title: '<div style="width:130px">记录时间</div>'},
@@ -510,7 +512,7 @@ var tracertresulttable = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                        console.log(result);
+                        //console.log(result);
                         //封装返回数据
                         let returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -542,7 +544,7 @@ var tracertresulttable = new Vue({
                             rows.push(row);
                         });
                         returnData.data = rows;
-                        console.log(returnData);
+                        //console.log(returnData);
                         //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);
