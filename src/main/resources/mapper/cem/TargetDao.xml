@@ -27,7 +27,7 @@
     <select id="infoBatch" resultMap="targetMap">
 		select * from target
 		where superservice_type = #{value}
-		order by id
+		order by convert(target_name USING gbk)
 	</select>
 
     <select id="queryList" resultType="io.cem.modules.cem.entity.TargetEntity">
@@ -37,7 +37,7 @@
                 order by ${sidx} ${order}
             </when>
             <otherwise>
-                order by id desc
+                order by convert(target_name USING gbk)
             </otherwise>
         </choose>
         <if test="offset != null and limit != null">
@@ -49,7 +49,7 @@
 		select * from target
 		WHERE superservice_type = #{value}
 		OR superservice_type = 0
-		order by id
+		order by convert(target_name USING gbk)
 	</select>
 
     <select id="queryTargetListByGroup" resultType="io.cem.modules.cem.entity.TargetEntity">
@@ -78,7 +78,6 @@
         FROM target
         LEFT JOIN target_group
         ON target.group_id = target_group.id
-
         WHERE target.id IS NOT NULL
         <if test="target_name != null and target_name != ''">
             AND target.target_name LIKE concat('%',#{target_name},'%')
@@ -94,7 +93,7 @@
                 order by ${sidx} ${order}
             </when>
             <otherwise>
-                order by target.id desc
+                order by convert(target_name USING gbk)
             </otherwise>
         </choose>
         <if test="offset != null and limit != null">

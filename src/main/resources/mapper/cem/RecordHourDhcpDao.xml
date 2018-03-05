@@ -61,7 +61,7 @@
 		ON record_hour_dhcp.city_id = city.city_id
 		LEFT JOIN county
 		ON record_hour_dhcp.county_id = county.county_id
-		LEFT JOIN probe
+		INNER JOIN probe
 		ON record_hour_dhcp.probe_id = probe.id
 		LEFT JOIN target
 		ON record_hour_dhcp.target_id = target.id
@@ -95,7 +95,7 @@
 		ON dhcp.city_id = city.city_id
 		LEFT JOIN county
 		ON dhcp.county_id = county.county_id
-		LEFT JOIN probe
+		INNER JOIN probe
 		ON dhcp.probe_id = probe.id
 		LEFT JOIN target
 		ON dhcp.target_id = target.id

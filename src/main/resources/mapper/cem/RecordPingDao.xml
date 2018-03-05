@@ -176,9 +176,9 @@
 		FROM record_ping
 		INNER JOIN probe
 		ON  record_ping.probe_id =probe.id
-		LEFT JOIN task
+		INNER JOIN task
 		ON record_ping.task_id = task.id
-		LEFT JOIN target
+		INNER JOIN target
 		ON record_ping.target_id = target.id
 		LEFT JOIN dic_data a
 		ON (a.dic_type_id = 6 AND record_ping.task_type = a.data_id)
@@ -209,7 +209,7 @@
 				order by ${sidx} ${order}
 			</when>
 			<otherwise>
-				order by id desc
+				order by record_date desc,record_time desc
 			</otherwise>
 		</choose>
 		<if test="offset != null and limit != null">
@@ -219,8 +219,16 @@
 
 	<select id="queryPingTotal" resultType="int">
 	select count(*) FROM record_ping
+		INNER JOIN probe
+		ON  record_ping.probe_id =probe.id
+		INNER JOIN task
+		ON record_ping.task_id = task.id
+		INNER JOIN target
+		ON record_ping.target_id = target.id
 	WHERE
-	record_ping.id >= 0
+	record_ping.service_type = #{service_type}
+		AND
+    record_date BETWEEN #{startDate} AND #{terminalDate}
 	<if test="task_id != null and task_id != ''">
 		AND task_id = #{task_id}
 	</if>
@@ -229,9 +237,6 @@
 	</if>
 	<if test="probe_id != null and probe_id != ''">
 		AND probe_id = #{probe_id}
-	</if>
-	<if test="startDate != null and startDate != '' and terminalDate != null and terminalDate != '' ">
-		AND record_date BETWEEN #{startDate} AND #{terminalDate}
 	</if>
 	<if test="start_time != null and start_time != '' and end_time != null and end_time != '' ">
 		AND record_time BETWEEN #{start_time} AND #{end_time}
