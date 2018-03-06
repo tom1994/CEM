@@ -19,8 +19,8 @@ var st = new Map();//servicetype字典，可通过get方法查对应字符串。
 st.set(0, "综合业务");
 st.set(1, "网络连通性业务");
 st.set(2, "网络层质量业务");
-st.set(3, "网页浏览业务");
-st.set(4, "文件下载业务");
+st.set(3, "文件下载业务");
+st.set(4, "网页浏览业务");
 st.set(5, "在线视频业务");
 st.set(6, "网络游戏业务");
 
@@ -180,16 +180,16 @@ var search_service = new Vue({
                 console.log("时间选择有误，请重新选择！");
                 $('#nonavailable_time').modal('show');
             } else {
-                var ava_start = searchJson.startDate.substr(0, 10);
-                var ava_terminal = searchJson.terminalDate.substr(0, 10);
-                var startTime = searchJson.startDate.substr(11, 15);
-                var terminalTime = searchJson.startDate.substr(11, 15);
                 var search = new Object();
                 search.city_id = searchJson.city_id;
                 search.couty_id = searchJson.county_id;
                 search.service = searchJson.service_type;
                 search.target_id = searchJson.target_id;
-                if (ava_start.length != 0 && ava_terminal.length != 0 && startTime.length != 0 && terminalTime.length != 0) {
+                if (searchJson.startDate.length != 0 && searchJson.terminalDate.length != 0 ) {
+                    var ava_start = searchJson.startDate.substr(0, 10);
+                    var ava_terminal = searchJson.terminalDate.substr(0, 10);
+                    var startTime = searchJson.startDate.substr(11, 15);
+                    var terminalTime = searchJson.terminalDate.substr(11, 15);
                     search.ava_start = ava_start;
                     search.ava_terminal = ava_terminal;
                     search.starTime = startTime;
@@ -206,8 +206,7 @@ var search_service = new Vue({
         },
         reset: function () {    /*重置*/
             document.getElementById("probesearch").reset();
-            var data = {city_id:"110100",couty_id:"110108",target_id:"1022",ava_start:today.Format("yyyy-MM-dd"),
-                ava_terminal:(new Date()).Format("yyyy-MM-dd"),service:'1'};
+            var data = {ava_start:today.Format("yyyy-MM-dd"), ava_terminal:(new Date()).Format("yyyy-MM-dd"),service:'0'};
             probetable.probedata = data;
             probetable.redraw();
         }
@@ -235,10 +234,19 @@ var search_area_service = new Vue({
                 search.couty_id = searchJson.county_id;
                 search.service = searchJson.servicetype;
                 search.target_id = searchJson.target_id;
-                search.ava_start = searchJson.startDate.substr(0,10);
-                search.ava_terminal = searchJson.terminalDate.substr(0,10);
-                search.starTime = searchJson.startDate.substr(11,15);
-                search.terminalTime = searchJson.startDate.substr(11,15);
+                if (searchJson.startDate.length != 0 && searchJson.terminalDate.length != 0 ) {
+                    var ava_start = searchJson.startDate.substr(0, 10);
+                    var ava_terminal = searchJson.terminalDate.substr(0, 10);
+                    var startTime = searchJson.startDate.substr(11, 15);
+                    var terminalTime = searchJson.terminalDate.substr(11, 15);
+                    search.ava_start = ava_start;
+                    search.ava_terminal = ava_terminal;
+                    search.starTime = startTime;
+                    search.terminalTime = terminalTime;
+                } else {
+                    search.ava_start = (new Date()).Format("yyyy-MM-dd");
+                    search.ava_terminal = (new Date()).Format("yyyy-MM-dd");
+                }
                 var schedulepolicy = JSON.stringify(search);
                 console.log(schedulepolicy);
                 areatable.probedata = search;
@@ -249,8 +257,7 @@ var search_area_service = new Vue({
         },
         reset: function () {    /*重置*/
             document.getElementById("areasearch").reset();
-            var data = {city_id:"110100",couty_id:"110108",target_id:"1022",ava_start:today.Format("yyyy-MM-dd"),
-                ava_terminal:(new Date()).Format("yyyy-MM-dd"),service:'1'};
+            var data = {ava_start:today.Format("yyyy-MM-dd"), ava_terminal:(new Date()).Format("yyyy-MM-dd"),service:'0'};
             areatable.probedata = data;
             areatable.redraw();
         }
@@ -322,7 +329,7 @@ var probetable = new Vue({
         ],
         rows: [],
         dtHandle: null,
-        probedata: {city_id:"110100",couty_id:"110108",target_id:"1022",ava_start:today.Format("yyyy-MM-dd"), ava_terminal:(new Date()).Format("yyyy-MM-dd"),service:'1'}
+        probedata: {ava_start:today.Format("yyyy-MM-dd"), ava_terminal:(new Date()).Format("yyyy-MM-dd"),service:'0'}
 
     },
     methods: {
@@ -454,9 +461,7 @@ var areatable = new Vue({
         ],
         rows: [],
         dtHandle: null,
-        //probedata: {ava_start:(new Date()).Format("yyyy-MM-dd"), ava_terminal:(new Date()).Format("yyyy-MM-dd"),service:'0'}
-        probedata:{ city_id:"110100",couty_id:"110108",target_id:"1022",ava_start:today.Format("yyyy-MM-dd"),
-        ava_terminal:(new Date()).Format("yyyy-MM-dd"),service:'1'}
+        probedata:{ ava_start:today.Format("yyyy-MM-dd"), ava_terminal:(new Date()).Format("yyyy-MM-dd"),service:'0'}
     },
     methods: {
         reset: function () {
@@ -541,7 +546,7 @@ var areatable = new Vue({
                             row.push(item.countyName);
                             row.push(st.get(item.serviceType));
                             row.push(item.targetName);
-                            row.push(item.score);
+                            row.push(item.score.toFixed(2));
                             row.push('<a class="fontcolor" onclick="update_this(this)" id='+item.id+'>详情</a>&nbsp;' +
                                 '<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>诊断</a>'); //Todo:完成详情与诊断
                             rows.push(row);
