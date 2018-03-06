@@ -44,31 +44,34 @@ public class RecordPingServiceImpl implements RecordPingService {
 		return recordPingDao.queryPingList(map);
 	}
 
+	//数据统计部分按照粒度查询数据
 	@Override
 	public List<RecordHourPingEntity> queryIntervalList(Map<String, Object> map){
-		int interval = Integer.parseInt(map.get("interval").toString());
-		List<RecordHourPingEntity> recordPingList = new ArrayList<>();
-		for (int i=0; i<=24-interval; i=i+interval) {
-			if (i<10) {
-				String st = "0" + i;
-				map.put("startTime", st);
-			} else {
-				map.put("startTime",i);
-			}
-			int j = i+interval;
-			if(j<10) {
-				String et = "0" + j;
-				map.put("terminalTime", et);
-			} else {
-				map.put("terminalTime",j);
-			}
-			List<RecordHourPingEntity> recordHourPing = recordHourPingDao.queryIntervalList(map);
-			for(int k=0; k<recordHourPing.size(); k++) {
-				recordHourPing.get(k).setTimeRange(i + ":00-" + j + ":00");
-			}
-			recordPingList.addAll(recordHourPing);
-		}
-		return recordPingList;
+//		后台做循环的写法
+// 		int interval = Integer.parseInt(map.get("interval").toString());
+//		List<RecordHourPingEntity> recordPingList = new ArrayList<>();
+//		for (int i=0; i<=24-interval; i=i+interval) {
+//			if (i<10) {
+//				String st = "0" + i;
+//				map.put("startTime", st);
+//			} else {
+//				map.put("startTime",i);
+//			}
+//			int j = i+interval;
+//			if(j<10) {
+//				String et = "0" + j;
+//				map.put("terminalTime", et);
+//			} else {
+//				map.put("terminalTime",j);
+//			}
+//			List<RecordHourPingEntity> recordHourPing = recordHourPingDao.queryIntervalList(map);
+//			for(int k=0; k<recordHourPing.size(); k++) {
+//				recordHourPing.get(k).setTimeRange(i + ":00-" + j + ":00");
+//			}
+//			recordPingList.addAll(recordHourPing);
+//		}
+//		return recordPingList;
+		return recordHourPingDao.queryIntervalList(map);
 	}
 
 	@Override
@@ -83,25 +86,26 @@ public class RecordPingServiceImpl implements RecordPingService {
 
 	@Override
 	public int queryIntervalTotal(Map<String, Object> map){
-		int interval = Integer.parseInt(map.get("interval").toString());
-		int total = 0;
-		for (int i=0; i<=24-interval; i=i+interval) {
-			if (i < 10) {
-				String st = "0" + i;
-				map.put("startTime", st);
-			} else {
-				map.put("startTime", i);
-			}
-			int j = i + interval;
-			if (j < 10) {
-				String et = "0" + j;
-				map.put("terminalTime", et);
-			} else {
-				map.put("terminalTime", j);
-			}
-			total = total + recordHourPingDao.queryIntervalTotal(map);
-		}
-		return total;
+//		int interval = Integer.parseInt(map.get("interval").toString());
+//		int total = 0;
+//		for (int i=0; i<=24-interval; i=i+interval) {
+//			if (i < 10) {
+//				String st = "0" + i;
+//				map.put("startTime", st);
+//			} else {
+//				map.put("startTime", i);
+//			}
+//			int j = i + interval;
+//			if (j < 10) {
+//				String et = "0" + j;
+//				map.put("terminalTime", et);
+//			} else {
+//				map.put("terminalTime", j);
+//			}
+//			total = total + recordHourPingDao.queryIntervalTotal(map);
+//		}
+//		return total;
+		return recordHourPingDao.queryIntervalTotal(map);
 	}
 	
 	@Override

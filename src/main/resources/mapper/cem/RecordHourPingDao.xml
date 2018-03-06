@@ -99,7 +99,7 @@
         ON rhp.city_id = city.city_id
         LEFT JOIN county
         ON rhp.county_id = county.county_id
-        LEFT JOIN probe
+        INNER JOIN probe
         ON rhp.probe_id = probe.id
         LEFT JOIN target
         ON rhp.target_id = target.id
@@ -132,7 +132,8 @@
     <!--质量排名获取总记录条数(queryPingList的count)-->
     <select id="pingListTotal" resultType="int">
         select count(*) FROM (
-        SELECT rhp.id,rhp.city_id,rhp.county_id,rhp.probe_id,rhp.port,rhp.task_id,rhp.service_type,rhp.target_id,rhp.target_ip,rhp.record_date,rhp.remark,
+        SELECT
+        rhp.id,rhp.city_id,rhp.county_id,rhp.probe_id,rhp.port,rhp.task_id,rhp.service_type,rhp.target_id,rhp.target_ip,rhp.record_date,rhp.remark,
         AVG(rhp.delay) AS delay,
         AVG(rhp.delay_std) AS delay_std,
         AVG(rhp.delay_var) AS delay_var,
@@ -163,7 +164,8 @@
             AND rhp.probe_id = #{probe_id}
         </if>
         GROUP BY
-        rhp.city_id,rhp.county_id,rhp.service_type,rhp.target_id,rhp.probe_id,date_format(rhp.record_date,'%Y-%m-%d'),time_format(record_time,'%H')) a
+        rhp.city_id,rhp.county_id,rhp.service_type,rhp.target_id,rhp.probe_id,date_format(rhp.record_date,'%Y-%m-%d'),time_format(record_time,'%H'))
+        a
     </select>
 
     <select id="queryDayList" resultType="io.cem.modules.cem.entity.RecordHourPingEntity">
@@ -218,28 +220,29 @@
         task.task_name AS task_name,
         target.target_name AS target_name,
         target.value AS targetip_name,
-        dic_data.data_name AS servicetype_name,
-        time_format(record_time, '%H') AS record_time,
-        AVG(rhp.delay) AS delay,
-        AVG(rhp.delay_std) AS delay_std,
-        AVG(rhp.delay_var) AS delay_var,
-        AVG(rhp.jitter) AS jitter,
-        AVG(rhp.jitter_std) AS jitter_std,
-        AVG(rhp.jitter_var) AS jitter_var,
-        AVG(rhp.loss_rate) AS loss_rate
+        floor(time_format(record_time, '%H')/#{interval}) AS rt,
+        concat('从',floor(time_format(record_time, '%H')/#{interval})*#{interval},'点至',floor(time_format(record_time,
+        '%H')/#{interval})*#{interval}+#{interval},'点') AS record_time,
+        round(AVG(rhp.delay),2) AS delay,
+        round(AVG(rhp.delay_std),2) AS delay_std,
+        round(AVG(rhp.delay_var),2) AS delay_var,
+        round(AVG(rhp.jitter),2) AS jitter,
+        round(AVG(rhp.jitter_std),2) AS jitter_std,
+        round(AVG(rhp.jitter_var),2) AS jitter_var,
+        round(AVG(rhp.loss_rate),2) AS loss_rate,
+        d.data_name AS servicetype_name
         FROM record_hour_ping rhp
-        LEFT JOIN probe
+        INNER JOIN probe
         ON rhp.probe_id = probe.id
-        LEFT JOIN task
+        INNER JOIN task
         ON rhp.task_id = task.id
-        LEFT JOIN target
+        INNER JOIN target
         ON rhp.target_id = target.id
-        LEFT JOIN dic_data
-        ON dic_data.dic_type_id = 5 AND rhp.service_type = dic_data.data_id
+        LEFT JOIN dic_data d
+        ON (d.dic_type_id = 5 AND rhp.service_type = d.data_id)
         WHERE
         rhp.service_type = #{service_type}
         AND rhp.record_date BETWEEN #{startDate} AND #{terminalDate}
-        AND (time_format(rhp.record_time,'%H') BETWEEN #{startTime} AND #{terminalTime})
         AND rhp.record_time BETWEEN #{start_time} AND #{end_time}
         <if test="task_id != null and task_id != ''">
             AND rhp.task_id = #{task_id}
@@ -251,11 +254,14 @@
             AND rhp.probe_id = #{probe_id}
         </if>
         GROUP BY
-        rhp.service_type,rhp.target_id,rhp.task_id,rhp.probe_id,date_format(rhp.record_date,'%Y-%m-%d'),time_format(record_time,'%H')
+        rhp.service_type,rhp.target_id,rhp.task_id,rhp.probe_id,date_format(rhp.record_date,'%Y-%m-%d'),rt
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
-                order by ${sidx} ${order}
+                ORDER BY ${sidx} ${order}
             </when>
+            <otherwise>
+                ORDER BY record_date DESC,rt DESC
+            </otherwise>
         </choose>
         <if test="offset != null and limit != null">
             limit #{offset}, #{limit}
@@ -269,8 +275,8 @@
     <select id="queryIntervalTotal" resultType="int">
         SELECT count(*) FROM (
         select
-        rhp.id,rhp.probe_id,rhp.port,rhp.task_id,rhp.service_type,rhp.target_id,rhp.target_ip,rhp.record_date,
-        AVG(rhp.delay) AS delay,
+        rhp.id,rhp.probe_id,rhp.port,rhp.task_id,rhp.service_type,rhp.target_id,rhp.target_ip,rhp.record_date,rhp.remark,
+        floor(time_format(record_time, '%H')/#{interval}) AS rt,AVG(rhp.delay) AS delay,
         AVG(rhp.delay_std) AS delay_std,
         AVG(rhp.delay_var) AS delay_var,
         AVG(rhp.jitter) AS jitter,
@@ -278,17 +284,9 @@
         AVG(rhp.jitter_var) AS jitter_var,
         AVG(rhp.loss_rate) AS loss_rate
         FROM record_hour_ping rhp
-        LEFT JOIN probe
-        ON rhp.probe_id = probe.id
-        LEFT JOIN task
-        ON rhp.task_id = task.id
-        LEFT JOIN target
-        ON rhp.target_id = target.id
-        LEFT JOIN dic_data
-        ON dic_data.dic_type_id = 5 AND rhp.service_type = dic_data.data_id
         WHERE
-        rhp.record_date BETWEEN #{startDate} AND #{terminalDate}
-        AND (time_format(rhp.record_time,'%H') BETWEEN #{startTime} AND #{terminalTime})
+        rhp.service_type = #{service_type}
+        AND rhp.record_date BETWEEN #{startDate} AND #{terminalDate}
         AND rhp.record_time BETWEEN #{start_time} AND #{end_time}
         <if test="task_id != null and task_id != ''">
             AND rhp.task_id = #{task_id}
@@ -300,8 +298,7 @@
             AND rhp.probe_id = #{probe_id}
         </if>
         GROUP BY
-        rhp.service_type,rhp.target_id,rhp.task_id,rhp.probe_id,date_format(rhp.record_date,'%Y-%m-%d'),time_format(rhp.record_time,
-        '%H')) t
+        rhp.service_type,rhp.target_id,rhp.task_id,rhp.probe_id,date_format(rhp.record_date,'%Y-%m-%d'),rt) t
     </select>
 
     <insert id="save" parameterType="io.cem.modules.cem.entity.RecordHourPingEntity" useGeneratedKeys="true"

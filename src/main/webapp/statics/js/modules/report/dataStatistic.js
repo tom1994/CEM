@@ -285,13 +285,13 @@ var pingresulttable = new Vue({
             {title: '<div style="width:100px">抖动标准差(ms)</div>'},
             {title: '<div style="width:90px">抖动方差(ms)</div>'},
             {title: '<div style="width:70px">丢包率(%)</div>'},
-            {title: '<div style="width:130px">记录时间</div>'},
-            {title: '<div style="width:150px">统计时间</div>'},
+            {title: '<div style="width:130px">记录日期</div>'},
+            {title: '<div style="width:150px">记录时间</div>'},
             {title: '<div style="width:90px">备注</div>'}
         ],
         rows: [],
         dtHandle: null,
-        resultdata: {service_type:"1", interval: "",probe_id:"42", task_id:"1000", target_id:"1022",
+        resultdata: {service_type:"1", interval: "",probe_id:"", task_id:"", target_id:"",
             startDate:today.Format("yyyy-MM-dd"), terminalDate:(new Date()).Format("yyyy-MM-dd"),
             start_time:"00:00:00", end_time:"24:00:00", queryType:"1"}
     },
@@ -376,11 +376,11 @@ var pingresulttable = new Vue({
                         var timeRange = "";
                         result.page.list.forEach(function (item) {
                             //console.log(item);
-                            if(timeTag == "1") {
-                                recordDateTime = (item.recordDate).substr(0, 10) + " " + item.recordTime;
-                            } else if(timeTag == "0") {
-                                timeRange = (item.recordDate).substr(0, 10) + " " + item.timeRange;
-                            }
+                            // if(timeTag == "1") {
+                            //     recordDateTime = (item.recordDate).substr(0, 10) + " " + item.recordTime;
+                            // } else if(timeTag == "0") {
+                            //     timeRange = (item.recordDate).substr(0, 10) + " " + item.timeRange;
+                            // }
                             //console.log(recordDateTime);
                             let row = [];
                             row.push(i++);
@@ -397,8 +397,8 @@ var pingresulttable = new Vue({
                             row.push(item.jitterStd);
                             row.push(item.jitterVar);
                             row.push(item.lossRate);
-                            row.push(recordDateTime);
-                            row.push(timeRange);
+                            row.push(item.recordDate.substr(0,10));
+                            row.push(item.recordTime);
                             row.push(item.remark);
                             rows.push(row);
                         });
