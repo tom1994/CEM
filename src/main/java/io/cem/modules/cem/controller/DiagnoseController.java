@@ -125,13 +125,18 @@ public class DiagnoseController {
                         List<ScoreEntity> pppoe = recordHourSlaService.calculatePppoe(pppoeList);
                         List<ScoreEntity> radius = recordHourSlaService.calculateRadius(radiusList);
                         scoreList.addAll(recordHourSlaService.calculateDate2(slaTcp,slaUdp,dns,dhcp,pppoe,radius));
-                    } else if (service == 3) {
+                    } else if (service == 4) {
+                        //网络浏览类业务代码为4
                         List<RecordHourWebPageEntity> webPageList = recordHourWebPageService.queryDayList(map);
                         scoreList.addAll(recordHourWebPageService.calculateService3(webPageList));
-                    } else if (service == 4) {
+                    } else if (service == 3) {
+                        //网络下载类业务代码为3
                         List<RecordHourWebDownloadEntity> webDownloadList = recordHourWebDownloadService.queryDayList(map);
                         List<RecordHourFtpEntity> ftpList = recordHourFtpService.queryDayList(map);
-                        scoreList.addAll(recordHourWebDownloadService.calculateService4(webDownloadList, ftpList));
+                        List<ScoreEntity> webDownload = recordHourWebDownloadService.calculateWebDownload(webDownloadList);
+                        List<ScoreEntity> ftpDownload = recordHourWebDownloadService.calculateFtpDownload(ftpList);
+                        List<ScoreEntity> ftpUpload = recordHourWebDownloadService.calculateFtpUpload(ftpList);
+                        scoreList.addAll(recordHourWebDownloadService.calculateService4(webDownload, ftpDownload,ftpUpload));
                     } else if (service == 5) {
                         List<RecordHourWebVideoEntity> videoList = recordHourWebVideoService.queryDayList(map);
                         scoreList.addAll(recordHourWebVideoService.calculateService5(videoList));
@@ -165,13 +170,18 @@ public class DiagnoseController {
                         List<ScoreEntity> pppoe = recordHourSlaService.calculatePppoe(pppoeList);
                         List<ScoreEntity> radius = recordHourSlaService.calculateRadius(radiusList);
                         scoreList.addAll(recordHourSlaService.calculateDate2(slaTcp,slaUdp,dns,dhcp,pppoe,radius));
-                    } else if (service == 3) {
+                    } else if (service == 4) {
+                        //网页浏览类业务代码为4
                         List<RecordHourWebPageEntity> webPageList = recordHourWebPageService.queryWebList(map);
                         scoreList.addAll(recordHourWebPageService.calculateService3(webPageList));
-                    } else if (service == 4) {
+                    } else if (service == 3) {
+                        //下载类业务代码为3
                         List<RecordHourWebDownloadEntity> webDownloadList = recordHourWebDownloadService.queryWebDownloadList(map);
                         List<RecordHourFtpEntity> ftpList = recordHourFtpService.queryFtpList(map);
-                        scoreList.addAll(recordHourWebDownloadService.calculateService4(webDownloadList, ftpList));
+                        List<ScoreEntity> webDownload = recordHourWebDownloadService.calculateWebDownload(webDownloadList);
+                        List<ScoreEntity> ftpDownload = recordHourWebDownloadService.calculateFtpDownload(ftpList);
+                        List<ScoreEntity> ftpUpload = recordHourWebDownloadService.calculateFtpUpload(ftpList);
+                        scoreList.addAll(recordHourWebDownloadService.calculateService4(webDownload,ftpDownload,ftpUpload));
                     } else if (service == 5) {
                         List<RecordHourWebVideoEntity> videoList = recordHourWebVideoService.queryVideoList(map);
                         scoreList.addAll(recordHourWebVideoService.calculateService5(videoList));
@@ -220,14 +230,19 @@ public class DiagnoseController {
                     List<ScoreEntity> radius = recordHourSlaService.calculateRadius(radiusList);
                     scoreList = recordHourSlaService.calculateDate2(slaTcp,slaUdp,dns,dhcp,pppoe,radius);
                 }
-                else if (service==3){
+                else if (service==4){
+                    //网络浏览类业务代码为4
                     List<RecordHourWebPageEntity> webPageList = recordHourWebPageService.queryDayList(map);
                     scoreList = recordHourWebPageService.calculateService3(webPageList);
                 }
-                else if (service==4){
+                else if (service==3){
+                    //下载类业务代码为3
                     List<RecordHourWebDownloadEntity> webDownloadList = recordHourWebDownloadService.queryDayList(map);
                     List<RecordHourFtpEntity> ftpList = recordHourFtpService.queryDayList(map);
-                    scoreList = recordHourWebDownloadService.calculateServiceDate4(webDownloadList, ftpList);
+                    List<ScoreEntity> webDownload = recordHourWebDownloadService.calculateWebDownload(webDownloadList);
+                    List<ScoreEntity> ftpDownload = recordHourWebDownloadService.calculateFtpDownload(ftpList);
+                    List<ScoreEntity> ftpUpload = recordHourWebDownloadService.calculateFtpUpload(ftpList);
+                    scoreList = recordHourWebDownloadService.calculateDate4(webDownload, ftpDownload,ftpUpload);
                 }
                 else if (service==5){
                     List<RecordHourWebVideoEntity> videoList = recordHourWebVideoService.queryDayList(map);
@@ -263,13 +278,18 @@ public class DiagnoseController {
                     List<ScoreEntity> pppoe = recordHourSlaService.calculatePppoe(pppoeList);
                     List<ScoreEntity> radius = recordHourSlaService.calculateRadius(radiusList);
                     scoreList = recordHourSlaService.calculateDate2(slaTcp,slaUdp,dns,dhcp,pppoe,radius);
-                } else if (service == 3) {
+                } else if (service == 4) {
+                    //网络浏览类业务代码为4
                     List<RecordHourWebPageEntity> webPageList = recordHourWebPageService.queryWebList(map);
                     scoreList = recordHourWebPageService.calculateService3(webPageList);
-                } else if (service == 4) {
+                } else if (service == 3) {
+                    //下载类业务代码为3
                     List<RecordHourWebDownloadEntity> webDownloadList = recordHourWebDownloadService.queryWebDownloadList(map);
                     List<RecordHourFtpEntity> ftpList = recordHourFtpService.queryFtpList(map);
-                    scoreList = recordHourWebDownloadService.calculateServiceDate4(webDownloadList, ftpList);
+                    List<ScoreEntity> webDownload = recordHourWebDownloadService.calculateWebDownload(webDownloadList);
+                    List<ScoreEntity> ftpDownload = recordHourWebDownloadService.calculateFtpDownload(ftpList);
+                    List<ScoreEntity> ftpUpload = recordHourWebDownloadService.calculateFtpUpload(ftpList);
+                    scoreList = recordHourWebDownloadService.calculateDate4(webDownload, ftpDownload,ftpUpload);
                 } else if (service == 5) {
                     List<RecordHourWebVideoEntity> videoList = recordHourWebVideoService.queryVideoList(map);
                     scoreList = recordHourWebVideoService.calculateService5(videoList);

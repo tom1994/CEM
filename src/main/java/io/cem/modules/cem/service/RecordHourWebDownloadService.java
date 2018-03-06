@@ -26,11 +26,17 @@ public interface RecordHourWebDownloadService {
 
 	List<RecordHourWebDownloadEntity> queryDayList(Map<String, Object> map);
 
-	List<ScoreEntity> calculateService4 (List<RecordHourWebDownloadEntity> webDownloadList,List<RecordHourFtpEntity> ftpList);
+	List<ScoreEntity> calculateWebDownload(List<RecordHourWebDownloadEntity> webDownloadList);
 
-	List<ScoreEntity> calculateServiceArea4 (List<RecordHourWebDownloadEntity> webDownloadList,List<RecordHourFtpEntity> ftpList);
+	List<ScoreEntity> calculateFtpDownload(List<RecordHourFtpEntity> ftpList);
 
-	List<ScoreEntity> calculateServiceDate4 (List<RecordHourWebDownloadEntity> webDownloadList,List<RecordHourFtpEntity> ftpList);
+	List<ScoreEntity> calculateFtpUpload(List<RecordHourFtpEntity> ftpList);
+
+	List<ScoreEntity> calculateService4 (List<ScoreEntity> webDownload,List<ScoreEntity> ftpDownload,List<ScoreEntity> ftpUpload);
+
+	List<ScoreEntity> calculateArea4 (List<ScoreEntity> webDownload,List<ScoreEntity> ftpDownload,List<ScoreEntity> ftpUpload);
+
+	List<ScoreEntity> calculateDate4 (List<ScoreEntity> webDownload,List<ScoreEntity> ftpDownload,List<ScoreEntity> ftpUpload);
 
 	int queryTotal(Map<String, Object> map);
 	

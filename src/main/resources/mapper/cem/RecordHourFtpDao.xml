@@ -69,7 +69,7 @@
 		ON record_hour_ftp.city_id = city.city_id
 		LEFT JOIN county
 		ON record_hour_ftp.county_id = county.county_id
-		LEFT JOIN probe
+		INNER JOIN probe
 		ON record_hour_ftp.probe_id = probe.id
 		LEFT JOIN target
 		ON record_hour_ftp.target_id = target.id
@@ -107,7 +107,7 @@
 		ON ftp.city_id = city.city_id
 		LEFT JOIN county
 		ON ftp.county_id = county.county_id
-		LEFT JOIN probe
+		INNER JOIN probe
 		ON ftp.probe_id = probe.id
 		LEFT JOIN target
 		ON ftp.target_id = target.id

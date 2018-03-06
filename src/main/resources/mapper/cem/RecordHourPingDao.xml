@@ -146,7 +146,7 @@
         ON rhp.city_id = city.city_id
         LEFT JOIN county
         ON rhp.county_id = county.county_id
-        LEFT JOIN probe
+        INNER JOIN probe
         ON rhp.probe_id = probe.id
         LEFT JOIN target
         ON rhp.target_id = target.id
@@ -189,7 +189,7 @@
         ON rhp.city_id = city.city_id
         LEFT JOIN county
         ON rhp.county_id = county.county_id
-        LEFT JOIN probe
+        INNER JOIN probe
         ON rhp.probe_id = probe.id
         LEFT JOIN target
         ON rhp.target_id = target.id

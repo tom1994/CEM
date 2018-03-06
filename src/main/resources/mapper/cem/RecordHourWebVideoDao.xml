@@ -67,9 +67,6 @@
 		AVG(record_hour_web_video.dns_delay) AS dns_delay,
 		AVG(record_hour_web_video.ws_conn_delay) AS ws_conn_delay,
 		AVG(record_hour_web_video.web_page_delay) AS web_page_delay,
-		AVG(record_hour_web_video.ss_conn_delay) AS ss_conn_delay,
-		AVG(record_hour_web_video.address_delay) AS address_delay,
-		AVG(record_hour_web_video.ms_conn_delay) AS ms_conn_delay,
 		AVG(record_hour_web_video.head_frame_delay) AS head_frame_delay,
 		AVG(record_hour_web_video.init_buffer_delay) AS init_buffer_delay,
 		AVG(record_hour_web_video.load_delay) AS load_delay,
@@ -81,7 +78,7 @@
 		ON record_hour_web_video.city_id = city.city_id
 		LEFT JOIN county
 		ON record_hour_web_video.county_id = county.county_id
-		LEFT JOIN probe
+		INNER JOIN probe
 		ON record_hour_web_video.probe_id = probe.id
 		LEFT JOIN target
 		ON record_hour_web_video.target_id = target.id
@@ -111,9 +108,6 @@
 		AVG(webv.dns_delay) AS dns_delay,
 		AVG(webv.ws_conn_delay) AS ws_conn_delay,
 		AVG(webv.web_page_delay) AS web_page_delay,
-		AVG(webv.ss_conn_delay) AS ss_conn_delay,
-		AVG(webv.address_delay) AS address_delay,
-		AVG(webv.ms_conn_delay) AS ms_conn_delay,
 		AVG(webv.head_frame_delay) AS head_frame_delay,
 		AVG(webv.init_buffer_delay) AS init_buffer_delay,
 		AVG(webv.load_delay) AS load_delay,
@@ -125,7 +119,7 @@
 		ON webv.city_id = city.city_id
 		LEFT JOIN county
 		ON webv.county_id = county.county_id
-		LEFT JOIN probe
+		INNER JOIN probe
 		ON webv.probe_id = probe.id
 		LEFT JOIN target
 		ON webv.target_id = target.id

@@ -73,7 +73,7 @@
 		ON record_hour_web_page.city_id = city.city_id
 		LEFT JOIN county
 		ON record_hour_web_page.county_id = county.county_id
-		LEFT JOIN probe
+		INNER JOIN probe
 		ON record_hour_web_page.probe_id = probe.id
 		LEFT JOIN target
 		ON record_hour_web_page.target_id = target.id
@@ -113,7 +113,7 @@
 		ON webp.city_id = city.city_id
 		LEFT JOIN county
 		ON webp.county_id = county.county_id
-		LEFT JOIN probe
+		INNER JOIN probe
 		ON webp.probe_id = probe.id
 		LEFT JOIN target
 		ON webp.target_id = target.id
