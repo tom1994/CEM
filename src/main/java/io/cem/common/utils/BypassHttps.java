@@ -7,7 +7,7 @@ import java.net.URL;
 
 
 public class BypassHttps {
-    public static void sendRequestIgnoreSSL(String url)  {
+    public static int sendRequestIgnoreSSL(String url)  {
         HttpsURLConnection con = null;
         // Create a trust manager that does not validate certificate chains
         TrustManager[] trustAllCerts = new TrustManager[]{
@@ -46,6 +46,7 @@ public class BypassHttps {
             input.close();
             System.out.println("Resp Code:"+con .getResponseCode());
             System.out.println("Resp Message:"+ con .getResponseMessage());
+            return con.getResponseCode();
         } catch (Exception e) {
             e.printStackTrace();
             try {
@@ -55,6 +56,7 @@ public class BypassHttps {
             } catch (IOException e1) {
 
             }
+            return 404;
         }
     }
 }

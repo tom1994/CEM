@@ -322,8 +322,16 @@
         SELECT *
         FROM probe
         WHERE county_id = #{value}
-        ORDER BY id
+        order by convert(probe_name USING gbk)
     </select>
+
+    <select id="queryProbeByCity" resultMap="probeMap">
+        SELECT *
+        FROM probe
+        WHERE city_id = #{value}
+        order by convert(probe_name USING gbk)
+    </select>
+
 
     <select id="queryDetail" resultMap="probeMap">
         SELECT *

@@ -7,12 +7,9 @@ import java.util.List;
 import java.util.Map;
 
 /***
- * @author ${author}
- * @email ${email}
- * @date 2017-11-13 11:01:11
  */
 public interface TaskDispatchDao extends BaseDao<TaskDispatchEntity> {
-    List<TaskDispatchEntity> queryDispatchList(Integer id);
+    List<TaskDispatchEntity> queryDispatchList(Map<String, Object> map);
 
     int queryDispatchTotal(Integer id);
 

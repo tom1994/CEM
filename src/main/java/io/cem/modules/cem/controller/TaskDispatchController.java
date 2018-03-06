@@ -65,6 +65,7 @@ public class TaskDispatchController {
     @RequiresPermissions("taskdispatch:info")
     public R info(@PathVariable("id") Integer id, Integer page, Integer limit) throws Exception {
         Map<String, Object> map = new HashMap<>();
+        map.put("taskid",id);
         int total = 0;
         if (page == null) {              /*没有传入page,则取全部值*/
             map.put("offset", null);
@@ -76,13 +77,14 @@ public class TaskDispatchController {
             map.put("limit", limit);
             total = taskDispatchService.queryDispatchTotal(id);
         }
-        List<TaskDispatchEntity> dispatchList = taskDispatchService.queryDispatchList(id);
-        String[] targetList = new String[dispatchList.size()];
-        for (int i = 0; i < dispatchList.size(); i++) {
-            targetList[i] = dispatchList.get(i).getTarget();
-            String targetName = taskDispatchService.queryTargetBatch(targetList[i].split(",|\""));
-            dispatchList.get(i).setTargetName(targetName);
-        }
+
+        List<TaskDispatchEntity> dispatchList = taskDispatchService.queryDispatchList(map);
+//        String[] targetList = new String[dispatchList.size()];
+//        for (int i = 0; i < dispatchList.size(); i++) {
+//            targetList[i] = dispatchList.get(i).getTarget();
+//            String targetName = taskDispatchService.queryTargetBatch(targetList[i].split(",|\""));
+//            dispatchList.get(i).setTargetName(targetName);
+//        }
 
         PageUtils pageUtil = new PageUtils(dispatchList, total, limit, page);
         return R.ok().put("page", pageUtil);

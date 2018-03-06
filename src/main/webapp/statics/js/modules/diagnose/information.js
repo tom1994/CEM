@@ -214,7 +214,7 @@ var ping1Table = new Vue({
                     url: "../../recordping/diagnose",
                     cache: false,  //禁用缓存
                     data: JSON.stringify(param),  //传入组装的参数
-                    data :param,
+                    // data :param,
                     dataType: "json",
                     contentType:"application/json",
                     success: function (result) {
@@ -360,12 +360,12 @@ var ping2Table = new Vue({
                     url: "../../recordping/diagnose",
                     cache: false,  //禁用缓存
                     data: JSON.stringify(param),  //传入组装的参数
-                    data :param,
+                    // data :param,
                     dataType: "json",
                     contentType:"application/json",
                     success: function (result) {
-                        console.log(result)
-                        $('.warning').css('display', 'none')
+                        console.log(result);
+                        $('.warning').css('display', 'none');
                         $('.loader').hide();
                         //  console.log(result.page.list)
                         // //封装返回数据
@@ -506,7 +506,7 @@ var ping3Table = new Vue({
                     url: "../../recordping/diagnose",
                     cache: false,  //禁用缓存
                     data: JSON.stringify(param),  //传入组装的参数
-                    data :param,
+                    // data :param,
                     dataType: "json",
                     contentType:"application/json",
                     success: function (result) {
@@ -655,6 +655,7 @@ var ROUTETable = new Vue({
                     dataType: "json",
                     contentType:"application/json",
                     success: function (result) {
+                        console.log(result);
                         $('.warning').css('display', 'none')
                         $('.loader').hide();
                         // 封装返回数据
