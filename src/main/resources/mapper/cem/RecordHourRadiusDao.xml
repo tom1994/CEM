@@ -61,7 +61,7 @@
 		ON record_hour_radius.city_id = city.city_id
 		LEFT JOIN county
 		ON record_hour_radius.county_id = county.county_id
-		LEFT JOIN probe
+		INNER JOIN probe
 		ON record_hour_radius.probe_id = probe.id
 		LEFT JOIN target
 		ON record_hour_radius.target_id = target.id
@@ -95,7 +95,7 @@
 		ON radius.city_id = city.city_id
 		LEFT JOIN county
 		ON radius.county_id = county.county_id
-		LEFT JOIN probe
+		INNER JOIN probe
 		ON radius.probe_id = probe.id
 		LEFT JOIN target
 		ON radius.target_id = target.id

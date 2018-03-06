@@ -57,7 +57,6 @@
 		county.county_name AS area_name,
 		probe.probe_name AS probe_name,
 		target.target_name AS target_name,
-		AVG(record_hour_game.dns_delay) AS dns_delay,
 		AVG(record_hour_game.conn_delay) AS conn_delay,
 		AVG(record_hour_game.packet_delay) AS packet_delay,
 		AVG(record_hour_game.packet_jitter) AS packet_jitter,
@@ -67,7 +66,7 @@
 		ON record_hour_game.city_id = city.city_id
 		LEFT JOIN county
 		ON record_hour_game.county_id = county.county_id
-		LEFT JOIN probe
+		INNER JOIN probe
 		ON record_hour_game.probe_id = probe.id
 		LEFT JOIN target
 		ON record_hour_game.target_id = target.id
@@ -94,7 +93,6 @@
 		county.county_name AS area_name,
 		probe.probe_name AS probe_name,
 		target.target_name AS target_name,
-		AVG(game.dns_delay) AS dns_delay,
 		AVG(game.conn_delay) AS conn_delay,
 		AVG(game.packet_delay) AS packet_delay,
 		AVG(game.packet_jitter) AS packet_jitter,
@@ -104,7 +102,7 @@
 		ON game.city_id = city.city_id
 		LEFT JOIN county
 		ON game.county_id = county.county_id
-		LEFT JOIN probe
+		INNER JOIN probe
 		ON game.probe_id = probe.id
 		LEFT JOIN target
 		ON game.target_id = target.id

@@ -74,28 +74,16 @@
 		AVG(record_hour_sla.delay) AS delay,
         AVG(record_hour_sla.g_delay) AS g_delay,
         AVG(record_hour_sla.r_delay) AS r_delay,
-		AVG(record_hour_sla.delay_std) AS delay_std,
-        AVG(record_hour_sla.g_delay_std) AS g_delay_std,
-        AVG(record_hour_sla.r_delay_std) AS r_delay_std,
-		AVG(record_hour_sla.delay_var) AS delay_var,
-        AVG(record_hour_sla.g_delay_var) AS g_delay_var,
-        AVG(record_hour_sla.r_delay_var) AS r_delay_var,
 		AVG(record_hour_sla.jitter) AS jitter,
         AVG(record_hour_sla.g_jitter) AS g_jitter,
         AVG(record_hour_sla.r_jitter) AS r_jitter,
-		AVG(record_hour_sla.jitter_std) AS jitter_std,
-        AVG(record_hour_sla.g_jitter_std) AS g_jitter_std,
-        AVG(record_hour_sla.r_jitter_std) AS r_jitter_std,
-		AVG(record_hour_sla.jitter_var) AS jitter_var,
-        AVG(record_hour_sla.g_jitter_var) AS g_jitter_var,
-        AVG(record_hour_sla.r_jitter_var) AS r_jitter_var,
 		AVG(record_hour_sla.loss_rate) AS loss_rate
 		FROM record_hour_sla
 		LEFT JOIN city
 		ON record_hour_sla.city_id = city.city_id
 		LEFT JOIN county
 		ON record_hour_sla.county_id = county.county_id
-		LEFT JOIN probe
+		INNER JOIN probe
 		ON record_hour_sla.probe_id = probe.id
 		LEFT JOIN target
 		ON record_hour_sla.target_id = target.id
@@ -125,28 +113,16 @@
 		AVG(sla.delay) AS delay,
 		AVG(sla.g_delay) AS g_delay,
 		AVG(sla.r_delay) AS r_delay,
-		AVG(sla.delay_std) AS delay_std,
-		AVG(sla.g_delay_std) AS g_delay_std,
-		AVG(sla.r_delay_std) AS r_delay_std,
-		AVG(sla.delay_var) AS delay_var,
-		AVG(sla.g_delay_var) AS g_delay_var,
-		AVG(sla.r_delay_var) AS r_delay_var,
 		AVG(sla.jitter) AS jitter,
 		AVG(sla.g_jitter) AS g_jitter,
 		AVG(sla.r_jitter) AS r_jitter,
-		AVG(sla.jitter_std) AS jitter_std,
-		AVG(sla.g_jitter_std) AS g_jitter_std,
-		AVG(sla.r_jitter_std) AS r_jitter_std,
-		AVG(sla.jitter_var) AS jitter_var,
-		AVG(sla.g_jitter_var) AS g_jitter_var,
-		AVG(sla.r_jitter_var) AS r_jitter_var,
 		AVG(sla.loss_rate) AS loss_rate
 		FROM record_day_sla sla
 		LEFT JOIN city
 		ON sla.city_id = city.city_id
 		LEFT JOIN county
 		ON sla.county_id = county.county_id
-		LEFT JOIN probe
+		INNER JOIN probe
 		ON sla.probe_id = probe.id
 		LEFT JOIN target
 		ON sla.target_id = target.id

@@ -63,7 +63,7 @@
 		ON record_hour_pppoe.city_id = city.city_id
 		LEFT JOIN county
 		ON record_hour_pppoe.county_id = county.county_id
-		LEFT JOIN probe
+		INNER JOIN probe
 		ON record_hour_pppoe.probe_id = probe.id
 		LEFT JOIN target
 		ON record_hour_pppoe.target_id = target.id
@@ -98,7 +98,7 @@
 		ON pppoe.city_id = city.city_id
 		LEFT JOIN county
 		ON pppoe.county_id = county.county_id
-		LEFT JOIN probe
+		INNER JOIN probe
 		ON pppoe.probe_id = probe.id
 		LEFT JOIN target
 		ON pppoe.target_id = target.id
