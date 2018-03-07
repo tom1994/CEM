@@ -392,6 +392,7 @@ var weightHandle = new Vue ({
 
         },
         reset:function(){
+            debugger;
             $.ajax({
                 type: "POST", /*GET会乱码*/
                 url: "../../cem/allweight/reset",

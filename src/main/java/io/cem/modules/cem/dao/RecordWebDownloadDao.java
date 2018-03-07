@@ -14,4 +14,5 @@ public interface RecordWebDownloadDao extends BaseDao<RecordWebDownloadEntity> {
     List<RecordWebDownloadEntity> queryWebDownloadTest(Map<String, Object> map);
     List<RecordHourWebDownloadEntity> queryWebDownload(Map<String, Object> map);
     List<RecordDayWebDownloadEntity> queryDay(Map<String, Object> map);
+    List<RecordWebDownloadEntity> queryWebDownloadList(Map<String, Object> map);
 }

@@ -1,16 +1,12 @@
 package io.cem.modules.cem.service;
 
 import io.cem.modules.cem.entity.RecordDhcpEntity;
+import io.cem.modules.cem.entity.RecordHourDhcpEntity;
 
 import java.util.List;
 import java.util.Map;
 
 /**
- * 
- * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2017-10-12 17:12:45
  */
 public interface RecordDhcpService {
 	
@@ -19,6 +15,12 @@ public interface RecordDhcpService {
 	List<RecordDhcpEntity> queryList(Map<String, Object> map);
 
 	List<RecordDhcpEntity> queryDhcpTest(Map<String, Object> map);
+
+	List<RecordDhcpEntity> queryDhcpList(Map<String, Object> map);
+
+	List<RecordHourDhcpEntity> queryIntervalList(Map<String, Object> map);
+
+	int queryIntervalTotal(Map<String, Object> map);
 	
 	int queryTotal(Map<String, Object> map);
 	

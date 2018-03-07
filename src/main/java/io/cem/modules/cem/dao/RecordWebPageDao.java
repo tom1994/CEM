@@ -15,4 +15,5 @@ public interface RecordWebPageDao extends BaseDao<RecordWebPageEntity> {
     List<RecordWebPageEntity> queryWebPageTest(Map<String, Object> map);
     List<RecordHourWebPageEntity> queryWebPage(Map<String, Object> map);
     List<RecordDayWebPageEntity> queryDay(Map<String, Object> map);
+    List<RecordWebPageEntity> queryWebPageList(Map<String, Object> map);
 }

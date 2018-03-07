@@ -8,7 +8,9 @@
     <link href="${rc.contextPath}/statics/css/formStyle.css" rel="stylesheet">  <!--自定义CSS-->
     <style type="text/css">
         tr:hover{background:#E5E5E5 }
-
+        .clear::-ms-clear { display: none;}
+        .clear::-ms-reveal { display: none;}
+        
         .box{
             padding-bottom: 0px !important;
             padding: 0px; min-height: 0px;
@@ -63,14 +65,14 @@
                                    style="display: none">id</label>
                             <div class="col-lg-8 col-md-8 col-sm-8 form_border"
                                  style="display: none">
-                                <input type="text" class="form-control input" id="id" name="id"  >
+                                <input type="text" class="form-control input clear" id="id" name="id"  >
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="name" class="col-lg-3 col-md-3 col-sm-3 control-label form_border"
                                style="line-height: 1.5"    >策略名称</label>
                             <div class="col-lg-8 col-md-8 col-sm-8">
-                                <input type="text" class="form-control input" id="name" name="spName"  >
+                                <input type="text" class="form-control input clear" id="name" name="spName"  >
                             </div>
                         </div>
                         <div class="form-group row">
@@ -91,14 +93,14 @@
                             <label for="interval" class="col-lg-3 col-md-3 col-sm-3 control-label form_border"
                                    style="line-height: 1.5" >时间间隔(分钟)</label>
                             <div class="col-lg-7 col-md-7 col-sm-7">
-                                <input type="text" class="form-control input" id="interval" name="interval" style="width: 302px" ><!--Todo:时间间隔只能允许输入15分钟到24小时-->
+                                <input type="text" class="form-control input clear" id="interval" name="interval" style="width: 302px" ><!--Todo:时间间隔只能允许输入15分钟到24小时-->
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="remark" class="col-lg-3 col-md-3 col-sm-3 control-label form_border"
                                    style="line-height: 1.5"  >备注</label>
                             <div class="col-lg-8 col-md-8 col-sm-8">
-                                <input type="text" class="form-control input" id="remark" name="remark"  >
+                                <input type="text" class="form-control input clear" id="remark" name="remark"  >
                             </div>
                         </div>
                     </form>

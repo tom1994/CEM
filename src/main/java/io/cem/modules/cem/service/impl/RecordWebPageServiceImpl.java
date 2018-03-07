@@ -1,5 +1,7 @@
 package io.cem.modules.cem.service.impl;
 
+import io.cem.modules.cem.dao.RecordHourWebPageDao;
+import io.cem.modules.cem.entity.RecordHourWebPageEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,9 @@ import io.cem.modules.cem.service.RecordWebPageService;
 public class RecordWebPageServiceImpl implements RecordWebPageService {
 	@Autowired
 	private RecordWebPageDao recordWebPageDao;
+
+	@Autowired
+	private RecordHourWebPageDao recordHourWebPageDao;
 	
 	@Override
 	public RecordWebPageEntity queryObject(Integer id){
@@ -35,6 +40,21 @@ public class RecordWebPageServiceImpl implements RecordWebPageService {
 	@Override
 	public List<RecordWebPageEntity> queryWebPageTest(Map<String, Object> map){
 		return recordWebPageDao.queryWebPageTest(map);
+	}
+
+	@Override
+	public List<RecordWebPageEntity> queryWebPageList(Map<String, Object> map) {
+		return recordWebPageDao.queryWebPageList(map);
+	}
+
+	@Override
+	public List<RecordHourWebPageEntity> queryIntervalList(Map<String, Object> map) {
+		return recordHourWebPageDao.queryIntervalList(map);
+	}
+
+	@Override
+	public int queryIntervalTotal(Map<String, Object> map) {
+		return recordHourWebPageDao.queryIntervalTotal(map);
 	}
 
 	@Override

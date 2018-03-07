@@ -14,4 +14,5 @@ public interface RecordWebVideoDao extends BaseDao<RecordWebVideoEntity> {
     List<RecordWebVideoEntity> queryWebVideoTest(Map<String, Object> map);
     List<RecordHourWebVideoEntity> queryWebVideo(Map<String, Object> map);
     List<RecordDayWebVideoEntity> queryDay(Map<String, Object> map);
+    List<RecordWebVideoEntity> queryWebVideoList(Map<String, Object> map);
 }

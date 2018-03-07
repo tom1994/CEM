@@ -14,4 +14,5 @@ public interface RecordPppoeDao extends BaseDao<RecordPppoeEntity> {
     List<RecordPppoeEntity> queryPppoeTest(Map<String, Object> map);
     List<RecordHourPppoeEntity> queryPppoe(Map<String, Object> map);
     List<RecordDayPppoeEntity> queryDay(Map<String, Object> map);
+    List<RecordPppoeEntity> queryPppoeList(Map<String, Object> map);
 }

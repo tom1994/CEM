@@ -14,4 +14,5 @@ public interface RecordRadiusDao extends BaseDao<RecordRadiusEntity> {
     List<RecordRadiusEntity> queryRadiusTest(Map<String, Object> map);
     List<RecordHourRadiusEntity> queryRadius(Map<String, Object> map);
     List<RecordDayRadiusEntity> queryDay(Map<String, Object> map);
+    List<RecordRadiusEntity> queryRadiusList(Map<String, Object> map);
 }

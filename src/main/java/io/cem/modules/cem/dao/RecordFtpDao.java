@@ -14,4 +14,5 @@ public interface RecordFtpDao extends BaseDao<RecordFtpEntity> {
     List<RecordFtpEntity> queryFtpTest(Map<String, Object> map);
     List<RecordHourFtpEntity> queryFtp(Map<String, Object> map);
     List<RecordDayFtpEntity> queryDay(Map<String, Object> map);
+    List<RecordFtpEntity> queryFtpList(Map<String, Object> map);
 }

@@ -268,10 +268,6 @@
         </if>
     </select>
 
-    <select id="queryTotal" resultType="int">
-		select count(*) from record_hour_ping 
-	</select>
-
     <select id="queryIntervalTotal" resultType="int">
         SELECT count(*) FROM (
         select
@@ -299,6 +295,11 @@
         </if>
         GROUP BY
         rhp.service_type,rhp.target_id,rhp.task_id,rhp.probe_id,date_format(rhp.record_date,'%Y-%m-%d'),rt) t
+    </select>
+
+
+    <select id="queryTotal" resultType="int">
+        select count(*) from record_hour_ping
     </select>
 
     <insert id="save" parameterType="io.cem.modules.cem.entity.RecordHourPingEntity" useGeneratedKeys="true"

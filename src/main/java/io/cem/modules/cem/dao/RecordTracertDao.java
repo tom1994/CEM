@@ -14,4 +14,5 @@ public interface RecordTracertDao extends BaseDao<RecordTracertEntity> {
     List<RecordTracertEntity> queryTracertTest(Map<String, Object> map);
     List<RecordHourTracertEntity> queryTracert(Map<String,Object> map);
     List<RecordDayTracertEntity> queryDay(Map<String,Object> map);
+    List<RecordTracertEntity> queryTracertList(Map<String, Object> map);
 }

@@ -156,50 +156,7 @@
 		AND rp.state = 0
 		GROUP BY rp.port,rp.service_type,rp.target_id,rp.task_id,rp.probe_id;
 	</select>
-
-	<!--根据条件查询测试结果-->
-	<select id="queryTracertList" resultType="io.cem.modules.cem.entity.RecordTracertEntity">
-		select record_tracert.*,
-		probe.probe_name AS probe_name,
-		task.task_name AS task_name,
-		target.target_name AS target_name,
-		target.value AS targetip_name,
-		a.data_name AS tasktype_name,
-		b.data_name AS targettype_name,
-		c.data_name AS state_name,
-		d.data_name AS servicetype_name
-		FROM record_tracert
-		LEFT JOIN probe
-		ON probe.id = record_tracert.probe_id
-		LEFT JOIN task
-		ON task.id = record_tracert.task_id
-		LEFT JOIN target
-		ON target.id = record_tracert.target_id
-		LEFT JOIN dic_data a
-		ON (a.dic_type_id = 6 AND record_tracert.task_type = a.data_id)
-		LEFT JOIN dic_data b
-		ON (b.dic_type_id = 8 AND record_tracert.target_type = b.data_id)
-		LEFT JOIN dic_data c
-		ON (c.dic_type_id = 9 AND record_tracert.state = c.data_id)
-		LEFT JOIN dic_data d
-		ON (d.dic_type_id = 5 AND record_tracert.service_type = d.data_id)
-		<!-- WHERE (record_date BETWEEN #{startDate} AND #{terminalDate}) AND (record_time BETWEEN #{startTime} AND #{terminalTime}) AND task_id = #{taskId} AND target_id = #{targetId} AND probe_id = #{probeId}-->
-		<!--暂时不判断时间，只根据日期筛选-->
-		WHERE
-		record_tracert.id >= 0
-		<if test="task_id != null and task_id != ''">
-			AND task_id = #{task_id}
-		</if>
-		<if test="target_id != null and target_id != ''">
-			AND target_id = #{target_id}
-		</if>
-		<if test="probe_id != null and probe_id != ''">
-			AND probe_id = #{probe_id}
-		</if>
-		<if test="startDate != null and startDate != '' and terminalDate != null and terminalDate != '' ">
-			AND (record_date BETWEEN #{startDate} AND #{terminalDate})
-		</if>
-	</select>
+	
 
 	<select id="queryTracertTest" resultType="io.cem.modules.cem.entity.RecordTracertEntity">
 		select record_tracert.*,
@@ -225,9 +182,86 @@
 			limit #{offset}, #{limit}
 		</if>
 	</select>
-	
- 	<select id="queryTotal" resultType="int">
-		select count(*) from record_tracert 
+
+	<!--根据条件查询测试结果-->
+	<select id="queryTracertList" resultType="io.cem.modules.cem.entity.RecordTracertEntity">
+		select record_tracert.*,
+		probe.probe_name AS probe_name,
+		task.task_name AS task_name,
+		target.target_name AS target_name,
+		target.value AS targetip_name,
+		a.data_name AS tasktype_name,
+		b.data_name AS targettype_name,
+		c.data_name AS state_name,
+		d.data_name AS servicetype_name
+		FROM record_tracert
+		INNER JOIN probe
+		ON  record_tracert.probe_id =probe.id
+		INNER JOIN task
+		ON record_tracert.task_id = task.id
+		INNER JOIN target
+		ON record_tracert.target_id = target.id
+		LEFT JOIN dic_data a
+		ON (a.dic_type_id = 6 AND record_tracert.task_type = a.data_id)
+		LEFT JOIN dic_data b
+		ON (b.dic_type_id = 8 AND record_tracert.target_type = b.data_id)
+		LEFT JOIN dic_data c
+		ON (c.dic_type_id = 9 AND record_tracert.state = c.data_id)
+		LEFT JOIN dic_data d
+		ON (d.dic_type_id = 5 AND record_tracert.service_type = d.data_id)
+		WHERE record_tracert.service_type = #{service_type}
+		<if test="task_id != null and task_id != ''">
+			AND task_id = #{task_id}
+		</if>
+		<if test="target_id != null and target_id != ''">
+			AND target_id = #{target_id}
+		</if>
+		<if test="probe_id != null and probe_id != ''">
+			AND probe_id = #{probe_id}
+		</if>
+		<if test="startDate != null and startDate != '' and terminalDate != null and terminalDate != '' ">
+			AND record_date BETWEEN #{startDate} AND #{terminalDate}
+		</if>
+		<if test="start_time != null and start_time != '' and end_time != null and end_time != '' ">
+			AND record_time BETWEEN #{start_time} AND #{end_time}
+		</if>
+		<choose>
+			<when test="sidx != null and sidx.trim() != ''">
+				order by ${sidx} ${order}
+			</when>
+			<otherwise>
+				order by record_date desc,record_time desc
+			</otherwise>
+		</choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+	<select id="queryTotal" resultType="int">
+		select count(*) FROM record_tracert
+		INNER JOIN probe
+		ON  record_tracert.probe_id =probe.id
+		INNER JOIN task
+		ON record_tracert.task_id = task.id
+		INNER JOIN target
+		ON record_tracert.target_id = target.id
+		WHERE
+		record_tracert.service_type = #{service_type}
+		AND
+		record_date BETWEEN #{startDate} AND #{terminalDate}
+		<if test="task_id != null and task_id != ''">
+			AND task_id = #{task_id}
+		</if>
+		<if test="target_id != null and target_id != ''">
+			AND target_id = #{target_id}
+		</if>
+		<if test="probe_id != null and probe_id != ''">
+			AND probe_id = #{probe_id}
+		</if>
+		<if test="start_time != null and start_time != '' and end_time != null and end_time != '' ">
+			AND record_time BETWEEN #{start_time} AND #{end_time}
+		</if>
 	</select>
 	 
 	<insert id="save" parameterType="io.cem.modules.cem.entity.RecordTracertEntity" useGeneratedKeys="true" keyProperty="id">

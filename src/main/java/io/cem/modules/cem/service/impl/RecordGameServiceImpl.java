@@ -1,5 +1,7 @@
 package io.cem.modules.cem.service.impl;
 
+import io.cem.modules.cem.dao.RecordHourGameDao;
+import io.cem.modules.cem.entity.RecordHourGameEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,9 @@ import io.cem.modules.cem.service.RecordGameService;
 public class RecordGameServiceImpl implements RecordGameService {
 	@Autowired
 	private RecordGameDao recordGameDao;
+
+	@Autowired
+	private RecordHourGameDao recordHourGameDao;
 	
 	@Override
 	public RecordGameEntity queryObject(Integer id){
@@ -37,6 +42,21 @@ public class RecordGameServiceImpl implements RecordGameService {
 		return recordGameDao.queryGameTest(map);
 	}
 
+	@Override
+	public List<RecordGameEntity> queryGameList(Map<String, Object> map) {
+		return recordGameDao.queryGameList(map);
+	}
+
+	@Override
+	public List<RecordHourGameEntity> queryIntervalList(Map<String, Object> map) {
+		return recordHourGameDao.queryIntervalList(map);
+	}
+
+	@Override
+	public int queryIntervalTotal(Map<String, Object> map) {
+		return recordHourGameDao.queryIntervalTotal(map);
+	}
+	
 	@Override
 	public void save(RecordGameEntity recordGame){
 		recordGameDao.save(recordGame);

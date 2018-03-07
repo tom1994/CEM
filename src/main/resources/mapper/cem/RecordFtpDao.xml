@@ -144,9 +144,86 @@
 		AND rp.state = 0
 		GROUP BY rp.port,rp.service_type,rp.target_id,rp.task_id,rp.probe_id;
 	</select>
-	
- 	<select id="queryTotal" resultType="int">
-		select count(*) from record_ftp 
+
+	<!--根据条件查询测试结果-->
+	<select id="queryFtpList" resultType="io.cem.modules.cem.entity.RecordFtpEntity">
+		select record_ftp.*,
+		probe.probe_name AS probe_name,
+		task.task_name AS task_name,
+		target.target_name AS target_name,
+		target.value AS targetip_name,
+		a.data_name AS tasktype_name,
+		b.data_name AS targettype_name,
+		c.data_name AS state_name,
+		d.data_name AS servicetype_name
+		FROM record_ftp
+		INNER JOIN probe
+		ON  record_ftp.probe_id =probe.id
+		INNER JOIN task
+		ON record_ftp.task_id = task.id
+		INNER JOIN target
+		ON record_ftp.target_id = target.id
+		LEFT JOIN dic_data a
+		ON (a.dic_type_id = 6 AND record_ftp.task_type = a.data_id)
+		LEFT JOIN dic_data b
+		ON (b.dic_type_id = 8 AND record_ftp.target_type = b.data_id)
+		LEFT JOIN dic_data c
+		ON (c.dic_type_id = 9 AND record_ftp.state = c.data_id)
+		LEFT JOIN dic_data d
+		ON (d.dic_type_id = 5 AND record_ftp.service_type = d.data_id)
+		WHERE record_ftp.service_type = #{service_type}
+		<if test="task_id != null and task_id != ''">
+			AND task_id = #{task_id}
+		</if>
+		<if test="target_id != null and target_id != ''">
+			AND target_id = #{target_id}
+		</if>
+		<if test="probe_id != null and probe_id != ''">
+			AND probe_id = #{probe_id}
+		</if>
+		<if test="startDate != null and startDate != '' and terminalDate != null and terminalDate != '' ">
+			AND record_date BETWEEN #{startDate} AND #{terminalDate}
+		</if>
+		<if test="start_time != null and start_time != '' and end_time != null and end_time != '' ">
+			AND record_time BETWEEN #{start_time} AND #{end_time}
+		</if>
+		<choose>
+			<when test="sidx != null and sidx.trim() != ''">
+				order by ${sidx} ${order}
+			</when>
+			<otherwise>
+				order by record_date desc,record_time desc
+			</otherwise>
+		</choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+	<select id="queryTotal" resultType="int">
+		select count(*) FROM record_ftp
+		INNER JOIN probe
+		ON  record_ftp.probe_id =probe.id
+		INNER JOIN task
+		ON record_ftp.task_id = task.id
+		INNER JOIN target
+		ON record_ftp.target_id = target.id
+		WHERE
+		record_ftp.service_type = #{service_type}
+		AND
+		record_date BETWEEN #{startDate} AND #{terminalDate}
+		<if test="task_id != null and task_id != ''">
+			AND task_id = #{task_id}
+		</if>
+		<if test="target_id != null and target_id != ''">
+			AND target_id = #{target_id}
+		</if>
+		<if test="probe_id != null and probe_id != ''">
+			AND probe_id = #{probe_id}
+		</if>
+		<if test="start_time != null and start_time != '' and end_time != null and end_time != '' ">
+			AND record_time BETWEEN #{start_time} AND #{end_time}
+		</if>
 	</select>
 
 	<select id="queryFtpTest" resultType="io.cem.modules.cem.entity.RecordFtpEntity">

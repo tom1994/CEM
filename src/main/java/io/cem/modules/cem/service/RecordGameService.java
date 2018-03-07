@@ -1,6 +1,7 @@
 package io.cem.modules.cem.service;
 
 import io.cem.modules.cem.entity.RecordGameEntity;
+import io.cem.modules.cem.entity.RecordHourGameEntity;
 
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,12 @@ public interface RecordGameService {
 	List<RecordGameEntity> queryList(Map<String, Object> map);
 
 	List<RecordGameEntity> queryGameTest(Map<String, Object> map);
+
+	List<RecordGameEntity> queryGameList(Map<String, Object> map);
+
+	List<RecordHourGameEntity> queryIntervalList(Map<String, Object> map);
+
+	int queryIntervalTotal(Map<String, Object> map);
 	
 	int queryTotal(Map<String, Object> map);
 	

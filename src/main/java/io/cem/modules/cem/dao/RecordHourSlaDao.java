@@ -8,13 +8,10 @@ import java.util.Map;
 
 
 /**
- * 
- * 
- * @author ${author}
- * @email ${email}
- * @date 2017-12-12 15:11:35
  */
 public interface RecordHourSlaDao extends BaseDao<RecordHourSlaEntity> {
     List<RecordHourSlaEntity> querySlaList(Map<String, Object> map);
     List<RecordHourSlaEntity> queryDayList(Map<String, Object> map);
+    List<RecordHourSlaEntity> queryIntervalList(Map<String,Object> map);
+    int queryIntervalTotal(Map<String,Object> map);
 }

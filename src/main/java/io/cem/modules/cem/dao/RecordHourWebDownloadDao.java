@@ -7,13 +7,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 
- * 
- * @author ${author}
- * @email ${email}
- * @date 2017-12-13 17:02:52
  */
 public interface RecordHourWebDownloadDao extends BaseDao<RecordHourWebDownloadEntity> {
     List<RecordHourWebDownloadEntity> queryWebDownloadList(Map<String, Object> map);
     List<RecordHourWebDownloadEntity> queryDayList(Map<String, Object> map);
+    List<RecordHourWebDownloadEntity> queryIntervalList(Map<String,Object> map);
+    int queryIntervalTotal(Map<String,Object> map);
 }

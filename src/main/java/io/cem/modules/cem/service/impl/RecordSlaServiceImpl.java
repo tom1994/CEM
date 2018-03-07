@@ -1,5 +1,7 @@
 package io.cem.modules.cem.service.impl;
 
+import io.cem.modules.cem.dao.RecordHourSlaDao;
+import io.cem.modules.cem.entity.RecordHourSlaEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,9 @@ import io.cem.modules.cem.service.RecordSlaService;
 public class RecordSlaServiceImpl implements RecordSlaService {
 	@Autowired
 	private RecordSlaDao recordSlaDao;
+
+	@Autowired
+	private RecordHourSlaDao recordHourSlaDao;
 	
 	@Override
 	public RecordSlaEntity queryObject(Integer id){
@@ -37,6 +42,21 @@ public class RecordSlaServiceImpl implements RecordSlaService {
 		return recordSlaDao.querySlaTest(map);
 	}
 
+	@Override
+	public List<RecordSlaEntity> querySlaList(Map<String, Object> map) {
+		return recordSlaDao.querySlaList(map);
+	}
+
+	@Override
+	public List<RecordHourSlaEntity> queryIntervalList(Map<String, Object> map) {
+		return recordHourSlaDao.queryIntervalList(map);
+	}
+
+	@Override
+	public int queryIntervalTotal(Map<String, Object> map) {
+		return recordHourSlaDao.queryIntervalTotal(map);
+	}
+	
 	@Override
 	public void save(RecordSlaEntity recordSla){
 		recordSlaDao.save(recordSla);

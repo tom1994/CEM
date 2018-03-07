@@ -14,4 +14,5 @@ public interface RecordDhcpDao extends BaseDao<RecordDhcpEntity> {
     List<RecordDhcpEntity> queryDhcpTest(Map<String, Object> map);
     List<RecordHourDhcpEntity> queryDhcp(Map<String, Object> map);
     List<RecordDayDhcpEntity> queryDay(Map<String, Object> map);
+    List<RecordDhcpEntity> queryDhcpList(Map<String, Object> map);
 }

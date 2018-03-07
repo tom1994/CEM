@@ -14,4 +14,5 @@ public interface RecordSlaDao extends BaseDao<RecordSlaEntity> {
     List<RecordSlaEntity> querySlaTest(Map<String, Object> map);
     List<RecordHourSlaEntity> querySla(Map<String, Object> map);
     List<RecordDaySlaEntity> queryDay(Map<String, Object> map);
+    List<RecordSlaEntity> querySlaList(Map<String, Object> map);
 }

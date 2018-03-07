@@ -23,38 +23,40 @@ $(function () {
         $('#myTab').append("<li><a href=\"#record_game\" data-toggle=\"tab\">网络游戏</a></li>");
     }
     if (RequestJson.ping != undefined) {
-        $('#myTab').append("<li class='active'><a href=\"#record_ping\" data-toggle=\"tab\">网络连通性</a></li>");
+        $('#myTab').append("<li><a href=\"#record_ping\" data-toggle=\"tab\">网络连通性</a></li>");
         activeId.push(1);
     }
     if (RequestJson.sla != undefined) {
         activeId.push(2);
-        $('#myTab').append("<li class='active'><a href=\"#record_quality\" data-toggle=\"tab\">网络质量</a></li>");
+        $('#myTab').append("<li><a href=\"#record_quality\" data-toggle=\"tab\">网络质量</a></li>");
     }
     if (RequestJson.download != undefined) {
         activeId.push(3);
-        $('#myTab').append("<li class='active'><a href=\"#record_file\" data-toggle=\"tab\">文件传输</a></li>");
+        $('#myTab').append("<li><a href=\"#record_file\" data-toggle=\"tab\">文件传输</a></li>");
     }
     if (RequestJson.web != undefined) {
         activeId.push(4);
-        $('#myTab').append("<li class='active'><a href=\"#record_browsing\" data-toggle=\"tab\">网页浏览</a></li>");
+        $('#myTab').append("<li><a href=\"#record_browsing\" data-toggle=\"tab\">网页浏览</a></li>");
     }
     if (RequestJson.video != undefined) {
         activeId.push(5);
-        $('#myTab').append("<li class='active'><a href=\"#record_video\" data-toggle=\"tab\">在线视频</a></li>");
+        $('#myTab').append("<li><a href=\"#record_video\" data-toggle=\"tab\">在线视频</a></li>");
     }
     if (RequestJson.game != undefined) {
         activeId.push(6);
-        $('#myTab').append("<li class='active'><a href=\"#record_game\" data-toggle=\"tab\">网络游戏</a></li>");
+        $('#myTab').append("<li><a href=\"#record_game\" data-toggle=\"tab\">网络游戏</a></li>");
+
     }
 
     var allId = [1, 2, 3, 4, 5, 6];
     var diffId = allId.minus(activeId);
     var sameId = Array.intersect(allId, activeId);
+     
     // diffId.forEach(function (o, x) {
-    //     $("#myTab>li").eq(o - 1).css("display", "none");
+    //     $("#myTab>li").eq(o ).css("display", "none");
     // });
-    $("#myTabContent>div").eq(sameId[0] - 1).addClass("in active");
-    $("#myTab>li").eq(sameId[0] - 1).addClass("active");
+    $("#myTabContent>div").eq(sameId[0]-1 ).addClass("in active");
+    $("#myTab>li").eq(0).addClass("active");
 })
 Array.prototype.minus = function (arr) {
     var result = new Array();
@@ -364,8 +366,8 @@ var ping2Table = new Vue({
                     dataType: "json",
                     contentType:"application/json",
                     success: function (result) {
-                        console.log(result);
-                        $('.warning').css('display', 'none');
+                        console.log(result)
+                        $('.warning').css('display', 'none')
                         $('.loader').hide();
                         //  console.log(result.page.list)
                         // //封装返回数据
@@ -506,7 +508,6 @@ var ping3Table = new Vue({
                     url: "../../recordping/diagnose",
                     cache: false,  //禁用缓存
                     data: JSON.stringify(param),  //传入组装的参数
-                    // data :param,
                     dataType: "json",
                     contentType:"application/json",
                     success: function (result) {
@@ -655,7 +656,6 @@ var ROUTETable = new Vue({
                     dataType: "json",
                     contentType:"application/json",
                     success: function (result) {
-                        console.log(result);
                         $('.warning').css('display', 'none')
                         $('.loader').hide();
                         // 封装返回数据

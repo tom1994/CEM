@@ -1,5 +1,7 @@
 package io.cem.modules.cem.service.impl;
 
+import io.cem.modules.cem.dao.RecordHourWebVideoDao;
+import io.cem.modules.cem.entity.RecordHourWebVideoEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,9 @@ import io.cem.modules.cem.service.RecordWebVideoService;
 public class RecordWebVideoServiceImpl implements RecordWebVideoService {
 	@Autowired
 	private RecordWebVideoDao recordWebVideoDao;
+
+	@Autowired
+	private RecordHourWebVideoDao recordHourWebVideoDao;
 	
 	@Override
 	public RecordWebVideoEntity queryObject(Integer id){
@@ -37,6 +42,21 @@ public class RecordWebVideoServiceImpl implements RecordWebVideoService {
 		return recordWebVideoDao.queryWebVideoTest(map);
 	}
 
+	@Override
+	public List<RecordWebVideoEntity> queryWebVideoList(Map<String, Object> map) {
+		return recordWebVideoDao.queryWebVideoList(map);
+	}
+
+	@Override
+	public List<RecordHourWebVideoEntity> queryIntervalList(Map<String, Object> map) {
+		return recordHourWebVideoDao.queryIntervalList(map);
+	}
+
+	@Override
+	public int queryIntervalTotal(Map<String, Object> map) {
+		return recordHourWebVideoDao.queryIntervalTotal(map);
+	}
+	
 	@Override
 	public void save(RecordWebVideoEntity recordWebVideo){
 		recordWebVideoDao.save(recordWebVideo);

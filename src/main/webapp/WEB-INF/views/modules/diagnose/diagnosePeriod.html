@@ -60,6 +60,15 @@
             border-color: #0EB690;
             box-shadow: none;
         }
+        .combo-input{
+            text-overflow: clip;
+        }
+        .clear::-ms-clear { display: none;}
+        .clear::-ms-reveal { display: none;}
+
+        input[type=text]::-ms-clear{
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -106,7 +115,7 @@
                                             <div class="input-group searchspan" id="probe" >
                                                 <div class="jq22">
                                                     <select id="selectprobe" class="form-control" name="probeid"  style="display: none">
-                                                        <option value="">---请选择---</option>
+                                                        <option value="">所有探针</option>
                                                         <option v-for="item in probe" v-bind:value="item.message.id">{{ item.message.name}}</option>
                                                     </select>
                                                 </div>
@@ -139,7 +148,7 @@
                                         </div>
                                         <div class="input-group searchspan">
                                             <span class="searchname search left " title="日期" style="width: 60px">结束时间</span>
-                                            <input type="text" id="terminal_date" class="form-control input "
+                                            <input type="text" id="terminal_date" class="form-control input clear "
                                                    name="terminalDate"
                                                    style="width: 134px"
                                                    value="">

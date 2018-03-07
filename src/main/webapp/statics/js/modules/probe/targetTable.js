@@ -36,6 +36,30 @@ var targetgroupdata_handle = new Vue({
                 }
                 search_data.target_names = targetGroupNames;
                 targetform_data.groupNames = targetGroupNames;
+                var groupSelected=0;
+               setTimeout(function () {
+                   $('#group .jq22').comboSelect();
+                   $('.combo-dropdown').css("z-index","3");
+                   $('#group .option-item').click(function (group) {
+                       var a = $(group.currentTarget)[0].innerText;
+                       groupSelected = $($(group.currentTarget)[0]).data('value');
+                       setTimeout(function(){
+                           $('#group .combo-input').val(a);
+                       },20);
+                   });
+                   $('#group input[type=text] ').keyup(function (group) {
+                       if( group.keyCode=='13'){
+                           var b = $("#group .option-hover.option-selected").text();
+                           var c=($("#group .option-hover.option-selected"));
+                           var c=c[0].dataset
+                           groupSelected = c.value;
+                           $('#group .combo-input').val(b);
+                           $('#group .combo-select select').val(b);
+                       }
+
+                   });
+               },20)
+
             }
         });
     },
@@ -75,6 +99,7 @@ var target_search = new Vue({
     },
     methods:{
         testagentListsearch:function() {   /*查询监听事件*/
+
                 var data = getFormJson($('#targetsearch'));
                 /*得到查询条件*/
                 /*获取表单元素的值*/
@@ -95,6 +120,7 @@ var tg_search = new Vue({
     data:{},
     methods:{
         tg_search:function() {   /*查询监听事件*/
+              
             var data = getFormJson($('#tgsearch'));
             /*得到查询条件*/
             /*获取表单元素的值*/
@@ -336,7 +362,6 @@ var targetform_data = new Vue({
             var targetJson = getFormJson($('#targetform_data'));
             console.log(targetJson);
             var reg1 = /^(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\/])+$/;
-
             var reg=/^((https|http|ftp|rtsp|mms)?:\/\/)[^\s]+/;
             if (targetJson.targetname == "") {
                 toastr.warning("请输入名称!");
@@ -482,7 +507,11 @@ var tgform_data = new Vue({
 function getFormJson(form) {
     var o = {};
     var a = $(form).serializeArray();
-    $.each(a, function () {
+    var b = $("#group .option-selected")[0].dataset.value;
+    var c=$('#service .option-selected')[0].dataset.value;
+    a[1].value = b;
+    a[2].value=c;
+        $.each(a, function () {
         if (o[this.name] !== undefined) {
             if (!o[this.name].push) {
                 o[this.name] = [o[this.name]];
@@ -814,3 +843,31 @@ var tg_table = new Vue({
         });
     }
 });
+
+$(document).ready(function () {
+    var serviceSelected=0;
+    $('#service .jq22').comboSelect();
+    $("#service input[type=text]").attr('placeholder',"---请选择---");
+    $('.combo-dropdown').css("z-index","3");
+    $('#service .option-item').click(function (service) {
+        var a = $(service.currentTarget)[0].innerText;
+        serviceSelected = $($(service.currentTarget)[0]).data('value');
+        setTimeout(function(){
+            $('#service .combo-input').val(a);
+        },20);
+    });
+
+    $('#service input[type=text] ').keyup(function (service) {
+        if( service.keyCode=='13'){
+            var b = $("#service .option-hover.option-selected").text();
+            var c=($("#service .option-hover.option-selected"));
+            var c=c[0].dataset
+            serviceSelected = c.value;
+            $('#service .combo-input').val(b);
+            $('#service .combo-select select').val(b);
+        }
+
+    });
+
+
+})

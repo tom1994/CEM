@@ -9,6 +9,7 @@ import com.alibaba.fastjson.JSONObject;
 import io.cem.common.exception.RRException;
 import io.cem.common.utils.JSONUtils;
 import io.cem.modules.cem.entity.DiagnoseEntity;
+import io.cem.modules.cem.entity.RecordHourPppoeEntity;
 import io.cem.modules.cem.service.TaskDispatchService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,16 +44,37 @@ public class RecordPppoeController {
 	 */
 	@RequestMapping("/list")
 	@RequiresPermissions("recordpppoe:list")
-	public R list(@RequestParam Map<String, Object> params){
-		//查询列表数据
-        Query query = new Query(params);
-
-		List<RecordPppoeEntity> recordPppoeList = recordPppoeService.queryList(query);
-		int total = recordPppoeService.queryTotal(query);
-		
-		PageUtils pageUtil = new PageUtils(recordPppoeList, total, query.getLimit(), query.getPage());
-		
-		return R.ok().put("page", pageUtil);
+	public R list(String resultdata, Integer page, Integer limit) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		JSONObject resultdata_jsonobject = JSONObject.parseObject(resultdata);
+		try {
+			map.putAll(JSONUtils.jsonToMap(resultdata_jsonobject));
+		} catch (RuntimeException e) {
+			throw new RRException("内部参数错误，请重试！");
+		}
+		int total = 0;
+		if(page==null) {              /*没有传入page,则取全部值*/
+			map.put("offset", null);
+			map.put("limit", null);
+			page = 0;
+			limit = 0;
+		}else {
+			map.put("offset", (page - 1) * limit);
+			map.put("limit", limit);
+		}
+		if (Integer.parseInt(map.get("queryType").toString()) == 1) {
+			List<RecordPppoeEntity> resultList = recordPppoeService.queryPppoeList(map);
+			System.out.println(resultList);
+			total = recordPppoeService.queryTotal(map);
+			PageUtils pageUtil = new PageUtils(resultList, total, limit, page);
+			return R.ok().put("page", pageUtil);
+		} else {
+			List<RecordHourPppoeEntity> resultList = recordPppoeService.queryIntervalList(map);
+			System.out.println(resultList);
+			total = recordPppoeService.queryIntervalTotal(map);
+			PageUtils pageUtil = new PageUtils(resultList, total, limit, page);
+			return R.ok().put("page", pageUtil);
+		}
 	}
 
 	@RequestMapping("/diagnose")

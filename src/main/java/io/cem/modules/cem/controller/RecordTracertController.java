@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.cem.modules.cem.entity.RecordTracertEntity;
 import io.cem.modules.cem.service.RecordTracertService;
+import io.cem.modules.cem.entity.RecordHourTracertEntity;
+import io.cem.modules.cem.service.RecordHourTracertService;
 import io.cem.common.utils.PageUtils;
 import io.cem.common.utils.Query;
 import io.cem.common.utils.R;
@@ -34,6 +36,9 @@ import static java.lang.Thread.sleep;
 public class RecordTracertController {
 	@Autowired
 	private RecordTracertService recordTracertService;
+
+	@Autowired
+	private RecordTracertService recordHourTracertService;
 
 	@Autowired
 	private TaskDispatchService taskDispatchService;
@@ -59,11 +64,21 @@ public class RecordTracertController {
 		}else {
 			map.put("offset", (page - 1) * limit);
 			map.put("limit", limit);
-			total = recordTracertService.queryTotal(map);
+//			total = recordTracertService.queryTotal(map);
 		}
-		List<RecordTracertEntity> resultList = recordTracertService.queryTracertList(map);
-		PageUtils pageUtil = new PageUtils(resultList, total, limit, page);
-		return R.ok().put("page", pageUtil);
+		if (Integer.parseInt(map.get("queryType").toString()) == 1) {
+			List<RecordTracertEntity> resultList = recordTracertService.queryTracertList(map);
+			System.out.println(resultList);
+			total = recordTracertService.queryTotal(map);
+			PageUtils pageUtil = new PageUtils(resultList, total, limit, page);
+			return R.ok().put("page", pageUtil);
+		} else {
+			List<RecordHourTracertEntity> resultList = recordTracertService.queryIntervalList(map);
+			System.out.println(resultList);
+			total = recordTracertService.queryIntervalTotal(map);
+			PageUtils pageUtil = new PageUtils(resultList, total, limit, page);
+			return R.ok().put("page", pageUtil);
+		}
 	}
 
 	@RequestMapping("/diagnose")

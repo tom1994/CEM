@@ -12,6 +12,10 @@ import java.util.Map;
  */
 public interface RecordDnsDao extends BaseDao<RecordDnsEntity> {
     List<RecordDnsEntity> queryDnsTest(Map<String, Object> map);
+
     List<RecordHourDnsEntity> queryDns(Map<String, Object> map);
+
     List<RecordDayDnsEntity> queryDay(Map<String, Object> map);
+
+    List<RecordDnsEntity> queryDnsList(Map<String, Object> map);
 }

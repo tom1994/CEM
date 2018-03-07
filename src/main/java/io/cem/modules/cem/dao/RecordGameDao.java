@@ -15,4 +15,5 @@ public interface RecordGameDao extends BaseDao<RecordGameEntity> {
     List<RecordGameEntity> queryGameTest(Map<String, Object> map);
     List<RecordHourGameEntity> queryGame(Map<String, Object> map);
     List<RecordDayGameEntity> queryDay(Map<String, Object> map);
+    List<RecordGameEntity> queryGameList(Map<String, Object> map);
 }

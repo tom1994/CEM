@@ -1,5 +1,6 @@
 package io.cem.modules.cem.service;
 
+import io.cem.modules.cem.entity.RecordHourSlaEntity;
 import io.cem.modules.cem.entity.RecordSlaEntity;
 
 import java.util.List;
@@ -19,6 +20,12 @@ public interface RecordSlaService {
 	List<RecordSlaEntity> queryList(Map<String, Object> map);
 
 	List<RecordSlaEntity> querySlaTest(Map<String, Object> map);
+
+	List<RecordSlaEntity> querySlaList(Map<String, Object> map);
+
+	List<RecordHourSlaEntity> queryIntervalList(Map<String, Object> map);
+
+	int queryIntervalTotal(Map<String, Object> map);
 	
 	int queryTotal(Map<String, Object> map);
 	

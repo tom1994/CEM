@@ -7,13 +7,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 
- * 
- * @author ${author}
- * @email ${email}
- * @date 2017-12-02 14:35:31
  */
 public interface RecordHourTracertDao extends BaseDao<RecordHourTracertEntity> {
     List<RecordHourTracertEntity> queryTracertList(Map<String, Object> map);
     List<RecordHourTracertEntity> queryDayList(Map<String, Object> map);
+    List<RecordHourTracertEntity> queryIntervalList(Map<String,Object> map);
+    int queryIntervalTotal(Map<String,Object> map);
 }
