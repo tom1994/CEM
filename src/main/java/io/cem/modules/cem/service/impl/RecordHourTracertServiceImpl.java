@@ -58,6 +58,8 @@ public class RecordHourTracertServiceImpl implements RecordHourTracertService {
 			scoreTarget.setCountyName(connection.get(i).getCountyName());
 			scoreTarget.setProbeName(connection.get(i).getProbeName());
 			scoreTarget.setTargetName(connection.get(i).getTargetName());
+			scoreTarget.setRecordDate(connection.get(i).getRecordDate());
+			scoreTarget.setRecordTime(connection.get(i).getRecordTime());
 			ScoreBaseEntity scoreBase = new ScoreBaseEntity();
 			scoreBase.setScore((connection.get(i).getScore()) * (connection.get(i).getBase()));
 			scoreBase.setBase(connection.get(i).getBase());
@@ -88,6 +90,8 @@ public class RecordHourTracertServiceImpl implements RecordHourTracertService {
 			lastScore.setServiceType(0);
 			lastScore.setTargetId(ite.getTargetId());
 			lastScore.setTargetName(ite.getTargetName());
+			lastScore.setRecordTime(ite.getRecordTime());
+			lastScore.setRecordDate(ite.getRecordDate());
 			lastScore.setScore(score.get(ite).getScore() / score.get(ite).getBase());
 			lastScore.setBase(score.get(ite).getBase());
 			finalScore.add(lastScore);
@@ -110,6 +114,8 @@ public class RecordHourTracertServiceImpl implements RecordHourTracertService {
 			scoreTarget.setCountyName(list.get(i).getCountyName());
 			scoreTarget.setProbeName(list.get(i).getProbeName());
 			scoreTarget.setTargetName(list.get(i).getTargetName());
+			scoreTarget.setRecordTime(list.get(i).getRecordTime());
+			scoreTarget.setRecordDate(list.get(i).getRecordDate());
 
 			if (!map.containsKey(scoreTarget)) {
 				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
