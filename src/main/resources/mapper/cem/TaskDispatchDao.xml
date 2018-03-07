@@ -54,8 +54,11 @@
 		ON task_dispatch.probe_id = probe.id
 		LEFT JOIN layer
 		ON probe.access_layer = layer.layer_tag
-		WHERE task_id = #{value} AND task_dispatch.status = 1
+		WHERE task_id = #{taskid} AND task_dispatch.status != 2
 		order by id desc
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
 	</select>
 
 	<select id="taskQueryDispatchList" resultMap="taskDispatchMap">
@@ -68,6 +71,7 @@
 		ON task_dispatch.task_id = task.id
 		LEFT JOIN schedule_policy ON task.sch_policy_id = schedule_policy.id
 		WHERE probe_id = #{probeid}
+		AND task_dispatch.is_ondemand = 0
 		<choose>
 			<when test="sidx != null and sidx.trim() != ''">
 				order by ${sidx} ${order}
@@ -84,22 +88,21 @@
 
 	<select id="queryDispatchTotal" resultType="int">
 		select count(*) from task_dispatch
-		WHERE task_id = #{value}
+		INNER JOIN probe
+		ON task_dispatch.probe_id=probe.id
+		WHERE task_id = #{value} AND task_dispatch.status != 2
 	</select>
 
 	<select id="queryTestStatus" resultType="int">
 		SELECT count(*) FROM task_dispatch
 		WHERE id = #{value}
-		AND is_ondemand = 1
 		AND status>1
 	</select>
 
 	<select id="taskQueryDispatchTotal" resultType="int">
 		select count(*) from task_dispatch
-		WHERE probe_id = #{probeid}
-		<if test="offset != null and limit != null">
-			limit #{offset}, #{limit}
-		</if>
+		WHERE probe_id = #{probeid} AND task_dispatch.status != 2
+		AND task_dispatch.is_ondemand = 0
 	</select>
 
 	<insert id="save" parameterType="io.cem.modules.cem.entity.TaskDispatchEntity" useGeneratedKeys="true" keyProperty="id">
@@ -162,7 +165,7 @@
 
 	 <update id="cancelTask">
 		 update task_dispatch
-		 SET status = 0
+		 SET status = 2
 		 WHERE id = #{value}
 	 </update>
 

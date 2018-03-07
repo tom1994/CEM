@@ -115,6 +115,17 @@ public class ProbeController {
 		return R.ok().put("probe", probeList);
 	}
 
+	/**
+	 * 按地市信息搜索探针信息
+	 */
+	@RequestMapping("/infoByCity/{id}")
+	@RequiresPermissions("probe:info")
+	public R infoByCity(@PathVariable("id") Integer id){
+		List<ProbeEntity> probeList = probeService.queryProbeByCity(id);
+		return R.ok().put("probe", probeList);
+	}
+
+
 
 	/**
 	 * 详细信息

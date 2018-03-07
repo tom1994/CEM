@@ -14,7 +14,7 @@ public interface TaskDispatchService {
 	
 	List<TaskDispatchEntity> queryList(Map<String, Object> map);
 
-	List<TaskDispatchEntity> queryDispatchList(Integer id);
+	List<TaskDispatchEntity> queryDispatchList(Map<String, Object> map);
 
 	List<TaskDispatchEntity> taskQueryDispatchList(Map<String, Object> map);
 

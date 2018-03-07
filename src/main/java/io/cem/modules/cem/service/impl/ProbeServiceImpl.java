@@ -51,6 +51,11 @@ public class ProbeServiceImpl implements ProbeService {
     }
 
     @Override
+    public List<ProbeEntity> queryProbeByCity(Integer id) {
+        return probeDao.queryProbeByCity(id);
+    }
+
+    @Override
     public List<ProbeEntity> queryProbe(Integer id) {
         return probeDao.queryProbe(id);
     }

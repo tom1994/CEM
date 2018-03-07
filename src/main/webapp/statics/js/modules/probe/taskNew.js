@@ -1093,7 +1093,7 @@ var dispatch_table = new Vue({
             {title: '<div style="width:77px">探针名称</div>'},
             {title: '<div style="width:78px">位置</div>'},
             {title: '<div style="width:57px">层级</div>'},
-            {title: '<div style="width:160px">测试目标</div>'},
+            // {title: '<div style="width:160px">测试目标</div>'},
             {title: '<div style="width:67px">操作</div>'}
         ],
         rows: [],
@@ -1168,6 +1168,7 @@ var dispatch_table = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
+                        console.log(result);
                         //封装返回数据
                         var returnData = {};
                         returnData.draw = result.page.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -1178,13 +1179,12 @@ var dispatch_table = new Vue({
                         var rows = [];
                         var i = param.start + 1;
                         result.page.list.forEach(function (item) {
-                            console.log(item);
                             var row = [];
                             row.push(i++);
                             row.push(item.probeName);
                             row.push('<span title="' + item.location + '" style="white-space: nowrap">' + (item.location).substr(0, 10) + '</span>');
                             row.push(item.layerName);
-                            row.push('<span title="' + item.targetName + '" style="white-space: nowrap">' + (item.targetName).substr(0, 25) + '</span>');
+                            // row.push('<span title="' + item.targetName + '" style="white-space: nowrap">' + (item.targetName).substr(0, 25) + '</span>');
                             // row.push(item.targetName);
                             row.push('<a class="fontcolor" onclick="cancel_task(this)" id=' + item.id + '>取消任务</a>');
                             rows.push(row);

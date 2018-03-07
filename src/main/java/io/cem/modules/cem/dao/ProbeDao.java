@@ -12,6 +12,7 @@ import java.util.Map;
 public interface ProbeDao extends BaseDao<ProbeEntity> {
     List<ProbeEntity> queryProbeList(Map<String,Object> map);
     List<ProbeEntity> queryProbe(Integer id);
+    List<ProbeEntity> queryProbeByCity(Integer id);
     ProbeEntity queryDetail(Integer id);
     ProbeEntity queryProbeByLayer(Integer id);
     List<ProbeEntity> queryProbeListByGroup(Integer id);
