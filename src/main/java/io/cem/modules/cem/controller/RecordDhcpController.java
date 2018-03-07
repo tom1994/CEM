@@ -43,7 +43,6 @@ public class RecordDhcpController {
 	 * 列表
 	 */
 	@RequestMapping("/list")
-	@RequiresPermissions("recorddhcp:list")
 	public R list(String resultdata, Integer page, Integer limit) throws Exception {
 		Map<String, Object> map = new HashMap<>();
 		JSONObject resultdata_jsonobject = JSONObject.parseObject(resultdata);

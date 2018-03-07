@@ -173,7 +173,7 @@
 		GROUP BY rs.port,rs.service_type,rs.target_id,rs.task_id,rs.probe_id;
 	</select>
 
-	<select id="queryDay" resultType="io.cem.modules.cem.entity.RecordDayslaEntity">
+	<select id="queryDay" resultType="io.cem.modules.cem.entity.RecordDaySlaEntity">
 		select rs.probe_id AS probe_id,
 		rs.port AS port,
 		rs.task_id AS task_id,

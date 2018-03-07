@@ -333,11 +333,10 @@ var getArea = function (cityid) {
 };
 //城市探针
 var getProbeCity = function (cityid) {
-    debugger;
     probeSelected = 0;
     if (cityid != "" && cityid != null){
         $.ajax({//探针信息
-            url: "../../cem/probe/info/" + cityid,
+            url: "../../cem/probe/infoByCity/" + cityid,
             type: "POST",
             cache: false,  //禁用缓存
             dataType: "json",

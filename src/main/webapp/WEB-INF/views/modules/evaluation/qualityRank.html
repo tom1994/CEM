@@ -14,8 +14,6 @@
     <style type="text/css">
 
         tr:hover{background:#E5E5E5 }
-
-
         .search{
             margin-top: 0px;
             text-align: center;
@@ -40,7 +38,45 @@
         .btn {
             margin-bottom: 0px !important;
         }
-
+        .combo-select{
+            display: inline-block;
+            max-width: 138px;
+            left:4px
+        }
+        .combo-dropdown{
+            max-height: 200px!important;
+        }
+        .combo-dropdown li{
+            padding: 5px;
+        }
+        .option-item{
+            border-bottom:0px
+        }
+        .combo-arrow:before{
+            border-top: 5px solid 	Gray
+        }
+        .combo-open .combo-arrow{
+            border-color: #0EB690;
+        }
+        .combo-focus input{
+            border-color: #0EB690;
+        }
+        .combo-focus{
+            border-color: #0EB690;
+            box-shadow: none
+        }
+        input:focus {
+            border-color: #0EB690;
+            box-shadow: none;
+        }
+        .combo-input{
+            text-overflow: clip;
+        }
+        .clear::-ms-clear { display: none;}
+        .clear::-ms-reveal { display: none;}
+        input[type=text]::-ms-clear{
+            display: none;
+        }
     </style>
 
 </head>
@@ -65,69 +101,86 @@
                                     <div class="row" id="searchbox" style="border: none !important;">
                                         <form class="col-lg-9 col-md-19 col-sm-9 form-horizontal" id="probesearch"
                                               role="form">
-                                            <div class="form-group row" style="margin-bottom: -5px">
-                                                <div class="input-group searchspan">
-                                                    <span class="searchname  search " title="地市" style="width: 80px">地市</span>
-                                                    <select id="selectcity" class="form-control input" name="city_id"
-                                                            v-on:change="citychange()" style="width: 140px">
-                                                        <option value="">所有地市</option>
-                                                        <option v-for="item in cities"
-                                                                v-bind:value="item.message.cityId">{{
-                                                            item.message.cityName }}
-                                                        </option>
-                                                        <!--<option v-for="pitem in parray" v-bind:value="pitem.Id">{{ pitem.Name }}-->
-                                                    </select>
+                                            <div class="form-group row" >
+                                                <div style="display:inline-block;">
+                                                    <span class="searchname" title="地市" style="width:80px; text-align: center">地市</span>
+                                                    <div class="input-group searchspan" id="city" >
+                                                        <div class="jq22">
+                                                            <select id="selectcity" class="form-control" name="type"  v-on:change="citychange()" style="display: none">
+                                                                <option value="">所有地市</option>
+                                                                <option v-for="item in cities"
+                                                                        v-bind:value="item.message.cityId">{{ item.message.cityName }}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div class="input-group searchspan">
-                                                    <span class="searchname  search left" title="区县" style="width: 80px">区&nbsp;&nbsp;&nbsp;&nbsp;县</span>
-                                                    <select id="selectarea" class="form-control  input " name="county_id"
-                                                            style="width: 140px">
-                                                        <option value="">所有区县</option>
-                                                        <option v-for="item in areas"
-                                                                v-bind:value="item.message.countyId">
-                                                            {{ item.message.countyName }}
-                                                        </option>
-                                                    </select>
+                                                <div style="display: inline-block;">
+                                                    <span class="searchname search left" title="区县" style="width: 80px;margin-left: 63px">区县</span>
+                                                    <div class="input-group searchspan" id="country">
+                                                        <div class="jq22">
+                                                            <select id="selectarea" class="form-control" name="countyid"  v-on:change="areachange()" style="display: none">
+                                                                <option value="">所有区县</option>
+                                                                <option v-for="item in areas"
+                                                                        v-bind:value="item.message.countyId">{{item.message.countyName}}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
                                                 </div>
-
-                                                <div class="input-group searchspan">
-                                                    <span class="searchname search left" title="业务类型"
-                                                          style="width: 80px">业务类型</span>
-                                                    <select id="selectservice" class="form-control  input" name="service_type"
-                                                            v-on:change="servicechange()" style="width: 140px">
-                                                        <option value="0">综合业务</option>
-                                                        <option value="1">网络连通性业务</option>
-                                                        <option value="2">网络层质量业务</option>
-                                                        <option value="3">文件下载业务</option>
-                                                        <option value="4">网页浏览业务</option>
-                                                        <option value="5">在线视频业务</option>
-                                                        <option value="6">网络游戏业务</option>
-                                                        <!--<option v-for="pitem in parray" v-bind:value="pitem.Id">{{ pitem.Name }}-->
-                                                    </select>
+                                                <div style="display: inline-block;">
+                                                    <span class="searchname search left" title="业务类型" style="width: 80px;margin-left: 65px;">业务类型</span>
+                                                    <div class="input-group searchspan" id="service" >
+                                                        <div class="jq22">
+                                                            <select id="selectservice" class="form-control  input" name="service_type"
+                                                                    v-on:change="servicechange()" style="width: 140px;display: none;">
+                                                                <option value="0">综合业务</option>
+                                                                <option value="1">网络连通性业务</option>
+                                                                <option value="2">网络层质量业务</option>
+                                                                <option value="3">文件下载业务</option>
+                                                                <option value="4">网页浏览业务</option>
+                                                                <option value="5">在线视频业务</option>
+                                                                <option value="6">网络游戏业务</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
 
                                             <div class="form-group row" style="margin-bottom: -5px">
-                                                <div class="input-group searchspan">
-                                                    <span class="searchname search" title="目标地址"
-                                                          style="width: 80px">目标地址</span>
-                                                    <select id="select_target" class="form-control input" name="target_id"
-                                                            style="width: 140px">
-                                                        <option value="">所有目标地址</option>
-                                                        <option v-for="item in target"
-                                                                v-bind:value="item.message.id">{{ item.message.targetName}}</option>
-                                                    </select>
+                                                <!--<div class="input-group searchspan">-->
+                                                    <!--<span class="searchname search" title="目标地址"-->
+                                                          <!--style="width: 80px">目标地址</span>-->
+                                                    <!--<select id="select_target" class="form-control input clear" name="target_id"-->
+                                                            <!--style="width: 140px">-->
+                                                        <!--<option value="">所有目标地址</option>-->
+                                                        <!--<option v-for="item in target"-->
+                                                                <!--v-bind:value="item.message.id">{{ item.message.targetName}}</option>-->
+                                                    <!--</select>-->
+                                                <!--</div>-->
+                                                <div style="display: inline-block;">
+                                                    <span class="searchname search " title="目标地址" style="width: 80px;">目标地址</span>
+                                                    <div class="input-group searchspan" id="target" style="top: -8px;">
+                                                        <div class="jq22">
+                                                            <select id="select_target" class="form-control  input" name="target_id"
+                                                                    style="width: 140px;display: none;">
+                                                                <option value="">所有目标地址</option>
+                                                                <option v-for="item in target"
+                                                                        v-bind:value="item.message.id">{{ item.message.targetName}}</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <div class="input-group searchspan">
-                                                    <span class="searchname search left" title="日期" style="width: 80px">起始时间</span>
-                                                    <input type="text" id="start_date" class="form-control input"
+                                                    <span class="searchname search left" title="日期" style="width: 80px;margin-left: 62px">起始时间</span>
+                                                    <input type="text" id="start_date" class="form-control input clear"
                                                            name="startDate"
                                                            style="width: 140px"
                                                            value="">
                                                 </div>
                                                 <div class="input-group searchspan">
                                                     <span class="searchname search left" title="日期" style="width: 80px">结束时间</span>
-                                                    <input type="text" id="terminal_date" class="form-control input"
+                                                    <input type="text" id="terminal_date" class="form-control input clear"
                                                            name="terminalDate"
                                                            style="width: 140px"
                                                            value="">
@@ -155,8 +208,6 @@
                         </div>
                     </div>
                 </div>
-
-
                 <div class="row" id="test_table">
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="ibox float-e-margins">
@@ -177,7 +228,6 @@
                     </div>
                 </div>
             </div>
-
             <div role="tabpanel" class="tab-pane fade" id="Section2">
                 <div class="wrapper wrapper-content">
                     <div class="row">
@@ -185,47 +235,54 @@
                             <div class="ibox float-e-margins">
                                 <div class="ibox-content" style="padding-bottom: 0 !important;">
                                     <div class="row" id="area_searchbox" style="border: none !important;">
-
                                         <form class="col-lg-9 col-md-19 col-sm-9 form-horizontal" id="areasearch"
                                               role="form">
-                                            <div class="form-group row" style="margin-bottom: -5px">
+                                            <div class="form-group row" >
 
-                                                <div class="input-group searchspan">
-                                                    <span class="searchname search" title="地市" style="width: 80px">地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;市</span>
-                                                    <select id="area_city" class="form-control input" name="city_id" style="width: 140px">
-                                                        <option value="">所有地市</option>
-                                                        <option v-for="item in cities"
-                                                                v-bind:value="item.message.cityId">{{ item.message.cityName }}
-                                                        </option>
-                                                        <!--<option v-for="pitem in parray" v-bind:value="pitem.Id">{{ pitem.Name }}-->
-                                                    </select>
+                                                <div style="display:inline-block;">
+                                                    <span class="searchname" title="地市" style="width:80px; text-align: center;">地 &nbsp;&nbsp;&nbsp;市</span>
+                                                    <div class="input-group searchspan" id="areaCity">
+                                                        <div class="jq22">
+                                                            <select id="area_city" class="form-control" name="type"  v-on:change="citychange()" style="display: none">
+                                                                <option value="">所有地市</option>
+                                                                <option v-for="item in cities"
+                                                                        v-bind:value="item.message.cityId">{{ item.message.cityName }}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
                                                 </div>
 
-                                                <div class="input-group searchspan">
-                                                    <span class="searchname search left" title="业务类型"
-                                                          style="width: 80px">业务类型</span>
-                                                    <select id="area_service" class="form-control input" name="servicetype"
-                                                            v-on:change="servicechange()" style="width: 140px">
-                                                        <option value="0">综合业务</option>
-                                                        <option value="1">网络连通性业务</option>
-                                                        <option value="2">网络层质量业务</option>
-                                                        <option value="3">文件下载业务</option>
-                                                        <option value="4">网页浏览业务</option>
-                                                        <option value="5">在线视频业务</option>
-                                                        <option value="6">网络游戏业务</option>
-                                                        <!--<option v-for="pitem in parray" v-bind:value="pitem.Id">{{ pitem.Name }}-->
-                                                    </select>
+                                                <div style="display: inline-block;">
+                                                    <span class="searchname search left" title="业务类型" style="width: 80px;text-align: center; margin-left: 63px">业务类型</span>
+                                                    <div class="input-group searchspan" id="area" >
+                                                        <div class="jq22">
+                                                            <select id="area_service" class="form-control  input" name="service_type"
+                                                                    v-on:change="servicechange()" style="width: 140px;display: none;">
+                                                                <option value="0">综合业务</option>
+                                                                <option value="1">网络连通性业务</option>
+                                                                <option value="2">网络层质量业务</option>
+                                                                <option value="3">文件下载业务</option>
+                                                                <option value="4">网页浏览业务</option>
+                                                                <option value="5">在线视频业务</option>
+                                                                <option value="6">网络游戏业务</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
                                                 </div>
 
-                                                <div class="input-group searchspan">
-                                                    <span class="searchname search  left" title="目标地址"
-                                                          style="width: 80px">目标地址</span>
-                                                    <select id="area_target" class="form-control input " name="target"
-                                                            style="width: 117px">
-                                                        <option value="">所有目标地址</option>
-                                                        <option v-for="item in target"
-                                                                v-bind:value="item.message.id">{{ item.message.targetName}}</option>
-                                                    </select>
+                                                <div style="display: inline-block;">
+                                                    <span class="searchname search left " title="目标地址" style="width: 80px;">目标地址</span>
+                                                    <div class="input-group searchspan" id="areaTarget" >
+                                                        <div class="jq22">
+                                                            <select id="area_target" class="form-control  input" name="target_id"
+                                                                    style="width: 140px;display: none;">
+                                                                <option value="">所有目标地址</option>
+                                                                <option v-for="item in target"
+                                                                        v-bind:value="item.message.id">{{ item.message.targetName}}</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
 
@@ -246,10 +303,7 @@
                                                            value="">
                                                 </div>
                                             </div>
-
                                         </form>
-
-
                                         <div class="col-lg-3 col-md-3 col-sm-3 pull-left"
                                              style="text-align:center;height:50px;position: relative;" id="area_search">
                                             <button type="button" class="btn btn-sm btn-success"
@@ -269,8 +323,6 @@
                         </div>
                     </div>
                 </div>
-
-
                 <div class="row" id="areatest_table">
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="ibox float-e-margins">
@@ -288,22 +340,9 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
-
-
-
-
-
                 </div>
             </div>
-
-
-
-
-
-
-
         </div>
     </div>
 
@@ -409,7 +448,158 @@
     }
 </script>
 
+<script>
+    $(document).ready(function () {
+        var citySelected=0;
+        $('#country .jq22').comboSelect();
+        $('#probe .jq22').comboSelect();
+        $('#target .jq22').comboSelect();
+        $('#areaTarget .jq22').comboSelect();
+        citySelected=0
+        $.ajax({
+            type: "POST", /*GET会乱码*/
+            url: "../../cem/city/list",//c城市列表
+            cache: false,  //禁用缓存
+            dataType: "json",
+            success: function (result) {
+                var cities = [];
+                for (var i = 0; i < result.page.list.length; i++) {
+                    cities[i] = {message: result.page.list[i]}
+                }
+                search_data.city = cities;
+                setTimeout(function () {
+                    $('div#city .jq22').comboSelect();
+                    $('.combo-dropdown').css("z-index","3");
+                    $('div#city .option-item').click(function (city) {
+                        setTimeout(function () {
+                            var a = $(city.currentTarget)[0].innerText;
+                            clearArea(a);
+                            citySelected = $($(city.currentTarget)[0]).data('value');
+                            getArea(citySelected);
+                            $('div#city .combo-input').val(a);
+                            $('div#city .combo-select select').val(a);
+                        }, 30);
+                    });
+                    $('#city input[type=text] ').keyup(function (city) {
+                        if( city.keyCode=='13'){
+                            var b = $("#city .option-hover.option-selected").text();
+                            clearArea(b);
+                            var c=($("#city .option-hover.option-selected"));
+                            var c=c[0].dataset
+                            citySelected = c.value;
+                            getArea(citySelected);
+                            $('#city .combo-input').val(b);
+                            $('#city .combo-select select').val(b);
+                        }
 
+                    })
+                }, 50);
+            }
+        });
+
+        function clearArea(a) {
+            if(a=="所有地市"){
+                $('#country .combo-input').val("所有区县");
+                $('#country .combo-select select').val("所有区县");
+                search_data.areas = [];
+                $('#country ul').html("");
+                $("#country ul").append("<li class='option-item option-hover option-selected' data-index=='0' data-value=''>"+"所有区县"+"</li>");
+            }
+        }
+        var serviceSelected=0;
+        $('#service .jq22').comboSelect();
+        $("#service input[type=text]").attr('placeholder',"---请选择---")
+        $('.combo-dropdown').css("z-index","3");
+        $('#service .option-item').click(function (service) {
+            var a = $(service.currentTarget)[0].innerText;
+            serviceSelected = $($(service.currentTarget)[0]).data('value');
+            setTimeout(function(){
+                $('#service .combo-input').val(a);
+            },20);
+
+            getService(serviceSelected);
+        });
+
+        $('#service input[type=text] ').keyup(function (service) {
+            if( service.keyCode=='13'){
+                var b = $("#service .option-hover.option-selected").text();
+                var c=($("#service .option-hover.option-selected"));
+                var c=c[0].dataset
+                serviceSelected = c.value;
+                getService(serviceSelected);
+                $('#service .combo-input').val(b);
+                $('#service .combo-select select').val(b);
+            }
+
+        });
+
+        var area_Selected=0;
+        $('#area .jq22').comboSelect();
+        $("#area input[type=text]").attr('placeholder',"---请选择---")
+        $('.combo-dropdown').css("z-index","3");
+        $('#area .option-item').click(function (area) {
+            var a = $(area.currentTarget)[0].innerText;
+            area_Selected = $($(area.currentTarget)[0]).data('value');
+            setTimeout(function(){
+                $('#area .combo-input').val(a);
+            },20);
+            getAreaService(area_Selected);
+        });
+
+        $('#area input[type=text] ').keyup(function (area) {
+            if( area.keyCode=='13'){
+                var b = $("#area .option-hover.option-selected").text();
+                var c=($("#area .option-hover.option-selected"));
+                var c=c[0].dataset
+                serviceSelected = c.value;
+                getAreaService(serviceSelected);
+                $('#area .combo-input').val(b);
+                $('#area .combo-select select').val(b);
+            }
+        });
+        //区域排名
+        var citySelected=0;
+        citySelected=0;
+        $.ajax({
+            type: "POST", /*GET会乱码*/
+            url: "../../cem/city/list",//c城市列表
+            cache: false,  //禁用缓存
+            dataType: "json",
+            success: function (result) {
+                var cities = [];
+                for (var i = 0; i < result.page.list.length; i++) {
+                    cities[i] = {message: result.page.list[i]}
+                }
+                search_data.city = cities;
+                setTimeout(function () {
+                    $('div#areaCity .jq22').comboSelect();
+                    $('.combo-dropdown').css("z-index","3");
+                    $('div#areaCity .option-item').click(function (area) {
+                        setTimeout(function () {
+                            var a = $(area.currentTarget)[0].innerText;
+                            clearArea(a);
+                            citySelected = $($(area.currentTarget)[0]).data('value');
+                            $('div#areaCity .combo-input').val(a);
+                            $('div#areaCity .combo-select select').val(a);
+                        }, 50);
+                    });
+                    $('#areaCity input[type=text] ').keyup(function (area) {
+                        if( area.keyCode=='13'){
+                            var b = $("#areaCity .option-hover.option-selected").text();
+                            clearArea(b);
+                            var c=($("#areaCity .option-hover.option-selected"));
+                            var c=c[0].dataset
+                            citySelected = c.value;
+                            $('#areaCity .combo-input').val(b);
+                            $('#areaCity .combo-select select').val(b);
+                        }
+
+                    })
+                }, 100);
+            }
+        });
+    })
+</script>
 
 
 </body>

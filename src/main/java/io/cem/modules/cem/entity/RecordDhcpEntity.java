@@ -7,11 +7,6 @@ import java.util.Date;
 
 
 /**
- * 
- * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2017-10-12 17:12:45
  */
 public class RecordDhcpEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -33,7 +28,7 @@ public class RecordDhcpEntity implements Serializable {
 	//测试目标ID
 	private Integer targetId;
 	//测试目标IP
-	private Integer targetIp;
+	private Long targetIp;
 	//测试目标归属地
 	private String targetLoc;
 	//测试结果
@@ -48,6 +43,20 @@ public class RecordDhcpEntity implements Serializable {
 	private BigDecimal successRate;
 	//备注
 	private String remark;
+
+	private String probeName;
+
+	private String taskName;
+
+	private String targetName;
+
+	private String targetipName;
+
+	private String targettypeName;
+
+	private String stateName;
+
+	private String servicetypeName;
 
 	/**
 	 * 设置：测试记录ID
@@ -148,13 +157,13 @@ public class RecordDhcpEntity implements Serializable {
 	/**
 	 * 设置：测试目标IP
 	 */
-	public void setTargetIp(Integer targetIp) {
+	public void setTargetIp(Long targetIp) {
 		this.targetIp = targetIp;
 	}
 	/**
 	 * 获取：测试目标IP
 	 */
-	public Integer getTargetIp() {
+	public Long getTargetIp() {
 		return targetIp;
 	}
 	/**
@@ -240,5 +249,61 @@ public class RecordDhcpEntity implements Serializable {
 	 */
 	public String getRemark() {
 		return remark;
+	}
+
+	public String getProbeName() {
+		return probeName;
+	}
+
+	public void setProbeName(String probeName) {
+		this.probeName = probeName;
+	}
+
+	public String getTaskName() {
+		return taskName;
+	}
+
+	public void setTaskName(String taskName) {
+		this.taskName = taskName;
+	}
+
+	public String getTargetName() {
+		return targetName;
+	}
+
+	public void setTargetName(String targetName) {
+		this.targetName = targetName;
+	}
+
+	public String getTargetipName() {
+		return targetipName;
+	}
+
+	public void setTargetipName(String targetipName) {
+		this.targetipName = targetipName;
+	}
+
+	public String getTargettypeName() {
+		return targettypeName;
+	}
+
+	public void setTargettypeName(String targettypeName) {
+		this.targettypeName = targettypeName;
+	}
+
+	public String getStateName() {
+		return stateName;
+	}
+
+	public void setStateName(String stateName) {
+		this.stateName = stateName;
+	}
+
+	public String getServicetypeName() {
+		return servicetypeName;
+	}
+
+	public void setServicetypeName(String servicetypeName) {
+		this.servicetypeName = servicetypeName;
 	}
 }

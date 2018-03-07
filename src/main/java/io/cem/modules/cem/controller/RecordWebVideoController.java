@@ -44,7 +44,6 @@ public class RecordWebVideoController {
 	 * 列表
 	 */
 	@RequestMapping("/list")
-	@RequiresPermissions("recordwebvideo:list")
 	public R list(String resultdata, Integer page, Integer limit) throws Exception {
 		Map<String, Object> map = new HashMap<>();
 		JSONObject resultdata_jsonobject = JSONObject.parseObject(resultdata);

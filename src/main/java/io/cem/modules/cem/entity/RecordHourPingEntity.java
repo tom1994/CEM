@@ -70,6 +70,26 @@ public class RecordHourPingEntity implements Serializable {
 
 	private String timeRange;
 
+	private String targettypeName;
+
+	private String stateName;
+
+	public String getTargettypeName() {
+		return targettypeName;
+	}
+
+	public void setTargettypeName(String targettypeName) {
+		this.targettypeName = targettypeName;
+	}
+
+	public String getStateName() {
+		return stateName;
+	}
+
+	public void setStateName(String stateName) {
+		this.stateName = stateName;
+	}
+
 	/**
 	 * 设置：记录ID
 	 */

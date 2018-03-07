@@ -180,7 +180,7 @@ var search_data = new Vue({
             }
             if (recordtag == "dhcp") {
                 dhcpresult_Table.resultdata = data;
-                tracertresulttable.redraw();
+                dhcpresult_Table.redraw();
                 /*根据查询条件重绘*/
             }
             if (recordtag == "dns") {
@@ -425,7 +425,6 @@ var pingresulttable = new Vue({
                 param.start = data.start;//开始的记录序号
                 param.page = (data.start / data.length) + 1;//当前页码
                 param.resultdata = JSON.stringify(vm.resultdata);
-                console.log(param);
                 var timeTag = (vm.resultdata).queryType;
                 //console.log((vm.resultdata).queryType);
                 /*用于查询probe数据*/
@@ -522,9 +521,8 @@ var tracertresulttable = new Vue({
         ],
         rows: [],
         dtHandle: null,
-        /*resultdata: {startDate:'2017-11-24', startTime:'10:00',terminalDate:'2017-11-25',terminalTime:'11:00',probeId:'1',taskId:'2238',targetId:'2'}*/
         resultdata: {
-            service_type: "1", interval: "", probe_id: "", task_id: "", target_id: "",
+            service_type: "4", interval: "", probe_id: "", task_id: "", target_id: "",
             startDate: today.Format("yyyy-MM-dd"), terminalDate: (new Date()).Format("yyyy-MM-dd"),
             start_time: "00:00:00", end_time: "24:00:00", queryType: "1"
         }
@@ -593,7 +591,7 @@ var tracertresulttable = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                        //console.log(result);
+                        console.log(result);
                         //封装返回数据
                         let returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -749,7 +747,7 @@ var slaresulttable = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                        //console.log(result);
+                        console.log(result);
                         //封装返回数据
                         let returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -827,7 +825,7 @@ var dhcpresult_Table = new Vue({
         rows: [],
         dtHandle: null,
         resultdata: {
-            service_type: "1", interval: "", probe_id: "", task_id: "", target_id: "",
+            service_type: "13", interval: "", probe_id: "", task_id: "", target_id: "",
             startDate: today.Format("yyyy-MM-dd"), terminalDate: (new Date()).Format("yyyy-MM-dd"),
             start_time: "00:00:00", end_time: "24:00:00", queryType: "1"
         }
@@ -886,23 +884,17 @@ var dhcpresult_Table = new Vue({
                 param.limit = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
                 param.start = data.start;//开始的记录序号
                 param.page = (data.start / data.length) + 1;//当前页码
-                let sla = RequestJson.sla;
-                param.dispatchId = dispatchId(sla, 3,4);//获取当前的数组
-                /*用于查询probe数据*/
-                console.log(param.dispatchId,'DHCP');
-                //ajax请求数据
-                $('.warning').text('正在处理，请稍等');
+                param.resultdata = JSON.stringify(vm.resultdata);
+                console.log(param);
+                var timeTag = (vm.resultdata).queryType;
                 $.ajax({
                     type: "POST", /*GET会乱码*/
                     url: "../../recorddhcp/list",
                     cache: false,  //禁用缓存
-                    data: JSON.stringify(param),  //传入组装的参数
-                    // data:param,
+                    data: param,  //传入组装的参数
                     dataType: "json",
-                    contentType:"application/json",
                     success: function (result) {
-                        $('.warning').css('display', 'none')
-                        $('.loader').hide();
+                        console.log(result);
                         // 封装返回数据
                         let returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -964,7 +956,7 @@ var dnsresult_Table = new Vue({
         rows: [],
         dtHandle: null,
         resultdata: {
-            service_type: "1", interval: "", probe_id: "", task_id: "", target_id: "",
+            service_type: "14", interval: "", probe_id: "", task_id: "", target_id: "",
             startDate: today.Format("yyyy-MM-dd"), terminalDate: (new Date()).Format("yyyy-MM-dd"),
             start_time: "00:00:00", end_time: "24:00:00", queryType: "1"
         }
@@ -1023,22 +1015,18 @@ var dnsresult_Table = new Vue({
                 param.limit = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
                 param.start = data.start;//开始的记录序号
                 param.page = (data.start / data.length) + 1;//当前页码
-                let sla = RequestJson.sla;
-                param.dispatchId = dispatchId(sla,4, 5);
+                param.resultdata = JSON.stringify(vm.resultdata);
+                var timeTag = (vm.resultdata).queryType;
                 /*用于查询probe数据*/
-                console.log(param.dispatchId,'DNS');
                 //ajax请求数据
-                $('.warning').text('正在处理，请稍等');
                 $.ajax({
                     type: "POST", /*GET会乱码*/
                     url: "../../recorddns/list",
                     cache: false,  //禁用缓存
-                    data: JSON.stringify(param),  //传入组装的参数
+                    data: param,  //传入组装的参数
                     dataType: "json",
-                    contentType:"application/json",
                     success: function (result) {
-                        $('.warning').css('display', 'none')
-                        $('.loader').hide();
+                        console.log(result);
                         // 封装返回数据
                         let returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -1100,7 +1088,7 @@ var radiusresult_Table = new Vue({
         rows: [],
         dtHandle: null,
         resultdata: {
-            service_type: "1", interval: "", probe_id: "", task_id: "", target_id: "",
+            service_type: "15", interval: "", probe_id: "", task_id: "", target_id: "",
             startDate: today.Format("yyyy-MM-dd"), terminalDate: (new Date()).Format("yyyy-MM-dd"),
             start_time: "00:00:00", end_time: "24:00:00", queryType: "1"
         }
@@ -1160,29 +1148,25 @@ var radiusresult_Table = new Vue({
                 param.limit = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
                 param.start = data.start;//开始的记录序号
                 param.page = (data.start / data.length) + 1;//当前页码
-                let sla = RequestJson.sla;
-                param.dispatchId = dispatchId(sla, 5, 6);
-                /*用于查询probe数据*/
-                console.log(param.dispatchId,'Radius');
+                param.resultdata = JSON.stringify(vm.resultdata);
+                var timeTag = (vm.resultdata).queryType;
                 //ajax请求数据
-                $('.warning').text('正在处理，请稍等');
+                
                 $.ajax({
                     type: "POST", /*GET会乱码*/
                     url: "../../recordradius/list",
                     cache: false,  //禁用缓存
-                    data: JSON.stringify(param),  //传入组装的参数
-                    // data:param,
+                    data: param,  //传入组装的参数
                     dataType: "json",
-                    contentType:"application/json",
                     success: function (result) {
-                        $('.warning').css('display', 'none')
-                        $('.loader').hide();
+                        console.log(result);
                         // 封装返回数据
                         let returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
                         returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
                         returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
                         returnData.data = result.page.list;//返回的数据列表
+                        let rows = [];
                         result.page.list.forEach(function (item) {
                             let row = [];
                             row.push(i++);
@@ -1238,7 +1222,7 @@ var ftpresult_Table = new Vue({
         rows: [],
         dtHandle: null,
         resultdata: {
-            service_type: "1", interval: "", probe_id: "", task_id: "", target_id: "",
+            service_type: "31", interval: "", probe_id: "", task_id: "", target_id: "",
             startDate: today.Format("yyyy-MM-dd"), terminalDate: (new Date()).Format("yyyy-MM-dd"),
             start_time: "00:00:00", end_time: "24:00:00", queryType: "1"
         }
@@ -1297,24 +1281,16 @@ var ftpresult_Table = new Vue({
                 param.limit = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
                 param.start = data.start;//开始的记录序号
                 param.page = (data.start / data.length) + 1;//当前页码
-                let download = RequestJson.download;
-                param.dispatchId = dispatchId(download, 1, 3);
-                console.log(param.dispatchId,'FTP_download');
-                /*用于查询probe数据*/
-                //console.log(param);
-                //ajax请求数据
-                $('.warning').text('正在处理，请稍等');
+                param.resultdata = JSON.stringify(vm.resultdata);
+                var timeTag = (vm.resultdata).queryType;
                 $.ajax({
                     type: "POST", /*GET会乱码*/
                     url: "../../recordftp/list",
                     cache: false,  //禁用缓存
-                    data: JSON.stringify(param),  //传入组装的参数
-                    // data:param,
+                    data: param,  //传入组装的参数
                     dataType: "json",
-                    contentType:"application/json",
                     success: function (result) {
-                        $('.warning').css('display', 'none')
-                        $('.loader').hide();
+                       console.log(result);
                         // 封装返回数据
                         let returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -1333,8 +1309,8 @@ var ftpresult_Table = new Vue({
                             row.push(item.dnsDelay);
                             row.push(item.connDelay);
                             row.push(item.loginDelay);
-                            row.push(item.uploadSpeed);
-                            row.push(item.downloadSpeed);
+                            row.push(item.uploadRate);
+                            row.push(item.downloadRate);
                             row.push(item.headbyteDelay);
                             row.push(item.targetId);
                             row.push(item.targetIp);
@@ -1382,7 +1358,7 @@ var webdownloadresult_Table = new Vue({
         rows: [],
         dtHandle: null,
         resultdata: {
-            service_type: "1", interval: "", probe_id: "", task_id: "", target_id: "",
+            service_type: "30", interval: "", probe_id: "", task_id: "", target_id: "",
             startDate: today.Format("yyyy-MM-dd"), terminalDate: (new Date()).Format("yyyy-MM-dd"),
             start_time: "00:00:00", end_time: "24:00:00", queryType: "1"
         }
@@ -1441,23 +1417,16 @@ var webdownloadresult_Table = new Vue({
                 param.limit = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
                 param.start = data.start;//开始的记录序号
                 param.page = (data.start / data.length) + 1;//当前页码
-                let download = RequestJson.download;
-                param.dispatchId = dispatchId(download, 0, 1);
-                console.log(param.dispatchId,'webdownload')
-                /*用于查询probe数据*/
-                //console.log(param);
-                //ajax请求数据
-                $('.warning').text('正在处理，请稍等');
+                param.resultdata = JSON.stringify(vm.resultdata);
+                var timeTag = (vm.resultdata).queryType;
                 $.ajax({
                     type: "POST", /*GET会乱码*/
                     url: "../../recordwebdownload/list",
                     cache: false,  //禁用缓存
-                    data: JSON.stringify(param),  //传入组装的参数
+                    data: param,  //传入组装的参数
                     dataType: "json",
-                    contentType:"application/json",
                     success: function (result) {
-                        $('.warning').css('display', 'none')
-                        $('.loader').hide();
+                        console.log(result);
                         // 封装返回数据
                         let returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -1475,7 +1444,7 @@ var webdownloadresult_Table = new Vue({
                             row.push(item.port);
                             row.push(item.dnsDelay);
                             row.push(item.connDelay);
-                            row.push(item.downloadSpeed);
+                            row.push(item.downloadRate);
                             row.push(item.headbyteDelay);
                             row.push(item.targetId);
                             row.push(item.targetIp);
@@ -1527,7 +1496,7 @@ var webpageresult_Table = new Vue({
         rows: [],
         dtHandle: null,
         resultdata: {
-            service_type: "1", interval: "", probe_id: "", task_id: "", target_id: "",
+            service_type: "20", interval: "", probe_id: "", task_id: "", target_id: "",
             startDate: today.Format("yyyy-MM-dd"), terminalDate: (new Date()).Format("yyyy-MM-dd"),
             start_time: "00:00:00", end_time: "24:00:00", queryType: "1"
         }
@@ -1587,23 +1556,16 @@ var webpageresult_Table = new Vue({
                 param.limit = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
                 param.start = data.start;//开始的记录序号
                 param.page = (data.start / data.length) + 1;//当前页码
-                let web = RequestJson.web;
-                param.dispatchId = dispatchId(web, 0, 1);
-                console.log(param.dispatchId,'web')
-                /*用于查询probe数据*/
-                //console.log(param);
-                //ajax请求数据
-                $('.warning').text('正在处理，请稍等');
+                param.resultdata = JSON.stringify(vm.resultdata);
+                var timeTag = (vm.resultdata).queryType;
                 $.ajax({
                     type: "POST", /*GET会乱码*/
                     url: "../../recordwebpage/list",
                     cache: false,  //禁用缓存
-                    data: JSON.stringify(param),  //传入组装的参数
+                    data: param,  //传入组装的参数
                     dataType: "json",
-                    contentType:"application/json",
                     success: function (result) {
-                        $('.warning').css('display', 'none')
-                        $('.loader').hide();
+                        console.log(result);
                         //封装返回数据
                         let returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -1623,14 +1585,14 @@ var webpageresult_Table = new Vue({
                             row.push(item.connDelay);
                             row.push(item.headbyteDelay);
                             row.push(item.aboveFoldDelay);
-                            row.push(item.downloadSpeed);
+                            row.push(item.downloadRate);
                             row.push(item.redirectDelay);
                             row.push(item.pageFileDelay);
                             row.push(item.pageElementDelay);
                             row.push(item.targetId);
                             row.push(item.targetIp);
                             row.push(item.targetLoc);
-                            row.push(item.state)
+                            row.push(item.state);
                             row.push(item.remark);
                             rows.push(row);
                         });
@@ -1681,7 +1643,7 @@ var webvideoresult_Table = new Vue({
         rows: [],
         dtHandle: null,
         resultdata: {
-            service_type: "1", interval: "", probe_id: "", task_id: "", target_id: "",
+            service_type: "40", interval: "", probe_id: "", task_id: "", target_id: "",
             startDate: today.Format("yyyy-MM-dd"), terminalDate: (new Date()).Format("yyyy-MM-dd"),
             start_time: "00:00:00", end_time: "24:00:00", queryType: "1"
         }
@@ -1740,23 +1702,16 @@ var webvideoresult_Table = new Vue({
                 param.limit = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
                 param.start = data.start;//开始的记录序号
                 param.page = (data.start / data.length) + 1;//当前页码
-                let video = RequestJson.video;
-                param.dispatchId = dispatchId(video, 0, 1);
-                console.log(param.dispatchId,'video')
-                /*用于查询probe数据*/
-                //console.log(param);
-                //ajax请求数据
-                $('.warning').text('正在处理，请稍等');
+                param.resultdata = JSON.stringify(vm.resultdata);
+                var timeTag = (vm.resultdata).queryType;
                 $.ajax({
                     type: "POST", /*GET会乱码*/
                     url: "../../recordwebvideo/list",
                     cache: false,  //禁用缓存
-                    data: JSON.stringify(param),  //传入组装的参数
+                    data: param,  //传入组装的参数
                     dataType: "json",
-                    contentType:"application/json",
                     success: function (result) {
-                        $('.warning').css('display', 'none')
-                        $('.loader').hide();
+                        console.log(result);
                         //封装返回数据
                         let returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -1776,7 +1731,7 @@ var webvideoresult_Table = new Vue({
                             row.push(item.initBufferDelay);
                             row.push(item.loadDelay);
                             row.push(item.totalBufferDelay);
-                            row.push(item.downloadSpeed);
+                            row.push(item.downloadRate);
                             row.push(item.bufferTime);
                             row.push(item.dnsDelay);
                             row.push(item.wsConnDelay);
@@ -1831,7 +1786,7 @@ var gameresult_Table = new Vue({
         rows: [],
         dtHandle: null,
         resultdata: {
-            service_type: "1", interval: "", probe_id: "", task_id: "", target_id: "",
+            service_type: "50", interval: "", probe_id: "", task_id: "", target_id: "",
             startDate: today.Format("yyyy-MM-dd"), terminalDate: (new Date()).Format("yyyy-MM-dd"),
             start_time: "00:00:00", end_time: "24:00:00", queryType: "1"
         }
@@ -1889,23 +1844,16 @@ var gameresult_Table = new Vue({
                 param.limit = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
                 param.start = data.start;//开始的记录序号
                 param.page = (data.start / data.length) + 1;//当前页码
-                let game = RequestJson.game;
-                param.dispatchId = dispatchId(game, 0, 1);
-                console.log(param.dispatchId,'game');
-                /*用于查询probe数据*/
-                //console.log(param);
-                //ajax请求数据
-                $('.warning').text('正在处理，请稍等');
+                param.resultdata = JSON.stringify(vm.resultdata);
+                var timeTag = (vm.resultdata).queryType;
                 $.ajax({
                     type: "POST", /*GET会乱码*/
                     url: "../../recordgame/list",
                     cache: false,  //禁用缓存
-                    data: JSON.stringify(param),  //传入组装的参数
+                    data: param,  //传入组装的参数
                     dataType: "json",
-                    contentType:"application/json",
                     success: function (result) {
-                        $('.warning').css('display', 'none')
-                        $('.loader').hide();
+                        console.log(result);
                         //封装返回数据
                         let returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回

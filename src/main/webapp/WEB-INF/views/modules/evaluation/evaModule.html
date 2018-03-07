@@ -91,7 +91,6 @@
                                             <input class="superservice-input   middle" type="text" id="connectionweight"
                                                    name="connectionweight" size="3"
                                                    onkeyup="value=value.replace(/[^0-9.]/g,'')">
-                                            <!--方案2：onblur="testnum(this)"-->
                                         </div>
                                     </div>
 
@@ -249,7 +248,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="row">
                             <!--在线视频类业务-->
                             <div class="col-lg-5 col-md-5 col-sm-5">
@@ -1499,195 +1497,51 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-lg-3 col-md-3 col-sm-3">
-                            <span>时延标准差(ms)</span>
-                        </div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT41"  name="slaT41" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT42"  name="slaT42" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT43"  name="slaT43" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT44"  name="slaT44" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT45"  name="slaT45" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT46"  name="slaT46" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT47"  name="slaT47" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-lg-3 col-md-3 col-sm-3">
-                            <span>往向时延标准差(ms)</span>
-                        </div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT51"  name="slaT51" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT52"  name="slaT52" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT53"  name="slaT53" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT54"  name="slaT54" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT55"  name="slaT55" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT56"  name="slaT56" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT57"  name="slaT57" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-lg-3 col-md-3 col-sm-3">
-                            <span>返向时延标准差(ms)</span>
-                        </div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT61"  name="slaT61" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT62"  name="slaT62" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT63"  name="slaT63" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT64"  name="slaT64" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT65"  name="slaT65" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT66"  name="slaT66" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT67"  name="slaT67" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-lg-3 col-md-3 col-sm-3">
-                            <span>时延方差(ms)</span>
-                        </div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT71"  name="slaT71" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT72"  name="slaT72" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT73"  name="slaT73" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT74"  name="slaT74" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT75"  name="slaT75" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT76"  name="slaT76" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT77"  name="slaT77" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-lg-3 col-md-3 col-sm-3">
-                            <span>往向时延方差(ms)</span>
-                        </div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT81"  name="slaT81" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT82"  name="slaT82" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT83"  name="slaT83" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT84"  name="slaT84" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT85"  name="slaT85" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT86"  name="slaT86" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT87"  name="slaT87" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-lg-3 col-md-3 col-sm-3">
-                            <span>返向时延方差(ms)</span>
-                        </div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT91"  name="slaT91" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT92"  name="slaT92" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT93"  name="slaT93" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT94"  name="slaT94" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT95"  name="slaT95" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT96"  name="slaT96" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT97"  name="slaT97" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-lg-3 col-md-3 col-sm-3">
                             <span>抖动(ms)</span>
                         </div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT101" name="slaT101" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT102" name="slaT102" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT103" name="slaT103" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT104" name="slaT104" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT105" name="slaT105" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT106" name="slaT106" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT107" name="slaT107" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT41" name="slaT41" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT42" name="slaT42" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT43" name="slaT43" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT44" name="slaT4" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT45" name="slaT45" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT46" name="slaT46" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT47" name="slaT47" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
                     </div>
                     <div class="form-group row">
                         <div class="col-lg-3 col-md-3 col-sm-3">
                             <span>往向抖动(ms)</span>
                         </div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT111" name="slaT111" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT112" name="slaT112" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT113" name="slaT113" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT114" name="slaT114" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT115" name="slaT115" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT116" name="slaT116" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT117" name="slaT117" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT51" name="slaT51" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT52" name="slaT52" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT53" name="slaT53" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT54" name="slaT54" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT55" name="slaT55" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT56" name="slaT56" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT57" name="slaT57" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
                     </div>
                     <div class="form-group row">
                         <div class="col-lg-3 col-md-3 col-sm-3">
                             <span>返向抖动(ms)</span>
                         </div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT121" name="slaT121" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT122" name="slaT122" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT123" name="slaT123" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT124" name="slaT124" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT125" name="slaT125" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT126" name="slaT126" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT127" name="slaT127" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-lg-3 col-md-3 col-sm-3">
-                            <span>抖动标准差(ms)</span>
-                        </div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT131" name="slaT131" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT132" name="slaT132" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT133" name="slaT133" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT134" name="slaT134" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT135" name="slaT135" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT136" name="slaT136" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT137" name="slaT137" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-lg-3 col-md-3 col-sm-3">
-                            <span>往向抖动标准差(ms)</span>
-                        </div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT141" name="slaT141" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT142" name="slaT142" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT143" name="slaT143" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT144" name="slaT144" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT145" name="slaT145" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT146" name="slaT146" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT147" name="slaT147" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-lg-3 col-md-3 col-sm-3">
-                            <span>返向抖动标准差(ms)</span>
-                        </div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT151" name="slaT151" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT152" name="slaT152" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT153" name="slaT153" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT154" name="slaT154" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT155" name="slaT155" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT156" name="slaT156" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT157" name="slaT157" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-lg-3 col-md-3 col-sm-3">
-                            <span>抖动方差(ms)</span>
-                        </div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT161" name="slaT161" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT162" name="slaT162" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT163" name="slaT163" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT164" name="slaT164" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT165" name="slaT165" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT166" name="slaT166" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT167" name="slaT167" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-lg-3 col-md-3 col-sm-3">
-                            <span>往向抖动方差(ms)</span>
-                        </div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT171" name="slaT171" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT172" name="slaT172" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT173" name="slaT173" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT174" name="slaT174" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT175" name="slaT175" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT176" name="slaT176" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT177" name="slaT177" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-lg-3 col-md-3 col-sm-3">
-                            <span>返向抖动方差(ms)</span>
-                        </div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT181" name="slaT181" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT182" name="slaT182" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT183" name="slaT183" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT184" name="slaT184" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT185" name="slaT185" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT186" name="slaT186" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT187" name="slaT187" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT61" name="slaT61" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT62" name="slaT62" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT63" name="slaT63" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT64" name="slaT64" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT65" name="slaT65" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT66" name="slaT66" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT67" name="slaT67" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
                     </div>
                     <div class="form-group row">
                         <div class="col-lg-3 col-md-3 col-sm-3">
                             <span>丢包率(%)</span>
                         </div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT191" name="slaT191" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT192" name="slaT192" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT193" name="slaT193" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT194" name="slaT194" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT195" name="slaT195" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT196" name="slaT196" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT197" name="slaT197" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT71" name="slaT71" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT72" name="slaT72" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT73" name="slaT73" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT74" name="slaT74" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT75" name="slaT75" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT76" name="slaT76" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaT77" name="slaT77" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
                     </div>
                 </form>
             </div>
@@ -1764,197 +1618,54 @@
                         <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU36"  name="slaU36" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
                         <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU37"  name="slaU37" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
                     </div>
-                    <div class="form-group row">
-                        <div class="col-lg-3 col-md-3 col-sm-3">
-                            <span>时延标准差(ms)</span>
-                        </div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU41"  name="slaU41" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU42"  name="slaU42" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU43"  name="slaU43" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU44"  name="slaU44" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU45"  name="slaU45" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU46"  name="slaU46" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU47"  name="slaU47" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-lg-3 col-md-3 col-sm-3">
-                            <span>往向时延标准差(ms)</span>
-                        </div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU51"  name="slaU51" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU52"  name="slaU52" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU53"  name="slaU53" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU54"  name="slaU54" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU55"  name="slaU55" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU56"  name="slaU56" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU57"  name="slaU57" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-lg-3 col-md-3 col-sm-3">
-                            <span>返向时延标准差(ms)</span>
-                        </div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU61"  name="slaU61" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU62"  name="slaU62" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU63"  name="slaU63" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU64"  name="slaU64" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU65"  name="slaU65" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU66"  name="slaU66" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU67"  name="slaU67" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-lg-3 col-md-3 col-sm-3">
-                            <span>时延方差(ms)</span>
-                        </div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU71"  name="slaU71" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU72"  name="slaU72" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU73"  name="slaU73" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU74"  name="slaU74" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU75"  name="slaU75" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU76"  name="slaU76" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU77"  name="slaU77" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-lg-3 col-md-3 col-sm-3">
-                            <span>往向时延方差(ms)</span>
-                        </div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU81"  name="slaU81" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU82"  name="slaU82" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU83"  name="slaU83" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU84"  name="slaU84" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU85"  name="slaU85" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU86"  name="slaU86" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU87"  name="slaU87" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-lg-3 col-md-3 col-sm-3">
-                            <span>返向时延方差(ms)</span>
-                        </div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU91"  name="slaU91" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU92"  name="slaU92" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU93"  name="slaU93" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU94"  name="slaU94" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU95"  name="slaU95" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU96"  name="slaU96" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU97"  name="slaU97" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                    </div>
+
                     <div class="form-group row">
                         <div class="col-lg-3 col-md-3 col-sm-3">
                             <span>抖动(ms)</span>
                         </div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU101" name="slaU101" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU102" name="slaU102" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU103" name="slaU103" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU104" name="slaU104" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU105" name="slaU105" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU106" name="slaU106" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU107" name="slaU107" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU41" name="slaU41" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU42" name="slaU42" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU43" name="slaU43" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU44" name="slaU44" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU45" name="slaU45" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU46" name="slaU46" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU47" name="slaU47" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
                     </div>
                     <div class="form-group row">
                         <div class="col-lg-3 col-md-3 col-sm-3">
                             <span>往向抖动(ms)</span>
                         </div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU111" name="slaU111" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU112" name="slaU112" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU113" name="slaU113" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU114" name="slaU114" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU115" name="slaU115" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU116" name="slaU116" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU117" name="slaU117" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU51" name="slaU51" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU52" name="slaU52" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU53" name="slaU53" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU54" name="slaU54" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU55" name="slaU55" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU56" name="slaU56" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU57" name="slaU57" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
                     </div>
                     <div class="form-group row">
                         <div class="col-lg-3 col-md-3 col-sm-3">
                             <span>返向抖动(ms)</span>
                         </div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU121" name="slaU121" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU122" name="slaU122" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU123" name="slaU123" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU124" name="slaU124" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU125" name="slaU125" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU126" name="slaU126" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU127" name="slaU127" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-lg-3 col-md-3 col-sm-3">
-                            <span>抖动标准差(ms)</span>
-                        </div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU131" name="slaU131" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU132" name="slaU132" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU133" name="slaU133" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU134" name="slaU134" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU135" name="slaU135" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU136" name="slaU136" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU137" name="slaU137" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-lg-3 col-md-3 col-sm-3">
-                            <span>往向抖动标准差(ms)</span>
-                        </div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU141" name="slaU141" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU142" name="slaU142" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU143" name="slaU143" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU144" name="slaU144" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU145" name="slaU145" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU146" name="slaU146" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU147" name="slaU147" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-lg-3 col-md-3 col-sm-3">
-                            <span>返向抖动标准差(ms)</span>
-                        </div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU151" name="slaU151" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU152" name="slaU152" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU153" name="slaU153" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU154" name="slaU154" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU155" name="slaU155" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU156" name="slaU156" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU157" name="slaU157" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-lg-3 col-md-3 col-sm-3">
-                            <span>抖动方差(ms)</span>
-                        </div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU161" name="slaU161" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU162" name="slaU162" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU163" name="slaU163" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU164" name="slaU164" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU165" name="slaU165" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU166" name="slaU166" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU167" name="slaU167" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-lg-3 col-md-3 col-sm-3">
-                            <span>往向抖动方差(ms)</span>
-                        </div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU171" name="slaU171" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU172" name="slaU172" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU173" name="slaU173" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU174" name="slaU174" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU175" name="slaU175" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU176" name="slaU176" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU177" name="slaU177" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-lg-3 col-md-3 col-sm-3">
-                            <span>返向抖动方差(ms)</span>
-                        </div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU181" name="slaU181" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU182" name="slaU182" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU183" name="slaU183" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU184" name="slaU184" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU185" name="slaU185" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU186" name="slaU186" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU187" name="slaU187" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU61" name="slaU61" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU62" name="slaU62" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU63" name="slaU63" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU64" name="slaU64" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU65" name="slaU65" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU66" name="slaU66" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU67" name="slaU67" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
                     </div>
                     <div class="form-group row">
                         <div class="col-lg-3 col-md-3 col-sm-3">
                             <span>丢包率(%)</span>
                         </div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU191" name="slaU191" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU192" name="slaU192" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU193" name="slaU193" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU194" name="slaU194" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU195" name="slaU195" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU196" name="slaU196" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU197" name="slaU197" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU71" name="slaU71" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU72" name="slaU72" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU73" name="slaU73" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU74" name="slaU74" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU75" name="slaU75" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU76" name="slaU76" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input type="text" id="slaU77" name="slaU77" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
                     </div>
                 </form>
             </div>
@@ -2720,7 +2431,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-lg-3 col-md-3 col-sm-3">
-                            <span>连接调度服务器时延(ms)</span>
+                            <span>总体缓冲次数</span>
                         </div>
                         <div class="col-lg-1 col-md-1 col-sm-1"><input id="video41"  name="video41" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
                         <div class="col-lg-1 col-md-1 col-sm-1"><input id="video42"  name="video42" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
@@ -2732,7 +2443,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-lg-3 col-md-3 col-sm-3">
-                            <span>获取视频地址时延(ms)</span>
+                            <span>首帧到达时延(ms)</span>
                         </div>
                         <div class="col-lg-1 col-md-1 col-sm-1"><input id="video51"  name="video51" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
                         <div class="col-lg-1 col-md-1 col-sm-1"><input id="video52"  name="video52" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
@@ -2744,7 +2455,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-lg-3 col-md-3 col-sm-3">
-                            <span>连接媒体服务器时延(ms)</span>
+                            <span>首次缓冲时延(ms)</span>
                         </div>
                         <div class="col-lg-1 col-md-1 col-sm-1"><input id="video61"  name="video61" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
                         <div class="col-lg-1 col-md-1 col-sm-1"><input id="video62"  name="video62" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
@@ -2756,7 +2467,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-lg-3 col-md-3 col-sm-3">
-                            <span>首帧到达时延(ms)</span>
+                            <span>视频加载时延(ms)</span>
                         </div>
                         <div class="col-lg-1 col-md-1 col-sm-1"><input id="video71"  name="video71" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
                         <div class="col-lg-1 col-md-1 col-sm-1"><input id="video72"  name="video72" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
@@ -2768,51 +2479,27 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-lg-3 col-md-3 col-sm-3">
-                            <span>首次缓冲时延(ms)</span>
-                        </div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input id="video81"  name="video81" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input id="video82"  name="video82" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input id="video83"  name="video83" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input id="video84"  name="video84" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input id="video85"  name="video85" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input id="video86"  name="video86" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input id="video87"  name="video87" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-lg-3 col-md-3 col-sm-3">
-                            <span>视频加载时延(ms)</span>
-                        </div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input id="video91"  name="video91" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input id="video92"  name="video92" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input id="video93"  name="video93" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input id="video94"  name="video94" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input id="video95"  name="video95" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input id="video96"  name="video96" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input id="video97"  name="video97" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-lg-3 col-md-3 col-sm-3">
                             <span>总体缓冲时间(ms)</span>
                         </div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input id="video101" name="video101" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input id="video102" name="video102" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input id="video103" name="video103" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input id="video104" name="video104" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input id="video105" name="video105" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input id="video106" name="video106" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input id="video107" name="video107" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input id="video81" name="video81" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input id="video82" name="video82" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input id="video83" name="video83" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input id="video84" name="video84" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input id="video85" name="video85" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input id="video86" name="video86" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input id="video87" name="video87" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
                     </div>
                     <div class="form-group row">
                         <div class="col-lg-3 col-md-3 col-sm-3">
                             <span>下载速度(kB/s)</span>
                         </div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input id="video111" name="video111" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input id="video112" name="video112" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input id="video113" name="video113" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input id="video114" name="video114" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input id="video115" name="video115" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input id="video116" name="video116" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input id="video117" name="video117" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input id="video91" name="video91" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input id="video92" name="video92" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input id="video93" name="video93" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input id="video94" name="video94" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input id="video95" name="video95" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input id="video96" name="video96" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"><input id="video97" name="video97" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
                     </div>
                 </form>
             </div>
@@ -2854,9 +2541,10 @@
                         <div class="col-lg-1 col-md-1 col-sm-1 form_border"><span>20分</span></div>
                         <div class="col-lg-1 col-md-1 col-sm-1 form_border"><span>0分</span></div>
                     </div>
+
                     <div class="form-group row">
                         <div class="col-lg-3 col-md-3 col-sm-3">
-                            <span>DNS解析时延(ms)</span>
+                            <span>连接时延(ms)</span>
                         </div>
                         <div class="col-lg-1 col-md-1 col-sm-1"><input id="game11" name="game11" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
                         <div class="col-lg-1 col-md-1 col-sm-1"><input id="game12" name="game12" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
@@ -2868,7 +2556,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-lg-3 col-md-3 col-sm-3">
-                            <span>连接时延(ms)</span>
+                            <span>游戏数据包时延(ms)</span>
                         </div>
                         <div class="col-lg-1 col-md-1 col-sm-1"><input id="game21" name="game21" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
                         <div class="col-lg-1 col-md-1 col-sm-1"><input id="game22" name="game22" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
@@ -2880,7 +2568,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-lg-3 col-md-3 col-sm-3">
-                            <span>游戏数据包时延(ms)</span>
+                            <span>游戏数据包抖动(ms)</span>
                         </div>
                         <div class="col-lg-1 col-md-1 col-sm-1"><input id="game31" name="game31" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
                         <div class="col-lg-1 col-md-1 col-sm-1"><input id="game32" name="game32" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
@@ -2892,8 +2580,8 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-lg-3 col-md-3 col-sm-3">
-                            <span>游戏数据包抖动(ms)</span>
-                        </div>
+                            <span>游戏数据包丢包率(%)</span>
+                        </div4
                         <div class="col-lg-1 col-md-1 col-sm-1"><input id="game41" name="game41" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
                         <div class="col-lg-1 col-md-1 col-sm-1"><input id="game42" name="game42" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
                         <div class="col-lg-1 col-md-1 col-sm-1"><input id="game43" name="game43" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
@@ -2901,18 +2589,6 @@
                         <div class="col-lg-1 col-md-1 col-sm-1"><input id="game45" name="game45" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
                         <div class="col-lg-1 col-md-1 col-sm-1"><input id="game46" name="game46" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
                         <div class="col-lg-1 col-md-1 col-sm-1"><input id="game47" name="game47" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-lg-3 col-md-3 col-sm-3">
-                            <span>游戏数据包丢包率(%)</span>
-                        </div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input id="game51" name="game51" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input id="game52" name="game52" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input id="game53" name="game53" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input id="game54" name="game54" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input id="game55" name="game55" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input id="game56" name="game56" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
-                        <div class="col-lg-1 col-md-1 col-sm-1"><input id="game57" name="game57" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
                     </div>
                 </form>
             </div>

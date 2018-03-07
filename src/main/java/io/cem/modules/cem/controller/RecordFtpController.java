@@ -29,11 +29,6 @@ import static java.lang.Thread.sleep;
 
 
 /**
- * 
- * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2017-10-12 17:12:44
  */
 @RestController
 @RequestMapping("recordftp")
@@ -48,7 +43,6 @@ public class RecordFtpController {
 	 * 列表
 	 */
 	@RequestMapping("/list")
-	@RequiresPermissions("recordftp:list")
 	public R list(String resultdata, Integer page, Integer limit) throws Exception {
 		Map<String, Object> map = new HashMap<>();
 		JSONObject resultdata_jsonobject = JSONObject.parseObject(resultdata);

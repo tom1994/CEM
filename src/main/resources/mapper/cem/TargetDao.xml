@@ -27,6 +27,7 @@
     <select id="infoBatch" resultMap="targetMap">
 		select * from target
 		where superservice_type = #{value}
+		OR superservice_type = 0
 		order by convert(target_name USING gbk)
 	</select>
 

@@ -113,6 +113,7 @@ var area_data = new Vue({
 });
 
 var getArea = function (cityid) {
+    countrySeleted=0
     $.ajax({
         url: "../../cem/county/info/"+cityid,
         type: "POST",
@@ -126,6 +127,27 @@ var getArea = function (cityid) {
                 areaNames[i] = {message: result.county[i]}
             }
             search_data.areas = areaNames;
+            setTimeout(function () {
+                $('#country .jq22').comboSelect();
+                $('.combo-dropdown').css("z-index","3");
+                $('#country .option-item').click(function (areas) {
+                    setTimeout(function () {
+                        var a = $(areas.currentTarget)[0].innerText;
+                        countrySelected = $($(areas.currentTarget)[0]).data('value');
+                        $('#country .combo-input').val(a);
+                        $('#country .combo-select select').val(a);
+                    },20)
+
+                });
+                $('#country input[type=text] ').keyup(function (areas) {
+                    if( areas.keyCode=='13'){
+                        var b = $("#country .option-hover.option-selected").text();
+                        countrySelected = $($(areas.currentTarget)[0]).data('value');
+                        $('#country .combo-input').val(b);
+                        $('#country .combo-select select').val(b);
+                    }
+                })
+            }, 50);
         }
     });
 }
@@ -145,6 +167,25 @@ var getService = function (serviceId) {
                 targetNames[i] = {message: result.target[i]}
             }
             search_data.target = targetNames;
+            setTimeout(function () {
+                $('#target  .jq22').comboSelect();
+                $('#target  .option-item').click(function (target) {
+                    setTimeout(function () {
+                        var a = $(target.currentTarget)[0].innerText;
+                        targetSelected = $($(target.currentTarget)[0]).data('value');
+                        $('#target .combo-input').val(a);
+                        $('#target .combo-select select').val(a);
+                    }, 30);
+                });
+                $('#target input[type=text] ').keyup(function (target) {
+                    if( target.keyCode=='13'){
+                        var b = $("#target  .option-hover.option-selected").text();
+                        probeSelected = $($(target.currentTarget)[0]).data('value');
+                        $('#target .combo-input').val(b);
+                        $('#target .combo-select select').val(b);
+                    }
+                })
+            }, 50);
         }
     });
 }
@@ -164,6 +205,25 @@ var getAreaService = function (serviceId) {
                 targetNames[i] = {message: result.target[i]}
             }
             area_data.target = targetNames;
+            setTimeout(function () {
+                $('#areaTarget  .jq22').comboSelect();
+                $('#areaTarget  .option-item').click(function (target) {
+                    setTimeout(function () {
+                        var a = $(target.currentTarget)[0].innerText;
+                        targetSelected = $($(target.currentTarget)[0]).data('value');
+                        $('#areaTarget .combo-input').val(a);
+                        $('#areaTarget .combo-select select').val(a);
+                    }, 30);
+                });
+                $('#areaTarget input[type=text] ').keyup(function (target) {
+                    if( target.keyCode=='13'){
+                        var b = $("#areaTarget  .option-hover.option-selected").text();
+                        probeSelected = $($(target.currentTarget)[0]).data('value');
+                        $('#areaTarget .combo-input').val(b);
+                        $('#areaTarget .combo-select select').val(b);
+                    }
+                })
+            }, 50);
         }
     });
 }
@@ -266,8 +326,70 @@ var search_area_service = new Vue({
 
 
 function getFormJson(form) {      /*将表单对象变为json对象*/
-    var o = {};
-    var a = $(form).serializeArray();
+    var aa = $(form).serializeArray();
+    debugger;
+    if(form.selector=='#probesearch'){
+        var o = {};
+        var o1 = {};
+        var o2 = {};
+        var o3 = {};
+        var o4 = {};
+        var o5 = {};
+        var bName = "type";
+        var bValue = $("#city .option-selected")[0].dataset.value;
+        var cName="countyid";
+        var cValue=$('#country .option-selected')[0].dataset.value;
+        var dName="service_type";
+        var dValue=$('#service .option-selected')[0].dataset.value;
+        var eName="target_id";
+        var eValue=$('#target .option-selected')[0].dataset.value;
+        var fName="startDate";
+        var fValue=$('#start_date').val();
+        var gName="terminalDate";
+        var gValue=$('#terminal_date').val();
+        o.name = bName;
+        o1.name = cName;
+        o2.name = dName;
+        o3.name = eName;
+        o4.name = fName;
+        o5.name = gName;
+        o.value = bValue;
+        o1.value = cValue
+        o2.value = dValue;
+        o3.value = eValue;
+        o4.value = fValue;
+        o5.value = gValue;
+        var a=[o,o1,o2,o3,o4,o5];
+    }else {
+        var o = {};
+        var o1 = {};
+        var o2 = {};
+        var o3 = {};
+        var o4 = {};
+        var o5 = {};
+        var bName = "type";
+        var bValue = $("#areaCity .option-selected")[0].dataset.value;
+        var dName="service_type";
+        var dValue=$('#area .option-selected')[0].dataset.value;
+        var eName="target_id";
+        var eValue=$('#areaTarget .option-selected')[0].dataset.value;
+        var fName="startDate";
+        var fValue=$('#areastart_date').val();
+        var gName="terminalDate";
+        var gValue=$('#areaterminal_date').val();
+        o.name = bName;
+        o2.name = dName;
+        o3.name = eName;
+        o4.name = fName;
+        o5.name = gName;
+        o.value = bValue;
+        o2.value = dValue;
+        o3.value = eValue;
+        o4.value = fValue;
+        o5.value = gValue;
+        var a=[o,o2,o3,o4,o5];
+    }
+
     $.each(a, function () {
         if (o[this.name] !== undefined) {
             if (!o[this.name].push) {

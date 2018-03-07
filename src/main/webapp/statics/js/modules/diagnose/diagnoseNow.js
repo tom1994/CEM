@@ -39,17 +39,16 @@ function probe() {
     });
 };
 var getProbeCity = function (cityid) {
-    debugger;
     probeSelected = 0;
     if (cityid != "" && cityid != null){
         $.ajax({//探针信息
-            url: "../../cem/probe/info/" + cityid,
+            url: "../../cem/probe/infoByCity/" + cityid,
             type: "POST",
             cache: false,  //禁用缓存
             dataType: "json",
             contentType: "application/json",
             success: function (result) {
-                debugger;
+                 
                 var probes = [];
                 for (var i = 0; i < result.probe.length; i++) {
                     probes[i] = {message: result.probe[i]}
@@ -82,7 +81,10 @@ var getProbeCity = function (cityid) {
 };
 //页面上直接加载
 $(document).ready(function () {
+    $('#city .jq22').comboSelect()
     $('#country .jq22').comboSelect();
+    $('#probe .jq22').comboSelect();
+    $('#target .jq22').comboSelect()
     citySelected=0
     $.ajax({
         type: "POST", /*GET会乱码*/
@@ -103,7 +105,7 @@ $(document).ready(function () {
                         citySelected = $($(city.currentTarget)[0]).data('value');
                         $('div#city .combo-input').val(a);
                         $('div#city .combo-select select').val(a);
-                        debugger;
+                         
                         clearArea(a);
                         getArea(citySelected);
                         getProbeCity(citySelected);
@@ -237,7 +239,7 @@ var target_data = new Vue({
 });
 
 var getArea = function (cityid) {
-    debugger;
+     
     countrySeleted=0
     if (cityid != "" && cityid != null) {
         $.ajax({//区县
@@ -283,7 +285,7 @@ var getArea = function (cityid) {
 
 function clearArea(a) {
     if(a=="所有地市"){
-        debugger;
+         
         $('#country .combo-input').val("所有区县");
         $('#country .combo-select select').val("所有区县");
         search_data.areas = [];

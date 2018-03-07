@@ -6,11 +6,6 @@ import java.util.Date;
 
 
 /**
- * 
- * 
- * @author ${author}
- * @email ${email}
- * @date 2017-12-12 15:11:35
  */
 public class RecordHourSlaEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -87,6 +82,56 @@ public class RecordHourSlaEntity implements Serializable {
 	private String targetName;
 
 	private Integer accessLayer;
+
+	private String taskName;
+
+	private String targetipName;
+
+	private String targettypeName;
+
+	private String stateName;
+
+	private String servicetypeName;
+
+	public String getTaskName() {
+		return taskName;
+	}
+
+	public void setTaskName(String taskName) {
+		this.taskName = taskName;
+	}
+
+	public String getTargetipName() {
+		return targetipName;
+	}
+
+	public void setTargetipName(String targetipName) {
+		this.targetipName = targetipName;
+	}
+
+	public String getTargettypeName() {
+		return targettypeName;
+	}
+
+	public void setTargettypeName(String targettypeName) {
+		this.targettypeName = targettypeName;
+	}
+
+	public String getStateName() {
+		return stateName;
+	}
+
+	public void setStateName(String stateName) {
+		this.stateName = stateName;
+	}
+
+	public String getServicetypeName() {
+		return servicetypeName;
+	}
+
+	public void setServicetypeName(String servicetypeName) {
+		this.servicetypeName = servicetypeName;
+	}
 
 	/**
 	 * 设置：记录ID

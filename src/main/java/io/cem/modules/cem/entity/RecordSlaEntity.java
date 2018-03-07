@@ -7,11 +7,6 @@ import java.util.Date;
 
 
 /**
- * 
- * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2017-10-12 17:12:47
  */
 public class RecordSlaEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -33,7 +28,7 @@ public class RecordSlaEntity implements Serializable {
 	//测试目标ID
 	private Integer targetId;
 	//测试目标IP
-	private Integer targetIp;
+	private Long targetIp;
 	//测试目标归属地
 	private String targetLoc;
 	//测试结果
@@ -86,6 +81,76 @@ public class RecordSlaEntity implements Serializable {
 	private BigDecimal rLossRate;
 	//备注
 	private String remark;
+
+	private String probeName;
+
+	private String targetName;
+
+	private String taskName;
+
+	private String targetipName;
+
+	private String targettypeName;
+
+	private String stateName;
+
+	private String servicetypeName;
+
+	public String getProbeName() {
+		return probeName;
+	}
+
+	public void setProbeName(String probeName) {
+		this.probeName = probeName;
+	}
+
+	public String getTargetName() {
+		return targetName;
+	}
+
+	public void setTargetName(String targetName) {
+		this.targetName = targetName;
+	}
+
+	public String getTaskName() {
+		return taskName;
+	}
+
+	public void setTaskName(String taskName) {
+		this.taskName = taskName;
+	}
+
+	public String getTargetipName() {
+		return targetipName;
+	}
+
+	public void setTargetipName(String targetipName) {
+		this.targetipName = targetipName;
+	}
+
+	public String getTargettypeName() {
+		return targettypeName;
+	}
+
+	public void setTargettypeName(String targettypeName) {
+		this.targettypeName = targettypeName;
+	}
+
+	public String getStateName() {
+		return stateName;
+	}
+
+	public void setStateName(String stateName) {
+		this.stateName = stateName;
+	}
+
+	public String getServicetypeName() {
+		return servicetypeName;
+	}
+
+	public void setServicetypeName(String servicetypeName) {
+		this.servicetypeName = servicetypeName;
+	}
 
 	/**
 	 * 设置：测试记录ID
@@ -186,13 +251,13 @@ public class RecordSlaEntity implements Serializable {
 	/**
 	 * 设置：测试目标IP
 	 */
-	public void setTargetIp(Integer targetIp) {
+	public void setTargetIp(Long targetIp) {
 		this.targetIp = targetIp;
 	}
 	/**
 	 * 获取：测试目标IP
 	 */
-	public Integer getTargetIp() {
+	public Long getTargetIp() {
 		return targetIp;
 	}
 	/**

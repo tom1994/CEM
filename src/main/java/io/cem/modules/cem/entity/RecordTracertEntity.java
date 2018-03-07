@@ -7,11 +7,6 @@ import java.util.Date;
 
 
 /**
- * 
- * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2017-10-12 17:12:47
  */
 public class RecordTracertEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -76,6 +71,8 @@ public class RecordTracertEntity implements Serializable {
 	private String hopRecord;
 	//备注
 	private String remark;
+
+
 
 	/**
 	 * 设置：测试记录ID
