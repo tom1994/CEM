@@ -44,7 +44,7 @@
         city.city_name AS city_name,
         county.county_name AS area_name,
         probe.probe_name AS probe_name,
-        probe.access_layer,
+        probe.access_layer AS accessLayer,
         target.target_name AS target_name
         FROM record_hour_ping rhp
         LEFT JOIN city
@@ -84,7 +84,7 @@
         city.city_name AS city_name,
         county.county_name AS area_name,
         probe.probe_name AS probe_name,
-        probe.access_layer,
+        probe.access_layer AS accessLayer,
         target.target_name AS target_name,
         time_format(record_time, '%H') AS record_time,
         AVG(rhp.delay) AS delay,

@@ -141,28 +141,28 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 					}
 
 					//jitter 100
-					if ((slaList.get(i).getDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaT42"))) <= 0) {
+					if ((slaList.get(i).getJitter()).compareTo(Double.parseDouble(pros.getValue("slaT42"))) <= 0) {
 						score += 100 * (Double.parseDouble(pros.getValue("slaT41")));
 					}
 					//jitter 80-100
-					else if (((slaList.get(i).getDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaT42"))) > 0) && ((slaList.get(i).getDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaT43"))) <= 0)) {
-						score += (80 + ((((slaList.get(i).getDelayStd().doubleValue()) - (Double.parseDouble(pros.getValue("slaT43")))) * 20) / ((Double.parseDouble(pros.getValue("slaT42")) - (Double.parseDouble(pros.getValue("slaT43"))))))) * (Double.parseDouble(pros.getValue("slaT41")));
+					else if (((slaList.get(i).getJitter()).compareTo(Double.parseDouble(pros.getValue("slaT42"))) > 0) && ((slaList.get(i).getJitter()).compareTo(Double.parseDouble(pros.getValue("slaT43"))) <= 0)) {
+						score += (80 + ((((slaList.get(i).getJitter().doubleValue()) - (Double.parseDouble(pros.getValue("slaT43")))) * 20) / ((Double.parseDouble(pros.getValue("slaT42")) - (Double.parseDouble(pros.getValue("slaT43"))))))) * (Double.parseDouble(pros.getValue("slaT41")));
 					}
 					//jitter 60-80
-					else if (((slaList.get(i).getDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaT43"))) > 0) && ((slaList.get(i).getDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaT44"))) <= 0)) {
-						score += (60 + ((((slaList.get(i).getDelayStd().doubleValue()) - (Double.parseDouble(pros.getValue("slaT44")))) * 20) / ((Double.parseDouble(pros.getValue("slaT43")) - (Double.parseDouble(pros.getValue("slaT44"))))))) * (Double.parseDouble(pros.getValue("slaT41")));
+					else if (((slaList.get(i).getJitter()).compareTo(Double.parseDouble(pros.getValue("slaT43"))) > 0) && ((slaList.get(i).getJitter()).compareTo(Double.parseDouble(pros.getValue("slaT44"))) <= 0)) {
+						score += (60 + ((((slaList.get(i).getJitter().doubleValue()) - (Double.parseDouble(pros.getValue("slaT44")))) * 20) / ((Double.parseDouble(pros.getValue("slaT43")) - (Double.parseDouble(pros.getValue("slaT44"))))))) * (Double.parseDouble(pros.getValue("slaT41")));
 					}
 					//jitter 40-60
-					else if (((slaList.get(i).getDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaT44"))) > 0) && ((slaList.get(i).getDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaT45"))) <= 0)) {
-						score += (40 + ((((slaList.get(i).getDelayStd().doubleValue()) - (Double.parseDouble(pros.getValue("slaT45")))) * 20) / ((Double.parseDouble(pros.getValue("slaT44")) - (Double.parseDouble(pros.getValue("slaT45"))))))) * (Double.parseDouble(pros.getValue("slaT41")));
+					else if (((slaList.get(i).getJitter()).compareTo(Double.parseDouble(pros.getValue("slaT44"))) > 0) && ((slaList.get(i).getJitter()).compareTo(Double.parseDouble(pros.getValue("slaT45"))) <= 0)) {
+						score += (40 + ((((slaList.get(i).getJitter().doubleValue()) - (Double.parseDouble(pros.getValue("slaT45")))) * 20) / ((Double.parseDouble(pros.getValue("slaT44")) - (Double.parseDouble(pros.getValue("slaT45"))))))) * (Double.parseDouble(pros.getValue("slaT41")));
 					}
 					//jitter 20-40
-					else if (((slaList.get(i).getDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaT45"))) > 0) && ((slaList.get(i).getDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaT46"))) <= 0)) {
-						score += (20 + ((((slaList.get(i).getDelayStd().doubleValue()) - (Double.parseDouble(pros.getValue("slaT46")))) * 20) / ((Double.parseDouble(pros.getValue("slaT45")) - (Double.parseDouble(pros.getValue("slaT46"))))))) * (Double.parseDouble(pros.getValue("slaT41")));
+					else if (((slaList.get(i).getJitter()).compareTo(Double.parseDouble(pros.getValue("slaT45"))) > 0) && ((slaList.get(i).getJitter()).compareTo(Double.parseDouble(pros.getValue("slaT46"))) <= 0)) {
+						score += (20 + ((((slaList.get(i).getJitter().doubleValue()) - (Double.parseDouble(pros.getValue("slaT46")))) * 20) / ((Double.parseDouble(pros.getValue("slaT45")) - (Double.parseDouble(pros.getValue("slaT46"))))))) * (Double.parseDouble(pros.getValue("slaT41")));
 					}
 					//jitter 0-20
-					else if (((slaList.get(i).getDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaT46"))) > 0) && ((slaList.get(i).getDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaT47"))) <= 0)) {
-						score += ((((slaList.get(i).getDelayStd().doubleValue()) - (Double.parseDouble(pros.getValue("slaT47")))) * 20) / ((Double.parseDouble(pros.getValue("slaT46")) - (Double.parseDouble(pros.getValue("slaT47")))))) * (Double.parseDouble(pros.getValue("slaT41")));
+					else if (((slaList.get(i).getJitter()).compareTo(Double.parseDouble(pros.getValue("slaT46"))) > 0) && ((slaList.get(i).getJitter()).compareTo(Double.parseDouble(pros.getValue("slaT47"))) <= 0)) {
+						score += ((((slaList.get(i).getJitter().doubleValue()) - (Double.parseDouble(pros.getValue("slaT47")))) * 20) / ((Double.parseDouble(pros.getValue("slaT46")) - (Double.parseDouble(pros.getValue("slaT47")))))) * (Double.parseDouble(pros.getValue("slaT41")));
 					}
 					//jitter 0
 					else {
@@ -170,28 +170,28 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 					}
 
 					//g_jitter 100
-					if ((slaList.get(i).getGDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaT52"))) <= 0) {
+					if ((slaList.get(i).getGJitter()).compareTo(Double.parseDouble(pros.getValue("slaT52"))) <= 0) {
 						score += 100 * (Double.parseDouble(pros.getValue("slaT51")));
 					}
 					//g_jitter 80-100
-					else if (((slaList.get(i).getGDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaT52"))) > 0) && ((slaList.get(i).getGDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaT53"))) <= 0)) {
-						score += (80 + ((((slaList.get(i).getGDelayStd().doubleValue()) - (Double.parseDouble(pros.getValue("slaT53")))) * 20) / ((Double.parseDouble(pros.getValue("slaT52")) - (Double.parseDouble(pros.getValue("slaT53"))))))) * (Double.parseDouble(pros.getValue("slaT51")));
+					else if (((slaList.get(i).getGJitter()).compareTo(Double.parseDouble(pros.getValue("slaT52"))) > 0) && ((slaList.get(i).getGJitter()).compareTo(Double.parseDouble(pros.getValue("slaT53"))) <= 0)) {
+						score += (80 + ((((slaList.get(i).getGJitter().doubleValue()) - (Double.parseDouble(pros.getValue("slaT53")))) * 20) / ((Double.parseDouble(pros.getValue("slaT52")) - (Double.parseDouble(pros.getValue("slaT53"))))))) * (Double.parseDouble(pros.getValue("slaT51")));
 					}
 					//g_jitter 60-80
-					else if (((slaList.get(i).getGDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaT53"))) > 0) && ((slaList.get(i).getGDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaT54"))) <= 0)) {
-						score += (60 + ((((slaList.get(i).getGDelayStd().doubleValue()) - (Double.parseDouble(pros.getValue("slaT54")))) * 20) / ((Double.parseDouble(pros.getValue("slaT53")) - (Double.parseDouble(pros.getValue("slaT54"))))))) * (Double.parseDouble(pros.getValue("slaT51")));
+					else if (((slaList.get(i).getGJitter()).compareTo(Double.parseDouble(pros.getValue("slaT53"))) > 0) && ((slaList.get(i).getGJitter()).compareTo(Double.parseDouble(pros.getValue("slaT54"))) <= 0)) {
+						score += (60 + ((((slaList.get(i).getGJitter().doubleValue()) - (Double.parseDouble(pros.getValue("slaT54")))) * 20) / ((Double.parseDouble(pros.getValue("slaT53")) - (Double.parseDouble(pros.getValue("slaT54"))))))) * (Double.parseDouble(pros.getValue("slaT51")));
 					}
 					//g_jitter 40-60
-					else if (((slaList.get(i).getGDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaT54"))) > 0) && ((slaList.get(i).getGDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaT55"))) <= 0)) {
-						score += (40 + ((((slaList.get(i).getGDelayStd().doubleValue()) - (Double.parseDouble(pros.getValue("slaT55")))) * 20) / ((Double.parseDouble(pros.getValue("slaT54")) - (Double.parseDouble(pros.getValue("slaT55"))))))) * (Double.parseDouble(pros.getValue("slaT51")));
+					else if (((slaList.get(i).getGJitter()).compareTo(Double.parseDouble(pros.getValue("slaT54"))) > 0) && ((slaList.get(i).getGJitter()).compareTo(Double.parseDouble(pros.getValue("slaT55"))) <= 0)) {
+						score += (40 + ((((slaList.get(i).getGJitter().doubleValue()) - (Double.parseDouble(pros.getValue("slaT55")))) * 20) / ((Double.parseDouble(pros.getValue("slaT54")) - (Double.parseDouble(pros.getValue("slaT55"))))))) * (Double.parseDouble(pros.getValue("slaT51")));
 					}
 					//g_jitter 20-40
-					else if (((slaList.get(i).getGDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaT55"))) > 0) && ((slaList.get(i).getGDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaT56"))) <= 0)) {
-						score += (20 + ((((slaList.get(i).getGDelayStd().doubleValue()) - (Double.parseDouble(pros.getValue("slaT56")))) * 20) / ((Double.parseDouble(pros.getValue("slaT55")) - (Double.parseDouble(pros.getValue("slaT56"))))))) * (Double.parseDouble(pros.getValue("slaT51")));
+					else if (((slaList.get(i).getGJitter()).compareTo(Double.parseDouble(pros.getValue("slaT55"))) > 0) && ((slaList.get(i).getGJitter()).compareTo(Double.parseDouble(pros.getValue("slaT56"))) <= 0)) {
+						score += (20 + ((((slaList.get(i).getGJitter().doubleValue()) - (Double.parseDouble(pros.getValue("slaT56")))) * 20) / ((Double.parseDouble(pros.getValue("slaT55")) - (Double.parseDouble(pros.getValue("slaT56"))))))) * (Double.parseDouble(pros.getValue("slaT51")));
 					}
 					//g_jitter 0-20
-					else if (((slaList.get(i).getGDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaT56"))) > 0) && ((slaList.get(i).getGDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaT57"))) <= 0)) {
-						score += ((((slaList.get(i).getGDelayStd().doubleValue()) - (Double.parseDouble(pros.getValue("slaT57")))) * 20) / ((Double.parseDouble(pros.getValue("slaT56")) - (Double.parseDouble(pros.getValue("slaT57")))))) * (Double.parseDouble(pros.getValue("slaT51")));
+					else if (((slaList.get(i).getGJitter()).compareTo(Double.parseDouble(pros.getValue("slaT56"))) > 0) && ((slaList.get(i).getGJitter()).compareTo(Double.parseDouble(pros.getValue("slaT57"))) <= 0)) {
+						score += ((((slaList.get(i).getGJitter().doubleValue()) - (Double.parseDouble(pros.getValue("slaT57")))) * 20) / ((Double.parseDouble(pros.getValue("slaT56")) - (Double.parseDouble(pros.getValue("slaT57")))))) * (Double.parseDouble(pros.getValue("slaT51")));
 					}
 					//g_jitter 0
 					else {
@@ -199,28 +199,28 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 					}
 
 					//r_jitter 100
-					if ((slaList.get(i).getRDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaT62"))) <= 0) {
+					if ((slaList.get(i).getRJitter()).compareTo(Double.parseDouble(pros.getValue("slaT62"))) <= 0) {
 						score += 100 * (Double.parseDouble(pros.getValue("slaT61")));
 					}
 					//r_jitter 80-100
-					else if (((slaList.get(i).getRDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaT62"))) > 0) && ((slaList.get(i).getRDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaT63"))) <= 0)) {
-						score += (80 + ((((slaList.get(i).getRDelayStd().doubleValue()) - (Double.parseDouble(pros.getValue("slaT63")))) * 20) / ((Double.parseDouble(pros.getValue("slaT62")) - (Double.parseDouble(pros.getValue("slaT63"))))))) * (Double.parseDouble(pros.getValue("slaT61")));
+					else if (((slaList.get(i).getRJitter()).compareTo(Double.parseDouble(pros.getValue("slaT62"))) > 0) && ((slaList.get(i).getRJitter()).compareTo(Double.parseDouble(pros.getValue("slaT63"))) <= 0)) {
+						score += (80 + ((((slaList.get(i).getRJitter().doubleValue()) - (Double.parseDouble(pros.getValue("slaT63")))) * 20) / ((Double.parseDouble(pros.getValue("slaT62")) - (Double.parseDouble(pros.getValue("slaT63"))))))) * (Double.parseDouble(pros.getValue("slaT61")));
 					}
 					//r_jitter 60-80
-					else if (((slaList.get(i).getRDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaT63"))) > 0) && ((slaList.get(i).getRDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaT64"))) <= 0)) {
-						score += (60 + ((((slaList.get(i).getRDelayStd().doubleValue()) - (Double.parseDouble(pros.getValue("slaT64")))) * 20) / ((Double.parseDouble(pros.getValue("slaT63")) - (Double.parseDouble(pros.getValue("slaT64"))))))) * (Double.parseDouble(pros.getValue("slaT61")));
+					else if (((slaList.get(i).getRJitter()).compareTo(Double.parseDouble(pros.getValue("slaT63"))) > 0) && ((slaList.get(i).getRJitter()).compareTo(Double.parseDouble(pros.getValue("slaT64"))) <= 0)) {
+						score += (60 + ((((slaList.get(i).getRJitter().doubleValue()) - (Double.parseDouble(pros.getValue("slaT64")))) * 20) / ((Double.parseDouble(pros.getValue("slaT63")) - (Double.parseDouble(pros.getValue("slaT64"))))))) * (Double.parseDouble(pros.getValue("slaT61")));
 					}
 					//r_jitter 40-60
-					else if (((slaList.get(i).getRDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaT64"))) > 0) && ((slaList.get(i).getRDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaT65"))) <= 0)) {
-						score += (40 + ((((slaList.get(i).getRDelayStd().doubleValue()) - (Double.parseDouble(pros.getValue("slaT65")))) * 20) / ((Double.parseDouble(pros.getValue("slaT64")) - (Double.parseDouble(pros.getValue("slaT65"))))))) * (Double.parseDouble(pros.getValue("slaT61")));
+					else if (((slaList.get(i).getRJitter()).compareTo(Double.parseDouble(pros.getValue("slaT64"))) > 0) && ((slaList.get(i).getRJitter()).compareTo(Double.parseDouble(pros.getValue("slaT65"))) <= 0)) {
+						score += (40 + ((((slaList.get(i).getRJitter().doubleValue()) - (Double.parseDouble(pros.getValue("slaT65")))) * 20) / ((Double.parseDouble(pros.getValue("slaT64")) - (Double.parseDouble(pros.getValue("slaT65"))))))) * (Double.parseDouble(pros.getValue("slaT61")));
 					}
 					//r_jitter 20-40
-					else if (((slaList.get(i).getRDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaT65"))) > 0) && ((slaList.get(i).getRDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaT66"))) <= 0)) {
-						score += (20 + ((((slaList.get(i).getRDelayStd().doubleValue()) - (Double.parseDouble(pros.getValue("slaT66")))) * 20) / ((Double.parseDouble(pros.getValue("slaT65")) - (Double.parseDouble(pros.getValue("slaT66"))))))) * (Double.parseDouble(pros.getValue("slaT61")));
+					else if (((slaList.get(i).getRJitter()).compareTo(Double.parseDouble(pros.getValue("slaT65"))) > 0) && ((slaList.get(i).getRJitter()).compareTo(Double.parseDouble(pros.getValue("slaT66"))) <= 0)) {
+						score += (20 + ((((slaList.get(i).getRJitter().doubleValue()) - (Double.parseDouble(pros.getValue("slaT66")))) * 20) / ((Double.parseDouble(pros.getValue("slaT65")) - (Double.parseDouble(pros.getValue("slaT66"))))))) * (Double.parseDouble(pros.getValue("slaT61")));
 					}
 					//r_jitter 0-20
-					else if (((slaList.get(i).getRDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaT66"))) > 0) && ((slaList.get(i).getRDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaT67"))) <= 0)) {
-						score += ((((slaList.get(i).getRDelayStd().doubleValue()) - (Double.parseDouble(pros.getValue("slaT67")))) * 20) / ((Double.parseDouble(pros.getValue("slaT66")) - (Double.parseDouble(pros.getValue("slaT67")))))) * (Double.parseDouble(pros.getValue("slaT61")));
+					else if (((slaList.get(i).getRJitter()).compareTo(Double.parseDouble(pros.getValue("slaT66"))) > 0) && ((slaList.get(i).getRJitter()).compareTo(Double.parseDouble(pros.getValue("slaT67"))) <= 0)) {
+						score += ((((slaList.get(i).getRJitter().doubleValue()) - (Double.parseDouble(pros.getValue("slaT67")))) * 20) / ((Double.parseDouble(pros.getValue("slaT66")) - (Double.parseDouble(pros.getValue("slaT67")))))) * (Double.parseDouble(pros.getValue("slaT61")));
 					}
 					//r_jitter 0
 					else {
@@ -228,28 +228,28 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 					}
 
 					//loss_rate 100
-					if ((slaList.get(i).getDelayVar()).compareTo(Double.parseDouble(pros.getValue("slaT72"))) <= 0) {
+					if ((slaList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("slaT72"))) <= 0) {
 						score += 100 * (Double.parseDouble(pros.getValue("slaT71")));
 					}
 					//loss_rate 80-100
-					else if (((slaList.get(i).getDelayVar()).compareTo(Double.parseDouble(pros.getValue("slaT72"))) > 0) && ((slaList.get(i).getDelayVar()).compareTo(Double.parseDouble(pros.getValue("slaT73"))) <= 0)) {
-						score += (80 + ((((slaList.get(i).getDelayVar().doubleValue()) - (Double.parseDouble(pros.getValue("slaT73")))) * 20) / ((Double.parseDouble(pros.getValue("slaT72")) - (Double.parseDouble(pros.getValue("slaT73"))))))) * (Double.parseDouble(pros.getValue("slaT71")));
+					else if (((slaList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("slaT72"))) > 0) && ((slaList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("slaT73"))) <= 0)) {
+						score += (80 + ((((slaList.get(i).getLossRate().doubleValue()) - (Double.parseDouble(pros.getValue("slaT73")))) * 20) / ((Double.parseDouble(pros.getValue("slaT72")) - (Double.parseDouble(pros.getValue("slaT73"))))))) * (Double.parseDouble(pros.getValue("slaT71")));
 					}
 					//loss_rate 60-80
-					else if (((slaList.get(i).getDelayVar()).compareTo(Double.parseDouble(pros.getValue("slaT73"))) > 0) && ((slaList.get(i).getDelayVar()).compareTo(Double.parseDouble(pros.getValue("slaT74"))) <= 0)) {
-						score += (60 + ((((slaList.get(i).getDelayVar().doubleValue()) - (Double.parseDouble(pros.getValue("slaT74")))) * 20) / ((Double.parseDouble(pros.getValue("slaT73")) - (Double.parseDouble(pros.getValue("slaT74"))))))) * (Double.parseDouble(pros.getValue("slaT71")));
+					else if (((slaList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("slaT73"))) > 0) && ((slaList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("slaT74"))) <= 0)) {
+						score += (60 + ((((slaList.get(i).getLossRate().doubleValue()) - (Double.parseDouble(pros.getValue("slaT74")))) * 20) / ((Double.parseDouble(pros.getValue("slaT73")) - (Double.parseDouble(pros.getValue("slaT74"))))))) * (Double.parseDouble(pros.getValue("slaT71")));
 					}
 					//loss_rate 40-60
-					else if (((slaList.get(i).getDelayVar()).compareTo(Double.parseDouble(pros.getValue("slaT74"))) > 0) && ((slaList.get(i).getDelayVar()).compareTo(Double.parseDouble(pros.getValue("slaT75"))) <= 0)) {
-						score += (40 + ((((slaList.get(i).getDelayVar().doubleValue()) - (Double.parseDouble(pros.getValue("slaT75")))) * 20) / ((Double.parseDouble(pros.getValue("slaT74")) - (Double.parseDouble(pros.getValue("slaT75"))))))) * (Double.parseDouble(pros.getValue("slaT71")));
+					else if (((slaList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("slaT74"))) > 0) && ((slaList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("slaT75"))) <= 0)) {
+						score += (40 + ((((slaList.get(i).getLossRate().doubleValue()) - (Double.parseDouble(pros.getValue("slaT75")))) * 20) / ((Double.parseDouble(pros.getValue("slaT74")) - (Double.parseDouble(pros.getValue("slaT75"))))))) * (Double.parseDouble(pros.getValue("slaT71")));
 					}
 					//loss_rate 20-40
-					else if (((slaList.get(i).getDelayVar()).compareTo(Double.parseDouble(pros.getValue("slaT75"))) > 0) && ((slaList.get(i).getDelayVar()).compareTo(Double.parseDouble(pros.getValue("slaT76"))) <= 0)) {
-						score += (20 + ((((slaList.get(i).getDelayVar().doubleValue()) - (Double.parseDouble(pros.getValue("slaT76")))) * 20) / ((Double.parseDouble(pros.getValue("slaT75")) - (Double.parseDouble(pros.getValue("slaT76"))))))) * (Double.parseDouble(pros.getValue("slaT71")));
+					else if (((slaList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("slaT75"))) > 0) && ((slaList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("slaT76"))) <= 0)) {
+						score += (20 + ((((slaList.get(i).getLossRate().doubleValue()) - (Double.parseDouble(pros.getValue("slaT76")))) * 20) / ((Double.parseDouble(pros.getValue("slaT75")) - (Double.parseDouble(pros.getValue("slaT76"))))))) * (Double.parseDouble(pros.getValue("slaT71")));
 					}
 					//loss_rate 0-20
-					else if (((slaList.get(i).getDelayVar()).compareTo(Double.parseDouble(pros.getValue("slaT76"))) > 0) && ((slaList.get(i).getDelayVar()).compareTo(Double.parseDouble(pros.getValue("slaT77"))) <= 0)) {
-						score += ((((slaList.get(i).getDelayVar().doubleValue()) - (Double.parseDouble(pros.getValue("slaT77")))) * 20) / ((Double.parseDouble(pros.getValue("slaT76")) - (Double.parseDouble(pros.getValue("slaT77")))))) * (Double.parseDouble(pros.getValue("slaT71")));
+					else if (((slaList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("slaT76"))) > 0) && ((slaList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("slaT77"))) <= 0)) {
+						score += ((((slaList.get(i).getLossRate().doubleValue()) - (Double.parseDouble(pros.getValue("slaT77")))) * 20) / ((Double.parseDouble(pros.getValue("slaT76")) - (Double.parseDouble(pros.getValue("slaT77")))))) * (Double.parseDouble(pros.getValue("slaT71")));
 					}
 					//loss_rate 0
 					else {
@@ -380,28 +380,28 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 					}
 
 					//jitter 100
-					if ((slaList.get(i).getDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaU42"))) <= 0) {
+					if ((slaList.get(i).getJitter()).compareTo(Double.parseDouble(pros.getValue("slaU42"))) <= 0) {
 						score += 100 * (Double.parseDouble(pros.getValue("slaU41")));
 					}
 					//jitter 80-100
-					else if (((slaList.get(i).getDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaU42"))) > 0) && ((slaList.get(i).getDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaU43"))) <= 0)) {
-						score += (80 + ((((slaList.get(i).getDelayStd().doubleValue()) - (Double.parseDouble(pros.getValue("slaU43")))) * 20) / ((Double.parseDouble(pros.getValue("slaU42")) - (Double.parseDouble(pros.getValue("slaU43"))))))) * (Double.parseDouble(pros.getValue("slaU41")));
+					else if (((slaList.get(i).getJitter()).compareTo(Double.parseDouble(pros.getValue("slaU42"))) > 0) && ((slaList.get(i).getJitter()).compareTo(Double.parseDouble(pros.getValue("slaU43"))) <= 0)) {
+						score += (80 + ((((slaList.get(i).getJitter().doubleValue()) - (Double.parseDouble(pros.getValue("slaU43")))) * 20) / ((Double.parseDouble(pros.getValue("slaU42")) - (Double.parseDouble(pros.getValue("slaU43"))))))) * (Double.parseDouble(pros.getValue("slaU41")));
 					}
 					//jitter 60-80
-					else if (((slaList.get(i).getDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaU43"))) > 0) && ((slaList.get(i).getDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaU44"))) <= 0)) {
-						score += (60 + ((((slaList.get(i).getDelayStd().doubleValue()) - (Double.parseDouble(pros.getValue("slaU44")))) * 20) / ((Double.parseDouble(pros.getValue("slaU43")) - (Double.parseDouble(pros.getValue("slaU44"))))))) * (Double.parseDouble(pros.getValue("slaU41")));
+					else if (((slaList.get(i).getJitter()).compareTo(Double.parseDouble(pros.getValue("slaU43"))) > 0) && ((slaList.get(i).getJitter()).compareTo(Double.parseDouble(pros.getValue("slaU44"))) <= 0)) {
+						score += (60 + ((((slaList.get(i).getJitter().doubleValue()) - (Double.parseDouble(pros.getValue("slaU44")))) * 20) / ((Double.parseDouble(pros.getValue("slaU43")) - (Double.parseDouble(pros.getValue("slaU44"))))))) * (Double.parseDouble(pros.getValue("slaU41")));
 					}
 					//jitter 40-60
-					else if (((slaList.get(i).getDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaU44"))) > 0) && ((slaList.get(i).getDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaU45"))) <= 0)) {
-						score += (40 + ((((slaList.get(i).getDelayStd().doubleValue()) - (Double.parseDouble(pros.getValue("slaU45")))) * 20) / ((Double.parseDouble(pros.getValue("slaU44")) - (Double.parseDouble(pros.getValue("slaU45"))))))) * (Double.parseDouble(pros.getValue("slaU41")));
+					else if (((slaList.get(i).getJitter()).compareTo(Double.parseDouble(pros.getValue("slaU44"))) > 0) && ((slaList.get(i).getJitter()).compareTo(Double.parseDouble(pros.getValue("slaU45"))) <= 0)) {
+						score += (40 + ((((slaList.get(i).getJitter().doubleValue()) - (Double.parseDouble(pros.getValue("slaU45")))) * 20) / ((Double.parseDouble(pros.getValue("slaU44")) - (Double.parseDouble(pros.getValue("slaU45"))))))) * (Double.parseDouble(pros.getValue("slaU41")));
 					}
 					//jitter 20-40
-					else if (((slaList.get(i).getDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaU45"))) > 0) && ((slaList.get(i).getDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaU46"))) <= 0)) {
-						score += (20 + ((((slaList.get(i).getDelayStd().doubleValue()) - (Double.parseDouble(pros.getValue("slaU46")))) * 20) / ((Double.parseDouble(pros.getValue("slaU45")) - (Double.parseDouble(pros.getValue("slaU46"))))))) * (Double.parseDouble(pros.getValue("slaU41")));
+					else if (((slaList.get(i).getJitter()).compareTo(Double.parseDouble(pros.getValue("slaU45"))) > 0) && ((slaList.get(i).getJitter()).compareTo(Double.parseDouble(pros.getValue("slaU46"))) <= 0)) {
+						score += (20 + ((((slaList.get(i).getJitter().doubleValue()) - (Double.parseDouble(pros.getValue("slaU46")))) * 20) / ((Double.parseDouble(pros.getValue("slaU45")) - (Double.parseDouble(pros.getValue("slaU46"))))))) * (Double.parseDouble(pros.getValue("slaU41")));
 					}
 					//jitter 0-20
-					else if (((slaList.get(i).getDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaU46"))) > 0) && ((slaList.get(i).getDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaU47"))) <= 0)) {
-						score += ((((slaList.get(i).getDelayStd().doubleValue()) - (Double.parseDouble(pros.getValue("slaU47")))) * 20) / ((Double.parseDouble(pros.getValue("slaU46")) - (Double.parseDouble(pros.getValue("slaU47")))))) * (Double.parseDouble(pros.getValue("slaU41")));
+					else if (((slaList.get(i).getJitter()).compareTo(Double.parseDouble(pros.getValue("slaU46"))) > 0) && ((slaList.get(i).getJitter()).compareTo(Double.parseDouble(pros.getValue("slaU47"))) <= 0)) {
+						score += ((((slaList.get(i).getJitter().doubleValue()) - (Double.parseDouble(pros.getValue("slaU47")))) * 20) / ((Double.parseDouble(pros.getValue("slaU46")) - (Double.parseDouble(pros.getValue("slaU47")))))) * (Double.parseDouble(pros.getValue("slaU41")));
 					}
 					//jitter 0
 					else {
@@ -409,28 +409,28 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 					}
 
 					//g_jitter 100
-					if ((slaList.get(i).getGDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaU52"))) <= 0) {
+					if ((slaList.get(i).getGJitter()).compareTo(Double.parseDouble(pros.getValue("slaU52"))) <= 0) {
 						score += 100 * (Double.parseDouble(pros.getValue("slaU51")));
 					}
 					//g_jitter 80-100
-					else if (((slaList.get(i).getGDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaU52"))) > 0) && ((slaList.get(i).getGDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaU53"))) <= 0)) {
-						score += (80 + ((((slaList.get(i).getGDelayStd().doubleValue()) - (Double.parseDouble(pros.getValue("slaU53")))) * 20) / ((Double.parseDouble(pros.getValue("slaU52")) - (Double.parseDouble(pros.getValue("slaU53"))))))) * (Double.parseDouble(pros.getValue("slaU51")));
+					else if (((slaList.get(i).getGJitter()).compareTo(Double.parseDouble(pros.getValue("slaU52"))) > 0) && ((slaList.get(i).getGJitter()).compareTo(Double.parseDouble(pros.getValue("slaU53"))) <= 0)) {
+						score += (80 + ((((slaList.get(i).getGJitter().doubleValue()) - (Double.parseDouble(pros.getValue("slaU53")))) * 20) / ((Double.parseDouble(pros.getValue("slaU52")) - (Double.parseDouble(pros.getValue("slaU53"))))))) * (Double.parseDouble(pros.getValue("slaU51")));
 					}
 					//g_jitter 60-80
-					else if (((slaList.get(i).getGDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaU53"))) > 0) && ((slaList.get(i).getGDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaU54"))) <= 0)) {
-						score += (60 + ((((slaList.get(i).getGDelayStd().doubleValue()) - (Double.parseDouble(pros.getValue("slaU54")))) * 20) / ((Double.parseDouble(pros.getValue("slaU53")) - (Double.parseDouble(pros.getValue("slaU54"))))))) * (Double.parseDouble(pros.getValue("slaU51")));
+					else if (((slaList.get(i).getGJitter()).compareTo(Double.parseDouble(pros.getValue("slaU53"))) > 0) && ((slaList.get(i).getGJitter()).compareTo(Double.parseDouble(pros.getValue("slaU54"))) <= 0)) {
+						score += (60 + ((((slaList.get(i).getGJitter().doubleValue()) - (Double.parseDouble(pros.getValue("slaU54")))) * 20) / ((Double.parseDouble(pros.getValue("slaU53")) - (Double.parseDouble(pros.getValue("slaU54"))))))) * (Double.parseDouble(pros.getValue("slaU51")));
 					}
 					//g_jitter 40-60
-					else if (((slaList.get(i).getGDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaU54"))) > 0) && ((slaList.get(i).getGDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaU55"))) <= 0)) {
-						score += (40 + ((((slaList.get(i).getGDelayStd().doubleValue()) - (Double.parseDouble(pros.getValue("slaU55")))) * 20) / ((Double.parseDouble(pros.getValue("slaU54")) - (Double.parseDouble(pros.getValue("slaU55"))))))) * (Double.parseDouble(pros.getValue("slaU51")));
+					else if (((slaList.get(i).getGJitter()).compareTo(Double.parseDouble(pros.getValue("slaU54"))) > 0) && ((slaList.get(i).getGJitter()).compareTo(Double.parseDouble(pros.getValue("slaU55"))) <= 0)) {
+						score += (40 + ((((slaList.get(i).getGJitter().doubleValue()) - (Double.parseDouble(pros.getValue("slaU55")))) * 20) / ((Double.parseDouble(pros.getValue("slaU54")) - (Double.parseDouble(pros.getValue("slaU55"))))))) * (Double.parseDouble(pros.getValue("slaU51")));
 					}
 					//g_jitter 20-40
-					else if (((slaList.get(i).getGDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaU55"))) > 0) && ((slaList.get(i).getGDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaU56"))) <= 0)) {
-						score += (20 + ((((slaList.get(i).getGDelayStd().doubleValue()) - (Double.parseDouble(pros.getValue("slaU56")))) * 20) / ((Double.parseDouble(pros.getValue("slaU55")) - (Double.parseDouble(pros.getValue("slaU56"))))))) * (Double.parseDouble(pros.getValue("slaU51")));
+					else if (((slaList.get(i).getGJitter()).compareTo(Double.parseDouble(pros.getValue("slaU55"))) > 0) && ((slaList.get(i).getGJitter()).compareTo(Double.parseDouble(pros.getValue("slaU56"))) <= 0)) {
+						score += (20 + ((((slaList.get(i).getGJitter().doubleValue()) - (Double.parseDouble(pros.getValue("slaU56")))) * 20) / ((Double.parseDouble(pros.getValue("slaU55")) - (Double.parseDouble(pros.getValue("slaU56"))))))) * (Double.parseDouble(pros.getValue("slaU51")));
 					}
 					//g_jitter 0-20
-					else if (((slaList.get(i).getGDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaU56"))) > 0) && ((slaList.get(i).getGDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaU57"))) <= 0)) {
-						score += ((((slaList.get(i).getGDelayStd().doubleValue()) - (Double.parseDouble(pros.getValue("slaU57")))) * 20) / ((Double.parseDouble(pros.getValue("slaU56")) - (Double.parseDouble(pros.getValue("slaU57")))))) * (Double.parseDouble(pros.getValue("slaU51")));
+					else if (((slaList.get(i).getGJitter()).compareTo(Double.parseDouble(pros.getValue("slaU56"))) > 0) && ((slaList.get(i).getGJitter()).compareTo(Double.parseDouble(pros.getValue("slaU57"))) <= 0)) {
+						score += ((((slaList.get(i).getGJitter().doubleValue()) - (Double.parseDouble(pros.getValue("slaU57")))) * 20) / ((Double.parseDouble(pros.getValue("slaU56")) - (Double.parseDouble(pros.getValue("slaU57")))))) * (Double.parseDouble(pros.getValue("slaU51")));
 					}
 					//g_jitter 0
 					else {
@@ -438,28 +438,28 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 					}
 
 					//r_jitter 100
-					if ((slaList.get(i).getRDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaU62"))) <= 0) {
+					if ((slaList.get(i).getRJitter()).compareTo(Double.parseDouble(pros.getValue("slaU62"))) <= 0) {
 						score += 100 * (Double.parseDouble(pros.getValue("slaU61")));
 					}
 					//r_jitter 80-100
-					else if (((slaList.get(i).getRDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaU62"))) > 0) && ((slaList.get(i).getRDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaU63"))) <= 0)) {
-						score += (80 + ((((slaList.get(i).getRDelayStd().doubleValue()) - (Double.parseDouble(pros.getValue("slaU63")))) * 20) / ((Double.parseDouble(pros.getValue("slaU62")) - (Double.parseDouble(pros.getValue("slaU63"))))))) * (Double.parseDouble(pros.getValue("slaU61")));
+					else if (((slaList.get(i).getRJitter()).compareTo(Double.parseDouble(pros.getValue("slaU62"))) > 0) && ((slaList.get(i).getRJitter()).compareTo(Double.parseDouble(pros.getValue("slaU63"))) <= 0)) {
+						score += (80 + ((((slaList.get(i).getRJitter().doubleValue()) - (Double.parseDouble(pros.getValue("slaU63")))) * 20) / ((Double.parseDouble(pros.getValue("slaU62")) - (Double.parseDouble(pros.getValue("slaU63"))))))) * (Double.parseDouble(pros.getValue("slaU61")));
 					}
 					//r_jitter 60-80
-					else if (((slaList.get(i).getRDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaU63"))) > 0) && ((slaList.get(i).getRDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaU64"))) <= 0)) {
-						score += (60 + ((((slaList.get(i).getRDelayStd().doubleValue()) - (Double.parseDouble(pros.getValue("slaU64")))) * 20) / ((Double.parseDouble(pros.getValue("slaU63")) - (Double.parseDouble(pros.getValue("slaU64"))))))) * (Double.parseDouble(pros.getValue("slaU61")));
+					else if (((slaList.get(i).getRJitter()).compareTo(Double.parseDouble(pros.getValue("slaU63"))) > 0) && ((slaList.get(i).getRJitter()).compareTo(Double.parseDouble(pros.getValue("slaU64"))) <= 0)) {
+						score += (60 + ((((slaList.get(i).getRJitter().doubleValue()) - (Double.parseDouble(pros.getValue("slaU64")))) * 20) / ((Double.parseDouble(pros.getValue("slaU63")) - (Double.parseDouble(pros.getValue("slaU64"))))))) * (Double.parseDouble(pros.getValue("slaU61")));
 					}
 					//r_jitter 40-60
-					else if (((slaList.get(i).getRDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaU64"))) > 0) && ((slaList.get(i).getRDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaU65"))) <= 0)) {
-						score += (40 + ((((slaList.get(i).getRDelayStd().doubleValue()) - (Double.parseDouble(pros.getValue("slaU65")))) * 20) / ((Double.parseDouble(pros.getValue("slaU64")) - (Double.parseDouble(pros.getValue("slaU65"))))))) * (Double.parseDouble(pros.getValue("slaU61")));
+					else if (((slaList.get(i).getRJitter()).compareTo(Double.parseDouble(pros.getValue("slaU64"))) > 0) && ((slaList.get(i).getRJitter()).compareTo(Double.parseDouble(pros.getValue("slaU65"))) <= 0)) {
+						score += (40 + ((((slaList.get(i).getRJitter().doubleValue()) - (Double.parseDouble(pros.getValue("slaU65")))) * 20) / ((Double.parseDouble(pros.getValue("slaU64")) - (Double.parseDouble(pros.getValue("slaU65"))))))) * (Double.parseDouble(pros.getValue("slaU61")));
 					}
 					//r_jitter 20-40
-					else if (((slaList.get(i).getRDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaU65"))) > 0) && ((slaList.get(i).getRDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaU66"))) <= 0)) {
-						score += (20 + ((((slaList.get(i).getRDelayStd().doubleValue()) - (Double.parseDouble(pros.getValue("slaU66")))) * 20) / ((Double.parseDouble(pros.getValue("slaU65")) - (Double.parseDouble(pros.getValue("slaU66"))))))) * (Double.parseDouble(pros.getValue("slaU61")));
+					else if (((slaList.get(i).getRJitter()).compareTo(Double.parseDouble(pros.getValue("slaU65"))) > 0) && ((slaList.get(i).getRJitter()).compareTo(Double.parseDouble(pros.getValue("slaU66"))) <= 0)) {
+						score += (20 + ((((slaList.get(i).getRJitter().doubleValue()) - (Double.parseDouble(pros.getValue("slaU66")))) * 20) / ((Double.parseDouble(pros.getValue("slaU65")) - (Double.parseDouble(pros.getValue("slaU66"))))))) * (Double.parseDouble(pros.getValue("slaU61")));
 					}
 					//r_jitter 0-20
-					else if (((slaList.get(i).getRDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaU66"))) > 0) && ((slaList.get(i).getRDelayStd()).compareTo(Double.parseDouble(pros.getValue("slaU67"))) <= 0)) {
-						score += ((((slaList.get(i).getRDelayStd().doubleValue()) - (Double.parseDouble(pros.getValue("slaU67")))) * 20) / ((Double.parseDouble(pros.getValue("slaU66")) - (Double.parseDouble(pros.getValue("slaU67")))))) * (Double.parseDouble(pros.getValue("slaU61")));
+					else if (((slaList.get(i).getRJitter()).compareTo(Double.parseDouble(pros.getValue("slaU66"))) > 0) && ((slaList.get(i).getRJitter()).compareTo(Double.parseDouble(pros.getValue("slaU67"))) <= 0)) {
+						score += ((((slaList.get(i).getRJitter().doubleValue()) - (Double.parseDouble(pros.getValue("slaU67")))) * 20) / ((Double.parseDouble(pros.getValue("slaU66")) - (Double.parseDouble(pros.getValue("slaU67")))))) * (Double.parseDouble(pros.getValue("slaU61")));
 					}
 					//r_jitter 0
 					else {
@@ -467,28 +467,28 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 					}
 
 					//loss_rate 100
-					if ((slaList.get(i).getDelayVar()).compareTo(Double.parseDouble(pros.getValue("slaU72"))) <= 0) {
+					if ((slaList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("slaU72"))) <= 0) {
 						score += 100 * (Double.parseDouble(pros.getValue("slaU71")));
 					}
 					//loss_rate 80-100
-					else if (((slaList.get(i).getDelayVar()).compareTo(Double.parseDouble(pros.getValue("slaU72"))) > 0) && ((slaList.get(i).getDelayVar()).compareTo(Double.parseDouble(pros.getValue("slaU73"))) <= 0)) {
-						score += (80 + ((((slaList.get(i).getDelayVar().doubleValue()) - (Double.parseDouble(pros.getValue("slaU73")))) * 20) / ((Double.parseDouble(pros.getValue("slaU72")) - (Double.parseDouble(pros.getValue("slaU73"))))))) * (Double.parseDouble(pros.getValue("slaU71")));
+					else if (((slaList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("slaU72"))) > 0) && ((slaList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("slaU73"))) <= 0)) {
+						score += (80 + ((((slaList.get(i).getLossRate().doubleValue()) - (Double.parseDouble(pros.getValue("slaU73")))) * 20) / ((Double.parseDouble(pros.getValue("slaU72")) - (Double.parseDouble(pros.getValue("slaU73"))))))) * (Double.parseDouble(pros.getValue("slaU71")));
 					}
 					//loss_rate 60-80
-					else if (((slaList.get(i).getDelayVar()).compareTo(Double.parseDouble(pros.getValue("slaU73"))) > 0) && ((slaList.get(i).getDelayVar()).compareTo(Double.parseDouble(pros.getValue("slaU74"))) <= 0)) {
-						score += (60 + ((((slaList.get(i).getDelayVar().doubleValue()) - (Double.parseDouble(pros.getValue("slaU74")))) * 20) / ((Double.parseDouble(pros.getValue("slaU73")) - (Double.parseDouble(pros.getValue("slaU74"))))))) * (Double.parseDouble(pros.getValue("slaU71")));
+					else if (((slaList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("slaU73"))) > 0) && ((slaList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("slaU74"))) <= 0)) {
+						score += (60 + ((((slaList.get(i).getLossRate().doubleValue()) - (Double.parseDouble(pros.getValue("slaU74")))) * 20) / ((Double.parseDouble(pros.getValue("slaU73")) - (Double.parseDouble(pros.getValue("slaU74"))))))) * (Double.parseDouble(pros.getValue("slaU71")));
 					}
 					//loss_rate 40-60
-					else if (((slaList.get(i).getDelayVar()).compareTo(Double.parseDouble(pros.getValue("slaU74"))) > 0) && ((slaList.get(i).getDelayVar()).compareTo(Double.parseDouble(pros.getValue("slaU75"))) <= 0)) {
-						score += (40 + ((((slaList.get(i).getDelayVar().doubleValue()) - (Double.parseDouble(pros.getValue("slaU75")))) * 20) / ((Double.parseDouble(pros.getValue("slaU74")) - (Double.parseDouble(pros.getValue("slaU75"))))))) * (Double.parseDouble(pros.getValue("slaU71")));
+					else if (((slaList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("slaU74"))) > 0) && ((slaList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("slaU75"))) <= 0)) {
+						score += (40 + ((((slaList.get(i).getLossRate().doubleValue()) - (Double.parseDouble(pros.getValue("slaU75")))) * 20) / ((Double.parseDouble(pros.getValue("slaU74")) - (Double.parseDouble(pros.getValue("slaU75"))))))) * (Double.parseDouble(pros.getValue("slaU71")));
 					}
 					//loss_rate 20-40
-					else if (((slaList.get(i).getDelayVar()).compareTo(Double.parseDouble(pros.getValue("slaU75"))) > 0) && ((slaList.get(i).getDelayVar()).compareTo(Double.parseDouble(pros.getValue("slaU76"))) <= 0)) {
-						score += (20 + ((((slaList.get(i).getDelayVar().doubleValue()) - (Double.parseDouble(pros.getValue("slaU76")))) * 20) / ((Double.parseDouble(pros.getValue("slaU75")) - (Double.parseDouble(pros.getValue("slaU76"))))))) * (Double.parseDouble(pros.getValue("slaU71")));
+					else if (((slaList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("slaU75"))) > 0) && ((slaList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("slaU76"))) <= 0)) {
+						score += (20 + ((((slaList.get(i).getLossRate().doubleValue()) - (Double.parseDouble(pros.getValue("slaU76")))) * 20) / ((Double.parseDouble(pros.getValue("slaU75")) - (Double.parseDouble(pros.getValue("slaU76"))))))) * (Double.parseDouble(pros.getValue("slaU71")));
 					}
 					//loss_rate 0-20
-					else if (((slaList.get(i).getDelayVar()).compareTo(Double.parseDouble(pros.getValue("slaU76"))) > 0) && ((slaList.get(i).getDelayVar()).compareTo(Double.parseDouble(pros.getValue("slaU77"))) <= 0)) {
-						score += ((((slaList.get(i).getDelayVar().doubleValue()) - (Double.parseDouble(pros.getValue("slaU77")))) * 20) / ((Double.parseDouble(pros.getValue("slaU76")) - (Double.parseDouble(pros.getValue("slaU77")))))) * (Double.parseDouble(pros.getValue("slaU71")));
+					else if (((slaList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("slaU76"))) > 0) && ((slaList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("slaU77"))) <= 0)) {
+						score += ((((slaList.get(i).getLossRate().doubleValue()) - (Double.parseDouble(pros.getValue("slaU77")))) * 20) / ((Double.parseDouble(pros.getValue("slaU76")) - (Double.parseDouble(pros.getValue("slaU77")))))) * (Double.parseDouble(pros.getValue("slaU71")));
 					}
 					//loss_rate 0
 					else {

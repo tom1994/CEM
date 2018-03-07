@@ -585,7 +585,7 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 					finalScore.setCountyName(ite.getCountyName());
 					finalScore.setProbeId(ite.getProbeId());
 					finalScore.setProbeName(ite.getProbeName());
-					finalScore.setServiceType(4);
+					finalScore.setServiceType(3);
 					finalScore.setTargetId(ite.getTargetId());
 					finalScore.setTargetName(ite.getTargetName());
 					finalScore.setScore((connection.get(ite).getScore()) / (connection.get(ite).getBase()));

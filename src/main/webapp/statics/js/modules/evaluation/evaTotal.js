@@ -45,15 +45,15 @@ var search_service = new Vue({ //Todo:完成查询条件框
                 console.log("时间选择有误，请重新选择！");
                 $('#nonavailable_time').modal('show');
             }else{
-                var ava_start=searchJson.startDate.substr(0,10);
-                var ava_terminal=searchJson.terminalDate.substr(0,10);
-                var startTime=searchJson.startDate.substr(11,15);
-                var terminalTime=searchJson.startDate.substr(11,15);
                 var search = new Object();
-                search.city_id = searchJson.city_id;
-                search.couty_id = searchJson.county_id;
-                search.probe_id = searchJson.probe_id;
-                if(ava_start.length!=0&&ava_terminal.length!=0&&startTime.length!=0&&terminalTime.length!=0) {
+                search.city_id = searchJson.city;
+                search.couty_id = searchJson.county;
+                search.probe_id = searchJson.probe;
+                if (searchJson.startDate.length != 0 && searchJson.terminalDate.length != 0 ) {
+                    var ava_start = searchJson.startDate.substr(0, 10);
+                    var ava_terminal = searchJson.terminalDate.substr(0, 10);
+                    var startTime = searchJson.startDate.substr(11, 15);
+                    var terminalTime = searchJson.terminalDate.substr(11, 15);
                     search.ava_start = ava_start;
                     search.ava_terminal = ava_terminal;
                     search.starTime = startTime;
@@ -64,6 +64,7 @@ var search_service = new Vue({ //Todo:完成查询条件框
                 }
                 let param = {};
                 param.probedata = JSON.stringify(search);
+                console.log(param.probedata);
                 $.ajax({
                     type: "POST",   /*GET会乱码*/
                     url: "../../recordhourping/qualityList",//Todo:改成测试任务组的list方法

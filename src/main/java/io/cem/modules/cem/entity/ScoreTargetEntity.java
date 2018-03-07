@@ -1,6 +1,8 @@
 package io.cem.modules.cem.entity;
 
 
+import java.util.Date;
+
 public class ScoreTargetEntity {
     //地市
     private String cityName;
@@ -20,6 +22,10 @@ public class ScoreTargetEntity {
     private Integer targetId;
 
     private Integer accessLayer;
+    //记录日期
+    private Date recordDate;
+    //记录时间
+    private String recordTime;
 
     public String getCityName() {
         return cityName;
@@ -84,6 +90,23 @@ public class ScoreTargetEntity {
     public void setTargetId(Integer targetId) {
         this.targetId = targetId;
     }
+
+    public Date getRecordDate() {
+        return recordDate;
+    }
+
+    public void setRecordDate(Date recordDate) {
+        this.recordDate = recordDate;
+    }
+
+    public String getRecordTime() {
+        return recordTime;
+    }
+
+    public void setRecordTime(String recordTime) {
+        this.recordTime = recordTime;
+    }
+
 
     @Override
     public boolean equals(Object obj) {
