@@ -893,7 +893,7 @@ public class RecordHourPingController {
 			List<ScoreEntity> pingUdp = recordHourPingService.calculatePingUdp(pingList);
 			List<ScoreEntity> tracertIcmp = recordHourPingService.calculateTracertIcmp(tracertList);
 			List<ScoreEntity> tracertUdp = recordHourPingService.calculateTracertUdp(tracertList);
-			scoreList = recordHourPingService.calculateService1(pingIcmp,pingTcp,pingUdp,tracertIcmp,tracertUdp);
+			scoreList = recordHourPingService.calculateDate1(pingIcmp,pingTcp,pingUdp,tracertIcmp,tracertUdp);
 		}
 		//查询小时表
 		else {
@@ -904,7 +904,7 @@ public class RecordHourPingController {
 			List<ScoreEntity> pingUdp = recordHourPingService.calculatePingUdp(pingList);
 			List<ScoreEntity> tracertIcmp = recordHourPingService.calculateTracertIcmp(tracertList);
 			List<ScoreEntity> tracertUdp = recordHourPingService.calculateTracertUdp(tracertList);
-			scoreList = recordHourPingService.calculateService1(pingIcmp,pingTcp,pingUdp,tracertIcmp,tracertUdp);
+			scoreList = recordHourPingService.calculateDate1(pingIcmp,pingTcp,pingUdp,tracertIcmp,tracertUdp);
 		}
 		System.out.println(scoreList);
 		return R.ok().put("scoreList", scoreList);

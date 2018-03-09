@@ -324,6 +324,34 @@ function connection_info() {
     $('#myModal_dispatch').modal('show');
 }
 
+/*网络连通性图表*/
+var connection_chart = new Vue({
+    el: '#',
+    data: {
+        chartdata: {ava_start:(new Date()).Format("yyyy-MM-dd"), ava_terminal:(new Date()).Format("yyyy-MM-dd")}
+    },
+    methods:{
+
+    },
+    mounted: function(){         /*动态加载测试任务组数据*/
+        let param = {};
+        param.probedata = JSON.stringify(this.chartdata);
+        $.ajax({
+            type: "POST",   /*GET会乱码*/
+            url: "../../recordhourping/connection",
+            cache: false,  //禁用缓存
+            data: param,  //传入组装的参数
+            dataType: "json",
+            /* contentType:"application/json",  /!*必须要,不可少*!/*/
+            success: function (result) {
+                console.log(result.scoreList);
+
+
+            }
+        });
+    },
+
+});
 
 
 
