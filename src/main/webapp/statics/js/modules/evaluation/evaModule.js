@@ -122,7 +122,7 @@ var weightSet = new Vue({
                 contentType: "application/json", /*必须要,不可少*/
                 success: function (result) {
                     var forms = $('#sla_tcp_form .form-input');
-                    for (var i = 0; i < 133; i++) {
+                    for (var i = 0; i < 49; i++) {
                         forms[i].value = result.slaTCP[i];
                     }
                     $('#Modal_sla_tcp').modal('show');
@@ -138,7 +138,7 @@ var weightSet = new Vue({
                 contentType: "application/json", /*必须要,不可少*/
                 success: function (result) {
                     var forms = $('#sla_udp_form .form-input');
-                    for (var i = 0; i < 133; i++) {
+                    for (var i = 0; i < 49; i++) {
                         forms[i].value = result.slaUDP[i];
                     }
                     $('#Modal_sla_udp').modal('show');
@@ -392,7 +392,6 @@ var weightHandle = new Vue ({
 
         },
         reset:function(){
-            debugger;
             $.ajax({
                 type: "POST", /*GET会乱码*/
                 url: "../../cem/allweight/reset",
@@ -694,11 +693,7 @@ var stform_data = new Vue ({
             var stJson = getFormJson($('#sla_tcp_form'));
             var stTotalWeight = parseFloat(stJson.slaT11) + parseFloat(stJson.slaT21) + parseFloat(stJson.slaT31)
                 + parseFloat(stJson.slaT41) + parseFloat(stJson.slaT51) + parseFloat(stJson.slaT61)
-                + parseFloat(stJson.slaT71) + parseFloat(stJson.slaT81) + parseFloat(stJson.slaT91)
-                + parseFloat(stJson.slaT101) + parseFloat(stJson.slaT111) + parseFloat(stJson.slaT121)
-                + parseFloat(stJson.slaT131) + parseFloat(stJson.slaT141) + parseFloat(stJson.slaT151)
-                + parseFloat(stJson.slaT161) + parseFloat(stJson.slaT171) + parseFloat(stJson.slaT181)
-                + parseFloat(stJson.slaT191);
+                + parseFloat(stJson.slaT71);
             for (var prop in stJson)
             {
                 if (stJson[prop] == "") {
@@ -749,11 +744,8 @@ var suform_data = new Vue ({
 
             var suTotalWeight = parseFloat(suJson.slaU11) + parseFloat(suJson.slaU21) + parseFloat(suJson.slaU31)
                 + parseFloat(suJson.slaU41) + parseFloat(suJson.slaU51) + parseFloat(suJson.slaU61)
-                + parseFloat(suJson.slaU71) + parseFloat(suJson.slaU81) + parseFloat(suJson.slaU91)
-                + parseFloat(suJson.slaU101) + parseFloat(suJson.slaU111) + parseFloat(suJson.slaU121)
-                + parseFloat(suJson.slaU131) + parseFloat(suJson.slaU141) + parseFloat(suJson.slaU151)
-                + parseFloat(suJson.slaU161) + parseFloat(suJson.slaU171) + parseFloat(suJson.slaU181)
-                + parseFloat(suJson.slaU191);
+                + parseFloat(suJson.slaU71);
+            debugger;
             for (var prop in suJson) {
                 if (suJson[prop] == "") {
                     toastr.warning("权重不能为空!");
