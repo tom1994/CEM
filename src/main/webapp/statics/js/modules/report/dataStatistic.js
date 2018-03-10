@@ -252,7 +252,7 @@ var getArea = function (cityid) {
             search_data.areas = areaNames;
         }
     });
-}
+};
 
 var getProbe = function (countyid) {
     probeNames = [];
@@ -270,7 +270,7 @@ var getProbe = function (countyid) {
             search_data.probeNames = probeNames;
         }
     });
-}
+};
 
 var getTask = function (servicetype) {
     $.ajax({
@@ -1177,7 +1177,7 @@ var radiusresult_Table = new Vue({
                             row.push(item.targetId);
                             row.push(item.targetIp);
                             row.push(item.targetLoc);
-                            row.push(item.state)
+                            row.push(item.state);
                             row.push(item.remark);
                             rows.push(row);
                         });

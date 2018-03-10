@@ -164,7 +164,7 @@
 
 	<!--根据条件查询测试结果-->
 	<select id="queryPingList" resultType="io.cem.modules.cem.entity.RecordPingEntity">
-		select record_ping.*,
+		select rp.*,
 		probe.probe_name AS probe_name,
 		task.task_name AS task_name,
 		target.target_name AS target_name,
@@ -173,24 +173,10 @@
 		b.data_name AS targettype_name,
 		c.data_name AS state_name,
 		d.data_name AS servicetype_name
-		FROM record_ping
-		INNER JOIN probe
-		ON  record_ping.probe_id =probe.id
-		INNER JOIN task
-		ON record_ping.task_id = task.id
-		INNER JOIN target
-		ON record_ping.target_id = target.id
-		LEFT JOIN dic_data a
-		ON (a.dic_type_id = 6 AND record_ping.task_type = a.data_id)
-		LEFT JOIN dic_data b
-		ON (b.dic_type_id = 8 AND record_ping.target_type = b.data_id)
-		LEFT JOIN dic_data c
-		ON (c.dic_type_id = 9 AND record_ping.state = c.data_id)
-		LEFT JOIN dic_data d
-		ON (d.dic_type_id = 5 AND record_ping.service_type = d.data_id)
-		WHERE record_ping.service_type = #{service_type}
+		FROM (SELECT * FROM record_ping
+		WHERE service_type=#{service_type}
 		<if test="task_id != null and task_id != ''">
-			AND task_id = #{task_id}
+		AND task_id = #{task_id}
 		</if>
 		<if test="target_id != null and target_id != ''">
 			AND target_id = #{target_id}
@@ -211,36 +197,51 @@
 			<otherwise>
 				order by record_date desc,record_time desc
 			</otherwise>
-		</choose>
+		</choose>) rp
+		INNER JOIN probe
+		ON  rp.probe_id =probe.id
+		INNER JOIN task
+		ON rp.task_id = task.id
+		INNER JOIN target
+		ON rp.target_id = target.id
+		LEFT JOIN dic_data a
+		ON (a.dic_type_id = 6 AND rp.task_type = a.data_id)
+		LEFT JOIN dic_data b
+		ON (b.dic_type_id = 8 AND rp.target_type = b.data_id)
+		LEFT JOIN dic_data c
+		ON (c.dic_type_id = 9 AND rp.state = c.data_id)
+		LEFT JOIN dic_data d
+		ON (d.dic_type_id = 5 AND rp.service_type = d.data_id)
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
 	</select>
 
 	<select id="queryPingTotal" resultType="int">
-	select count(*) FROM record_ping
+	select count(*)
+		FROM record_ping
 		INNER JOIN probe
 		ON  record_ping.probe_id =probe.id
 		INNER JOIN task
 		ON record_ping.task_id = task.id
 		INNER JOIN target
 		ON record_ping.target_id = target.id
-	WHERE
-	record_ping.service_type = #{service_type}
+		WHERE
+		record_ping.service_type = #{service_type}
 		AND
-    record_date BETWEEN #{startDate} AND #{terminalDate}
-	<if test="task_id != null and task_id != ''">
-		AND task_id = #{task_id}
-	</if>
-	<if test="target_id != null and target_id != ''">
-		AND target_id = #{target_id}
-	</if>
-	<if test="probe_id != null and probe_id != ''">
-		AND probe_id = #{probe_id}
-	</if>
-	<if test="start_time != null and start_time != '' and end_time != null and end_time != '' ">
-		AND record_time BETWEEN #{start_time} AND #{end_time}
-	</if>
+		record_date BETWEEN #{startDate} AND #{terminalDate}
+		<if test="task_id != null and task_id != ''">
+			AND task_id = #{task_id}
+		</if>
+		<if test="target_id != null and target_id != ''">
+			AND target_id = #{target_id}
+		</if>
+		<if test="probe_id != null and probe_id != ''">
+			AND probe_id = #{probe_id}
+		</if>
+		<if test="start_time != null and start_time != '' and end_time != null and end_time != '' ">
+			AND record_time BETWEEN #{start_time} AND #{end_time}
+		</if>
 	</select>
 
 	<select id="queryPingTest" resultType="io.cem.modules.cem.entity.RecordPingEntity">

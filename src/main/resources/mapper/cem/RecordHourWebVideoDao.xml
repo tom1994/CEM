@@ -155,13 +155,15 @@
 		floor(time_format(record_time, '%H')/#{interval}) AS rt,
 		concat('从',floor(time_format(record_time, '%H')/#{interval})*#{interval},'点至',floor(time_format(record_time,
 		'%H')/#{interval})*#{interval}+#{interval},'点') AS record_time,
-		round(AVG(rhp.delay),2) AS delay,
-		round(AVG(rhp.delay_std),2) AS delay_std,
-		round(AVG(rhp.delay_var),2) AS delay_var,
-		round(AVG(rhp.jitter),2) AS jitter,
-		round(AVG(rhp.jitter_std),2) AS jitter_std,
-		round(AVG(rhp.jitter_var),2) AS jitter_var,
-		round(AVG(rhp.loss_rate),2) AS loss_rate,
+		round(AVG(rhp.dns_delay),2) AS dns_delay,
+		round(AVG(rhp.ws_conn_delay),2) AS ws_conn_delay,
+		round(AVG(rhp.web_page_delay),2) AS web_page_delay,
+		round(AVG(rhp.head_frame_delay),2) AS head_frame_delay,
+		round(AVG(rhp.init_buffer_delay),2) AS init_buffer_delay,
+		round(AVG(rhp.load_delay),2) AS load_delay,
+		round(AVG(rhp.total_buffer_delay),2) AS total_buffer_delay,
+		round(AVG(rhp.download_rate),2) AS download_rate,
+		round(AVG(rhp.buffer_time),2) AS buffer_time,
 		d.data_name AS servicetype_name
 		FROM record_hour_web_video rhp
 		INNER JOIN probe
@@ -204,13 +206,7 @@
 		SELECT count(*) FROM (
 		select
 		rhp.id,rhp.probe_id,rhp.port,rhp.task_id,rhp.service_type,rhp.target_id,rhp.target_ip,rhp.record_date,rhp.remark,
-		floor(time_format(record_time, '%H')/#{interval}) AS rt,AVG(rhp.delay) AS delay,
-		AVG(rhp.delay_std) AS delay_std,
-		AVG(rhp.delay_var) AS delay_var,
-		AVG(rhp.jitter) AS jitter,
-		AVG(rhp.jitter_std) AS jitter_std,
-		AVG(rhp.jitter_var) AS jitter_var,
-		AVG(rhp.loss_rate) AS loss_rate
+		floor(time_format(record_time, '%H')/#{interval}) AS rt,
 		FROM record_hour_web_video rhp
 		WHERE
 		rhp.service_type = #{service_type}
