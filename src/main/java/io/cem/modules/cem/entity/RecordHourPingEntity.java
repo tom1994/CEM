@@ -66,6 +66,10 @@ public class RecordHourPingEntity implements Serializable {
 
 	private Integer accessLayer;
 
+	private Integer fail;
+
+	private Integer total;
+
 	private String targetipName;
 
 	private String timeRange;
@@ -376,4 +380,20 @@ public class RecordHourPingEntity implements Serializable {
 	public String getTaskName() {return taskName;}
 
 	public void setTaskName(String taskName) {this.taskName = taskName;}
+
+	public Integer getFail() {
+		return fail;
+	}
+
+	public void setFail(Integer fail) {
+		this.fail = fail;
+	}
+
+	public Integer getTotal() {
+		return total;
+	}
+
+	public void setTotal(Integer total) {
+		this.total = total;
+	}
 }

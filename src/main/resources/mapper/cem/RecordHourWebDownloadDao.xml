@@ -25,6 +25,8 @@
 		<result property="areaName" column="area_name"/>
 		<result property="probeName" column="probe_name"/>
 		<result property="targetName" column="target_name"/>
+		<result property="fail" column="fail"/>
+		<result property="total" column="total"/>
     </resultMap>
 
 	<select id="queryObject" resultType="io.cem.modules.cem.entity.RecordHourWebDownloadEntity">
@@ -59,7 +61,9 @@
 		AVG(record_hour_web_download.dns_delay) AS dns_delay,
 		AVG(record_hour_web_download.conn_delay) AS conn_delay,
 		AVG(record_hour_web_download.headbyte_delay) AS headbyte_delay,
-		AVG(record_hour_web_download.download_rate) AS download_rate
+		AVG(record_hour_web_download.download_rate) AS download_rate,
+		SUM(record_hour_web_download.fail) AS fail,
+		SUM(record_hour_web_download.total) AS total
 		FROM record_hour_web_download
 		LEFT JOIN city
 		ON record_hour_web_download.city_id = city.city_id
@@ -95,7 +99,9 @@
 		AVG(webd.dns_delay) AS dns_delay,
 		AVG(webd.conn_delay) AS conn_delay,
 		AVG(webd.headbyte_delay) AS headbyte_delay,
-		AVG(webd.download_rate) AS download_rate
+		AVG(webd.download_rate) AS download_rate,
+		SUM(webd.fail) AS fail,
+		SUM(webd.total) AS total
 		FROM record_day_web_download webd
 		LEFT JOIN city
 		ON webd.city_id = city.city_id

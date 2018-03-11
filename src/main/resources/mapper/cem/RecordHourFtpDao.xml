@@ -27,6 +27,8 @@
 		<result property="areaName" column="area_name"/>
 		<result property="probeName" column="probe_name"/>
 		<result property="targetName" column="target_name"/>
+		<result property="fail" column="fail"/>
+		<result property="total" column="total"/>
     </resultMap>
 
 	<select id="queryObject" resultType="io.cem.modules.cem.entity.RecordHourFtpEntity">
@@ -63,7 +65,9 @@
 		AVG(record_hour_ftp.login_delay) AS login_delay,
 		AVG(record_hour_ftp.headbyte_delay) AS headbyte_delay,
 		AVG(record_hour_ftp.download_rate) AS download_rate,
-		AVG(record_hour_ftp.upload_rate) AS upload_rate
+		AVG(record_hour_ftp.upload_rate) AS upload_rate,
+		SUM(record_hour_ftp.fail) AS fail,
+		SUM(record_hour_ftp.total) AS total
 		FROM record_hour_ftp
 		LEFT JOIN city
 		ON record_hour_ftp.city_id = city.city_id
@@ -101,7 +105,9 @@
 		AVG(ftp.login_delay) AS login_delay,
 		AVG(ftp.headbyte_delay) AS headbyte_delay,
 		AVG(ftp.download_rate) AS download_rate,
-		AVG(ftp.upload_rate) AS upload_rate
+		AVG(ftp.upload_rate) AS upload_rate,
+		SUM(ftp.fail) AS fail,
+		SUM(ftp.total) AS total
 		FROM record_day_ftp ftp
 		LEFT JOIN city
 		ON ftp.city_id = city.city_id

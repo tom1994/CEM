@@ -32,6 +32,10 @@ public class ScoreEntity {
 
     private Integer accessLayer;
 
+    private Integer fail;
+
+    private Integer total;
+
 
     /**
      * 设置：记录ID
@@ -168,5 +172,21 @@ public class ScoreEntity {
 
     public void setAccessLayer(Integer accessLayer) {
         this.accessLayer = accessLayer;
+    }
+
+    public Integer getFail() {
+        return fail;
+    }
+
+    public void setFail(Integer fail) {
+        this.fail = fail;
+    }
+
+    public Integer getTotal() {
+        return total;
+    }
+
+    public void setTotal(Integer total) {
+        this.total = total;
     }
 }

@@ -23,6 +23,8 @@
 		<result property="areaName" column="area_name"/>
 		<result property="probeName" column="probe_name"/>
 		<result property="targetName" column="target_name"/>
+		<result property="fail" column="fail"/>
+		<result property="total" column="total"/>
     </resultMap>
 
 	<select id="queryObject" resultType="io.cem.modules.cem.entity.RecordHourDhcpEntity">
@@ -55,7 +57,9 @@
 		probe.probe_name AS probe_name,
 		target.target_name AS target_name,
 		AVG(record_hour_dhcp.delay) AS delay,
-		AVG(record_hour_dhcp.success_rate) AS success_rate
+		AVG(record_hour_dhcp.success_rate) AS success_rate,
+		SUM(record_hour_dhcp.fail) AS fail,
+		SUM(record_hour_dhcp.total) AS total
 		FROM record_hour_dhcp
 		LEFT JOIN city
 		ON record_hour_dhcp.city_id = city.city_id
@@ -89,7 +93,9 @@
 		probe.probe_name AS probe_name,
 		target.target_name AS target_name,
 		AVG(dhcp.delay) AS delay,
-		AVG(dhcp.success_rate) AS success_rate
+		AVG(dhcp.success_rate) AS success_rate,
+		SUM(dhcp.fail) AS fail,
+		SUM(dhcp.total) AS total
 		FROM record_day_dhcp dhcp
 		LEFT JOIN city
 		ON dhcp.city_id = city.city_id

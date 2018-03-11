@@ -302,7 +302,9 @@ public class RecordHourWebPageServiceImpl implements RecordHourWebPageService {
 				finalScore.setTargetName(webPageList.get(i).getTargetName());
 				finalScore.setRecordTime(webPageList.get(i).getRecordTime());
 				finalScore.setRecordDate(webPageList.get(i).getRecordDate());
-				finalScore.setScore(score);
+				finalScore.setFail(webPageList.get(i).getFail());
+				finalScore.setTotal(webPageList.get(i).getTotal());
+				finalScore.setScore(score*(webPageList.get(i).getFail()/webPageList.get(i).getTotal()));
 				finalScore.setBase(Double.parseDouble(pros.getValue("browseweight")));
 				connectionScore.add(finalScore);
 

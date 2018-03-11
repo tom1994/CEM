@@ -26,6 +26,8 @@
 		<result property="areaName" column="area_name"/>
 		<result property="probeName" column="probe_name"/>
 		<result property="targetName" column="target_name"/>
+		<result property="fail" column="fail"/>
+		<result property="total" column="total"/>
     </resultMap>
 
 	<select id="queryObject" resultType="io.cem.modules.cem.entity.RecordHourGameEntity">
@@ -60,7 +62,9 @@
 		AVG(record_hour_game.conn_delay) AS conn_delay,
 		AVG(record_hour_game.packet_delay) AS packet_delay,
 		AVG(record_hour_game.packet_jitter) AS packet_jitter,
-		AVG(record_hour_game.loss_rate) AS loss_rate
+		AVG(record_hour_game.loss_rate) AS loss_rate,
+		SUM(record_hour_game.fail) AS fail,
+		SUM(record_hour_game.total) AS total
 		FROM record_hour_game
 		LEFT JOIN city
 		ON record_hour_game.city_id = city.city_id
@@ -96,7 +100,9 @@
 		AVG(game.conn_delay) AS conn_delay,
 		AVG(game.packet_delay) AS packet_delay,
 		AVG(game.packet_jitter) AS packet_jitter,
-		AVG(game.loss_rate) AS loss_rate
+		AVG(game.loss_rate) AS loss_rate,
+		SUM(game.fail) AS fail,
+		SUM(game.total) AS total
 		FROM record_day_game game
 		LEFT JOIN city
 		ON game.city_id = city.city_id

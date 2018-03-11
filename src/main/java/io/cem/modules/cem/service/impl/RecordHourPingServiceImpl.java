@@ -279,6 +279,8 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						icmpPing.setAccessLayer(pingList.get(i).getAccessLayer());
 						icmpPing.setRecordDate(pingList.get(i).getRecordDate());
 						icmpPing.setRecordTime(pingList.get(i).getRecordTime());
+						icmpPing.setFail(pingList.get(i).getFail());
+						icmpPing.setTotal(pingList.get(i).getTotal());
 						icmpPing.setScore(score);
 						icmpPing.setBase(Double.parseDouble(pros.getValue("ping_icmp")));
 
@@ -524,6 +526,8 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						tcpPing.setAccessLayer(pingList.get(i).getAccessLayer());
 						tcpPing.setRecordDate(pingList.get(i).getRecordDate());
 						tcpPing.setRecordTime(pingList.get(i).getRecordTime());
+						tcpPing.setFail(pingList.get(i).getFail());
+						tcpPing.setTotal(pingList.get(i).getTotal());
 						tcpPing.setScore(score);
 						tcpPing.setBase(Double.parseDouble(pros.getValue("ping_tcp")));
 
@@ -769,6 +773,8 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						udpPing.setAccessLayer(pingList.get(i).getAccessLayer());
 						udpPing.setRecordDate(pingList.get(i).getRecordDate());
 						udpPing.setRecordTime(pingList.get(i).getRecordTime());
+						udpPing.setFail(pingList.get(i).getFail());
+						udpPing.setTotal(pingList.get(i).getTotal());
 						udpPing.setScore(score);
 						udpPing.setBase(Double.parseDouble(pros.getValue("ping_udp")));
 
@@ -1012,6 +1018,8 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						icmpTracert.setAccessLayer(tracertList.get(i).getAccessLayer());
 						icmpTracert.setRecordDate(tracertList.get(i).getRecordDate());
 						icmpTracert.setRecordTime(tracertList.get(i).getRecordTime());
+						icmpTracert.setFail(tracertList.get(i).getFail());
+						icmpTracert.setTotal(tracertList.get(i).getTotal());
 						icmpTracert.setScore(score);
 						icmpTracert.setBase(Double.parseDouble(pros.getValue("tr_icmp")));
 
@@ -1255,6 +1263,8 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						tcpTracert.setAccessLayer(tracertList.get(i).getAccessLayer());
 						tcpTracert.setRecordDate(tracertList.get(i).getRecordDate());
 						tcpTracert.setRecordTime(tracertList.get(i).getRecordTime());
+						tcpTracert.setFail(tracertList.get(i).getFail());
+						tcpTracert.setTotal(tracertList.get(i).getTotal());
 						tcpTracert.setScore(score);
 						tcpTracert.setBase(Double.parseDouble(pros.getValue("tr_tcp")));
 
@@ -1285,6 +1295,8 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 				scoreTarget.setProbeName(pingIcmp.get(i).getProbeName());
 				scoreTarget.setTargetName(pingIcmp.get(i).getTargetName());
 				scoreTarget.setAccessLayer(pingIcmp.get(i).getAccessLayer());
+				scoreTarget.setFail(pingIcmp.get(i).getFail());
+				scoreTarget.setTotal(pingIcmp.get(i).getTotal());
 				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
 				scoreBase.setScore((pingIcmp.get(i).getScore()) * (pingIcmp.get(i).getBase()));
 				scoreBase.setBase(pingIcmp.get(i).getBase());
@@ -1315,7 +1327,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 					finalScore.setTargetId(ite.getTargetId());
 					finalScore.setTargetName(ite.getTargetName());
 					finalScore.setAccessLayer(ite.getAccessLayer());
-					finalScore.setScore((connection.get(ite).getScore()) / (connection.get(ite).getBase()));
+					finalScore.setScore(((connection.get(ite).getScore()) / (connection.get(ite).getBase()))*((ite.getFail())/ite.getTotal()));
 					finalScore.setBase(Double.parseDouble(pros.getValue("connectionweight")));
 					connectionScore.add(finalScore);
 				} catch (IOException e) {
@@ -1379,7 +1391,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 					finalScore.setAccessLayer(ite.getAccessLayer());
 					finalScore.setRecordDate(ite.getRecordDate());
 					finalScore.setRecordTime(ite.getRecordTime());
-					finalScore.setScore((connection.get(ite).getScore()) / (connection.get(ite).getBase()));
+					finalScore.setScore(((connection.get(ite).getScore()) / (connection.get(ite).getBase()))*((ite.getFail())/ite.getTotal()));
 					finalScore.setBase(Double.parseDouble(pros.getValue("connectionweight")));
 					connectionScore.add(finalScore);
 				} catch (IOException e) {
@@ -1437,7 +1449,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 					finalScore.setServiceType(1);
 					finalScore.setTargetId(ite.getTargetId());
 					finalScore.setTargetName(ite.getTargetName());
-					finalScore.setScore((connection.get(ite).getScore()) / (connection.get(ite).getBase()));
+					finalScore.setScore(((connection.get(ite).getScore()) / (connection.get(ite).getBase()))*((ite.getFail())/ite.getTotal()));
 					finalScore.setBase(Double.parseDouble(pros.getValue("connectionweight")));
 					connectionScore.add(finalScore);
 				} catch (IOException e) {
@@ -1462,6 +1474,8 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 			scoreTarget.setProbeName(list.get(i).getProbeName());
 			scoreTarget.setTargetName(list.get(i).getTargetName());
 			scoreTarget.setAccessLayer(list.get(i).getAccessLayer());
+			scoreTarget.setFail(list.get(i).getFail());
+			scoreTarget.setTotal(list.get(i).getTotal());
 
 			if (!map.containsKey(scoreTarget)) {
 				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
@@ -1496,6 +1510,9 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 			scoreTarget.setAccessLayer(list.get(i).getAccessLayer());
 			scoreTarget.setRecordDate(list.get(i).getRecordDate());
 			scoreTarget.setRecordTime(list.get(i).getRecordTime());
+			scoreTarget.setFail(list.get(i).getFail());
+			scoreTarget.setTotal(list.get(i).getTotal());
+
 
 			if (!map.containsKey(scoreTarget)) {
 				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
@@ -1530,6 +1547,8 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 			scoreTarget.setAccessLayer(list.get(i).getAccessLayer());
 			scoreTarget.setRecordDate(list.get(i).getRecordDate());
 			scoreTarget.setRecordTime(list.get(i).getRecordTime());
+			scoreTarget.setFail(list.get(i).getFail());
+			scoreTarget.setTotal(list.get(i).getTotal());
 
 			if (!map.containsKey(scoreTarget)) {
 				ScoreBaseEntity scoreBase = new ScoreBaseEntity();

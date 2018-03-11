@@ -48,6 +48,8 @@
 		<result property="areaName" column="area_name"/>
 		<result property="probeName" column="probe_name"/>
 		<result property="targetName" column="target_name"/>
+		<result property="fail" column="fail"/>
+		<result property="total" column="total"/>
 	</resultMap>
 
 	<resultMap type="io.cem.modules.cem.entity.RecordDayGameEntity" id="recordDayGameMap">
@@ -68,6 +70,8 @@
 		<result property="packetJitter" column="packet_jitter"/>
 		<result property="lossRate" column="loss_rate"/>
 		<result property="remark" column="remark"/>
+		<result property="fail" column="fail"/>
+		<result property="total" column="total"/>
 	</resultMap>
 	
 
@@ -91,10 +95,25 @@
 		AVG(rp.packet_delay) AS packet_delay,
 		AVG(rp.packet_jitter) AS packet_jitter,
 		AVG(rp.loss_rate) AS loss_rate,
-		rp.remark AS remark
+		rp.remark AS remark,
+		t.total AS total,
+		t.fail AS fail
 		FROM record_game rp
 		LEFT JOIN probe
 		ON  rp.probe_id =probe.id
+		INNER JOIN (SELECT probe_id  AS probe_id,
+                     port      AS port,
+                     task_id   AS task_id,
+                     service_type  AS service_type,
+                     target_id     AS target_id,
+                     sum(state) AS fail,
+                     count(record_game.id)  AS total
+              FROM record_game
+                INNER JOIN probe
+                  ON probe_id = probe.id
+              WHERE record_date = #{record_date}
+                    AND record_time BETWEEN #{start_time} AND #{terminal_time}
+              GROUP BY port, service_type, target_id, task_id, probe_id) t
 		WHERE rp.record_date = #{record_date}
 		AND rp.record_time BETWEEN #{start_time} AND #{terminal_time}
 		AND rp.state = 0
@@ -117,10 +136,25 @@
 		AVG(rp.packet_delay) AS packet_delay,
 		AVG(rp.packet_jitter) AS packet_jitter,
 		AVG(rp.loss_rate) AS loss_rate,
-		rp.remark AS remark
+		rp.remark AS remark,
+		t.total AS total,
+		t.fail AS fail
 		FROM record_game rp
 		LEFT JOIN probe
 		ON  rp.probe_id =probe.id
+		INNER JOIN (SELECT probe_id  AS probe_id,
+                     port      AS port,
+                     task_id   AS task_id,
+                     service_type  AS service_type,
+                     target_id     AS target_id,
+                     sum(state) AS fail,
+                     count(record_game.id)  AS total
+              FROM record_game
+                INNER JOIN probe
+                  ON probe_id = probe.id
+              WHERE record_date = #{record_date}
+                    AND record_time BETWEEN #{start_time} AND #{terminal_time}
+              GROUP BY port, service_type, target_id, task_id, probe_id) t
 		WHERE rp.record_date = #{record_date}
 		AND rp.state = 0
 		GROUP BY rp.port,rp.service_type,rp.target_id,rp.task_id,rp.probe_id;

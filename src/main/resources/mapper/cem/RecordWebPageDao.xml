@@ -54,6 +54,8 @@
 		<result property="areaName" column="area_name"/>
 		<result property="probeName" column="probe_name"/>
 		<result property="targetName" column="target_name"/>
+		<result property="fail" column="fail"/>
+		<result property="total" column="total"/>
 	</resultMap>
 
 	<resultMap type="io.cem.modules.cem.entity.RecordDayWebPageEntity" id="recordDayWebPageMap">
@@ -77,6 +79,8 @@
 		<result property="pageElementDelay" column="page_element_delay"/>
 		<result property="downloadRate" column="download_rate"/>
 		<result property="remark" column="remark"/>
+		<result property="fail" column="fail"/>
+		<result property="total" column="total"/>
 	</resultMap>
 
 	<select id="queryObject" resultType="io.cem.modules.cem.entity.RecordWebPageEntity">
@@ -103,10 +107,25 @@
 		AVG(rp.above_fold_delay) AS above_fold_delay,
 		AVG(rp.page_element_delay) AS page_element_delay,
 		AVG(rp.download_rate) AS download_rate,
-		rp.remark AS remark
+		rp.remark AS remark,
+		t.total AS total,
+		t.fail AS fail
 		FROM record_web_page rp
 		LEFT JOIN probe
 		ON  rp.probe_id =probe.id
+		INNER JOIN (SELECT probe_id  AS probe_id,
+                     port      AS port,
+                     task_id   AS task_id,
+                     service_type  AS service_type,
+                     target_id     AS target_id,
+                     sum(state) AS fail,
+                     count(record_web_page.id)  AS total
+              FROM record_web_page
+                INNER JOIN probe
+                  ON probe_id = probe.id
+              WHERE record_date = #{record_date}
+                    AND record_time BETWEEN #{start_time} AND #{terminal_time}
+              GROUP BY port, service_type, target_id, task_id, probe_id) t
 		WHERE rp.record_date = #{record_date}
 		AND rp.record_time BETWEEN #{start_time} AND #{terminal_time}
 		AND rp.state = 0
@@ -132,10 +151,25 @@
 		AVG(rp.above_fold_delay) AS above_fold_delay,
 		AVG(rp.page_element_delay) AS page_element_delay,
 		AVG(rp.download_rate) AS download_rate,
-		rp.remark AS remark
+		rp.remark AS remark,
+		t.total AS total,
+		t.fail AS fail
 		FROM record_web_page rp
 		LEFT JOIN probe
 		ON  rp.probe_id =probe.id
+		INNER JOIN (SELECT probe_id  AS probe_id,
+                     port      AS port,
+                     task_id   AS task_id,
+                     service_type  AS service_type,
+                     target_id     AS target_id,
+                     sum(state) AS fail,
+                     count(record_web_page.id)  AS total
+              FROM record_web_page
+                INNER JOIN probe
+                  ON probe_id = probe.id
+              WHERE record_date = #{record_date}
+                    AND record_time BETWEEN #{start_time} AND #{terminal_time}
+              GROUP BY port, service_type, target_id, task_id, probe_id) t
 		WHERE rp.record_date = #{record_date}
 		AND rp.state = 0
 		GROUP BY rp.port,rp.service_type,rp.target_id,rp.task_id,rp.probe_id;

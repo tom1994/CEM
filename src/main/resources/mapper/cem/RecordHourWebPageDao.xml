@@ -29,6 +29,8 @@
 		<result property="areaName" column="area_name"/>
 		<result property="probeName" column="probe_name"/>
 		<result property="targetName" column="target_name"/>
+		<result property="fail" column="fail"/>
+		<result property="total" column="total"/>
     </resultMap>
 
 	<select id="queryObject" resultType="io.cem.modules.cem.entity.RecordHourWebPageEntity">
@@ -67,7 +69,9 @@
 		AVG(record_hour_web_page.redirect_delay) AS redirect_delay,
 		AVG(record_hour_web_page.above_fold_delay) AS above_fold_delay,
 		AVG(record_hour_web_page.page_element_delay) AS page_element_delay,
-		AVG(record_hour_web_page.download_rate) AS download_rate
+		AVG(record_hour_web_page.download_rate) AS download_rate,
+		SUM(record_hour_web_page.fail) AS fail,
+		SUM(record_hour_web_page.total) AS total
 		FROM record_hour_web_page
 		LEFT JOIN city
 		ON record_hour_web_page.city_id = city.city_id
@@ -107,7 +111,9 @@
 		AVG(webp.redirect_delay) AS redirect_delay,
 		AVG(webp.above_fold_delay) AS above_fold_delay,
 		AVG(webp.page_element_delay) AS page_element_delay,
-		AVG(webp.download_rate) AS download_rate
+		AVG(webp.download_rate) AS download_rate,
+		SUM(webp.fail) AS fail,
+		SUM(webp.total) AS total
 		FROM record_day_web_page webp
 		LEFT JOIN city
 		ON webp.city_id = city.city_id

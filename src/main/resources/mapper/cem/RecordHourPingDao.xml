@@ -32,6 +32,8 @@
         <result property="targetName" column="target_name"/>
         <result property="targetipName" column="targetip_name"/>
         <result property="accessLayer" column="access_layer"/>
+        <result property="fail" column="fail"/>
+        <result property="total" column="total"/>
     </resultMap>
 
     <select id="queryObject" resultType="io.cem.modules.cem.entity.RecordHourPingEntity">
@@ -93,7 +95,9 @@
         AVG(rhp.jitter) AS jitter,
         AVG(rhp.jitter_std) AS jitter_std,
         AVG(rhp.jitter_var) AS jitter_var,
-        AVG(rhp.loss_rate) AS loss_rate
+        AVG(rhp.loss_rate) AS loss_rate,
+        SUM(rhp.fail) AS fail,
+        SUM(rhp.total) AS total
         FROM record_hour_ping rhp
         LEFT JOIN city
         ON rhp.city_id = city.city_id
@@ -183,7 +187,9 @@
         AVG(rhp.jitter) AS jitter,
         AVG(rhp.jitter_std) AS jitter_std,
         AVG(rhp.jitter_var) AS jitter_var,
-        AVG(rhp.loss_rate) AS loss_rate
+        AVG(rhp.loss_rate) AS loss_rate,
+        SUM(rhp.fail) AS fail,
+        SUM(rhp.total) AS total
         FROM record_day_ping rhp
         LEFT JOIN city
         ON rhp.city_id = city.city_id

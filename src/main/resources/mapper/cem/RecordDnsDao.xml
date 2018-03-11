@@ -42,6 +42,8 @@
 		<result property="areaName" column="area_name"/>
 		<result property="probeName" column="probe_name"/>
 		<result property="targetName" column="target_name"/>
+		<result property="fail" column="fail"/>
+		<result property="total" column="total"/>
 	</resultMap>
 
 	<resultMap type="io.cem.modules.cem.entity.RecordDayDnsEntity" id="recordDayDnsMap">
@@ -59,6 +61,8 @@
 		<result property="delay" column="delay"/>
 		<result property="successRate" column="success_rate"/>
 		<result property="remark" column="remark"/>
+		<result property="fail" column="fail"/>
+		<result property="total" column="total"/>
 	</resultMap>
 
 	<select id="queryObject" resultType="io.cem.modules.cem.entity.RecordDnsEntity">
@@ -174,10 +178,25 @@
 		probe.county_id AS county_id,
 		AVG(rd.delay) AS delay,
 		AVG(rd.success_rate) AS success_rate,
-		rd.remark AS remark
+		rd.remark AS remark,
+		t.fail AS fail,
+		t.total AS total
 		FROM record_dns rd
 		LEFT JOIN probe
 		ON  rd.probe_id =probe.id
+		INNER JOIN (SELECT probe_id  AS probe_id,
+                     port      AS port,
+                     task_id   AS task_id,
+                     service_type  AS service_type,
+                     target_id     AS target_id,
+                     sum(state) AS fail,
+                     count(record_dns.id)  AS total
+              FROM record_dns
+                INNER JOIN probe
+                  ON probe_id = probe.id
+              WHERE record_date = #{record_date}
+                    AND record_time BETWEEN #{start_time} AND #{terminal_time}
+              GROUP BY port, service_type, target_id, task_id, probe_id) t
 		WHERE rd.record_date = #{record_date}
 		AND rd.record_time BETWEEN #{start_time} AND #{terminal_time}
 		AND rd.state = 0
@@ -197,10 +216,25 @@
 		probe.county_id AS county_id,
 		AVG(rd.delay) AS delay,
 		AVG(rd.success_rate) AS success_rate,
-		rd.remark AS remark
+		rd.remark AS remark,
+		t.fail AS fail,
+		t.total AS total
 		FROM record_dns rd
 		LEFT JOIN probe
 		ON  rd.probe_id =probe.id
+		INNER JOIN (SELECT probe_id  AS probe_id,
+                     port      AS port,
+                     task_id   AS task_id,
+                     service_type  AS service_type,
+                     target_id     AS target_id,
+                     sum(state) AS fail,
+                     count(record_dns.id)  AS total
+              FROM record_dns
+                INNER JOIN probe
+                  ON probe_id = probe.id
+              WHERE record_date = #{record_date}
+                    AND record_time BETWEEN #{start_time} AND #{terminal_time}
+              GROUP BY port, service_type, target_id, task_id, probe_id) t
 		WHERE rd.record_date = #{record_date}
 		AND rd.state = 0
 		GROUP BY rd.port,rd.service_type,rd.target_id,rd.task_id,rd.probe_id;

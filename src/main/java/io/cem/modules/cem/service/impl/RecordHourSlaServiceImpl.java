@@ -272,6 +272,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 					tcpSla.setAccessLayer(slaList.get(i).getAccessLayer());
 					tcpSla.setRecordDate(slaList.get(i).getRecordDate());
 					tcpSla.setRecordTime(slaList.get(i).getRecordTime());
+					tcpSla.setFail(slaList.get(i).getFail());
+					tcpSla.setTotal(slaList.get(i).getTotal());
 					tcpSla.setScore(score);
 					tcpSla.setBase(Double.parseDouble(pros.getValue("sla_tcp")));
 
@@ -511,6 +513,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 					udpSla.setAccessLayer(slaList.get(i).getAccessLayer());
 					udpSla.setRecordDate(slaList.get(i).getRecordDate());
 					udpSla.setRecordTime(slaList.get(i).getRecordTime());
+					udpSla.setFail(slaList.get(i).getFail());
+					udpSla.setTotal(slaList.get(i).getTotal());
 					udpSla.setScore(score);
 					udpSla.setBase(Double.parseDouble(pros.getValue("sla_udp")));
 
@@ -603,6 +607,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				DNS.setAccessLayer(dnsList.get(i).getAccessLayer());
 				DNS.setRecordDate(dnsList.get(i).getRecordDate());
 				DNS.setRecordTime(dnsList.get(i).getRecordTime());
+				DNS.setFail(dnsList.get(i).getFail());
+				DNS.setTotal(dnsList.get(i).getTotal());
 				DNS.setScore(score);
 				DNS.setBase(Double.parseDouble(pros.getValue("dns")));
 
@@ -695,6 +701,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				DHCP.setAccessLayer(dhcpList.get(i).getAccessLayer());
 				DHCP.setRecordDate(dhcpList.get(i).getRecordDate());
 				DHCP.setRecordTime(dhcpList.get(i).getRecordTime());
+				DHCP.setFail(dhcpList.get(i).getFail());
+				DHCP.setTotal(dhcpList.get(i).getTotal());
 				DHCP.setScore(score);
 				DHCP.setBase(Double.parseDouble(pros.getValue("dhcp")));
 
@@ -815,6 +823,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				PPPOE.setAccessLayer(pppoeList.get(i).getAccessLayer());
 				PPPOE.setRecordDate(pppoeList.get(i).getRecordDate());
 				PPPOE.setRecordTime(pppoeList.get(i).getRecordTime());
+				PPPOE.setFail(pppoeList.get(i).getFail());
+				PPPOE.setTotal(pppoeList.get(i).getTotal());
 				PPPOE.setScore(score);
 				PPPOE.setBase(Double.parseDouble(pros.getValue("adsl")));
 
@@ -906,6 +916,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				RADIUS.setAccessLayer(radiusList.get(i).getAccessLayer());
 				RADIUS.setRecordDate(radiusList.get(i).getRecordDate());
 				RADIUS.setRecordTime(radiusList.get(i).getRecordTime());
+				RADIUS.setFail(radiusList.get(i).getFail());
+				RADIUS.setTotal(radiusList.get(i).getTotal());
 				RADIUS.setScore(score);
 				RADIUS.setBase(Double.parseDouble(pros.getValue("radius")));
 
@@ -934,6 +946,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				scoreTarget.setProbeName(slaTcp.get(i).getProbeName());
 				scoreTarget.setTargetName(slaTcp.get(i).getTargetName());
 				scoreTarget.setAccessLayer(slaTcp.get(i).getAccessLayer());
+				scoreTarget.setFail(slaTcp.get(i).getFail());
+				scoreTarget.setTotal(slaTcp.get(i).getTotal());
 				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
 				scoreBase.setScore((slaTcp.get(i).getScore()) * (slaTcp.get(i).getBase()));
 				scoreBase.setBase(slaTcp.get(i).getBase());
@@ -964,7 +978,7 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 					finalScore.setServiceType(2);
 					finalScore.setTargetId(ite.getTargetId());
 					finalScore.setTargetName(ite.getTargetName());
-					finalScore.setScore((connection.get(ite).getScore()) / (connection.get(ite).getBase()));
+					finalScore.setScore(((connection.get(ite).getScore()) / (connection.get(ite).getBase()))*((ite.getFail())/ite.getTotal()));
 					finalScore.setBase(Double.parseDouble(pros.getValue("qualityweight")));
 					connectionScore.add(finalScore);
 				} catch (IOException e) {
@@ -993,6 +1007,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				scoreTarget.setCountyName(slaTcp.get(i).getCountyName());
 				scoreTarget.setProbeName(slaTcp.get(i).getProbeName());
 				scoreTarget.setTargetName(slaTcp.get(i).getTargetName());
+				scoreTarget.setFail(slaTcp.get(i).getFail());
+				scoreTarget.setTotal(slaTcp.get(i).getTotal());
 				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
 				scoreBase.setScore((slaTcp.get(i).getScore()) * (slaTcp.get(i).getBase()));
 				scoreBase.setBase(slaTcp.get(i).getBase());
@@ -1022,7 +1038,7 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				finalScore.setServiceType(2);
 				finalScore.setTargetId(ite.getTargetId());
 				finalScore.setTargetName(ite.getTargetName());
-				finalScore.setScore((connection.get(ite).getScore()) / (connection.get(ite).getBase()));
+				finalScore.setScore(((connection.get(ite).getScore()) / (connection.get(ite).getBase()))*((ite.getFail())/ite.getTotal()));
 				finalScore.setBase(Double.parseDouble(pros.getValue("qualityweight")));
 				connectionScore.add(finalScore);
 				id++;
@@ -1050,6 +1066,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				scoreTarget.setTargetName(slaTcp.get(i).getTargetName());
 				scoreTarget.setRecordDate(slaTcp.get(i).getRecordDate());
 				scoreTarget.setRecordTime(slaTcp.get(i).getRecordTime());
+				scoreTarget.setFail(slaTcp.get(i).getFail());
+				scoreTarget.setTotal(slaTcp.get(i).getTotal());
 				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
 				scoreBase.setScore((slaTcp.get(i).getScore()) * (slaTcp.get(i).getBase()));
 				scoreBase.setBase(slaTcp.get(i).getBase());
@@ -1079,7 +1097,7 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				finalScore.setServiceType(2);
 				finalScore.setTargetId(ite.getTargetId());
 				finalScore.setTargetName(ite.getTargetName());
-				finalScore.setScore((connection.get(ite).getScore()) / (connection.get(ite).getBase()));
+				finalScore.setScore(((connection.get(ite).getScore()) / (connection.get(ite).getBase()))*((ite.getFail())/ite.getTotal()));
 				finalScore.setBase(Double.parseDouble(pros.getValue("qualityweight")));
 				connectionScore.add(finalScore);
 				id++;

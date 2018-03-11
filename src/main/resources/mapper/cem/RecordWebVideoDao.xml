@@ -62,6 +62,8 @@
 		<result property="areaName" column="area_name"/>
 		<result property="probeName" column="probe_name"/>
 		<result property="targetName" column="target_name"/>
+		<result property="fail" column="fail"/>
+		<result property="total" column="total"/>
 	</resultMap>
 
 	<resultMap type="io.cem.modules.cem.entity.RecordDayWebVideoEntity" id="recordDayWebVideoMap">
@@ -89,6 +91,8 @@
 		<result property="downloadRate" column="download_rate"/>
 		<result property="bufferTime" column="buffer_time"/>
 		<result property="remark" column="remark"/>
+		<result property="fail" column="fail"/>
+		<result property="total" column="total"/>
 	</resultMap>
 
 	<select id="queryObject" resultType="io.cem.modules.cem.entity.RecordWebVideoEntity">
@@ -118,10 +122,25 @@
 		AVG(rp.total_buffer_delay) AS total_buffer_delay,
 		AVG(rp.download_rate) AS download_rate,
 		AVG(rp.buffer_time) AS buffer_time,
-		rp.remark AS remark
+		rp.remark AS remark,
+		t.fail AS fail,
+		t.total AS total
 		FROM record_web_video rp
 		LEFT JOIN probe
 		ON  rp.probe_id =probe.id
+		INNER JOIN (SELECT probe_id  AS probe_id,
+                     port      AS port,
+                     task_id   AS task_id,
+                     service_type  AS service_type,
+                     target_id     AS target_id,
+                     sum(state) AS fail,
+                     count(record_web_video.id)  AS total
+              FROM record_web_video
+                INNER JOIN probe
+                  ON probe_id = probe.id
+              WHERE record_date = #{record_date}
+                    AND record_time BETWEEN #{start_time} AND #{terminal_time}
+              GROUP BY port, service_type, target_id, task_id, probe_id) t
 		WHERE rp.record_date = #{record_date}
 		AND rp.record_time BETWEEN #{start_time} AND #{terminal_time}
 		AND rp.state = 0
@@ -151,10 +170,25 @@
 		AVG(rp.total_buffer_delay) AS total_buffer_delay,
 		AVG(rp.download_rate) AS download_rate,
 		AVG(rp.buffer_time) AS buffer_time,
-		rp.remark AS remark
+		rp.remark AS remark,
+		t.fail AS fail,
+		t.total AS total
 		FROM record_web_video rp
 		LEFT JOIN probe
 		ON  rp.probe_id =probe.id
+		INNER JOIN (SELECT probe_id  AS probe_id,
+                     port      AS port,
+                     task_id   AS task_id,
+                     service_type  AS service_type,
+                     target_id     AS target_id,
+                     sum(state) AS fail,
+                     count(record_web_video.id)  AS total
+              FROM record_web_video
+                INNER JOIN probe
+                  ON probe_id = probe.id
+              WHERE record_date = #{record_date}
+                    AND record_time BETWEEN #{start_time} AND #{terminal_time}
+              GROUP BY port, service_type, target_id, task_id, probe_id) t
 		WHERE rp.record_date = #{record_date}
 		AND rp.state = 0
 		GROUP BY rp.port,rp.service_type,rp.target_id,rp.task_id,rp.probe_id;
