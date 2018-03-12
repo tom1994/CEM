@@ -87,65 +87,44 @@
     </div>
     <h3 style="margin-top: 26px">选择测试内容</h3>
     <div class="row">
-        <form id="superservice" style="margin: 3px" role="form">
+        <form id="superservice" style="margin: 3px;height: 155px" role="form">
             <div class="row col-lg-8 col-md-8 col-sm-8 col-xs-8" style="margin-top: 10px">
                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" >
-                    <img src="../../statics/img/ping.png" alt=""  id="ping_pic" style="width:65%;height: 100%"  >
-                </div>
-                <div class="col-lg-2 col-md-2 col-sm-2  col-xs-2 "  >
-                    <img src="../../statics/img/sla.png" alt="" id="sla_pic" style="width: 60%;" ><br>
-                </div>
-                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"  >
-                    <img src="../../statics/img/web.png" alt="" id="web_pic" style="width: 65%;height: 100%" >
-                </div>
-                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"  >
-                    <img src="../../statics/img/download.png" alt="" id="download_pic" style="width: 59%;height: 100%;margin-bottom: 8px" >
-                </div>
-            </div>
-            <div class="row col-lg-8 col-md-8 col-sm-8 col-xs-8" style="margin-bottom: 16px">
-                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" >
+                    <img src="../../statics/img/ping.png" alt=""  id="ping_pic" style="width:65%;height: 100%"  ><br>
                     <input type="checkbox" id="ping" class="" name="ping" value="1" onclick="getTarget()" checked>
                     <span for="ping">网络连通性</span>
                 </div>
                 <div class="col-lg-2 col-md-2 col-sm-2  col-xs-2 "  >
+                    <img src="../../statics/img/sla.png" alt="" id="sla_pic" style="width: 60%;" ><br>
                     <input type="checkbox" id="sla" class="" name="sla" value="2" onclick="getTarget()">
                     <span for="sla">网络层质量</span>
                 </div>
                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"  >
+                    <img src="../../statics/img/web.png" alt="" id="web_pic" style="width: 65%;height: 100%" ><br>
                     <input type="checkbox" id="web" class="" name="web" value="3" onclick="getTarget()" >
                     <span for="web">网页浏览</span>
                 </div>
                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"  >
+                    <img src="../../statics/img/download.png" alt="" id="download_pic" style="width: 59%;height: 100%;margin-bottom: 8px" ><br>
                     <input type="checkbox" id="download" class="" name="download" value="4" onclick="getTarget()" >
                     <span for="download">文件下载</span>
                 </div>
             </div>
-        </form>
-    </div>
-    <div class="row">
-        <form id="superservice1" style="margin: 3px" role="form">
             <div class="row col-lg-8 col-md-8 col-sm-8 col-xs-8">
                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"  >
-                    <img src="../../statics/img/video.png" alt="" id="video_pic" style="width:60%;height: 100%">
-
-                </div>
-                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"  >
-                    <img src="../../statics/img/game.png" alt="" id="game_pic" style="width: 59%;height: 100%">
-
-                </div>
-            </div>
-            <div class="row col-lg-8 col-md-8 col-sm-8 col-xs-8" style="margin-bottom: 14px">
-                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"  >
+                    <img src="../../statics/img/video.png" alt="" id="video_pic" style="width:60%;height: 100%"><br>
                     <input type="checkbox" id="video" class="" name="video" value="5" onclick="getTarget()">
                     <span for="video">在线视频</span>
                 </div>
                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"  >
+                    <img src="../../statics/img/game.png" alt="" id="game_pic" style="width: 59%;height: 100%"><br>
                     <input type="checkbox" id="game" class="" name="game" value="6" onclick="getTarget()" >
                     <span for="game">网络游戏</span>
                 </div>
             </div>
         </form>
     </div>
+
 
     <div class="row" style="margin-top: 8px">
         <div class="col-lg-3 col-md-3 col-sm-3" id="target" style="display: inline-block">

@@ -253,6 +253,7 @@
 		ON  record_sla.probe_id =probe.id
 		INNER JOIN task
 		ON record_sla.task_id = task.id
+		AND task.is_ondemand =0
 		INNER JOIN target
 		ON record_sla.target_id = target.id
 		LEFT JOIN dic_data a
@@ -298,6 +299,7 @@
 		ON  record_sla.probe_id =probe.id
 		INNER JOIN task
 		ON record_sla.task_id = task.id
+		AND task.is_ondemand =0
 		INNER JOIN target
 		ON record_sla.target_id = target.id
 		WHERE

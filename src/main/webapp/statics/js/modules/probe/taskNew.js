@@ -182,7 +182,7 @@ function get_viewModal(update_data_id) {
                 paramforms[1].value = param.interval2;
                 paramforms[2].value = param.count2;
                 paramforms[3].value = param.timeout;
-                paramforms[4].value =JSON.stringify(param.domains);
+                paramforms[4].value = JSON.stringify(param.domains);
             }
             if (stid.get(servicetypeid) == "pppoe") {
                 paramforms[0].value = param.username;
@@ -308,6 +308,45 @@ var delete_data = new Vue({
             /*清空id数组*/
             idArray[0] = this.id;
             delete_ajax();
+        }
+    }
+});
+
+var cancel_confirm = new Vue({
+    el: '#cancel_confirm',
+    data: {
+        taskDispatchId: 0
+    },
+    methods: {
+        show_deleteModal: function () {
+            $(this.$el).modal('show');
+            /*弹出确认模态框*/
+        },
+        close_modal: function (obj) {
+            $(this.$el).modal('hide');
+        },
+        cancel_delete: function () {
+            $(this.$el).modal('hide');
+        },
+        confirm: function () {
+            $.ajax({
+                type: "POST", /*GET会乱码*/
+                url: "../../cem/taskdispatch/cancel/" + this.taskDispatchId,
+                cache: false,  //禁用缓存
+                dataType: "json",
+                success: function (result) {
+                    if(result.code == 404){
+                        dispatch_table.currReset();
+                        task_table.currReset();
+                        toastr.error(result.msg)
+                    }else {
+                        dispatch_table.currReset();
+                        task_table.currReset();
+                        toastr.success("任务已取消!");
+                        cancel_confirm.close_modal();
+                    }
+                }
+            });
         }
     }
 });
@@ -492,11 +531,11 @@ function submit_dispatch() {
             $.ajax({
                 type: "POST", /*GET会乱码*/
                 url: "https://114.236.91.16:23456/web/v1/tasks/" + targetList.taskId,
-                WebSecurityDisabled:true,
+                WebSecurityDisabled: true,
                 headers: {
-                    "Authorization":"Bearer 8dd1cac5-7e95-4611-ac31-fc66d94eaefa"
+                    "Authorization": "Bearer 8dd1cac5-7e95-4611-ac31-fc66d94eaefa"
                 },
-                success : function (result) {
+                success: function (result) {
                     console.log(result);
                 }
             });
@@ -651,7 +690,7 @@ var taskform_data = new Vue({
             tasknewJson.createTime = oDate.Format("yyyy-MM-dd hh:mm:ss");
             tasknewJson.remark = "无";
             var tasknew = JSON.stringify(tasknewJson);
-            console.log( tasknewJson);
+            console.log(tasknewJson);
             console.log(tasknewJson.serviceType)
             if (tasknewJson.taskName == "") {
                 toastr.warning("请输入任务名称!");
@@ -661,93 +700,93 @@ var taskform_data = new Vue({
                 toastr.warning("请选择调度策略!");
                 // } else if(!reg.test(tasknewJson.domains)){
                 //     toastr.warning("输入的域名有误，请重新输入!");
-            }else if(tasknewJson.parameter){
-                var paramnew=JSON.parse(tasknewJson.parameter)
-                if(paramnew.count<3 || paramnew.count>10000 ){
+            } else if (tasknewJson.parameter) {
+                var paramnew = JSON.parse(tasknewJson.parameter)
+                if (paramnew.count < 3 || paramnew.count > 10000) {
                     toastr.warning("您输入的发包个数有误，请正确输入!");
-                }else if(paramnew.interval<5 ||paramnew.interval>5000){
+                } else if (paramnew.interval < 5 || paramnew.interval > 5000) {
                     toastr.warning("您输入的发包间隔有误，请正确输入!");
-                }else if(paramnew.payload<0|| paramnew.payload>255){
+                } else if (paramnew.payload < 0 || paramnew.payload > 255) {
                     toastr.warning("您输入的负载内容有误，请正确输入!");
-                }else if(paramnew.size<18 ||paramnew.size>1472){
+                } else if (paramnew.size < 18 || paramnew.size > 1472) {
                     toastr.warning("您输入的负载大小有误，请正确输入!");
-                }else if(paramnew.ttl<32 ||paramnew.ttl>255){
+                } else if (paramnew.ttl < 32 || paramnew.ttl > 255) {
                     toastr.warning("您输入的TTL有误，请正确输入!");
-                }else if(paramnew.timeout<1|| paramnew.timeout>100){
+                } else if (paramnew.timeout < 1 || paramnew.timeout > 100) {
                     toastr.warning("您输入的超时时间有误，请正确输入!");
-                }else if(paramnew.max_hop<20 || paramnew.max_hop>64){
+                } else if (paramnew.max_hop < 20 || paramnew.max_hop > 64) {
                     toastr.warning("您输入的最大跳数有误，请正确输入!");
-                } else if(paramnew.count1<3 || paramnew.count1>5){
+                } else if (paramnew.count1 < 3 || paramnew.count1 > 5) {
                     toastr.warning("您输入的单跳发包个数有误，请正确输入!");
-                }else if(paramnew.times<1 || paramnew.times>1000) {
+                } else if (paramnew.times < 1 || paramnew.times > 1000) {
                     toastr.warning("您输入的拨号请求次数有误，请正确输入!");
-                }else if(paramnew.online_time<1||paramnew.online_time>3600){
+                } else if (paramnew.online_time < 1 || paramnew.online_time > 3600) {
                     toastr.warning("您输入的用户在线时长有误，请正确输入!");
-                }else  if(tasknewJson.serviceType=="12" && paramnew.username==""){
+                } else if (tasknewJson.serviceType == "12" && paramnew.username == "") {
                     toastr.warning("请输入用户名！");
-                }else  if (tasknewJson.serviceType=="12" &&paramnew.password==""){
+                } else if (tasknewJson.serviceType == "12" && paramnew.password == "") {
                     toastr.warning("请输入密码！");
-                } else if(paramnew.interval1<1 ||paramnew.interval1>5000){
+                } else if (paramnew.interval1 < 1 || paramnew.interval1 > 5000) {
                     toastr.warning("您输入的时间间隔有误，请正确输入!");
-                }else if(paramnew.times1<1 || paramnew.timeout1>1000){
+                } else if (paramnew.times1 < 1 || paramnew.timeout1 > 1000) {
                     toastr.warning("您输入的IP分配次数有误，请正确输入!");
-                }else if(paramnew.timeout1<500 ||paramnew.timeout1 >5000){
+                } else if (paramnew.timeout1 < 500 || paramnew.timeout1 > 5000) {
                     toastr.warning("您输入的超时时间有误，请正确输入!");
-                }else if (paramnew.times2<1 || paramnew.times2>1000){
+                } else if (paramnew.times2 < 1 || paramnew.times2 > 1000) {
                     toastr.warning("您输入的查询次数有误，请正确输入!");
-                }else if(paramnew.interval2<1|| paramnew.interval2>5000){
+                } else if (paramnew.interval2 < 1 || paramnew.interval2 > 5000) {
                     toastr.warning("您输入的查询间隔有误，请正确输入!");
-                }else  if(paramnew.count2<1 || paramnew.count2>10000){
+                } else if (paramnew.count2 < 1 || paramnew.count2 > 10000) {
                     toastr.warning("您输入的单次发包次数有误，请正确输入!");
-                }else if(paramnew.domains ==""){
+                } else if (paramnew.domains == "") {
                     toastr.warning("请输入待查询域名");
-                }else if(paramnew.auth_port<1 || paramnew.auth_port>65535){
+                } else if (paramnew.auth_port < 1 || paramnew.auth_port > 65535) {
                     toastr.warning("您输入的服务器认证端口有误，请正确输入!");
-                }else if(paramnew.nas_port<0 || paramnew.nas_port>65535){
+                } else if (paramnew.nas_port < 0 || paramnew.nas_port > 65535) {
                     toastr.warning("您输入的NAS端口有误，请正确输入!");
-                }else if(paramnew.secret ==""){
+                } else if (paramnew.secret == "") {
                     toastr.warning("请输入共享密钥");
-                } else if(tasknewJson.serviceType=="15"&&paramnew.username==""){
+                } else if (tasknewJson.serviceType == "15" && paramnew.username == "") {
                     toastr.warning("请输入用户名！");
-                }else if(tasknewJson.serviceType=="15"&&paramnew.password==""){
+                } else if (tasknewJson.serviceType == "15" && paramnew.password == "") {
                     toastr.warning("请输入密码！");
-                } else if(paramnew.times3<1||paramnew.times3>100){
+                } else if (paramnew.times3 < 1 || paramnew.times3 > 100) {
                     toastr.warning("您输入的测试次数有误，请正确输入!");
-                }else if (paramnew.interval3<1 || paramnew.interval3>5000){
+                } else if (paramnew.interval3 < 1 || paramnew.interval3 > 5000) {
                     toastr.warning("您输入的测试间隔有误，请正确输入!");
-                }else if (paramnew.max_element< 1|| paramnew.max_element>2000){
+                } else if (paramnew.max_element < 1 || paramnew.max_element > 2000) {
                     toastr.warning("您输入的最多下载元素有误，请正确输入!");
-                }else if(paramnew.element_timeout<1 ||paramnew.element_timeout>2000){
+                } else if (paramnew.element_timeout < 1 || paramnew.element_timeout > 2000) {
                     toastr.warning("您输入的元素超时时长有误，请正确输入!");
-                }else if(paramnew.page_timeout<1 || paramnew.page_timeout>2000){
+                } else if (paramnew.page_timeout < 1 || paramnew.page_timeout > 2000) {
                     toastr.warning("您输入的页面超时时长有误，请正确输入!");
-                }else if(paramnew.user_agent=="")
+                } else if (paramnew.user_agent == "")
                     toastr.warning("请选择User-Agent");
-                else if(paramnew.max_size<1 || paramnew.max_size>1024000){
+                else if (paramnew.max_size < 1 || paramnew.max_size > 1024000) {
                     toastr.warning("您输入的最大下载容量有误，请正确输入!");
-                }else if(paramnew.is_http_proxy=="1"&&paramnew.address ==""){
+                } else if (paramnew.is_http_proxy == "1" && paramnew.address == "") {
                     toastr.warning("请输入地址！");
-                }else if(paramnew.is_http_proxy=="1"&&paramnew.port ==""){
+                } else if (paramnew.is_http_proxy == "1" && paramnew.port == "") {
                     toastr.warning("请输入端口号！");
-                } else if(paramnew.lasting_time<5 || paramnew.lasting_time>300){
+                } else if (paramnew.lasting_time < 5 || paramnew.lasting_time > 300) {
                     toastr.warning("您输入的持续时长有误，请正确输入!");
-                } else if (paramnew.is_http_proxy=="1"&&(paramnew.port<1 ||paramnew.port>65535)){
+                } else if (paramnew.is_http_proxy == "1" && (paramnew.port < 1 || paramnew.port > 65535)) {
                     toastr.warning("您输入的端口有误，请正确输入!");
-                }else if (tasknewJson.serviceType!="20"&&(paramnew.port<1 ||paramnew.port>65535)){
+                } else if (tasknewJson.serviceType != "20" && (paramnew.port < 1 || paramnew.port > 65535)) {
                     toastr.warning("您输入的服务器端口有误，请正确输入!");
-                }else if((tasknewJson.serviceType=="31"||tasknewJson.serviceType=="32")&&paramnew.is_anonymous=='0' && paramnew.username==""){
+                } else if ((tasknewJson.serviceType == "31" || tasknewJson.serviceType == "32") && paramnew.is_anonymous == '0' && paramnew.username == "") {
                     toastr.warning("请输入用户名！");
-                }else if((tasknewJson.serviceType=="31"||tasknewJson.serviceType=="32")&&paramnew.is_anonymous=='0' && paramnew.password==""){
+                } else if ((tasknewJson.serviceType == "31" || tasknewJson.serviceType == "32") && paramnew.is_anonymous == '0' && paramnew.password == "") {
                     toastr.warning("请输入密码！");
-                } else if(paramnew.filename==''){
+                } else if (paramnew.filename == '') {
                     toastr.warning("请输入文件名称！");
-                }else if(paramnew.download_size<1 ||  paramnew.download_size>1024000){
+                } else if (paramnew.download_size < 1 || paramnew.download_size > 1024000) {
                     toastr.warning("您输入的上传文件的大小有误，请正确输入！");
-                }else if(paramnew.upload_size<1 ||  paramnew.upload_size>1024000){
+                } else if (paramnew.upload_size < 1 || paramnew.upload_size > 1024000) {
                     toastr.warning("您输入的上传文件的大小有误，请正确输入！");
-                }else if (paramnew.first_buffer_time>20){
+                } else if (paramnew.first_buffer_time > 20) {
                     toastr.warning("您输入的首次缓冲时长有误，请正确输入！");
-                }else if(paramnew.lasting_time1<5 || paramnew.lasting_time1>300){
+                } else if (paramnew.lasting_time1 < 5 || paramnew.lasting_time1 > 300) {
                     toastr.warning("您输入的持续时长有误，请正确输入!");
                 } else {
                     var tasknew = JSON.stringify(tasknewJson);
@@ -878,12 +917,17 @@ function getFormJson2(form) {      /*将表单对象变为json对象*/
             //
             // }
 
-            switch (a[i].value){
-                case "times":a[i].value =parseInt(a[i].value);
-                case "interval":a[i].value =parseInt(a[i].value);
-                case "count":a[i].value =parseInt(a[i].value);
-                case "timeout":a[i].value =parseInt(a[i].value);
-                case "domains":a[i].value =JSON.parse(a[i].value);
+            switch (a[i].value) {
+                case "times":
+                    a[i].value = parseInt(a[i].value);
+                case "interval":
+                    a[i].value = parseInt(a[i].value);
+                case "count":
+                    a[i].value = parseInt(a[i].value);
+                case "timeout":
+                    a[i].value = parseInt(a[i].value);
+                case "domains":
+                    a[i].value = JSON.parse(a[i].value);
 
             }
         }
@@ -903,19 +947,10 @@ function getFormJson2(form) {      /*将表单对象变为json对象*/
 }
 
 function cancel_task(obj) {
-    var taskDispatchId = parseInt(obj.id)
+    var taskDispatchId = parseInt(obj.id);
+    cancel_confirm.taskDispatchId = taskDispatchId;
     console.log(taskDispatchId);
-    $.ajax({
-        type: "POST", /*GET会乱码*/
-        url: "../../cem/taskdispatch/cancel/" + taskDispatchId,
-        cache: false,  //禁用缓存
-        dataType: "json",
-        success: function (result) {
-            dispatch_table.currReset();
-            task_table.currReset();
-            toastr.success("任务已取消!");
-        }
-    });
+    cancel_confirm.show_deleteModal();
 }
 
 /*选中表格事件*/
@@ -1055,7 +1090,7 @@ var task_table = new Vue({
                             row.push(item.atName);
                             row.push('<a class="fontcolor" onclick="dispatch_info(this)" id=' + item.id + '>' + item.countDispatch + '</a>&nbsp;');
                             row.push('<a class="fontcolor" onclick="task_assign(this)" id=' + item.id + ' name=' + item.serviceType + '>下发任务</a>&nbsp;' +
-                                '<a class="fontcolor" onclick="view_this(this)" id=' + item.id + '>详情</a> &nbsp;'+
+                                '<a class="fontcolor" onclick="view_this(this)" id=' + item.id + '>详情</a> &nbsp;' +
                                 '<a class="fontcolor" onclick="delete_this(this)" id=' + item.id + '>删除</a>');
                             rows.push(row);
                         });

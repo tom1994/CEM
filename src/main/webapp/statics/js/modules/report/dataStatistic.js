@@ -4,6 +4,13 @@ var probeNames = new Array();
 var taskNames = new Array();
 var targetNames = new Array();
 var recordtag = "0";
+var citySelected=0
+var countrySelected=0
+var probeSelected=0;
+var serviceSelected=0;
+var taskSelected=0
+var targetSelected=0;
+var intervalSelected=0
 
 //key:service_type value:superservice_type
 var spst = new Map();
@@ -49,6 +56,42 @@ recordtype.set(50,"game");
 function getFormJson(form) {      /*将表单对象变为json对象*/
     var o = {};
     var a = $(form).serializeArray();
+   if(citySelected!=0){
+       a[4]={};
+       a[4].name="city_id";
+       a[4].value=citySelected;
+   }
+   if(countrySelected!=0){
+       a[5]={};
+       a[5].name="country_id";
+       a[5].value=countrySelected;
+   }
+   
+    if(probeSelected!=0){
+        a[6]={};
+        a[6].name="probe_id";
+        a[6].value=probeSelected;
+    }
+    if(serviceSelected!=0){
+        a[7]={};
+        a[7].name="service_type";
+        a[7].value=serviceSelected;
+    }
+    if(taskSelected!=0){
+        a[8]={};
+        a[8].name="task_id";
+        a[8].value=taskSelected;
+    }
+    if(targetSelected!=0){
+        a[9]={};
+        a[9].name="target_id";
+        a[9].value=targetSelected;
+    }
+    if(intervalSelected!=0){
+        a[10]={};
+        a[10].name="interval";
+        a[10].value=intervalSelected;
+    }
     $.each(a, function () {
         if (o[this.name] !== undefined) {
             if (!o[this.name].push) {
@@ -61,35 +104,300 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
     });
     return o;
 }
+var getProbeCity = function (cityid) {
+    probeSelected = 0;
+    if (cityid != "" && cityid != null){
+        $.ajax({//探针信息
+            url: "../../cem/probe/infoByCity/" + cityid,
+            type: "POST",
+            cache: false,  //禁用缓存
+            dataType: "json",
+            contentType: "application/json",
+            success: function (result) {
+                var probes = [];
+                for (var i = 0; i < result.probe.length; i++) {
+                    probes[i] = {message: result.probe[i]}
+                }
+                search_data.probe = probes;
+                setTimeout(function () {
+                    $('#probe .jq22').comboSelect();
+                    $(".combo-dropdown").css("z-index",'3');
+                    $('#probe .option-item').click(function (probe) {
+                        setTimeout(function () {
+                            var a = $(probe.currentTarget)[0].innerText;
+                            probeSelected = $($(probe.currentTarget)[0]).data('value');
+                            debugger
+                            $('#probe .combo-input').val(a);
+                            $('#probe .combo-select select').val(a);
+                        }, 30);
+                    });
+                    $('#probe input[type=text] ').keyup(function (probe) {
+                        if( probe.keyCode=='13'){
+                            var b = $("#probe .option-hover.option-selected").text();
+                            probeSelected=$("#probe .option-hover.option-selected")[0].dataset.value;
+                            $('#probe .combo-input').val(b);
+                            $('#probe .combo-select select').val(b);
+                        }
 
+                    })
+                }, 50);
+            }
+        });
+    }
+
+};
+function clearArea(a) {
+    if(a=="所有地市"){
+        $('#country .combo-input').val("所有区县");
+        $('#country .combo-select select').val("所有区县");
+        search_data.areas = [];
+        $('#country ul').html("");
+        // $('#country ul').append(<li class="option-item option-hover option-selected" data-index="0" data-value="">所有区县</li>);
+        $("#country ul").append("<li class='option-item option-hover option-selected' data-index=='0' data-value=''>"+"所有区县"+"</li>");
+        $.ajax({
+            type: "POST",   /*GET会乱码*/
+            url: "../../cem/probe/list",
+            cache: false,  //禁用缓存
+            dataType: "json",
+            success: function (result) {
+                var probes = [];
+                for (var i = 0; i < result.page.list.length; i++) {
+                    probes[i] = {message: result.page.list[i]}
+                }
+                search_data.probe = probes;
+                setTimeout(function () {
+                    $('#probe .jq22').comboSelect();
+                    $(".combo-dropdown").css("z-index",'3');
+                    $('#probe .option-item').click(function (probe) {
+                        setTimeout(function () {
+                            var a = $(probe.currentTarget)[0].innerText;
+                            probeSelected = $($(probe.currentTarget)[0]).data('value');
+                            debugger
+                            $('#probe .combo-input').val(a);
+                            $('#probe .combo-select select').val(a);
+                        }, 30);
+                    });
+                    $('#probe input[type=text] ').keyup(function (probe) {
+                        if( probe.keyCode=='13'){
+                            var b = $("#probe .option-hover.option-selected").text();
+                            probeSelected=$("#probe .option-hover.option-selected")[0].dataset.value;
+                            $('#probe .combo-input').val(b);
+                            $('#probe .combo-select select').val(b);
+                        }
+
+                    })
+                }, 50);
+
+            }
+        });
+    }
+    if(a=="所有区县"){
+        $.ajax({
+            type: "POST",   /*GET会乱码*/
+            url: "../../cem/probe/list",
+            cache: false,  //禁用缓存
+            dataType: "json",
+            success: function (result) {
+                var probes = [];
+                for (var i = 0; i < result.page.list.length; i++) {
+                    probes[i] = {message: result.page.list[i]}
+                }
+                search_data.probe = probes;
+                setTimeout(function () {
+                    $('#probe .jq22').comboSelect();
+                    $(".combo-dropdown").css("z-index",'3');
+                    $('#probe .option-item').click(function (probe) {
+                        setTimeout(function () {
+                            var a = $(probe.currentTarget)[0].innerText;
+                            probeSelected = $($(probe.currentTarget)[0]).data('value');
+                            debugger;
+                            $('#probe .combo-input').val(a);
+                            $('#probe .combo-select select').val(a);
+                        }, 30);
+                    });
+                    $('#probe input[type=text] ').keyup(function (probe) {
+                        if( probe.keyCode=='13'){
+                            var b = $("#probe .option-hover.option-selected").text();
+                            probeSelected=$("#probe .option-hover.option-selected")[0].dataset.value;
+                            $('#probe .combo-input').val(b);
+                            $('#probe .combo-select select').val(b);
+                        }
+
+                    })
+                }, 50);
+
+            }
+        });
+    }
+}
+
+$(document).ready(function () {
+    $('#city .jq22').comboSelect()
+    $('#country .jq22').comboSelect();
+    $('#task .jq22').comboSelect();
+    $('#target .jq22').comboSelect();
+    $.ajax({
+        type: "POST",   /*GET会乱码*/
+        url: "../../cem/city/list",
+        cache: false,  //禁用缓存
+        dataType: "json",
+        success: function (result) {
+            var cities = [];
+            for (var i = 0; i < result.page.list.length; i++) {
+                cities[i] = {message: result.page.list[i]}
+            }
+            search_data.city = cities;
+            setTimeout(function () {
+                $('div#city .jq22').comboSelect();
+                $('.combo-dropdown').css("z-index","3");
+                $('div#city .option-item').click(function (city) {
+                    setTimeout(function () {
+                        var a = $(city.currentTarget)[0].innerText;
+                        citySelected = $($(city.currentTarget)[0]).data('value');
+                        $('div#city .combo-input').val(a);
+                        $('div#city .combo-select select').val(a);
+                        clearArea(a);
+                        getArea(citySelected);
+                        getProbeCity(citySelected);
+                    }, 30);
+                });
+                $('#city input[type=text] ').keyup(function (city) {
+                    if( city.keyCode=='13'){
+                        var b = $("#city .option-hover.option-selected").text();
+                        clearArea(b);
+                        var c=($("#city .option-hover.option-selected"));
+                        var c=c[0].dataset
+                        citySelected = c.value;
+                        clearArea(a);
+                        getArea(citySelected);
+                        getProbeCity(citySelected);
+                        $('#city .combo-input').val(b);
+                        $('#city .combo-select select').val(b);
+                    }
+                })
+            }, 200);
+
+        }
+    });
+    $.ajax({
+        type: "POST",   /*GET会乱码*/
+        url: "../../cem/probe/list",
+        cache: false,  //禁用缓存
+        dataType: "json",
+        success: function (result) {
+            var probes = [];
+            for (var i = 0; i < result.page.list.length; i++) {
+                probes[i] = {message: result.page.list[i]}
+            }
+            search_data.probe = probes;
+            setTimeout(function () {
+                $('#probe .jq22').comboSelect();
+                $(".combo-dropdown").css("z-index",'3');
+                $('#probe .option-item').click(function (probe) {
+                    setTimeout(function () {
+                        var a = $(probe.currentTarget)[0].innerText;
+                        probeSelected = $($(probe.currentTarget)[0]).data('value');
+                        debugger;
+                        $('#probe .combo-input').val(a);
+                        $('#probe .combo-select select').val(a);
+                    }, 30);
+                });
+                $('#probe input[type=text] ').keyup(function (probe) {
+                    if( probe.keyCode=='13'){
+                        var b = $("#probe .option-hover.option-selected").text();
+                        probeSelected=$("#probe .option-hover.option-selected")[0].dataset.value;
+                        $('#probe .combo-input').val(b);
+                        $('#probe .combo-select select').val(b);
+                    }
+
+                })
+            }, 200);
+
+        }
+    });
+});
 var resultdata_handle = new Vue({
     el: '#resulthandle',
     data: {},
     mounted: function () {         /*动态加载地市数据*/
         $.ajax({
-            type: "POST", /*GET会乱码*/
+            type: "POST",   /*GET会乱码*/
             url: "../../cem/city/list",
             cache: false,  //禁用缓存
             dataType: "json",
             success: function (result) {
                 //console.log(result);
+                var cities = [];
                 for (var i = 0; i < result.page.list.length; i++) {
-                    cityNames[i] = {message: result.page.list[i]}
+                    cities[i] = {message: result.page.list[i]}
                 }
-                search_data.cities = cityNames;
+                search_data.city = cities;
+                setTimeout(function () {
+                    $('div#city .jq22').comboSelect();
+                    $('.combo-dropdown').css("z-index","3");
+                    $('div#city .option-item').click(function (city) {
+                        setTimeout(function () {
+                            var a = $(city.currentTarget)[0].innerText;
+                            citySelected = $($(city.currentTarget)[0]).data('value');
+                            $('div#city .combo-input').val(a);
+                            $('div#city .combo-select select').val(a);
+                            clearArea(a);
+                            getArea(citySelected);
+                            getProbeCity(citySelected);
+                        }, 30);
+                    });
+                    $('#city input[type=text] ').keyup(function (city) {
+                        if( city.keyCode=='13'){
+                            var b = $("#city .option-hover.option-selected").text();
+                            clearArea(b);
+                            var c=($("#city .option-hover.option-selected"));
+                            var c=c[0].dataset
+                            citySelected = c.value;
+                            clearArea(a);
+                            getArea(citySelected);
+                            getProbeCity(citySelected);
+                            $('#city .combo-input').val(b);
+                            $('#city .combo-select select').val(b);
+                        }
+                    })
+                }, 50);
+
             }
         });
         $.ajax({
-            type: "POST", /*GET会乱码*/
+            type: "POST",   /*GET会乱码*/
             url: "../../cem/probe/list",
             cache: false,  //禁用缓存
             dataType: "json",
             success: function (result) {
-                console.log(result);
+                var probes = [];
                 for (var i = 0; i < result.page.list.length; i++) {
-                    probeNames[i] = {message: result.page.list[i]}
+                    probes[i] = {message: result.page.list[i]}
                 }
-                search_data.probeNames = probeNames;
+                search_data.probe = probes;
+                setTimeout(function () {
+                    $('#probe .jq22').comboSelect();
+                    $(".combo-dropdown").css("z-index",'3');
+                    $('#probe .option-item').click(function (probe) {
+                        setTimeout(function () {
+                            var a = $(probe.currentTarget)[0].innerText;
+                            probeSelected = $($(probe.currentTarget)[0]).data('value');
+                            debugger;
+                            $('#probe .combo-input').val(a);
+                            $('#probe .combo-select select').val(a);
+                        }, 30);
+                    });
+                    $('#probe input[type=text] ').keyup(function (probe) {
+                        if( probe.keyCode=='13'){
+                            var b = $("#probe .option-hover.option-selected").text();
+                            probeSelected=$("#probe .option-hover.option-selected")[0].dataset.value;
+                            $('#probe .combo-input').val(b);
+                            $('#probe .combo-select select').val(b);
+                        }
+
+                    })
+                }, 50);
+
             }
         });
     },
@@ -125,8 +433,8 @@ var search_data = new Vue({
             this.servicetype = parseInt($('#selectservice').val());
             recordtag = recordtype.get(this.servicetype);
             $("#" + recordtag + "_record ").removeClass("service_unselected");
-
             var data = getFormJson($('#resultsearch .selectdata'));
+            debugger;
             /*得到查询条件*/
             /*获取表单元素的值*/
             var starttemp = data.start_time;
@@ -239,6 +547,7 @@ var search_data = new Vue({
 });
 
 var getArea = function (cityid) {
+    countrySeleted=0;
     $.ajax({
         url: "../../cem/county/info/" + cityid,
         type: "POST",
@@ -246,45 +555,121 @@ var getArea = function (cityid) {
         dataType: "json",
         contentType: "application/json",
         success: function (result) {
-            for (var i = 0; i < result.county.length; i++) {
+            search_data.areas = [];
+            areaNames = [];
+            for (let i = 0; i < result.county.length; i++) {
                 areaNames[i] = {message: result.county[i]}
             }
             search_data.areas = areaNames;
+            setTimeout(function () {
+                $('#country .jq22').comboSelect();
+                $('.combo-dropdown').css("z-index","3");
+                $('#country .option-item').click(function (areas) {
+                    setTimeout(function () {
+                        var a = $(areas.currentTarget)[0].innerText;
+                        countrySelected = $($(areas.currentTarget)[0]).data('value');
+                        $('#country .combo-input').val(a);
+                        $('#country .combo-select select').val(a);
+
+                        getProbe(countrySelected);
+                    },20)
+
+                });
+                $('#country input[type=text] ').keyup(function (areas) {
+                    if( areas.keyCode=='13'){
+                        var b = $("#country .option-hover.option-selected").text();
+                        countrySelected=$("#country .option-hover.option-selected")[0].dataset.value;
+                        $('#country .combo-input').val(b);
+                        $('#country .combo-select select').val(b);
+                        getProbe(countrySelected);
+                    }
+                })
+            }, 50);
+
         }
     });
 };
 
 var getProbe = function (countyid) {
+    var countrySeleted=0;
     probeNames = [];
     $.ajax({
-        url: "../../cem/probe/info/" + countyid,
+        url: "../../cem/county/info/" + cityid,
         type: "POST",
         cache: false,  //禁用缓存
         dataType: "json",
         contentType: "application/json",
         success: function (result) {
-            console.log(result);
-            for (var i = 0; i < result.probe.length; i++) {
-                probeNames[i] = {message: result.probe[i]}
+            search_data.areas = [];
+            areaNames = [];
+            for (let i = 0; i < result.county.length; i++) {
+                areaNames[i] = {message: result.county[i]}
             }
-            search_data.probeNames = probeNames;
+            search_data.areas = areaNames;
+            setTimeout(function () {
+                $('#country .jq22').comboSelect();
+                $('.combo-dropdown').css("z-index","3");
+                $('#country .option-item').click(function (areas) {
+                    setTimeout(function () {
+                        var a = $(areas.currentTarget)[0].innerText;
+                        countrySelected = $($(areas.currentTarget)[0]).data('value');
+                        $('#country .combo-input').val(a);
+                        $('#country .combo-select select').val(a);
+                         
+                        getProbe(countrySelected);
+                    },20)
+
+                });
+                $('#country input[type=text] ').keyup(function (areas) {
+                    if( areas.keyCode=='13'){
+                        var b = $("#country .option-hover.option-selected").text();
+                        countrySelected=$("#country .option-hover.option-selected")[0].dataset.value;
+                        $('#country .combo-input').val(b);
+                        $('#country .combo-select select').val(b);
+                        getProbe(countrySelected);
+                    }
+                })
+            }, 50);
+
         }
     });
-};
+}
 
 var getTask = function (servicetype) {
+    var taskSelected=0
     $.ajax({
-        url: "../../cem/task/infoByService/" + servicetype,
+        url: "../../cem/task/infoByService/"+servicetype,
         type: "POST", /*GET会乱码*/
         cache: false,  //禁用缓存
         dataType: "json",
         contentType: "application/json", /*必须要,不可少*/
         success: function (result) {
             taskNames = [];
-            for (var i = 0; i < result.task.length; i++) {
+            for(var i=0;i<result.task.length;i++){
                 taskNames[i] = {message: result.task[i]}
             }
             search_data.tasks = taskNames;
+            setTimeout(function () {
+                $('#task .jq22').comboSelect();
+                $('.combo-dropdown').css("z-index","3");
+                $('#task .option-item').click(function (tasks) {
+                    setTimeout(function () {
+                        var a = $(tasks.currentTarget)[0].innerText.trim();
+                        taskSelected = $($(tasks.currentTarget)[0]).data('value');
+                        $('#task .combo-input').val(a);
+                        $('#task .combo-select select').val(a);
+                    },20)
+
+                });
+                $('#task input[type=text] ').keyup(function (tasks) {
+                    if( tasks.keyCode=='13'){
+                        var b = $("#task .option-hover.option-selected").text().trim();
+                        taskSelected=$("#task .option-hover.option-selected")[0].dataset.value;
+                        $('#task .combo-input').val(b);
+                        $('#task .combo-select select').val(b);
+                    }
+                })
+            }, 50);
         }
     });
 }
@@ -292,17 +677,38 @@ var getTask = function (servicetype) {
 /*此处的serviceId其实是superservice的*/
 var getTarget = function (serviceId) {
     $.ajax({
-        url: "../../target/infobat/" + serviceId,
+        url: "../../target/infobat/"+serviceId,
         type: "POST", /*GET会乱码*/
         cache: false,  //禁用缓存
         dataType: "json",
         contentType: "application/json", /*必须要,不可少*/
         success: function (result) {
             targetNames = [];
-            for (var i = 0; i < result.target.length; i++) {
+            for(var i=0;i<result.target.length;i++){
                 targetNames[i] = {message: result.target[i]}
             }
             search_data.targets = targetNames;
+            setTimeout(function () {
+                $('#target .jq22').comboSelect();
+                $('.combo-dropdown').css("z-index","3");
+                $('#target .option-item').click(function (target) {
+                    setTimeout(function () {
+                        var a = $(target.currentTarget)[0].innerText.trim();
+                        targetSelected = $($(target.currentTarget)[0]).data('value');
+                        $('#target .combo-input').val(a);
+                        $('#target .combo-select select').val(a);
+                    },20)
+                });
+                $('#target input[type=text] ').keyup(function (target) {
+                    if( target.keyCode=='13'){
+                        var b = $("#target .option-hover.option-selected").text().trim();
+                        targetSelected=$("#target .option-hover.option-selected")[0].dataset.value;
+                        debugger;
+                        $('#target .combo-input').val(b);
+                        $('#target .combo-select select').val(b);
+                    }
+                })
+            }, 50);
         }
     });
 }
@@ -1177,7 +1583,7 @@ var radiusresult_Table = new Vue({
                             row.push(item.targetId);
                             row.push(item.targetIp);
                             row.push(item.targetLoc);
-                            row.push(item.state);
+                            row.push(item.state)
                             row.push(item.remark);
                             rows.push(row);
                         });
