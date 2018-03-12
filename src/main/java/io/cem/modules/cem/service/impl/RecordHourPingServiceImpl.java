@@ -1327,7 +1327,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 					finalScore.setTargetId(ite.getTargetId());
 					finalScore.setTargetName(ite.getTargetName());
 					finalScore.setAccessLayer(ite.getAccessLayer());
-					finalScore.setScore(((connection.get(ite).getScore()) / (connection.get(ite).getBase()))*((ite.getFail())/ite.getTotal()));
+					finalScore.setScore(((connection.get(ite).getScore()) / (connection.get(ite).getBase()))*(1-(ite.getFail())/ite.getTotal()));
 					finalScore.setBase(Double.parseDouble(pros.getValue("connectionweight")));
 					connectionScore.add(finalScore);
 				} catch (IOException e) {
@@ -1391,7 +1391,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 					finalScore.setAccessLayer(ite.getAccessLayer());
 					finalScore.setRecordDate(ite.getRecordDate());
 					finalScore.setRecordTime(ite.getRecordTime());
-					finalScore.setScore(((connection.get(ite).getScore()) / (connection.get(ite).getBase()))*((ite.getFail())/ite.getTotal()));
+					finalScore.setScore(((connection.get(ite).getScore()) / (connection.get(ite).getBase()))*(1-(ite.getFail())/ite.getTotal()));
 					finalScore.setBase(Double.parseDouble(pros.getValue("connectionweight")));
 					connectionScore.add(finalScore);
 				} catch (IOException e) {
@@ -1449,7 +1449,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 					finalScore.setServiceType(1);
 					finalScore.setTargetId(ite.getTargetId());
 					finalScore.setTargetName(ite.getTargetName());
-					finalScore.setScore(((connection.get(ite).getScore()) / (connection.get(ite).getBase()))*((ite.getFail())/ite.getTotal()));
+					finalScore.setScore(((connection.get(ite).getScore()) / (connection.get(ite).getBase()))*(1-(ite.getFail())/ite.getTotal()));
 					finalScore.setBase(Double.parseDouble(pros.getValue("connectionweight")));
 					connectionScore.add(finalScore);
 				} catch (IOException e) {

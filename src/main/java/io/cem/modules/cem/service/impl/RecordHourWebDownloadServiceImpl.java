@@ -596,7 +596,7 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 					finalScore.setServiceType(3);
 					finalScore.setTargetId(ite.getTargetId());
 					finalScore.setTargetName(ite.getTargetName());
-					finalScore.setScore(((connection.get(ite).getScore()) / (connection.get(ite).getBase()))*((ite.getFail())/ite.getTotal()));
+					finalScore.setScore(((connection.get(ite).getScore()) / (connection.get(ite).getBase()))*(1-(ite.getFail())/ite.getTotal()));
 					finalScore.setBase(Double.parseDouble(pros.getValue("downloadweight")));
 					connectionScore.add(finalScore);
 				} catch (IOException e) {}
@@ -652,7 +652,7 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 					finalScore.setServiceType(4);
 					finalScore.setTargetId(ite.getTargetId());
 					finalScore.setTargetName(ite.getTargetName());
-					finalScore.setScore(((connection.get(ite).getScore()) / (connection.get(ite).getBase()))*((ite.getFail())/ite.getTotal()));
+					finalScore.setScore(((connection.get(ite).getScore()) / (connection.get(ite).getBase()))*(1-(ite.getFail())/ite.getTotal()));
 					finalScore.setBase(Double.parseDouble(pros.getValue("downloadweight")));
 					connectionScore.add(finalScore);
 				} catch (IOException e) {}
@@ -709,7 +709,7 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 					finalScore.setServiceType(4);
 					finalScore.setTargetId(ite.getTargetId());
 					finalScore.setTargetName(ite.getTargetName());
-					finalScore.setScore(((connection.get(ite).getScore()) / (connection.get(ite).getBase()))*((ite.getFail())/ite.getTotal()));
+					finalScore.setScore(((connection.get(ite).getScore()) / (connection.get(ite).getBase()))*(1-(ite.getFail())/ite.getTotal()));
 					finalScore.setBase(Double.parseDouble(pros.getValue("downloadweight")));
 					connectionScore.add(finalScore);
 				} catch (IOException e) {}
