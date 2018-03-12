@@ -34,8 +34,8 @@ var search_service = new Vue({ //Todo:完成查询条件框
     el: '#search',
     data: {
         /*name: [],
-        scheduler: [],
-        remark: []*/
+         scheduler: [],
+         remark: []*/
     },
     // 在 `methods` 对象中定义方法
     methods: {
@@ -326,7 +326,7 @@ function connection_info() {
 
 /*网络连通性图表*/
 var connection_chart = new Vue({
-    el: '#',
+    el: '#container',
     data: {
         chartdata: {ava_start:(new Date()).Format("yyyy-MM-dd"), ava_terminal:(new Date()).Format("yyyy-MM-dd")}
     },
@@ -344,6 +344,7 @@ var connection_chart = new Vue({
             dataType: "json",
             /* contentType:"application/json",  /!*必须要,不可少*!/*/
             success: function (result) {
+                debugger;
                 console.log(result.scoreList);
 
 

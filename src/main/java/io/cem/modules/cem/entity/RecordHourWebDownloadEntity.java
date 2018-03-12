@@ -61,6 +61,25 @@ public class RecordHourWebDownloadEntity implements Serializable {
 
 	private String servicetypeName;
 
+	private Integer fail;
+
+	private Integer total;
+
+	public Integer getFail() {
+		return fail;
+	}
+
+	public void setFail(Integer fail) {
+		this.fail = fail;
+	}
+
+	public Integer getTotal() {
+		return total;
+	}
+
+	public void setTotal(Integer total) {
+		this.total = total;
+	}
 	public String getTaskName() {
 		return taskName;
 	}

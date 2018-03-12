@@ -78,6 +78,8 @@
 		<result property="areaName" column="area_name"/>
 		<result property="probeName" column="probe_name"/>
 		<result property="targetName" column="target_name"/>
+		<result property="fail" column="fail"/>
+		<result property="total" column="total"/>
 	</resultMap>
 
 	<resultMap type="io.cem.modules.cem.entity.RecordDaySlaEntity" id="recordDaySlaMap">
@@ -112,6 +114,8 @@
 		<result property="rJitterVar" column="r_jitter_var"/>
 		<result property="lossRate" column="loss_rate"/>
 		<result property="remark" column="remark"/>
+		<result property="fail" column="fail"/>
+		<result property="total" column="total"/>
 	</resultMap>
 
 	<select id="queryObject" resultType="io.cem.modules.cem.entity.RecordSlaEntity">
@@ -163,10 +167,25 @@
         AVG(rs.g_jitter_var) AS g_jitter_var,
         AVG(rs.r_jitter_var) AS r_jitter_var,
 		AVG(rs.loss_rate) AS loss_rate,
-		rs.remark AS remark
+		rs.remark AS remark,
+		t.total AS total,
+		t.fail AS fail
 		FROM record_sla rs
 		LEFT JOIN probe
 		ON  rs.probe_id =probe.id
+		INNER JOIN (SELECT probe_id  AS probe_id,
+                           port      AS port,
+                           task_id   AS task_id,
+                           service_type  AS service_type,
+                           target_id     AS target_id,
+                           sum(state) AS fail,
+                           count(record_sla.id)  AS total
+                    FROM record_sla
+                    INNER JOIN probe
+                    ON probe_id = probe.id
+                    WHERE record_date = #{record_date}
+                    AND record_time BETWEEN #{start_time} AND #{terminal_time}
+                    GROUP BY port, service_type, target_id, task_id, probe_id) t
 		WHERE rs.record_date = #{record_date}
 		AND rs.record_time BETWEEN #{start_time} AND #{terminal_time}
 		AND rs.state = 0
@@ -203,10 +222,25 @@
         AVG(rs.g_jitter_var) AS g_jitter_var,
         AVG(rs.r_jitter_var) AS r_jitter_var,
 		AVG(rs.loss_rate) AS loss_rate,
-		rs.remark AS remark
+		rs.remark AS remark,
+		t.fail AS fail,
+		t.total AS total
 		FROM record_sla rs
 		LEFT JOIN probe
 		ON  rs.probe_id =probe.id
+		INNER JOIN (SELECT probe_id  AS probe_id,
+                           port      AS port,
+                           task_id   AS task_id,
+                           service_type  AS service_type,
+                           target_id     AS target_id,
+                           sum(state) AS fail,
+                           count(record_sla.id)  AS total
+                    FROM record_sla
+                    INNER JOIN probe
+                    ON probe_id = probe.id
+                    WHERE record_date = #{record_date}
+                    AND record_time BETWEEN #{start_time} AND #{terminal_time}
+                    GROUP BY port, service_type, target_id, task_id, probe_id) t
 		WHERE rs.record_date = #{record_date}
 		AND rs.state = 0
 		GROUP BY rs.port,rs.service_type,rs.target_id,rs.task_id,rs.probe_id;

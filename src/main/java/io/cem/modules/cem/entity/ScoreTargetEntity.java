@@ -27,6 +27,10 @@ public class ScoreTargetEntity {
     //记录时间
     private String recordTime;
 
+    private Integer fail;
+
+    private Integer total;
+
     public String getCityName() {
         return cityName;
     }
@@ -107,6 +111,21 @@ public class ScoreTargetEntity {
         this.recordTime = recordTime;
     }
 
+    public Integer getFail() {
+        return fail;
+    }
+
+    public void setFail(Integer fail) {
+        this.fail = fail;
+    }
+
+    public Integer getTotal() {
+        return total;
+    }
+
+    public void setTotal(Integer total) {
+        this.total = total;
+    }
 
     @Override
     public boolean equals(Object obj) {

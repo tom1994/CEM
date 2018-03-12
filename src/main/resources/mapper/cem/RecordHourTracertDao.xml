@@ -25,6 +25,8 @@
         <result property="lossRate" column="loss_rate"/>
         <result property="hopRecord" column="hop_record"/>
         <result property="remark" column="remark"/>
+		<result property="fail" column="fail"/>
+		<result property="total" column="total"/>
     </resultMap>
 
 	<select id="queryObject" resultType="io.cem.modules.cem.entity.RecordHourTracertEntity">
@@ -60,7 +62,9 @@
 		AVG(rht.jitter) AS jitter,
 		AVG(rht.jitter_std) AS jitter_std,
 		AVG(rht.jitter_var) AS jitter_var,
-		AVG(rht.loss_rate) AS loss_rate
+		AVG(rht.loss_rate) AS loss_rate,
+		SUM(rht.fail) AS fail,
+		SUM(rht.total) AS total
 		FROM record_hour_tracert rht
 		LEFT JOIN city
 		ON rht.city_id = city.city_id
@@ -99,7 +103,9 @@
 		AVG(rht.jitter) AS jitter,
 		AVG(rht.jitter_std) AS jitter_std,
 		AVG(rht.jitter_var) AS jitter_var,
-		AVG(rht.loss_rate) AS loss_rate
+		AVG(rht.loss_rate) AS loss_rate,
+		SUM(rht.fail) AS fail,
+		SUM(rht.total) AS total
 		FROM record_day_tracert rht
 		LEFT JOIN city
 		ON rht.city_id = city.city_id

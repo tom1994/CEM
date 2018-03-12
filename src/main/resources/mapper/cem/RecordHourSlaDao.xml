@@ -40,6 +40,8 @@
 		<result property="areaName" column="area_name"/>
 		<result property="probeName" column="probe_name"/>
 		<result property="targetName" column="target_name"/>
+		<result property="fail" column="fail"/>
+		<result property="total" column="total"/>
     </resultMap>
 
 	<select id="queryObject" resultType="io.cem.modules.cem.entity.RecordHourSlaEntity">
@@ -77,7 +79,9 @@
 		AVG(record_hour_sla.jitter) AS jitter,
         AVG(record_hour_sla.g_jitter) AS g_jitter,
         AVG(record_hour_sla.r_jitter) AS r_jitter,
-		AVG(record_hour_sla.loss_rate) AS loss_rate
+		AVG(record_hour_sla.loss_rate) AS loss_rate,
+		SUM(record_hour_sla.fail) AS fail,
+		SUM(record_hour_sla.total) AS total
 		FROM record_hour_sla
 		LEFT JOIN city
 		ON record_hour_sla.city_id = city.city_id
@@ -116,7 +120,9 @@
 		AVG(sla.jitter) AS jitter,
 		AVG(sla.g_jitter) AS g_jitter,
 		AVG(sla.r_jitter) AS r_jitter,
-		AVG(sla.loss_rate) AS loss_rate
+		AVG(sla.loss_rate) AS loss_rate,
+		SUM(sla.fail) AS fail,
+		SUM(sla.total) AS total
 		FROM record_day_sla sla
 		LEFT JOIN city
 		ON sla.city_id = city.city_id

@@ -29,6 +29,10 @@ public class ScoreDateEntity {
 
     private Integer accessLayer;
 
+    private Integer fail;
+
+    private Integer total;
+
     public String getCityName() {
         return cityName;
     }
@@ -107,6 +111,22 @@ public class ScoreDateEntity {
 
     public void setRecordTime(String recordTime) {
         this.recordTime = recordTime;
+    }
+
+    public Integer getFail() {
+        return fail;
+    }
+
+    public void setFail(Integer fail) {
+        this.fail = fail;
+    }
+
+    public Integer getTotal() {
+        return total;
+    }
+
+    public void setTotal(Integer total) {
+        this.total = total;
     }
 
     @Override

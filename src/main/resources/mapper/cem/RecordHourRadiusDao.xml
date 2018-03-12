@@ -23,6 +23,8 @@
 		<result property="areaName" column="area_name"/>
 		<result property="probeName" column="probe_name"/>
 		<result property="targetName" column="target_name"/>
+		<result property="fail" column="fail"/>
+		<result property="total" column="total"/>
     </resultMap>
 
 	<select id="queryObject" resultType="io.cem.modules.cem.entity.RecordHourRadiusEntity">
@@ -55,7 +57,9 @@
 		probe.probe_name AS probe_name,
 		target.target_name AS target_name,
 		AVG(record_hour_radius.delay) AS delay,
-		AVG(record_hour_radius.success_rate) AS success_rate
+		AVG(record_hour_radius.success_rate) AS success_rate,
+		SUM(record_hour_radius.fail) AS fail,
+		SUM(record_hour_radius.total) AS total
 		FROM record_hour_radius
 		LEFT JOIN city
 		ON record_hour_radius.city_id = city.city_id
@@ -89,7 +93,9 @@
 		probe.probe_name AS probe_name,
 		target.target_name AS target_name,
 		AVG(radius.delay) AS delay,
-		AVG(radius.success_rate) AS success_rate
+		AVG(radius.success_rate) AS success_rate,
+		SUM(radius.fail) AS fail,
+		SUM(radius.total) AS total
 		FROM record_day_radius radius
 		LEFT JOIN city
 		ON radius.city_id = city.city_id

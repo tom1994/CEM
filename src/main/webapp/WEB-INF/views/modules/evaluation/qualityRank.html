@@ -106,7 +106,7 @@
                                                     <span class="searchname" title="地市" style="width:80px; text-align: center">地市</span>
                                                     <div class="input-group searchspan" id="city" >
                                                         <div class="jq22">
-                                                            <select id="selectcity" class="form-control" name="type"  v-on:change="citychange()" style="display: none">
+                                                            <select id="selectcity" class="form-control"   v-on:change="citychange()" style="display: none">
                                                                 <option value="">所有地市</option>
                                                                 <option v-for="item in cities"
                                                                         v-bind:value="item.message.cityId">{{ item.message.cityName }}
@@ -119,7 +119,7 @@
                                                     <span class="searchname search left" title="区县" style="width: 80px;margin-left: 63px">区县</span>
                                                     <div class="input-group searchspan" id="country">
                                                         <div class="jq22">
-                                                            <select id="selectarea" class="form-control" name="countyid"  v-on:change="areachange()" style="display: none">
+                                                            <select id="selectarea" class="form-control"  v-on:change="areachange()" style="display: none">
                                                                 <option value="">所有区县</option>
                                                                 <option v-for="item in areas"
                                                                         v-bind:value="item.message.countyId">{{item.message.countyName}}
@@ -132,7 +132,7 @@
                                                     <span class="searchname search left" title="业务类型" style="width: 80px;margin-left: 65px;">业务类型</span>
                                                     <div class="input-group searchspan" id="service" >
                                                         <div class="jq22">
-                                                            <select id="selectservice" class="form-control  input" name="service_type"
+                                                            <select id="selectservice" class="form-control  input"
                                                                     v-on:change="servicechange()" style="width: 140px;display: none;">
                                                                 <option value="0">综合业务</option>
                                                                 <option value="1">网络连通性业务</option>
@@ -148,21 +148,12 @@
                                             </div>
 
                                             <div class="form-group row" style="margin-bottom: -5px">
-                                                <!--<div class="input-group searchspan">-->
-                                                    <!--<span class="searchname search" title="目标地址"-->
-                                                          <!--style="width: 80px">目标地址</span>-->
-                                                    <!--<select id="select_target" class="form-control input clear" name="target_id"-->
-                                                            <!--style="width: 140px">-->
-                                                        <!--<option value="">所有目标地址</option>-->
-                                                        <!--<option v-for="item in target"-->
-                                                                <!--v-bind:value="item.message.id">{{ item.message.targetName}}</option>-->
-                                                    <!--</select>-->
-                                                <!--</div>-->
+
                                                 <div style="display: inline-block;">
                                                     <span class="searchname search " title="目标地址" style="width: 80px;">目标地址</span>
                                                     <div class="input-group searchspan" id="target" style="top: -8px;">
                                                         <div class="jq22">
-                                                            <select id="select_target" class="form-control  input" name="target_id"
+                                                            <select id="select_target" class="form-control  input"
                                                                     style="width: 140px;display: none;">
                                                                 <option value="">所有目标地址</option>
                                                                 <option v-for="item in target"
@@ -243,7 +234,7 @@
                                                     <span class="searchname" title="地市" style="width:80px; text-align: center;">地 &nbsp;&nbsp;&nbsp;市</span>
                                                     <div class="input-group searchspan" id="areaCity">
                                                         <div class="jq22">
-                                                            <select id="area_city" class="form-control" name="type"  v-on:change="citychange()" style="display: none">
+                                                            <select id="area_city" class="form-control"   v-on:change="citychange()" style="display: none">
                                                                 <option value="">所有地市</option>
                                                                 <option v-for="item in cities"
                                                                         v-bind:value="item.message.cityId">{{ item.message.cityName }}
@@ -257,7 +248,7 @@
                                                     <span class="searchname search left" title="业务类型" style="width: 80px;text-align: center; margin-left: 63px">业务类型</span>
                                                     <div class="input-group searchspan" id="area" >
                                                         <div class="jq22">
-                                                            <select id="area_service" class="form-control  input" name="service_type"
+                                                            <select id="area_service" class="form-control  input"
                                                                     v-on:change="servicechange()" style="width: 140px;display: none;">
                                                                 <option value="0">综合业务</option>
                                                                 <option value="1">网络连通性业务</option>
@@ -275,7 +266,7 @@
                                                     <span class="searchname search left " title="目标地址" style="width: 80px;">目标地址</span>
                                                     <div class="input-group searchspan" id="areaTarget" >
                                                         <div class="jq22">
-                                                            <select id="area_target" class="form-control  input" name="target_id"
+                                                            <select id="area_target" class="form-control  input"
                                                                     style="width: 140px;display: none;">
                                                                 <option value="">所有目标地址</option>
                                                                 <option v-for="item in target"
@@ -332,7 +323,7 @@
                                             class="glyphicon glyphicon-open  Btn"></span>导出
                                     </button>
                                 </a>
-                                    <p id="area_flip" style="position:relative; left:45%;" class="glyphicon glyphicon-menu-up" onClick="toggle2('area_searchbox')"></p>
+                                <p id="area_flip" style="position:relative; left:45%;" class="glyphicon glyphicon-menu-up" onClick="toggle2('area_searchbox')"></p>
                             </div>
                             <div class="ibox-content">
                                 <div class="row " style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
@@ -447,160 +438,6 @@
         $("#"+param).toggle();
     }
 </script>
-
-<script>
-    $(document).ready(function () {
-        var citySelected=0;
-        $('#country .jq22').comboSelect();
-        $('#probe .jq22').comboSelect();
-        $('#target .jq22').comboSelect();
-        $('#areaTarget .jq22').comboSelect();
-        citySelected=0
-        $.ajax({
-            type: "POST", /*GET会乱码*/
-            url: "../../cem/city/list",//c城市列表
-            cache: false,  //禁用缓存
-            dataType: "json",
-            success: function (result) {
-                var cities = [];
-                for (var i = 0; i < result.page.list.length; i++) {
-                    cities[i] = {message: result.page.list[i]}
-                }
-                search_data.city = cities;
-                setTimeout(function () {
-                    $('div#city .jq22').comboSelect();
-                    $('.combo-dropdown').css("z-index","3");
-                    $('div#city .option-item').click(function (city) {
-                        setTimeout(function () {
-                            var a = $(city.currentTarget)[0].innerText;
-                            clearArea(a);
-                            citySelected = $($(city.currentTarget)[0]).data('value');
-                            getArea(citySelected);
-                            $('div#city .combo-input').val(a);
-                            $('div#city .combo-select select').val(a);
-                        }, 30);
-                    });
-                    $('#city input[type=text] ').keyup(function (city) {
-                        if( city.keyCode=='13'){
-                            var b = $("#city .option-hover.option-selected").text();
-                            clearArea(b);
-                            var c=($("#city .option-hover.option-selected"));
-                            var c=c[0].dataset
-                            citySelected = c.value;
-                            getArea(citySelected);
-                            $('#city .combo-input').val(b);
-                            $('#city .combo-select select').val(b);
-                        }
-
-                    })
-                }, 50);
-            }
-        });
-
-        function clearArea(a) {
-            if(a=="所有地市"){
-                $('#country .combo-input').val("所有区县");
-                $('#country .combo-select select').val("所有区县");
-                search_data.areas = [];
-                $('#country ul').html("");
-                $("#country ul").append("<li class='option-item option-hover option-selected' data-index=='0' data-value=''>"+"所有区县"+"</li>");
-            }
-        }
-        var serviceSelected=0;
-        $('#service .jq22').comboSelect();
-        $("#service input[type=text]").attr('placeholder',"---请选择---")
-        $('.combo-dropdown').css("z-index","3");
-        $('#service .option-item').click(function (service) {
-            var a = $(service.currentTarget)[0].innerText;
-            serviceSelected = $($(service.currentTarget)[0]).data('value');
-            setTimeout(function(){
-                $('#service .combo-input').val(a);
-            },20);
-
-            getService(serviceSelected);
-        });
-
-        $('#service input[type=text] ').keyup(function (service) {
-            if( service.keyCode=='13'){
-                var b = $("#service .option-hover.option-selected").text();
-                var c=($("#service .option-hover.option-selected"));
-                var c=c[0].dataset
-                serviceSelected = c.value;
-                getService(serviceSelected);
-                $('#service .combo-input').val(b);
-                $('#service .combo-select select').val(b);
-            }
-
-        });
-
-        var area_Selected=0;
-        $('#area .jq22').comboSelect();
-        $("#area input[type=text]").attr('placeholder',"---请选择---")
-        $('.combo-dropdown').css("z-index","3");
-        $('#area .option-item').click(function (area) {
-            var a = $(area.currentTarget)[0].innerText;
-            area_Selected = $($(area.currentTarget)[0]).data('value');
-            setTimeout(function(){
-                $('#area .combo-input').val(a);
-            },20);
-            getAreaService(area_Selected);
-        });
-
-        $('#area input[type=text] ').keyup(function (area) {
-            if( area.keyCode=='13'){
-                var b = $("#area .option-hover.option-selected").text();
-                var c=($("#area .option-hover.option-selected"));
-                var c=c[0].dataset
-                serviceSelected = c.value;
-                getAreaService(serviceSelected);
-                $('#area .combo-input').val(b);
-                $('#area .combo-select select').val(b);
-            }
-        });
-        //区域排名
-        var citySelected=0;
-        citySelected=0;
-        $.ajax({
-            type: "POST", /*GET会乱码*/
-            url: "../../cem/city/list",//c城市列表
-            cache: false,  //禁用缓存
-            dataType: "json",
-            success: function (result) {
-                var cities = [];
-                for (var i = 0; i < result.page.list.length; i++) {
-                    cities[i] = {message: result.page.list[i]}
-                }
-                search_data.city = cities;
-                setTimeout(function () {
-                    $('div#areaCity .jq22').comboSelect();
-                    $('.combo-dropdown').css("z-index","3");
-                    $('div#areaCity .option-item').click(function (area) {
-                        setTimeout(function () {
-                            var a = $(area.currentTarget)[0].innerText;
-                            clearArea(a);
-                            citySelected = $($(area.currentTarget)[0]).data('value');
-                            $('div#areaCity .combo-input').val(a);
-                            $('div#areaCity .combo-select select').val(a);
-                        }, 50);
-                    });
-                    $('#areaCity input[type=text] ').keyup(function (area) {
-                        if( area.keyCode=='13'){
-                            var b = $("#areaCity .option-hover.option-selected").text();
-                            clearArea(b);
-                            var c=($("#areaCity .option-hover.option-selected"));
-                            var c=c[0].dataset
-                            citySelected = c.value;
-                            $('#areaCity .combo-input').val(b);
-                            $('#areaCity .combo-select select').val(b);
-                        }
-
-                    })
-                }, 100);
-            }
-        });
-    })
-</script>
-
 
 </body>
 

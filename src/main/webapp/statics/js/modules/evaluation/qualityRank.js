@@ -11,6 +11,14 @@ var targetNames = new Array();
 var probeNames = new Array();
 var typeNames = new Array();
 var statusNames = new Array();
+
+var citySelected=0;
+var countrySelected=0;
+var serviceSelected=0;
+var area_Selected=0;
+var probeSelected=0
+var targetSelected=0;
+
 var today = new Date();
 today.setDate(today.getDate() - 1); //显示近一天内的数据
 
@@ -142,7 +150,7 @@ var getArea = function (cityid) {
                 $('#country input[type=text] ').keyup(function (areas) {
                     if( areas.keyCode=='13'){
                         var b = $("#country .option-hover.option-selected").text();
-                        countrySelected = $($(areas.currentTarget)[0]).data('value');
+                        countrySelected=$("#country .option-hover.option-selected")[0].dataset.value;
                         $('#country .combo-input').val(b);
                         $('#country .combo-select select').val(b);
                     }
@@ -154,6 +162,7 @@ var getArea = function (cityid) {
 
 var getService = function (serviceId) {
     console.log("I'm here!!!!"+serviceId);
+    targetSelected=0
     $.ajax({
         url: "../../target/infobat/"+serviceId,
         type: "POST", /*GET会乱码*/
@@ -180,7 +189,7 @@ var getService = function (serviceId) {
                 $('#target input[type=text] ').keyup(function (target) {
                     if( target.keyCode=='13'){
                         var b = $("#target  .option-hover.option-selected").text();
-                        probeSelected = $($(target.currentTarget)[0]).data('value');
+                        targetSelected=$("#target .option-hover.option-selected")[0].dataset.value;
                         $('#target .combo-input').val(b);
                         $('#target .combo-select select').val(b);
                     }
@@ -192,6 +201,7 @@ var getService = function (serviceId) {
 
 var getAreaService = function (serviceId) {
     console.log("I'm here!!!!"+serviceId);
+    targetSelected=0
     $.ajax({
         url: "../../target/infobat/"+serviceId,
         type: "POST", /*GET会乱码*/
@@ -218,7 +228,7 @@ var getAreaService = function (serviceId) {
                 $('#areaTarget input[type=text] ').keyup(function (target) {
                     if( target.keyCode=='13'){
                         var b = $("#areaTarget  .option-hover.option-selected").text();
-                        probeSelected = $($(target.currentTarget)[0]).data('value');
+                        targetSelected=$("#areaTarget .option-hover.option-selected")[0].dataset.value;
                         $('#areaTarget .combo-input').val(b);
                         $('#areaTarget .combo-select select').val(b);
                     }
@@ -326,68 +336,46 @@ var search_area_service = new Vue({
 
 
 function getFormJson(form) {      /*将表单对象变为json对象*/
-    var aa = $(form).serializeArray();
-    debugger;
+    var a = $(form).serializeArray();
+    var o={}
     if(form.selector=='#probesearch'){
-        var o = {};
-        var o1 = {};
-        var o2 = {};
-        var o3 = {};
-        var o4 = {};
-        var o5 = {};
-        var bName = "type";
-        var bValue = $("#city .option-selected")[0].dataset.value;
-        var cName="countyid";
-        var cValue=$('#country .option-selected')[0].dataset.value;
-        var dName="service_type";
-        var dValue=$('#service .option-selected')[0].dataset.value;
-        var eName="target_id";
-        var eValue=$('#target .option-selected')[0].dataset.value;
-        var fName="startDate";
-        var fValue=$('#start_date').val();
-        var gName="terminalDate";
-        var gValue=$('#terminal_date').val();
-        o.name = bName;
-        o1.name = cName;
-        o2.name = dName;
-        o3.name = eName;
-        o4.name = fName;
-        o5.name = gName;
-        o.value = bValue;
-        o1.value = cValue
-        o2.value = dValue;
-        o3.value = eValue;
-        o4.value = fValue;
-        o5.value = gValue;
-        var a=[o,o1,o2,o3,o4,o5];
+        if(citySelected!=0){
+            a[2]={};
+            a[2].name="city_id";
+            a[2].value=citySelected;
+        }
+        if(countrySelected!=0){
+            a[3]={};
+            a[3].name="country_id";
+            a[3].value=countrySelected;
+        }
+        if(serviceSelected!=0){
+            a[4]={};
+            a[4].name="service_type";
+            a[4].value=serviceSelected;
+        }
+        if(targetSelected!=0){
+            a[5]={};
+            a[5].name="target";
+            a[5].value=targetSelected;
+        }
+
     }else {
-        var o = {};
-        var o1 = {};
-        var o2 = {};
-        var o3 = {};
-        var o4 = {};
-        var o5 = {};
-        var bName = "type";
-        var bValue = $("#areaCity .option-selected")[0].dataset.value;
-        var dName="service_type";
-        var dValue=$('#area .option-selected')[0].dataset.value;
-        var eName="target_id";
-        var eValue=$('#areaTarget .option-selected')[0].dataset.value;
-        var fName="startDate";
-        var fValue=$('#areastart_date').val();
-        var gName="terminalDate";
-        var gValue=$('#areaterminal_date').val();
-        o.name = bName;
-        o2.name = dName;
-        o3.name = eName;
-        o4.name = fName;
-        o5.name = gName;
-        o.value = bValue;
-        o2.value = dValue;
-        o3.value = eValue;
-        o4.value = fValue;
-        o5.value = gValue;
-        var a=[o,o2,o3,o4,o5];
+        if(citySelected!=0){
+            a[2]={};
+            a[2].name="city_id";
+            a[2].value=citySelected;
+        }
+        if(area_Selected!=0){
+            a[3]={};
+            a[3].name="service_type";
+            a[3].value=area_Selected;
+        }
+        if(targetSelected!=0){
+            a[4]={};
+            a[4].name="target";
+            a[4].value=targetSelected;
+        }
     }
 
     $.each(a, function () {
@@ -478,7 +466,7 @@ var probetable = new Vue({
             vm.dtHandle.draw();
             /*重绘*/
         }
-},
+    },
     mounted: function() {
         let vm = this;
         // Instantiate the datatable and store the reference to the instance in our dtHandle element.
@@ -696,4 +684,149 @@ var areatable = new Vue({
     }
 });
 
+$(document).ready(function () {
+    $('#country .jq22').comboSelect();
+    $('#probe .jq22').comboSelect();
+    $('#target .jq22').comboSelect();
+    $('#areaTarget .jq22').comboSelect();
+    $.ajax({
+        type: "POST", /*GET会乱码*/
+        url: "../../cem/city/list",//c城市列表
+        cache: false,  //禁用缓存
+        dataType: "json",
+        success: function (result) {
+            var cities = [];
+            for (var i = 0; i < result.page.list.length; i++) {
+                cities[i] = {message: result.page.list[i]}
+            }
+            search_data.city = cities;
+            setTimeout(function () {
+                $('div#city .jq22').comboSelect();
+                $('.combo-dropdown').css("z-index","3");
+                $('div#city .option-item').click(function (city) {
+                    setTimeout(function () {
+                        var a = $(city.currentTarget)[0].innerText;
+                        clearArea(a);
+                        citySelected = $($(city.currentTarget)[0]).data('value');
+                        getArea(citySelected);
+                        $('div#city .combo-input').val(a);
+                        $('div#city .combo-select select').val(a);
+                    }, 30);
+                });
+                $('#city input[type=text] ').keyup(function (city) {
+                    if( city.keyCode=='13'){
+                        var b = $("#city .option-hover.option-selected").text();
+                        clearArea(b);
+                        var c=($("#city .option-hover.option-selected"));
+                        var c=c[0].dataset
+                        citySelected = c.value;
+                        getArea(citySelected);
+                        $('#city .combo-input').val(b);
+                        $('#city .combo-select select').val(b);
+                    }
 
+                })
+            }, 50);
+        }
+    });
+
+    function clearArea(a) {
+        if(a=="所有地市"){
+            $('#country .combo-input').val("所有区县");
+            $('#country .combo-select select').val("所有区县");
+            search_data.areas = [];
+            $('#country ul').html("");
+            $("#country ul").append("<li class='option-item option-hover option-selected' data-index=='0' data-value=''>"+"所有区县"+"</li>");
+        }
+    }
+    var serviceSelected=0;
+    $('#service .jq22').comboSelect();
+    $("#service input[type=text]").attr('placeholder',"---请选择---")
+    $('.combo-dropdown').css("z-index","3");
+    $('#service .option-item').click(function (service) {
+        var a = $(service.currentTarget)[0].innerText;
+        serviceSelected = $($(service.currentTarget)[0]).data('value');
+        setTimeout(function(){
+            $('#service .combo-input').val(a);
+        },20);
+
+        getService(serviceSelected);
+    });
+
+    $('#service input[type=text] ').keyup(function (service) {
+        if( service.keyCode=='13'){
+            var b = $("#service .option-hover.option-selected").text();
+            var c=($("#service .option-hover.option-selected"));
+            var c=c[0].dataset
+            serviceSelected = c.value;
+            getService(serviceSelected);
+            $('#service .combo-input').val(b);
+            $('#service .combo-select select').val(b);
+        }
+
+    });
+
+
+    $('#area .jq22').comboSelect();
+    $("#area input[type=text]").attr('placeholder',"---请选择---")
+    $('.combo-dropdown').css("z-index","3");
+    $('#area .option-item').click(function (area) {
+        var a = $(area.currentTarget)[0].innerText;
+        area_Selected = $($(area.currentTarget)[0]).data('value');
+        setTimeout(function(){
+            $('#area .combo-input').val(a);
+        },20);
+        getAreaService(area_Selected);
+    });
+
+    $('#area input[type=text] ').keyup(function (area) {
+        if( area.keyCode=='13'){
+            var b = $("#area .option-hover.option-selected").text();
+            area_Selected=$("#area .option-hover.option-selected")[0].dataset.value;
+            getAreaService(serviceSelected);
+            $('#area .combo-input').val(b);
+            $('#area .combo-select select').val(b);
+        }
+    });
+    //区域排名
+
+    citySelected=0;
+    $.ajax({
+        type: "POST", /*GET会乱码*/
+        url: "../../cem/city/list",//c城市列表
+        cache: false,  //禁用缓存
+        dataType: "json",
+        success: function (result) {
+            var cities = [];
+            for (var i = 0; i < result.page.list.length; i++) {
+                cities[i] = {message: result.page.list[i]}
+            }
+            search_data.city = cities;
+            setTimeout(function () {
+                $('div#areaCity .jq22').comboSelect();
+                $('.combo-dropdown').css("z-index","3");
+                $('div#areaCity .option-item').click(function (area) {
+                    setTimeout(function () {
+                        var a = $(area.currentTarget)[0].innerText;
+                        clearArea(a);
+                        citySelected = $($(area.currentTarget)[0]).data('value');
+                        $('div#areaCity .combo-input').val(a);
+                        $('div#areaCity .combo-select select').val(a);
+                    }, 50);
+                });
+                $('#areaCity input[type=text] ').keyup(function (area) {
+                    if( area.keyCode=='13'){
+                        var b = $("#areaCity .option-hover.option-selected").text();
+                        clearArea(b);
+                        var c=($("#areaCity .option-hover.option-selected"));
+                        var c=c[0].dataset
+                        citySelected = c.value;
+                        $('#areaCity .combo-input').val(b);
+                        $('#areaCity .combo-select select').val(b);
+                    }
+
+                })
+            }, 100);
+        }
+    });
+})

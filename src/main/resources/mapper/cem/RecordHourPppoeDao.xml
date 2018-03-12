@@ -24,6 +24,8 @@
 		<result property="areaName" column="area_name"/>
 		<result property="probeName" column="probe_name"/>
 		<result property="targetName" column="target_name"/>
+		<result property="fail" column="fail"/>
+		<result property="total" column="total"/>
     </resultMap>
 
 	<select id="queryObject" resultType="io.cem.modules.cem.entity.RecordHourPppoeEntity">
@@ -57,7 +59,9 @@
 		target.target_name AS target_name,
 		AVG(record_hour_pppoe.delay) AS delay,
 		AVG(record_hour_pppoe.drop_rate) AS drop_rate,
-		AVG(record_hour_pppoe.success_rate) AS success_rate
+		AVG(record_hour_pppoe.success_rate) AS success_rate,
+		SUM(record_hour_pppoe.fail) AS fail,
+		SUM(record_hour_pppoe.total) AS total
 		FROM record_hour_pppoe
 		LEFT JOIN city
 		ON record_hour_pppoe.city_id = city.city_id
@@ -92,7 +96,9 @@
 		target.target_name AS target_name,
 		AVG(pppoe.delay) AS delay,
 		AVG(pppoe.drop_rate) AS drop_rate,
-		AVG(pppoe.success_rate) AS success_rate
+		AVG(pppoe.success_rate) AS success_rate,
+		SUM(pppoe.fail) AS fail,
+		SUM(pppoe.total) AS total
 		FROM record_day_pppoe pppoe
 		LEFT JOIN city
 		ON pppoe.city_id = city.city_id

@@ -184,7 +184,9 @@ public class RecordHourGameServiceImpl implements RecordHourGameService {
 				finalScore.setServiceType(6);
 				finalScore.setTargetId(gameList.get(i).getTargetId());
 				finalScore.setTargetName(gameList.get(i).getTargetName());
-				finalScore.setScore(score);
+				finalScore.setFail(gameList.get(i).getFail());
+				finalScore.setTotal(gameList.get(i).getTotal());
+				finalScore.setScore(score*(1-(gameList.get(i).getFail()/gameList.get(i).getTotal())));
 				finalScore.setBase(Double.parseDouble(pros.getValue("gameweight")));
 				connectionScore.add(finalScore);
 				

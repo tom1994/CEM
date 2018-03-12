@@ -43,6 +43,25 @@ public class RecordDayRadiusEntity implements Serializable {
 	private Double successRate;
 	//备注
 	private String remark;
+	private Integer fail;
+
+	private Integer total;
+
+	public Integer getFail() {
+		return fail;
+	}
+
+	public void setFail(Integer fail) {
+		this.fail = fail;
+	}
+
+	public Integer getTotal() {
+		return total;
+	}
+
+	public void setTotal(Integer total) {
+		this.total = total;
+	}
 
 	/**
 	 * 设置：记录ID
