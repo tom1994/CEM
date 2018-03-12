@@ -1359,6 +1359,8 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 				scoreTarget.setRecordDate(pingIcmp.get(i).getRecordDate());
 				scoreTarget.setRecordTime(pingIcmp.get(i).getRecordTime());
 				scoreTarget.setAccessLayer(pingIcmp.get(i).getAccessLayer());
+				scoreTarget.setFail(pingIcmp.get(i).getFail());
+				scoreTarget.setTotal(pingIcmp.get(i).getTotal());
 				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
 				scoreBase.setScore((pingIcmp.get(i).getScore()) * (pingIcmp.get(i).getBase()));
 				scoreBase.setBase(pingIcmp.get(i).getBase());

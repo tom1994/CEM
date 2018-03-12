@@ -9,274 +9,853 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>质量评分</title>
     #parse("cemHeader.html")  <!--导入CSS和js文件-->
-    <link href="${rc.contextPath}/statics/css/formStyle.css" rel="stylesheet">  <!--自定义CSS-->
-   <!-- <link href="${rc.contextPath}/statics/css/components.min.css" rel="stylesheet">  -->
+
+    <script src="https://cdn.bootcss.com/vue/2.5.13/vue.js"></script>
+    <!--<script src="https://code.highcharts.com/highcharts.js"></script>-->
+    <script src="https://cdn.bootcss.com/highstock/6.0.3/highstock.js"></script>
+    <script>
+        $(function () {
+            $('#container').highcharts({
+                chart: {
+                    type: 'line',
+                    backgroundColor: 'rgba(0,0,0,0)'
+                },
+                title: {
+                    text: ''
+                },
+
+                xAxis: {
+                    labels: {
+                        rotation: 0//调节倾斜角度偏移
+                    },
+                    // categories: (function () {
+                    //     var arr = [];
+                    //     $.ajax({
+                    //         type: "post",
+                    //         async: false, //同步执行
+                    //         url: "",
+                    //         data: {configId: 'home_web_top'},
+                    //         dataType: "json", //返回数据形式为json
+                    //         success: function (result) {
+                    //             if (result) {
+                    //                 for (var i = 0; i < result.rows.length; i++) {
+                    //                     arr.push(result.rows[i].destname);
+                    //                 }
+                    //             }
+                    //         }
+                    //     })
+                    //     return arr;
+                    // })(),
+                    categories:['3月','4月','5月',"6月",'7月','8月','9月','10月',"11月",'12月'],
+                    crosshair: true
+                },
+                yAxis: {
+                    max: 100,
+                    min: 60,
+                    title: {
+                        text: ' '
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} Q</b></td></tr>',
+                    footerFormat: '</table>',
+                    shared: true,
+                    useHTML: true
+                },
+                plotOptions: {
+                    stickyTracking: false,
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    },
+                },
+                exporting: {
+                    enabled:false
+                },
+                series: [{
+                    name: '',
+                    // data: (function () {
+                    //     var arr = [];
+                    //     $.ajax({
+                    //         type: "post",
+                    //         async: false, //同步执行
+                    //         url: "",
+                    //         data: {configId: 'home_web_top'},
+                    //         dataType: "json", //返回数据形式为json
+                    //         success: function (result) {
+                    //             if (result) {
+                    //                 for (var i = 0; i < result.rows.length; i++) {
+                    //                     arr.push(parseFloat(result.rows[i].qoe));
+                    //                 }
+                    //             }
+                    //         }
+                    //     })
+                    //     return arr;
+                    // })()
+                    data:[65,88,79,84,96,75,86,66,99,76],
+                    showInLegend: false,
+
+
+                }]
+
+            });
+
+
+        });
+        $(function () {
+            $('#container2').highcharts({
+                chart: {
+                    type: 'line',
+                    backgroundColor: 'rgba(0,0,0,0)'
+                },
+                title: {
+                    text: ''
+                },
+
+                xAxis: {
+                    labels: {
+                        rotation: 0//调节倾斜角度偏移
+                    },
+                    // categories: (function () {
+                    //     var arr = [];
+                    //     $.ajax({
+                    //         type: "post",
+                    //         async: false, //同步执行
+                    //         url: "",
+                    //         data: {configId: 'home_web_top'},
+                    //         dataType: "json", //返回数据形式为json
+                    //         success: function (result) {
+                    //             if (result) {
+                    //                 for (var i = 0; i < result.rows.length; i++) {
+                    //                     arr.push(result.rows[i].destname);
+                    //                 }
+                    //             }
+                    //         }
+                    //     })
+                    //     return arr;
+                    // })(),
+                    categories:['3月','4月','5月',"6月",'7月','8月','9月','10月',"11月",'12月'],
+                    crosshair: true
+                },
+                yAxis: {
+                    max: 100,
+                    min: 60,
+                    title: {
+                        text: ' '
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} Q</b></td></tr>',
+                    footerFormat: '</table>',
+                    shared: true,
+                    useHTML: true
+                },
+                plotOptions: {
+                    stickyTracking: false,
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    },
+                },
+                exporting: {
+                    enabled:false
+                },
+                series: [{
+                    name: '',
+                    // data: (function () {
+                    //     var arr = [];
+                    //     $.ajax({
+                    //         type: "post",
+                    //         async: false, //同步执行
+                    //         url: "",
+                    //         data: {configId: 'home_web_top'},
+                    //         dataType: "json", //返回数据形式为json
+                    //         success: function (result) {
+                    //             if (result) {
+                    //                 for (var i = 0; i < result.rows.length; i++) {
+                    //                     arr.push(parseFloat(result.rows[i].qoe));
+                    //                 }
+                    //             }
+                    //         }
+                    //     })
+                    //     return arr;
+                    // })()
+                    data:[65,88,79,84,96,75,86,66,99,76],
+                    showInLegend: false,
+
+
+                }]
+
+            });
+
+
+        });
+        $(function () {
+            $('#container3').highcharts({
+                chart: {
+                    type: 'line',
+                    backgroundColor: 'rgba(0,0,0,0)'
+                },
+                title: {
+                    text: ''
+                },
+
+                xAxis: {
+                    labels: {
+                        rotation: 0//调节倾斜角度偏移
+                    },
+                    // categories: (function () {
+                    //     var arr = [];
+                    //     $.ajax({
+                    //         type: "post",
+                    //         async: false, //同步执行
+                    //         url: "",
+                    //         data: {configId: 'home_web_top'},
+                    //         dataType: "json", //返回数据形式为json
+                    //         success: function (result) {
+                    //             if (result) {
+                    //                 for (var i = 0; i < result.rows.length; i++) {
+                    //                     arr.push(result.rows[i].destname);
+                    //                 }
+                    //             }
+                    //         }
+                    //     })
+                    //     return arr;
+                    // })(),
+                    categories:['3月','4月','5月',"6月",'7月','8月','9月','10月',"11月",'12月'],
+                    crosshair: true
+                },
+                yAxis: {
+                    max: 100,
+                    min: 60,
+                    title: {
+                        text: ' '
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} Q</b></td></tr>',
+                    footerFormat: '</table>',
+                    shared: true,
+                    useHTML: true
+                },
+                plotOptions: {
+                    stickyTracking: false,
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    },
+                },
+                exporting: {
+                    enabled:false
+                },
+                series: [{
+                    name: '',
+                    // data: (function () {
+                    //     var arr = [];
+                    //     $.ajax({
+                    //         type: "post",
+                    //         async: false, //同步执行
+                    //         url: "",
+                    //         data: {configId: 'home_web_top'},
+                    //         dataType: "json", //返回数据形式为json
+                    //         success: function (result) {
+                    //             if (result) {
+                    //                 for (var i = 0; i < result.rows.length; i++) {
+                    //                     arr.push(parseFloat(result.rows[i].qoe));
+                    //                 }
+                    //             }
+                    //         }
+                    //     })
+                    //     return arr;
+                    // })()
+                    data:[65,88,79,84,96,75,86,66,99,76],
+                    showInLegend: false,
+
+
+                }]
+
+            });
+
+
+        });
+        $(function () {
+            $('#container4').highcharts({
+                chart: {
+                    type: 'line',
+                    backgroundColor: 'rgba(0,0,0,0)'
+                },
+                title: {
+                    text: ''
+                },
+
+                xAxis: {
+                    labels: {
+                        rotation: 0//调节倾斜角度偏移
+                    },
+                    // categories: (function () {
+                    //     var arr = [];
+                    //     $.ajax({
+                    //         type: "post",
+                    //         async: false, //同步执行
+                    //         url: "",
+                    //         data: {configId: 'home_web_top'},
+                    //         dataType: "json", //返回数据形式为json
+                    //         success: function (result) {
+                    //             if (result) {
+                    //                 for (var i = 0; i < result.rows.length; i++) {
+                    //                     arr.push(result.rows[i].destname);
+                    //                 }
+                    //             }
+                    //         }
+                    //     })
+                    //     return arr;
+                    // })(),
+                    categories:['3月','4月','5月',"6月",'7月','8月','9月','10月',"11月",'12月'],
+                    crosshair: true
+                },
+                yAxis: {
+                    max: 100,
+                    min: 60,
+                    title: {
+                        text: ' '
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} Q</b></td></tr>',
+                    footerFormat: '</table>',
+                    shared: true,
+                    useHTML: true
+                },
+                plotOptions: {
+                    stickyTracking: false,
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    },
+                },
+                exporting: {
+                    enabled:false
+                },
+                series: [{
+                    name: '',
+                    // data: (function () {
+                    //     var arr = [];
+                    //     $.ajax({
+                    //         type: "post",
+                    //         async: false, //同步执行
+                    //         url: "",
+                    //         data: {configId: 'home_web_top'},
+                    //         dataType: "json", //返回数据形式为json
+                    //         success: function (result) {
+                    //             if (result) {
+                    //                 for (var i = 0; i < result.rows.length; i++) {
+                    //                     arr.push(parseFloat(result.rows[i].qoe));
+                    //                 }
+                    //             }
+                    //         }
+                    //     })
+                    //     return arr;
+                    // })()
+                    data:[65,88,79,84,96,75,86,66,99,76],
+                    showInLegend: false,
+
+
+                }]
+
+            });
+
+
+        });
+        $(function () {
+            $('#container5').highcharts({
+                chart: {
+                    type: 'line',
+                    backgroundColor: 'rgba(0,0,0,0)'
+                },
+                title: {
+                    text: ''
+                },
+
+                xAxis: {
+                    labels: {
+                        rotation: 0//调节倾斜角度偏移
+                    },
+                    // categories: (function () {
+                    //     var arr = [];
+                    //     $.ajax({
+                    //         type: "post",
+                    //         async: false, //同步执行
+                    //         url: "",
+                    //         data: {configId: 'home_web_top'},
+                    //         dataType: "json", //返回数据形式为json
+                    //         success: function (result) {
+                    //             if (result) {
+                    //                 for (var i = 0; i < result.rows.length; i++) {
+                    //                     arr.push(result.rows[i].destname);
+                    //                 }
+                    //             }
+                    //         }
+                    //     })
+                    //     return arr;
+                    // })(),
+                    categories:['3月','4月','5月',"6月",'7月','8月','9月','10月',"11月",'12月'],
+                    crosshair: true
+                },
+                yAxis: {
+                    max: 100,
+                    min: 60,
+                    title: {
+                        text: ' '
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} Q</b></td></tr>',
+                    footerFormat: '</table>',
+                    shared: true,
+                    useHTML: true
+                },
+                plotOptions: {
+                    stickyTracking: false,
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    },
+                },
+                exporting: {
+                    enabled:false
+                },
+                series: [{
+                    name: '',
+                    // data: (function () {
+                    //     var arr = [];
+                    //     $.ajax({
+                    //         type: "post",
+                    //         async: false, //同步执行
+                    //         url: "",
+                    //         data: {configId: 'home_web_top'},
+                    //         dataType: "json", //返回数据形式为json
+                    //         success: function (result) {
+                    //             if (result) {
+                    //                 for (var i = 0; i < result.rows.length; i++) {
+                    //                     arr.push(parseFloat(result.rows[i].qoe));
+                    //                 }
+                    //             }
+                    //         }
+                    //     })
+                    //     return arr;
+                    // })()
+                    data:[65,88,79,84,96,75,86,66,99,76],
+                    showInLegend: false,
+
+
+                }]
+
+            });
+
+
+        });
+        $(function () {
+            $('#container6').highcharts({
+                chart: {
+                    type: 'line',
+                    backgroundColor: 'rgba(0,0,0,0)'
+                },
+                title: {
+                    text: ''
+                },
+
+                xAxis: {
+                    labels: {
+                        rotation: 0//调节倾斜角度偏移
+                    },
+                    // categories: (function () {
+                    //     var arr = [];
+                    //     $.ajax({
+                    //         type: "post",
+                    //         async: false, //同步执行
+                    //         url: "",
+                    //         data: {configId: 'home_web_top'},
+                    //         dataType: "json", //返回数据形式为json
+                    //         success: function (result) {
+                    //             if (result) {
+                    //                 for (var i = 0; i < result.rows.length; i++) {
+                    //                     arr.push(result.rows[i].destname);
+                    //                 }
+                    //             }
+                    //         }
+                    //     })
+                    //     return arr;
+                    // })(),
+                    categories:['3月','4月','5月',"6月",'7月','8月','9月','10月',"11月",'12月'],
+                    crosshair: true
+                },
+                yAxis: {
+                    max: 100,
+                    min: 60,
+                    title: {
+                        text: ' '
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} Q</b></td></tr>',
+                    footerFormat: '</table>',
+                    shared: true,
+                    useHTML: true
+                },
+                plotOptions: {
+                    stickyTracking: false,
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    },
+                },
+                exporting: {
+                    enabled:false
+                },
+                series: [{
+                    name: '',
+                    // data: (function () {
+                    //     var arr = [];
+                    //     $.ajax({
+                    //         type: "post",
+                    //         async: false, //同步执行
+                    //         url: "",
+                    //         data: {configId: 'home_web_top'},
+                    //         dataType: "json", //返回数据形式为json
+                    //         success: function (result) {
+                    //             if (result) {
+                    //                 for (var i = 0; i < result.rows.length; i++) {
+                    //                     arr.push(parseFloat(result.rows[i].qoe));
+                    //                 }
+                    //             }
+                    //         }
+                    //     })
+                    //     return arr;
+                    // })()
+                    data:[65,88,79,84,96,75,86,66,99,76],
+                    showInLegend: false,
+
+
+                }]
+
+            });
+
+
+        });
+    </script>
+    <style>
+        .left-up{
+            height: 150px;
+        }
+        p{
+            margin: 10px 0 10px;
+        }
+
+    </style>
 </head>
 
 <body>
-    <div class="wrapper wrapper-content">
-
-        <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-content" style="padding-bottom: 0 !important;">
-                        <div class="row" id="searchbox" style="border: none !important;">
-
-                            <form class="col-lg-9 col-md-19 col-sm-9 form-horizontal" id="probesearch"
-                                  role="form">
-                                <div class="form-group row">
-                                    <div class="input-group searchspan">
-                                        <span class="searchname" title="选择探针" style="width: 80px">选择探针：</span>
-                                    </div>
-
-                                    <div class="input-group searchspan">
-                                        <span class="searchname" title="地市" style="width: 40px">地市</span>
-                                        <select id="selectcity" class="form-control" name="city"
-                                                v-on:change="citychange()" style="width: 110px">
-                                            <option value="">---请选择---</option>
-                                            <option v-for="item in cities"
-                                                    v-bind:value="item.message.cityId">{{ item.message.cityName }}
-                                            </option>
-                                            <!--<option v-for="pitem in parray" v-bind:value="pitem.Id">{{ pitem.Name }}-->
-                                        </select>
-                                    </div>
-
-                                    <div class="input-group searchspan">
-                                        <span class="searchname" title="区县" style="width: 40px">区县</span>
-                                        <select id="selectarea" class="form-control " name="area"
-                                                v-on:change="areachange()" style="width: 110px">
-                                            <option value="">---请选择---</option>
-                                            <option v-for="item in areas"
-                                                    v-bind:value="item.message.countyId">{{ item.message.countyName }}
-                                            </option>
-                                        </select>
-                                    </div>
-                                    <div class="input-group searchspan">
-                                        <span class="searchname" title="探针" style="width: 40px">探针</span>
-                                        <select class="form-control " name="probe" style="width: 110px">
-                                            <option value="">---请选择---</option>
-                                            <option v-for="item in probe">{{ item.message.name }}</option>
-                                        </select>
-                                    </div>
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content" style="padding-bottom: 0 !important;">
+                    <div class="row" id="searchbox" style="border: none !important;">
+                        <form class="col-lg-9 col-md-19 col-sm-9 form-horizontal" id="probesearch"
+                              role="form">
+                            <div class="form-group row">
+                                <div class="input-group searchspan">
+                                    <span class="searchname" title="选择探针" style="width: 80px">选择探针：</span>
                                 </div>
 
-                                <div class="form-group row">
-                                    <div class="input-group searchspan">
-                                        <span class="searchname" title="时间" style="width: 80px">选择时间：</span>
-                                    </div>
-
-                                    <div class="input-group searchspan">
-                                        <span class="searchname" title="日期" style="width: 40px">起始</span>
-                                        <input type="text" id="start_date" class="form-control" name="startDate"
-                                               style="width: 140px"
-                                               value="">
-                                    </div>
-
-                                    <div class="input-group searchspan">
-                                        <span class="searchname" title="日期" style="width: 40px">结束</span>
-                                        <input type="text" id="terminal_date" class="form-control" name="terminalDate"
-                                               style="width: 140px"
-                                               value="">
-                                    </div>
+                                <div class="input-group searchspan">
+                                    <span class="searchname" title="地市" style="width: 40px">地市</span>
+                                    <select id="selectcity" class="form-control" name="city"
+                                            v-on:change="citychange()" style="width: 110px">
+                                        <option value="">---请选择---</option>
+                                        <option v-for="item in cities"
+                                                v-bind:value="item.message.cityId">{{ item.message.cityName }}
+                                        </option>
+                                        <!--<option v-for="pitem in parray" v-bind:value="pitem.Id">{{ pitem.Name }}-->
+                                    </select>
                                 </div>
 
-                            </form>
-
-
-                            <div class="col-lg-2 col-md-2 col-sm-2 pull-left" style="margin-top: 4px;" id="search">
-                                <button type="button" class="btn btn-sm btn-success"
-                                        style="margin-right: 5px"
-                                        v-on:click="testagentListsearch"><span
-                                        class="glyphicon glyphicon-zoom-in"></span>查询
-                                </button>
+                                <div class="input-group searchspan">
+                                    <span class="searchname" title="区县" style="width: 40px">区县</span>
+                                    <select id="selectarea" class="form-control " name="area"
+                                            v-on:change="areachange()" style="width: 110px">
+                                        <option value="">---请选择---</option>
+                                        <option v-for="item in areas"
+                                                v-bind:value="item.message.countyId">{{ item.message.countyName }}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="input-group searchspan">
+                                    <span class="searchname" title="探针" style="width: 40px">探针</span>
+                                    <select class="form-control " name="probe" style="width: 110px">
+                                        <option value="">---请选择---</option>
+                                        <option v-for="item in probe">{{ item.message.name }}</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <div class="row" id="test_table">
-            <div class="col-lg-12 col-md-12 col-sm-12">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title fontcolor" id="probehandle" style="padding-bottom: 0px !important;">
-                        <a href="../../cem/probe/download">
-                            <button type="button" class="btn btn-sm btn-success"><span
-                                    class="glyphicon glyphicon-open"></span>导出
+                            <div class="form-group row">
+                                <div class="input-group searchspan">
+                                    <span class="searchname" title="时间" style="width: 80px">选择时间：</span>
+                                </div>
+
+                                <div class="input-group searchspan">
+                                    <span class="searchname" title="日期" style="width: 40px">起始</span>
+                                    <input type="text" id="start_date" class="form-control" name="startDate"
+                                           style="width: 140px"
+                                           value="">
+                                </div>
+
+                                <div class="input-group searchspan">
+                                    <span class="searchname" title="日期" style="width: 40px">结束</span>
+                                    <input type="text" id="terminal_date" class="form-control" name="terminalDate"
+                                           style="width: 140px"
+                                           value="">
+                                </div>
+                            </div>
+
+                        </form>
+
+
+                        <div class="col-lg-2 col-md-2 col-sm-2 pull-left" style="margin-top: 4px;" id="search">
+                            <button type="button" class="btn btn-sm btn-success"
+                                    style="margin-right: 5px"
+                                    v-on:click="testagentListsearch"><span
+                                    class="glyphicon glyphicon-zoom-in"></span>查询
                             </button>
-                        </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="row" id="test_table">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title fontcolor" id="probehandle" style="padding-bottom: 0px !important;">
+                    <a href="../../cem/probe/download">
+                        <button type="button" class="btn btn-sm btn-success"><span
+                                class="glyphicon glyphicon-open"></span>导出
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-
-
-
-    <!--六大业务权重设置表单-->
-    <form id="weight_form">
-        <div class="wrapper wrapper-content">
-            <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12" style="padding-right: 30px;padding-left: 30px;">
-                    <div  class="wrapper-module">
-                        <div id="weightset">
-                            <!--网络连通性测试业务-->
-                            <div class="row">
-                                <div class="col-lg-6 col-md-6 col-sm-6">
-                                    <div class="wrapper-block wrapper_border">
-                                        <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
-                                            <span class="modulefont">网络连通性测试业务</span>
-                                            <div  class="tools">
-                                                <a href="#" onclick="connection_info();return false;" style="color:white">查看详情</a>
-                                            </div>
-                                        </div>
-
-                                        <div class="wrapper-block" style="font-size:15px !important">
-                                            <div class="row">
-                                                <div class="left-up">
-                                                    <div id="v-for-connection" class="col-lg-12 col-md-12 col-sm-12">
-                                                        <p>最高分：{{connection.max}}</p>
-                                                        <p>平均分：{{connection.average}}</p>
-                                                        <p>最低分：{{connection.min}}</p>
-                                                    </div>
-                                                </div>
-
-                                                <div class="right">
-                                                    <div class="col-lg-12 col-md-12 col-sm-12">
-                                                        <div class="col-lg-12 col-md-12 col-sm-12">
-                                                            <div id="container"
-                                                                 style="height: 100px; margin: 0 10px 0 0 "></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+<!--六大业务权重设置表单-->
+<form id="weight_form">
+    <div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12" style="padding-right: 30px;padding-left: 30px;">
+                <div  class="wrapper-module">
+                    <div id="weightset">
+                        <!--网络连通性测试业务-->
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="wrapper-block wrapper_border">
+                                    <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
+                                        <span class="modulefont">网络连通性测试业务</span>
+                                        <div  class="tools">
+                                            <a href="#" onclick="connection_info();return false;" style="color:white">查看详情</a>
                                         </div>
                                     </div>
-                                </div>
 
-                                <!--网络层质量测试业务-->
-                                <!--<div class="right">-->
-                                <div class="col-lg-6 col-md-6 col-sm-6">
-                                    <div class="wrapper-block wrapper_border">
-                                        <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
-                                            <span class="modulefont">网络层质量测试业务</span>
-                                            <div class="tools">
-                                                <a style="color:white">查看详情</a>
+                                    <div class="wrapper-block" style="font-size:15px !important">
+                                        <div class="row">
+                                            <div class="left-up" >
+                                                <div id="v-for-connection" class="col-lg-12 col-md-12 col-sm-12">
+                                                    <p>最高分：{{connection.max}}</p>
+                                                    <p>平均分：{{connection.average}}</p>
+                                                    <p>最低分：{{connection.min}}</p>
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        <div class="wrapper-block" style="font-size:15px !important">
-                                            <div class="row">
-                                                <div class="left-up">
-                                                    <div id="v-for-quality" class="col-lg-12 col-md-12 col-sm-12">
-                                                        <p>最高分：{{quality.max}}</p>
-                                                        <p>平均分：{{quality.average}}</p>
-                                                        <p>最低分：{{quality.min}}</p>
+                                            <div class="right">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <div id="container" style="height: 150px; margin: 0 10px 0 0 ">
+
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
 
-                            <!--文件下载类业务-->
-                            <div class="row">
-                                <div class="col-lg-6 col-md-6 col-sm-6">
-                                    <div class="wrapper-block wrapper_border">
-                                        <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
-                                            <span class="modulefont">文件下载类业务</span>
-                                            <div class="tools">
-                                                <a style="color:white">查看详情</a>
-                                            </div>
+                            <!--网络层质量测试业务-->
+                            <!--<div class="right">-->
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="wrapper-block wrapper_border">
+                                    <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
+                                        <span class="modulefont">网络层质量测试业务</span>
+                                        <div class="tools">
+                                            <a style="color:white">查看详情</a>
                                         </div>
+                                    </div>
 
-                                        <div class="wrapper-block" style="font-size:15px !important">
-                                            <div class="row">
-                                                <div class="left-up">
-                                                    <div id="v-for-download" class="col-lg-12 col-md-12 col-sm-12">
-                                                        <p>最高分：{{download.max}}</p>
-                                                        <p>平均分：{{download.average}}</p>
-                                                        <p>最低分：{{download.min}}</p>
+                                    <div class="wrapper-block" style="font-size:15px !important">
+                                        <div class="row">
+                                            <div class="left-up">
+                                                <div id="v-for-quality" class="col-lg-12 col-md-12 col-sm-12">
+                                                    <p>最高分：{{quality.max}}</p>
+                                                    <p>平均分：{{quality.average}}</p>
+                                                    <p>最低分：{{quality.min}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="right">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <div id="container2" style="height: 150px; margin: 0 10px 0 0 ">
+
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
+
                                 </div>
+                            </div>
+                        </div>
 
-                                <!--网页浏览类业务-->
-                                <div class="col-lg-6 col-md-6 col-sm-6">
-                                    <div class="wrapper-block wrapper_border">
-                                        <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
-                                            <span class="modulefont">网页浏览类业务</span>
-                                            <div class="tools">
-                                                <a style="color:white">查看详情</a>
-                                            </div>
+                        <!--文件下载类业务-->
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="wrapper-block wrapper_border">
+                                    <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
+                                        <span class="modulefont">文件下载类业务</span>
+                                        <div class="tools">
+                                            <a style="color:white">查看详情</a>
                                         </div>
+                                    </div>
+                                    <div class="wrapper-block" style="font-size:15px !important">
+                                        <div class="row">
+                                            <div class="left-up">
+                                                <div id="v-for-download" class="col-lg-12 col-md-12 col-sm-12">
+                                                    <p>最高分：{{download.max}}</p>
+                                                    <p>平均分：{{download.average}}</p>
+                                                    <p>最低分：{{download.min}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="right">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <div id="container3" style="height: 150px; margin: 0 10px 0 0 ">
 
-                                        <div class="wrapper-block" style="font-size:15px !important">
-                                            <div class="row">
-                                                <div class="left-up">
-                                                    <div id="v-for-page" class="col-lg-12 col-md-12 col-sm-12">
-                                                        <p>最高分：{{page.max}}</p>
-                                                        <p>平均分：{{page.average}}</p>
-                                                        <p>最低分：{{page.min}}</p>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
+
                                 </div>
                             </div>
 
-                            <!--在线视频类业务-->
-                            <div class="row">
-                                <div class="col-lg-6 col-md-6 col-sm-6">
-                                    <div class="wrapper-block wrapper_border">
-                                        <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
-                                            <span class="modulefont">在线视频类业务</span>
-                                            <div class="tools">
-                                                <a style="color:white">查看详情</a>
-                                            </div>
+                            <!--网页浏览类业务-->
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="wrapper-block wrapper_border">
+                                    <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
+                                        <span class="modulefont">网页浏览类业务</span>
+                                        <div class="tools">
+                                            <a style="color:white">查看详情</a>
                                         </div>
+                                    </div>
 
-                                        <div class="wrapper-block" style="font-size:15px !important">
-                                            <div class="row">
-                                                <div class="left-up">
-                                                    <div id="v-for-video" class="col-lg-12 col-md-12 col-sm-12">
-                                                        <p>最高分：{{video.max}}</p>
-                                                        <p>平均分：{{video.average}}</p>
-                                                        <p>最低分：{{video.min}}</p>
+                                    <div class="wrapper-block" style="font-size:15px !important">
+                                        <div class="row">
+                                            <div class="left-up">
+                                                <div id="v-for-page" class="col-lg-12 col-md-12 col-sm-12">
+                                                    <p>最高分：{{page.max}}</p>
+                                                    <p>平均分：{{page.average}}</p>
+                                                    <p>最低分：{{page.min}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="right">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <div id="container4" style="height: 150px; margin: 0 10px 0 0 ">
+
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
-                                </div>
 
-                                <!--网络游戏类业务-->
-                                <div class="col-lg-6 col-md-6 col-sm-6">
-                                    <div class="wrapper-block wrapper_border">
-                                        <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
-                                            <span class="modulefont">网络游戏类业务</span>
-                                            <div class="tools">
-                                                <a style="color:white">查看详情</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--在线视频类业务-->
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="wrapper-block wrapper_border">
+                                    <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
+                                        <span class="modulefont">在线视频类业务</span>
+                                        <div class="tools">
+                                            <a style="color:white">查看详情</a>
+                                        </div>
+                                    </div>
+
+                                    <div class="wrapper-block" style="font-size:15px !important">
+                                        <div class="row">
+                                            <div class="left-up">
+                                                <div id="v-for-video" class="col-lg-12 col-md-12 col-sm-12">
+                                                    <p>最高分：{{video.max}}</p>
+                                                    <p>平均分：{{video.average}}</p>
+                                                    <p>最低分：{{video.min}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="right">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <div id="container5" style="height: 150px; margin: 0 10px 0 0 ">
+
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
+                                    </div>
 
-                                        <div class="wrapper-block" style="font-size:15px !important">
-                                            <div class="row">
-                                                <div class="left-up">
-                                                    <div id="v-for-game" class="col-lg-12 col-md-12 col-sm-12">
-                                                        <p>最高分：{{game.max}}</p>
-                                                        <p>平均分：{{game.average}}</p>
-                                                        <p>最低分：{{game.min}}</p>
+                                </div>
+                            </div>
+
+                            <!--网络游戏类业务-->
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="wrapper-block wrapper_border">
+                                    <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
+                                        <span class="modulefont">网络游戏类业务</span>
+                                        <div class="tools">
+                                            <a style="color:white">查看详情</a>
+                                        </div>
+                                    </div>
+
+                                    <div class="wrapper-block" style="font-size:15px !important">
+                                        <div class="row">
+                                            <div class="left-up">
+                                                <div id="v-for-game" class="col-lg-12 col-md-12 col-sm-12">
+                                                    <p>最高分：{{game.max}}</p>
+                                                    <p>平均分：{{game.average}}</p>
+                                                    <p>最低分：{{game.min}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="right">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <div id="container6" style="height: 150px; margin: 0 10px 0 0 ">
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -289,7 +868,8 @@
                 </div>
             </div>
         </div>
-    </form>
+    </div>
+</form>
 
 <!-- 无效时间提醒模态框（Modal） -->
 <div class="modal fade" id="nonavailable_time" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -321,41 +901,43 @@
     </div><!-- /.modal -->
 </div>
 
-    <!--显示详情模态框-->
-    <div class="modal fade" id="myModal_dispatch" tabindex="-1" role="dialog"
-         aria-labelledby="myModalLabel" aria-hidden="" true>
-        <div class="modal-dialog" style="width: 1000px">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                        &times;
-                    </button>
-                    <h3 class="modal-title">
-                        网络连通性测试详情
-                    </h3>
+<!--显示详情模态框-->
+<div class="modal fade" id="myModal_dispatch" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="" true>
+    <div class="modal-dialog" style="width: 1000px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h3 class="modal-title">
+                    网络连通性测试详情
+                </h3>
+            </div>
+            <div class="ibox-title" style="margin-bottom: 5px">
+                <h4>PING(ICMP、UDP、TCP)测试结果详情</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row " style="overflow-x: auto">     <!--表格 verflow-x: scroll超出滚动-->
+                    <table class="table table-bordered " id="ping_table"></table>
                 </div>
-                <div class="ibox-title" style="margin-bottom: 5px">
-                    <h4>PING(ICMP、UDP、TCP)测试结果详情</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row " style="overflow-x: auto">     <!--表格 verflow-x: scroll超出滚动-->
-                        <table class="table table-bordered " id="ping_table"></table>
-                    </div>
-                </div>
-                <div class="ibox-title" style="margin-bottom: 5px">
-                    <h4>Trace Route(ICMP、UDP)测试结果详情</h4>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">返回
-                    </button>
-                    <!--<button type="button" class="btn btn-success" v-on:click="">-->
-                    <!--确定-->
-                    <!--</button>-->
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal -->
-    </div>
+            </div>
+            <div class="ibox-title" style="margin-bottom: 5px">
+                <h4>Trace Route(ICMP、UDP)测试结果详情</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">返回
+                </button>
+                <!--<button type="button" class="btn btn-success" v-on:click="">-->
+                <!--确定-->
+                <!--</button>-->
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+
 
 
 
@@ -367,7 +949,7 @@
         src="${rc.contextPath}/statics/js/modules/evaluation/evaTotal.js?_${date.systemTime}"></script>
 
 
-    <script>
+<script>
     $('#start_date').flatpickr({
         enableTime: true,
         dateFormat: "Y-m-d H:i",
@@ -382,20 +964,5 @@
         time_24hr: true
     });
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </body>
 </html>
