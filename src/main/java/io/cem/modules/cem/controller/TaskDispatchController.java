@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.qiniu.util.Json;
 import io.cem.common.exception.RRException;
@@ -77,20 +78,15 @@ public class TaskDispatchController {
             map.put("limit", limit);
             total = taskDispatchService.queryDispatchTotal(id);
         }
-
         List<TaskDispatchEntity> dispatchList = taskDispatchService.queryDispatchList(map);
-        for (int i = 0; i < dispatchList.size(); i++) {
-            String target = dispatchList.get(i).getTarget();
-            target.split("},\\{");
+        dispatchList = taskDispatchService.transformTarget(dispatchList);
 
-        }
         //        String[] targetList = new String[dispatchList.size()];
 //        for (int i = 0; i < dispatchList.size(); i++) {
 //            targetList[i] = dispatchList.get(i).getTarget();
 //            String targetName = taskDispatchService.queryTargetBatch(targetList[i].split(",|\""));
 //            dispatchList.get(i).setTargetName(targetName);
 //        }
-
         PageUtils pageUtil = new PageUtils(dispatchList, total, limit, page);
         return R.ok().put("page", pageUtil);
     }
@@ -116,12 +112,7 @@ public class TaskDispatchController {
         }
 
         List<TaskDispatchEntity> dispatchList = taskDispatchService.taskQueryDispatchList(map);
-//        String[] targetList = new String[dispatchList.size()];
-//        for (int i = 0; i < dispatchList.size(); i++) {
-//            targetList[i] = dispatchList.get(i).getTarget();
-//            String targetName = taskDispatchService.queryTargetBatch(targetList[i].split(",|\""));
-//            dispatchList.get(i).setTargetName(targetName);
-//        }
+        dispatchList = taskDispatchService.transformTarget(dispatchList);
         PageUtils pageUtil = new PageUtils(dispatchList, total, limit, page);
         return R.ok().put("page", pageUtil);
     }
@@ -249,13 +240,13 @@ public class TaskDispatchController {
         if (map.containsKey("ping")) {
             int[] pingState = new int[5];
             for (int i = 1; i < 6; i++) {
-                pingState[i-1] = BypassHttps.sendRequestIgnoreSSL("POST", "https://114.236.91.16:23456/web/v1/tasks/" + i);
+                pingState[i - 1] = BypassHttps.sendRequestIgnoreSSL("POST", "https://114.236.91.16:23456/web/v1/tasks/" + i);
             }
         }
         if (map.containsKey("sla")) {
             int[] slaState = new int[6];
             for (int i = 10; i < 16; i++) {
-                slaState[i-10] = BypassHttps.sendRequestIgnoreSSL("POST", "https://114.236.91.16:23456/web/v1/tasks/" + i);
+                slaState[i - 10] = BypassHttps.sendRequestIgnoreSSL("POST", "https://114.236.91.16:23456/web/v1/tasks/" + i);
             }
         }
         if (map.containsKey("web")) {
@@ -264,7 +255,7 @@ public class TaskDispatchController {
         if (map.containsKey("download")) {
             int[] downloadState = new int[3];
             for (int i = 30; i < 33; i++) {
-                downloadState[i-30] = BypassHttps.sendRequestIgnoreSSL("POST", "https://114.236.91.16:23456/web/v1/tasks/" + i);
+                downloadState[i - 30] = BypassHttps.sendRequestIgnoreSSL("POST", "https://114.236.91.16:23456/web/v1/tasks/" + i);
             }
         }
         if (map.containsKey("video")) {

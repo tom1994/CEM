@@ -126,7 +126,6 @@ var getProbeCity = function (cityid) {
                         setTimeout(function () {
                             var a = $(probe.currentTarget)[0].innerText;
                             probeSelected = $($(probe.currentTarget)[0]).data('value');
-                            debugger
                             $('#probe .combo-input').val(a);
                             $('#probe .combo-select select').val(a);
                         }, 30);
@@ -172,7 +171,6 @@ function clearArea(a) {
                         setTimeout(function () {
                             var a = $(probe.currentTarget)[0].innerText;
                             probeSelected = $($(probe.currentTarget)[0]).data('value');
-                            debugger
                             $('#probe .combo-input').val(a);
                             $('#probe .combo-select select').val(a);
                         }, 30);
@@ -210,7 +208,6 @@ function clearArea(a) {
                         setTimeout(function () {
                             var a = $(probe.currentTarget)[0].innerText;
                             probeSelected = $($(probe.currentTarget)[0]).data('value');
-                            debugger;
                             $('#probe .combo-input').val(a);
                             $('#probe .combo-select select').val(a);
                         }, 30);
@@ -297,7 +294,6 @@ $(document).ready(function () {
                     setTimeout(function () {
                         var a = $(probe.currentTarget)[0].innerText;
                         probeSelected = $($(probe.currentTarget)[0]).data('value');
-                        debugger;
                         $('#probe .combo-input').val(a);
                         $('#probe .combo-select select').val(a);
                     }, 30);
@@ -382,7 +378,6 @@ var resultdata_handle = new Vue({
                         setTimeout(function () {
                             var a = $(probe.currentTarget)[0].innerText;
                             probeSelected = $($(probe.currentTarget)[0]).data('value');
-                            debugger;
                             $('#probe .combo-input').val(a);
                             $('#probe .combo-select select').val(a);
                         }, 30);
@@ -434,7 +429,6 @@ var search_data = new Vue({
             recordtag = recordtype.get(this.servicetype);
             $("#" + recordtag + "_record ").removeClass("service_unselected");
             var data = getFormJson($('#resultsearch .selectdata'));
-            debugger;
             /*得到查询条件*/
             /*获取表单元素的值*/
             var starttemp = data.start_time;
@@ -703,7 +697,6 @@ var getTarget = function (serviceId) {
                     if( target.keyCode=='13'){
                         var b = $("#target .option-hover.option-selected").text().trim();
                         targetSelected=$("#target .option-hover.option-selected")[0].dataset.value;
-                        debugger;
                         $('#target .combo-input').val(b);
                         $('#target .combo-select select').val(b);
                     }

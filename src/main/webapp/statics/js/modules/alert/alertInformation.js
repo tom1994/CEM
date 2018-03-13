@@ -14,6 +14,67 @@ var tus = new Map();//tus字典，可通过get方法查对应字符串。
 tus.set(0, "未处理");
 tus.set(1, "已处理");
 
+var TypeSelected=0;
+var LevelSelected=0;
+var StatusSeleted=0;
+$(document).ready(function () {
+    $('#Selecttype1 .jq22').comboSelect()
+    $('.combo-dropdown').css("z-index","3");
+    $('#Selecttype1 .option-item').click(function (type) {
+        var a = $(type.currentTarget)[0].innerText;
+        TypeSelected = $($(type.currentTarget)[0]).data('value');
+        setTimeout(function(){
+            $('#Selecttype1 .combo-input').val(a);
+        },20)
+    });
+
+    $('#Selecttype1 input[type=text] ').keyup(function (type) {
+        if( type.keyCode=='13'){
+            var b = $("#Selecttype1 .option-hover.option-selected").text();
+            TypeSelected=$("#Selecttype1 .option-hover.option-selected")[0].dataset.value;
+            $('#Selecttype1 .combo-input').val(b);
+            $('#Selecttype1 .combo-select select').val(b);
+        }
+    });
+
+    $('#selectlevel1 .jq22').comboSelect();
+    $('.combo-dropdown').css("z-index","3");
+    $('#selectlevel1 .option-item').click(function (level) {
+        var a = $(level.currentTarget)[0].innerText;
+        LevelSelected = $($(level.currentTarget)[0]).data('value');
+        $('#selectlevel1 .combo-input').val(a);
+        setTimeout(function(){
+            $('#selectlevel1 .combo-input').val(a);
+        },20)
+    });
+    $('#selectlevel1 input[type=text] ').keyup(function (level) {
+        if( level.keyCode=='13'){
+            var b = $("#selectlevel1 .option-hover.option-selected").text();
+            LevelSelected=$("#selectlevel1 .option-hover.option-selected")[0].dataset.value;
+            $('#selectlevel1 .combo-input').val(b);
+            $('#selectlevel1 .combo-select select').val(b);
+        }
+    });
+
+    $('#selectstatus1 .jq22').comboSelect();
+    $('.combo-dropdown').css("z-index","3");
+    $('#selectstatus1 .option-item').click(function (status) {
+        var a = $(status.currentTarget)[0].innerText;
+        StatusSeleted = $($(status.currentTarget)[0]).data('value');
+        setTimeout(function(){
+            $('#selectstatus1 .combo-input').val(a);
+        },20)
+    });
+    $('#selectstatus1 input[type=text] ').keyup(function (status) {
+        if( status.keyCode=='13'){
+            var b = $("#selectstatus1 .option-hover.option-selected").text();
+            StatusSelected=$("#selectstatus1 .option-hover.option-selected")[0].dataset.value;
+            $('#selectstatus1 .combo-input').val(b);
+            $('#selectstatus1 .combo-select select').val(b);
+        }
+    });
+    $('.combo-select  input[type=text]').css('height','28px')
+})
 var search_service = new Vue({
     el: '#search',
     data: {
@@ -25,6 +86,7 @@ var search_service = new Vue({
     methods: {
         testagentListsearch: function () {
             var searchJson = getFormJson($('#probesearch'));
+             
             if((searchJson.startDate)>(searchJson.terminalDate)){
                 console.log("时间选择有误，请重新选择！");
                 $('#nonavailable_time').modal('show');
@@ -44,6 +106,22 @@ var search_service = new Vue({
 function getFormJson(form) {      /*将表单对象变为json对象*/
     var o = {};
     var a = $(form).serializeArray();
+
+    if(TypeSelected!=0){
+        a[2]={}
+        a[2].name='type'
+        a[2].value=TypeSelected
+    }
+    if(LevelSelected!=0){
+        a[3]={}
+        a[3].name='level'
+        a[3].value=LevelSelected
+    }
+    if(StatusSeleted!=0){
+        a[4]={}
+        a[4].name='status'
+        a[4].value=StatusSeleted
+    }
     $.each(a, function () {
         if (o[this.name] !== undefined) {
             if (!o[this.name].push) {

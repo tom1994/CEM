@@ -471,6 +471,7 @@ function submit_dispatch() {
     console.log(a, b);
     var probeList = getFormJson2($('#dispatch_probe'));
     var targetList = getFormJson2($('#dispatch_target'));
+    console.log(probeList);
     if (a == 1) {
         var taskDispatch = {};
         taskDispatch.probePort = "port1";
@@ -528,18 +529,17 @@ function submit_dispatch() {
             // invocation.setRequestHeader("Authorization","Bearer 8dd1cac5-7e95-4611-ac31-fc66d94eaefa");
             // //invocation.onreadystatechange = handler;
             // invocation.send();
-            $.ajax({
-                type: "POST", /*GET会乱码*/
-                url: "https://114.236.91.16:23456/web/v1/tasks/" + targetList.taskId,
-                WebSecurityDisabled: true,
-                headers: {
-                    "Authorization": "Bearer 8dd1cac5-7e95-4611-ac31-fc66d94eaefa"
-                },
-                success: function (result) {
-                    console.log(result);
-                }
-            });
-
+            // $.ajax({
+            //     type: "POST", /*GET会乱码*/
+            //     url: "https://114.236.91.16:23456/web/v1/tasks/" + targetList.taskId,
+            //     WebSecurityDisabled: true,
+            //     headers: {
+            //         "Authorization": "Bearer 8dd1cac5-7e95-4611-ac31-fc66d94eaefa"
+            //     },
+            //     success: function (result) {
+            //         console.log(result);
+            //     }
+            // });
         }
 
     } else if (a == 0) {
@@ -589,17 +589,17 @@ function submit_dispatch() {
                     task_table.currReset();
                 }
             });
-            $.ajax({
-                type: "POST", /*GET会乱码*/
-                url: "https://127.0.0.1:23456/web/v1/tasks/" + targetList.taskid,
-                cache: false,  //禁用缓存
-                headers: {
-                    Authorization: "Bearer 6b7544ae-63d3-4db6-9cc8-1dc95a991d50"
-                },
-                success: function (result) {
-                    console.log(result);
-                }
-            });
+            // $.ajax({
+            //     type: "POST", /*GET会乱码*/
+            //     url: "https://127.0.0.1:23456/web/v1/tasks/" + targetList.taskid,
+            //     cache: false,  //禁用缓存
+            //     headers: {
+            //         Authorization: "Bearer 6b7544ae-63d3-4db6-9cc8-1dc95a991d50"
+            //     },
+            //     success: function (result) {
+            //         console.log(result);
+            //     }
+            // });
         }
 
     }
@@ -916,8 +916,11 @@ function getFormJson2(form) {      /*将表单对象变为json对象*/
             //     a[i].value =parseInt(a[i].value);
             //
             // }
-
-            switch (a[i].value) {
+            switch (a[i].name) {
+                case "probeId":
+                    a[i].value = parseInt(a[i].value);
+                case "targetId":
+                    a[i].value = parseInt(a[i].value);
                 case "times":
                     a[i].value = parseInt(a[i].value);
                 case "interval":
@@ -928,7 +931,6 @@ function getFormJson2(form) {      /*将表单对象变为json对象*/
                     a[i].value = parseInt(a[i].value);
                 case "domains":
                     a[i].value = JSON.parse(a[i].value);
-
             }
         }
 
@@ -980,7 +982,6 @@ $(document).ready(function () {
                 $(this).prop("checked", false);
                 $(this).closest('tr').removeClass('selected');
                 /*取得最近的tr元素*/
-
             })
         }
     })
@@ -1128,7 +1129,7 @@ var dispatch_table = new Vue({
             {title: '<div style="width:77px">探针名称</div>'},
             {title: '<div style="width:78px">位置</div>'},
             {title: '<div style="width:57px">层级</div>'},
-            // {title: '<div style="width:160px">测试目标</div>'},
+            {title: '<div style="width:160px">测试目标</div>'},
             {title: '<div style="width:67px">操作</div>'}
         ],
         rows: [],
@@ -1219,7 +1220,7 @@ var dispatch_table = new Vue({
                             row.push(item.probeName);
                             row.push('<span title="' + item.location + '" style="white-space: nowrap">' + (item.location).substr(0, 10) + '</span>');
                             row.push(item.layerName);
-                            // row.push('<span title="' + item.targetName + '" style="white-space: nowrap">' + (item.targetName).substr(0, 25) + '</span>');
+                            row.push('<span title="' + item.target + '" style="white-space: nowrap">' + (item.target).substr(0, 25) + '</span>');
                             // row.push(item.targetName);
                             row.push('<a class="fontcolor" onclick="cancel_task(this)" id=' + item.id + '>取消任务</a>');
                             rows.push(row);

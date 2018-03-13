@@ -84,7 +84,7 @@
                                     <span class="searchname" title="告警类型" style="width:80px; text-align: center">告警类型</span>
                                     <div class="input-group searchspan" id="Selecttype1" style="top: -10px;">
                                     <div class="jq22">
-                                        <select id="selecttype" class="form-control" name="type" style="display: none">
+                                        <select id="selecttype" class="form-control" style="display: none">
                                             <option value="">所有类型</option>
                                             <option value="1">离线告警</option>
                                             <option value="2">性能告警</option>
@@ -98,7 +98,7 @@
                                     <span class="searchname search left" title="告警级别" style="width: 80px;margin-left: 61px">告警级别</span>
                                     <div class="input-group searchspan" id="selectlevel1" style="top: -10px;">
                                         <div class="jq22">
-                                            <select id="selectlevel" class="form-control" name="level" style="display: none">
+                                            <select id="selectlevel" class="form-control"  style="display: none">
                                                 <option value="">所有级别</option>
                                                 <option value="1">严重</option>
                                                 <option value="2">一般</option>
@@ -110,7 +110,7 @@
                                     <span class="searchname search left" title="告警状态" style="width: 80px;text-align: center">告警状态</span>
                                     <div class="input-group searchspan" id="selectstatus1" style="top: -10px;">
                                         <div class="jq22">
-                                            <select id="selectstatus" class="form-control" name="level" style="display: none">
+                                            <select id="selectstatus" class="form-control"  style="display: none">
                                                 <option value="">所有状态</option>
                                                 <option value="0">未处理</option>
                                                 <option value="1">已处理</option>
@@ -305,65 +305,7 @@
 <script type="text/javascript"
         src="${rc.contextPath}/statics/js/modules/alert/alertInformation.js?_${date.systemTime}"></script>
 <script type="text/javascript">
-    var TypeSelected=0;
-    var LevelSelected=0;
-    var StatusSeleted=0;
-$('#Selecttype1 .jq22').comboSelect()
-$('.combo-dropdown').css("z-index","3");
-$('#Selecttype1 .option-item').click(function (type) {
-        var a = $(type.currentTarget)[0].innerText;
-        TypeSelected = $($(type.currentTarget)[0]).data('value');
-    setTimeout(function(){
-        $('#Selecttype1 .combo-input').val(a);
-    },20)
-});
 
-$('#Selecttype1 input[type=text] ').keyup(function (type) {
-    if( type.keyCode=='13'){
-        var b = $("#Selecttype1 .option-hover.option-selected").text();
-        TypeSelected = $($(type.currentTarget)[0]).data('value');
-        $('#Selecttype1 .combo-input').val(b);
-        $('#Selecttype1 .combo-select select').val(b);
-    }
-});
-
-    $('#selectlevel1 .jq22').comboSelect();
-    $('.combo-dropdown').css("z-index","3");
-    $('#selectlevel1 .option-item').click(function (level) {
-        var a = $(level.currentTarget)[0].innerText;
-        LevelSelected = $($(level.currentTarget)[0]).data('value');
-        $('#selectlevel1 .combo-input').val(a);
-        setTimeout(function(){
-            $('#selectlevel1 .combo-input').val(a);
-        },20)
-    });
-    $('#selectlevel1 input[type=text] ').keyup(function (level) {
-        if( level.keyCode=='13'){
-            var b = $("#selectlevel1 .option-hover.option-selected").text();
-            LevelSelected = $($(level.currentTarget)[0]).data('value');
-            $('#selectlevel1 .combo-input').val(b);
-            $('#selectlevel1 .combo-select select').val(b);
-        }
-    });
-
-    $('#selectstatus1 .jq22').comboSelect();
-    $('.combo-dropdown').css("z-index","3");
-    $('#selectstatus1 .option-item').click(function (status) {
-        var a = $(status.currentTarget)[0].innerText;
-        StatusSeleted = $($(status.currentTarget)[0]).data('value');
-        setTimeout(function(){
-            $('#selectstatus1 .combo-input').val(a);
-        },20)
-    });
-    $('#selectstatus1 input[type=text] ').keyup(function (status) {
-        if( status.keyCode=='13'){
-            var b = $("#selectstatus1 .option-hover.option-selected").text();
-            StatusSeleted = $($(status.currentTarget)[0]).data('value');
-            $('#selectstatus1 .combo-input').val(b);
-            $('#selectstatus1 .combo-select select').val(b);
-        }
-    });
-    $('.combo-select  input[type=text]').css('height','28px')
 </script>
 </body>
 </html>

@@ -88,7 +88,7 @@
                                             <span class="searchname" title="地市" style="width:40px; text-align: center">地市</span>
                                             <div class="input-group searchspan" id="city" >
                                                 <div class="jq22">
-                                                    <select id="selectcity" class="form-control" name="type"  v-on:change="citychange()" style="display: none">
+                                                    <select id="selectcity" class="form-control"   v-on:change="citychange()" style="display: none">
                                                         <option value="">所有地市</option>
                                                         <option v-for="item in cities"
                                                                 v-bind:value="item.message.cityId">{{ item.message.cityName }}
@@ -101,7 +101,7 @@
                                             <span class="searchname search left" title="区县" style="width: 60px;margin-left: 61px">区县</span>
                                             <div class="input-group searchspan" id="country">
                                                 <div class="jq22">
-                                                    <select id="selectarea" class="form-control" name="countyid"  v-on:change="areachange()" style="display: none">
+                                                    <select id="selectarea" class="form-control"   v-on:change="areachange()" style="display: none">
                                                         <option value="">所有区县</option>
                                                         <option v-for="item in areas"
                                                                 v-bind:value="item.message.countyId">{{item.message.countyName}}
@@ -114,7 +114,7 @@
                                             <span class="searchname search left" title="探针" style="width: 60px;margin-left: 68px">探针</span>
                                             <div class="input-group searchspan" id="probe" >
                                                 <div class="jq22">
-                                                    <select id="selectprobe" class="form-control" name="probeid"  style="display: none">
+                                                    <select id="selectprobe" class="form-control"   style="display: none">
                                                         <option value="">所有探针</option>
                                                         <option v-for="item in probe" v-bind:value="item.message.id">{{ item.message.name}}</option>
                                                     </select>
@@ -124,12 +124,11 @@
 
                                     </div>
                                     <div class="form-group row" style="margin-bottom: -5px">
-
                                         <div style="display:inline-block;">
                                             <span class="searchname" title="目标" style="width:40px; text-align: center;line-height: 14px">目标</span>
                                             <div class="input-group searchspan" id="target" style="top: -10px;">
                                                 <div class="jq22">
-                                                    <select id="select_target" class="form-control" name="type"  v-on:change="citychange()" style="display: none">
+                                                    <select id="select_target" class="form-control"    style="display: none">
                                                         <option value="">所有目标地址</option>
                                                         <option v-for="item in target"
                                                                 v-bind:value="item.message.targetId">{{item.message.targetName}}

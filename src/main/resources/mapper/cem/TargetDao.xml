@@ -102,6 +102,14 @@
         </if>
     </select>
 
+    <!--用于任务管理里批量查询探针名-->
+    <select id="queryTargetNames" resultType="io.cem.modules.cem.entity.TargetEntity">
+        SELECT target_name from target where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
     <insert id="save" parameterType="io.cem.modules.cem.entity.TargetEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into target
 		(

@@ -32,6 +32,12 @@ public class TargetServiceImpl implements TargetService {
 	}
 
 	@Override
+	public List<TargetEntity> queryTargetNames(int[] ids){
+		return targetDao.queryTargetNames(ids);
+	}
+
+
+	@Override
 	public List<TargetEntity> queryTgByTList(Map<String, Object> map) {
 		return targetDao.queryTgByTList(map);
 	}
