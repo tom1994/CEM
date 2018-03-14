@@ -18,6 +18,8 @@ public interface TaskDispatchService {
 
 	List<TaskDispatchEntity> taskQueryDispatchList(Map<String, Object> map);
 
+	List<TaskDispatchEntity> transformTarget(List<TaskDispatchEntity> taskDispatchEntities);
+
 	int saveAndReturn(TaskDispatchEntity taskDispatch);
 
 	int queryTestStatus(Integer[] id);

@@ -134,12 +134,7 @@
 		concat('从',floor(time_format(record_time, '%H')/#{interval})*#{interval},'点至',floor(time_format(record_time,
 		'%H')/#{interval})*#{interval}+#{interval},'点') AS record_time,
 		round(AVG(rhp.delay),2) AS delay,
-		round(AVG(rhp.delay_std),2) AS delay_std,
-		round(AVG(rhp.delay_var),2) AS delay_var,
-		round(AVG(rhp.jitter),2) AS jitter,
-		round(AVG(rhp.jitter_std),2) AS jitter_std,
-		round(AVG(rhp.jitter_var),2) AS jitter_var,
-		round(AVG(rhp.loss_rate),2) AS loss_rate,
+		round(AVG(rhp.success_rate),2) AS success_rate,
 		d.data_name AS servicetype_name
 		FROM record_hour_dns rhp
 		INNER JOIN probe
@@ -183,12 +178,6 @@
 		select
 		rhp.id,rhp.probe_id,rhp.port,rhp.task_id,rhp.service_type,rhp.target_id,rhp.target_ip,rhp.record_date,rhp.remark,
 		floor(time_format(record_time, '%H')/#{interval}) AS rt,AVG(rhp.delay) AS delay,
-		AVG(rhp.delay_std) AS delay_std,
-		AVG(rhp.delay_var) AS delay_var,
-		AVG(rhp.jitter) AS jitter,
-		AVG(rhp.jitter_std) AS jitter_std,
-		AVG(rhp.jitter_var) AS jitter_var,
-		AVG(rhp.loss_rate) AS loss_rate
 		FROM record_hour_dns rhp
 		WHERE
 		rhp.service_type = #{service_type}

@@ -46,7 +46,43 @@
         input[type=text]::-ms-clear{
             display: none;
         }
-
+        .combo-select{
+            display: inline-block;
+            max-width: 110px;
+            margin-top: 11px;
+            left:4px
+        }
+        .combo-dropdown{
+            max-height:200px!important;
+        }
+        .combo-dropdown li{
+            padding: 5px;
+        }
+        .option-item{
+            border-bottom:0px
+        }
+        .combo-arrow:before{
+            border-top: 5px solid 	Gray
+        }
+        .combo-open .combo-arrow{
+            border-color: #0EB690;
+        }
+        .combo-focus input{
+            border-color: #0EB690;
+        }
+        .combo-focus{
+            border-color: #0EB690;
+            box-shadow: none
+        }
+        input:focus {
+            border-color: #0EB690;
+            box-shadow: none;
+        }
+        .clear::-ms-clear { display: none;}
+        .clear::-ms-reveal { display: none;}
+        .combo-input{
+            text-overflow: clip;
+        }
     </style>
 </head>
 <body>
@@ -74,39 +110,49 @@
                                                 <div class="input-group searchspan">
                                                     <span class="searchname search" title="名称" style="width: 40px;text-align: center">名称</span>
                                                     <input type="text" class="form-control input clear" name="probe_name"
-                                                           style="width: 110px"
+                                                           style="width: 110px;height: 30px"
                                                            value="">
                                                 </div>
-                                                <div class="input-group searchspan">
-                                                    <span class="searchname left search" title="地市" style="width: 40px ">地市</span>
-                                                    <select id="selectcity" class="form-control input clear" name="city_id"
-                                                            v-on:change="citychange()" style="width: 110px">
-                                                        <option value="">---请选择---</option>
-                                                        <option v-for="item in cities"
-                                                                v-bind:value="item.message.cityId">{{ item.message.cityName }}
-                                                        </option>
-                                                        <!--<option v-for="pitem in parray" v-bind:value="pitem.Id">{{ pitem.Name }}-->
-                                                    </select>
+
+                                                <div style="display:inline-block;">
+                                                    <span class="searchname" title="地市" style="width:40px; text-align: center;">地市</span>
+                                                    <div class="input-group searchspan" id="cities"  style="top: -8px;">
+                                                        <div class="jq22">
+                                                            <select id="selectcity" class="form-control"  v-on:change="citychange()" style="display: none">
+                                                                <option value="">所有地市</option>
+                                                                <option v-for="item in cities"
+                                                                        v-bind:value="item.message.cityId">{{ item.message.cityName }}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div style="display: inline-block;">
+                                                    <span class="searchname search " title="区县" style="width: 40px;">区县</span>
+                                                    <div class="input-group searchspan" id="country" style="top: -8px;">
+                                                        <div class="jq22">
+                                                            <select id="selectarea" class="form-control"   v-on:change="areachange()" style="display: none">
+                                                                <option value="">所有区县</option>
+                                                                <option v-for="item in areas"
+                                                                        v-bind:value="item.message.countyId">{{item.message.countyName}}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
                                                 </div>
 
-                                                <div class="input-group searchspan">
-                                                    <span class="searchname left search" title="区县" style="width: 40px">区县</span>
-                                                    <select class="form-control input clear " name="county_id " style="width: 110px">
-                                                        <option value="">---请选择---</option>
-                                                        <option v-for="item in areas"
-                                                                v-bind:value="item.message.countyId">{{ item.message.countyName }}</option>
-                                                    </select>
-                                                </div>
-
-                                                <div class="input-group searchspan">
-                                                    <span class="searchname left search " title="探针组" style="width: 40px">探针组</span>
-                                                    <select class="form-control input clear" name="group_id"
-                                                            style="width: 110px;">
-                                                        <option value="">---请选择---</option>
-                                                        <!--vue 绑定value属性    重要！！！！-->
-                                                        <option v-for="item in probegroup_names"
-                                                                v-bind:value="item.message.id">{{ item.message.name }}</option>
-                                                    </select>
+                                                <div style="display: inline-block;">
+                                                    <span class="searchname search " title="探针组" style="width: 40px;">探针组</span>
+                                                    <div class="input-group searchspan" id="group" style="top: -8px;">
+                                                        <div class="jq22">
+                                                            <select  class="form-control"   style="display: none">
+                                                                <option value="">---请选择---</option>
+                                                                <!--vue 绑定value属性    重要！！！！-->
+                                                                <option v-for="item in probegroup_names"
+                                                                        v-bind:value="item.message.id">{{ item.message.name }}</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
 
@@ -114,42 +160,53 @@
                                                 <div class="input-group searchspan">
                                                     <span class="searchname search " title="位置" style="width: 40px">位置</span>
                                                     <input type="text" class="form-control input clear" name="location"
-                                                           style="width: 110px"
+                                                           style="width: 110px;height: 30px"
                                                            value="">
                                                 </div>
-
-                                                <div class="input-group searchspan">
-                                                    <span class="searchname left search " title="层级" style="width: 40px">层级</span>
-                                                    <select class="form-control input clear" name="access_layer"
-                                                            style="width: 110px">
-                                                        <option value="">---请选择---</option>
-                                                        <option v-for="item in accessLayers"
-                                                                v-bind:value="item.message.layerTag">{{ item.message.layerName }}</option>
-                                                    </select>
-                                                </div>
-                                                <div class="input-group searchspan">
-                                                    <span class="searchname left search " title="类型" style="width: 40px">类型</span>
-                                                    <select class="form-control input clear" name="type"
-                                                            style="width: 110px;">
-                                                        <option value="">---请选择---</option>
-                                                        <!--vue 绑定value属性    重要！！！！-->
-                                                        <option value="10">机架探针</option>
-                                                        <option value="20">盒式探针</option>
-                                                        <option value="30">家庭网关软探针</option>
-                                                        <option value="31">ONU软探针</option>
-                                                        <option value="32">OLT软探针</option>
-                                                    </select>
+                                                <div style="display: inline-block;">
+                                                    <span class="searchname search " title="层级" style="width: 40px;">层级</span>
+                                                    <div class="input-group searchspan" id="access"  style="top: -10px;">
+                                                        <div class="jq22">
+                                                            <!--name="access_layer"-->
+                                                            <select  class="form-control"   style="display: none">
+                                                                <option value="">---请选择---</option>
+                                                                <option v-for="item in accessLayers"
+                                                                        v-bind:value="item.message.layerTag">{{ item.message.layerName }}</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
                                                 </div>
 
-                                                <div class="input-group searchspan">
-                                                    <span class="searchname left search " title="状态" style="width: 40px">状态</span>
-                                                    <select class="form-control left input" name="status"
-                                                            style="width: 110px;">
-                                                        <option value="">---请选择---</option>
-                                                        <!--vue 绑定value属性    重要！！！！-->
-                                                        <option value="1">在线</option>
-                                                        <option value="2">离线</option>
-                                                    </select>
+                                                <div style="display:inline-block;">
+                                                    <span class="searchname" title="类型" style="width:40px; text-align: center">类型</span>
+                                                    <div class="input-group searchspan" id="Selecttype" style="top: -10px;">
+                                                        <div class="jq22">
+                                                            <!--name="type"-->
+                                                            <select  class="form-control" style="display: none">
+                                                                <option value="">---请选择---</option>
+                                                                <!--vue 绑定value属性    重要！！！！-->
+                                                                <option value="10">机架探针</option>
+                                                                <option value="20">盒式探针</option>
+                                                                <option value="30">家庭网关软探针</option>
+                                                                <option value="31">ONU软探针</option>
+                                                                <option value="32">OLT软探针</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div style="display:inline-block;">
+                                                    <span class="searchname" title="状态" style="width:40px; text-align: center">状态</span>
+                                                    <div class="input-group searchspan" id="Selectstatus" style="top: -10px;">
+                                                        <div class="jq22">
+                                                            <!--name="status"-->
+                                                            <select  class="form-control"  style="display: none">
+                                                                <option value="">---请选择---</option>
+                                                                <!--vue 绑定value属性    重要！！！！-->
+                                                                <option value="1">在线</option>
+                                                                <option value="2">离线</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </form>

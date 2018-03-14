@@ -73,13 +73,11 @@ public class RecordPingController {
         }
         if (Integer.parseInt(map.get("queryType").toString()) == 1) {
             List<RecordPingEntity> resultList = recordPingService.queryPingList(map);
-            System.out.println(resultList);
             total = recordPingService.queryPingTotal(map);
             PageUtils pageUtil = new PageUtils(resultList, total, limit, page);
             return R.ok().put("page", pageUtil);
         } else {
             List<RecordHourPingEntity> resultList = recordPingService.queryIntervalList(map);
-            System.out.println(resultList);
             total = recordPingService.queryIntervalTotal(map);
             PageUtils pageUtil = new PageUtils(resultList, total, limit, page);
             return R.ok().put("page", pageUtil);

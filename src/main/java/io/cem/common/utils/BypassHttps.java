@@ -7,7 +7,7 @@ import java.net.URL;
 
 
 public class BypassHttps {
-    public static int sendRequestIgnoreSSL(String url)  {
+    public static int sendRequestIgnoreSSL(String type, String url)  {
         HttpsURLConnection con = null;
         // Create a trust manager that does not validate certificate chains
         TrustManager[] trustAllCerts = new TrustManager[]{
@@ -37,7 +37,7 @@ public class BypassHttps {
         // Now you can access an https URL without having the certificate in the truststore
             URL myurl = new URL(url);
             con = (HttpsURLConnection)myurl.openConnection();
-            con.setRequestMethod("POST");
+            con.setRequestMethod(type);
             con.setRequestProperty("Authorization","Bearer 8dd1cac5-7e95-4611-ac31-fc66d94eaefa");
             con.setDoInput(true);
             DataInputStream input = new DataInputStream( con.getInputStream() );

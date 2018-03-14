@@ -200,6 +200,7 @@
 		ON  record_radius.probe_id =probe.id
 		INNER JOIN task
 		ON record_radius.task_id = task.id
+		AND task.is_ondemand =0
 		INNER JOIN target
 		ON record_radius.target_id = target.id
 		LEFT JOIN dic_data a
@@ -245,6 +246,7 @@
 		ON  record_radius.probe_id =probe.id
 		INNER JOIN task
 		ON record_radius.task_id = task.id
+		AND task.is_ondemand =0
 		INNER JOIN target
 		ON record_radius.target_id = target.id
 		WHERE

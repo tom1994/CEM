@@ -10,7 +10,59 @@ var cityNames = new Array();
 var typeNames = new Array();
 var statusNames = new Array();
 var probegroup_names = new Array();
+var citySelected=0
+var countrySelected=0
+var groupSelected=0;
+var accessSelected=0;
+var typeSelected=0;
+var statusSelected=0
 
+function getFormJson(form) {      /*将表单对象变为json对象*/
+    var o = {};
+    var a = $(form).serializeArray();
+    if(countrySelected!=0){
+        a[2]={}
+        a[2].name="country_id"
+        a[2].value=countrySelected
+    }
+    if(groupSelected!=0){
+        a[3]={}
+        a[3].name="group_id"
+        a[3].value=groupSelected
+    }
+    if(accessSelected!=0){
+        a[4]={}
+        a[4].name="access_layer"
+        a[4].value=accessSelected
+    }
+    if(typeSelected!=0){
+        a[5]={}
+        a[5].name="type"
+        a[5].value=typeSelected;
+    }
+    if(statusSelected!=0){
+        a[6]={}
+        a[6].name="status"
+        a[6].value=statusSelected
+
+    }
+    // if(citySelected!=0){
+    //     a[0]={}
+    //     a[0].name='city_id'
+    //     a[0].value=citySelected;
+    // }
+    $.each(a, function () {
+        if (o[this.name] !== undefined) {
+            if (!o[this.name].push) {
+                o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '');
+        } else {
+            o[this.name] = this.value || '';
+        }
+    });
+    return o;
+}
 var st = new Map();//servicetype字典，可通过get方法查对应字符串。
 st.set(1, "PING(ICMP Echo)");
 st.set(2, "PING(TCP Echo)");
@@ -29,7 +81,59 @@ st.set(31, "FTP下载");
 st.set(32, "FTP上传");
 st.set(40, "在线视频");
 st.set(50, "网络游戏");
+function clearArea(a) {
+    if(a=="所有地市"){
+        $('#country .combo-input').val("所有区县");
+        $('#country .combo-select select').val("所有区县");
+        search_data.areas = [];
+        $('#country ul').html("");
+        // $('#country ul').append(<li class="option-item option-hover option-selected" data-index="0" data-value="">所有区县</li>);
+        $("#country ul").append("<li class='option-item option-hover option-selected' data-index=='0' data-value=''>"+"所有区县"+"</li>");
+    }
 
+}
+$(document).ready(function () {
+    $('div#cities .jq22').comboSelect();
+    $('div#country .jq22').comboSelect();
+    $('div#group .jq22').comboSelect();
+   typeSelected=0;
+    statusSelected=0;
+    $('#Selecttype .jq22').comboSelect()
+    $('.combo-dropdown').css("z-index","3");
+    $('#Selecttype .option-item').click(function (type) {
+        var a = $(type.currentTarget)[0].innerText;
+        typeSelected = $($(type.currentTarget)[0]).data('value');
+        setTimeout(function(){
+            $('#Selecttype .combo-input').val(a);
+        },20)
+    });
+
+    $('#Selecttype input[type=text] ').keyup(function (type) {
+        if( type.keyCode=='13'){
+            var b = $("#Selecttype .option-hover.option-selected").text();
+            typeSelected=$("#Selecttype .option-hover.option-selected")[0].dataset.value;
+            $('#Selecttype .combo-input').val(b);
+            $('#Selecttype .combo-select select').val(b);
+        }
+    });
+    $('#Selectstatus .jq22').comboSelect();
+    $('.combo-dropdown').css("z-index","3");
+    $('#Selectstatus .option-item').click(function (status) {
+        var a = $(status.currentTarget)[0].innerText;
+        statusSelected = $($(status.currentTarget)[0]).data('value');
+        setTimeout(function(){
+            $('#Selectstatus .combo-input').val(a);
+        },20)
+    });
+    $('#Selectstatus input[type=text] ').keyup(function (status) {
+        if( status.keyCode=='13'){
+            var b = $("#Selectstatus .option-hover.option-selected").text();
+            statusSelected=$("#Selecttype .option-hover.option-selected")[0].dataset.value;
+            $('#Selectstatus .combo-input').val(b);
+            $('#Selectstatus .combo-select select').val(b);
+        }
+    });
+});
 var probedata_handle = new Vue({
     el: '#probehandle',
     data: {},
@@ -47,6 +151,33 @@ var probedata_handle = new Vue({
                 }
                 search_data.cities = cityNames;
                 probeform_data.cityNames = cityNames;
+                setTimeout(function () {
+                    $('div#cities .jq22').comboSelect();
+                    $('.combo-dropdown').css("z-index","3");
+                    $('div#cities .option-item').click(function (city) {
+                        setTimeout(function () {
+                            var a = $(city.currentTarget)[0].innerText;
+                            citySelected = $($(city.currentTarget)[0]).data('value');
+                            $('div#cities .combo-input').val(a);
+                            $('div#cities .combo-select select').val(a);
+                            clearArea(a);
+                            getArea(citySelected);
+                        }, 30);
+                    });
+                    $('#cities input[type=text] ').keyup(function (city) {
+                        if( city.keyCode=='13'){
+                            var b = $("#cities .option-hover.option-selected").text();
+                            clearArea(b);
+                            var c=($("#cities .option-hover.option-selected"));
+                            var c=c[0].dataset
+                            citySelected = c.value;
+                            clearArea(a);
+                            getArea(citySelected);
+                            $('#cities .combo-input').val(b);
+                            $('#cities .combo-select select').val(b);
+                        }
+                    })
+                }, 200);
             }
         });
 
@@ -63,9 +194,9 @@ var probedata_handle = new Vue({
                 probeform_data.upstreams = probeNames;
                 probeform_data.iptypeNames = probeNames;
                 probeform_data.statusNames = probeNames;
+
             }
         });
-
         $.ajax({
             type: "POST",   /*GET会乱码*/
             url: "../../cem/probegroup/list",
@@ -78,6 +209,29 @@ var probedata_handle = new Vue({
                 }
                 probeform_data.groupNames = probeGroupNames;
                 search_data.probegroup_names = probeGroupNames;
+                setTimeout(function () {
+                    $('div#group .jq22').comboSelect();
+                    $('.combo-dropdown').css("z-index","3");
+                    $('div#group .option-item').click(function (group) {
+                        setTimeout(function () {
+                            var a = $(group.currentTarget)[0].innerText;
+                            groupSelected = $($(group.currentTarget)[0]).data('value');
+                            $('div#group .combo-input').val(a);
+                            $('div#group .combo-select select').val(a);
+
+                        }, 30);
+                    });
+                    $('#group input[type=text] ').keyup(function (group) {
+                        if( group.keyCode=='13'){
+                            var b = $("#group .option-hover.option-selected").text();
+                            var c=($("#group .option-hover.option-selected"));
+                            var c=c[0].dataset;
+                            groupSelected = c.value;
+                            $('#group .combo-input').val(b);
+                            $('#group .combo-select select').val(b);
+                        }
+                    })
+                }, 50);
             }
         });
     },
@@ -139,6 +293,30 @@ var layer_handle = new Vue({
                 }
                 search_data.accessLayers = probeLayer;
                 probeform_data.accessLayers = probeLayer;
+                setTimeout(function () {
+                    $('div#access .jq22').comboSelect();
+                    $('.combo-dropdown').css("z-index","3");
+                    $('div#access .option-item').click(function (access) {
+                        setTimeout(function () {
+                            var a = $(access.currentTarget)[0].innerText;
+                            accessSelected = $($(access.currentTarget)[0]).data('value');
+                            $('div#access .combo-input').val(a);
+                            $('div#access .combo-select select').val(a);
+
+                        }, 30);
+                    });
+                    $('#access input[type=text] ').keyup(function (access) {
+                        if( access.keyCode=='13'){
+                            var b = $("#access .option-hover.option-selected").text();
+                            var c=($("#access .option-hover.option-selected"));
+                            var c=c[0].dataset
+                            accessSelected = c.value;
+                            $('#access .combo-input').val(b);
+                            $('#access .combo-select select').val(b);
+                        }
+                    })
+                }, 50);
+
             }
         });
     },
@@ -262,7 +440,8 @@ var dispatch_table = new Vue({
             {title: '<div style="width:17px"></div>'},
             {title: '<div style="width:117px">任务类型</div>'},
             {title: '<div style="width:117px">任务名称</div>'},
-            {title: '<div style="width:160px">调度策略</div>'}
+            {title: '<div style="width:160px">调度策略</div>'},
+            {title: '<div style="width:160px">测试目标</div>'}
         ],
         rows: [],
         dtHandle: null,
@@ -355,7 +534,7 @@ var dispatch_table = new Vue({
                             row.push(st.get(item.serviceType));
                             row.push(item.taskName);
                             row.push(item.spName);
-                            // row.push('<span title="' + item.targetName + '" style="white-space: nowrap">' + transString(item.targetName,0,25)+ '</span>');
+                            row.push('<span title="' + item.target + '" style="white-space: nowrap">' + transString(item.target,0,25)+ '</span>');
                             //row.push('<a class="fontcolor" onclick="cancel_task(this)" id=' + item.id + '>取消任务</a>');
                             rows.push(row);
                         });
@@ -508,7 +687,6 @@ function updategroup_this (obj) {     /*监听修改触发事件*/
 
 //探针列表删除功能
 function delete_ajax() {
-
     var ids = JSON.stringify(idArray);
     /*对象数组字符串*/
 
@@ -804,21 +982,7 @@ var groupform_data = new Vue({
     }
 });
 
-function getFormJson(form) {      /*将表单对象变为json对象*/
-    var o = {};
-    var a = $(form).serializeArray();
-    $.each(a, function () {
-        if (o[this.name] !== undefined) {
-            if (!o[this.name].push) {
-                o[this.name] = [o[this.name]];
-            }
-            o[this.name].push(this.value || '');
-        } else {
-            o[this.name] = this.value || '';
-        }
-    });
-    return o;
-}
+
 
 var search_data = new Vue({
     el:'#probesearch',
@@ -840,21 +1004,45 @@ var search_data = new Vue({
 
 /*搜索框中的联动选择地市和区县*/
 var getArea = function (cityid) {
+    countrySeleted=0;
     $.ajax({
-        url: "../../cem/county/info/"+cityid,
+        url: "../../cem/county/info/" + cityid,
         type: "POST",
         cache: false,  //禁用缓存
         dataType: "json",
         contentType: "application/json",
         success: function (result) {
-            var areaNames = [];
-            for(var i=0;i<result.county.length;i++){
+            search_data.areas = [];
+            areaNames = [];
+            for (let i = 0; i < result.county.length; i++) {
                 areaNames[i] = {message: result.county[i]}
             }
             search_data.areas = areaNames;
+            setTimeout(function () {
+                $('#country .jq22').comboSelect();
+                $('.combo-dropdown').css("z-index","3");
+                $('#country .option-item').click(function (areas) {
+                    setTimeout(function () {
+                        var a = $(areas.currentTarget)[0].innerText;
+                        countrySelected = $($(areas.currentTarget)[0]).data('value');
+                        $('#country .combo-input').val(a);
+                        $('#country .combo-select select').val(a);
+                    },20)
+
+                });
+                $('#country input[type=text] ').keyup(function (areas) {
+                    if( areas.keyCode=='13'){
+                        var b = $("#country .option-hover.option-selected").text();
+                        countrySelected=$("#country .option-hover.option-selected")[0].dataset.value;
+                        $('#country .combo-input').val(b);
+                        $('#country .combo-select select').val(b);
+                    }
+                })
+            }, 50);
+
         }
     });
-}
+};
 /*详情里的联动选择地市和区县*/
 var queryArea = function (cityid) {
     $.ajax({
@@ -942,7 +1130,7 @@ var probetable = new Vue({
             {title: '<div style="width:42px">区县</div>'},
             {title: '<div style="width:90px">位置</div>'},
             {title: '<div style="width:55px">层级</div>'},
-            {title: '<div style="width:70px">上联探针</div>'},
+            {title: '<div style="width:95px">上联探针</div>'},
             {title: '<div style="width:40px">状态</div>'},
             {title: '<div style="width:70px">类型</div>'},
             {title: '<div style="width:130px">注册时间</div>'},

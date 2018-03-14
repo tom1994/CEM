@@ -103,6 +103,7 @@ var weightSet = new Vue({
                 dataType: "json",
                 contentType: "application/json", /*必须要,不可少*/
                 success: function (result) {
+                    debugger;
                     var forms = $('#tr_tcp_form .form-input');
                     for (var i = 0; i < 49; i++) {
                         forms[i].value = result.trTCP[i];
@@ -255,7 +256,6 @@ var weightSet = new Vue({
                     for (var i = 0; i < 28; i++) {
                         forms[i].value = result.webDownload[i];
                     }
-
                     $('#Modal_web_download').modal('show');
                 }
             })
@@ -327,6 +327,7 @@ var weightHandle = new Vue ({
             var totalweight = parseFloat(weightJson.connectionweight) + parseFloat(weightJson.qualityweight)
                 + parseFloat(weightJson.browseweight) + parseFloat(weightJson.downloadweight)
                 + parseFloat(weightJson.videoweight) + parseFloat(weightJson.gameweight);
+            debugger;
             var totalsecondweight1 = parseFloat(weightJson.ping_icmp) + parseFloat(weightJson.ping_tcp)
                 + parseFloat(weightJson.ping_udp) + parseFloat(weightJson.tr_tcp) + parseFloat(weightJson.tr_icmp);
             var totalsecondweight2 = parseFloat(weightJson.sla_tcp) + parseFloat(weightJson.sla_udp)
@@ -334,9 +335,9 @@ var weightHandle = new Vue ({
                 + parseFloat(weightJson.radius);
             var totalsecondweight3 = parseFloat(weightJson.ftp_upload) + parseFloat(weightJson.ftp_download)
                 + parseFloat(weightJson.web_download);
-            var totalsecondweight4=parseFloat(weightJson.webpage)
-            var totalsecondweight5=parseFloat(weightJson.video)
-            var totalsecondweight6=parseFloat(weightJson.game)
+            var totalsecondweight4=parseFloat(weightJson.webpage);
+            var totalsecondweight5=parseFloat(weightJson.video);
+            var totalsecondweight6=parseFloat(weightJson.game);
             console.log(weightJson);
             for (var prop in weightJson)
             {
@@ -392,6 +393,7 @@ var weightHandle = new Vue ({
 
         },
         reset:function(){
+            debugger;
             $.ajax({
                 type: "POST", /*GET会乱码*/
                 url: "../../cem/allweight/reset",
@@ -694,6 +696,7 @@ var stform_data = new Vue ({
             var stTotalWeight = parseFloat(stJson.slaT11) + parseFloat(stJson.slaT21) + parseFloat(stJson.slaT31)
                 + parseFloat(stJson.slaT41) + parseFloat(stJson.slaT51) + parseFloat(stJson.slaT61)
                 + parseFloat(stJson.slaT71);
+            debugger;
             for (var prop in stJson)
             {
                 if (stJson[prop] == "") {
@@ -714,6 +717,7 @@ var stform_data = new Vue ({
                     data: {"st_new": st_new},
                     dataType: "json",
                     success: function (result) {
+                        debugger;
                         let code = result.code;
                         let msg = result.msg;
                         switch (code) {
@@ -741,17 +745,17 @@ var suform_data = new Vue ({
     methods:{
         submit: function() {
             var suJson = getFormJson($('#sla_udp_form'));
-
             var suTotalWeight = parseFloat(suJson.slaU11) + parseFloat(suJson.slaU21) + parseFloat(suJson.slaU31)
                 + parseFloat(suJson.slaU41) + parseFloat(suJson.slaU51) + parseFloat(suJson.slaU61)
                 + parseFloat(suJson.slaU71);
-            debugger;
+
             for (var prop in suJson) {
                 if (suJson[prop] == "") {
                     toastr.warning("权重不能为空!");
                     break;
                 }
             }
+            debugger;
             if (suTotalWeight.toFixed(5) != 1) {
                 toastr.warning("权重设置有误!");
             } else {
@@ -765,6 +769,7 @@ var suform_data = new Vue ({
                     data: {"su_new": su_new},
                     dataType: "json",
                     success: function (result) {
+                        debugger;
                         console.log(result);
                         let code = result.code;
                         let msg = result.msg;
@@ -1175,9 +1180,9 @@ var videoform_data = new Vue ({
         submit: function(){
             var videoJson = getFormJson($('#video_form'));
             var videoTotalWeight = parseFloat(videoJson.video11) + parseFloat(videoJson.video21)
-                + parseFloat(videoJson.video31) + parseFloat(videoJson.video41) +parseFloat(videoJson.video51)
-                + parseFloat(videoJson.video61) + parseFloat(videoJson.video71) +parseFloat(videoJson.video81)
-                + parseFloat(videoJson.video91) + parseFloat(videoJson.video101) +parseFloat(videoJson.video111);
+                + parseFloat(videoJson.video31) + parseFloat(videoJson.video41) + parseFloat(videoJson.video51) +parseFloat(videoJson.video61)
+                + parseFloat(videoJson.video71) + parseFloat(videoJson.video81) +parseFloat(videoJson.video91);
+            debugger;
             for (var prop in videoJson) {
                 if (videoJson[prop] == "") {
                     toastr.warning("权重及评分标准不能为空!");
@@ -1224,8 +1229,9 @@ var gameform_data = new Vue ({
     methods:{
         submit: function(){
             var gameJson = getFormJson($('#game_form'));
-            var gameTotalWeight = parseFloat(gameJson.game11) + parseFloat(gameJson.game21)
-                + parseFloat(gameJson.game31) + parseFloat(gameJson.game41) +parseFloat(gameJson.game51);
+            var gameTotalWeight =  parseFloat(gameJson.game11)
+                + parseFloat(gameJson.game21) + parseFloat(gameJson.game31) +parseFloat(gameJson.game41);
+            debugger;
             for (var prop in gameJson) {
                 if (gameJson[prop] == "") {
                     toastr.warning("权重及评分标准不能为空!");

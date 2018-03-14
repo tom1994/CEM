@@ -6,11 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 
- * 
- * @author ${author}
- * @email ${email}
- * @date 2017-11-05 20:39:28
  */
 public interface TargetService {
 	
@@ -35,4 +30,6 @@ public interface TargetService {
 	void delete(Integer id);
 	
 	void deleteBatch(Integer[] ids);
+
+	List<TargetEntity> queryTargetNames(int[] ids);
 }

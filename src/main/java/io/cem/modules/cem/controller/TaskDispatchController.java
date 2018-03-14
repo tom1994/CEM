@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.qiniu.util.Json;
 import io.cem.common.exception.RRException;
@@ -65,7 +66,7 @@ public class TaskDispatchController {
     @RequiresPermissions("taskdispatch:info")
     public R info(@PathVariable("id") Integer id, Integer page, Integer limit) throws Exception {
         Map<String, Object> map = new HashMap<>();
-        map.put("taskid",id);
+        map.put("taskid", id);
         int total = 0;
         if (page == null) {              /*没有传入page,则取全部值*/
             map.put("offset", null);
@@ -77,15 +78,15 @@ public class TaskDispatchController {
             map.put("limit", limit);
             total = taskDispatchService.queryDispatchTotal(id);
         }
-
         List<TaskDispatchEntity> dispatchList = taskDispatchService.queryDispatchList(map);
-//        String[] targetList = new String[dispatchList.size()];
+        dispatchList = taskDispatchService.transformTarget(dispatchList);
+
+        //        String[] targetList = new String[dispatchList.size()];
 //        for (int i = 0; i < dispatchList.size(); i++) {
 //            targetList[i] = dispatchList.get(i).getTarget();
 //            String targetName = taskDispatchService.queryTargetBatch(targetList[i].split(",|\""));
 //            dispatchList.get(i).setTargetName(targetName);
 //        }
-
         PageUtils pageUtil = new PageUtils(dispatchList, total, limit, page);
         return R.ok().put("page", pageUtil);
     }
@@ -111,12 +112,7 @@ public class TaskDispatchController {
         }
 
         List<TaskDispatchEntity> dispatchList = taskDispatchService.taskQueryDispatchList(map);
-//        String[] targetList = new String[dispatchList.size()];
-//        for (int i = 0; i < dispatchList.size(); i++) {
-//            targetList[i] = dispatchList.get(i).getTarget();
-//            String targetName = taskDispatchService.queryTargetBatch(targetList[i].split(",|\""));
-//            dispatchList.get(i).setTargetName(targetName);
-//        }
+        dispatchList = taskDispatchService.transformTarget(dispatchList);
         PageUtils pageUtil = new PageUtils(dispatchList, total, limit, page);
         return R.ok().put("page", pageUtil);
     }
@@ -139,7 +135,7 @@ public class TaskDispatchController {
         } else {
             taskDispatchService.save(taskDispatch);
         }
-        BypassHttps.sendRequestIgnoreSSL("https://114.236.91.16:23456/web/v1/tasks/" + taskDispatch.getTaskId());
+        BypassHttps.sendRequestIgnoreSSL("POST", "https://114.236.91.16:23456/web/v1/tasks/" + taskDispatch.getTaskId());
 
         return R.ok();
     }
@@ -198,7 +194,7 @@ public class TaskDispatchController {
                 taskDispatch.setTestInterval(10);
                 taskDispatch.setTaskId(2);
                 for (int b = 0; b < 6; b++) {
-                    taskDispatch.setTaskId(b + 20);
+                    taskDispatch.setTaskId(b + 10);
                     taskDispatchService.saveAndReturn(taskDispatch);
                     sla[b][i] = taskDispatch.getId();
                 }
@@ -239,30 +235,36 @@ public class TaskDispatchController {
                 dispatch.put("game", game);
             }
         }
+        /*调用接口通知探针*/
+        //TODO:增加下发失败的提醒
         if (map.containsKey("ping")) {
+            int[] pingState = new int[5];
             for (int i = 1; i < 6; i++) {
-                BypassHttps.sendRequestIgnoreSSL("https://114.236.91.16:23456/web/v1/tasks/" + i);
+                pingState[i - 1] = BypassHttps.sendRequestIgnoreSSL("POST", "https://114.236.91.16:23456/web/v1/tasks/" + i);
             }
         }
         if (map.containsKey("sla")) {
+            int[] slaState = new int[6];
             for (int i = 10; i < 16; i++) {
-                BypassHttps.sendRequestIgnoreSSL("https://114.236.91.16:23456/web/v1/tasks/" + i);
+                slaState[i - 10] = BypassHttps.sendRequestIgnoreSSL("POST", "https://114.236.91.16:23456/web/v1/tasks/" + i);
             }
         }
         if (map.containsKey("web")) {
-            BypassHttps.sendRequestIgnoreSSL("https://114.236.91.16:23456/web/v1/tasks/" + 20);
+            int webState = BypassHttps.sendRequestIgnoreSSL("POST", "https://114.236.91.16:23456/web/v1/tasks/" + 20);
         }
         if (map.containsKey("download")) {
+            int[] downloadState = new int[3];
             for (int i = 30; i < 33; i++) {
-                BypassHttps.sendRequestIgnoreSSL("https://114.236.91.16:23456/web/v1/tasks/" + i);
+                downloadState[i - 30] = BypassHttps.sendRequestIgnoreSSL("POST", "https://114.236.91.16:23456/web/v1/tasks/" + i);
             }
         }
         if (map.containsKey("video")) {
-            BypassHttps.sendRequestIgnoreSSL("https://114.236.91.16:23456/web/v1/tasks/" + 40);
+            int videoState = BypassHttps.sendRequestIgnoreSSL("POST", "https://114.236.91.16:23456/web/v1/tasks/" + 40);
         }
         if (map.containsKey("game")) {
-                BypassHttps.sendRequestIgnoreSSL("https://114.236.91.16:23456/web/v1/tasks/" + 50);
+            int gameState = BypassHttps.sendRequestIgnoreSSL("POST", "https://114.236.91.16:23456/web/v1/tasks/" + 50);
         }
+
         return R.ok().put("taskdispatch", dispatch);
     }
 
@@ -312,7 +314,7 @@ public class TaskDispatchController {
                 }
             }
             taskDispatchService.saveAll(taskDispatchEntityList);
-            BypassHttps.sendRequestIgnoreSSL("https://114.236.91.16:23456/web/v1/tasks/" + taskDispatch.getTaskId());
+            BypassHttps.sendRequestIgnoreSSL("POST", "https://114.236.91.16:23456/web/v1/tasks/" + taskDispatch.getTaskId());
             return R.ok();
         } else if (taskDispatch.getProbeIds() != null && taskDispatch.getProbeGroupIds() == null) {
             int[] probeIdsList = taskDispatch.getProbeIds();
@@ -323,7 +325,7 @@ public class TaskDispatchController {
                 taskDispatchEntityList.add(taskDispatchEntity);
             }
             taskDispatchService.saveAll(taskDispatchEntityList);
-            BypassHttps.sendRequestIgnoreSSL("https://114.236.91.16:23456/web/v1/tasks/" + taskDispatch.getTaskId());
+            BypassHttps.sendRequestIgnoreSSL("POST", "https://114.236.91.16:23456/web/v1/tasks/" + taskDispatch.getTaskId());
             return R.ok();
         } else {
             return R.error(111, "探针或探针组格式错误");
@@ -354,7 +356,11 @@ public class TaskDispatchController {
     @RequestMapping("/cancel/{id}")
     @RequiresPermissions("taskdispatch:delete")
     public R cancel(@PathVariable("id") Integer id) {
-        taskDispatchService.cancelTask(id);
-        return R.ok();
+        int result = BypassHttps.sendRequestIgnoreSSL("DELETE", "https://114.236.91.16:23456/web/v1/tasks/" + id);
+        if (result == 200) {
+            return R.ok();
+        } else {
+            return R.error(404, "取消任务失败");
+        }
     }
 }

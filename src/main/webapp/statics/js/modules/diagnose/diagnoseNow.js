@@ -105,7 +105,6 @@ $(document).ready(function () {
                         citySelected = $($(city.currentTarget)[0]).data('value');
                         $('div#city .combo-input').val(a);
                         $('div#city .combo-select select').val(a);
-                         
                         clearArea(a);
                         getArea(citySelected);
                         getProbeCity(citySelected);
@@ -239,7 +238,6 @@ var target_data = new Vue({
 });
 
 var getArea = function (cityid) {
-     
     countrySeleted=0
     if (cityid != "" && cityid != null) {
         $.ajax({//区县
@@ -285,7 +283,7 @@ var getArea = function (cityid) {
 
 function clearArea(a) {
     if(a=="所有地市"){
-         
+
         $('#country .combo-input').val("所有区县");
         $('#country .combo-select select').val("所有区县");
         search_data.areas = [];
@@ -458,7 +456,6 @@ var getTarget = function () {
 //诊断
 function diagnose() {
     var param = getFormJson($('#superservice'));
-     ;
     if (probeSelected == 0) {
         toastr.warning('请选择探针！')
     } else if (targetSelected == 0) {

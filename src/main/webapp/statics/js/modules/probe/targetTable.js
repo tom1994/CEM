@@ -8,7 +8,8 @@ var targetGroupNames = new Array();
 var groupNames = new Array();  //模态框中目标组
 var tgNames = new Array();
 var itemIds = new Array();
-
+var groupSelected=0;
+var serviceSelected=0;
 /*创建业务类型字典表*/
 var sst = new Map();
 sst.set(0, "综合业务");
@@ -23,6 +24,7 @@ var targetgroupdata_handle = new Vue({
     el: '#tghandle',
     data: {},
     mounted: function(){         /*动态加载测试任务组数据*/
+        groupSelected=0
         $.ajax({
             type: "POST",   /*GET会乱码*/
             url: "../../targetgroup/searchlist",//Todo:改成测试任务组的list方法
@@ -36,7 +38,6 @@ var targetgroupdata_handle = new Vue({
                 }
                 search_data.target_names = targetGroupNames;
                 targetform_data.groupNames = targetGroupNames;
-                var groupSelected=0;
                setTimeout(function () {
                    $('#group .jq22').comboSelect();
                    $('.combo-dropdown').css("z-index","3");
@@ -507,10 +508,12 @@ var tgform_data = new Vue({
 function getFormJson(form) {
     var o = {};
     var a = $(form).serializeArray();
-    var b = $("#group .option-selected")[0].dataset.value;
-    var c=$('#service .option-selected')[0].dataset.value;
-    a[1].value = b;
-    a[2].value=c;
+    if(groupSelected !=0){
+        a[1].value = groupSelected;
+    }
+   if(serviceSelected !=0){
+       a[2].value=serviceSelected
+   }
         $.each(a, function () {
         if (o[this.name] !== undefined) {
             if (!o[this.name].push) {
@@ -845,7 +848,7 @@ var tg_table = new Vue({
 });
 
 $(document).ready(function () {
-    var serviceSelected=0;
+    serviceSelected=0;
     $('#service .jq22').comboSelect();
     $("#service input[type=text]").attr('placeholder',"---请选择---");
     $('.combo-dropdown').css("z-index","3");
@@ -860,9 +863,7 @@ $(document).ready(function () {
     $('#service input[type=text] ').keyup(function (service) {
         if( service.keyCode=='13'){
             var b = $("#service .option-hover.option-selected").text();
-            var c=($("#service .option-hover.option-selected"));
-            var c=c[0].dataset
-            serviceSelected = c.value;
+            serviceSelected = $("#service .option-hover.option-selected")[0].dataset.value;
             $('#service .combo-input').val(b);
             $('#service .combo-select select').val(b);
         }
