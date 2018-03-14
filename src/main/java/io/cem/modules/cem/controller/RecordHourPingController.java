@@ -440,9 +440,16 @@ public class RecordHourPingController {
 			}
 
 
-			//文件下载类业务
+			//网页浏览类业务
 			List<RecordHourWebPageEntity> webPageList = recordHourWebPageService.queryDayList(map);
 			List<ScoreEntity> pageList = recordHourWebPageService.calculateService3(webPageList);
+			if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
+				pageList = recordHourPingService.dateChart1(pageList);
+			}else if(map.get("county_id")==null&&map.get("probe_id")==null){
+				pageList = recordHourPingService.cityChart1(pageList);
+			}else if(map.get("probe_id")==null){
+				pageList = recordHourPingService.probeChart1(pageList);
+			}else{}
 			if (pageList.size()!=0) {
 				double maxPage = pageList.get(0).getScore();
 				double averagePage = 0;
@@ -474,7 +481,7 @@ public class RecordHourPingController {
 				score.setPageMin(0.0);
 			}
 
-			//网页浏览类业务
+			//文件下载业务
 			List<RecordHourWebDownloadEntity> webDownloadList = recordHourWebDownloadService.queryDayList(map);
 			List<RecordHourFtpEntity> ftpList = recordHourFtpService.queryDayList(map);
 			List<ScoreEntity> webDownload = recordHourWebDownloadService.calculateWebDownload(webDownloadList);
@@ -522,6 +529,13 @@ public class RecordHourPingController {
 			//在线视频业务
 			List<RecordHourWebVideoEntity> videoList = recordHourWebVideoService.queryDayList(map);
 			List<ScoreEntity> videoServiceList = recordHourWebVideoService.calculateService5(videoList);
+			if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
+				videoServiceList = recordHourPingService.dateChart1(videoServiceList);
+			}else if(map.get("county_id")==null&&map.get("probe_id")==null){
+				videoServiceList = recordHourPingService.cityChart1(videoServiceList);
+			}else if(map.get("probe_id")==null){
+				videoServiceList = recordHourPingService.probeChart1(videoServiceList);
+			}else{}
 			if (videoServiceList.size()!=0) {
 				double maxVideo = videoServiceList.get(0).getScore();
 				double averageVideo = 0;
@@ -556,6 +570,13 @@ public class RecordHourPingController {
 			//网络游戏业务
 			List<RecordHourGameEntity> gameList = recordHourGameService.queryDayList(map);
 			List<ScoreEntity> gameServiceList = recordHourGameService.calculateService6(gameList);
+			if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
+				gameServiceList = recordHourPingService.dateChart1(gameServiceList);
+			}else if(map.get("county_id")==null&&map.get("probe_id")==null){
+				gameServiceList = recordHourPingService.cityChart1(gameServiceList);
+			}else if(map.get("probe_id")==null){
+				gameServiceList = recordHourPingService.probeChart1(gameServiceList);
+			}else{}
 			if (gameServiceList.size()!=0) {
 				double maxGame = gameServiceList.get(0).getScore();
 				double averageGame = 0;
@@ -691,6 +712,13 @@ public class RecordHourPingController {
 			//网页浏览类业务
 			List<RecordHourWebPageEntity> webPageList = recordHourWebPageService.queryWebList(map);
 			List<ScoreEntity> pageList = recordHourWebPageService.calculateService3(webPageList);
+			if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
+				pageList = recordHourPingService.dateChart1(pageList);
+			}else if(map.get("county_id")==null&&map.get("probe_id")==null){
+				pageList = recordHourPingService.cityChart1(pageList);
+			}else if(map.get("probe_id")==null){
+				pageList = recordHourPingService.probeChart1(pageList);
+			}else{}
 			if (pageList.size()!=0) {
 				double maxPage = pageList.get(0).getScore();
 				double averagePage = 0;
@@ -771,6 +799,13 @@ public class RecordHourPingController {
 			//在线视频业务
 			List<RecordHourWebVideoEntity> videoList = recordHourWebVideoService.queryVideoList(map);
 			List<ScoreEntity> videoServiceList = recordHourWebVideoService.calculateService5(videoList);
+			if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
+				videoServiceList = recordHourPingService.dateChart1(videoServiceList);
+			}else if(map.get("county_id")==null&&map.get("probe_id")==null){
+				videoServiceList = recordHourPingService.cityChart1(videoServiceList);
+			}else if(map.get("probe_id")==null){
+				videoServiceList = recordHourPingService.probeChart1(videoServiceList);
+			}else{}
 			if (videoServiceList.size()!=0) {
 				double maxVideo = videoServiceList.get(0).getScore();
 				double averageVideo = 0;
@@ -805,6 +840,13 @@ public class RecordHourPingController {
 			//网络游戏业务
 			List<RecordHourGameEntity> gameList = recordHourGameService.queryGameList(map);
 			List<ScoreEntity> gameServiceList = recordHourGameService.calculateService6(gameList);
+			if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
+				gameServiceList = recordHourPingService.dateChart1(gameServiceList);
+			}else if(map.get("county_id")==null&&map.get("probe_id")==null){
+				gameServiceList = recordHourPingService.cityChart1(gameServiceList);
+			}else if(map.get("probe_id")==null){
+				gameServiceList = recordHourPingService.probeChart1(gameServiceList);
+			}else{}
 			if (gameServiceList.size()!=0) {
 				double maxGame = gameServiceList.get(0).getScore();
 				double averageGame = 0;
@@ -954,6 +996,323 @@ public class RecordHourPingController {
 			List<ScoreEntity> tracertIcmp = recordHourPingService.calculateTracertIcmp(tracertList);
 			List<ScoreEntity> tracertUdp = recordHourPingService.calculateTracertUdp(tracertList);
 			scoreList = recordHourPingService.calculateDate1(pingIcmp,pingTcp,pingUdp,tracertIcmp,tracertUdp);
+			if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
+				scoreList = recordHourPingService.dateChart1(scoreList);
+			}else if(map.get("county_id")==null&&map.get("probe_id")==null){
+				scoreList = recordHourPingService.cityChart1(scoreList);
+			}else if(map.get("probe_id")==null){
+				scoreList = recordHourPingService.probeChart1(scoreList);
+			}else{}
+		}
+		System.out.println(scoreList);
+		return R.ok().put("scoreList", scoreList);
+	}
+
+	/**
+	 * ZTY用于绘制网络层质量图
+	 */
+	@RequestMapping("/quality")
+	@RequiresPermissions("recordhourping:quality")
+	public R qualityImage(String chartdata){
+		//查询列表数据
+		Map<String, Object> map = new HashMap<>();
+		JSONObject chartdata_jsonobject = JSONObject.parseObject(chartdata);
+		System.out.println(chartdata_jsonobject);
+		try {
+			map.putAll(JSONUtils.jsonToMap(chartdata_jsonobject));
+		} catch (RuntimeException e) {
+			throw new RRException("内部参数错误，请重试！");
+		}
+		String dateStr = map.get("ava_start").toString();
+		String dateStr2 = map.get("ava_terminal").toString();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		int dateDifferent = 0;
+		try
+		{
+			Date date2 = format.parse(dateStr2);
+			Date date = format.parse(dateStr);
+
+			dateDifferent = recordHourPingService.differentDays(date,date2);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+		List<ScoreEntity> scoreList = new ArrayList<>();
+		//查询天表
+		if (dateDifferent > 5) {
+			List<RecordHourSlaEntity> slaList = recordHourSlaService.queryDayList(map);
+			List<RecordHourDnsEntity> dnsList = recordHourDnsService.queryDayList(map);
+			List<RecordHourDhcpEntity> dhcpList = recordHourDhcpService.queryDayList(map);
+			List<RecordHourPppoeEntity> pppoeList = recordHourPppoeService.queryDayList(map);
+			List<RecordHourRadiusEntity> radiusList = recordHourRadiusService.queryDayList(map);
+			List<ScoreEntity> slaTcp = recordHourSlaService.calculateSlaTcp(slaList);
+			List<ScoreEntity> slaUdp = recordHourSlaService.calculateSlaUdp(slaList);
+			List<ScoreEntity> dns = recordHourSlaService.calculateDns(dnsList);
+			List<ScoreEntity> dhcp = recordHourSlaService.calculateDhcp(dhcpList);
+			List<ScoreEntity> pppoe = recordHourSlaService.calculatePppoe(pppoeList);
+			List<ScoreEntity> radius = recordHourSlaService.calculateRadius(radiusList);
+			scoreList = recordHourSlaService.calculateDate2(slaTcp,slaUdp,dns,dhcp,pppoe,radius);
+			if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
+				scoreList = recordHourPingService.dateChart1(scoreList);
+			}else if(map.get("county_id")==null&&map.get("probe_id")==null){
+				scoreList = recordHourPingService.cityChart1(scoreList);
+			}else if(map.get("probe_id")==null){
+				scoreList = recordHourPingService.probeChart1(scoreList);
+			}else{}
+		}
+		//查询小时表
+		else {
+			List<RecordHourSlaEntity> slaList = recordHourSlaService.querySlaList(map);
+			List<RecordHourDnsEntity> dnsList = recordHourDnsService.queryDnsList(map);
+			List<RecordHourDhcpEntity> dhcpList = recordHourDhcpService.queryDhcpList(map);
+			List<RecordHourPppoeEntity> pppoeList = recordHourPppoeService.queryPppoeList(map);
+			List<RecordHourRadiusEntity> radiusList = recordHourRadiusService.queryRadiusList(map);
+			List<ScoreEntity> slaTcp = recordHourSlaService.calculateSlaTcp(slaList);
+			List<ScoreEntity> slaUdp = recordHourSlaService.calculateSlaUdp(slaList);
+			List<ScoreEntity> dns = recordHourSlaService.calculateDns(dnsList);
+			List<ScoreEntity> dhcp = recordHourSlaService.calculateDhcp(dhcpList);
+			List<ScoreEntity> pppoe = recordHourSlaService.calculatePppoe(pppoeList);
+			List<ScoreEntity> radius = recordHourSlaService.calculateRadius(radiusList);
+			scoreList = recordHourSlaService.calculateDate2(slaTcp,slaUdp,dns,dhcp,pppoe,radius);
+			if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
+				scoreList= recordHourPingService.dateChart1(scoreList);
+			}else if(map.get("county_id")==null&&map.get("probe_id")==null){
+				scoreList = recordHourPingService.cityChart1(scoreList);
+			}else if(map.get("probe_id")==null){
+				scoreList = recordHourPingService.probeChart1(scoreList);
+			}else{}
+		}
+		System.out.println(scoreList);
+		return R.ok().put("scoreList", scoreList);
+	}
+
+	/**
+	 * ZTY用于绘制网页浏览图
+	 */
+	@RequestMapping("/page")
+	@RequiresPermissions("recordhourping:page")
+	public R pageImage(String chartdata){
+		//查询列表数据
+		Map<String, Object> map = new HashMap<>();
+		JSONObject chartdata_jsonobject = JSONObject.parseObject(chartdata);
+		System.out.println(chartdata_jsonobject);
+		try {
+			map.putAll(JSONUtils.jsonToMap(chartdata_jsonobject));
+		} catch (RuntimeException e) {
+			throw new RRException("内部参数错误，请重试！");
+		}
+		String dateStr = map.get("ava_start").toString();
+		String dateStr2 = map.get("ava_terminal").toString();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		int dateDifferent = 0;
+		try
+		{
+			Date date2 = format.parse(dateStr2);
+			Date date = format.parse(dateStr);
+
+			dateDifferent = recordHourPingService.differentDays(date,date2);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+		List<ScoreEntity> scoreList = new ArrayList<>();
+		//查询天表
+		if (dateDifferent > 5) {
+			List<RecordHourWebPageEntity> webPageList = recordHourWebPageService.queryDayList(map);
+			scoreList = recordHourWebPageService.calculateService3(webPageList);
+			if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
+				scoreList = recordHourPingService.dateChart1(scoreList);
+			}else if(map.get("county_id")==null&&map.get("probe_id")==null){
+				scoreList = recordHourPingService.cityChart1(scoreList);
+			}else if(map.get("probe_id")==null){
+				scoreList = recordHourPingService.probeChart1(scoreList);
+			}else{}
+		}
+		//查询小时表
+		else {
+			List<RecordHourWebPageEntity> webPageList = recordHourWebPageService.queryWebList(map);
+			scoreList = recordHourWebPageService.calculateService3(webPageList);
+			if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
+				scoreList = recordHourPingService.dateChart1(scoreList);
+			}else if(map.get("county_id")==null&&map.get("probe_id")==null){
+				scoreList = recordHourPingService.cityChart1(scoreList);
+			}else if(map.get("probe_id")==null){
+				scoreList = recordHourPingService.probeChart1(scoreList);
+			}else{}
+		}
+		System.out.println(scoreList);
+		return R.ok().put("scoreList", scoreList);
+	}
+
+	/**
+	 * ZTY用于绘制文件下载类图
+	 */
+	@RequestMapping("/download")
+	@RequiresPermissions("recordhourping:download")
+	public R downloadImage(String chartdata){
+		//查询列表数据
+		Map<String, Object> map = new HashMap<>();
+		JSONObject chartdata_jsonobject = JSONObject.parseObject(chartdata);
+		System.out.println(chartdata_jsonobject);
+		try {
+			map.putAll(JSONUtils.jsonToMap(chartdata_jsonobject));
+		} catch (RuntimeException e) {
+			throw new RRException("内部参数错误，请重试！");
+		}
+		String dateStr = map.get("ava_start").toString();
+		String dateStr2 = map.get("ava_terminal").toString();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		int dateDifferent = 0;
+		try
+		{
+			Date date2 = format.parse(dateStr2);
+			Date date = format.parse(dateStr);
+
+			dateDifferent = recordHourPingService.differentDays(date,date2);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+		List<ScoreEntity> scoreList = new ArrayList<>();
+		//查询天表
+		if (dateDifferent > 5) {
+			List<RecordHourWebDownloadEntity> webDownloadList = recordHourWebDownloadService.queryDayList(map);
+			List<RecordHourFtpEntity> ftpList = recordHourFtpService.queryDayList(map);
+			List<ScoreEntity> webDownload = recordHourWebDownloadService.calculateWebDownload(webDownloadList);
+			List<ScoreEntity> ftpDownload = recordHourWebDownloadService.calculateFtpDownload(ftpList);
+			List<ScoreEntity> ftpUpload = recordHourWebDownloadService.calculateFtpUpload(ftpList);
+			scoreList = recordHourWebDownloadService.calculateDate4(webDownload,ftpDownload,ftpUpload);
+			if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
+				scoreList = recordHourPingService.dateChart1(scoreList);
+			}else if(map.get("county_id")==null&&map.get("probe_id")==null){
+				scoreList = recordHourPingService.cityChart1(scoreList);
+			}else if(map.get("probe_id")==null){
+				scoreList = recordHourPingService.probeChart1(scoreList);
+			}else{}
+		}
+		//查询小时表
+		else {
+			List<RecordHourWebDownloadEntity> webDownloadList = recordHourWebDownloadService.queryWebDownloadList(map);
+			List<RecordHourFtpEntity> ftpList = recordHourFtpService.queryFtpList(map);
+			List<ScoreEntity> webDownload = recordHourWebDownloadService.calculateWebDownload(webDownloadList);
+			List<ScoreEntity> ftpDownload = recordHourWebDownloadService.calculateFtpDownload(ftpList);
+			List<ScoreEntity> ftpUpload = recordHourWebDownloadService.calculateFtpUpload(ftpList);
+			scoreList = recordHourWebDownloadService.calculateDate4(webDownload,ftpDownload,ftpUpload);
+			if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
+				scoreList = recordHourPingService.dateChart1(scoreList);
+			}else if(map.get("county_id")==null&&map.get("probe_id")==null){
+				scoreList = recordHourPingService.cityChart1(scoreList);
+			}else if(map.get("probe_id")==null){
+				scoreList = recordHourPingService.probeChart1(scoreList);
+			}else{}
+		}
+		return R.ok().put("scoreList", scoreList);
+	}
+
+	/**
+	 * ZTY用于绘制在线视频类图
+	 */
+	@RequestMapping("/video")
+	@RequiresPermissions("recordhourping:video")
+	public R videoImage(String chartdata){
+		//查询列表数据
+		Map<String, Object> map = new HashMap<>();
+		JSONObject chartdata_jsonobject = JSONObject.parseObject(chartdata);
+		System.out.println(chartdata_jsonobject);
+		try {
+			map.putAll(JSONUtils.jsonToMap(chartdata_jsonobject));
+		} catch (RuntimeException e) {
+			throw new RRException("内部参数错误，请重试！");
+		}
+		String dateStr = map.get("ava_start").toString();
+		String dateStr2 = map.get("ava_terminal").toString();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		int dateDifferent = 0;
+		try
+		{
+			Date date2 = format.parse(dateStr2);
+			Date date = format.parse(dateStr);
+
+			dateDifferent = recordHourPingService.differentDays(date,date2);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+		List<ScoreEntity> scoreList = new ArrayList<>();
+		//查询天表
+		if (dateDifferent > 5) {
+			List<RecordHourWebVideoEntity> videoList = recordHourWebVideoService.queryDayList(map);
+			scoreList = recordHourWebVideoService.calculateService5(videoList);
+			if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
+				scoreList = recordHourPingService.dateChart1(scoreList);
+			}else if(map.get("county_id")==null&&map.get("probe_id")==null){
+				scoreList = recordHourPingService.cityChart1(scoreList);
+			}else if(map.get("probe_id")==null){
+				scoreList = recordHourPingService.probeChart1(scoreList);
+			}else{}
+		}
+		//查询小时表
+		else {
+			List<RecordHourWebVideoEntity> videoList = recordHourWebVideoService.queryVideoList(map);
+			scoreList = recordHourWebVideoService.calculateService5(videoList);
+			if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
+				scoreList = recordHourPingService.dateChart1(scoreList);
+			}else if(map.get("county_id")==null&&map.get("probe_id")==null){
+				scoreList = recordHourPingService.cityChart1(scoreList);
+			}else if(map.get("probe_id")==null){
+				scoreList = recordHourPingService.probeChart1(scoreList);
+			}else{}
+		}
+		System.out.println(scoreList);
+		return R.ok().put("scoreList", scoreList);
+	}
+
+	/**
+	 * ZTY用于绘制游戏类图
+	 */
+	@RequestMapping("/game")
+	@RequiresPermissions("recordhourping:game")
+	public R gameImage(String chartdata){
+		//查询列表数据
+		Map<String, Object> map = new HashMap<>();
+		JSONObject chartdata_jsonobject = JSONObject.parseObject(chartdata);
+		System.out.println(chartdata_jsonobject);
+		try {
+			map.putAll(JSONUtils.jsonToMap(chartdata_jsonobject));
+		} catch (RuntimeException e) {
+			throw new RRException("内部参数错误，请重试！");
+		}
+		String dateStr = map.get("ava_start").toString();
+		String dateStr2 = map.get("ava_terminal").toString();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		int dateDifferent = 0;
+		try
+		{
+			Date date2 = format.parse(dateStr2);
+			Date date = format.parse(dateStr);
+
+			dateDifferent = recordHourPingService.differentDays(date,date2);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+		List<ScoreEntity> scoreList = new ArrayList<>();
+		//查询天表
+		if (dateDifferent > 5) {
+			List<RecordHourGameEntity> gameList = recordHourGameService.queryDayList(map);
+			scoreList = recordHourGameService.calculateService6(gameList);
+			if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
+				scoreList = recordHourPingService.dateChart1(scoreList);
+			}else if(map.get("county_id")==null&&map.get("probe_id")==null){
+				scoreList = recordHourPingService.cityChart1(scoreList);
+			}else if(map.get("probe_id")==null){
+				scoreList = recordHourPingService.probeChart1(scoreList);
+			}else{}
+		}
+		//查询小时表
+		else {
+			List<RecordHourGameEntity> gameList = recordHourGameService.queryGameList(map);
+			scoreList = recordHourGameService.calculateService6(gameList);
 			if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
 				scoreList = recordHourPingService.dateChart1(scoreList);
 			}else if(map.get("county_id")==null&&map.get("probe_id")==null){

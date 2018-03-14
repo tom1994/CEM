@@ -182,6 +182,8 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 				WEBDL.setServiceType(webDownloadList.get(i).getServiceType());
 				WEBDL.setTargetName(webDownloadList.get(i).getTargetName());
 				WEBDL.setTargetId(webDownloadList.get(i).getTargetId());
+				WEBDL.setRecordDate(webDownloadList.get(i).getRecordDate());
+				WEBDL.setRecordTime(webDownloadList.get(i).getRecordTime());
 				WEBDL.setFail(webDownloadList.get(i).getFail());
 				WEBDL.setTotal(webDownloadList.get(i).getTotal());
 				WEBDL.setScore(score);
@@ -571,6 +573,8 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 				scoreTarget.setCountyName(webDownload.get(i).getCountyName());
 				scoreTarget.setProbeName(webDownload.get(i).getProbeName());
 				scoreTarget.setTargetName(webDownload.get(i).getTargetName());
+				scoreTarget.setRecordDate(webDownload.get(i).getRecordDate());
+				scoreTarget.setRecordTime(webDownload.get(i).getRecordTime());
 				scoreTarget.setFail(webDownload.get(i).getFail());
 				scoreTarget.setTotal(webDownload.get(i).getTotal());
 				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
@@ -600,6 +604,8 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 					finalScore.setServiceType(3);
 					finalScore.setTargetId(ite.getTargetId());
 					finalScore.setTargetName(ite.getTargetName());
+					finalScore.setRecordTime(ite.getRecordTime());
+					finalScore.setRecordDate(ite.getRecordDate());
 					finalScore.setScore(((connection.get(ite).getScore()) / (connection.get(ite).getBase()))*(1-(ite.getFail())/ite.getTotal()));
 					finalScore.setBase(Double.parseDouble(pros.getValue("downloadweight")));
 					connectionScore.add(finalScore);
@@ -688,6 +694,8 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 				scoreTarget.setCountyName(webDownload.get(i).getCountyName());
 				scoreTarget.setProbeName(webDownload.get(i).getProbeName());
 				scoreTarget.setTargetName(webDownload.get(i).getTargetName());
+				scoreTarget.setRecordDate(webDownload.get(i).getRecordDate());
+				scoreTarget.setRecordTime(webDownload.get(i).getRecordTime());
 				scoreTarget.setFail(webDownload.get(i).getFail());
 				scoreTarget.setTotal(webDownload.get(i).getTotal());
 				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
