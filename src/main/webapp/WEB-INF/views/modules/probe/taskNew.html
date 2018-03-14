@@ -449,7 +449,7 @@
                                           >单跳发包个数</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="tr_count"
-                                               value="3" disabled="disabled" name="count1"
+                                               value="3" disabled="disabled" name="count"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
                                                placeholder="">
                                     </div>
@@ -589,7 +589,7 @@
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="times"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
-                                               value="1" disabled="disabled" name="times1"
+                                               value="1" disabled="disabled" name="times"
                                                placeholder="">
                                     </div>
                                     <span class="col-lg-2 col-md-2 col-sm-2  Range"><span style="color:red">*</span>(1-1000)</span>
@@ -599,7 +599,7 @@
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="dhcp_timeout"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
-                                               value="500" disabled="disabled" name="timeout1"
+                                               value="500" disabled="disabled" name="timeout"
                                                placeholder="">
                                     </div>
                                     <span class="col-lg-2 col-md-2 col-sm-2  Range"><span style="color:red">*</span>(500-5000)</span>
@@ -626,7 +626,7 @@
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="dns_times"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
-                                               value="1" disabled="disabled" name="times2"
+                                               value="1" disabled="disabled" name="times"
                                                placeholder="">
                                     </div>
                                     <span class="col-lg-2 col-md-2 col-sm-2  Range"><span style="color:red">*</span>(1-1000)</span>
@@ -636,7 +636,7 @@
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="dns_interval"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
-                                               value="20" disabled="disabled" name="interval2"
+                                               value="20" disabled="disabled" name="interval"
                                                placeholder="">
                                     </div>
                                     <span class="col-lg-2 col-md-2 col-sm-2  Range"><span style="color:red">*</span>(1-5000)</span>
@@ -648,7 +648,7 @@
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="dns_count"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
-                                               value="1" disabled="disabled" name="count2" placeholder="">
+                                               value="1" disabled="disabled" name="count" placeholder="">
                                     </div>
                                     <span class="col-lg-2 col-md-2 col-sm-2  Range"><span style="color:red">*</span>(1-10000)</span>
                                     <label for="dns_timeout"
@@ -714,7 +714,7 @@
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="pppoe_interval"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
-                                               value="3000" disabled="disabled" name="interval1">
+                                               value="3000" disabled="disabled" name="interval">
                                     </div>
                                     <span class="col-lg-2 col-md-2 col-sm-2  Range"><span style="color:red">*</span>(1-5000)</span>
                                 </div>
@@ -786,7 +786,7 @@
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="radius_times"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
-                                               value="1" disabled="disabled" name="times3">
+                                               value="1" disabled="disabled" name="times">
                                     </div>
                                     <span class="col-lg-2 col-md-2 col-sm-2  Range"><span style="color:red">*</span>(1-100)</span>
                                 </div>
@@ -797,7 +797,7 @@
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="radius_interval"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
-                                               value="1000" disabled="disabled" name="interval3">
+                                               value="1000" disabled="disabled" name="interval">
                                     </div>
                                     <span class="col-lg-2 col-md-2 col-sm-2  Range"><span style="color:red">*</span>(1-5000)</span>
                                 </div>
@@ -1104,7 +1104,7 @@
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="video_lasting_time"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
-                                               value="30" disabled="disabled" name="lasting_time1">
+                                               value="30" disabled="disabled" name="lasting_time">
                                     </div>
                                     <span class="col-lg-2 col-md-2 col-sm-2  Range"><span style="color:red">*</span>(10-300)</span>
                                 </div>

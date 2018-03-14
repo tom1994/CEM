@@ -72,7 +72,7 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
         a[6].name="probe_id";
         a[6].value=probeSelected;
     }
-    if(serviceSelected!=0){
+    if(serviceSelected!=-1){
         a[7]={};
         a[7].name="service_type";
         a[7].value=serviceSelected;

@@ -157,7 +157,7 @@ function get_viewModal(update_data_id) {
                 paramforms[4].value = param.timeout;
             }
             if (stid.get(servicetypeid) == "tracert") {
-                paramforms[0].value = param.count1;
+                paramforms[0].value = param.count;
                 paramforms[1].value = param.interval;
                 paramforms[2].value = param.size;
                 paramforms[3].value = param.tos;
@@ -173,14 +173,14 @@ function get_viewModal(update_data_id) {
                 paramforms[5].value = param.timeout;
             }
             if (stid.get(servicetypeid) == "dhcp") {
-                paramforms[0].value = param.times1;
-                paramforms[1].value = param.timeout1;
+                paramforms[0].value = param.times;
+                paramforms[1].value = param.timeout;
                 paramforms[2].value = param.is_renew;
             }
             if (stid.get(servicetypeid) == "dns") {
-                paramforms[0].value = param.times2;
-                paramforms[1].value = param.interval2;
-                paramforms[2].value = param.count2;
+                paramforms[0].value = param.times;
+                paramforms[1].value = param.interval;
+                paramforms[2].value = param.count;
                 paramforms[3].value = param.timeout;
                 paramforms[4].value = JSON.stringify(param.domains);
             }
@@ -188,7 +188,7 @@ function get_viewModal(update_data_id) {
                 paramforms[0].value = param.username;
                 paramforms[1].value = param.password;
                 paramforms[2].value = param.times;
-                paramforms[3].value = param.interval1;
+                paramforms[3].value = param.interval;
                 paramforms[4].value = param.online_time;
             }
             if (stid.get(servicetypeid) == "radius") {
@@ -197,8 +197,8 @@ function get_viewModal(update_data_id) {
                 paramforms[2].value = param.secret;
                 paramforms[3].value = param.username;
                 paramforms[4].value = param.password;
-                paramforms[5].value = param.times3;
-                paramforms[6].value = param.interval3;
+                paramforms[5].value = param.times;
+                paramforms[6].value = param.interval;
             }
             if (stid.get(servicetypeid) == "ftp_upload") {
                 paramforms[0].value = param.port;
@@ -237,7 +237,8 @@ function get_viewModal(update_data_id) {
             }
             if (stid.get(servicetypeid) == "online_video") {
                 paramforms[0].value = param.video_quality;
-                paramforms[1].value = param.lasting_time1;
+                paramforms[1].value = param.lasting_time;
+                paramforms[2].value = param.first_buffer_time;
             }
             if (stid.get(servicetypeid) == "game") {
                 paramforms[0].value = param.count;
@@ -469,9 +470,7 @@ function submit_dispatch() {
     var b = parseInt($('input[name=choosetarget]:checked', '#dispatch_target').val());
     console.log(a, b);
     var probeList = getFormJson2($('#dispatch_probe'));
-    debugger;
     var targetList = getFormJson2($('#dispatch_target'));
-    debugger;
     console.log(probeList);
     if (a == 1) {
         var taskDispatch = {};
@@ -682,7 +681,6 @@ var taskform_data = new Vue({
             var tasknewJson = getFormJson($('#taskform_data'));//获取到对应的数据
             console.log(tasknewJson)
             var paramnewJson = getFormJson2($('#' + stid.get(parseInt(tasknewJson.serviceType)) + '_param'));
-            debugger;
             console.log(paramnewJson)
             var paramnew = JSON.stringify(paramnewJson);
             console.log(paramnew)
@@ -700,11 +698,10 @@ var taskform_data = new Vue({
                 toastr.warning("请选择任务类型!");
             } else if (tasknewJson.schPolicyId == "") {
                 toastr.warning("请选择调度策略!");
-                // } else if(!reg.test(tasknewJson.domains)){
-                //     toastr.warning("输入的域名有误，请重新输入!");
             } else if (tasknewJson.parameter) {
                 var paramnew = JSON.parse(tasknewJson.parameter)
-                if (paramnew.count < 3 || paramnew.count > 10000) {
+                if ((tasknewJson.serviceType== "1" ||  tasknewJson.serviceType == "2" ||tasknewJson.serviceType == "3" ||tasknewJson.serviceType == "10"||tasknewJson.serviceType == "11"||tasknewJson.serviceType == "50")&&
+                    paramnew.count < 3 || paramnew.count > 10000) {
                     toastr.warning("您输入的发包个数有误，请正确输入!");
                 } else if (paramnew.interval < 5 || paramnew.interval > 5000) {
                     toastr.warning("您输入的发包间隔有误，请正确输入!");
@@ -714,13 +711,13 @@ var taskform_data = new Vue({
                     toastr.warning("您输入的负载大小有误，请正确输入!");
                 } else if (paramnew.ttl < 32 || paramnew.ttl > 255) {
                     toastr.warning("您输入的TTL有误，请正确输入!");
-                } else if (paramnew.timeout < 1 || paramnew.timeout > 100) {
+                } else if (tasknewJson.serviceType != "13"&&paramnew.timeout < 1 || paramnew.timeout > 100) {
                     toastr.warning("您输入的超时时间有误，请正确输入!");
                 } else if (paramnew.max_hop < 20 || paramnew.max_hop > 64) {
                     toastr.warning("您输入的最大跳数有误，请正确输入!");
-                } else if (paramnew.count1 < 3 || paramnew.count1 > 5) {
+                } else if ((tasknewJson.serviceType == "4"||tasknewJson.serviceType == "5")&&paramnew.count < 3 || paramnew.count > 5) {
                     toastr.warning("您输入的单跳发包个数有误，请正确输入!");
-                } else if (paramnew.times < 1 || paramnew.times > 1000) {
+                } else if ((tasknewJson.serviceType != "14"||tasknewJson.serviceType != "13")&&paramnew.times < 1 || paramnew.times > 1000) {
                     toastr.warning("您输入的拨号请求次数有误，请正确输入!");
                 } else if (paramnew.online_time < 1 || paramnew.online_time > 3600) {
                     toastr.warning("您输入的用户在线时长有误，请正确输入!");
@@ -728,17 +725,17 @@ var taskform_data = new Vue({
                     toastr.warning("请输入用户名！");
                 } else if (tasknewJson.serviceType == "12" && paramnew.password == "") {
                     toastr.warning("请输入密码！");
-                } else if (paramnew.interval1 < 1 || paramnew.interval1 > 5000) {
+                } else if (paramnew.interval < 1 || paramnew.interval > 5000) {
                     toastr.warning("您输入的时间间隔有误，请正确输入!");
-                } else if (paramnew.times1 < 1 || paramnew.timeout1 > 1000) {
+                } else if (tasknewJson.serviceType == "13"&&paramnew.times < 1 || paramnew.times > 1000) {
                     toastr.warning("您输入的IP分配次数有误，请正确输入!");
-                } else if (paramnew.timeout1 < 500 || paramnew.timeout1 > 5000) {
+                } else if (tasknewJson.serviceType == "13"&& paramnew.timeout < 500 || paramnew.timeout > 5000) {
                     toastr.warning("您输入的超时时间有误，请正确输入!");
-                } else if (paramnew.times2 < 1 || paramnew.times2 > 1000) {
+                } else if (tasknewJson.serviceType== "14"&&paramnew.times < 1 || paramnew.times > 1000) {
                     toastr.warning("您输入的查询次数有误，请正确输入!");
-                } else if (paramnew.interval2 < 1 || paramnew.interval2 > 5000) {
+                } else if (paramnew.interval < 1 || paramnew.interval > 5000) {
                     toastr.warning("您输入的查询间隔有误，请正确输入!");
-                } else if (paramnew.count2 < 1 || paramnew.count2 > 10000) {
+                } else if (tasknewJson.serviceType== "14"&&paramnew.count < 1 || paramnew.count > 10000) {
                     toastr.warning("您输入的单次发包次数有误，请正确输入!");
                 } else if (paramnew.domains == "") {
                     toastr.warning("请输入待查询域名");
@@ -752,9 +749,9 @@ var taskform_data = new Vue({
                     toastr.warning("请输入用户名！");
                 } else if (tasknewJson.serviceType == "15" && paramnew.password == "") {
                     toastr.warning("请输入密码！");
-                } else if (paramnew.times3 < 1 || paramnew.times3 > 100) {
+                } else if (paramnew.times < 1 || paramnew.times > 100) {
                     toastr.warning("您输入的测试次数有误，请正确输入!");
-                } else if (paramnew.interval3 < 1 || paramnew.interval3 > 5000) {
+                } else if (paramnew.interval < 1 || paramnew.interval > 5000) {
                     toastr.warning("您输入的测试间隔有误，请正确输入!");
                 } else if (paramnew.max_element < 1 || paramnew.max_element > 2000) {
                     toastr.warning("您输入的最多下载元素有误，请正确输入!");
@@ -788,7 +785,7 @@ var taskform_data = new Vue({
                     toastr.warning("您输入的上传文件的大小有误，请正确输入！");
                 } else if (paramnew.first_buffer_time > 20) {
                     toastr.warning("您输入的首次缓冲时长有误，请正确输入！");
-                } else if (paramnew.lasting_time1 < 5 || paramnew.lasting_time1 > 300) {
+                } else if (paramnew.lasting_time < 5 || paramnew.lasting_time > 300) {
                     toastr.warning("您输入的持续时长有误，请正确输入!");
                 } else {
                     var tasknew = JSON.stringify(tasknewJson);
@@ -803,7 +800,6 @@ var taskform_data = new Vue({
                         success: function (result) {
                             var code = result.code;
                             var msg = result.msg;
-                            task_table.redraw();
                             // console.log(result);
                             if (status == 0) {
                                 switch (code) {

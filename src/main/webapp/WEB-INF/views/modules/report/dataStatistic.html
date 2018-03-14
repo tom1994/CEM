@@ -365,49 +365,56 @@
     });
 </script>
 <script>
-    var serviceSelected=0;
-    $('#service .jq22').comboSelect();
-    $('#service input[type=text]').val('PING(ICMP ECHO)');
-    $('.combo-dropdown').css("z-index","3");
-    $('#service .option-item').click(function (service) {
-        var a = $(service.currentTarget)[0].innerText;
-        serviceSelected = $($(service.currentTarget)[0]).data('value');
+    $(function () {
+        serviceSelected=0;
+        $('#service .jq22').comboSelect();
+        $('#city .jq22').comboSelect()
+        $('#country .jq22').comboSelect();
+        $('#task .jq22').comboSelect();
+        $('#target .jq22').comboSelect();
+        $('#service input[type=text]').val('PING(ICMP ECHO)');
+        $('.combo-dropdown').css("z-index","3");
+        $('#service .option-item').click(function (service) {
+            var a = $(service.currentTarget)[0].innerText;
+            serviceSelected = $($(service.currentTarget)[0]).data('value');
 //        var stid = $('#selectservice').val();
-        var spstid = spst.get(parseInt(serviceSelected));
-        /*测试目标和任务下拉框选项改变*/
-         getTarget(spstid);
-          getTask(serviceSelected);
-        setTimeout(function(){
-            $('#service .combo-input').val(a);
-        },20)
-    });
-    $('#service input[type=text] ').keyup(function (service) {
-        if( service.keyCode=='13'){
-            var b = $("#service .option-hover.option-selected").text();
-            serviceSelected=$("#service .option-hover.option-selected")[0].dataset.value;
-            $('#service .combo-input').val(b);
-            $('#service .combo-select select').val(b);
-        }
-    });
+            var spstid = spst.get(parseInt(serviceSelected));
+            /*测试目标和任务下拉框选项改变*/
+            getTarget(spstid);
+            getTask(serviceSelected);
+            setTimeout(function(){
+                $('#service .combo-input').val(a);
+            },20)
+        });
+        $('#service input[type=text] ').keyup(function (service) {
+            if( service.keyCode=='13'){
+                var b = $("#service .option-hover.option-selected").text();
+                serviceSelected=$("#service .option-hover.option-selected")[0].dataset.value;
+                $('#service .combo-input').val(b);
+                $('#service .combo-select select').val(b);
+            }
+        });
 
-    var intervalSelected=0;
-    $('#interval .jq22').comboSelect()
-    $('.combo-dropdown').css("z-index","3");
-    $('#interval .option-item').click(function (interval) {
-        var a = $(interval.currentTarget)[0].innerText;
-        intervalSelected = $($(interval.currentTarget)[0]).data('value');
-        setTimeout(function(){
-            $('#interval .combo-input').val(a);
-        },20)
-    });
-    $('#interval input[type=text] ').keyup(function (interval) {
-        if( interval.keyCode=='13'){
-            var b = $("#interval .option-hover.option-selected").text();
-            intervalSelected=$("#interval .option-hover.option-selected")[0].dataset.value;
-            $('#interval .combo-input').val(b);
-            $('#interval .combo-select select').val(b);
-        }
-    });
+        intervalSelected=0;
+        $('#interval .jq22').comboSelect()
+        $('.combo-dropdown').css("z-index","3");
+        $('#interval .option-item').click(function (interval) {
+            var a = $(interval.currentTarget)[0].innerText;
+            intervalSelected = $($(interval.currentTarget)[0]).data('value');
+            setTimeout(function(){
+                $('#interval .combo-input').val(a);
+            },20)
+        });
+        $('#interval input[type=text] ').keyup(function (interval) {
+            if( interval.keyCode=='13'){
+                var b = $("#interval .option-hover.option-selected").text();
+                intervalSelected=$("#interval .option-hover.option-selected")[0].dataset.value;
+                $('#interval .combo-input').val(b);
+                $('#interval .combo-select select').val(b);
+            }
+        });
+    })
+
 </script>
 <!--<script>-->
 <!--$(document).ready(function(){-->

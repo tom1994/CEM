@@ -336,8 +336,6 @@
             </div>
         </div>
     </div>
-
-
 </div>
 
 
@@ -378,6 +376,13 @@
 
 
 <script>
+    $(function () {
+        $('#city .jq22').comboSelect();
+        $('#country .jq22').comboSelect();
+        $('#probe .jq22').comboSelect();
+        $('#target .jq22').comboSelect();
+        $('#areaTarget .jq22').comboSelect();
+    })
     $('#start_date').flatpickr({
         enableTime: true,
         dateFormat: "Y-m-d H:i",

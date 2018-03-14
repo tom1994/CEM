@@ -107,10 +107,10 @@
                                         <form class="col-lg-9 col-md-9 col-sm-9 form-horizontal" id="probesearch"
                                               role="form">
                                             <div class="form-group row" style=" margin-bottom: -5px;">
-                                                <div class="input-group searchspan">
+                                                <div class="input-group searchspan" style="position: relative;top: 2px;">
                                                     <span class="searchname search" title="名称" style="width: 40px;text-align: center">名称</span>
                                                     <input type="text" class="form-control input clear" name="probe_name"
-                                                           style="width: 110px;height: 30px"
+                                                           style="width: 110px;height: 33px"
                                                            value="">
                                                 </div>
 
@@ -157,10 +157,10 @@
                                             </div>
 
                                             <div class="form-group row" style=" margin-bottom: -5px;">
-                                                <div class="input-group searchspan">
+                                                <div class="input-group searchspan" style="position: relative;top: -2px;">
                                                     <span class="searchname search " title="位置" style="width: 40px">位置</span>
                                                     <input type="text" class="form-control input clear" name="location"
-                                                           style="width: 110px;height: 30px"
+                                                           style="width: 110px;height: 33px"
                                                            value="">
                                                 </div>
                                                 <div style="display: inline-block;">
@@ -737,6 +737,14 @@
 <!--<script type="text/javascript" src="${rc.contextPath}/statics/js/index.js"></script>-->
 
 <script type="text/javascript">
+    $(function () {
+        $('#cities .jq22').comboSelect();
+        $('#country .jq22').comboSelect();
+        $('#group .jq22').comboSelect();
+        $('#Selecttype .jq22').comboSelect();
+        $('#Selectstatus .jq22').comboSelect();
+        $('#access .jq22').comboSelect()
+    })
     //参数para1：希望隐藏元素的id值
     function toggle1(param){
         if ($("#flip").attr("class")=="glyphicon glyphicon-menu-up")

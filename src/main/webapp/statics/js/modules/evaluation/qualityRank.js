@@ -295,6 +295,7 @@ var search_area_service = new Vue({
     methods: {
         testagentListsearch: function () {
             var searchJson = getFormJson($('#areasearch'));
+            debugger;
             if((searchJson.startDate)>(searchJson.terminalDate)){
                 console.log("时间选择有误，请重新选择！");
                 $('#nonavailable_time').modal('show');
@@ -337,7 +338,6 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
     var a = $(form).serializeArray();
     var o={};
     if(form.selector=='#probesearch'){
-        debugger;
         if(citySelected!=0){
             a[2]={};
             a[2].name="city_id";
@@ -685,10 +685,6 @@ var areatable = new Vue({
 });
 
 $(document).ready(function () {
-    $('#country .jq22').comboSelect();
-    $('#probe .jq22').comboSelect();
-    $('#target .jq22').comboSelect();
-    $('#areaTarget .jq22').comboSelect();
     $.ajax({
         type: "POST", /*GET会乱码*/
         url: "../../cem/city/list",//c城市列表
@@ -819,7 +815,7 @@ $(document).ready(function () {
                         var b = $("#areaCity .option-hover.option-selected").text();
                         clearArea(b);
                         var c=($("#areaCity .option-hover.option-selected"));
-                        var c=c[0].dataset
+                        var c=c[0].dataset;
                         citySelected = c.value;
                         $('#areaCity .combo-input').val(b);
                         $('#areaCity .combo-select select').val(b);
