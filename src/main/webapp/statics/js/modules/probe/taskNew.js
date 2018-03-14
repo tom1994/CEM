@@ -238,7 +238,6 @@ function get_viewModal(update_data_id) {
             if (stid.get(servicetypeid) == "online_video") {
                 paramforms[0].value = param.video_quality;
                 paramforms[1].value = param.lasting_time1;
-                paramforms[2].value = param.first_buffer_time;
             }
             if (stid.get(servicetypeid) == "game") {
                 paramforms[0].value = param.count;
@@ -470,7 +469,9 @@ function submit_dispatch() {
     var b = parseInt($('input[name=choosetarget]:checked', '#dispatch_target').val());
     console.log(a, b);
     var probeList = getFormJson2($('#dispatch_probe'));
+    debugger;
     var targetList = getFormJson2($('#dispatch_target'));
+    debugger;
     console.log(probeList);
     if (a == 1) {
         var taskDispatch = {};
@@ -681,6 +682,7 @@ var taskform_data = new Vue({
             var tasknewJson = getFormJson($('#taskform_data'));//获取到对应的数据
             console.log(tasknewJson)
             var paramnewJson = getFormJson2($('#' + stid.get(parseInt(tasknewJson.serviceType)) + '_param'));
+            debugger;
             console.log(paramnewJson)
             var paramnew = JSON.stringify(paramnewJson);
             console.log(paramnew)
@@ -801,6 +803,7 @@ var taskform_data = new Vue({
                         success: function (result) {
                             var code = result.code;
                             var msg = result.msg;
+                            task_table.redraw();
                             // console.log(result);
                             if (status == 0) {
                                 switch (code) {
@@ -910,30 +913,20 @@ function getFormJson2(form) {      /*将表单对象变为json对象*/
     var a = $(form).serializeArray();
     for (var i = 0; i < a.length; i++) {
         if (a[i].value != null && a[i].value != "") {
-            // if(a[i].name=='domains'){
-            //     a[i].domains=JSON.parse(a[i].domains)
-            // }else{
-            //     a[i].value =parseInt(a[i].value);
-            //
-            // }
             switch (a[i].name) {
-                case "probeId":
-                    a[i].value = parseInt(a[i].value);
-                case "targetId":
-                    a[i].value = parseInt(a[i].value);
-                case "times":
-                    a[i].value = parseInt(a[i].value);
-                case "interval":
-                    a[i].value = parseInt(a[i].value);
-                case "count":
-                    a[i].value = parseInt(a[i].value);
-                case "timeout":
-                    a[i].value = parseInt(a[i].value);
                 case "domains":
-                    a[i].value = JSON.parse(a[i].value);
+                    a[i].value = JSON.parse(a[i].value);break;
+                case "user_agent":
+                case "username":
+                case "secret":
+                case "filename":
+                case "address":
+                case "password":
+                    a[i].value = a[i].value;break;
+                default:
+                    a[i].value =parseInt(a[i].value);
             }
         }
-
     }
     $.each(a, function () {
         if (o[this.name] !== undefined) {
@@ -1161,6 +1154,12 @@ var dispatch_table = new Vue({
             console.log("页面重绘");
             vm.dtHandle.draw();
             /*重绘*/
+            $("#dispatch_table").colResizable({
+                liveDrag: true,
+                gripInnerHtml: "<div class='grip'></div>",
+                draggingClass: "dragging",
+                resizeMode: 'overflow',
+            });
         },
         show_modal: function () {
             $('#myModal_dispatch').modal('show');

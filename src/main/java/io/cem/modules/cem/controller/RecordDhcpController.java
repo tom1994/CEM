@@ -101,12 +101,12 @@ public class RecordDhcpController {
 //        }
 		map.put("offset", (page - 1) * limit);
 		map.put("limit", limit);
-		int total = recordDhcpService.queryTotal(map);
+		int total = dispatchId.length;
 		for (int i = 0; i < 20; i++){
 			if (taskDispatchService.queryTestStatus(dispatchId) > 0) {
 				break;
 			} else {
-				sleep(20000);
+				sleep(5000);
 			}
 		}
 		List<RecordDhcpEntity> resultList = new ArrayList<>();

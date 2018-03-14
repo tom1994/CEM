@@ -102,12 +102,12 @@ public class RecordWebVideoController {
 //        }
 		map.put("offset", (page - 1) * limit);
 		map.put("limit", limit);
-		int total = recordWebVideoService.queryTotal(map);
+		int total = dispatchId.length;
 		for (int i = 0; i < 20; i++){
 			if (taskDispatchService.queryTestStatus(dispatchId) > 0) {
 				break;
 			} else {
-				sleep(20000);
+				sleep(10000);
 			}
 		}
 		List<RecordWebVideoEntity> resultList = new ArrayList<>();

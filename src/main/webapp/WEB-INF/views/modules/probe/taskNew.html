@@ -759,7 +759,6 @@
                                           >共享密钥</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="secret"
-                                               onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
                                                disabled="disabled" name="secret">
                                     </div>
                                     <span class="col-lg-2 col-md-2 col-sm-2  Range"></span>
@@ -1022,15 +1021,15 @@
                                           >User-Agent</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <select id="user_agent" class="form-control input clear" disabled="disabled" name="user_agent">
-                                            <option value="1" selected="selected">Chrome on Windows 10</option>
-                                            <option value="2">Chrome on Windows 7</option>
-                                            <option value="3">Chrome on Windows XP</option>
-                                            <option value="4">IE9 on Windows 7</option>
-                                            <option value="5">IE11 on Windows 7</option>
-                                            <option value="6">IE11 on Windows 10</option>
-                                            <option value="7">Firefox on Windows 7</option>
-                                            <option value="8">Safari on Mac 10</option>
-                                            <option value="9">Safari on IOS 9</option>
+                                            <option value="Mozilla/5.0 (Windows NT 10.0; Win64; x64) " selected="selected">Chrome on Windows 10</option>
+                                            <option value="Mozilla/5.0 (Windows NT 6.1; Win64; x64)">Chrome on Windows 7</option>
+                                            <option value="Mozilla/5.0 (Windows NT 5.1; Win64; x64)">Chrome on Windows XP</option>
+                                            <option value="Mozilla/4.0 (compatible; MSIE 9.0; Windows NT 6.1)">IE9 on Windows 7</option>
+                                            <option value="Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0)">IE11 on Windows 7</option>
+                                            <option value="Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0)">IE11 on Windows 10</option>
+                                            <option value="Mozilla/5.0 (Windows NT 6.1; WOW64; rv:54.0) ">Firefox on Windows 7</option>
+                                            <option value="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) ">Safari on Mac 10</option>
+                                            <option value="Mozilla/5.0 (iPad; CPU OS 9_3_2 like Mac OS X) ">Safari on IOS 9</option>
                                         </select>
                                     </div>
                                     <span class="col-lg-2 col-md-2 col-sm-2  Range"></span>
@@ -1167,31 +1166,6 @@
             </div>
         </div>
     </div>
-</div>
-<div class="modal fade" id="cancel_confirm" tabindex="-1" role="dialog"
-     aria-labelledby="myModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" style="width: 500px">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                    &times;
-                </button>
-                <h3 class="modal-title">
-                    确认
-                </h3>
-            </div>
-            <div class="modal-body" style="font-size: medium">
-                <b>取消任务将不能恢复，确定取消吗?</b>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal"
-                        v-on:click="cancel_delete">返回
-                </button>
-                <button type="button" class="btn btn-success" v-on:click="confirm">确定</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal -->
 </div>
 
 <script>window.jQuery || document.write('<script src="${rc.contextPath}/statics/js/plugins/jquery/jquery-2.0.3.js"><\/script>')</script>

@@ -23,11 +23,6 @@ import io.cem.common.utils.R;
 
 
 /**
- * 
- * 
- * @author ${author}
- * @email ${email}
- * @date 2017-11-05 21:13:27
  */
 @RestController
 @RequestMapping("/cem/schedulepolicy")

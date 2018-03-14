@@ -6,10 +6,10 @@ var serviceArray = [];
 var targetNames = [];
 var probeNames = [];
 var status = 1;
-var probeSelected=0;
-var targetSelected=0;
-var citySelected=0;
-var countrySelected=0;
+var probeSelected = 0;
+var targetSelected = 0;
+var citySelected = 0;
+var countySelected = 0;
 var layers = new Map();
 var layerNames = new Map();
 
@@ -189,7 +189,7 @@ var search_data = new Vue({
 
 //区域
 var getArea = function (cityid) {
-    countrySeleted=0;
+    countySeleted = 0;
     $.ajax({
         url: "../../cem/county/info/" + cityid,
         type: "POST",
@@ -204,25 +204,25 @@ var getArea = function (cityid) {
             }
             search_data.areas = areaNames;
             setTimeout(function () {
-                $('#country .jq22').comboSelect();
-                $('.combo-dropdown').css("z-index","3");
-                $('#country .option-item').click(function (areas) {
-                        setTimeout(function () {
-                            var a = $(areas.currentTarget)[0].innerText;
-                            countrySelected = $($(areas.currentTarget)[0]).data('value');
-                            $('#country .combo-input').val(a);
-                            $('#country .combo-select select').val(a);
-                            getProbe(countrySelected);
-                        },20)
+                $('#county .jq22').comboSelect();
+                $('.combo-dropdown').css("z-index", "3");
+                $('#county .option-item').click(function (areas) {
+                    setTimeout(function () {
+                        var a = $(areas.currentTarget)[0].innerText;
+                        countySelected = $($(areas.currentTarget)[0]).data('value');
+                        $('#county .combo-input').val(a);
+                        $('#county .combo-select select').val(a);
+                        getProbe(countySelected);
+                    }, 20)
 
                 });
-                $('#country input[type=text] ').keyup(function (areas) {
-                    if( areas.keyCode=='13'){
-                        var b = $("#country .option-hover.option-selected").text();
-                        countrySelected=$("#country .option-hover.option-selected")[0].dataset.value;
-                        $('#country .combo-input').val(b);
-                        $('#country .combo-select select').val(b);
-                        getProbe(countrySelected);
+                $('#county input[type=text] ').keyup(function (areas) {
+                    if (areas.keyCode == '13') {
+                        var b = $("#county .option-hover.option-selected").text();
+                        countySelected = $("#county .option-hover.option-selected")[0].dataset.value;
+                        $('#county .combo-input').val(b);
+                        $('#county .combo-select select').val(b);
+                        getProbe(countySelected);
                     }
                 })
             }, 50);
@@ -233,7 +233,7 @@ var getArea = function (cityid) {
 //城市探针
 var getProbeCity = function (cityid) {
     probeSelected = 0;
-    if (cityid != "" && cityid != null){
+    if (cityid != "" && cityid != null) {
         $.ajax({//探针信息
             url: "../../cem/probe/infoByCity/" + cityid,
             type: "POST",
@@ -248,6 +248,7 @@ var getProbeCity = function (cityid) {
                 search_data.probe = probes;
                 setTimeout(function () {
                     $('#probe .jq22').comboSelect();
+                    $('.combo-dropdown').css("z-index", "3");
                     $('#probe .option-item').click(function (probe) {
                         setTimeout(function () {
                             var a = $(probe.currentTarget)[0].innerText;
@@ -257,9 +258,9 @@ var getProbeCity = function (cityid) {
                         }, 30);
                     });
                     $('#probe input[type=text] ').keyup(function (probe) {
-                        if( probe.keyCode=='13'){
+                        if (probe.keyCode == '13') {
                             var b = $("#probe .option-hover.option-selected").text();
-                            probeSelected=$("#probe .option-hover.option-selected")[0].dataset.value;
+                            probeSelected = $("#probe .option-hover.option-selected")[0].dataset.value;
                             $('#probe .combo-input').val(b);
                             $('#probe .combo-select select').val(b);
                         }
@@ -288,7 +289,7 @@ var getProbe = function (countyid) {
             search_data.probe = probes;
             setTimeout(function () {
                 $('#probe .jq22').comboSelect();
-                $('.combo-dropdown').css("z-index","3");
+                $('.combo-dropdown').css("z-index", "3");
                 $('#probe .option-item').click(function (probe) {
                     setTimeout(function () {
                         var a = $(probe.currentTarget)[0].innerText;
@@ -298,9 +299,9 @@ var getProbe = function (countyid) {
                     }, 30);
                 });
                 $('#probe input[type=text] ').keyup(function (probe) {
-                    if( probe.keyCode=='13'){
+                    if (probe.keyCode == '13') {
                         var b = $("#probe .option-hover.option-selected").text();
-                        probeSelected=$("#probe .option-hover.option-selected")[0].dataset.value;
+                        probeSelected = $("#probe .option-hover.option-selected")[0].dataset.value;
                         $('#probe .combo-input').val(b);
                         $('#probe .combo-select select').val(b);
                     }
@@ -318,27 +319,31 @@ var new_search = new Vue({
     methods: {
         search: function () {
             var searchJson = getFormJson($('#probesearch'));
+            console.log(searchJson);
+            debugger
             if ((searchJson.startDate) > (searchJson.terminalDate)) {
                 console.log("时间选择有误，请重新选择！");
                 toastr.warning('时间选择有误，请重新选择！');
             } else {
                 var search = {};
                 search.service = status;
-                search.city_id = searchJson.cityid;
-                search.county_id = searchJson.countyid;
-                search.probe_id = searchJson.probeid;
-                search.target_id = searchJson.targetid;
+                search.city_id = searchJson.city_id;
+                search.county_id = searchJson.county_id;
+                search.probe_id = searchJson.probe_id;
+                search.target_id = searchJson.target_id;
                 search.ava_start = searchJson.startDate.substr(0, 10);
                 search.ava_terminal = searchJson.terminalDate.substr(0, 10);
                 search.starTime = searchJson.startDate.substr(11, 15);
                 search.terminalTime = searchJson.startDate.substr(11, 15);
                 if (search.ava_start.length != 0 && search.ava_terminal.length != 0) {
                 } else {
-                    search.ava_start =  new Date(new Date() - 1000 * 60 * 60 * 24 * 4).Format("yyyy-MM-dd");
+                    search.ava_start = new Date(new Date() - 1000 * 60 * 60 * 24 * 4).Format("yyyy-MM-dd");
                     search.ava_terminal = (new Date()).Format("yyyy-MM-dd");
                 }
                 let param = {};
                 param.probedata = JSON.stringify(search);
+                debugger
+                console.log(param);
                 $.ajax({
                     /*后台取得数据,赋值给观察者*/
                     type: "POST",
@@ -711,25 +716,25 @@ $('#terminal_date').flatpickr({
 function getFormJson(form) {      /*将表单对象变为json对象*/
     var o = {};
     var a = $(form).serializeArray();
-    if(citySelected!=0){
-        a[2]={};
-        a[2].name="city_id";
-        a[2].value=citySelected;
+    if (citySelected != 0) {
+        a[2] = {};
+        a[2].name = "city_id";
+        a[2].value = citySelected;
     }
-    if(countrySelected!=0){
-        a[3]={};
-        a[3].name="country_id";
-        a[3].value=countrySelected;
+    if (countySelected != 0) {
+        a[3] = {};
+        a[3].name = "county_id";
+        a[3].value = countySelected;
     }
-    if(probeSelected!=0){
-        a[4]={};
-        a[4].name="probe_id";
-        a[4].value=probeSelected;
+    if (probeSelected != 0) {
+        a[4] = {};
+        a[4].name = "probe_id";
+        a[4].value = probeSelected;
     }
-    if(targetSelected!=0){
-        a[5]={};
-        a[5].name="probe_id";
-        a[5].value=probeSelected;
+    if (targetSelected != 0) {
+        a[5] = {};
+        a[5].name = "target_id";
+        a[5].value = targetSelected;
     }
 
     $.each(a, function () {
@@ -748,7 +753,7 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
 function changeStatus(i) {
     $.ajax({
         type: "POST", /*GET会乱码*/
-        url: "../../target/infoList/"+i,
+        url: "../../target/infoList/" + i,
         cache: false,  //禁用缓存
         dataType: "json",
         success: function (result) {
@@ -757,19 +762,23 @@ function changeStatus(i) {
                 targets[i] = {message: result.target[i]}
             }
             search_data.target = targets;
+            console.log(targets);
             setTimeout(function () {
                 $('div#target .jq22').comboSelect();
-                $('div#target input[type=text]').attr('placeholder','---请选择---');
+                $('.combo-dropdown').css("z-index", "3");
+                $('div#target input[type=text]').attr('placeholder', '---请选择---');
                 $('div#target .option-item').click(function (target) {
                     setTimeout(function () {
                         var a = $(target.currentTarget)[0].innerText;
+                        // console.log(a);
                         targetSelected = $($(target.currentTarget)[0]).data('value');
+                        console.log(targetSelected);
                         $('div#target .combo-input').val(a);
                         $('div#target .combo-select select').val(a);
                     }, 30);
                 });
                 $('#target input[type=text] ').keyup(function (target) {
-                    if( target.keyCode=='13'){
+                    if (target.keyCode == '13') {
                         var b = $("#target .option-hover.option-selected").text();
                         probeSelected = $($(target.currentTarget)[0]).data('value');
                         $('#target .combo-input').val(b);
@@ -783,7 +792,7 @@ function changeStatus(i) {
 
 
 function probe() {
-    probeSelected=0;
+    probeSelected = 0;
     $.ajax({
         url: "../../cem/probe/list",//探针列表
         type: "POST",
@@ -798,7 +807,7 @@ function probe() {
             search_data.probe = probes;
             setTimeout(function () {
                 $('#probe .jq22').comboSelect();
-                $('.combo-dropdown').css("z-index","3");
+                $('.combo-dropdown').css("z-index", "3");
                 $('#probe .option-item').click(function (probe) {
                     setTimeout(function () {
                         var a = $(probe.currentTarget)[0].innerText;
@@ -808,23 +817,24 @@ function probe() {
                     }, 30);
                 });
                 $('#probe input[type=text] ').keyup(function (probe) {
-                    if( probe.keyCode=='13'){
+                    if (probe.keyCode == '13') {
                         var b = $("#probe .option-hover.option-selected").text();
-                        probeSelected=$("#probe .option-hover.option-selected")[0].dataset.value;
+                        probeSelected = $("#probe .option-hover.option-selected")[0].dataset.value;
                         $('#probe .combo-input').val(b);
                         $('#probe .combo-select select').val(b);
                     }
                 })
-            },50);
+            }, 50);
         }
     });
 }
+
 $(document).ready(function () {
-    $('#country .jq22').comboSelect();
+    $('#county .jq22').comboSelect();
     $('#probe .jq22').comboSelect();
     $('div#city .jq22').comboSelect();
     $('#target .jq22').comboSelect();
-    citySelected=0
+    citySelected = 0;
     $.ajax({
         type: "POST", /*GET会乱码*/
         url: "../../cem/city/list",//c城市列表
@@ -838,7 +848,7 @@ $(document).ready(function () {
             search_data.city = cities;
             setTimeout(function () {
                 $('div#city .jq22').comboSelect();
-                $('.combo-dropdown').css("z-index","3");
+                $('.combo-dropdown').css("z-index", "3");
                 $('div#city .option-item').click(function (city) {
                     setTimeout(function () {
                         var a = $(city.currentTarget)[0].innerText;
@@ -851,11 +861,11 @@ $(document).ready(function () {
                     }, 50);
                 });
                 $('#city input[type=text] ').keyup(function (city) {
-                    if( city.keyCode=='13'){
+                    if (city.keyCode == '13') {
                         var b = $("#city .option-hover.option-selected").text();
                         clearArea(b);
-                        var c=($("#city .option-hover.option-selected"));
-                        var c=c[0].dataset
+                        var c = ($("#city .option-hover.option-selected"));
+                        var c = c[0].dataset
                         citySelected = c.value;
                         getArea(citySelected);
                         getProbeCity(citySelected);
@@ -868,17 +878,18 @@ $(document).ready(function () {
     });
 
     function clearArea(a) {
-        if(a=="所有地市"){
-            $('#country .combo-input').val("所有区县");
-            $('#country .combo-select select').val("所有区县");
+        if (a == "所有地市") {
+            $('#county .combo-input').val("所有区县");
+            $('#county .combo-select select').val("所有区县");
             search_data.areas = [];
-            $('#country ul').html("");
-            $("#country ul").append("<li class='option-item option-hover option-selected' data-index=='0' data-value=''>"+"所有区县"+"</li>");
+            $('#county ul').html("");
+            $("#county ul").append("<li class='option-item option-hover option-selected' data-index=='0' data-value=''>" + "所有区县" + "</li>");
             probe()
         }
-        if(a=="所有区县"){
+        if (a == "所有区县") {
             probe()
         }
     }
+
     probe()
 });

@@ -166,9 +166,8 @@ public class TaskDispatchController {
         TaskDispatchEntity taskDispatch = new TaskDispatchEntity();
         taskDispatch.setIsOndemand(1);
         taskDispatch.setStatus(0);
-        taskDispatch.setProbePort("port1");
+//        taskDispatch.setProbePort("port1");
         taskDispatch.setTarget("[" + JSON.toJSONString(targetjson) + "]");
-
         int size = probeList.size();
         int ping[][] = new int[5][size];
         int sla[][] = new int[6][size];
@@ -179,6 +178,11 @@ public class TaskDispatchController {
         JSONObject dispatch = new JSONObject();
         for (int i = 0; i < size; i++) {
             taskDispatch.setProbeId(probeList.get(i).getId());
+            if (probeList.get(i).getType() == 10) {
+                taskDispatch.setProbePort("port2");
+            }else{
+                taskDispatch.setProbePort("port1");
+            }
             if (map.containsKey("ping")) {
                 taskDispatch.setTestNumber(1);
                 taskDispatch.setTestInterval(10);

@@ -197,7 +197,8 @@
             probe.id,
             probe_name,
             upstream_id AS upstream,
-            access_layer
+            access_layer,
+            probe.type
         FROM probe
             INNER JOIN layer
                 ON access_layer = layer.layer_tag

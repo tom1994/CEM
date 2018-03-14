@@ -72,16 +72,19 @@ public class TaskDispatchServiceImpl implements TaskDispatchService {
 
     @Override
     public int queryTestStatus(Integer[] ids) {
-        int status = 0;
-        for (int j = 0; j < ids.length; j++) {
-            status = taskDispatchDao.queryTestStatus(ids[j]);
-            System.out.println(status);
-            if (status > 0) {
-            } else {
-                return 0;
+        if (ids != null) {
+            for (int j = 0; j < ids.length; j++) {
+                int status = taskDispatchDao.queryTestStatus(ids[j]);
+                System.out.println(status);
+                if (status > 0) {
+                } else {
+                    return 0;
+                }
             }
+            return 1;
+        }else{
+            return 0;
         }
-        return 1;
     }
 
     @Override
@@ -141,12 +144,12 @@ public class TaskDispatchServiceImpl implements TaskDispatchService {
             }
             StringBuilder targetNames = new StringBuilder("");
             List<TargetEntity> targetEntityList = targetService.queryTargetNames(targetIds);
-            if (targetEntityList != null && targetEntityList.size() != 0){
-                for (int j = 0; j <targetEntityList.size()-1 ; j++) {
+            if (targetEntityList != null && targetEntityList.size() != 0) {
+                for (int j = 0; j < targetEntityList.size() - 1; j++) {
                     targetNames.append(targetEntityList.get(j).getTargetName());
                     targetNames.append(",");
                 }
-                targetNames.append(targetEntityList.get(targetEntityList.size()-1).getTargetName());
+                targetNames.append(targetEntityList.get(targetEntityList.size() - 1).getTargetName());
             }
             dispatchList.get(i).setTarget(targetNames.toString());
         }

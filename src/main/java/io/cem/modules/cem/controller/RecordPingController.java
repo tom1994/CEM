@@ -98,13 +98,13 @@ public class RecordPingController {
 //        }
         map.put("offset", (page - 1) * limit);
         map.put("limit", limit);
-        int total = recordPingService.queryTotal(map);
+        int total = dispatchId.length;
 
         for (int i = 0; i < 20; i++){
             if (taskDispatchService.queryTestStatus(dispatchId) > 0) {
                 break;
             } else {
-                sleep(10000);
+                sleep(5000);
             }
         }
         List<RecordPingEntity> resultList = new ArrayList<>();

@@ -99,7 +99,7 @@
                                         </div>
                                         <div style="display: inline-block;">
                                             <span class="searchname search left" title="区县" style="width: 60px;margin-left: 61px">区县</span>
-                                            <div class="input-group searchspan" id="country">
+                                            <div class="input-group searchspan" id="county">
                                                 <div class="jq22">
                                                     <select id="selectarea" class="form-control"   v-on:change="areachange()" style="display: none">
                                                         <option value="">所有区县</option>
@@ -131,7 +131,7 @@
                                                     <select id="select_target" class="form-control"    style="display: none">
                                                         <option value="">所有目标地址</option>
                                                         <option v-for="item in target"
-                                                                v-bind:value="item.message.targetId">{{item.message.targetName}}
+                                                                v-bind:value="item.message.id">{{item.message.targetName}}
                                                         </option>
                                                     </select>
                                                 </div>

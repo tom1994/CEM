@@ -13,18 +13,10 @@ $(function () {
     RequestJson = JSON.parse(theRequest);
     var activeId = [];
     //根据内容显示tab页
-    if (RequestJson.ping != undefined && RequestJson.sla != undefined && RequestJson.download != undefined && RequestJson.web != undefined && RequestJson.video != undefined && RequestJson.game != undefined) {
-        activeId.push(1, 2, 3, 4, 5, 6);
-        $('#myTab').append("<li><a href=\"#record_ping\" data-toggle=\"tab\">网络连通性</a></li>");
-        $('#myTab').append("<li><a href=\"#record_quality\" data-toggle=\"tab\">网络质量</a></li>");
-        $('#myTab').append("<li><a href=\"#record_file\" data-toggle=\"tab\">文件传输</a></li>");
-        $('#myTab').append("<li><a href=\"#record_browsing\" data-toggle=\"tab\">网页浏览</a></li>");
-        $('#myTab').append("<li><a href=\"#record_video\" data-toggle=\"tab\">在线视频</a></li>");
-        $('#myTab').append("<li><a href=\"#record_game\" data-toggle=\"tab\">网络游戏</a></li>");
-    }
+
     if (RequestJson.ping != undefined) {
-        $('#myTab').append("<li><a href=\"#record_ping\" data-toggle=\"tab\">网络连通性</a></li>");
         activeId.push(1);
+        $('#myTab').append("<li><a href=\"#record_ping\" data-toggle=\"tab\">网络连通性</a></li>");
     }
     if (RequestJson.sla != undefined) {
         activeId.push(2);
@@ -92,7 +84,6 @@ Array.intersect = function () {
     return result;
 };
 var url = decodeURI(location.search);//获取url中"?"符后的字串
-console.log(url);
 var theRequest = new Object();
 if (url.indexOf("?") != -1) {
     var str = url.substr(1);
@@ -148,7 +139,6 @@ var ping1Table = new Vue({
         dtHandle: null,
         probedata: {},
         resultdata:{"startDate":"2018-01-29","terminalDate":"2018-01-30","interval":"","probe_id":"42","task_id":"1000","target_id":"1022","start_time":"00:00:00","end_time":"24:00:00","queryType":"1"}
-
     },
     methods: {
         reset: function () {
@@ -220,7 +210,7 @@ var ping1Table = new Vue({
                     dataType: "json",
                     contentType:"application/json",
                     success: function (result) {
-                        console.log(result)
+                        console.log(result);
                         $('.warning').css('display', 'none')
                         $('.loader').hide();
                         //  console.log(result.page.list)
@@ -1522,8 +1512,8 @@ var FTPTable = new Vue({
                             row.push(item.dnsDelay);
                             row.push(item.connDelay);
                             row.push(item.loginDelay);
-                            row.push(item.uploadSpeed);
-                            row.push(item.downloadSpeed);
+                            row.push(item.uploadRate);
+                            row.push(item.downloadRate);
                             row.push(item.headbyteDelay);
                             row.push(item.targetId);
                             row.push(item.targetIp);
@@ -1660,7 +1650,7 @@ var downloadTable = new Vue({
                             row.push(item.port);
                             row.push(item.dnsDelay);
                             row.push(item.connDelay);
-                            row.push(item.downloadSpeed);
+                            row.push(item.downloadRate);
                             row.push(item.headbyteDelay);
                             row.push(item.targetId);
                             row.push(item.targetIp);
@@ -1804,7 +1794,7 @@ var HTTPTable = new Vue({
                             row.push(item.connDelay);
                             row.push(item.headbyteDelay);
                             row.push(item.aboveFoldDelay);
-                            row.push(item.downloadSpeed);
+                            row.push(item.downloadRate);
                             row.push(item.redirectDelay);
                             row.push(item.pageFileDelay);
                             row.push(item.pageElementDelay);
@@ -1953,7 +1943,7 @@ var videoTable = new Vue({
                             row.push(item.initBufferDelay);
                             row.push(item.loadDelay);
                             row.push(item.totalBufferDelay);
-                            row.push(item.downloadSpeed);
+                            row.push(item.downloadRate);
                             row.push(item.bufferTime);
                             row.push(item.dnsDelay);
                             row.push(item.wsConnDelay);
