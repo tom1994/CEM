@@ -99,7 +99,7 @@
                                 </div>
                                 <div style="display: inline-block; position: relative; top: -15px;">
                                     <span class="searchname search left" title="区县" style="width: 40px">区县</span>
-                                    <div class="input-group searchspan" id="county">
+                                    <div class="input-group searchspan" id="country">
                                         <div class="jq22">
                                             <select id="selectarea" class="form-control"   v-on:change="areachange()" style="display: none">
                                                 <option value="">所有区县</option>
@@ -450,6 +450,11 @@
 
 
 <script>
+    $(function () {
+        $('#country .jq22').comboSelect();
+        $('#probe .jq22').comboSelect();
+        $('#city .jq22').comboSelect();
+    })
     $('#start_date').flatpickr({
         enableTime: true,
         dateFormat: "Y-m-d H:i",
