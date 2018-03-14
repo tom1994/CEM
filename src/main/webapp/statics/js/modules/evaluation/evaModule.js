@@ -289,7 +289,7 @@ var weightSet = new Vue({
                 contentType: "application/json", /*必须要,不可少*/
                 success: function (result) {
                     var forms = $('#video_form .form-input');
-                    for (var i = 0; i < 77; i++) {
+                    for (var i = 0; i < 63; i++) {
                         forms[i].value = result.video[i];
                     }
                     $('#Modal_video').modal('show');
@@ -307,7 +307,7 @@ var weightSet = new Vue({
                 contentType: "application/json", /*必须要,不可少*/
                 success: function (result) {
                     var forms = $('#game_form .form-input');
-                    for (var i = 0; i < 35; i++) {
+                    for (var i = 0; i < 28; i++) {
                         forms[i].value = result.game[i];
                     }
                     $('#Modal_game').modal('show');

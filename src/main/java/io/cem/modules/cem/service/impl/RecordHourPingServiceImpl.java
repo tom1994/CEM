@@ -1422,6 +1422,8 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 				scoreTarget.setProbeName(pingIcmp.get(i).getProbeName());
 				scoreTarget.setTargetName(pingIcmp.get(i).getTargetName());
 				scoreTarget.setAccessLayer(pingIcmp.get(i).getAccessLayer());
+				scoreTarget.setFail(pingIcmp.get(i).getFail());
+				scoreTarget.setTotal(pingIcmp.get(i).getTotal());
 				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
 				scoreBase.setScore((pingIcmp.get(i).getScore()) * (pingIcmp.get(i).getBase()));
 				scoreBase.setBase(pingIcmp.get(i).getBase());
@@ -1463,6 +1465,183 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 		return connectionScore;
 	}
 
+	@Override
+	public List<ScoreEntity> dateChart1(List<ScoreEntity> scoreList){
+		List<ScoreEntity> dateList = new ArrayList<>();
+		Map<DateChartEntity, ScoreBaseEntity> connection = new HashMap<>();
+		for (int i = 0; i < scoreList.size(); i++) {
+			DateChartEntity scoreTarget = new DateChartEntity();
+			scoreTarget.setCityId(scoreList.get(i).getCityId());
+			scoreTarget.setCountyId(scoreList.get(i).getCountyId());
+			scoreTarget.setProbeId(scoreList.get(i).getProbeId());
+			scoreTarget.setTargetId(scoreList.get(i).getTargetId());
+			scoreTarget.setCityName(scoreList.get(i).getCityName());
+			scoreTarget.setCountyName(scoreList.get(i).getCountyName());
+			scoreTarget.setProbeName(scoreList.get(i).getProbeName());
+			scoreTarget.setTargetName(scoreList.get(i).getTargetName());
+			scoreTarget.setAccessLayer(scoreList.get(i).getAccessLayer());
+			scoreTarget.setRecordDate(scoreList.get(i).getRecordDate());
+			scoreTarget.setRecordTime(scoreList.get(i).getRecordTime());
+			scoreTarget.setFail(scoreList.get(i).getFail());
+			scoreTarget.setTotal(scoreList.get(i).getTotal());
+			ScoreBaseEntity scoreBase = new ScoreBaseEntity();
+			scoreBase.setScore(scoreList.get(i).getScore());
+			scoreBase.setBase(scoreList.get(i).getBase());
+
+			if (!connection.containsKey(scoreTarget)) {
+				connection.put(scoreTarget, scoreBase);
+			} else {
+				ScoreBaseEntity scoreBaseDul = connection.get(scoreTarget);
+				scoreBase.setScore((scoreBaseDul.getScore() + scoreBase.getScore())/2);
+				scoreBase.setBase(scoreBase.getBase());
+				connection.put(scoreTarget, scoreBase);
+			}
+		}
+
+		Set<DateChartEntity> key = connection.keySet();
+		Iterator<DateChartEntity> iterator = key.iterator();
+		int id = 1;
+		while (iterator.hasNext()) {
+			DateChartEntity ite = iterator.next();
+			ScoreEntity finalScore = new ScoreEntity();
+			finalScore.setId(id);
+			finalScore.setCityId(ite.getCityId());
+			finalScore.setCityName(ite.getCityName());
+			finalScore.setCountyId(ite.getCountyId());
+			finalScore.setCountyName(ite.getCountyName());
+			finalScore.setProbeId(ite.getProbeId());
+			finalScore.setProbeName(ite.getProbeName());
+			finalScore.setServiceType(1);
+			finalScore.setTargetId(ite.getTargetId());
+			finalScore.setTargetName(ite.getTargetName());
+			finalScore.setRecordDate(ite.getRecordDate());
+			finalScore.setRecordTime(ite.getRecordTime());
+			finalScore.setScore(connection.get(ite).getScore());
+			finalScore.setBase(connection.get(ite).getBase());
+			dateList.add(finalScore);
+			id++;
+		}
+		return dateList;
+	}
+
+	@Override
+	public List<ScoreEntity> cityChart1(List<ScoreEntity> scoreList){
+		List<ScoreEntity> cityList = new ArrayList<>();
+		Map<CityChartEntity, ScoreBaseEntity> connection = new HashMap<>();
+		for (int i = 0; i < scoreList.size(); i++) {
+			CityChartEntity scoreTarget = new CityChartEntity();
+			scoreTarget.setCityId(scoreList.get(i).getCityId());
+			scoreTarget.setCountyId(scoreList.get(i).getCountyId());
+			scoreTarget.setProbeId(scoreList.get(i).getProbeId());
+			scoreTarget.setTargetId(scoreList.get(i).getTargetId());
+			scoreTarget.setCityName(scoreList.get(i).getCityName());
+			scoreTarget.setCountyName(scoreList.get(i).getCountyName());
+			scoreTarget.setProbeName(scoreList.get(i).getProbeName());
+			scoreTarget.setTargetName(scoreList.get(i).getTargetName());
+			scoreTarget.setAccessLayer(scoreList.get(i).getAccessLayer());
+			scoreTarget.setRecordDate(scoreList.get(i).getRecordDate());
+			scoreTarget.setRecordTime(scoreList.get(i).getRecordTime());
+			scoreTarget.setFail(scoreList.get(i).getFail());
+			scoreTarget.setTotal(scoreList.get(i).getTotal());
+			ScoreBaseEntity scoreBase = new ScoreBaseEntity();
+			scoreBase.setScore(scoreList.get(i).getScore());
+			scoreBase.setBase(scoreList.get(i).getBase());
+
+			if (!connection.containsKey(scoreTarget)) {
+				connection.put(scoreTarget, scoreBase);
+			} else {
+				ScoreBaseEntity scoreBaseDul = connection.get(scoreTarget);
+				scoreBase.setScore((scoreBaseDul.getScore() + scoreBase.getScore())/2);
+				scoreBase.setBase(scoreBase.getBase());
+				connection.put(scoreTarget, scoreBase);
+			}
+		}
+
+		Set<CityChartEntity> key = connection.keySet();
+		Iterator<CityChartEntity> iterator = key.iterator();
+		int id = 1;
+		while (iterator.hasNext()) {
+			CityChartEntity ite = iterator.next();
+			ScoreEntity finalScore = new ScoreEntity();
+			finalScore.setId(id);
+			finalScore.setCityId(ite.getCityId());
+			finalScore.setCityName(ite.getCityName());
+			finalScore.setCountyId(ite.getCountyId());
+			finalScore.setCountyName(ite.getCountyName());
+			finalScore.setProbeId(ite.getProbeId());
+			finalScore.setProbeName(ite.getProbeName());
+			finalScore.setServiceType(1);
+			finalScore.setTargetId(ite.getTargetId());
+			finalScore.setTargetName(ite.getTargetName());
+			finalScore.setRecordDate(ite.getRecordDate());
+			finalScore.setRecordTime(ite.getRecordTime());
+			finalScore.setScore(connection.get(ite).getScore());
+			finalScore.setBase(connection.get(ite).getBase());
+			cityList.add(finalScore);
+			id++;
+		}
+		return cityList;
+	}
+
+	@Override
+	public List<ScoreEntity> probeChart1(List<ScoreEntity> scoreList){
+		List<ScoreEntity> probeList = new ArrayList<>();
+		Map<ProbeChartEntity, ScoreBaseEntity> connection = new HashMap<>();
+		for (int i = 0; i < scoreList.size(); i++) {
+			ProbeChartEntity scoreTarget = new ProbeChartEntity();
+			scoreTarget.setCityId(scoreList.get(i).getCityId());
+			scoreTarget.setCountyId(scoreList.get(i).getCountyId());
+			scoreTarget.setProbeId(scoreList.get(i).getProbeId());
+			scoreTarget.setTargetId(scoreList.get(i).getTargetId());
+			scoreTarget.setCityName(scoreList.get(i).getCityName());
+			scoreTarget.setCountyName(scoreList.get(i).getCountyName());
+			scoreTarget.setProbeName(scoreList.get(i).getProbeName());
+			scoreTarget.setTargetName(scoreList.get(i).getTargetName());
+			scoreTarget.setAccessLayer(scoreList.get(i).getAccessLayer());
+			scoreTarget.setRecordDate(scoreList.get(i).getRecordDate());
+			scoreTarget.setRecordTime(scoreList.get(i).getRecordTime());
+			scoreTarget.setFail(scoreList.get(i).getFail());
+			scoreTarget.setTotal(scoreList.get(i).getTotal());
+			ScoreBaseEntity scoreBase = new ScoreBaseEntity();
+			scoreBase.setScore(scoreList.get(i).getScore());
+			scoreBase.setBase(scoreList.get(i).getBase());
+
+			if (!connection.containsKey(scoreTarget)) {
+				connection.put(scoreTarget, scoreBase);
+			} else {
+				ScoreBaseEntity scoreBaseDul = connection.get(scoreTarget);
+				scoreBase.setScore((scoreBaseDul.getScore() + scoreBase.getScore())/2);
+				scoreBase.setBase(scoreBase.getBase());
+				connection.put(scoreTarget, scoreBase);
+			}
+		}
+
+		Set<ProbeChartEntity> key = connection.keySet();
+		Iterator<ProbeChartEntity> iterator = key.iterator();
+		int id = 1;
+		while (iterator.hasNext()) {
+			ProbeChartEntity ite = iterator.next();
+			ScoreEntity finalScore = new ScoreEntity();
+			finalScore.setId(id);
+			finalScore.setCityId(ite.getCityId());
+			finalScore.setCityName(ite.getCityName());
+			finalScore.setCountyId(ite.getCountyId());
+			finalScore.setCountyName(ite.getCountyName());
+			finalScore.setProbeId(ite.getProbeId());
+			finalScore.setProbeName(ite.getProbeName());
+			finalScore.setServiceType(1);
+			finalScore.setTargetId(ite.getTargetId());
+			finalScore.setTargetName(ite.getTargetName());
+			finalScore.setRecordDate(ite.getRecordDate());
+			finalScore.setRecordTime(ite.getRecordTime());
+			finalScore.setScore(connection.get(ite).getScore());
+			finalScore.setBase(connection.get(ite).getBase());
+			probeList.add(finalScore);
+			id++;
+		}
+		return probeList;
+	}
+
 	//Map Function
 	public Map<ScoreTargetEntity,ScoreBaseEntity> putMap(List<ScoreEntity> list,Map<ScoreTargetEntity,ScoreBaseEntity> map){
 		for (int i = 0; i < list.size(); i++) {
@@ -1476,6 +1655,8 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 			scoreTarget.setProbeName(list.get(i).getProbeName());
 			scoreTarget.setTargetName(list.get(i).getTargetName());
 			scoreTarget.setAccessLayer(list.get(i).getAccessLayer());
+			scoreTarget.setRecordDate(list.get(i).getRecordDate());
+			scoreTarget.setRecordTime(list.get(i).getRecordTime());
 			scoreTarget.setFail(list.get(i).getFail());
 			scoreTarget.setTotal(list.get(i).getTotal());
 

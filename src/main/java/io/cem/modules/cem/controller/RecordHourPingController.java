@@ -350,6 +350,13 @@ public class RecordHourPingController {
 			List<ScoreEntity> tracertIcmp = recordHourPingService.calculateTracertIcmp(tracertList);
 			List<ScoreEntity> tracertUdp = recordHourPingService.calculateTracertUdp(tracertList);
 			List<ScoreEntity> connectionList = recordHourPingService.calculateDate1(pingIcmp,pingTcp,pingUdp,tracertIcmp,tracertUdp);
+			if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
+				connectionList = recordHourPingService.dateChart1(connectionList);
+			}else if(map.get("county_id")==null&&map.get("probe_id")==null){
+				connectionList = recordHourPingService.cityChart1(connectionList);
+			}else if(map.get("probe_id")==null){
+				connectionList = recordHourPingService.probeChart1(connectionList);
+			}else{}
 			if(connectionList.size()!=0) {
 				double maxConnection = connectionList.get(0).getScore();
 				double averageConnection = 0;
@@ -394,6 +401,13 @@ public class RecordHourPingController {
 			List<ScoreEntity> pppoe = recordHourSlaService.calculatePppoe(pppoeList);
 			List<ScoreEntity> radius = recordHourSlaService.calculateRadius(radiusList);
 			List<ScoreEntity> qualityList = recordHourSlaService.calculateDate2(slaTcp,slaUdp,dns,dhcp,pppoe,radius);
+			if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
+				qualityList = recordHourPingService.dateChart1(qualityList);
+			}else if(map.get("county_id")==null&&map.get("probe_id")==null){
+				qualityList = recordHourPingService.cityChart1(qualityList);
+			}else if(map.get("probe_id")==null){
+				qualityList = recordHourPingService.probeChart1(qualityList);
+			}else{}
 			if(qualityList.size()!=0) {
 				double maxQuality = qualityList.get(0).getScore();
 				double averageQuality = 0;
@@ -467,6 +481,13 @@ public class RecordHourPingController {
 			List<ScoreEntity> ftpDownload = recordHourWebDownloadService.calculateFtpDownload(ftpList);
 			List<ScoreEntity> ftpUpload = recordHourWebDownloadService.calculateFtpUpload(ftpList);
 			List<ScoreEntity> downloadList = recordHourWebDownloadService.calculateDate4(webDownload,ftpDownload,ftpUpload);
+			if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
+				downloadList = recordHourPingService.dateChart1(downloadList);
+			}else if(map.get("county_id")==null&&map.get("probe_id")==null){
+				downloadList = recordHourPingService.cityChart1(downloadList);
+			}else if(map.get("probe_id")==null){
+				downloadList = recordHourPingService.probeChart1(downloadList);
+			}else{}
 			if (downloadList.size()!=0) {
 				double maxDownload = downloadList.get(0).getScore();
 				double averageDownload = 0;
@@ -578,6 +599,13 @@ public class RecordHourPingController {
 			List<ScoreEntity> tracertIcmp = recordHourPingService.calculateTracertIcmp(tracertList);
 			List<ScoreEntity> tracertUdp = recordHourPingService.calculateTracertUdp(tracertList);
 			List<ScoreEntity> connectionList = recordHourPingService.calculateDate1(pingIcmp,pingTcp,pingUdp,tracertIcmp,tracertUdp);
+			if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
+				connectionList = recordHourPingService.dateChart1(connectionList);
+			}else if(map.get("county_id")==null&&map.get("probe_id")==null){
+				connectionList = recordHourPingService.cityChart1(connectionList);
+			}else if(map.get("probe_id")==null){
+				connectionList = recordHourPingService.probeChart1(connectionList);
+			}else{}
 			if (connectionList.size()!=0) {
 				double maxConnection = connectionList.get(0).getScore();
 				double averageConnection = 0;
@@ -622,6 +650,13 @@ public class RecordHourPingController {
 			List<ScoreEntity> pppoe = recordHourSlaService.calculatePppoe(pppoeList);
 			List<ScoreEntity> radius = recordHourSlaService.calculateRadius(radiusList);
 			List<ScoreEntity> qualityList = recordHourSlaService.calculateDate2(slaTcp,slaUdp,dns,dhcp,pppoe,radius);
+			if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
+				qualityList = recordHourPingService.dateChart1(qualityList);
+			}else if(map.get("county_id")==null&&map.get("probe_id")==null){
+				qualityList = recordHourPingService.cityChart1(qualityList);
+			}else if(map.get("probe_id")==null){
+				qualityList = recordHourPingService.probeChart1(qualityList);
+			}else{}
 			if (qualityList.size()!=0) {
 				double maxQuality = qualityList.get(0).getScore();
 				double averageQuality = 0;
@@ -695,6 +730,13 @@ public class RecordHourPingController {
 			List<ScoreEntity> ftpDownload = recordHourWebDownloadService.calculateFtpDownload(ftpList);
 			List<ScoreEntity> ftpUpload = recordHourWebDownloadService.calculateFtpUpload(ftpList);
 			List<ScoreEntity> downloadList = recordHourWebDownloadService.calculateDate4(webDownload,ftpDownload,ftpUpload);
+			if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
+				downloadList = recordHourPingService.dateChart1(downloadList);
+			}else if(map.get("county_id")==null&&map.get("probe_id")==null){
+				downloadList = recordHourPingService.cityChart1(downloadList);
+			}else if(map.get("probe_id")==null){
+				downloadList = recordHourPingService.probeChart1(downloadList);
+			}else{}
 			if (downloadList.size()!=0) {
 				double maxDownload = downloadList.get(0).getScore();
 				double averageDownload = 0;
@@ -859,13 +901,13 @@ public class RecordHourPingController {
 	 */
 	@RequestMapping("/connection")
 	@RequiresPermissions("recordhourping:connection")
-	public R connectionImage(String probedata, Integer page, Integer limit){
+	public R connectionImage(String chartdata){
 		//查询列表数据
 		Map<String, Object> map = new HashMap<>();
-		JSONObject probedata_jsonobject = JSONObject.parseObject(probedata);
-		System.out.println(probedata_jsonobject);
+		JSONObject chartdata_jsonobject = JSONObject.parseObject(chartdata);
+		System.out.println(chartdata_jsonobject);
 		try {
-			map.putAll(JSONUtils.jsonToMap(probedata_jsonobject));
+			map.putAll(JSONUtils.jsonToMap(chartdata_jsonobject));
 		} catch (RuntimeException e) {
 			throw new RRException("内部参数错误，请重试！");
 		}
@@ -894,6 +936,13 @@ public class RecordHourPingController {
 			List<ScoreEntity> tracertIcmp = recordHourPingService.calculateTracertIcmp(tracertList);
 			List<ScoreEntity> tracertUdp = recordHourPingService.calculateTracertUdp(tracertList);
 			scoreList = recordHourPingService.calculateDate1(pingIcmp,pingTcp,pingUdp,tracertIcmp,tracertUdp);
+			if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
+				scoreList = recordHourPingService.dateChart1(scoreList);
+			}else if(map.get("county_id")==null&&map.get("probe_id")==null){
+				scoreList = recordHourPingService.cityChart1(scoreList);
+			}else if(map.get("probe_id")==null){
+				scoreList = recordHourPingService.probeChart1(scoreList);
+			}else{}
 		}
 		//查询小时表
 		else {
@@ -905,6 +954,13 @@ public class RecordHourPingController {
 			List<ScoreEntity> tracertIcmp = recordHourPingService.calculateTracertIcmp(tracertList);
 			List<ScoreEntity> tracertUdp = recordHourPingService.calculateTracertUdp(tracertList);
 			scoreList = recordHourPingService.calculateDate1(pingIcmp,pingTcp,pingUdp,tracertIcmp,tracertUdp);
+			if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
+				scoreList = recordHourPingService.dateChart1(scoreList);
+			}else if(map.get("county_id")==null&&map.get("probe_id")==null){
+				scoreList = recordHourPingService.cityChart1(scoreList);
+			}else if(map.get("probe_id")==null){
+				scoreList = recordHourPingService.probeChart1(scoreList);
+			}else{}
 		}
 		System.out.println(scoreList);
 		return R.ok().put("scoreList", scoreList);

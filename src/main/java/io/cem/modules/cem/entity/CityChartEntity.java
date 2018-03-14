@@ -1,11 +1,10 @@
 package io.cem.modules.cem.entity;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class ScoreDateEntity {
+public class CityChartEntity {
     //地市
     private String cityName;
     //区县
@@ -32,6 +31,7 @@ public class ScoreDateEntity {
     private Integer fail;
 
     private Integer total;
+
 
     public String getCityName() {
         return cityName;
@@ -131,10 +131,10 @@ public class ScoreDateEntity {
 
     @Override
     public boolean equals(Object obj) {
-        ScoreDateEntity temp = (ScoreDateEntity) obj;
+        DateChartEntity temp = (DateChartEntity) obj;
         String end_time = format(this.getRecordDate(), "yyyy-MM-dd", Locale.CHINA);
-        String end_time1 = format(temp.getRecordDate(), "yyyy-MM-dd", Locale.CHINA);
-        if (this.getCityId().equals(temp.getCityId()) && this.getCountyId().equals(temp.getCountyId()) && this.getProbeId().equals(temp.getProbeId()) && this.getTargetId().equals(temp.getTargetId()) && end_time.equals(end_time1) && this.getRecordTime().equals(temp.getRecordTime())) {
+        String end_time1= format(temp.getRecordDate(), "yyyy-MM-dd", Locale.CHINA);
+        if(this.getCityId().equals(temp.getCityId())&&end_time.equals(end_time1)&&this.getRecordTime().equals(temp.getRecordTime())){
             return true;
         }
         return false;
@@ -149,11 +149,12 @@ public class ScoreDateEntity {
     }
 
 
+
     @Override
     public int hashCode() {
-
-        if (this.getCityId() != null && this.getCountyId() != null && this.getProbeId() != null && this.getTargetId() != null)
-            return this.getCityId() & this.getCountyId() & this.getProbeId() & this.getTargetId();
+        String end_time = format(this.getRecordDate(), "yyyyMMdd", Locale.CHINA);
+        if(this.getCityId()!=null&&this.getRecordTime()!=null&&this.getRecordDate()!=null)
+            return this.cityId&this.recordTime.hashCode()&end_time.hashCode();
         return super.hashCode();
     }
 

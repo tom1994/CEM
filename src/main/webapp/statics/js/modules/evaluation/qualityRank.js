@@ -295,6 +295,7 @@ var search_area_service = new Vue({
     methods: {
         testagentListsearch: function () {
             var searchJson = getFormJson($('#areasearch'));
+            debugger;
             if((searchJson.startDate)>(searchJson.terminalDate)){
                 console.log("时间选择有误，请重新选择！");
                 $('#nonavailable_time').modal('show');
@@ -321,8 +322,6 @@ var search_area_service = new Vue({
                 console.log(schedulepolicy);
                 areatable.probedata = search;
                 areatable.redraw();
-
-
             }
         },
         reset: function () {    /*重置*/
@@ -337,7 +336,7 @@ var search_area_service = new Vue({
 
 function getFormJson(form) {      /*将表单对象变为json对象*/
     var a = $(form).serializeArray();
-    var o={}
+    var o={};
     if(form.selector=='#probesearch'){
         if(citySelected!=0){
             a[2]={};
@@ -349,15 +348,16 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
             a[3].name="country_id";
             a[3].value=countrySelected;
         }
-        if(serviceSelected!=0){
-            a[4]={};
-            a[4].name="service_type";
-            a[4].value=serviceSelected;
+        if(serviceSelected!=-1){
+            debugger;
+            a[2]={};
+            a[2].name="service_type";
+            a[2].value=JSON.stringify(serviceSelected);
         }
         if(targetSelected!=0){
-            a[5]={};
-            a[5].name="target";
-            a[5].value=targetSelected;
+            a[3]={};
+            a[3].name="target";
+            a[3].value=targetSelected;
         }
 
     }else {
@@ -739,7 +739,7 @@ $(document).ready(function () {
             $("#country ul").append("<li class='option-item option-hover option-selected' data-index=='0' data-value=''>"+"所有区县"+"</li>");
         }
     }
-    var serviceSelected=0;
+
     $('#service .jq22').comboSelect();
     $("#service input[type=text]").attr('placeholder',"---请选择---")
     $('.combo-dropdown').css("z-index","3");

@@ -360,6 +360,8 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 					FTPD.setServiceType(ftpList.get(i).getServiceType());
 					FTPD.setTargetName(ftpList.get(i).getTargetName());
 					FTPD.setTargetId(ftpList.get(i).getTargetId());
+					FTPD.setRecordTime(ftpList.get(i).getRecordTime());
+					FTPD.setRecordDate(ftpList.get(i).getRecordDate());
 					FTPD.setFail(ftpList.get(i).getFail());
 					FTPD.setTotal(ftpList.get(i).getTotal());
 					FTPD.setScore(score);
@@ -538,6 +540,8 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 					FTPU.setServiceType(ftpList.get(i).getServiceType());
 					FTPU.setTargetName(ftpList.get(i).getTargetName());
 					FTPU.setTargetId(ftpList.get(i).getTargetId());
+					FTPU.setRecordTime(ftpList.get(i).getRecordTime());
+					FTPU.setRecordDate(ftpList.get(i).getRecordDate());
 					FTPU.setFail(ftpList.get(i).getFail());
 					FTPU.setTotal(ftpList.get(i).getTotal());
 					FTPU.setScore(score);
@@ -625,6 +629,8 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 				scoreTarget.setTargetName(webDownload.get(i).getTargetName());
 				scoreTarget.setFail(webDownload.get(i).getFail());
 				scoreTarget.setTotal(webDownload.get(i).getTotal());
+				scoreTarget.setRecordTime(webDownload.get(i).getRecordTime());
+				scoreTarget.setRecordDate(webDownload.get(i).getRecordDate());
 				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
 				scoreBase.setScore((webDownload.get(i).getScore()) * (webDownload.get(i).getBase()));
 				scoreBase.setBase(webDownload.get(i).getBase());
@@ -652,6 +658,8 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 					finalScore.setServiceType(4);
 					finalScore.setTargetId(ite.getTargetId());
 					finalScore.setTargetName(ite.getTargetName());
+					finalScore.setRecordDate(ite.getRecordDate());
+					finalScore.setRecordTime(ite.getRecordTime());
 					finalScore.setScore(((connection.get(ite).getScore()) / (connection.get(ite).getBase()))*(1-(ite.getFail())/ite.getTotal()));
 					finalScore.setBase(Double.parseDouble(pros.getValue("downloadweight")));
 					connectionScore.add(finalScore);

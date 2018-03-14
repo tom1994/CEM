@@ -48,6 +48,12 @@ public interface RecordHourPingService {
 
 	List<ScoreEntity> calculateArea1(List<ScoreEntity> pingIcmp,List<ScoreEntity> pingTcp,List<ScoreEntity> pingUdp,List<ScoreEntity> tracertIcmp,List<ScoreEntity> tracertUdp);
 
+	List<ScoreEntity> dateChart1(List<ScoreEntity> scoreList);
+
+	List<ScoreEntity> cityChart1(List<ScoreEntity> scoreList);
+
+	List<ScoreEntity> probeChart1(List<ScoreEntity> scoreList);
+
 	int differentDays(Date date1, Date date2);
 
 	int queryTotal(Map<String, Object> map);
