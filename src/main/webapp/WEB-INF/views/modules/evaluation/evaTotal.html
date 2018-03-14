@@ -9,560 +9,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>质量评分</title>
     #parse("cemHeader.html")  <!--导入CSS和js文件-->
-
+    <link href="${rc.contextPath}/statics/css/formStyle.css" rel="stylesheet">
     <script src="https://cdn.bootcss.com/vue/2.5.13/vue.js"></script>
     <!--<script src="https://code.highcharts.com/highcharts.js"></script>-->
-    <script src="https://cdn.bootcss.com/highstock/6.0.3/highstock.js"></script>
-    <script>
-        $(function () {
-            $('#container').highcharts({
-                chart: {
-                    type: 'line',
-                    backgroundColor: 'rgba(0,0,0,0)'
-                },
-                title: {
-                    text: ''
-                },
-
-                xAxis: {
-                    labels: {
-                        rotation: 0//调节倾斜角度偏移
-                    },
-                    // categories: (function () {
-                    //     var arr = [];
-                    //     $.ajax({
-                    //         type: "post",
-                    //         async: false, //同步执行
-                    //         url: "",
-                    //         data: {configId: 'home_web_top'},
-                    //         dataType: "json", //返回数据形式为json
-                    //         success: function (result) {
-                    //             if (result) {
-                    //                 for (var i = 0; i < result.rows.length; i++) {
-                    //                     arr.push(result.rows[i].destname);
-                    //                 }
-                    //             }
-                    //         }
-                    //     })
-                    //     return arr;
-                    // })(),
-                    categories:['3月','4月','5月',"6月",'7月','8月','9月','10月',"11月",'12月'],
-                    crosshair: true
-                },
-                yAxis: {
-                    max: 100,
-                    min: 60,
-                    title: {
-                        text: ' '
-                    }
-                },
-                tooltip: {
-                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                    '<td style="padding:0"><b>{point.y:.1f} Q</b></td></tr>',
-                    footerFormat: '</table>',
-                    shared: true,
-                    useHTML: true
-                },
-                plotOptions: {
-                    stickyTracking: false,
-                    column: {
-                        pointPadding: 0.2,
-                        borderWidth: 0
-                    },
-                },
-                exporting: {
-                    enabled:false
-                },
-                series: [{
-                    name: '',
-                    // data: (function () {
-                    //     var arr = [];
-                    //     $.ajax({
-                    //         type: "post",
-                    //         async: false, //同步执行
-                    //         url: "",
-                    //         data: {configId: 'home_web_top'},
-                    //         dataType: "json", //返回数据形式为json
-                    //         success: function (result) {
-                    //             if (result) {
-                    //                 for (var i = 0; i < result.rows.length; i++) {
-                    //                     arr.push(parseFloat(result.rows[i].qoe));
-                    //                 }
-                    //             }
-                    //         }
-                    //     })
-                    //     return arr;
-                    // })()
-                    data:[65,88,79,84,96,75,86,66,99,76],
-                    showInLegend: false,
-
-
-                }]
-
-            });
-
-
-        });
-        $(function () {
-            $('#container2').highcharts({
-                chart: {
-                    type: 'line',
-                    backgroundColor: 'rgba(0,0,0,0)'
-                },
-                title: {
-                    text: ''
-                },
-
-                xAxis: {
-                    labels: {
-                        rotation: 0//调节倾斜角度偏移
-                    },
-                    // categories: (function () {
-                    //     var arr = [];
-                    //     $.ajax({
-                    //         type: "post",
-                    //         async: false, //同步执行
-                    //         url: "",
-                    //         data: {configId: 'home_web_top'},
-                    //         dataType: "json", //返回数据形式为json
-                    //         success: function (result) {
-                    //             if (result) {
-                    //                 for (var i = 0; i < result.rows.length; i++) {
-                    //                     arr.push(result.rows[i].destname);
-                    //                 }
-                    //             }
-                    //         }
-                    //     })
-                    //     return arr;
-                    // })(),
-                    categories:['3月','4月','5月',"6月",'7月','8月','9月','10月',"11月",'12月'],
-                    crosshair: true
-                },
-                yAxis: {
-                    max: 100,
-                    min: 60,
-                    title: {
-                        text: ' '
-                    }
-                },
-                tooltip: {
-                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                    '<td style="padding:0"><b>{point.y:.1f} Q</b></td></tr>',
-                    footerFormat: '</table>',
-                    shared: true,
-                    useHTML: true
-                },
-                plotOptions: {
-                    stickyTracking: false,
-                    column: {
-                        pointPadding: 0.2,
-                        borderWidth: 0
-                    },
-                },
-                exporting: {
-                    enabled:false
-                },
-                series: [{
-                    name: '',
-                    // data: (function () {
-                    //     var arr = [];
-                    //     $.ajax({
-                    //         type: "post",
-                    //         async: false, //同步执行
-                    //         url: "",
-                    //         data: {configId: 'home_web_top'},
-                    //         dataType: "json", //返回数据形式为json
-                    //         success: function (result) {
-                    //             if (result) {
-                    //                 for (var i = 0; i < result.rows.length; i++) {
-                    //                     arr.push(parseFloat(result.rows[i].qoe));
-                    //                 }
-                    //             }
-                    //         }
-                    //     })
-                    //     return arr;
-                    // })()
-                    data:[65,88,79,84,96,75,86,66,99,76],
-                    showInLegend: false,
-
-
-                }]
-
-            });
-
-
-        });
-        $(function () {
-            $('#container3').highcharts({
-                chart: {
-                    type: 'line',
-                    backgroundColor: 'rgba(0,0,0,0)'
-                },
-                title: {
-                    text: ''
-                },
-
-                xAxis: {
-                    labels: {
-                        rotation: 0//调节倾斜角度偏移
-                    },
-                    // categories: (function () {
-                    //     var arr = [];
-                    //     $.ajax({
-                    //         type: "post",
-                    //         async: false, //同步执行
-                    //         url: "",
-                    //         data: {configId: 'home_web_top'},
-                    //         dataType: "json", //返回数据形式为json
-                    //         success: function (result) {
-                    //             if (result) {
-                    //                 for (var i = 0; i < result.rows.length; i++) {
-                    //                     arr.push(result.rows[i].destname);
-                    //                 }
-                    //             }
-                    //         }
-                    //     })
-                    //     return arr;
-                    // })(),
-                    categories:['3月','4月','5月',"6月",'7月','8月','9月','10月',"11月",'12月'],
-                    crosshair: true
-                },
-                yAxis: {
-                    max: 100,
-                    min: 60,
-                    title: {
-                        text: ' '
-                    }
-                },
-                tooltip: {
-                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                    '<td style="padding:0"><b>{point.y:.1f} Q</b></td></tr>',
-                    footerFormat: '</table>',
-                    shared: true,
-                    useHTML: true
-                },
-                plotOptions: {
-                    stickyTracking: false,
-                    column: {
-                        pointPadding: 0.2,
-                        borderWidth: 0
-                    },
-                },
-                exporting: {
-                    enabled:false
-                },
-                series: [{
-                    name: '',
-                    // data: (function () {
-                    //     var arr = [];
-                    //     $.ajax({
-                    //         type: "post",
-                    //         async: false, //同步执行
-                    //         url: "",
-                    //         data: {configId: 'home_web_top'},
-                    //         dataType: "json", //返回数据形式为json
-                    //         success: function (result) {
-                    //             if (result) {
-                    //                 for (var i = 0; i < result.rows.length; i++) {
-                    //                     arr.push(parseFloat(result.rows[i].qoe));
-                    //                 }
-                    //             }
-                    //         }
-                    //     })
-                    //     return arr;
-                    // })()
-                    data:[65,88,79,84,96,75,86,66,99,76],
-                    showInLegend: false,
-
-
-                }]
-
-            });
-
-
-        });
-        $(function () {
-            $('#container4').highcharts({
-                chart: {
-                    type: 'line',
-                    backgroundColor: 'rgba(0,0,0,0)'
-                },
-                title: {
-                    text: ''
-                },
-
-                xAxis: {
-                    labels: {
-                        rotation: 0//调节倾斜角度偏移
-                    },
-                    // categories: (function () {
-                    //     var arr = [];
-                    //     $.ajax({
-                    //         type: "post",
-                    //         async: false, //同步执行
-                    //         url: "",
-                    //         data: {configId: 'home_web_top'},
-                    //         dataType: "json", //返回数据形式为json
-                    //         success: function (result) {
-                    //             if (result) {
-                    //                 for (var i = 0; i < result.rows.length; i++) {
-                    //                     arr.push(result.rows[i].destname);
-                    //                 }
-                    //             }
-                    //         }
-                    //     })
-                    //     return arr;
-                    // })(),
-                    categories:['3月','4月','5月',"6月",'7月','8月','9月','10月',"11月",'12月'],
-                    crosshair: true
-                },
-                yAxis: {
-                    max: 100,
-                    min: 60,
-                    title: {
-                        text: ' '
-                    }
-                },
-                tooltip: {
-                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                    '<td style="padding:0"><b>{point.y:.1f} Q</b></td></tr>',
-                    footerFormat: '</table>',
-                    shared: true,
-                    useHTML: true
-                },
-                plotOptions: {
-                    stickyTracking: false,
-                    column: {
-                        pointPadding: 0.2,
-                        borderWidth: 0
-                    },
-                },
-                exporting: {
-                    enabled:false
-                },
-                series: [{
-                    name: '',
-                    // data: (function () {
-                    //     var arr = [];
-                    //     $.ajax({
-                    //         type: "post",
-                    //         async: false, //同步执行
-                    //         url: "",
-                    //         data: {configId: 'home_web_top'},
-                    //         dataType: "json", //返回数据形式为json
-                    //         success: function (result) {
-                    //             if (result) {
-                    //                 for (var i = 0; i < result.rows.length; i++) {
-                    //                     arr.push(parseFloat(result.rows[i].qoe));
-                    //                 }
-                    //             }
-                    //         }
-                    //     })
-                    //     return arr;
-                    // })()
-                    data:[65,88,79,84,96,75,86,66,99,76],
-                    showInLegend: false,
-
-
-                }]
-
-            });
-
-
-        });
-        $(function () {
-            $('#container5').highcharts({
-                chart: {
-                    type: 'line',
-                    backgroundColor: 'rgba(0,0,0,0)'
-                },
-                title: {
-                    text: ''
-                },
-
-                xAxis: {
-                    labels: {
-                        rotation: 0//调节倾斜角度偏移
-                    },
-                    // categories: (function () {
-                    //     var arr = [];
-                    //     $.ajax({
-                    //         type: "post",
-                    //         async: false, //同步执行
-                    //         url: "",
-                    //         data: {configId: 'home_web_top'},
-                    //         dataType: "json", //返回数据形式为json
-                    //         success: function (result) {
-                    //             if (result) {
-                    //                 for (var i = 0; i < result.rows.length; i++) {
-                    //                     arr.push(result.rows[i].destname);
-                    //                 }
-                    //             }
-                    //         }
-                    //     })
-                    //     return arr;
-                    // })(),
-                    categories:['3月','4月','5月',"6月",'7月','8月','9月','10月',"11月",'12月'],
-                    crosshair: true
-                },
-                yAxis: {
-                    max: 100,
-                    min: 60,
-                    title: {
-                        text: ' '
-                    }
-                },
-                tooltip: {
-                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                    '<td style="padding:0"><b>{point.y:.1f} Q</b></td></tr>',
-                    footerFormat: '</table>',
-                    shared: true,
-                    useHTML: true
-                },
-                plotOptions: {
-                    stickyTracking: false,
-                    column: {
-                        pointPadding: 0.2,
-                        borderWidth: 0
-                    },
-                },
-                exporting: {
-                    enabled:false
-                },
-                series: [{
-                    name: '',
-                    // data: (function () {
-                    //     var arr = [];
-                    //     $.ajax({
-                    //         type: "post",
-                    //         async: false, //同步执行
-                    //         url: "",
-                    //         data: {configId: 'home_web_top'},
-                    //         dataType: "json", //返回数据形式为json
-                    //         success: function (result) {
-                    //             if (result) {
-                    //                 for (var i = 0; i < result.rows.length; i++) {
-                    //                     arr.push(parseFloat(result.rows[i].qoe));
-                    //                 }
-                    //             }
-                    //         }
-                    //     })
-                    //     return arr;
-                    // })()
-                    data:[65,88,79,84,96,75,86,66,99,76],
-                    showInLegend: false,
-
-
-                }]
-
-            });
-
-
-        });
-        $(function () {
-            $('#container6').highcharts({
-                chart: {
-                    type: 'line',
-                    backgroundColor: 'rgba(0,0,0,0)'
-                },
-                title: {
-                    text: ''
-                },
-
-                xAxis: {
-                    labels: {
-                        rotation: 0//调节倾斜角度偏移
-                    },
-                    // categories: (function () {
-                    //     var arr = [];
-                    //     $.ajax({
-                    //         type: "post",
-                    //         async: false, //同步执行
-                    //         url: "",
-                    //         data: {configId: 'home_web_top'},
-                    //         dataType: "json", //返回数据形式为json
-                    //         success: function (result) {
-                    //             if (result) {
-                    //                 for (var i = 0; i < result.rows.length; i++) {
-                    //                     arr.push(result.rows[i].destname);
-                    //                 }
-                    //             }
-                    //         }
-                    //     })
-                    //     return arr;
-                    // })(),
-                    categories:['3月','4月','5月',"6月",'7月','8月','9月','10月',"11月",'12月'],
-                    crosshair: true
-                },
-                yAxis: {
-                    max: 100,
-                    min: 60,
-                    title: {
-                        text: ' '
-                    }
-                },
-                tooltip: {
-                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                    '<td style="padding:0"><b>{point.y:.1f} Q</b></td></tr>',
-                    footerFormat: '</table>',
-                    shared: true,
-                    useHTML: true
-                },
-                plotOptions: {
-                    stickyTracking: false,
-                    column: {
-                        pointPadding: 0.2,
-                        borderWidth: 0
-                    },
-                },
-                exporting: {
-                    enabled:false
-                },
-                series: [{
-                    name: '',
-                    // data: (function () {
-                    //     var arr = [];
-                    //     $.ajax({
-                    //         type: "post",
-                    //         async: false, //同步执行
-                    //         url: "",
-                    //         data: {configId: 'home_web_top'},
-                    //         dataType: "json", //返回数据形式为json
-                    //         success: function (result) {
-                    //             if (result) {
-                    //                 for (var i = 0; i < result.rows.length; i++) {
-                    //                     arr.push(parseFloat(result.rows[i].qoe));
-                    //                 }
-                    //             }
-                    //         }
-                    //     })
-                    //     return arr;
-                    // })()
-                    data:[65,88,79,84,96,75,86,66,99,76],
-                    showInLegend: false,
-
-
-                }]
-
-            });
-
-
-        });
-    </script>
+    <!--<script src="https://cdn.bootcss.com/highstock/6.0.3/highstock.js"></script>-->
     <style>
         .left-up{
             height: 150px;
+            width: 30%;
         }
+        .right{
+            width: 70%;
+        }
+
         p{
             margin: 10px 0 10px;
         }
 
+        .wrapper-module {
+            margin:  0;
+            padding:0;
+        }
+        tr:hover{background:#E5E5E5 }
+        .box{
+            padding: 0px;
+            min-height: 0px;
+        }
+        .float-e-margins .btn {
+            margin-bottom:0px !important;
+        }
+        /*.combo-dropdown{*/
+        /*max-height: 170px!important;*/
+        /*}*/
+        .combo-dropdown li{
+            padding: 5px;
+        }
+        .option-item{
+            border-bottom:0px
+        }
+        .combo-arrow::before{
+            border-top: 5px solid 	Gray;
+
+        }
+        .combo-open .combo-arrow{
+            border-color: #0EB690;
+        }
+        .combo-focus input{
+            border-color: #0EB690;
+        }
+        .combo-focus{
+            border-color: #0EB690;
+            box-shadow: none
+        }
+        input:focus {
+            border-color: #0EB690;
+            box-shadow: none;
+        }
+        .combo-input{
+            text-overflow: clip;
+        }
+        input[type=text]::-ms-clear{
+            display: none;
+        }
     </style>
 </head>
 
@@ -573,68 +81,61 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-content" style="padding-bottom: 0 !important;">
                     <div class="row" id="searchbox" style="border: none !important;">
-                        <form class="col-lg-9 col-md-19 col-sm-9 form-horizontal" id="probesearch"
+                        <form class="col-lg-11 col-md-11 col-sm-11 form-horizontal" id="probesearch"
                               role="form">
-                            <div class="form-group row">
-                                <div class="input-group searchspan">
-                                    <span class="searchname" title="选择探针" style="width: 80px">选择探针：</span>
+                            <div class="form-group row" style="margin-bottom: -14px" >
+                                <div style="display:inline-block;position: relative;top: -15px; ">
+                                    <span class="searchname" title="地市" style="width:40px">地市</span>
+                                    <div class="input-group searchspan" id="city" >
+                                        <div class="jq22">
+                                            <select id="selectcity" class="form-control"   v-on:change="citychange()" style="display: none">
+                                                <option value="">所有地市</option>
+                                                <option v-for="item in cities"
+                                                        v-bind:value="item.message.cityId">{{ item.message.cityName }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
-
-                                <div class="input-group searchspan">
-                                    <span class="searchname" title="地市" style="width: 40px">地市</span>
-                                    <select id="selectcity" class="form-control" name="city"
-                                            v-on:change="citychange()" style="width: 110px">
-                                        <option value="">---请选择---</option>
-                                        <option v-for="item in cities"
-                                                v-bind:value="item.message.cityId">{{ item.message.cityName }}
-                                        </option>
-                                        <!--<option v-for="pitem in parray" v-bind:value="pitem.Id">{{ pitem.Name }}-->
-                                    </select>
+                                <div style="display: inline-block; position: relative; top: -15px;">
+                                    <span class="searchname search left" title="区县" style="width: 40px">区县</span>
+                                    <div class="input-group searchspan" id="county">
+                                        <div class="jq22">
+                                            <select id="selectarea" class="form-control"   v-on:change="areachange()" style="display: none">
+                                                <option value="">所有区县</option>
+                                                <option v-for="item in areas"
+                                                        v-bind:value="item.message.countyId">{{item.message.countyName}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
-
-                                <div class="input-group searchspan">
-                                    <span class="searchname" title="区县" style="width: 40px">区县</span>
-                                    <select id="selectarea" class="form-control " name="area"
-                                            v-on:change="areachange()" style="width: 110px">
-                                        <option value="">---请选择---</option>
-                                        <option v-for="item in areas"
-                                                v-bind:value="item.message.countyId">{{ item.message.countyName }}
-                                        </option>
-                                    </select>
+                                <div style="display: inline-block; position: relative;top: -15px;" >
+                                    <span class="searchname search" title="探针" style="width: 40px">探针</span>
+                                    <div class="input-group searchspan" id="probe" >
+                                        <div class="jq22">
+                                            <select id="selectprobe" class="form-control"   style="display: none">
+                                                <option value="">所有探针</option>
+                                                <option v-for="item in probe" v-bind:value="item.message.id">{{ item.message.name}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="input-group searchspan">
-                                    <span class="searchname" title="探针" style="width: 40px">探针</span>
-                                    <select class="form-control " name="probe" style="width: 110px">
-                                        <option value="">---请选择---</option>
-                                        <option v-for="item in probe">{{ item.message.name }}</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <div class="input-group searchspan">
-                                    <span class="searchname" title="时间" style="width: 80px">选择时间：</span>
-                                </div>
-
-                                <div class="input-group searchspan">
+                                <div class="input-group searchspan " style="position: relative;top: -5px;">
                                     <span class="searchname" title="日期" style="width: 40px">起始</span>
                                     <input type="text" id="start_date" class="form-control" name="startDate"
-                                           style="width: 140px"
+                                           style="width: 140px;height: 36px;"
                                            value="">
                                 </div>
-
-                                <div class="input-group searchspan">
+                                <div class="input-group searchspan" style="position: relative;top: -5px;">
                                     <span class="searchname" title="日期" style="width: 40px">结束</span>
                                     <input type="text" id="terminal_date" class="form-control" name="terminalDate"
-                                           style="width: 140px"
+                                           style="width: 140px;height: 36px;"
                                            value="">
                                 </div>
                             </div>
-
                         </form>
-
-
-                        <div class="col-lg-2 col-md-2 col-sm-2 pull-left" style="margin-top: 4px;" id="search">
+                        <div class="col-lg-1 col-md-1 col-sm-1 pull-left" style="margin-top: 4px;" id="search">
                             <button type="button" class="btn btn-sm btn-success"
                                     style="margin-right: 5px"
                                     v-on:click="testagentListsearch"><span
@@ -648,8 +149,8 @@
     </div>
     <div class="row" id="test_table">
         <div class="col-lg-12 col-md-12 col-sm-12">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title fontcolor" id="probehandle" style="padding-bottom: 0px !important;">
+            <div class="ibox float-e-margins ">
+                <div class="ibox-title fontcolor box" id="probehandle" style="padding-bottom: 0px !important;">
                     <a href="../../cem/probe/download">
                         <button type="button" class="btn btn-sm btn-success"><span
                                 class="glyphicon glyphicon-open"></span>导出
@@ -691,7 +192,7 @@
 
                                             <div class="right">
                                                 <div class="col-lg-12 col-md-12 col-sm-12">
-                                                    <div id="container" style="height: 150px; margin: 0 10px 0 0 ">
+                                                    <div id="container_connection" style="height: 150px; margin: 0 10px 0 0 ">
 
                                                     </div>
                                                 </div>
@@ -723,7 +224,7 @@
                                             </div>
                                             <div class="right">
                                                 <div class="col-lg-12 col-md-12 col-sm-12">
-                                                    <div id="container2" style="height: 150px; margin: 0 10px 0 0 ">
+                                                    <div id="container_quality" style="height: 150px; margin: 0 10px 0 0 ">
 
                                                     </div>
                                                 </div>
@@ -756,7 +257,7 @@
                                             </div>
                                             <div class="right">
                                                 <div class="col-lg-12 col-md-12 col-sm-12">
-                                                    <div id="container3" style="height: 150px; margin: 0 10px 0 0 ">
+                                                    <div id="container_download" style="height: 150px; margin: 0 10px 0 0 ">
 
                                                     </div>
                                                 </div>
@@ -788,7 +289,7 @@
                                             </div>
                                             <div class="right">
                                                 <div class="col-lg-12 col-md-12 col-sm-12">
-                                                    <div id="container4" style="height: 150px; margin: 0 10px 0 0 ">
+                                                    <div id="container_page" style="height: 150px; margin: 0 10px 0 0 ">
 
                                                     </div>
                                                 </div>
@@ -822,7 +323,7 @@
                                             </div>
                                             <div class="right">
                                                 <div class="col-lg-12 col-md-12 col-sm-12">
-                                                    <div id="container5" style="height: 150px; margin: 0 10px 0 0 ">
+                                                    <div id="container_video" style="height: 150px; margin: 0 10px 0 0 ">
 
                                                     </div>
                                                 </div>
@@ -854,7 +355,7 @@
                                             </div>
                                             <div class="right">
                                                 <div class="col-lg-12 col-md-12 col-sm-12">
-                                                    <div id="container6" style="height: 150px; margin: 0 10px 0 0 ">
+                                                    <div id="container_game" style="height: 150px; margin: 0 10px 0 0 ">
 
                                                     </div>
                                                 </div>
@@ -943,10 +444,9 @@
 
 
 
-
-
 <script type="text/javascript"
         src="${rc.contextPath}/statics/js/modules/evaluation/evaTotal.js?_${date.systemTime}"></script>
+
 
 
 <script>
@@ -964,5 +464,20 @@
         time_24hr: true
     });
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </body>
 </html>
