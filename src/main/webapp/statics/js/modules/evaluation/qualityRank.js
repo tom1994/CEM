@@ -295,11 +295,6 @@ var search_area_service = new Vue({
     methods: {
         testagentListsearch: function () {
             var searchJson = getFormJson($('#areasearch'));
-<<<<<<< HEAD
-            debugger;
-=======
-            debugger
->>>>>>> 025f520d0f2f46925efcb0c3b0825befa6f88c4c
             if((searchJson.startDate)>(searchJson.terminalDate)){
                 console.log("时间选择有误，请重新选择！");
                 $('#nonavailable_time').modal('show');
@@ -341,10 +336,6 @@ var search_area_service = new Vue({
 function getFormJson(form) {      /*将表单对象变为json对象*/
     var a = $(form).serializeArray();
     var o={};
-<<<<<<< HEAD
-=======
-    debugger
->>>>>>> 025f520d0f2f46925efcb0c3b0825befa6f88c4c
     if(form.selector=='#probesearch'){
         debugger;
         if(citySelected!=0){

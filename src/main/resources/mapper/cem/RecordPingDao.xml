@@ -231,7 +231,10 @@
 			<otherwise>
 				order by record_date desc,record_time desc
 			</otherwise>
-		</choose>) rp
+		</choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>) rp
 		INNER JOIN probe
 		ON  rp.probe_id =probe.id
 		INNER JOIN task
@@ -247,9 +250,6 @@
 		ON (c.dic_type_id = 9 AND rp.state = c.data_id)
 		LEFT JOIN dic_data d
 		ON (d.dic_type_id = 5 AND rp.service_type = d.data_id)
-		<if test="offset != null and limit != null">
-			limit #{offset}, #{limit}
-		</if>
 	</select>
 
 	<select id="queryPingTotal" resultType="int">

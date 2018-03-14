@@ -327,19 +327,34 @@ var new_search = new Vue({
             } else {
                 var search = {};
                 search.service = status;
-                search.city_id = searchJson.city_id;
-                search.county_id = searchJson.county_id;
-                search.probe_id = searchJson.probe_id;
-                search.target_id = searchJson.target_id;
-                search.ava_start = searchJson.startDate.substr(0, 10);
-                search.ava_terminal = searchJson.terminalDate.substr(0, 10);
-                search.starTime = searchJson.startDate.substr(11, 15);
-                search.terminalTime = searchJson.startDate.substr(11, 15);
-                if (search.ava_start.length != 0 && search.ava_terminal.length != 0) {
-                } else {
-                    search.ava_start = new Date(new Date() - 1000 * 60 * 60 * 24 * 4).Format("yyyy-MM-dd");
-                    search.ava_terminal = (new Date()).Format("yyyy-MM-dd");
+                if (searchJson.city_id != 0) {
+                    search.city_id = searchJson.city_id;
                 }
+                if (searchJson.county_id != 0) {
+                    search.county_id = searchJson.county_id;
+                }
+                if (searchJson.probe_id != 0) {
+                    search.probe_id = searchJson.probe_id;
+                }
+                if (searchJson.target_id != 0) {
+                    search.target_id = searchJson.target_id;
+                }
+                if (searchJson.startDate == "" && searchJson.terminalDate == "") {
+                    search.ava_start = new Date(new Date() - 1000 * 60 * 60 * 24 * 1).Format("yyyy-MM-dd");
+                    search.ava_terminal = (new Date()).Format("yyyy-MM-dd");
+                    search.starTime = "00:00:00";
+                    search.terminalTime = "23:59:59";
+                }else{
+                    search.ava_start = searchJson.startDate.substr(0, 10);
+                    search.ava_terminal = searchJson.terminalDate.substr(0, 10);
+                    search.starTime = searchJson.startDate.substr(11, 15);
+                    search.terminalTime = searchJson.terminalDate.substr(11, 15);
+                }
+                // if (search.ava_start.length != 0 && search.ava_terminal.length != 0) {
+                // } else {
+                //     search.ava_start = new Date(new Date() - 1000 * 60 * 60 * 24 * 4).Format("yyyy-MM-dd");
+                //     search.ava_terminal = (new Date()).Format("yyyy-MM-dd");
+                // }
                 let param = {};
                 param.probedata = JSON.stringify(search);
                 debugger
