@@ -80,18 +80,34 @@
     </select>
 
     <select id="queryList" resultType="io.cem.modules.cem.entity.ProbeEntity">
-        select * from probe
-        <choose>
-            <when test="sidx != null and sidx.trim() != ''">
-                order by ${sidx} ${order}
-            </when>
-            <otherwise>
-                order by id desc
-            </otherwise>
-        </choose>
-        <if test="offset != null and limit != null">
-            limit #{offset}, #{limit}
-        </if>
+        SELECT probe.*,
+        probe.upstream_id AS upstream,
+        probe.probe_name AS `name`,
+        city.city_name AS city_name,
+        county.county_name AS area_name,
+        a.data_name AS type_name,
+        b.data_name AS status_name,
+        c.data_name AS iptype_name,
+        layer.layer_name AS layer_name,
+        parent.parent_name AS upstream_name
+        FROM probe
+        LEFT JOIN city
+        ON probe.city_id = city.city_id
+        LEFT JOIN county
+        ON probe.county_id = county.county_id
+        LEFT JOIN dic_data a
+        ON (probe.type = a.data_id AND a.dic_type_id = 1 )
+        LEFT JOIN dic_data b
+        ON (probe.status = b.data_id AND b.dic_type_id = 3)
+        LEFT JOIN dic_data c
+        ON (probe.ip_type = c.data_id AND c.dic_type_id = 2)
+        LEFT JOIN layer
+        ON probe.access_layer = layer.layer_tag
+        LEFT JOIN probe_group
+        ON probe.group_id = probe_group.id
+        LEFT JOIN(SELECT probe.probe_name AS parent_name,probe.id AS parent_id FROM probe
+        WHERE id in (SELECT upstream_id FROM probe)) parent
+        ON parent.parent_id = probe.upstream_id
     </select>
 
     <select id="queryTotal" resultType="int">

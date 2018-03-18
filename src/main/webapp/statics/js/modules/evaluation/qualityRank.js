@@ -254,7 +254,7 @@ var search_service = new Vue({
                 search.city_id = searchJson.city_id;
                 search.couty_id = searchJson.county_id;
                 search.service = searchJson.service_type;
-                search.target_id = searchJson.target_id;
+                search.target_id = searchJson.target;
                 if (searchJson.startDate.length != 0 && searchJson.terminalDate.length != 0 ) {
                     var ava_start = searchJson.startDate.substr(0, 10);
                     var ava_terminal = searchJson.terminalDate.substr(0, 10);
@@ -349,7 +349,6 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
             a[3].value=countrySelected;
         }
         if(serviceSelected!=-1){
-            debugger;
             a[2]={};
             a[2].name="service_type";
             a[2].value=JSON.stringify(serviceSelected);
@@ -737,7 +736,7 @@ $(document).ready(function () {
     }
 
     $('#service .jq22').comboSelect();
-    $("#service input[type=text]").attr('placeholder',"---请选择---")
+    $("#service input[type=text]").attr('placeholder',"综合业务")
     $('.combo-dropdown').css("z-index","3");
     $('#service .option-item').click(function (service) {
         var a = $(service.currentTarget)[0].innerText;

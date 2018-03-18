@@ -239,8 +239,8 @@
                                                             name="superservicetype" style="width: 100%">  <!--VUE列表渲染-->
                                                         <option value="">---请选择---</option>
                                                         <option value="0">综合业务</option>
-                                                        <option value="1">网络连通性测试业务</option>
-                                                        <option value="2">网络层质量测试业务</option>
+                                                        <option value="1">网络连通性业务</option>
+                                                        <option value="2">网络层质量业务</option>
                                                         <option value="3">文件下载类业务</option>
                                                         <option value="4">网页浏览类业务</option>
                                                         <option value="5">在线视频类业务</option>
@@ -254,7 +254,7 @@
                                                        class="col-lg-3 col-md-3 col-sm-3 input-label form_border">测试目标组</label>
                                                 <div class="form_border col-lg-4 col-md-4 col-sm-4">
                                                     <select id="groupid" class="form-control input  clear" name="groupId" style="width: 100%">  <!--VUE列表渲染-->
-                                                        <option value=""></option>
+                                                        <option value="">---请选择---</option>
                                                         <option v-for="item in groupNames" v-bind:value="item.message.id">
                                                             {{ item.message.tgName }}
                                                         </option>
@@ -416,10 +416,10 @@
                                         <div class="form_border col-lg-4 col-md-4 col-sm-4">
                                             <select id="tgsuperservicetype" class="form-control input  clear" name="superserviceType"
                                                     style="width: 100%">  <!--VUE列表渲染-->
-                                                <option value=""></option>
+                                                <option value="">---请选择---</option>
                                                 <option value="0">综合业务</option>
-                                                <option value="1">网络连通性测试业务</option>
-                                                <option value="2">网络层质量测试业务</option>
+                                                <option value="1">网络连通性业务</option>
+                                                <option value="2">网络层质量业务</option>
                                                 <option value="3">文件下载类业务</option>
                                                 <option value="4">网页浏览类业务</option>
                                                 <option value="5">在线视频类业务</option>
@@ -486,6 +486,10 @@
 
 
 <script type="text/javascript">
+    $(function () {
+        $('#group .jq22').comboSelect()
+
+    })
     //参数para1：希望隐藏元素的id值
     function toggle1(param) {
         if ($("#flip").attr("class") == "glyphicon glyphicon-menu-up") {

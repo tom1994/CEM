@@ -209,6 +209,9 @@
 		d.data_name AS servicetype_name
 		FROM (SELECT * FROM record_ping
 		WHERE service_type=#{service_type}
+		AND probe_id IN (SELECT id FROM probe)
+		AND task_id IN (SELECT id FROM task WHERE is_ondemand = 0)
+		AND target_id IN (SELECT id FROM target)
 		<if test="task_id != null and task_id != ''">
 		AND task_id = #{task_id}
 		</if>
@@ -239,7 +242,6 @@
 		ON  rp.probe_id =probe.id
 		INNER JOIN task
 		ON rp.task_id = task.id
-		AND task.is_ondemand =0
 		INNER JOIN target
 		ON rp.target_id = target.id
 		LEFT JOIN dic_data a

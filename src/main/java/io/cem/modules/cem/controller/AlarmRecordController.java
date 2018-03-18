@@ -23,11 +23,6 @@ import io.cem.common.utils.R;
 
 
 /**
- * 
- * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2017-10-12 17:12:44
  */
 @RestController
 @RequestMapping("alarmrecord")

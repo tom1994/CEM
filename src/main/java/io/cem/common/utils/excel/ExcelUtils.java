@@ -354,7 +354,7 @@ public class ExcelUtils {
         titleStyle.setBorderTop(BorderStyle.MEDIUM);     //左边框
         titleStyle.setBorderBottom(BorderStyle.MEDIUM);    //右边框
         titleStyle.setBorderTop(BorderStyle.DOUBLE);    //顶边框
-        titleStyle.setFillForegroundColor(new XSSFColor(new Color(0, 204, 255)));    //填充的背景颜色
+        titleStyle.setFillForegroundColor(new XSSFColor(new Color(	70,130,180)));    //填充的背景颜色
         titleStyle.setAlignment(HorizontalAlignment.CENTER);
 
         titleStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);    //填充图案
@@ -375,7 +375,7 @@ public class ExcelUtils {
         style.setBorderRight(BorderStyle.THIN);    //右边框
         style.setBorderBottom(BorderStyle.THIN);
         style.setBorderTop(BorderStyle.THIN);
-        style.setFillForegroundColor(new XSSFColor(new Color(204, 255, 255)));    //填充的背景颜色
+        style.setFillForegroundColor(new XSSFColor(new Color(	176,224,230)));    //填充的背景颜色
         style.setFillPattern(FillPatternType.SOLID_FOREGROUND);    //填充图案
         return style;
     }
