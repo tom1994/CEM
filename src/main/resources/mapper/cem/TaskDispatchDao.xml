@@ -54,7 +54,7 @@
 		ON task_dispatch.probe_id = probe.id
 		LEFT JOIN layer
 		ON probe.access_layer = layer.layer_tag
-		WHERE task_id = #{taskid} AND task_dispatch.status != 2
+		WHERE task_id = #{taskid} AND task_dispatch.status = 1
 		order by id desc
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
@@ -90,7 +90,7 @@
 		select count(*) from task_dispatch
 		INNER JOIN probe
 		ON task_dispatch.probe_id=probe.id
-		WHERE task_id = #{value} AND task_dispatch.status != 2
+		WHERE task_id = #{value} AND task_dispatch.status = 1
 	</select>
 
 	<select id="queryTestStatus" resultType="int">
@@ -101,7 +101,7 @@
 
 	<select id="taskQueryDispatchTotal" resultType="int">
 		select count(*) from task_dispatch
-		WHERE probe_id = #{probeid} AND task_dispatch.status != 2
+		WHERE probe_id = #{probeid} AND task_dispatch.status = 1
 		AND task_dispatch.is_ondemand = 0
 	</select>
 

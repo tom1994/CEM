@@ -114,6 +114,7 @@
             </div>
         </div>
     </div>
+
     <!-- 任务下发模态框（Modal） -->
     <div class="modal fade col-lg-12 col-md-12 col-sm-12" id="task_dispatch" tabindex="-1" role="dialog"
          aria-labelledby="myModalLabel"
@@ -1166,6 +1167,31 @@
             </div>
         </div>
     </div>
+</div>
+<div class="modal fade" id="cancel_confirm" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" style="width: 500px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h3 class="modal-title">
+                    确认
+                </h3>
+            </div>
+            <div class="modal-body" style="font-size: medium">
+                <b>取消任务将不能恢复，确定取消吗?</b>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"
+                        v-on:click="cancel_delete">取消
+                </button>
+                <button type="button" class="btn btn-success" v-on:click="confirm">确定</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
 </div>
 
 <script>window.jQuery || document.write('<script src="${rc.contextPath}/statics/js/plugins/jquery/jquery-2.0.3.js"><\/script>')</script>

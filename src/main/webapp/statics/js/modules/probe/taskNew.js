@@ -701,23 +701,25 @@ var taskform_data = new Vue({
             } else if (tasknewJson.parameter) {
                 var paramnew = JSON.parse(tasknewJson.parameter)
                 if ((tasknewJson.serviceType== "1" ||  tasknewJson.serviceType == "2" ||tasknewJson.serviceType == "3" ||tasknewJson.serviceType == "10"||tasknewJson.serviceType == "11"||tasknewJson.serviceType == "50")&&
-                    paramnew.count < 3 || paramnew.count > 10000) {
+                    (paramnew.count < 3 || paramnew.count > 10000)) {
                     toastr.warning("您输入的发包个数有误，请正确输入!");
-                } else if (paramnew.interval < 5 || paramnew.interval > 5000) {
+                } else if ((tasknewJson.serviceType != "15"&&tasknewJson.serviceType != "12"&&tasknewJson.serviceType != "14")&&(paramnew.interval < 5 || paramnew.interval > 5000)) {
                     toastr.warning("您输入的发包间隔有误，请正确输入!");
                 } else if (paramnew.payload < 0 || paramnew.payload > 255) {
                     toastr.warning("您输入的负载内容有误，请正确输入!");
-                } else if (paramnew.size < 18 || paramnew.size > 1472) {
+                } else if ((tasknewJson.serviceType!= "10"&&tasknewJson.serviceType!= "11")&&(paramnew.size < 18 || paramnew.size > 1472)) {
+                    toastr.warning("您输入的负载大小有误，请正确输入!");
+                } else if ((tasknewJson.serviceType== "10"||tasknewJson.serviceType== "11")&&(paramnew.size < 6 || paramnew.size > 1460)) {
                     toastr.warning("您输入的负载大小有误，请正确输入!");
                 } else if (paramnew.ttl < 32 || paramnew.ttl > 255) {
                     toastr.warning("您输入的TTL有误，请正确输入!");
-                } else if (tasknewJson.serviceType != "13"&&paramnew.timeout < 1 || paramnew.timeout > 100) {
+                } else if (tasknewJson.serviceType != "13"&&(paramnew.timeout < 1 || paramnew.timeout > 100)) {
                     toastr.warning("您输入的超时时间有误，请正确输入!");
                 } else if (paramnew.max_hop < 20 || paramnew.max_hop > 64) {
                     toastr.warning("您输入的最大跳数有误，请正确输入!");
-                } else if ((tasknewJson.serviceType == "4"||tasknewJson.serviceType == "5")&&paramnew.count < 3 || paramnew.count > 5) {
+                } else if ((tasknewJson.serviceType == "4"||tasknewJson.serviceType == "5")&&(paramnew.count < 3 || paramnew.count > 5)) {
                     toastr.warning("您输入的单跳发包个数有误，请正确输入!");
-                } else if ((tasknewJson.serviceType != "14"||tasknewJson.serviceType != "13")&&paramnew.times < 1 || paramnew.times > 1000) {
+                } else if ((tasknewJson.serviceType != "15"&&tasknewJson.serviceType != "14"&&tasknewJson.serviceType != "13")&&(paramnew.times < 1 || paramnew.times > 1000)) {
                     toastr.warning("您输入的拨号请求次数有误，请正确输入!");
                 } else if (paramnew.online_time < 1 || paramnew.online_time > 3600) {
                     toastr.warning("您输入的用户在线时长有误，请正确输入!");
@@ -725,15 +727,15 @@ var taskform_data = new Vue({
                     toastr.warning("请输入用户名！");
                 } else if (tasknewJson.serviceType == "12" && paramnew.password == "") {
                     toastr.warning("请输入密码！");
-                } else if (paramnew.interval < 1 || paramnew.interval > 5000) {
+                } else if (tasknewJson.serviceType == "12"&&(paramnew.interval < 1 || paramnew.interval > 5000)) {
                     toastr.warning("您输入的时间间隔有误，请正确输入!");
-                } else if (tasknewJson.serviceType == "13"&&paramnew.times < 1 || paramnew.times > 1000) {
+                } else if (tasknewJson.serviceType == "13"&&(paramnew.times < 1 || paramnew.times > 1000)) {
                     toastr.warning("您输入的IP分配次数有误，请正确输入!");
-                } else if (tasknewJson.serviceType == "13"&& paramnew.timeout < 500 || paramnew.timeout > 5000) {
+                } else if (tasknewJson.serviceType == "13"&& (paramnew.timeout < 500 || paramnew.timeout > 5000)) {
                     toastr.warning("您输入的超时时间有误，请正确输入!");
                 } else if (tasknewJson.serviceType== "14"&&paramnew.times < 1 || paramnew.times > 1000) {
                     toastr.warning("您输入的查询次数有误，请正确输入!");
-                } else if (paramnew.interval < 1 || paramnew.interval > 5000) {
+                } else if (tasknewJson.serviceType == "14"&&(paramnew.interval < 1 || paramnew.interval > 5000)) {
                     toastr.warning("您输入的查询间隔有误，请正确输入!");
                 } else if (tasknewJson.serviceType== "14"&&paramnew.count < 1 || paramnew.count > 10000) {
                     toastr.warning("您输入的单次发包次数有误，请正确输入!");
@@ -749,9 +751,9 @@ var taskform_data = new Vue({
                     toastr.warning("请输入用户名！");
                 } else if (tasknewJson.serviceType == "15" && paramnew.password == "") {
                     toastr.warning("请输入密码！");
-                } else if (paramnew.times < 1 || paramnew.times > 100) {
+                } else if (tasknewJson.serviceType == "15" && (paramnew.times < 1 || paramnew.times > 100)) {
                     toastr.warning("您输入的测试次数有误，请正确输入!");
-                } else if (paramnew.interval < 1 || paramnew.interval > 5000) {
+                } else if (tasknewJson.serviceType == "15" &&(paramnew.interval < 1 || paramnew.interval > 5000)) {
                     toastr.warning("您输入的测试间隔有误，请正确输入!");
                 } else if (paramnew.max_element < 1 || paramnew.max_element > 2000) {
                     toastr.warning("您输入的最多下载元素有误，请正确输入!");
@@ -800,7 +802,7 @@ var taskform_data = new Vue({
                         success: function (result) {
                             var code = result.code;
                             var msg = result.msg;
-                            // console.log(result);
+                            task_table.redraw();
                             if (status == 0) {
                                 switch (code) {
                                     case 0:

@@ -1,5 +1,7 @@
 package io.cem.modules.cem.entity;
 
+import io.cem.common.utils.excel.annotation.ExcelIgnore;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -18,27 +20,39 @@ public class ProbeEntity implements Serializable {
 	//探针名称
 	private String name;
 	//所属探针组ID
+	@ExcelIgnore
 	private Integer groupId;
+
+	//地市名称
+	private String cityName;
+	//区县名称
+	private String areaName;
 
 	private String groupName;
 	//探针类型
+	@ExcelIgnore
 	private Integer type;
 	//接入层级
+	@ExcelIgnore
 	private Integer accessLayer;
 	//IP类型
+	@ExcelIgnore
 	private Integer ipType;
-
+	@ExcelIgnore
 	private String iptypeName;
 
 	//端口及IP
 	private String portIp;
 	//归属地市
+	@ExcelIgnore
 	private Integer city;
 	//归属区县
+	@ExcelIgnore
 	private Integer county;
 	//详细归属地
 	private String location;
 	//上级探针
+	@ExcelIgnore
 	private Integer upstream;
 	//接入BRAS名称
 	private String brasName;
@@ -47,11 +61,18 @@ public class ProbeEntity implements Serializable {
 	//接入BRAS端口
 	private String brasPort;
 	//接入运营商
+	@ExcelIgnore
 	private Integer isp;
+
+	//探针类型
+	private String typeName;
 
 	private String ispName;
 	//探针状态
+	@ExcelIgnore
 	private Integer status;
+	//探针状态
+	private String statusName;
 	//设备型号
 	private String device;
 	//软件版本
@@ -78,14 +99,8 @@ public class ProbeEntity implements Serializable {
 	private String remark;
 	//创建时间
 	private Date createTime;
-	//地市名称
-	private String cityName;
-	//区县名称
-	private String areaName;
-	//探针类型
-	private String typeName;
-	//探针状态
-	private String statusName;
+
+
 	//接入层级
 	private String layerName;
 

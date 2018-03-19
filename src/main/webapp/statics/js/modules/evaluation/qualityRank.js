@@ -736,7 +736,7 @@ $(document).ready(function () {
     }
 
     $('#service .jq22').comboSelect();
-    $("#service input[type=text]").attr('placeholder',"---请选择---")
+    $("#service input[type=text]").attr('placeholder',"综合业务")
     $('.combo-dropdown').css("z-index","3");
     $('#service .option-item').click(function (service) {
         var a = $(service.currentTarget)[0].innerText;

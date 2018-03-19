@@ -344,7 +344,7 @@ var new_search = new Vue({
                     search.ava_terminal = (new Date()).Format("yyyy-MM-dd");
                     search.starTime = "00:00:00";
                     search.terminalTime = "23:59:59";
-                }else{
+                } else {
                     search.ava_start = searchJson.startDate.substr(0, 10);
                     search.ava_terminal = searchJson.terminalDate.substr(0, 10);
                     search.starTime = searchJson.startDate.substr(11, 15);
@@ -668,7 +668,8 @@ Vue.component('data-table', {
                 // options.series[4].data[i] = [Date.UTC(year, month, day), val[i].pingAvgQoe];
             }
             var chart = new Highcharts.Chart('container', options);
-            val.forEach(function (item) {              /*观察user是否变化,更新表格数据*/
+            val.forEach(function (item) {/*观察user是否变化,更新表格数据*/
+                debugger
                 let row = [];
                 row.push(layerNames.get(item.accessLayer));
                 row.push(item.targetName);
