@@ -953,11 +953,11 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				scoreBase.setBase(slaTcp.get(i).getBase());
 				connection.put(scoreTarget, scoreBase);
 			}
-			connection=pingService.putMap(slaUdp,connection);
-			connection=pingService.putMap(dns,connection);
-			connection=pingService.putMap(dhcp,connection);
-			connection=pingService.putMap(pppoe,connection);
-			connection=pingService.putMap(radius,connection);
+	//		connection=pingService.putMap(slaUdp,connection,"slaUdp");
+	//		connection=pingService.putMap(dns,connection,"dns");
+	//		connection=pingService.putMap(dhcp,connection,"dhcp");
+	//		connection=pingService.putMap(pppoe,connection,"pppoe");
+	//		connection=pingService.putMap(radius,connection,"radius");
 
 			System.out.println("MAP:"+connection);
 

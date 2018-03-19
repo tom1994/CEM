@@ -582,8 +582,8 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 				scoreBase.setBase(webDownload.get(i).getBase());
 				connection.put(scoreTarget, scoreBase);
 			}
-			connection=pingService.putMap(ftpDownload,connection);
-			connection=pingService.putMap(ftpUpload,connection);
+	//		connection=pingService.putMap(ftpDownload,connection,"ftpDownload");
+	//		connection=pingService.putMap(ftpUpload,connection,"ftpUpload");
 
 			System.out.println("MAP:"+connection);
 

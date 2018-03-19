@@ -57,11 +57,12 @@
 	</select>
 
 	<select id="queryWebList" resultType="io.cem.modules.cem.entity.RecordHourWebPageEntity">
-		select record_hour_web_page.id,record_hour_web_page.city_id,record_hour_web_page.county_id,record_hour_web_page.probe_id,record_hour_web_page.port,record_hour_web_page.task_id,record_hour_web_page.service_type,record_hour_web_page.target_id,record_hour_web_page.target_ip,record_hour_web_page.record_date,record_hour_web_page.record_time,record_hour_web_page.remark,
+		select record_hour_web_page.id,record_hour_web_page.city_id,record_hour_web_page.county_id,record_hour_web_page.probe_id,record_hour_web_page.port,record_hour_web_page.task_id,record_hour_web_page.service_type,record_hour_web_page.target_id,record_hour_web_page.target_ip,record_hour_web_page.record_date,record_hour_web_page.remark,
 		city.city_name AS city_name,
 		county.county_name AS area_name,
 		probe.probe_name AS probe_name,
 		target.target_name AS target_name,
+		time_format(record_hour_web_page.record_time, '%H') AS record_time,
 		AVG(record_hour_web_page.dns_delay) AS dns_delay,
 		AVG(record_hour_web_page.conn_delay) AS conn_delay,
 		AVG(record_hour_web_page.headbyte_delay) AS headbyte_delay,
@@ -99,11 +100,12 @@
 	</select>
 
 	<select id="queryDayList" resultType="io.cem.modules.cem.entity.RecordHourWebPageEntity">
-		select webp.id,webp.city_id,webp.county_id,webp.probe_id,webp.port,webp.task_id,webp.service_type,webp.target_id,webp.target_ip,webp.record_date,webp.record_time,webp.remark,
+		select webp.id,webp.city_id,webp.county_id,webp.probe_id,webp.port,webp.task_id,webp.service_type,webp.target_id,webp.target_ip,webp.record_date,webp.remark,
 		city.city_name AS city_name,
 		county.county_name AS area_name,
 		probe.probe_name AS probe_name,
 		target.target_name AS target_name,
+		time_format(webp.record_time, '%H') AS record_time,
 		AVG(webp.dns_delay) AS dns_delay,
 		AVG(webp.conn_delay) AS conn_delay,
 		AVG(webp.headbyte_delay) AS headbyte_delay,
