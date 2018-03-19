@@ -906,6 +906,7 @@ var video_chart = new Vue({
                         data: param,  //传入组装的参数
                         dataType: "json",
                         success: function (result) {
+                            debugger;
                             for(var i=0;i<result.scoreList.length;i++){
                                 arr.push(result.scoreList[i].recordTime);
                             }
@@ -948,7 +949,7 @@ var video_chart = new Vue({
                     $.ajax({
                         type: "POST",
                         async: false, //同步执行
-                        url: "../../recordhourping/connection",
+                        url: "../../recordhourping/video",
                         cache: false,  //禁用缓存
                         data: param,  //传入组装的参数
                         dataType: "json",

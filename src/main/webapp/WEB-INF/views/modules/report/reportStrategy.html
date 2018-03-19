@@ -1,11 +1,236 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <h>报表策略</h>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>报表策略管理</title>
+    #parse("cemHeader.html")  <!--导入CSS和js文件-->
+    <link href="${rc.contextPath}/statics/css/formStyle.css" rel="stylesheet">  <!--自定义CSS-->
+    <style type="text/css">
+        tr:hover{background:#E5E5E5 }
+        .clear::-ms-clear { display: none;}
+        .clear::-ms-reveal { display: none;}
+
+        .box{
+            padding-bottom: 0px !important;
+            padding: 0px; min-height: 0px;
+        }
+        .Btn{
+            margin-bottom:0px!important;
+        }
+        .input{
+            margin-bottom: -3px;
+            height: 28px;
+            line-height: 28px;
+            /*//text-align: center;*/
+            padding-top: 0px;
+        }
+        .form_border{
+            text-align: right!important;
+        }
+    </style>
 </head>
 <body>
+<div class="row" id="sp_table">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title fontcolor box" id="handle" style="padding-bottom: 0px !important;">
+                <!--<button type="button" class="btn btn-default ui-button" v-on:click="schedulepolicyadd"><span-->
+                <button type="button" class="btn btn-sm btn-success Btn" v-on:click="spadd"><span
+                        class="glyphicon glyphicon-plus "></span>新建
+                </button>
+            </div>
+            <div class="ibox-content">
+                <div class="row " style="overflow-x: auto">     <!--表格 verflow-x: scroll超出滚动-->
+                    <table class="table table-bordered formStyle" id="spdata_table" style="margin-top: 2px !important;"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal_sp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width: 500px"> <!--修改bootstrap modal模态框的宽度-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3 class="modal-title" id="myModalLabel">{{modaltitle}}</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <form class="form-horizontal" id="spform_data" role="form">
+                        <div class="form-group row">
+                            <label for="id" class="col-lg-3 col-md-3 col-sm-3 control-label form_border"
+                                   style="display: none">id</label>
+                            <div class="col-lg-8 col-md-8 col-sm-8 form_border"
+                                 style="display: none">
+                                <input type="text" class="form-control input clear" id="id" name="id"  >
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="name" class="col-lg-3 col-md-3 col-sm-3 control-label form_border"
+                                   style="line-height: 1.5">策略名称</label>
+                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                <input type="text" class="form-control input clear" id="name" name="methodName"  >
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="name" class="col-lg-3 col-md-3 col-sm-3 control-label form_border"
+                                   style="line-height: 1.5">cron表达式</label>
+                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                <input type="text" class="form-control input clear" id="cron" name="cronExpression" placeholder="如：0 0 12 * * ?" >
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="remark" class="col-lg-3 col-md-3 col-sm-3 control-label form_border"
+                                   style="line-height: 1.5"  >备注</label>
+                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                <input type="text" class="form-control input clear" id="remark" name="remark"  >
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-success" v-on:click="submit">保存</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<div class="modal fade" id="myModal_delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" style="width: 500px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h3 class="modal-title" id="myModalLabel_delete">
+                    确认
+                </h3>
+            </div>
+            <div class="modal-body" style="font-size: medium">
+                <b>确定删除吗?</b>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" v-on:click="cancel_delete">取消
+                </button>
+                <button type="button" class="btn btn-success" v-on:click="delete_data">确定</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+
+<script type="text/javascript" src="${rc.contextPath}/statics/js/modules/report/reportStrategy.js?_${date.systemTime}"></script>
 
 </body>
+
+<script>
+    $('#customtime').click(function () {
+        $('#startDate').removeAttr("disabled");
+        $('#endDate').removeAttr("disabled");
+    });
+
+    $('#everyday').click(function () {
+        $('#startDate').attr("disabled","disabled");
+        $('#endDate').attr("disabled","disabled");
+    })
+
+
+    /** 拖拽模态框*/
+    var dragModal={
+        mouseStartPoint:{"left":0,"top":  0},
+        mouseEndPoint : {"left":0,"top":  0},
+        mouseDragDown : false,
+        basePoint : {"left":0,"top":  0},
+        moveTarget:null,
+        topleng:0
+    }
+    $(document).on("mousedown",".modal-header",function(e){
+        //webkit内核和火狐禁止文字被选中
+        $('body').addClass('select')
+        //ie浏览器禁止文字选中
+        document.body.onselectstart=document.body.ondrag=function(){
+            return false;
+        }
+        if($(e.target).hasClass("close"))//点关闭按钮不能移动对话框
+            return;
+        dragModal.mouseDragDown = true;
+        dragModal.moveTarget = $(this).parent().parent();
+        dragModal.mouseStartPoint = {"left":e.clientX,"top":  e.pageY};
+        dragModal.basePoint = dragModal.moveTarget.offset();
+        dragModal.topLeng=e.pageY-e.clientY;
+    });
+    $(document).on("mouseup",function(e){
+        dragModal.mouseDragDown = false;
+        dragModal.moveTarget = undefined;
+        dragModal.mouseStartPoint = {"left":0,"top":  0};
+        dragModal.basePoint = {"left":0,"top":  0};
+    });
+    $(document).on("mousemove",function(e){
+        if(!dragModal.mouseDragDown || dragModal.moveTarget == undefined)return;
+        var mousX = e.clientX;
+        var mousY = e.pageY;
+        if(mousX < 0)mousX = 0;
+        if(mousY < 0)mousY = 25;
+        dragModal.mouseEndPoint = {"left":mousX,"top": mousY};
+        var width = dragModal.moveTarget.width();
+        var height = dragModal.moveTarget.height();
+        var clientWidth=document.body.clientWidth
+        var clientHeight=document.body.clientHeight;
+        if(dragModal.mouseEndPoint.left<dragModal.mouseStartPoint.left - dragModal.basePoint.left){
+            dragModal.mouseEndPoint.left=0;
+        }
+        else if(dragModal.mouseEndPoint.left>=clientWidth-width+dragModal.mouseStartPoint.left - dragModal.basePoint.left){
+            dragModal.mouseEndPoint.left=clientWidth-width-38;
+        }else{
+            dragModal.mouseEndPoint.left =dragModal.mouseEndPoint.left-(dragModal.mouseStartPoint.left - dragModal.basePoint.left);//移动修正，更平滑
+
+        }
+        if(dragModal.mouseEndPoint.top-(dragModal.mouseStartPoint.top - dragModal.basePoint.top)<dragModal.topLeng){
+            dragModal.mouseEndPoint.top=dragModal.topLeng;
+        }else if(dragModal.mouseEndPoint.top-dragModal.topLeng>clientHeight-height+dragModal.mouseStartPoint.top - dragModal.basePoint.top){
+            dragModal.mouseEndPoint.top=clientHeight-height-38+dragModal.topLeng;
+        }
+        else{
+            dragModal.mouseEndPoint.top = dragModal.mouseEndPoint.top - (dragModal.mouseStartPoint.top - dragModal.basePoint.top);
+        }
+        dragModal.moveTarget.offset(dragModal.mouseEndPoint);
+    });
+    $(document).on('hidden.bs.modal','.modal',function(e){
+        $('.modal-dialog').css({'top': '0px','left': '0px'})
+        $('body').removeClass('select')
+        document.body.onselectstart=document.body.ondrag=null;
+    })
+</script>
+
+<script>
+    $('#startDate').flatpickr({
+        enableTime: false,
+        dateFormat: "Y-m-d"
+    });
+</script>
+
+<script>
+    $('#endDate').flatpickr({
+        enableTime: false,
+        dateFormat: "Y-m-d"
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $(function(){
+            $('input:reset').click(function(){
+                $('.input #startDate').val("");
+                $('.input #endDate').val("");
+            });
+        });
+    });
+</script>
+
 </html>
