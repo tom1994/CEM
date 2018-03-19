@@ -289,6 +289,12 @@ public class RecordHourPingController {
 			}
 		}
 
+		if(map.get("target_id")==null){
+			for(int i=0;i<scoreList.size();i++){
+				scoreList.get(i).setTargetName("");
+			}
+		}else{}
+
 		int total = 0;
 		if(page==null) {              /*没有传入page,则取全部值*/
 			map.put("offset", null);
@@ -1140,7 +1146,6 @@ public class RecordHourPingController {
 				scoreList = recordHourPingService.probeChart1(scoreList);
 			}else{}
 		}
-		System.out.println(scoreList);
 		return R.ok().put("scoreList", scoreList);
 	}
 

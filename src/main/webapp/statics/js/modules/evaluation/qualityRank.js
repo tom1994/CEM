@@ -465,7 +465,7 @@ var probetable = new Vue({
             vm.dtHandle.draw();
             /*重绘*/
         }
-},
+    },
     mounted: function() {
         let vm = this;
         // Instantiate the datatable and store the reference to the instance in our dtHandle element.
