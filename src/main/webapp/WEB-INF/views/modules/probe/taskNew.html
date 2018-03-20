@@ -158,16 +158,16 @@
                     </form>
                     <form class="form-horizontal" id="dispatch_target" role="form">
                         <div class="row">
-                                <label>
-                                    <input type="radio" name="choosetarget"
-                                           onclick="$('#targetselected').removeAttr('style', 'display:none');$('#targetgroupselected').attr('style', 'display:none')"
-                                           checked value="1"><i></i>选择测试目标
-                                </label>
-                                <label>
-                                    <input type="radio" name="choosetarget"
-                                           onclick="$('#targetgroupselected').removeAttr('style', 'display:none');$('#targetselected').attr('style', 'display:none')"
-                                           value="0">选择测试目标组
-                                </label>
+                            <label>
+                                <input type="radio" name="choosetarget"
+                                       onclick="$('#targetselected').removeAttr('style', 'display:none');$('#targetgroupselected').attr('style', 'display:none')"
+                                       checked value="1"><i></i>选择测试目标
+                            </label>
+                            <label>
+                                <input type="radio" name="choosetarget"
+                                       onclick="$('#targetgroupselected').removeAttr('style', 'display:none');$('#targetselected').attr('style', 'display:none')"
+                                       value="0">选择测试目标组
+                            </label>
                         </div>
                         <div style="display: none">
                             <input type="text" id="taskId" name="taskId" readonly="readonly" unselectable="on">
@@ -221,7 +221,7 @@
                                 </div>
                                 <label for="taskname"
                                        class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                      >任务名称</label>
+                                >任务名称</label>
                                 <div class="col-lg-2 col-md-2 col-sm-2">
                                     <input type="text" class="form-control input clear" id="taskname"
                                            name="taskName" readonly="readonly" unselectable="on"
@@ -232,7 +232,7 @@
 
                                 <label for="servicetype"
                                        class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                      >任务类型</label>
+                                >任务类型</label>
                                 <div class="col-lg-2 col-md-2 col-sm-2">
                                     <select id="servicetype" disabled="disabled" v-on:change="servicechange()"
                                             class="form-control input clear"
@@ -273,7 +273,7 @@
                             <div class="form-group row">
                                 <label for="schpolicy"
                                        class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                       >调度策略</label>
+                                >调度策略</label>
                                 <div class="col-lg-2 col-md-2 col-sm-2">
                                     <select id="schpolicy" class="form-control input clear" disabled="disabled" name="schPolicyId">
                                         <option value="">---请选择---</option>
@@ -285,7 +285,7 @@
                                 <span class="col-lg-2 col-md-2 col-sm-2 Range"></span>
                                 <label for="alarmtemplate"
                                        class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                       >告警模板</label>
+                                >告警模板</label>
                                 <div class="col-lg-2 col-md-2 col-sm-2">
                                     <select id="alarmtemplate" disabled="disabled" class="form-control input clear"
                                             name="alarmTemplateId">
@@ -302,7 +302,7 @@
                                 <div class="form-group row">
                                     <label for="count"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                         >发包个数</label>
+                                    >发包个数</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="count"
                                                value="10" disabled="disabled" name="count"
@@ -311,7 +311,7 @@
                                     <span class="col-lg-2 col-md-2 col-sm-2  Range"><span style="color:red"><span style="color:red">*</span></span>(3-10000)</span>
                                     <label for="interval"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                           >发包间隔(ms)</label>
+                                    >发包间隔(ms)</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="interval"
                                                value="100" disabled="disabled" name="interval"
@@ -323,7 +323,7 @@
                                 <div class="form-group row">
                                     <label for="size"
                                            class="col-lg-2 col-md-2 col-sm2 form_border"
-                                          >负载大小(byte)</label>
+                                    >负载大小(byte)</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="size"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
@@ -332,7 +332,7 @@
                                     <span class="col-lg-2 col-md-2 col-sm-2  Range"><span style="color:red">*</span>(18-1472)</span>
                                     <label for="payload"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >负载内容</label>
+                                    >负载内容</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="payload"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
@@ -343,7 +343,7 @@
                                 <div class="form-group row">
                                     <label for="ttl"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >TTL</label>
+                                    >TTL</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="ttl"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
@@ -352,7 +352,7 @@
                                     <span class="col-lg-2 col-md-2 col-sm-2 Range"><span style="color:red">*</span>(32-255)</span>
                                     <label for="tos"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >IP服务类型</label>
+                                    >IP服务类型</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <select name="tos" disabled="disabled" id="tos"   class="form-control input clear">
                                             <option value="0">普通</option>
@@ -384,7 +384,7 @@
                                 <div class="form-group row">
                                     <label for="pt_count"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >发包个数</label>
+                                    >发包个数</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="pt_count"
                                                value="10" disabled="disabled" name="count"
@@ -394,7 +394,7 @@
                                     <span class="col-lg-2 col-md-2 col-sm-2  Range"><span style="color:red">*</span>(3-10000)</span>
                                     <label for="pt_interval"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >发包间隔(ms)</label>
+                                    >发包间隔(ms)</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="pt_interval"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
@@ -406,7 +406,7 @@
                                 <div class="form-group row">
                                     <label for="pt_ttl"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >TTL</label>
+                                    >TTL</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="pt_ttl"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
@@ -415,7 +415,7 @@
                                     <span class="col-lg-2 col-md-2 col-sm-2  Range"><span style="color:red">*</span>(32-255)</span>
                                     <label for="pt_tos"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >IP服务类型</label>
+                                    >IP服务类型</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <select name="tos" disabled="disabled" id="pt_tos"   class="form-control input clear">
                                             <option value="0">普通</option>
@@ -447,7 +447,7 @@
                                 <div class="form-group row">
                                     <label for="tr_count"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >单跳发包个数</label>
+                                    >单跳发包个数</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="tr_count"
                                                value="3" disabled="disabled" name="count"
@@ -457,7 +457,7 @@
                                     <span class="col-lg-2 col-md-2 col-sm-2  Range"><span style="color:red">*</span>(3-5)</span>
                                     <label for="tr_interval"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >发包间隔(ms)</label>
+                                    >发包间隔(ms)</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="tr_interval"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
@@ -469,7 +469,7 @@
                                 <div class="form-group row">
                                     <label for="tr_size"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >负载大小(byte)</label>
+                                    >负载大小(byte)</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="tr_size"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
@@ -478,7 +478,7 @@
                                     <span class="col-lg-2 col-md-2 col-sm-2  Range"><span style="color:red">*</span>(18-1477)</span>
                                     <label for="tr_tos"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >IP服务类型</label>
+                                    >IP服务类型</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <select name="tos" disabled="disabled" id="tr_tos"   class="form-control input clear">
                                             <option value="0">普通</option>
@@ -495,7 +495,7 @@
                                 <div class="form-group row">
                                     <label for="tr_timeout"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >超出时间(s)</label>
+                                    >超出时间(s)</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="tr_timeout"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
@@ -504,7 +504,7 @@
                                     <span class="col-lg-2 col-md-2 col-sm-2  Range"><span style="color:red">*</span>(1-100)</span>
                                     <label for="max_hop"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >最大跳数</label>
+                                    >最大跳数</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="max_hop"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
@@ -519,7 +519,7 @@
                                 <div class="form-group row">
                                     <label for="sla_count"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >发包个数</label>
+                                    >发包个数</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="sla_count"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
@@ -529,7 +529,7 @@
                                     <span class="col-lg-2 col-md-2 col-sm-2  Range"><span style="color:red">*</span>(3-10000)</span>
                                     <label for="sla_interval"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >发包间隔(ms)</label>
+                                    >发包间隔(ms)</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="sla_interval"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
@@ -541,7 +541,7 @@
                                 <div class="form-group row">
                                     <label for="sla_size"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >负载大小(byte)</label>
+                                    >负载大小(byte)</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="sla_size"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
@@ -550,7 +550,7 @@
                                     <span class="col-lg-2 col-md-2 col-sm-2  Range"><span style="color:red">*</span>(6-1460)</span>
                                     <label for="sla_payload"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >负载内容</label>
+                                    >负载内容</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="sla_payload"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
@@ -562,7 +562,7 @@
                                 <div class="form-group row">
                                     <label for="sla_ttl"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >TTL</label>
+                                    >TTL</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="sla_ttl"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
@@ -571,7 +571,7 @@
                                     <span class="col-lg-2 col-md-2 col-sm-2  Range"><span style="color:red">*</span>(32-255)</span>
                                     <label for="sla_timeout"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >超时时间(s)</label>
+                                    >超时时间(s)</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="sla_timeout"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
@@ -586,7 +586,7 @@
                                 <div class="form-group row">
                                     <label for="times"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >IP分配次数</label>
+                                    >IP分配次数</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="times"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
@@ -596,7 +596,7 @@
                                     <span class="col-lg-2 col-md-2 col-sm-2  Range"><span style="color:red">*</span>(1-1000)</span>
                                     <label for="dhcp_timeout"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >超时时间(ms)</label>
+                                    >超时时间(ms)</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="dhcp_timeout"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
@@ -608,10 +608,10 @@
                                 <div class="form-group row">
                                     <label for="is_renew"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >是否使用原IP</label>
+                                    >是否使用原IP</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <select name="is_renew" disabled="disabled" id="is_renew"
-                                                  class="form-control input clear">
+                                                class="form-control input clear">
                                             <option value="1">是</option>
                                             <option value="0">否</option>
                                         </select>
@@ -633,7 +633,7 @@
                                     <span class="col-lg-2 col-md-2 col-sm-2  Range"><span style="color:red">*</span>(1-1000)</span>
                                     <label for="dns_interval"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >查询间隔(ms)</label>
+                                    >查询间隔(ms)</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="dns_interval"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
@@ -645,7 +645,7 @@
                                 <div class="form-group row">
                                     <label for="dns_count"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >单次发包个数</label>
+                                    >单次发包个数</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="dns_count"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
@@ -654,7 +654,7 @@
                                     <span class="col-lg-2 col-md-2 col-sm-2  Range"><span style="color:red">*</span>(1-10000)</span>
                                     <label for="dns_timeout"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >超时时间(s)</label>
+                                    >超时时间(s)</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="dns_timeout"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
@@ -665,7 +665,7 @@
                                 <div class="form-group row">
                                     <label for="domains"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >待查询域名</label>
+                                    >待查询域名</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <textarea name="domains" id="domains" onkeydown="Domains()" cols="15" rows="5"  class="form-control input clear" style="resize: none"></textarea>
                                     </div>
@@ -674,7 +674,7 @@
                                     </div>
                                     <div class="col-lg-3 col-md-3 col-sm-3" style="display: inline ;position: absolute;bottom: 36px;">
                                         <span id="a">已输入0/6000字符 </span>
-                                </div>
+                                    </div>
                                 </div>
                             </div>
                         </form>
@@ -683,7 +683,7 @@
                                 <div class="form-group row">
                                     <label for="username"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >用户名</label>
+                                    >用户名</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="username"
                                                disabled="disabled" name="username"
@@ -692,7 +692,7 @@
                                     <span class="col-lg-2 col-md-2 col-sm-2  Range"></span>
                                     <label for="password"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >密码</label>
+                                    >密码</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="password"
                                                value="" disabled="disabled" name="password"
@@ -702,7 +702,7 @@
                                 <div class="form-group row">
                                     <label for="pppoe_times"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >拨号请求次数</label>
+                                    >拨号请求次数</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="pppoe_times"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
@@ -711,7 +711,7 @@
                                     <span class="col-lg-2 col-md-2 col-sm-2  Range"><span style="color:red">*</span>(1-1000)</span>
                                     <label for="pppoe_interval"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >时间间隔(ms)</label>
+                                    >时间间隔(ms)</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="pppoe_interval"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
@@ -722,7 +722,7 @@
                                 <div class="form-group row">
                                     <label for="online_time"
                                            class="col-lg-2 col-md-2 col-sm-3 form_border"
-                                          >用户在线时长(s)</label>
+                                    >用户在线时长(s)</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="online_time"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
@@ -737,7 +737,7 @@
                                 <div class="form-group row">
                                     <label for="auth_port"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >服务器认证端口</label>
+                                    >服务器认证端口</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="auth_port"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
@@ -746,7 +746,7 @@
                                     <span class="col-lg-2 col-md-2 col-sm-2  Range"><span style="color:red">*</span>(1-65535)</span>
                                     <label for="nas_port"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >NAS端口</label>
+                                    >NAS端口</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="nas_port"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
@@ -757,7 +757,7 @@
                                 <div class="form-group row">
                                     <label for="secret"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >共享密钥</label>
+                                    >共享密钥</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="secret"
                                                disabled="disabled" name="secret">
@@ -775,7 +775,7 @@
                                 <div class="form-group row">
                                     <label for="radius_password"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >密码</label>
+                                    >密码</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="radius_password"
                                                disabled="disabled" name="password">
@@ -783,7 +783,7 @@
                                     <span class="col-lg-2 col-md-2 col-sm-2  Range"></span>
                                     <label for="radius_times"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >测试次数</label>
+                                    >测试次数</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="radius_times"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
@@ -794,7 +794,7 @@
                                 <div class="form-group row">
                                     <label for="radius_interval"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >测试间隔(ms)</label>
+                                    >测试间隔(ms)</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="radius_interval"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
@@ -809,7 +809,7 @@
                                 <div class="form-group row">
                                     <label for="port"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >服务器端口</label>
+                                    >服务器端口</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="port"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
@@ -818,16 +818,19 @@
                                     <span class="col-lg-2 col-md-2 col-sm-2  Range"><span style="color:red">*</span>(1-65535)</span>
                                     <label for="filename"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >文件名称</label>
+                                    >文件名称</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
-                                        <input type="text"   class="form-control input clear" id="filename"
-                                               disabled="disabled" name="filename">
+                                        <select name="filename" id="filename" class="form-control input clear"disabled="disabled">
+                                            <option value="test_upload_100M">测试文件1(100M)</option>
+                                            <option value="test_upload_10M" selected>测试文件2(10M)</option>
+                                            <option value="test_upload_1M">测试文件3(1M)</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="lasting_time"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >持续时长(s)</label>
+                                    >持续时长(s)</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="lasting_time"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
@@ -836,7 +839,7 @@
                                     <span class="col-lg-2 col-md-2 col-sm-2  Range"><span style="color:red">*</span>(5-300)</span>
                                     <label for="upload_size"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border" style="padding-right: 0px"
-                                          >上传文件大小(KB)</label>
+                                    >上传文件大小(KB)</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="upload_size"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
@@ -847,10 +850,10 @@
                                 <div class="form-group row">
                                     <label for="is_delete"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >是否删除文件</label>
+                                    >是否删除文件</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <select name="is_delete" disabled="disabled" id="is_delete"
-                                                  class="form-control input clear">
+                                                class="form-control input clear">
                                             <option value="1">是</option>
                                             <option value="0">否</option>
                                         </select>
@@ -858,10 +861,10 @@
                                     <span class="col-lg-2 col-md-2 col-sm-2  Range"></span>
                                     <label for="is_anonymous"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >是否匿名</label>
+                                    >是否匿名</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <select name="is_anonymous" disabled="disabled" id="is_anonymous"
-                                                  class="form-control input clear">
+                                                class="form-control input clear">
                                             <option value="1" selected="selected">是</option>
                                             <option value="0">否</option>
                                         </select>
@@ -870,7 +873,7 @@
                                 <div class="form-group row">
                                     <label for="ftpup_username"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >用户名</label>
+                                    >用户名</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="ftpup_username"
                                                readonly="readonly" onfocus="this.blur()"  disabled="disabled" name="username">
@@ -878,7 +881,7 @@
                                     <span class="col-lg-2 col-md-2 col-sm-2  Range"></span>
                                     <label for="ftpup_password"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >密码</label>
+                                    >密码</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="ftpup_password"
                                                readonly="readonly" onfocus="this.blur()"  disabled="disabled" name="password">
@@ -891,7 +894,7 @@
                                 <div class="form-group row">
                                     <label for="ftpdown_port"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >服务器端口</label>
+                                    >服务器端口</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="ftpdown_port"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
@@ -900,7 +903,7 @@
                                     <span class="col-lg-2 col-md-2 col-sm-2  Range"><span style="color:red">*</span>(1-65535)</span>
                                     <label for="ftpdown_filename"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >文件名称</label>
+                                    >文件名称</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="ftpdown_filename"
                                                disabled="disabled" name="filename">
@@ -909,7 +912,7 @@
                                 <div class="form-group row">
                                     <label for="ftpdown_lasting_time"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >持续时长(s)</label>
+                                    >持续时长(s)</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="ftpdown_lasting_time"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
@@ -918,7 +921,7 @@
                                     <span class="col-lg-2 col-md-2 col-sm-2  Range"><span style="color:red">*</span>(5-300)</span>
                                     <label for="download_size"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border" style="padding-right: 0px"
-                                          >上传文件大小(KB)</label>
+                                    >上传文件大小(KB)</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="download_size"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
@@ -929,10 +932,10 @@
                                 <div class="form-group row">
                                     <label for="ftpdown_is_anonymous"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >是否匿名</label>
+                                    >是否匿名</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <select name="is_anonymous" disabled="disabled" id="ftpdown_is_anonymous"
-                                                  class="form-control input clear">
+                                                class="form-control input clear">
                                             <option value="1" selected="selected">是</option>
                                             <option value="0">否</option>
                                         </select>
@@ -941,17 +944,17 @@
                                     <div class="form-group row">
                                         <label for="ftpdown_username"
                                                class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                            >用户名</label>
+                                        >用户名</label>
                                         <div class="col-lg-2 col-md-2 col-sm-2" style="padding-left: 10px">
                                             <input type="text"   class="form-control input clear" style="width:102.98px" id="ftpdown_username"
-                                               readonly="readonly"  onfocus="this.blur()"  disabled="disabled" name="username">
+                                                   readonly="readonly"  onfocus="this.blur()"  disabled="disabled" name="username">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="ftpdown_password"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >密码</label>
+                                    >密码</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="ftpdown_password"
                                                readonly="readonly" onfocus="this.blur()" disabled="disabled" name="password">
@@ -964,7 +967,7 @@
                                 <div class="form-group row">
                                     <label for="web_lasting_time"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border "
-                                          >持续时长(s)</label>
+                                    >持续时长(s)</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                         <input type="text"   class="form-control input clear" id="web_lasting_time"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
@@ -979,7 +982,7 @@
                                 <div class="form-group row">
                                     <label for="max_element"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >最多下载元素</label>
+                                    >最多下载元素</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="max_element"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
@@ -988,7 +991,7 @@
                                     <span class="col-lg-2 col-md-2 col-sm-2  Range"><span style="color:red">*</span>(1-2000)</span>
                                     <label for="element_timeout"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >元素超时时长(s)</label>
+                                    >元素超时时长(s)</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="element_timeout"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
@@ -999,7 +1002,7 @@
                                 <div class="form-group row">
                                     <label for="page_timeout"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >页面超时时长(s)</label>
+                                    >页面超时时长(s)</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="page_timeout"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
@@ -1008,7 +1011,7 @@
                                     <span class="col-lg-2 col-md-2 col-sm-2  Range"><span style="color:red">*</span>(1-2000)</span>
                                     <label for="max_size"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                         style="padding-left: 0px;" >最大下载容量(KB)</label>
+                                           style="padding-left: 0px;" >最大下载容量(KB)</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="max_size"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
@@ -1019,7 +1022,7 @@
                                 <div class="form-group row">
                                     <label for="user_agent"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >User-Agent</label>
+                                    >User-Agent</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <select id="user_agent" class="form-control input clear" disabled="disabled" name="user_agent">
                                             <option value="Mozilla/5.0 (Windows NT 10.0; Win64; x64) " selected="selected">Chrome on Windows 10</option>
@@ -1036,10 +1039,10 @@
                                     <span class="col-lg-2 col-md-2 col-sm-2  Range"></span>
                                     <label for="is_http_proxy"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          style="padding-left: 0px;">是否使用HTTP代理</label>
+                                           style="padding-left: 0px;">是否使用HTTP代理</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <select name="is_http_proxy" disabled="disabled" id="is_http_proxy"
-                                                  class="form-control input clear">
+                                                class="form-control input clear">
                                             <option value="1">是</option>
                                             <option value="0" selected="selected">否</option>
                                         </select>
@@ -1048,7 +1051,7 @@
                                 <div class="form-group row">
                                     <label for="address"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >地址</label>
+                                    >地址</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="address" readonly="readonly"
                                                disabled="disabled"  name="address" onfocus="this.blur()">
@@ -1056,7 +1059,7 @@
                                     <span class="col-lg-2 col-md-2 col-sm-2  Range"></span>
                                     <label for="webpage_port"
                                            class="col-lg-2 col-md-2 col-sm-2  form_border"
-                                          >端口</label>
+                                    >端口</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="webpage_port"  readonly="readonly"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
@@ -1067,7 +1070,7 @@
                                 <div class="form-group row">
                                     <label for="username"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >用户名</label>
+                                    >用户名</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="uername" readonly="readonly"
                                                disabled="disabled"    name="username" onfocus="this.blur()">
@@ -1076,10 +1079,10 @@
                                     <span class="col-lg-2 col-md-2 col-sm-2  Range"></span>
                                     <label for="webpage_password"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >密码</label>
+                                    >密码</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="webpage_password" readonly="readonly"
-                                                  name="password" onfocus="this.blur()">
+                                               name="password" onfocus="this.blur()">
                                     </div>
                                 </div>
                             </div>
@@ -1089,10 +1092,10 @@
                                 <div class="form-group row">
                                     <label for="video_quality"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >视频质量</label>
+                                    >视频质量</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <select name="video_quality" disabled="disabled" id="video_quality"
-                                                  class="form-control input clear">
+                                                class="form-control input clear">
                                             <option value="1">标清</option>
                                             <option value="2">高清</option>
                                             <option value="3">超清</option>
@@ -1101,7 +1104,7 @@
                                     <span class="col-lg-2 col-md-2 col-sm-2  Range"></span>
                                     <label for="video_lasting_time"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                          >持续时长(s)</label>
+                                    >持续时长(s)</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="video_lasting_time"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
@@ -1116,7 +1119,7 @@
                                 <div class="form-group row">
                                     <label for="game_count"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                           >发包个数</label>
+                                    >发包个数</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="game_count"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
@@ -1125,7 +1128,7 @@
                                     <span class="col-lg-2 col-md-2 col-sm-2  Range"><span style="color:red">*</span>(3-10000)</span>
                                     <label for="game_interval"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                           >发包间隔(ms)</label>
+                                    >发包间隔(ms)</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="game_interval"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
@@ -1136,7 +1139,7 @@
                                 <div class="form-group row">
                                     <label for="game_size"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                           >负载大小(byte)</label>
+                                    >负载大小(byte)</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="game_size"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
@@ -1145,7 +1148,7 @@
                                     <span class="col-lg-2 col-md-2 col-sm-2  Range"><span style="color:red">*</span>(18-1472)</span>
                                     <label for="game_timeout"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                           >超时时间(s)</label>
+                                    >超时时间(s)</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="game_timeout"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
@@ -1199,105 +1202,105 @@
 <!--<script type="text/javascript" src="${rc.contextPath}/statics/js/index.js"></script>-->
 <script type="text/javascript" src="${rc.contextPath}/statics/js/doublebox-bootstrap.js"></script>
 <script type="text/javascript">
-      function Domains(){
-          var maxl=6000//总长
-          var s=document.getElementById("domains").value.trim().length +1;
-          if(s>maxl)document.getElementById("domains").value=document.getElementById("domains").value.substr(0,maxl-1);
-          else document.getElementById("a").innerHTML="已输入"+s+"/"+maxl+" 字符";
-      }
+    function Domains(){
+        var maxl=6000//总长
+        var s=document.getElementById("domains").value.trim().length +1;
+        if(s>maxl)document.getElementById("domains").value=document.getElementById("domains").value.substr(0,maxl-1);
+        else document.getElementById("a").innerHTML="已输入"+s+"/"+maxl+" 字符";
+    }
 
 
-$(function () {
-    //web浏览
-    $('#is_http_proxy').change(function () {
-        if($(this).val()=="1"){
-            $('#address').removeAttr("readonly");
-            $('#webpage_port').removeAttr('readonly');
-            $('#webpage_port').attr("value","80");
-            $("#range").removeAttr('style');
-            $('#uername').removeAttr("readonly");
-            $('#webpage_password').removeAttr("readonly");
-            $('#address').removeAttr("onfocus");
-            $('#webpage_port').removeAttr('onfocus');
-            $('#uername').removeAttr("onfocus");
-            $('#webpage_password').removeAttr("onfocus");
-        }else{
-            $('#webpage_port').removeAttr("value",'');
-            $('#address').removeAttr("value","");
-            $('#uername').removeAttr("value","");
-            $('#webpage_password').removeAttr("value");
-            $('#address').attr("readonly","readonly");
-            $('#webpage_port').attr('readonly',"readonly");
-            $('#uername').attr("readonly","readonly");
-            $("#range").css('display','none');
-            $('#webpage_password').attr("readonly","readonly");
-            $('#address').attr("onfocus","this.blur()");
-            $('#webpage_port').attr('onfocus',"this.blur()");
-            $('#uername').attr("onfocus","this.blur()");
-            $('#webpage_password').attr("onfocus","this.blur()");
-        }
-    })
-    //ftp下载
-    $('#ftpdown_is_anonymous').change(function () {
-        if($(this).val()=="0"){
-            $("#ftpdown_username").removeAttr('readonly');
-            $('#ftpdown_password').removeAttr('readonly');
-            $('#ftpdown_username').removeAttr("onfocus");
-            $('#ftpdown_password').removeAttr("onfocus");
-        }else{
-            $("#ftpdown_username").attr('readonly','readonly');
-            $('#ftpdown_password').attr('readonly','readonly');
-            $('#ftpdown_username').attr("onfocus","this.blur()");
-            $('#ftpdown_password').attr("onfocus","this.blur()");
-        }
-    })
-    //ftp上传
-    $('#is_anonymous').change(function () {
-        if($(this).val()=="0"){
-            $("#ftpup_username").removeAttr('readonly');
-            $('#ftpup_password').removeAttr('readonly');
-            $('#ftpup_username').removeAttr("onfocus");
-            $('#ftpup_password').removeAttr("onfocus");
-        }else{
-            $("#ftpup_username").attr('readonly','readonly');
-            $('#ftpup_password').attr('readonly','readonly');
-            $('#ftpup_username').attr("onfocus","this.blur()");
-            $('#ftpup_password').attr("onfocus","this.blur()");
-        }
-    })
-    //禁止浏览器后退
-    function banBackSpace(e){
-        var ev = e || window.event;//获取event对象
-        var obj = ev.target || ev.srcElement;//获取事件源
-        var t = obj.type || obj.getAttribute('type');//获取事件源类型
-        //获取作为判断条件的事件类型
-        var vReadOnly = obj.getAttribute('readonly');
-        //处理null值情况
-        vReadOnly = (vReadOnly == "") ? false : vReadOnly;
-        //当敲Backspace键时，事件源类型为密码或单行、多行文本的，
-        //并且readonly属性为true或enabled属性为false的，则退格键失效
-        var flag1=(ev.keyCode == 8 && (t=="password" || t=="text" || t=="textarea")
+    $(function () {
+        //web浏览
+        $('#is_http_proxy').change(function () {
+            if($(this).val()=="1"){
+                $('#address').removeAttr("readonly");
+                $('#webpage_port').removeAttr('readonly');
+                $('#webpage_port').attr("value","80");
+                $("#range").removeAttr('style');
+                $('#uername').removeAttr("readonly");
+                $('#webpage_password').removeAttr("readonly");
+                $('#address').removeAttr("onfocus");
+                $('#webpage_port').removeAttr('onfocus');
+                $('#uername').removeAttr("onfocus");
+                $('#webpage_password').removeAttr("onfocus");
+            }else{
+                $('#webpage_port').removeAttr("value",'');
+                $('#address').removeAttr("value","");
+                $('#uername').removeAttr("value","");
+                $('#webpage_password').removeAttr("value");
+                $('#address').attr("readonly","readonly");
+                $('#webpage_port').attr('readonly',"readonly");
+                $('#uername').attr("readonly","readonly");
+                $("#range").css('display','none');
+                $('#webpage_password').attr("readonly","readonly");
+                $('#address').attr("onfocus","this.blur()");
+                $('#webpage_port').attr('onfocus',"this.blur()");
+                $('#uername').attr("onfocus","this.blur()");
+                $('#webpage_password').attr("onfocus","this.blur()");
+            }
+        })
+        //ftp下载
+        $('#ftpdown_is_anonymous').change(function () {
+            if($(this).val()=="0"){
+                $("#ftpdown_username").removeAttr('readonly');
+                $('#ftpdown_password').removeAttr('readonly');
+                $('#ftpdown_username').removeAttr("onfocus");
+                $('#ftpdown_password').removeAttr("onfocus");
+            }else{
+                $("#ftpdown_username").attr('readonly','readonly');
+                $('#ftpdown_password').attr('readonly','readonly');
+                $('#ftpdown_username').attr("onfocus","this.blur()");
+                $('#ftpdown_password').attr("onfocus","this.blur()");
+            }
+        })
+        //ftp上传
+        $('#is_anonymous').change(function () {
+            if($(this).val()=="0"){
+                $("#ftpup_username").removeAttr('readonly');
+                $('#ftpup_password').removeAttr('readonly');
+                $('#ftpup_username').removeAttr("onfocus");
+                $('#ftpup_password').removeAttr("onfocus");
+            }else{
+                $("#ftpup_username").attr('readonly','readonly');
+                $('#ftpup_password').attr('readonly','readonly');
+                $('#ftpup_username').attr("onfocus","this.blur()");
+                $('#ftpup_password').attr("onfocus","this.blur()");
+            }
+        })
+        //禁止浏览器后退
+        function banBackSpace(e){
+            var ev = e || window.event;//获取event对象
+            var obj = ev.target || ev.srcElement;//获取事件源
+            var t = obj.type || obj.getAttribute('type');//获取事件源类型
+            //获取作为判断条件的事件类型
+            var vReadOnly = obj.getAttribute('readonly');
+            //处理null值情况
+            vReadOnly = (vReadOnly == "") ? false : vReadOnly;
+            //当敲Backspace键时，事件源类型为密码或单行、多行文本的，
+            //并且readonly属性为true或enabled属性为false的，则退格键失效
+            var flag1=(ev.keyCode == 8 && (t=="password" || t=="text" || t=="textarea")
             && vReadOnly=="readonly")?true:false;
-        //当敲Backspace键时，事件源类型非密码或单行、多行文本的，则退格键失效
-        var flag2=(ev.keyCode == 8 && t != "password" && t != "text" && t != "textarea")
-            ?true:false;
+            //当敲Backspace键时，事件源类型非密码或单行、多行文本的，则退格键失效
+            var flag2=(ev.keyCode == 8 && t != "password" && t != "text" && t != "textarea")
+                ?true:false;
 
-        //判断
-        if(flag2){
-            return false;
+            //判断
+            if(flag2){
+                return false;
+            }
+            if(flag1){
+                return false;
+            }
         }
-        if(flag1){
-            return false;
-        }
-    }
 
-    window.onload=function(){
-        //禁止后退键 作用于Firefox、Opera
-        document.onkeypress=banBackSpace;
-        //禁止后退键 作用于IE、Chrome
-        document.onkeydown=banBackSpace;
-    }
-})
+        window.onload=function(){
+            //禁止后退键 作用于Firefox、Opera
+            document.onkeypress=banBackSpace;
+            //禁止后退键 作用于IE、Chrome
+            document.onkeydown=banBackSpace;
+        }
+    })
 
 
 

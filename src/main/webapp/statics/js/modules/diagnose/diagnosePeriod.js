@@ -320,7 +320,6 @@ var new_search = new Vue({
         search: function () {
             var searchJson = getFormJson($('#probesearch'));
             console.log(searchJson);
-            debugger
             if ((searchJson.startDate) > (searchJson.terminalDate)) {
                 console.log("时间选择有误，请重新选择！");
                 toastr.warning('时间选择有误，请重新选择！');

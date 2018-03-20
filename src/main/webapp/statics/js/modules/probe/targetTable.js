@@ -27,7 +27,7 @@ var targetgroupdata_handle = new Vue({
         groupSelected=0
         $.ajax({
             type: "POST",   /*GET会乱码*/
-            url: "../../targetgroup/searchlist",//Todo:改成测试任务组的list方法
+            url: "../../targetgroup/searchlist",
             cache: false,  //禁用缓存
             dataType: "json",
             /* contentType:"application/json",  /!*必须要,不可少*!/*/
@@ -360,7 +360,8 @@ var targetform_data = new Vue({
     // 在 `methods` 对象中定义方法
     methods: {
         submit: function () {
-            var targetJson = getFormJson($('#targetform_data'));
+            debugger
+            var targetJson = getFormJson2($('#targetform_data'));
             console.log(targetJson);
             var reg1 = /^(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\/])+$/;
             var reg=/^((https|http|ftp|rtsp|mms)?:\/\/)[^\s]+/;
@@ -442,6 +443,7 @@ var tgform_data = new Vue({
     methods: {
         submit: function () {
             var tgJson = getFormJson($('#tgform_data'));
+            debugger
             console.log(tgJson);
             if (tgJson.tgName == "") {
                 toastr.warning("请输入名称!");
@@ -508,10 +510,11 @@ var tgform_data = new Vue({
 function getFormJson(form) {
     var o = {};
     var a = $(form).serializeArray();
+    debugger
     if(groupSelected !=0){
         a[1].value = groupSelected;
     }
-   if(serviceSelected !=0){
+   if(serviceSelected !=-1){
        a[2].value=serviceSelected
    }
         $.each(a, function () {
@@ -526,7 +529,21 @@ function getFormJson(form) {
     });
     return o;
 }
-
+function getFormJson2(form) {
+    var o = {};
+    var a = $(form).serializeArray();
+    $.each(a, function () {
+        if (o[this.name] !== undefined) {
+            if (!o[this.name].push) {
+                o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '');
+        } else {
+            o[this.name] = this.value || '';
+        }
+    });
+    return o;
+}
 //格式化日期
 Date.prototype.Format = function (fmt) {
     var o = {
@@ -639,6 +656,7 @@ var target_table = new Vue({
         },
         currReset: function () {
             let vm = this;
+            console.log(vm.dtHandle)
             vm.dtHandle.clear();
             console.log("当前页面重绘");
             vm.dtHandle.draw(false);

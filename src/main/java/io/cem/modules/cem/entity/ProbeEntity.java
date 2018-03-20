@@ -1,6 +1,7 @@
 package io.cem.modules.cem.entity;
 
 import io.cem.common.utils.excel.annotation.ExcelIgnore;
+import io.cem.common.utils.excel.annotation.ExportName;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -16,18 +17,23 @@ public class ProbeEntity implements Serializable {
 	//探针ID
 	private Integer id;
 	//探针序列号
+	@ExportName(exportName = "序列号")
 	private String serialNumber;
 	//探针名称
+	@ExportName(exportName = "探针名")
 	private String name;
 	//所属探针组ID
 	@ExcelIgnore
 	private Integer groupId;
 
 	//地市名称
+	@ExportName(exportName = "地市")
 	private String cityName;
 	//区县名称
+	@ExportName(exportName = "区县")
 	private String areaName;
 
+	@ExportName(exportName = "探针组")
 	private String groupName;
 	//探针类型
 	@ExcelIgnore
@@ -42,6 +48,7 @@ public class ProbeEntity implements Serializable {
 	private String iptypeName;
 
 	//端口及IP
+	@ExportName(exportName = "端口及ip")
 	private String portIp;
 	//归属地市
 	@ExcelIgnore
@@ -50,11 +57,13 @@ public class ProbeEntity implements Serializable {
 	@ExcelIgnore
 	private Integer county;
 	//详细归属地
+	@ExportName(exportName = "详细地址")
 	private String location;
 	//上级探针
 	@ExcelIgnore
 	private Integer upstream;
 	//接入BRAS名称
+	@ExportName(exportName = "接入BRAS名称")
 	private String brasName;
 	//接入BRAS IP
 	private String brasIp;
