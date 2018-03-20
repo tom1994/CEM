@@ -1792,6 +1792,27 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 				scoreBase.setTracertTcpJitterStd(list.get(i).getTracertIcmpJitterStd());
 				scoreBase.setTracertTcpJitterVar(list.get(i).getTracertIcmpJitterVar());
 				scoreBase.setTracertTcpLossRate(list.get(i).getTracertIcmpLossRate());
+			}else if(type.equals("slaUdp")){
+				scoreBase.setSlaUdpDelay(list.get(i).getSlaUdpDelay());
+				scoreBase.setSlaUdpGDelay(list.get(i).getSlaUdpGDelay());
+				scoreBase.setSlaUdpRDelay(list.get(i).getSlaUdpRDelay());
+				scoreBase.setSlaUdpJitter(list.get(i).getSlaUdpJitter());
+				scoreBase.setSlaUdpGJitter(list.get(i).getSlaUdpGJitter());
+				scoreBase.setSlaUdpRJitter(list.get(i).getSlaUdpRJitter());
+				scoreBase.setSlaUdpLossRate(list.get(i).getSlaUdpLossRate());
+			}else if(type.equals("dns")){
+				scoreBase.setDnsDelay(list.get(i).getDnsDelay());
+				scoreBase.setDnsSuccessRate(list.get(i).getDnsSuccessRate());
+			}else if(type.equals("dhcp")){
+				scoreBase.setDhcpDelay(list.get(i).getDhcpDelay());
+				scoreBase.setDhcpSuccessRate(list.get(i).getDhcpSuccessRate());
+			}else if(type.equals("pppoe")){
+				scoreBase.setPppoeDelay(list.get(i).getPppoeDelay());
+				scoreBase.setPppoeDropRate(list.get(i).getPppoeDropRate());
+				scoreBase.setPppoeSuccessRate(list.get(i).getPppoeSuccessRate());
+			}else if(type.equals("radius")){
+				scoreBase.setRadiusDelay(list.get(i).getRadiusDelay());
+				scoreBase.setRadiusSuccessRate(list.get(i).getRadiusSuccessRate());
 			}else{}
 			scoreBase.setScore(list.get(i).getScore());
 			scoreBase.setBase(list.get(i).getBase());
