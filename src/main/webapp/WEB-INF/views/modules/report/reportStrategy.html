@@ -76,6 +76,29 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="city"
+                                   class="col-lg-2 col-md-2 col-sm-2 input-label form_border">所属地市</label>
+                            <div class="col-lg-2 col-md-2 col-sm-2 form_border">
+                                <select id="city" class="form-control input clear" name="city" v-on:change="queryArea()">  <!--VUE列表渲染-->
+                                    <option v-for="item in cityNames" v-bind:value="item.message.cityId">
+                                        {{ item.message.cityName }}
+                                    </option>
+                                </select>
+                            </div>
+
+                            <label for="county"
+                                   class="col-lg-2 col-md-2 col-sm-2 input-label form_border">所属区县</label>
+                            <div class="col-lg-2 col-md-2 col-sm-2 form_border">
+                                <select id="county" class="form-control input clear" name="county">
+                                    <!--VUE列表渲染-->
+                                    <option v-for="item in countyNames"
+                                            v-bind:value="item.message.areaId">
+                                        {{ item.message.countyName }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="name" class="col-lg-3 col-md-3 col-sm-3 control-label form_border"
                                    style="line-height: 1.5">cron表达式</label>
                             <div class="col-lg-8 col-md-8 col-sm-8">

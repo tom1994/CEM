@@ -36,6 +36,11 @@ var spform_data = new Vue({
     },
     // 在 `methods` 对象中定义方法
     methods: {
+        /*模态框中选择区县*/
+        queryArea: function(){
+            //console.log($("#city").val());
+            this.countyNames = queryArea($("#city").val());
+        },
         submit: function () {
             var spJson = getFormJson($('#spform_data'));
             console.log(spJson);
@@ -98,6 +103,23 @@ var spform_data = new Vue({
         }
     }
 });
+
+/*详情里的联动选择地市和区县*/
+var queryArea = function (cityid) {
+    $.ajax({
+        url: "../../cem/county/info/"+cityid,
+        type: "POST",
+        cache: false,  //禁用缓存
+        dataType: "json",
+        contentType: "application/json",
+        success: function (result) {
+            var areaNames_detail = new Array();
+            for(var i=0;i<result.county.length;i++){
+                areaNames_detail[i] = {message: result.county[i]}
+            }
+        }
+    });
+}
 
 function getFormJson(form) {      /*将表单对象变为json对象*/
     var o = {};

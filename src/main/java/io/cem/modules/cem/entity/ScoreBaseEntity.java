@@ -86,6 +86,63 @@ public class ScoreBaseEntity {
     //丢包率
     private Double tracertTcpLossRate;
 
+    /*sla tcp details*/
+    //时延平均值
+    private Double slaTcpDelay;
+    //往向时延
+    private Double slaTcpGDelay;
+    //返向时延
+    private Double slaTcpRDelay;
+    //抖动平均值
+    private Double slaTcpJitter;
+    //往向抖动
+    private Double slaTcpGJitter;
+    //返向抖动
+    private Double slaTcpRJitter;
+    //丢包率
+    private Double slaTcpLossRate;
+
+    /*sla UDP details*/
+    //时延平均值
+    private Double slaUdpDelay;
+    //往向时延
+    private Double slaUdpGDelay;
+    //返向时延
+    private Double slaUdpRDelay;
+    //抖动平均值
+    private Double slaUdpJitter;
+    //往向抖动
+    private Double slaUdpGJitter;
+    //返向抖动
+    private Double slaUdpRJitter;
+    //丢包率
+    private Double slaUdpLossRate;
+
+    /*dns details*/
+    //时延平均值
+    private Double dnsDelay;
+    //查询成功率
+    private Double dnsSuccessRate;
+
+    /*dhcp details*/
+    //时延平均值
+    private Double dhcpDelay;
+    //查询成功率
+    private Double dhcpSuccessRate;
+
+    /*pppoe details*/
+    //时延平均值
+    private Double pppoeDelay;
+    //掉线率
+    private Double pppoeDropRate;
+    //查询成功率
+    private Double pppoeSuccessRate;
+
+    /*radius details*/
+    //时延平均值
+    private Double radiusDelay;
+    //认证成功率
+    private Double radiusSuccessRate;
 
     public Double getScore() {
         return score;
@@ -381,5 +438,189 @@ public class ScoreBaseEntity {
 
     public void setTracertTcpLossRate(Double tracertTcpLossRate) {
         this.tracertTcpLossRate = tracertTcpLossRate;
+    }
+
+    public Double getSlaTcpDelay() {
+        return slaTcpDelay;
+    }
+
+    public void setSlaTcpDelay(Double slaTcpDelay) {
+        this.slaTcpDelay = slaTcpDelay;
+    }
+
+    public Double getSlaTcpGDelay() {
+        return slaTcpGDelay;
+    }
+
+    public void setSlaTcpGDelay(Double slaTcpGDelay) {
+        this.slaTcpGDelay = slaTcpGDelay;
+    }
+
+    public Double getSlaTcpRDelay() {
+        return slaTcpRDelay;
+    }
+
+    public void setSlaTcpRDelay(Double slaTcpRDelay) {
+        this.slaTcpRDelay = slaTcpRDelay;
+    }
+
+    public Double getSlaTcpJitter() {
+        return slaTcpJitter;
+    }
+
+    public void setSlaTcpJitter(Double slaTcpJitter) {
+        this.slaTcpJitter = slaTcpJitter;
+    }
+
+    public Double getSlaTcpGJitter() {
+        return slaTcpGJitter;
+    }
+
+    public void setSlaTcpGJitter(Double slaTcpGJitter) {
+        this.slaTcpGJitter = slaTcpGJitter;
+    }
+
+    public Double getSlaTcpRJitter() {
+        return slaTcpRJitter;
+    }
+
+    public void setSlaTcpRJitter(Double slaTcpRJitter) {
+        this.slaTcpRJitter = slaTcpRJitter;
+    }
+
+    public Double getSlaTcpLossRate() {
+        return slaTcpLossRate;
+    }
+
+    public void setSlaTcpLossRate(Double slaTcpLossRate) {
+        this.slaTcpLossRate = slaTcpLossRate;
+    }
+
+    public Double getSlaUdpDelay() {
+        return slaUdpDelay;
+    }
+
+    public void setSlaUdpDelay(Double slaUdpDelay) {
+        this.slaUdpDelay = slaUdpDelay;
+    }
+
+    public Double getSlaUdpGDelay() {
+        return slaUdpGDelay;
+    }
+
+    public void setSlaUdpGDelay(Double slaUdpGDelay) {
+        this.slaUdpGDelay = slaUdpGDelay;
+    }
+
+    public Double getSlaUdpRDelay() {
+        return slaUdpRDelay;
+    }
+
+    public void setSlaUdpRDelay(Double slaUdpRDelay) {
+        this.slaUdpRDelay = slaUdpRDelay;
+    }
+
+    public Double getSlaUdpJitter() {
+        return slaUdpJitter;
+    }
+
+    public void setSlaUdpJitter(Double slaUdpJitter) {
+        this.slaUdpJitter = slaUdpJitter;
+    }
+
+    public Double getSlaUdpGJitter() {
+        return slaUdpGJitter;
+    }
+
+    public void setSlaUdpGJitter(Double slaUdpGJitter) {
+        this.slaUdpGJitter = slaUdpGJitter;
+    }
+
+    public Double getSlaUdpRJitter() {
+        return slaUdpRJitter;
+    }
+
+    public void setSlaUdpRJitter(Double slaUdpRJitter) {
+        this.slaUdpRJitter = slaUdpRJitter;
+    }
+
+    public Double getSlaUdpLossRate() {
+        return slaUdpLossRate;
+    }
+
+    public void setSlaUdpLossRate(Double slaUdpLossRate) {
+        this.slaUdpLossRate = slaUdpLossRate;
+    }
+
+    public Double getDnsDelay() {
+        return dnsDelay;
+    }
+
+    public void setDnsDelay(Double dnsDelay) {
+        this.dnsDelay = dnsDelay;
+    }
+
+    public Double getDnsSuccessRate() {
+        return dnsSuccessRate;
+    }
+
+    public void setDnsSuccessRate(Double dnsSuccessRate) {
+        this.dnsSuccessRate = dnsSuccessRate;
+    }
+
+    public Double getDhcpDelay() {
+        return dhcpDelay;
+    }
+
+    public void setDhcpDelay(Double dhcpDelay) {
+        this.dhcpDelay = dhcpDelay;
+    }
+
+    public Double getDhcpSuccessRate() {
+        return dhcpSuccessRate;
+    }
+
+    public void setDhcpSuccessRate(Double dhcpSuccessRate) {
+        this.dhcpSuccessRate = dhcpSuccessRate;
+    }
+
+    public Double getPppoeDelay() {
+        return pppoeDelay;
+    }
+
+    public void setPppoeDelay(Double pppoeDelay) {
+        this.pppoeDelay = pppoeDelay;
+    }
+
+    public Double getPppoeDropRate() {
+        return pppoeDropRate;
+    }
+
+    public void setPppoeDropRate(Double pppoeDropRate) {
+        this.pppoeDropRate = pppoeDropRate;
+    }
+
+    public Double getPppoeSuccessRate() {
+        return pppoeSuccessRate;
+    }
+
+    public void setPppoeSuccessRate(Double pppoeSuccessRate) {
+        this.pppoeSuccessRate = pppoeSuccessRate;
+    }
+
+    public Double getRadiusDelay() {
+        return radiusDelay;
+    }
+
+    public void setRadiusDelay(Double radiusDelay) {
+        this.radiusDelay = radiusDelay;
+    }
+
+    public Double getRadiusSuccessRate() {
+        return radiusSuccessRate;
+    }
+
+    public void setRadiusSuccessRate(Double radiusSuccessRate) {
+        this.radiusSuccessRate = radiusSuccessRate;
     }
 }
