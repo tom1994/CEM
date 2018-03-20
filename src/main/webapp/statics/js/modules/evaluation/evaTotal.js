@@ -95,7 +95,11 @@ var search_service = new Vue({ //Todo:完成查询条件框
                 }
                 let param = {};
                 param.probedata = JSON.stringify(search);
-                console.log(param.probedata);
+
+                param.chartdata = JSON.stringify(search);
+
+                xChange(param);
+
                 $.ajax({
                     type: "POST",   /*GET会乱码*/
                     url: "../../recordhourping/qualityList",//Todo:改成测试任务组的list方法
@@ -123,21 +127,605 @@ var search_service = new Vue({ //Todo:完成查询条件框
                         game_service.game.max = parseFloat(result.score.gameMax).toFixed(3);
                         game_service.game.average = parseFloat(result.score.gameAverage).toFixed(3);
                         game_service.game.min = parseFloat(result.score.gameMin).toFixed(3);
+
                     }
                 });
             }
         },
     }
 });
+
+
+function datedifference(sDate1, sDate2) {    //sDate1和sDate2是2006-12-18格式
+    var dateSpan,
+        tempDate,
+        iDays;
+    sDate1 = Date.parse(sDate1);
+    sDate2 = Date.parse(sDate2);
+    dateSpan = sDate2 - sDate1;
+    dateSpan = Math.abs(dateSpan);
+    iDays = Math.floor(dateSpan / (24 * 3600 * 1000));
+    return iDays
+};
+
+function xChange(param) {
+    $('#container_connection').highcharts({
+        chart: {
+            type: 'spline',
+            backgroundColor: 'rgba(0,0,0,0)'
+        },
+        title: {
+            text: ''
+        },
+
+        xAxis: {
+            labels: {
+                rotation: 0//调节倾斜角度偏移
+            },
+            categories: (function () {
+                var arr = [];
+                $.ajax({
+                    type: "POST",
+                    async: false, //同步执行
+                    url: "../../recordhourping/connection",
+                    cache: false,  //禁用缓存
+                    data: param,  //传入组装的参数
+                    dataType: "json",
+                    success: function (result) {
+                         
+                        var dateDiff = datedifference(param.ava_start,param.ava_terminal);
+                        if(dateDiff > 5){
+                            for(var i=0;i<result.scoreList.length;i++){
+                                arr.push(result.scoreList[i].recordDate);
+                            }
+                        }else{
+                            for(var i=0;i<result.scoreList.length;i++){
+                                arr.push(result.scoreList[i].recordTime);
+                            }
+                        }
+
+
+                    }
+                })
+
+                return arr.sort();
+
+            })(),
+            crosshair: true,
+        },
+        yAxis: {
+            max: 100,
+            min: 60,
+            title: {
+                text: ' '
+            }
+        },
+        tooltip: {
+        crosshairs: true,
+        headerFormat: '<b>{series.name}</b><br>',
+        pointFormat: '  分数:{point.y:.2f}分',
+    },
+        plotOptions: {
+            stickyTracking: false,
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            },
+            series: {
+                stickyTracking: false
+            }
+        },
+        exporting: {
+            enabled:false
+        },
+        series: [{
+            name:"score" ,
+            data: (function () {
+                var arr = [];
+                $.ajax({
+                    type: "POST",
+                    async: false, //同步执行
+                    url: "../../recordhourping/connection",
+                    cache: false,  //禁用缓存
+                    data: param,  //传入组装的参数
+                    dataType: "json",
+                    success: function (result) {
+                        console.log(result.scoreList);
+                        for(var i=0;i<result.scoreList.length;i++){
+                            arr.push(parseFloat(result.scoreList[i].score));
+                        }
+                    }
+                })
+                return arr.sort();
+            })(),
+            showInLegend: false,
+        }]
+
+    });
+    $('#container_quality').highcharts({
+        chart: {
+            type: 'spline',
+            backgroundColor: 'rgba(0,0,0,0)'
+        },
+        title: {
+            text: ''
+        },
+
+        xAxis: {
+            labels: {
+                rotation: 0//调节倾斜角度偏移
+            },
+            categories: (function () {
+                var arr = [];
+                $.ajax({
+                    type: "POST",
+                    async: false, //同步执行
+                    url: "../../recordhourping/quality",
+                    cache: false,  //禁用缓存
+                    data: param,  //传入组装的参数
+                    dataType: "json",
+                    success: function (result) {
+                         
+                        var dateDiff = datedifference(param.ava_start,param.ava_terminal);
+                        if(dateDiff > 5){
+                            for(var i=0;i<result.scoreList.length;i++){
+                                arr.push(result.scoreList[i].recordDate);
+                            }
+                        }else{
+                            for(var i=0;i<result.scoreList.length;i++){
+                                arr.push(result.scoreList[i].recordTime);
+                            }
+                        }
+
+
+                    }
+                })
+
+                return arr.sort();
+
+            })(),
+            crosshair: true,
+        },
+        yAxis: {
+            max: 100,
+            min: 60,
+            title: {
+                text: ' '
+            }
+        },
+        tooltip: {
+        crosshairs: true,
+        headerFormat: '<b>{series.name}</b><br>',
+        pointFormat: '  分数:{point.y:.2f}分',
+    },
+        plotOptions: {
+            stickyTracking: false,
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            },
+            series: {
+                stickyTracking: false
+            }
+        },
+        exporting: {
+            enabled:false
+        },
+        series: [{
+            name:"score" ,
+            data: (function () {
+                var arr = [];
+                $.ajax({
+                    type: "POST",
+                    async: false, //同步执行
+                    url: "../../recordhourping/quality",
+                    cache: false,  //禁用缓存
+                    data: param,  //传入组装的参数
+                    dataType: "json",
+                    success: function (result) {
+                        console.log(result.scoreList);
+                        for(var i=0;i<result.scoreList.length;i++){
+                            arr.push(parseFloat(result.scoreList[i].score));
+                        }
+                    }
+                })
+                return arr.sort();
+            })(),
+            showInLegend: false,
+        }]
+
+    });
+    $('#container_download').highcharts({
+        chart: {
+            type: 'spline',
+            backgroundColor: 'rgba(0,0,0,0)'
+        },
+        title: {
+            text: ''
+        },
+
+        xAxis: {
+            labels: {
+                rotation: 0//调节倾斜角度偏移
+            },
+            categories: (function () {
+                var arr = [];
+                $.ajax({
+                    type: "POST",
+                    async: false, //同步执行
+                    url: "../../recordhourping/download",
+                    cache: false,  //禁用缓存
+                    data: param,  //传入组装的参数
+                    dataType: "json",
+                    success: function (result) {
+                         
+                        var dateDiff = datedifference(param.ava_start,param.ava_terminal);
+                        if(dateDiff > 5){
+                            for(var i=0;i<result.scoreList.length;i++){
+                                arr.push(result.scoreList[i].recordDate);
+                            }
+                        }else{
+                            for(var i=0;i<result.scoreList.length;i++){
+                                arr.push(result.scoreList[i].recordTime);
+                            }
+                        }
+
+
+                    }
+                })
+
+                return arr.sort();
+
+            })(),
+            crosshair: true,
+        },
+        yAxis: {
+            max: 100,
+            min: 60,
+            title: {
+                text: ' '
+            }
+        },
+        tooltip: {
+        crosshairs: true,
+        headerFormat: '<b>{series.name}</b><br>',
+        pointFormat: '日期:{point.x}  分数:{point.y:.2f}分',
+    },
+        plotOptions: {
+            stickyTracking: false,
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            },
+            series: {
+                stickyTracking: false
+            }
+        },
+        exporting: {
+            enabled:false
+        },
+        series: [{
+            name:"score" ,
+            data: (function () {
+                var arr = [];
+                $.ajax({
+                    type: "POST",
+                    async: false, //同步执行
+                    url: "../../recordhourping/download",
+                    cache: false,  //禁用缓存
+                    data: param,  //传入组装的参数
+                    dataType: "json",
+                    success: function (result) {
+                        console.log(result.scoreList);
+                        for(var i=0;i<result.scoreList.length;i++){
+                            arr.push(parseFloat(result.scoreList[i].score));
+                        }
+                    }
+                })
+                return arr.sort();
+            })(),
+            showInLegend: false,
+        }]
+
+    });
+    $('#container_page').highcharts({
+        chart: {
+            type: 'spline',
+            backgroundColor: 'rgba(0,0,0,0)'
+        },
+        title: {
+            text: ''
+        },
+
+        xAxis: {
+            labels: {
+                rotation: 0//调节倾斜角度偏移
+            },
+            categories: (function () {
+                var arr = [];
+                $.ajax({
+                    type: "POST",
+                    async: false, //同步执行
+                    url: "../../recordhourping/page",
+                    cache: false,  //禁用缓存
+                    data: param,  //传入组装的参数
+                    dataType: "json",
+                    success: function (result) {
+                         
+                        var dateDiff = datedifference(param.ava_start,param.ava_terminal);
+                        if(dateDiff > 5){
+                            for(var i=0;i<result.scoreList.length;i++){
+                                arr.push(result.scoreList[i].recordDate);
+                            }
+                        }else{
+                            for(var i=0;i<result.scoreList.length;i++){
+                                arr.push(result.scoreList[i].recordTime);
+                            }
+                        }
+
+
+                    }
+                })
+
+                return arr.sort();
+
+            })(),
+            crosshair: true,
+        },
+        yAxis: {
+            max: 100,
+            min: 60,
+            title: {
+                text: ' '
+            }
+        },
+        tooltip: {
+        crosshairs: true,
+        headerFormat: '<b>{series.name}</b><br>',
+        pointFormat: '  分数:{point.y:.2f}分',
+    },
+        plotOptions: {
+            stickyTracking: false,
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            },
+            series: {
+                stickyTracking: false
+            }
+        },
+        exporting: {
+            enabled:false
+        },
+        series: [{
+            name:"score" ,
+            data: (function () {
+                var arr = [];
+                $.ajax({
+                    type: "POST",
+                    async: false, //同步执行
+                    url: "../../recordhourping/page",
+                    cache: false,  //禁用缓存
+                    data: param,  //传入组装的参数
+                    dataType: "json",
+                    success: function (result) {
+                        console.log(result.scoreList);
+                        for(var i=0;i<result.scoreList.length;i++){
+                            arr.push(parseFloat(result.scoreList[i].score));
+                        }
+                    }
+                })
+                return arr.sort();
+            })(),
+            showInLegend: false,
+        }]
+
+    });
+    $('#container_video').highcharts({
+        chart: {
+            type: 'spline',
+            backgroundColor: 'rgba(0,0,0,0)'
+        },
+        title: {
+            text: ''
+        },
+
+        xAxis: {
+            labels: {
+                rotation: 0//调节倾斜角度偏移
+            },
+            categories: (function () {
+                var arr = [];
+                $.ajax({
+                    type: "POST",
+                    async: false, //同步执行
+                    url: "../../recordhourping/video",
+                    cache: false,  //禁用缓存
+                    data: param,  //传入组装的参数
+                    dataType: "json",
+                    success: function (result) {
+                         
+                        var dateDiff = datedifference(param.ava_start,param.ava_terminal);
+                        if(dateDiff > 5){
+                            for(var i=0;i<result.scoreList.length;i++){
+                                arr.push(result.scoreList[i].recordDate);
+                            }
+                        }else{
+                            for(var i=0;i<result.scoreList.length;i++){
+                                arr.push(result.scoreList[i].recordTime);
+                            }
+                        }
+
+
+                    }
+                })
+
+                return arr.sort();
+
+            })(),
+            crosshair: true,
+        },
+        yAxis: {
+            max: 100,
+            min: 60,
+            title: {
+                text: ' '
+            }
+        },
+        tooltip: {
+        crosshairs: true,
+        headerFormat: '<b>{series.name}</b><br>',
+        pointFormat: '  分数:{point.y:.2f}分',
+    },
+        plotOptions: {
+            stickyTracking: false,
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            },
+            series: {
+                stickyTracking: false
+            }
+        },
+        exporting: {
+            enabled:false
+        },
+        series: [{
+            name:"score" ,
+            data: (function () {
+                var arr = [];
+                $.ajax({
+                    type: "POST",
+                    async: false, //同步执行
+                    url: "../../recordhourping/video",
+                    cache: false,  //禁用缓存
+                    data: param,  //传入组装的参数
+                    dataType: "json",
+                    success: function (result) {
+                        console.log(result.scoreList);
+                        for(var i=0;i<result.scoreList.length;i++){
+                            arr.push(parseFloat(result.scoreList[i].score));
+                        }
+                    }
+                })
+                return arr.sort();
+            })(),
+            showInLegend: false,
+        }]
+
+    });
+    $('#container_game').highcharts({
+        chart: {
+            type: 'spline',
+            backgroundColor: 'rgba(0,0,0,0)'
+        },
+        title: {
+            text: ''
+        },
+
+        xAxis: {
+            labels: {
+                rotation: 0//调节倾斜角度偏移
+            },
+            categories: (function () {
+                var arr = [];
+                $.ajax({
+                    type: "POST",
+                    async: false, //同步执行
+                    url: "../../recordhourping/game",
+                    cache: false,  //禁用缓存
+                    data: param,  //传入组装的参数
+                    dataType: "json",
+                    success: function (result) {
+                         
+                        var dateDiff = datedifference(param.ava_start,param.ava_terminal);
+                        if(dateDiff > 5){
+                            for(var i=0;i<result.scoreList.length;i++){
+                                arr.push(result.scoreList[i].recordDate);
+                            }
+                        }else{
+                            for(var i=0;i<result.scoreList.length;i++){
+                                arr.push(result.scoreList[i].recordTime);
+                            }
+                        }
+
+
+                    }
+                })
+
+                return arr.sort();
+
+            })(),
+            crosshair: true,
+        },
+        yAxis: {
+            max: 100,
+            min: 60,
+            title: {
+                text: ' '
+            }
+        },
+        tooltip: {
+        crosshairs: true,
+        headerFormat: '<b>{series.name}</b><br>',
+        pointFormat: '  分数:{point.y:.2f}分',
+    },
+        plotOptions: {
+            stickyTracking: false,
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            },
+            series: {
+                stickyTracking: false
+            }
+        },
+        exporting: {
+            enabled:false
+        },
+        series: [{
+            name:"score" ,
+            data: (function () {
+                var arr = [];
+                $.ajax({
+                    type: "POST",
+                    async: false, //同步执行
+                    url: "../../recordhourping/game",
+                    cache: false,  //禁用缓存
+                    data: param,  //传入组装的参数
+                    dataType: "json",
+                    success: function (result) {
+                        console.log(result.scoreList);
+                        for(var i=0;i<result.scoreList.length;i++){
+                            arr.push(parseFloat(result.scoreList[i].score));
+                        }
+                    }
+                })
+                return arr.sort();
+            })(),
+            showInLegend: false,
+        }]
+
+    });
+
+}
+
+
+
+
+
+
+
+
 function getFormJson(form) {      /*将表单对象变为json对象*/
     var o = {};
     var a = $(form).serializeArray();
-    if(citySelected!=0){
-        a[2]={};
-        a[2].name="city";
-        a[2].value=citySelected;
+    if(citySelected!=0) {
+        a[2] = {};
+        a[2].name = "city";
+        a[2].value = citySelected;
     }
-    if(countrySelected!=0){
+    if(citySelected!=0&&countrySelected!=0){
         a[3]={};
         a[3].name="country";
         a[3].value=countrySelected;
@@ -364,7 +952,7 @@ var connection_service = new Vue({
             dataType: "json",
             /* contentType:"application/json",  /!*必须要,不可少*!/*/
             success: function (result) {
-                console.log(result.score.connectionMax);
+                console.log(result);
                 connection_service.connection.max = parseFloat(result.score.connectionMax).toFixed(3);
                 connection_service.connection.average = parseFloat(result.score.connectionAverage).toFixed(3);
                 connection_service.connection.min = parseFloat(result.score.connectionMin).toFixed(3);
@@ -472,12 +1060,14 @@ var connection_chart = new Vue({
 
     },
     mounted: function(){         /*动态加载测试任务组数据*/
+
         let param = {};
         chartdata=this.chartdata;
         param.chartdata = JSON.stringify(this.chartdata);
+        // var chart = new Highcharts.Chart('container_connection', options)
         $('#container_connection').highcharts({
             chart: {
-                type: 'line',
+                type: 'spline',
                 backgroundColor: 'rgba(0,0,0,0)'
             },
             title: {
@@ -498,17 +1088,16 @@ var connection_chart = new Vue({
                         data: param,  //传入组装的参数
                         dataType: "json",
                         success: function (result) {
-
+                             
                             for(var i=0;i<result.scoreList.length;i++){
                                 arr.push(result.scoreList[i].recordTime);
                             }
                         }
                     })
 
-                    return arr;
+                    return arr.sort();
 
                 })(),
-                // categories:['3月','4月','5月',"6月",'7月','8月','9月','10月',"11月",'12月'],
                 crosshair: true,
             },
             yAxis: {
@@ -519,13 +1108,9 @@ var connection_chart = new Vue({
                 }
             },
             tooltip: {
-                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
-                footerFormat: '</table>',
-                shared: false,
-                shadow: false,
-                useHTML: true,
+                crosshairs: true,
+                headerFormat: '<b>{series.name}</b><br>',
+                pointFormat: '  分数:{point.y:.2f}分',
             },
             plotOptions: {
                 stickyTracking: false,
@@ -558,17 +1143,14 @@ var connection_chart = new Vue({
                             }
                         }
                     })
-                    return arr;
+                    return arr.sort();;
                 })(),
                 showInLegend: false,
-
-
             }]
 
         });
 
     },
-
 });
 /*网络质量性图表*/
 var quality_chart = new Vue({
@@ -610,7 +1192,7 @@ var quality_chart = new Vue({
                             }
                         }
                     })
-                    return arr;
+                    return arr.sort();;
                 })(),
                 // categories:['3月','4月','5月',"6月",'7月','8月'],
                 crosshair: true
@@ -623,12 +1205,9 @@ var quality_chart = new Vue({
                 }
             },
             tooltip: {
-                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.1f} Q</b></td></tr>',
-                footerFormat: '</table>',
-                shared: true,
-                useHTML: true
+                crosshairs: true,
+                headerFormat: '<b>{series.name}</b><br>',
+                pointFormat: '  分数:{point.y:.2f}分',
             },
             plotOptions: {
                 stickyTracking: false,
@@ -636,12 +1215,15 @@ var quality_chart = new Vue({
                     pointPadding: 0.2,
                     borderWidth: 0
                 },
+                series: {
+                    stickyTracking: false
+                }
             },
             exporting: {
                 enabled:false
             },
             series: [{
-                name: '',
+                name:"score" ,
                 data: (function () {
                     var arr = [];
                     $.ajax({
@@ -658,7 +1240,7 @@ var quality_chart = new Vue({
                             }
                         }
                     })
-                    return arr;
+                    return arr.sort();;
                 })(),
                 showInLegend: false,
 
@@ -705,13 +1287,12 @@ var download_chart = new Vue({
                         data: param,  //传入组装的参数
                         dataType: "json",
                         success: function (result) {
-                            debugger;
                             for(var i=0;i<result.scoreList.length;i++){
                                 arr.push(result.scoreList[i].recordTime);
                             }
                         }
                     })
-                    return arr;
+                    return arr.sort();;
                 })(),
                 // categories:['3月','4月','5月',"6月",'7月','8月'],
                 crosshair: true
@@ -724,12 +1305,9 @@ var download_chart = new Vue({
                 }
             },
             tooltip: {
-                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.1f} Q</b></td></tr>',
-                footerFormat: '</table>',
-                shared: true,
-                useHTML: true
+                crosshairs: true,
+                headerFormat: '<b>{series.name}</b><br>',
+                pointFormat: '  分数:{point.y:.2f}分',
             },
             plotOptions: {
                 stickyTracking: false,
@@ -737,12 +1315,15 @@ var download_chart = new Vue({
                     pointPadding: 0.2,
                     borderWidth: 0
                 },
+                series: {
+                    stickyTracking: false
+                }
             },
             exporting: {
                 enabled:false
             },
             series: [{
-                name: '',
+                name:"score" ,
                 data: (function () {
                     var arr = [];
                     $.ajax({
@@ -759,7 +1340,7 @@ var download_chart = new Vue({
                             }
                         }
                     })
-                    return arr;
+                    return arr.sort();;
                 })(),
                 showInLegend: false,
 
@@ -811,7 +1392,7 @@ var page_chart = new Vue({
                             }
                         }
                     })
-                    return arr;
+                    return arr.sort();;
                 })(),
                 // categories:['3月','4月','5月',"6月",'7月','8月'],
                 crosshair: true
@@ -824,12 +1405,9 @@ var page_chart = new Vue({
                 }
             },
             tooltip: {
-                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.1f} Q</b></td></tr>',
-                footerFormat: '</table>',
-                shared: true,
-                useHTML: true
+                crosshairs: true,
+                headerFormat: '<b>{series.name}</b><br>',
+                pointFormat: '  分数:{point.y:.2f}分',
             },
             plotOptions: {
                 stickyTracking: false,
@@ -837,12 +1415,15 @@ var page_chart = new Vue({
                     pointPadding: 0.2,
                     borderWidth: 0
                 },
+                series: {
+                    stickyTracking: false
+                }
             },
             exporting: {
                 enabled:false
             },
             series: [{
-                name: '',
+                name:"score" ,
                 data: (function () {
                     var arr = [];
                     $.ajax({
@@ -857,9 +1438,10 @@ var page_chart = new Vue({
                             for(var i=0;i<result.scoreList.length;i++){
                                 arr.push(parseFloat(result.scoreList[i].score));
                             }
+
                         }
                     })
-                    return arr;
+                    return arr.sort();;
                 })(),
                 showInLegend: false,
 
@@ -912,7 +1494,7 @@ var video_chart = new Vue({
                             }
                         }
                     })
-                    return arr;
+                    return arr.sort();;
                 })(),
                 // categories:['3月','4月','5月',"6月",'7月','8月'],
                 crosshair: true
@@ -925,12 +1507,9 @@ var video_chart = new Vue({
                 }
             },
             tooltip: {
-                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.1f} Q</b></td></tr>',
-                footerFormat: '</table>',
-                shared: true,
-                useHTML: true
+                crosshairs: true,
+                headerFormat: '<b>{series.name}</b><br>',
+                pointFormat: '  分数:{point.y:.2f}分',
             },
             plotOptions: {
                 stickyTracking: false,
@@ -938,12 +1517,15 @@ var video_chart = new Vue({
                     pointPadding: 0.2,
                     borderWidth: 0
                 },
+                series: {
+                    stickyTracking: false
+                }
             },
             exporting: {
                 enabled:false
             },
             series: [{
-                name: '',
+                name:"score" ,
                 data: (function () {
                     var arr = [];
                     $.ajax({
@@ -960,7 +1542,7 @@ var video_chart = new Vue({
                             }
                         }
                     })
-                    return arr;
+                    return arr.sort();;
                 })(),
                 showInLegend: false,
 
@@ -1009,11 +1591,12 @@ var game_chart = new Vue({
                         dataType: "json",
                         success: function (result) {
                             for(var i=0;i<result.scoreList.length;i++){
+                                 
                                 arr.push(result.scoreList[i].recordTime);
                             }
                         }
                     })
-                    return arr;
+                    return arr.sort();;
                 })(),
                 // categories:['3月','4月','5月',"6月",'7月','8月'],
                 crosshair: true,
@@ -1026,12 +1609,9 @@ var game_chart = new Vue({
                 }
             },
             tooltip: {
-                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.1f} Q</b></td></tr>',
-                footerFormat: '</table>',
-                shared: true,
-                useHTML: true
+                crosshairs: true,
+                headerFormat: '<b>{series.name}</b><br>',
+                pointFormat: '  分数:{point.y:.2f}分',
             },
             plotOptions: {
                 stickyTracking: false,
@@ -1039,12 +1619,15 @@ var game_chart = new Vue({
                     pointPadding: 0.2,
                     borderWidth: 0
                 },
+                series: {
+                    stickyTracking: false
+                }
             },
             exporting: {
                 enabled:false
             },
             series: [{
-                name: '',
+                name:"score" ,
                 data: (function () {
                     var arr = [];
                     $.ajax({
@@ -1055,13 +1638,12 @@ var game_chart = new Vue({
                         data: param,  //传入组装的参数
                         dataType: "json",
                         success: function (result) {
-
                             for(var i=0;i<result.scoreList.length;i++){
                                 arr.push(parseFloat(result.scoreList[i].score));
                             }
                         }
                     })
-                    return arr;
+                    return arr.sort();;
                 })(),
                 showInLegend: false,
 
@@ -1073,21 +1655,11 @@ var game_chart = new Vue({
     },
 
 });
-// for(var i=0;i<result.scoreList.length;i++){
-//   var NewDate=Split(result.scoreList[i].recordDate.substring(0,10));
-//   var Today=Split(chartdata.ava_start);
-//     if(Today-NewDate>5){
-//
-//     }else{
-//
-//     }
-// }
-function Split(d) {
-    var arr=[];
-    arr = d.split("-");
-    var str = arr.join("");
-    return str
-}
+
+
+
+
+
 function probe() {
     probeSelected=0;
     $.ajax({

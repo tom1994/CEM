@@ -16,10 +16,10 @@
     <style>
         .left-up{
             height: 150px;
-            width: 30%;
+            width: 23%;
         }
         .right{
-            width: 70%;
+            width: 77%;
         }
 
         p{
@@ -27,7 +27,7 @@
         }
 
         .wrapper-module {
-            margin:  0;
+             margin:  0;
             padding:0;
         }
         tr:hover{background:#E5E5E5 }
@@ -39,7 +39,7 @@
             margin-bottom:0px !important;
         }
         /*.combo-dropdown{*/
-        /*max-height: 170px!important;*/
+            /*max-height: 170px!important;*/
         /*}*/
         .combo-dropdown li{
             padding: 5px;
@@ -75,288 +75,289 @@
 </head>
 
 <body>
-<div class="wrapper wrapper-content">
-    <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12">
-            <div class="ibox float-e-margins">
-                <div class="ibox-content" style="padding-bottom: 0 !important;">
-                    <div class="row" id="searchbox" style="border: none !important;">
-                        <form class="col-lg-11 col-md-11 col-sm-11 form-horizontal" id="probesearch"
-                              role="form">
-                            <div class="form-group row" style="margin-bottom: -14px" >
-                                <div style="display:inline-block;position: relative;top: -15px; ">
-                                    <span class="searchname" title="地市" style="width:40px">地市</span>
-                                    <div class="input-group searchspan" id="city" >
-                                        <div class="jq22">
-                                            <select id="selectcity" class="form-control"   v-on:change="citychange()" style="display: none">
-                                                <option value="">所有地市</option>
-                                                <option v-for="item in cities"
-                                                        v-bind:value="item.message.cityId">{{ item.message.cityName }}
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div style="display: inline-block; position: relative; top: -15px;">
-                                    <span class="searchname search left" title="区县" style="width: 40px">区县</span>
-                                    <div class="input-group searchspan" id="country">
-                                        <div class="jq22">
-                                            <select id="selectarea" class="form-control"   v-on:change="areachange()" style="display: none">
-                                                <option value="">所有区县</option>
-                                                <option v-for="item in areas"
-                                                        v-bind:value="item.message.countyId">{{item.message.countyName}}
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div style="display: inline-block; position: relative;top: -15px;" >
-                                    <span class="searchname search" title="探针" style="width: 40px">探针</span>
-                                    <div class="input-group searchspan" id="probe" >
-                                        <div class="jq22">
-                                            <select id="selectprobe" class="form-control"   style="display: none">
-                                                <option value="">所有探针</option>
-                                                <option v-for="item in probe" v-bind:value="item.message.id">{{ item.message.name}}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="input-group searchspan " style="position: relative;top: -5px;">
-                                    <span class="searchname" title="日期" style="width: 40px">起始</span>
-                                    <input type="text" id="start_date" class="form-control" name="startDate"
-                                           style="width: 140px;height: 36px;"
-                                           value="">
-                                </div>
-                                <div class="input-group searchspan" style="position: relative;top: -5px;">
-                                    <span class="searchname" title="日期" style="width: 40px">结束</span>
-                                    <input type="text" id="terminal_date" class="form-control" name="terminalDate"
-                                           style="width: 140px;height: 36px;"
-                                           value="">
-                                </div>
-                            </div>
-                        </form>
-                        <div class="col-lg-1 col-md-1 col-sm-1 pull-left" style="margin-top: 4px;" id="search">
-                            <button type="button" class="btn btn-sm btn-success"
-                                    style="margin-right: 5px"
-                                    v-on:click="testagentListsearch"><span
-                                    class="glyphicon glyphicon-zoom-in"></span>查询
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row" id="test_table">
-        <div class="col-lg-12 col-md-12 col-sm-12">
-            <div class="ibox float-e-margins ">
-                <div class="ibox-title fontcolor box" id="probehandle" style="padding-bottom: 0px !important;">
-                    <a href="../../cem/probe/download">
-                        <button type="button" class="btn btn-sm btn-success"><span
-                                class="glyphicon glyphicon-open"></span>导出
-                        </button>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!--六大业务权重设置表单-->
-<form id="weight_form">
     <div class="wrapper wrapper-content">
         <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12" style="padding-right: 30px;padding-left: 30px;">
-                <div  class="wrapper-module">
-                    <div id="weightset">
-                        <!--网络连通性测试业务-->
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-6">
-                                <div class="wrapper-block wrapper_border">
-                                    <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
-                                        <span class="modulefont">网络连通性测试业务</span>
-                                        <div  class="tools">
-                                            <a href="#" onclick="connection_info();return false;" style="color:white">查看详情</a>
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content" style="padding-bottom: 0 !important;">
+                        <div class="row" id="searchbox" style="border: none !important;">
+                            <form class="col-lg-11 col-md-11 col-sm-11 form-horizontal" id="probesearch"
+                                  role="form">
+                                <div class="form-group row" style="margin-bottom: -14px" >
+                                    <div style="display:inline-block;position: relative;top: -15px; ">
+                                        <span class="searchname" title="地市" style="width:40px">地市</span>
+                                        <div class="input-group searchspan" id="city" >
+                                            <div class="jq22">
+                                                <select id="selectcity" class="form-control"   v-on:change="citychange()" style="display: none">
+                                                    <option value="">所有地市</option>
+                                                    <option v-for="item in cities"
+                                                            v-bind:value="item.message.cityId">{{ item.message.cityName }}
+                                                    </option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
-
-                                    <div class="wrapper-block" style="font-size:15px !important">
-                                        <div class="row">
-                                            <div class="left-up" >
-                                                <div id="v-for-connection" class="col-lg-12 col-md-12 col-sm-12">
-                                                    <p>最高分：{{connection.max}}</p>
-                                                    <p>平均分：{{connection.average}}</p>
-                                                    <p>最低分：{{connection.min}}</p>
-                                                </div>
-                                            </div>
-
-                                            <div class="right">
-                                                <div class="col-lg-12 col-md-12 col-sm-12">
-                                                    <div id="container_connection" style="height: 150px; margin: 0 10px 0 0 ">
-
-                                                    </div>
-                                                </div>
+                                    <div style="display: inline-block; position: relative; top: -15px;">
+                                        <span class="searchname search left" title="区县" style="width: 40px">区县</span>
+                                        <div class="input-group searchspan" id="country">
+                                            <div class="jq22">
+                                                <select id="selectarea" class="form-control"   v-on:change="areachange()" style="display: none">
+                                                    <option value="">所有区县</option>
+                                                    <option v-for="item in areas"
+                                                            v-bind:value="item.message.countyId">{{item.message.countyName}}
+                                                    </option>
+                                                </select>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div style="display: inline-block; position: relative;top: -15px;" >
+                                        <span class="searchname search" title="探针" style="width: 40px">探针</span>
+                                        <div class="input-group searchspan" id="probe" >
+                                            <div class="jq22">
+                                                <select id="selectprobe" class="form-control"   style="display: none">
+                                                    <option value="">所有探针</option>
+                                                    <option v-for="item in probe" v-bind:value="item.message.id">{{ item.message.name}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="input-group searchspan " style="position: relative;top: -5px;">
+                                        <span class="searchname" title="日期" style="width: 40px">起始</span>
+                                        <input type="text" id="start_date" class="form-control" name="startDate"
+                                               style="width: 140px;height: 36px;"
+                                               value="">
+                                    </div>
+                                    <div class="input-group searchspan" style="position: relative;top: -5px;">
+                                        <span class="searchname" title="日期" style="width: 40px">结束</span>
+                                        <input type="text" id="terminal_date" class="form-control" name="terminalDate"
+                                               style="width: 140px;height: 36px;"
+                                               value="">
                                     </div>
                                 </div>
-                            </div>
-
-                            <!--网络层质量测试业务-->
-                            <!--<div class="right">-->
-                            <div class="col-lg-6 col-md-6 col-sm-6">
-                                <div class="wrapper-block wrapper_border">
-                                    <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
-                                        <span class="modulefont">网络层质量测试业务</span>
-                                        <div class="tools">
-                                            <a style="color:white">查看详情</a>
-                                        </div>
-                                    </div>
-
-                                    <div class="wrapper-block" style="font-size:15px !important">
-                                        <div class="row">
-                                            <div class="left-up">
-                                                <div id="v-for-quality" class="col-lg-12 col-md-12 col-sm-12">
-                                                    <p>最高分：{{quality.max}}</p>
-                                                    <p>平均分：{{quality.average}}</p>
-                                                    <p>最低分：{{quality.min}}</p>
-                                                </div>
-                                            </div>
-                                            <div class="right">
-                                                <div class="col-lg-12 col-md-12 col-sm-12">
-                                                    <div id="container_quality" style="height: 150px; margin: 0 10px 0 0 ">
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
+                            </form>
+                            <div class="col-lg-1 col-md-1 col-sm-1 pull-left" style="margin-top: 4px;" id="search">
+                                <button type="button" class="btn btn-sm btn-success" id="BTN"
+                                        style="margin-right: 5px"
+                                        v-on:click="testagentListsearch"><span
+                                        class="glyphicon glyphicon-zoom-in"></span>查询
+                                </button>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="test_table">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="ibox float-e-margins ">
+                    <div class="ibox-title fontcolor box" id="probehandle" style="padding-bottom: 0px !important;">
+                        <a href="../../cem/probe/download">
+                            <button type="button" class="btn btn-sm btn-success"><span
+                                    class="glyphicon glyphicon-open"></span>导出
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                        <!--文件下载类业务-->
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-6">
-                                <div class="wrapper-block wrapper_border">
-                                    <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
-                                        <span class="modulefont">文件下载类业务</span>
-                                        <div class="tools">
-                                            <a style="color:white">查看详情</a>
-                                        </div>
-                                    </div>
-                                    <div class="wrapper-block" style="font-size:15px !important">
-                                        <div class="row">
-                                            <div class="left-up">
-                                                <div id="v-for-download" class="col-lg-12 col-md-12 col-sm-12">
-                                                    <p>最高分：{{download.max}}</p>
-                                                    <p>平均分：{{download.average}}</p>
-                                                    <p>最低分：{{download.min}}</p>
-                                                </div>
+    <!--六大业务权重设置表单-->
+    <form id="weight_form">
+        <div class="wrapper wrapper-content">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12" style="padding-right: 30px;padding-left: 30px;">
+                    <div  class="wrapper-module">
+                        <div id="weightset">
+                            <!--网络连通性测试业务-->
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <div class="wrapper-block wrapper_border">
+                                        <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
+                                            <span class="modulefont">网络连通性测试业务</span>
+                                            <div  class="tools">
+                                                <a href="#" onclick="connection_info();return false;" style="color:white">查看详情</a>
                                             </div>
-                                            <div class="right">
-                                                <div class="col-lg-12 col-md-12 col-sm-12">
-                                                    <div id="container_download" style="height: 150px; margin: 0 10px 0 0 ">
+                                        </div>
 
+                                        <div class="wrapper-block" style="font-size:15px !important">
+                                            <div class="row">
+                                                <div class="left-up" >
+                                                    <div id="v-for-connection" class="col-lg-12 col-md-12 col-sm-12" style="padding: 0px">
+                                                        <p>最高分：{{connection.max}}</p>
+                                                        <p>平均分：{{connection.average}}</p>
+                                                        <p>最低分：{{connection.min}}</p>
+                                                    </div>
+                                                </div>
+
+                                                <div class="right">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12" style="padding: 0px">
+                                                        <div id="container_connection" style="height: 150px; margin: 0 10px 0 0 ">
+
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
-                            </div>
 
-                            <!--网页浏览类业务-->
-                            <div class="col-lg-6 col-md-6 col-sm-6">
-                                <div class="wrapper-block wrapper_border">
-                                    <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
-                                        <span class="modulefont">网页浏览类业务</span>
-                                        <div class="tools">
-                                            <a style="color:white">查看详情</a>
-                                        </div>
-                                    </div>
-
-                                    <div class="wrapper-block" style="font-size:15px !important">
-                                        <div class="row">
-                                            <div class="left-up">
-                                                <div id="v-for-page" class="col-lg-12 col-md-12 col-sm-12">
-                                                    <p>最高分：{{page.max}}</p>
-                                                    <p>平均分：{{page.average}}</p>
-                                                    <p>最低分：{{page.min}}</p>
-                                                </div>
+                                <!--网络层质量测试业务-->
+                                <!--<div class="right">-->
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <div class="wrapper-block wrapper_border">
+                                        <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
+                                            <span class="modulefont">网络层质量测试业务</span>
+                                            <div class="tools">
+                                                <a style="color:white">查看详情</a>
                                             </div>
-                                            <div class="right">
-                                                <div class="col-lg-12 col-md-12 col-sm-12">
-                                                    <div id="container_page" style="height: 150px; margin: 0 10px 0 0 ">
+                                        </div>
 
+                                        <div class="wrapper-block" style="font-size:15px !important">
+                                            <div class="row">
+                                                <div class="left-up">
+                                                    <div id="v-for-quality" class="col-lg-12 col-md-12 col-sm-12" style="padding: 0px">
+                                                        <p>最高分：{{quality.max}}</p>
+                                                        <p>平均分：{{quality.average}}</p>
+                                                        <p>最低分：{{quality.min}}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="right">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12" style="padding: 0px">
+                                                        <div id="container_quality" style="height: 150px; margin: 0 10px 0 0 ">
+
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
 
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <!--在线视频类业务-->
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-6">
-                                <div class="wrapper-block wrapper_border">
-                                    <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
-                                        <span class="modulefont">在线视频类业务</span>
-                                        <div class="tools">
-                                            <a style="color:white">查看详情</a>
-                                        </div>
-                                    </div>
-
-                                    <div class="wrapper-block" style="font-size:15px !important">
-                                        <div class="row">
-                                            <div class="left-up">
-                                                <div id="v-for-video" class="col-lg-12 col-md-12 col-sm-12">
-                                                    <p>最高分：{{video.max}}</p>
-                                                    <p>平均分：{{video.average}}</p>
-                                                    <p>最低分：{{video.min}}</p>
-                                                </div>
+                            <!--文件下载类业务-->
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <div class="wrapper-block wrapper_border">
+                                        <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
+                                            <span class="modulefont">文件下载类业务</span>
+                                            <div class="tools">
+                                                <a style="color:white">查看详情</a>
                                             </div>
-                                            <div class="right">
-                                                <div class="col-lg-12 col-md-12 col-sm-12">
-                                                    <div id="container_video" style="height: 150px; margin: 0 10px 0 0 ">
+                                        </div>
+                                        <div class="wrapper-block" style="font-size:15px !important">
+                                            <div class="row">
+                                                <div class="left-up">
+                                                    <div id="v-for-download" class="col-lg-12 col-md-12 col-sm-12" style="padding: 0px">
+                                                        <p>最高分：{{download.max}}</p>
+                                                        <p>平均分：{{download.average}}</p>
+                                                        <p>最低分：{{download.min}}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="right">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12" style="padding: 0px">
+                                                        <div id="container_download" style="height: 150px; margin: 0 10px 0 0 ">
 
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
 
+                                    </div>
+                                </div>
+
+                                <!--网页浏览类业务-->
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <div class="wrapper-block wrapper_border">
+                                        <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
+                                            <span class="modulefont">网页浏览类业务</span>
+                                            <div class="tools">
+                                                <a style="color:white">查看详情</a>
+                                            </div>
+                                        </div>
+
+                                        <div class="wrapper-block" style="font-size:15px !important">
+                                            <div class="row">
+                                                <div class="left-up">
+                                                    <div id="v-for-page" class="col-lg-12 col-md-12 col-sm-12" style="padding: 0px">
+                                                        <p>最高分：{{page.max}}</p>
+                                                        <p>平均分：{{page.average}}</p>
+                                                        <p>最低分：{{page.min}}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="right">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12" style="padding: 0px">
+                                                        <div id="container_page" style="height: 150px; margin: 0 10px 0 0 ">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
                                 </div>
                             </div>
 
-                            <!--网络游戏类业务-->
-                            <div class="col-lg-6 col-md-6 col-sm-6">
-                                <div class="wrapper-block wrapper_border">
-                                    <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
-                                        <span class="modulefont">网络游戏类业务</span>
-                                        <div class="tools">
-                                            <a style="color:white">查看详情</a>
+                            <!--在线视频类业务-->
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <div class="wrapper-block wrapper_border">
+                                        <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
+                                            <span class="modulefont">在线视频类业务</span>
+                                            <div class="tools">
+                                                <a style="color:white">查看详情</a>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div class="wrapper-block" style="font-size:15px !important">
-                                        <div class="row">
-                                            <div class="left-up">
-                                                <div id="v-for-game" class="col-lg-12 col-md-12 col-sm-12">
-                                                    <p>最高分：{{game.max}}</p>
-                                                    <p>平均分：{{game.average}}</p>
-                                                    <p>最低分：{{game.min}}</p>
+                                        <div class="wrapper-block" style="font-size:15px !important">
+                                            <div class="row">
+                                                <div class="left-up">
+                                                    <div id="v-for-video" class="col-lg-12 col-md-12 col-sm-12" style="padding: 0px">
+                                                        <p>最高分：{{video.max}}</p>
+                                                        <p>平均分：{{video.average}}</p>
+                                                        <p>最低分：{{video.min}}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="right">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12" style="padding: 0px">
+                                                        <div id="container_video" style="height: 150px; margin: 0 10px 0 0 ">
+
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="right">
-                                                <div class="col-lg-12 col-md-12 col-sm-12">
-                                                    <div id="container_game" style="height: 150px; margin: 0 10px 0 0 ">
+                                        </div>
 
+                                    </div>
+                                </div>
+
+                                <!--网络游戏类业务-->
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <div class="wrapper-block wrapper_border">
+                                        <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
+                                            <span class="modulefont">网络游戏类业务</span>
+                                            <div class="tools">
+                                                <a style="color:white">查看详情</a>
+                                            </div>
+                                        </div>
+
+                                        <div class="wrapper-block" style="font-size:15px !important">
+                                            <div class="row">
+                                                <div class="left-up">
+                                                    <div id="v-for-game" class="col-lg-12 col-md-12 col-sm-12" style="padding: 0px">
+                                                        <p>最高分：{{game.max}}</p>
+                                                        <p>平均分：{{game.average}}</p>
+                                                        <p>最低分：{{game.min}}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="right">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12" style="padding: 0px">
+                                                        <div id="container_game" style="height: 150px; margin: 0 10px 0 0 ">
+
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -369,8 +370,7 @@
                 </div>
             </div>
         </div>
-    </div>
-</form>
+    </form>
 
 <!-- 无效时间提醒模态框（Modal） -->
 <div class="modal fade" id="nonavailable_time" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -402,41 +402,41 @@
     </div><!-- /.modal -->
 </div>
 
-<!--显示详情模态框-->
-<div class="modal fade" id="myModal_dispatch" tabindex="-1" role="dialog"
-     aria-labelledby="myModalLabel" aria-hidden="" true>
-    <div class="modal-dialog" style="width: 1000px">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                    &times;
-                </button>
-                <h3 class="modal-title">
-                    网络连通性测试详情
-                </h3>
-            </div>
-            <div class="ibox-title" style="margin-bottom: 5px">
-                <h4>PING(ICMP、UDP、TCP)测试结果详情</h4>
-            </div>
-            <div class="modal-body">
-                <div class="row " style="overflow-x: auto">     <!--表格 verflow-x: scroll超出滚动-->
-                    <table class="table table-bordered " id="ping_table"></table>
+    <!--显示详情模态框-->
+    <div class="modal fade" id="myModal_dispatch" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="" true>
+        <div class="modal-dialog" style="width: 1000px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h3 class="modal-title">
+                        网络连通性测试详情
+                    </h3>
                 </div>
-            </div>
-            <div class="ibox-title" style="margin-bottom: 5px">
-                <h4>Trace Route(ICMP、UDP)测试结果详情</h4>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default"
-                        data-dismiss="modal">返回
-                </button>
-                <!--<button type="button" class="btn btn-success" v-on:click="">-->
-                <!--确定-->
-                <!--</button>-->
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal -->
-</div>
+                <div class="ibox-title" style="margin-bottom: 5px">
+                    <h4>PING(ICMP、UDP、TCP)测试结果详情</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row " style="overflow-x: auto">     <!--表格 verflow-x: scroll超出滚动-->
+                        <table class="table table-bordered " id="ping_table"></table>
+                    </div>
+                </div>
+                <div class="ibox-title" style="margin-bottom: 5px">
+                    <h4>Trace Route(ICMP、UDP)测试结果详情</h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default"
+                            data-dismiss="modal">返回
+                    </button>
+                    <!--<button type="button" class="btn btn-success" v-on:click="">-->
+                    <!--确定-->
+                    <!--</button>-->
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
 
 
 
@@ -444,17 +444,17 @@
 
 
 
-<script type="text/javascript"
-        src="${rc.contextPath}/statics/js/modules/evaluation/evaTotal.js?_${date.systemTime}"></script>
+    <script type="text/javascript"
+            src="${rc.contextPath}/statics/js/modules/evaluation/evaTotal.js?_${date.systemTime}"></script>
 
 
 
-<script>
-    $(function () {
-        $('#country .jq22').comboSelect();
-        $('#probe .jq22').comboSelect();
-        $('#city .jq22').comboSelect();
-    })
+    <script>
+        $(function () {
+            $('#country .jq22').comboSelect();
+            $('#probe .jq22').comboSelect();
+            $('#city .jq22').comboSelect();
+        })
     $('#start_date').flatpickr({
         enableTime: true,
         dateFormat: "Y-m-d H:i",

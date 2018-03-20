@@ -43,7 +43,7 @@ $(function () {
     var allId = [1, 2, 3, 4, 5, 6];
     var diffId = allId.minus(activeId);
     var sameId = Array.intersect(allId, activeId);
-     
+
     // diffId.forEach(function (o, x) {
     //     $("#myTab>li").eq(o ).css("display", "none");
     // });
@@ -818,7 +818,7 @@ var ROUTE1Table = new Vue({
                             row.push(item.targetIp);
                             row.push(item.targetLoc);
                             row.push(item.state);
-                           row.push(item.remark);
+                            row.push(item.remark);
                             rows.push(row);
                         });
                         returnData.data = rows;
@@ -2068,6 +2068,7 @@ var gameTable = new Vue({
                     dataType: "json",
                     contentType:"application/json",
                     success: function (result) {
+                        debugger;
                         $('.warning').css('display', 'none')
                         $('.loader').hide();
                         //封装返回数据
@@ -2089,11 +2090,11 @@ var gameTable = new Vue({
                             row.push(item.dnsDelay);
                             row.push(item.packetDelay);
                             row.push(item.packetJitter);
-                            row.push(item.packetLossRate);
+                            row.push(item.lossRate);
                             row.push(item.targetId);
                             row.push(item.targetIp);
                             row.push(item.targetLoc);
-                            row.push(item.state)
+                            row.push(item.state);
                             row.push(item.remark);
                             rows.push(row);
                         });
