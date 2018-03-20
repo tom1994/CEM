@@ -9,6 +9,9 @@
 	<select id="queryList" resultType="io.cem.modules.job.entity.ScheduleJobEntity" >
 		select * from schedule_job
 		<where>
+			<if test="method_name != null and method_name != ''">
+				method_name LIKE concat('%',#{method_name},'%')
+			</if>
 			<if test="beanName != null and beanName.trim() != ''">
 				bean_name like concat('%', #{beanName}, '%') 
 			</if>
@@ -21,6 +24,9 @@
  	<select id="queryTotal" resultType="int">
 		select count(1) from schedule_job 
 		<where>
+			<if test="method_name != null and method_name != ''">
+				method_name LIKE concat('%',#{method_name},'%')
+			</if>
 			<if test="beanName != null and beanName.trim() != ''">
 				bean_name like concat('%', #{beanName}, '%') 
 			</if>

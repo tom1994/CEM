@@ -1,6 +1,9 @@
 package io.cem.modules.job.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import io.cem.common.annotation.SysLog;
+import io.cem.common.exception.RRException;
+import io.cem.common.utils.JSONUtils;
 import io.cem.common.utils.PageUtils;
 import io.cem.common.utils.Query;
 import io.cem.common.utils.R;
@@ -11,6 +14,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -42,6 +46,38 @@ public class ScheduleJobController {
 		
 		return R.ok().put("page", pageUtil);
 	}
+	/**
+	 * 用于展示报表策略
+	 */
+	@RequestMapping("/reportlist")
+	@RequiresPermissions("sys:schedule:reportlist")
+	public R list(String reportdata, Integer page, Integer limit) throws Exception{
+		//查询列表数据
+
+		Map<String, Object> map = new HashMap<>();
+		map.put("method_name","Report");
+		JSONObject probedata_jsonobject = JSONObject.parseObject(reportdata);
+		try {
+			map.putAll(JSONUtils.jsonToMap(probedata_jsonobject));
+		} catch (RuntimeException e) {
+			throw new RRException("内部参数错误，请重试！");
+		}
+		int total = 0;
+		if (page == null) {              /*没有传入page,则取全部值*/
+			map.put("offset", null);
+			map.put("limit", null);
+			page = 0;
+			limit = 0;
+		} else {
+			map.put("offset", (page - 1) * limit);
+			map.put("limit", limit);
+			total = scheduleJobService.queryTotal(map);
+		}
+//		List<ProbeEntity> probeList = probeService.queryList(map);
+		List<ScheduleJobEntity> jobList = scheduleJobService.queryList(map);
+		PageUtils pageUtil = new PageUtils(jobList, total, limit, page);
+		return R.ok().put("page", pageUtil);
+	}
 	
 	/**
 	 * 定时任务信息
@@ -60,11 +96,25 @@ public class ScheduleJobController {
 	@SysLog("保存定时任务")
 	@RequestMapping("/save")
 	@RequiresPermissions("sys:schedule:save")
-	public R save(@RequestBody ScheduleJobEntity scheduleJob){
+	public R reportsave(@RequestBody ScheduleJobEntity scheduleJob){
 		ValidatorUtils.validateEntity(scheduleJob);
 		
 		scheduleJobService.save(scheduleJob);
 		
+		return R.ok();
+	}
+
+	/**
+	 * 保存定时报表任务
+	 */
+	@RequestMapping("/reportsave")
+	@RequiresPermissions("sys:schedule:reportsave")
+	public R save(@RequestBody ScheduleJobEntity scheduleJob){
+		ValidatorUtils.validateEntity(scheduleJob);
+
+		System.out.println(scheduleJob);
+		scheduleJobService.save(scheduleJob);
+
 		return R.ok();
 	}
 	
