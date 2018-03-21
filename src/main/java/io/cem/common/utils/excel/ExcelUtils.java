@@ -1,6 +1,7 @@
 package io.cem.common.utils.excel;
 
 import io.cem.common.utils.excel.annotation.ExcelIgnore;
+import io.cem.common.utils.excel.annotation.ExportName;
 import io.cem.common.utils.excel.factory.WorkbookFactory;
 import io.cem.common.utils.excel.factory.impl.HSSFWorkbookFactory;
 import io.cem.common.utils.excel.factory.impl.XSSFWorkbookFactory;
@@ -278,7 +279,12 @@ public class ExcelUtils {
                 if (!isFieldFinal(field) && ignore == null) {
                     // 添加到标题
                     // TODO:此处需要添加一个field name和export name之间的转换
-                    exportFieldTitle.add(field.getName());
+                    ExportName export = field.getAnnotation(ExportName.class);
+                    if (export == null){
+                        exportFieldTitle.add(field.getName());
+                    }else {
+                        exportFieldTitle.add(export.exportName());
+                    }
                     // 添加标题的列宽
                     exportFieldWidth.add(FIELD_WIDTH);
                     // 添加到需要导出的字段的方法

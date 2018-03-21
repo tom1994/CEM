@@ -38,7 +38,7 @@ public class BypassHttps {
             URL myurl = new URL(url);
             con = (HttpsURLConnection)myurl.openConnection();
             con.setRequestMethod(type);
-            con.setRequestProperty("Authorization","Bearer e2fba2c5-ab1d-417f-ad9d-c91c9993f04b");
+            con.setRequestProperty("Authorization","Bearer d156c35d-7f98-4339-8ca3-d2628b55df2e");
             con.setDoInput(true);
             DataInputStream input = new DataInputStream( con.getInputStream() );
             for( int c = input.read(); c != -1; c = input.read() )

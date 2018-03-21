@@ -96,7 +96,7 @@ $(document).ready(function () {
     $('div#cities .jq22').comboSelect();
     $('div#country .jq22').comboSelect();
     $('div#group .jq22').comboSelect();
-   typeSelected=0;
+    typeSelected=0;
     statusSelected=0;
     $('#Selecttype .jq22').comboSelect()
     $('.combo-dropdown').css("z-index","3");
@@ -720,84 +720,84 @@ function update_this (obj) {     /*监听修改触发事件*/
             forms[24].value = result.probe.lastReportTime;
             forms[25].value = result.probe.lastUpdateTime;
             portIP=JSON.parse(result.probe.portIp);
-           if(portIP.length=="1"){
-               $('#con').css('display','none')
-               $('#portIP').removeAttr('style')
-               forms[26].value = portIP[0].port;
-               forms[27].value = portIP[0].ip;
-               if(portIP[0].ip_type=='1'){
-                   forms[28].value ="静态IP"
-               }
-               if(portIP[0].ip_type=="2"){
-                   forms[28].value ="DHCP动态分配"
-               }
-               if(portIP[0].ip_type=="3"){
-                   forms[28].value ="PPPoE拨号"
-               }
-           }
-           else{
-               $('#portIP').css('display','none')
-               $('#con').removeAttr('style');
-               console.log(portIP)
-               forms[29].value = portIP[0].port;
-               console.log( forms[29].value );
-               forms[30].value = portIP[0].ip;
-               if(portIP[0].ip_type=='1'){
-                   forms[31].value ="静态IP"
-               }
-               if(portIP[0].ip_type=="2"){
-                   forms[31].value ="DHCP动态分配"
-               }
-               if(portIP[0].ip_type=="3"){
-                   forms[31].value ="PPPoE拨号"
-               }
-               forms[32].value = portIP[1].port;
-               forms[33].value = portIP[1].ip;
-               if(portIP[1].ip_type=='1'){
-                   forms[34].value ="静态IP"
-               }
-               if(portIP[1].ip_type=="2"){
-                   forms[34].value ="DHCP动态分配"
-               }
-               if(portIP[1].ip_type=="3"){
-                   forms[34].value ="PPPoE拨号"
-               }
-               forms[35].value = portIP[2].port;
-               forms[36].value = portIP[2].ip;
-               if(portIP[2].ip_type=='1'){
-                   forms[37].value ="静态IP"
-               }
-               if(portIP[2].ip_type=="2"){
-                   forms[37].value ="DHCP动态分配"
-               }
-               if(portIP[2].ip_type=="3"){
-                   forms[37].value ="PPPoE拨号"
-               }
-               forms[38].value = portIP[3].port;
-               forms[39].value = portIP[3].ip;
-               if(portIP[3].ip_type=='1'){
-                   forms[40].value ="静态IP"
-               }
-               if(portIP[3].ip_type=="2"){
-                   forms[40].value ="DHCP动态分配"
-               }
-               if(portIP[3].ip_type=="3"){
-                   forms[40].value ="PPPoE拨号"
-               }
-               forms[41].value = portIP[4].port;
-               forms[42].value = portIP[4].ip;
-               if(portIP[4].ip_type=='1'){
-                   forms[43].value ="静态IP"
-               }
-               if(portIP[4].ip_type=="2"){
-                   forms[43].value ="DHCP动态分配"
-               }
-               if(portIP[4].ip_type=="3"){
-                   forms[43].value ="PPPoE拨号"
-               }
+            if(portIP.length=="1"){
+                $('#con').css('display','none')
+                $('#portIP').removeAttr('style')
+                forms[26].value = portIP[0].port;
+                forms[27].value = portIP[0].ip;
+                if(portIP[0].ip_type=='1'){
+                    forms[28].value ="静态IP"
+                }
+                if(portIP[0].ip_type=="2"){
+                    forms[28].value ="DHCP动态分配"
+                }
+                if(portIP[0].ip_type=="3"){
+                    forms[28].value ="PPPoE拨号"
+                }
+            }
+            else{
+                $('#portIP').css('display','none')
+                $('#con').removeAttr('style');
+                console.log(portIP)
+                forms[29].value = portIP[0].port;
+                console.log( forms[29].value );
+                forms[30].value = portIP[0].ip;
+                if(portIP[0].ip_type=='1'){
+                    forms[31].value ="静态IP"
+                }
+                if(portIP[0].ip_type=="2"){
+                    forms[31].value ="DHCP动态分配"
+                }
+                if(portIP[0].ip_type=="3"){
+                    forms[31].value ="PPPoE拨号"
+                }
+                forms[32].value = portIP[1].port;
+                forms[33].value = portIP[1].ip;
+                if(portIP[1].ip_type=='1'){
+                    forms[34].value ="静态IP"
+                }
+                if(portIP[1].ip_type=="2"){
+                    forms[34].value ="DHCP动态分配"
+                }
+                if(portIP[1].ip_type=="3"){
+                    forms[34].value ="PPPoE拨号"
+                }
+                forms[35].value = portIP[2].port;
+                forms[36].value = portIP[2].ip;
+                if(portIP[2].ip_type=='1'){
+                    forms[37].value ="静态IP"
+                }
+                if(portIP[2].ip_type=="2"){
+                    forms[37].value ="DHCP动态分配"
+                }
+                if(portIP[2].ip_type=="3"){
+                    forms[37].value ="PPPoE拨号"
+                }
+                forms[38].value = portIP[3].port;
+                forms[39].value = portIP[3].ip;
+                if(portIP[3].ip_type=='1'){
+                    forms[40].value ="静态IP"
+                }
+                if(portIP[3].ip_type=="2"){
+                    forms[40].value ="DHCP动态分配"
+                }
+                if(portIP[3].ip_type=="3"){
+                    forms[40].value ="PPPoE拨号"
+                }
+                forms[41].value = portIP[4].port;
+                forms[42].value = portIP[4].ip;
+                if(portIP[4].ip_type=='1'){
+                    forms[43].value ="静态IP"
+                }
+                if(portIP[4].ip_type=="2"){
+                    forms[43].value ="DHCP动态分配"
+                }
+                if(portIP[4].ip_type=="3"){
+                    forms[43].value ="PPPoE拨号"
+                }
 
 
-           }
+            }
 
         }
     });
@@ -976,10 +976,12 @@ var probeform_data = new Vue({
         },
         submit: function () {
             var probeJson = getFormJson($('#probeform_data'));
+            debugger
             if (typeof(probeJson["name"]) == "undefined") {
                 toastr.warning("请录入探针名!");
             } else {
                 var probe = JSON.stringify(probeJson);
+                debugger;
                 console.log(probe);
                 var mapstr;
                 if (status == 0) {
@@ -1510,7 +1512,6 @@ var grouptable = new Vue({
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);
                         $("#Section").on("click",function(){
-                            console.log(1111)
                             $("#probegroup_table").colResizable({
                                 minWidth:40,
                             });

@@ -108,6 +108,13 @@ public class DiagnoseController {
                         List<ScoreEntity> tracertIcmp = recordHourPingService.calculateTracertIcmp(tracertList);
                         List<ScoreEntity> tracertUdp = recordHourPingService.calculateTracertUdp(tracertList);
                         scoreList.addAll(recordHourPingService.calculateDate1(pingIcmp,pingTcp,pingUdp,tracertIcmp,tracertUdp));
+                        if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
+                            scoreList = recordHourPingService.dateChart1(scoreList);
+                        }else if(map.get("county_id")==null&&map.get("probe_id")==null){
+                            scoreList = recordHourPingService.cityChart1(scoreList);
+                        }else if(map.get("probe_id")==null){
+                            scoreList = recordHourPingService.probeChart1(scoreList);
+                        }
                     } else if (service == 2) {
                         List<RecordHourSlaEntity> slaList = recordHourSlaService.queryDayList(map);
                         List<RecordHourDnsEntity> dnsList = recordHourDnsService.queryDayList(map);
@@ -121,10 +128,24 @@ public class DiagnoseController {
                         List<ScoreEntity> pppoe = recordHourSlaService.calculatePppoe(pppoeList);
                         List<ScoreEntity> radius = recordHourSlaService.calculateRadius(radiusList);
                         scoreList.addAll(recordHourSlaService.calculateDate2(slaTcp,slaUdp,dns,dhcp,pppoe,radius));
+                        if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
+                            scoreList = recordHourPingService.dateChart1(scoreList);
+                        }else if(map.get("county_id")==null&&map.get("probe_id")==null){
+                            scoreList = recordHourPingService.cityChart1(scoreList);
+                        }else if(map.get("probe_id")==null){
+                            scoreList = recordHourPingService.probeChart1(scoreList);
+                        }
                     } else if (service == 4) {
                         //网络浏览类业务代码为4
                         List<RecordHourWebPageEntity> webPageList = recordHourWebPageService.queryDayList(map);
                         scoreList.addAll(recordHourWebPageService.calculateService3(webPageList));
+                        if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
+                            scoreList = recordHourPingService.dateChart1(scoreList);
+                        }else if(map.get("county_id")==null&&map.get("probe_id")==null){
+                            scoreList = recordHourPingService.cityChart1(scoreList);
+                        }else if(map.get("probe_id")==null){
+                            scoreList = recordHourPingService.probeChart1(scoreList);
+                        }
                     } else if (service == 3) {
                         //网络下载类业务代码为3
                         List<RecordHourWebDownloadEntity> webDownloadList = recordHourWebDownloadService.queryDayList(map);
@@ -133,12 +154,33 @@ public class DiagnoseController {
                         List<ScoreEntity> ftpDownload = recordHourWebDownloadService.calculateFtpDownload(ftpList);
                         List<ScoreEntity> ftpUpload = recordHourWebDownloadService.calculateFtpUpload(ftpList);
                         scoreList.addAll(recordHourWebDownloadService.calculateService4(webDownload, ftpDownload,ftpUpload));
+                        if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
+                            scoreList = recordHourPingService.dateChart1(scoreList);
+                        }else if(map.get("county_id")==null&&map.get("probe_id")==null){
+                            scoreList = recordHourPingService.cityChart1(scoreList);
+                        }else if(map.get("probe_id")==null){
+                            scoreList = recordHourPingService.probeChart1(scoreList);
+                        }
                     } else if (service == 5) {
                         List<RecordHourWebVideoEntity> videoList = recordHourWebVideoService.queryDayList(map);
                         scoreList.addAll(recordHourWebVideoService.calculateService5(videoList));
+                        if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
+                            scoreList = recordHourPingService.dateChart1(scoreList);
+                        }else if(map.get("county_id")==null&&map.get("probe_id")==null){
+                            scoreList = recordHourPingService.cityChart1(scoreList);
+                        }else if(map.get("probe_id")==null){
+                            scoreList = recordHourPingService.probeChart1(scoreList);
+                        }
                     } else if (service == 6) {
                         List<RecordHourGameEntity> gameList = recordHourGameService.queryDayList(map);
                         scoreList.addAll(recordHourGameService.calculateService6(gameList));
+                        if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
+                            scoreList = recordHourPingService.dateChart1(scoreList);
+                        }else if(map.get("county_id")==null&&map.get("probe_id")==null){
+                            scoreList = recordHourPingService.cityChart1(scoreList);
+                        }else if(map.get("probe_id")==null){
+                            scoreList = recordHourPingService.probeChart1(scoreList);
+                        }
                     } else {
                     }
                 }
@@ -153,6 +195,13 @@ public class DiagnoseController {
                         List<ScoreEntity> tracertIcmp = recordHourPingService.calculateTracertIcmp(tracertList);
                         List<ScoreEntity> tracertUdp = recordHourPingService.calculateTracertUdp(tracertList);
                         scoreList.addAll(recordHourPingService.calculateDate1(pingIcmp,pingTcp,pingUdp,tracertIcmp,tracertUdp));
+                        if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
+                            scoreList = recordHourPingService.dateChart1(scoreList);
+                        }else if(map.get("county_id")==null&&map.get("probe_id")==null){
+                            scoreList = recordHourPingService.cityChart1(scoreList);
+                        }else if(map.get("probe_id")==null){
+                            scoreList = recordHourPingService.probeChart1(scoreList);
+                        }
                     } else if (service == 2) {
                         List<RecordHourSlaEntity> slaList = recordHourSlaService.querySlaList(map);
                         List<RecordHourDnsEntity> dnsList = recordHourDnsService.queryDnsList(map);
@@ -166,10 +215,24 @@ public class DiagnoseController {
                         List<ScoreEntity> pppoe = recordHourSlaService.calculatePppoe(pppoeList);
                         List<ScoreEntity> radius = recordHourSlaService.calculateRadius(radiusList);
                         scoreList.addAll(recordHourSlaService.calculateDate2(slaTcp,slaUdp,dns,dhcp,pppoe,radius));
+                        if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
+                            scoreList = recordHourPingService.dateChart1(scoreList);
+                        }else if(map.get("county_id")==null&&map.get("probe_id")==null){
+                            scoreList = recordHourPingService.cityChart1(scoreList);
+                        }else if(map.get("probe_id")==null){
+                            scoreList = recordHourPingService.probeChart1(scoreList);
+                        }
                     } else if (service == 4) {
                         //网页浏览类业务代码为4
                         List<RecordHourWebPageEntity> webPageList = recordHourWebPageService.queryWebList(map);
                         scoreList.addAll(recordHourWebPageService.calculateService3(webPageList));
+                        if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
+                            scoreList = recordHourPingService.dateChart1(scoreList);
+                        }else if(map.get("county_id")==null&&map.get("probe_id")==null){
+                            scoreList = recordHourPingService.cityChart1(scoreList);
+                        }else if(map.get("probe_id")==null){
+                            scoreList = recordHourPingService.probeChart1(scoreList);
+                        }
                     } else if (service == 3) {
                         //下载类业务代码为3
                         List<RecordHourWebDownloadEntity> webDownloadList = recordHourWebDownloadService.queryWebDownloadList(map);
@@ -178,12 +241,33 @@ public class DiagnoseController {
                         List<ScoreEntity> ftpDownload = recordHourWebDownloadService.calculateFtpDownload(ftpList);
                         List<ScoreEntity> ftpUpload = recordHourWebDownloadService.calculateFtpUpload(ftpList);
                         scoreList.addAll(recordHourWebDownloadService.calculateService4(webDownload,ftpDownload,ftpUpload));
+                        if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
+                            scoreList = recordHourPingService.dateChart1(scoreList);
+                        }else if(map.get("county_id")==null&&map.get("probe_id")==null){
+                            scoreList = recordHourPingService.cityChart1(scoreList);
+                        }else if(map.get("probe_id")==null){
+                            scoreList = recordHourPingService.probeChart1(scoreList);
+                        }
                     } else if (service == 5) {
                         List<RecordHourWebVideoEntity> videoList = recordHourWebVideoService.queryVideoList(map);
                         scoreList.addAll(recordHourWebVideoService.calculateService5(videoList));
+                        if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
+                            scoreList = recordHourPingService.dateChart1(scoreList);
+                        }else if(map.get("county_id")==null&&map.get("probe_id")==null){
+                            scoreList = recordHourPingService.cityChart1(scoreList);
+                        }else if(map.get("probe_id")==null){
+                            scoreList = recordHourPingService.probeChart1(scoreList);
+                        }
                     } else if (service == 6) {
                         List<RecordHourGameEntity> gameList = recordHourGameService.queryGameList(map);
                         scoreList.addAll(recordHourGameService.calculateService6(gameList));
+                        if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
+                            scoreList = recordHourPingService.dateChart1(scoreList);
+                        }else if(map.get("county_id")==null&&map.get("probe_id")==null){
+                            scoreList = recordHourPingService.cityChart1(scoreList);
+                        }else if(map.get("probe_id")==null){
+                            scoreList = recordHourPingService.probeChart1(scoreList);
+                        }
                     } else {
                     }
                 }
@@ -211,6 +295,13 @@ public class DiagnoseController {
                     List<ScoreEntity> tracertIcmp = recordHourPingService.calculateTracertIcmp(tracertList);
                     List<ScoreEntity> tracertUdp = recordHourPingService.calculateTracertUdp(tracertList);
                     scoreList = recordHourPingService.calculateDate1(pingIcmp,pingTcp,pingUdp,tracertIcmp,tracertUdp);
+                    if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
+                        scoreList = recordHourPingService.dateChart1(scoreList);
+                    }else if(map.get("county_id")==null&&map.get("probe_id")==null){
+                        scoreList = recordHourPingService.cityChart1(scoreList);
+                    }else if(map.get("probe_id")==null){
+                        scoreList = recordHourPingService.probeChart1(scoreList);
+                    }
                 }
                 else if (service==2){
                     List<RecordHourSlaEntity> slaList = recordHourSlaService.queryDayList(map);
@@ -225,11 +316,25 @@ public class DiagnoseController {
                     List<ScoreEntity> pppoe = recordHourSlaService.calculatePppoe(pppoeList);
                     List<ScoreEntity> radius = recordHourSlaService.calculateRadius(radiusList);
                     scoreList = recordHourSlaService.calculateDate2(slaTcp,slaUdp,dns,dhcp,pppoe,radius);
+                    if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
+                        scoreList = recordHourPingService.dateChart1(scoreList);
+                    }else if(map.get("county_id")==null&&map.get("probe_id")==null){
+                        scoreList = recordHourPingService.cityChart1(scoreList);
+                    }else if(map.get("probe_id")==null){
+                        scoreList = recordHourPingService.probeChart1(scoreList);
+                    }
                 }
                 else if (service==4){
                     //网络浏览类业务代码为4
                     List<RecordHourWebPageEntity> webPageList = recordHourWebPageService.queryDayList(map);
                     scoreList = recordHourWebPageService.calculateService3(webPageList);
+                    if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
+                        scoreList = recordHourPingService.dateChart1(scoreList);
+                    }else if(map.get("county_id")==null&&map.get("probe_id")==null){
+                        scoreList = recordHourPingService.cityChart1(scoreList);
+                    }else if(map.get("probe_id")==null){
+                        scoreList = recordHourPingService.probeChart1(scoreList);
+                    }
                 }
                 else if (service==3){
                     //下载类业务代码为3
@@ -239,14 +344,35 @@ public class DiagnoseController {
                     List<ScoreEntity> ftpDownload = recordHourWebDownloadService.calculateFtpDownload(ftpList);
                     List<ScoreEntity> ftpUpload = recordHourWebDownloadService.calculateFtpUpload(ftpList);
                     scoreList = recordHourWebDownloadService.calculateDate4(webDownload, ftpDownload,ftpUpload);
+                    if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
+                        scoreList = recordHourPingService.dateChart1(scoreList);
+                    }else if(map.get("county_id")==null&&map.get("probe_id")==null){
+                        scoreList = recordHourPingService.cityChart1(scoreList);
+                    }else if(map.get("probe_id")==null){
+                        scoreList = recordHourPingService.probeChart1(scoreList);
+                    }
                 }
                 else if (service==5){
                     List<RecordHourWebVideoEntity> videoList = recordHourWebVideoService.queryDayList(map);
                     scoreList = recordHourWebVideoService.calculateService5(videoList);
+                    if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
+                        scoreList = recordHourPingService.dateChart1(scoreList);
+                    }else if(map.get("county_id")==null&&map.get("probe_id")==null){
+                        scoreList = recordHourPingService.cityChart1(scoreList);
+                    }else if(map.get("probe_id")==null){
+                        scoreList = recordHourPingService.probeChart1(scoreList);
+                    }
                 }
                 else if (service==6){
                     List<RecordHourGameEntity> gameList = recordHourGameService.queryDayList(map);
                     scoreList = recordHourGameService.calculateService6(gameList);
+                    if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
+                        scoreList = recordHourPingService.dateChart1(scoreList);
+                    }else if(map.get("county_id")==null&&map.get("probe_id")==null){
+                        scoreList = recordHourPingService.cityChart1(scoreList);
+                    }else if(map.get("probe_id")==null){
+                        scoreList = recordHourPingService.probeChart1(scoreList);
+                    }
                 }
                 else {}
             }
@@ -261,6 +387,13 @@ public class DiagnoseController {
                     List<ScoreEntity> tracertIcmp = recordHourPingService.calculateTracertIcmp(tracertList);
                     List<ScoreEntity> tracertUdp = recordHourPingService.calculateTracertUdp(tracertList);
                     scoreList = recordHourPingService.calculateDate1(pingIcmp,pingTcp,pingUdp,tracertIcmp,tracertUdp);
+                    if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
+                        scoreList = recordHourPingService.dateChart1(scoreList);
+                    }else if(map.get("county_id")==null&&map.get("probe_id")==null){
+                        scoreList = recordHourPingService.cityChart1(scoreList);
+                    }else if(map.get("probe_id")==null){
+                        scoreList = recordHourPingService.probeChart1(scoreList);
+                    }
                 } else if (service == 2) {
                     List<RecordHourSlaEntity> slaList = recordHourSlaService.querySlaList(map);
                     List<RecordHourDnsEntity> dnsList = recordHourDnsService.queryDnsList(map);
@@ -274,10 +407,24 @@ public class DiagnoseController {
                     List<ScoreEntity> pppoe = recordHourSlaService.calculatePppoe(pppoeList);
                     List<ScoreEntity> radius = recordHourSlaService.calculateRadius(radiusList);
                     scoreList = recordHourSlaService.calculateDate2(slaTcp,slaUdp,dns,dhcp,pppoe,radius);
+                    if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
+                        scoreList = recordHourPingService.dateChart1(scoreList);
+                    }else if(map.get("county_id")==null&&map.get("probe_id")==null){
+                        scoreList = recordHourPingService.cityChart1(scoreList);
+                    }else if(map.get("probe_id")==null){
+                        scoreList = recordHourPingService.probeChart1(scoreList);
+                    }
                 } else if (service == 4) {
                     //网络浏览类业务代码为4
                     List<RecordHourWebPageEntity> webPageList = recordHourWebPageService.queryWebList(map);
                     scoreList = recordHourWebPageService.calculateService3(webPageList);
+                    if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
+                        scoreList = recordHourPingService.dateChart1(scoreList);
+                    }else if(map.get("county_id")==null&&map.get("probe_id")==null){
+                        scoreList = recordHourPingService.cityChart1(scoreList);
+                    }else if(map.get("probe_id")==null){
+                        scoreList = recordHourPingService.probeChart1(scoreList);
+                    }
                 } else if (service == 3) {
                     //下载类业务代码为3
                     List<RecordHourWebDownloadEntity> webDownloadList = recordHourWebDownloadService.queryWebDownloadList(map);
@@ -286,12 +433,33 @@ public class DiagnoseController {
                     List<ScoreEntity> ftpDownload = recordHourWebDownloadService.calculateFtpDownload(ftpList);
                     List<ScoreEntity> ftpUpload = recordHourWebDownloadService.calculateFtpUpload(ftpList);
                     scoreList = recordHourWebDownloadService.calculateDate4(webDownload, ftpDownload,ftpUpload);
+                    if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
+                        scoreList = recordHourPingService.dateChart1(scoreList);
+                    }else if(map.get("county_id")==null&&map.get("probe_id")==null){
+                        scoreList = recordHourPingService.cityChart1(scoreList);
+                    }else if(map.get("probe_id")==null){
+                        scoreList = recordHourPingService.probeChart1(scoreList);
+                    }
                 } else if (service == 5) {
                     List<RecordHourWebVideoEntity> videoList = recordHourWebVideoService.queryVideoList(map);
                     scoreList = recordHourWebVideoService.calculateService5(videoList);
+                    if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
+                        scoreList = recordHourPingService.dateChart1(scoreList);
+                    }else if(map.get("county_id")==null&&map.get("probe_id")==null){
+                        scoreList = recordHourPingService.cityChart1(scoreList);
+                    }else if(map.get("probe_id")==null){
+                        scoreList = recordHourPingService.probeChart1(scoreList);
+                    }
                 } else if (service == 6) {
                     List<RecordHourGameEntity> gameList = recordHourGameService.queryGameList(map);
                     scoreList = recordHourGameService.calculateService6(gameList);
+                    if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
+                        scoreList = recordHourPingService.dateChart1(scoreList);
+                    }else if(map.get("county_id")==null&&map.get("probe_id")==null){
+                        scoreList = recordHourPingService.cityChart1(scoreList);
+                    }else if(map.get("probe_id")==null){
+                        scoreList = recordHourPingService.probeChart1(scoreList);
+                    }
                 } else {
                 }
             }
