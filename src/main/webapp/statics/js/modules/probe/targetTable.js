@@ -9,14 +9,14 @@ var groupNames = new Array();  //模态框中目标组
 var tgNames = new Array();
 var itemIds = new Array();
 var groupSelected=0;
-var serviceSelected=0;
+var serviceSelected;
 /*创建业务类型字典表*/
 var sst = new Map();
 sst.set(0, "综合业务");
 sst.set(1, "网络连通性测试业务");
 sst.set(2, "网络层质量测试业务");
-sst.set(3, "文件下载类业务");
-sst.set(4, "网页浏览类业务");
+sst.set(3,  "网页浏览类业务");
+sst.set(4, "文件下载类业务");
 sst.set(5, "在线视频类业务");
 sst.set(6, "网络游戏类业务");
 
@@ -27,7 +27,7 @@ var targetgroupdata_handle = new Vue({
         groupSelected=0
         $.ajax({
             type: "POST",   /*GET会乱码*/
-            url: "../../targetgroup/searchlist",
+            url: "../../targetgroup/searchlist",//Todo:改成测试任务组的list方法
             cache: false,  //禁用缓存
             dataType: "json",
             /* contentType:"application/json",  /!*必须要,不可少*!/*/
@@ -69,6 +69,7 @@ var targetgroupdata_handle = new Vue({
             status = 0;
             /*状态0,表示录入*/
             var forms = $('#tgform_data .form-control');
+
             $('#tgform_data input[type=text]').prop("readonly", false);
             /*去除只读状态*/
             $('#tgform_data select').prop("disabled", false);
@@ -100,7 +101,6 @@ var target_search = new Vue({
     },
     methods:{
         testagentListsearch:function() {   /*查询监听事件*/
-
                 var data = getFormJson($('#targetsearch'));
                 /*得到查询条件*/
                 /*获取表单元素的值*/
@@ -122,7 +122,7 @@ var tg_search = new Vue({
     methods:{
         tg_search:function() {   /*查询监听事件*/
               
-            var data = getFormJson($('#tgsearch'));
+            var data = getFormJson2($('#tgsearch'));
             /*得到查询条件*/
             /*获取表单元素的值*/
             console.log(data);
@@ -442,7 +442,7 @@ var tgform_data = new Vue({
     // 在 `methods` 对象中定义方法
     methods: {
         submit: function () {
-            var tgJson = getFormJson($('#tgform_data'));
+            var tgJson = getFormJson2($('#tgform_data'));
             debugger
             console.log(tgJson);
             if (tgJson.tgName == "") {
@@ -524,7 +524,7 @@ function getFormJson(form) {
             }
             o[this.name].push(this.value || '');
         } else {
-            o[this.name] = this.value || '';
+            o[this.name] = this.value ;
         }
     });
     return o;
@@ -866,7 +866,6 @@ var tg_table = new Vue({
 });
 
 $(document).ready(function () {
-    serviceSelected=0;
     $('#service .jq22').comboSelect();
     $("#service input[type=text]").attr('placeholder',"---请选择---");
     $('.combo-dropdown').css("z-index","3");

@@ -423,10 +423,13 @@ var search_data = new Vue({
             this.probeNames = getProbe($("#selectarea").val());
         },
         resultListsearch: function () {   /*查询监听事件*/
+            debugger
             /*显示相应的data_table*/
             $(".record-table").addClass("service_unselected");
-            this.servicetype = parseInt($('#selectservice').val());
+            this.servicetype = parseInt(serviceSelected);
+            console.log(this.servicetype );
             recordtag = recordtype.get(this.servicetype);
+            console.log(recordtag);
             $("#" + recordtag + "_record ").removeClass("service_unselected");
             var data = getFormJson($('#resultsearch .selectdata'));
             /*得到查询条件*/
@@ -449,8 +452,8 @@ var search_data = new Vue({
             if (termtemp != "") {
                 data.end_time = termtemp + ":00";
             }
-
-            if (data.interval == "") {
+console.log(data);
+            if (data.interval == "" || data.interval == undefined) {
                 data.queryType = "1";
             } else {
                 data.queryType = "0";
@@ -2272,7 +2275,7 @@ var gameresult_Table = new Vue({
                             row.push(item.dnsDelay);
                             row.push(item.packetDelay);
                             row.push(item.packetJitter);
-                            row.push(item.packetLossRate);
+                            row.push(item.lossRate);
                             row.push(item.targetId);
                             row.push(item.targetIp);
                             row.push(item.targetLoc);

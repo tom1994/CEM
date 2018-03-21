@@ -135,7 +135,7 @@ public class DiagnoseController {
                         }else if(map.get("probe_id")==null){
                             scoreList = recordHourPingService.probeChart1(scoreList);
                         }
-                    } else if (service == 4) {
+                    } else if (service == 3) {
                         //网络浏览类业务代码为4
                         List<RecordHourWebPageEntity> webPageList = recordHourWebPageService.queryDayList(map);
                         scoreList.addAll(recordHourWebPageService.calculateService3(webPageList));
@@ -146,7 +146,7 @@ public class DiagnoseController {
                         }else if(map.get("probe_id")==null){
                             scoreList = recordHourPingService.probeChart1(scoreList);
                         }
-                    } else if (service == 3) {
+                    } else if (service == 4) {
                         //网络下载类业务代码为3
                         List<RecordHourWebDownloadEntity> webDownloadList = recordHourWebDownloadService.queryDayList(map);
                         List<RecordHourFtpEntity> ftpList = recordHourFtpService.queryDayList(map);
@@ -222,7 +222,7 @@ public class DiagnoseController {
                         }else if(map.get("probe_id")==null){
                             scoreList = recordHourPingService.probeChart1(scoreList);
                         }
-                    } else if (service == 4) {
+                    } else if (service == 3) {
                         //网页浏览类业务代码为4
                         List<RecordHourWebPageEntity> webPageList = recordHourWebPageService.queryWebList(map);
                         scoreList.addAll(recordHourWebPageService.calculateService3(webPageList));
@@ -233,7 +233,7 @@ public class DiagnoseController {
                         }else if(map.get("probe_id")==null){
                             scoreList = recordHourPingService.probeChart1(scoreList);
                         }
-                    } else if (service == 3) {
+                    } else if (service == 4) {
                         //下载类业务代码为3
                         List<RecordHourWebDownloadEntity> webDownloadList = recordHourWebDownloadService.queryWebDownloadList(map);
                         List<RecordHourFtpEntity> ftpList = recordHourFtpService.queryFtpList(map);
@@ -324,7 +324,7 @@ public class DiagnoseController {
                         scoreList = recordHourPingService.probeChart1(scoreList);
                     }
                 }
-                else if (service==4){
+                else if (service==3){
                     //网络浏览类业务代码为4
                     List<RecordHourWebPageEntity> webPageList = recordHourWebPageService.queryDayList(map);
                     scoreList = recordHourWebPageService.calculateService3(webPageList);
@@ -336,7 +336,7 @@ public class DiagnoseController {
                         scoreList = recordHourPingService.probeChart1(scoreList);
                     }
                 }
-                else if (service==3){
+                else if (service==4){
                     //下载类业务代码为3
                     List<RecordHourWebDownloadEntity> webDownloadList = recordHourWebDownloadService.queryDayList(map);
                     List<RecordHourFtpEntity> ftpList = recordHourFtpService.queryDayList(map);
@@ -414,7 +414,7 @@ public class DiagnoseController {
                     }else if(map.get("probe_id")==null){
                         scoreList = recordHourPingService.probeChart1(scoreList);
                     }
-                } else if (service == 4) {
+                } else if (service == 3) {
                     //网络浏览类业务代码为4
                     List<RecordHourWebPageEntity> webPageList = recordHourWebPageService.queryWebList(map);
                     scoreList = recordHourWebPageService.calculateService3(webPageList);
@@ -425,7 +425,7 @@ public class DiagnoseController {
                     }else if(map.get("probe_id")==null){
                         scoreList = recordHourPingService.probeChart1(scoreList);
                     }
-                } else if (service == 3) {
+                } else if (service == 4) {
                     //下载类业务代码为3
                     List<RecordHourWebDownloadEntity> webDownloadList = recordHourWebDownloadService.queryWebDownloadList(map);
                     List<RecordHourFtpEntity> ftpList = recordHourFtpService.queryFtpList(map);

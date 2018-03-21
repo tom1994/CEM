@@ -388,8 +388,8 @@ var Reset = new Vue({
     el: '#reset',
     data: {
         probedata: {
-            ava_start: (new Date()).Format("2017-11-27"),
-            ava_terminal: (new Date()).Format("2017-12-01"),
+            ava_start: new Date(new Date() - 1000 * 60 * 60 * 24).Format("yyyy-MM-dd"),
+            ava_terminal: (new Date()).Format("yyyy-MM-dd"),
             city_id: '110100',
             service: '1'
         }
@@ -404,6 +404,7 @@ var Reset = new Vue({
             /*前4天日期*/
             param.endtime = (new Date()).Format("yyyy-MM-dd") + " 23:59:59";
             /*当前日期*/
+            console.log(param);
             $.ajax({
                 /*后台取得数据,赋值给观察者*/
                 type: "POST",
@@ -460,7 +461,7 @@ var options = {
     tooltip: {
         crosshairs: true,
         headerFormat: '<b>{series.name}</b><br>',
-        pointFormat: '日期:{point.x:%Y-%m-%d} 分数:{point.y:.2f}分',
+        pointFormat: '日期:{point.x:%Y-%m-%d %H:%M:%S} 分数:{point.y:.2f}分',
     },
     plotOptions: {
         spline: {
@@ -627,6 +628,7 @@ Vue.component('data-table', {
                 {title: '所属层级'},
                 {title: '测试目标', class: 'some-special-class'},
                 {title: '得分'},
+                {title: '日期'},
                 {title: '时间'}
             ],
             rows: [],
@@ -637,11 +639,6 @@ Vue.component('data-table', {
         scoredata: function (val, oldVal) {
             let vm = this;
             vm.rows = [];
-            // var times = 1;
-            // if (flag == 1) {
-            //     times = 0;
-            // }
-            // options.xAxis.categories = [];
             for (let i = 0; i < options.series.length; i++) {
                 options.series[i].data = [];
             }
@@ -668,12 +665,12 @@ Vue.component('data-table', {
             }
             var chart = new Highcharts.Chart('container', options);
             val.forEach(function (item) {/*观察user是否变化,更新表格数据*/
-                debugger
                 let row = [];
                 row.push(layerNames.get(item.accessLayer));
                 row.push(item.targetName);
                 row.push("" + item.score);
-                row.push("" + item.recordDate.substr(0, 10) + " " + item.recordTime + ":00")
+                row.push("" + item.recordDate.substr(0, 10));
+                row.push("" + item.recordTime + ":00");
                 // row.push(item.date);
                 vm.rows.push(row);
             });
@@ -777,7 +774,7 @@ function changeStatus(i) {
                 targets[i] = {message: result.target[i]}
             }
             search_data.target = targets;
-            console.log(targets);
+            // console.log(targets);
             setTimeout(function () {
                 $('div#target .jq22').comboSelect();
                 $('.combo-dropdown').css("z-index", "3");
@@ -787,7 +784,7 @@ function changeStatus(i) {
                         var a = $(target.currentTarget)[0].innerText;
                         // console.log(a);
                         targetSelected = $($(target.currentTarget)[0]).data('value');
-                        console.log(targetSelected);
+                        // console.log(targetSelected);
                         $('div#target .combo-input').val(a);
                         $('div#target .combo-select select').val(a);
                     }, 30);

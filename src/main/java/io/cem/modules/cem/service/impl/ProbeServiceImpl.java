@@ -36,12 +36,16 @@ public class ProbeServiceImpl implements ProbeService {
     @Override
     public List<ProbeEntity> queryProbeByLayer(Integer id) {
         List<ProbeEntity> probeList = new ArrayList<>();
-        ProbeEntity probeLayer = probeDao.queryProbeByLayer(id);
-        while (probeLayer.getUpstream() != null && probeLayer.getUpstream() != 0) {
+        if(probeDao.queryProbeByLayer(id)!=null) {
+            ProbeEntity probeLayer = probeDao.queryProbeByLayer(id);
+            while (probeLayer.getUpstream() != null && probeLayer.getUpstream() != 0) {
+                probeList.add(probeLayer);
+                probeLayer = probeDao.queryProbeByLayer(probeLayer.getUpstream());
+            }
             probeList.add(probeLayer);
-            probeLayer = probeDao.queryProbeByLayer(probeLayer.getUpstream());
+        }else{
+            probeList.add(probeDao.queryObject(id));
         }
-        probeList.add(probeLayer);
         return probeList;
     }
 
