@@ -2,16 +2,21 @@ package io.cem.modules.cem.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import io.cem.common.exception.RRException;
-import io.cem.common.utils.JSONUtils;
-import io.cem.common.utils.PageUtils;
-import io.cem.common.utils.Query;
-import io.cem.common.utils.R;
+import io.cem.common.utils.*;
+import io.cem.modules.cem.entity.RecordHourPingEntity;
+import io.cem.modules.cem.entity.RecordPingEntity;
 import io.cem.modules.cem.entity.ReportPolicyEntity;
+import io.cem.modules.cem.service.RecordHourPingService;
+import io.cem.modules.cem.service.RecordPingService;
 import io.cem.modules.cem.service.ReportPolicyService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +30,10 @@ import java.util.Map;
 public class ReportPolicyController {
 	@Autowired
 	private ReportPolicyService reportPolicyService;
-	
+	@Autowired
+	private RecordPingService recordPingService;
+	@Autowired
+	private RecordHourPingService recordHourPingService;
 	/**
 	 * 列表
 	 */
@@ -71,7 +79,49 @@ public class ReportPolicyController {
 		PageUtils pageUtil = new PageUtils(probeList, total, limit, page);
 		return R.ok().put("page", pageUtil);
 	}
-	
+
+	@RequestMapping("/download/{id}")
+	@RequiresPermissions("reportpolicy:download")
+	public void downloadProbe(HttpServletResponse response, @PathVariable("id") Integer id) throws RRException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		System.out.println(id);
+		ReportPolicyEntity detail = reportPolicyService.queryObject(id);
+		int service = detail.getServiceType();
+		int queryType = detail.getQueryType();
+		String startTime = detail.getStartTime().toString();
+		String endTime = detail.getEndTime().toString();
+
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh-mm-ss");
+		Date startDate = new Date(); Date terminalDate = new Date(); Date start_time=new Date(); Date end_time=new Date();
+		try {
+			startDate = dateFormat.parse(String.valueOf(detail.getStartTime()));
+			terminalDate = dateFormat.parse(endTime);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		map.put("probe_id",detail.getProbeId());
+		map.put("service_type",detail.getServiceType());
+		map.put("startDate",startDate);
+		map.put("terminalDate",terminalDate);
+		map.put("start_time",start_time);
+		map.put("end_time",end_time);
+
+		if (queryType== 1) {
+			if(service == 1){
+				List<RecordPingEntity> list = recordPingService.queryPingList(map);
+				CollectionToFile.collectionToFile(response, list, RecordPingEntity.class);
+			}else{}
+
+
+		} else {
+			map.put("interval",detail.getInterval());
+			if(service == 01){
+				List<RecordHourPingEntity> list = recordPingService.queryIntervalList(map);
+				CollectionToFile.collectionToFile(response, list, RecordHourPingEntity.class);
+			}else{}
+
+		}
+	}
 	
 	/**
 	 * 信息

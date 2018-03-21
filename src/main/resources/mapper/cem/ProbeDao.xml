@@ -108,9 +108,6 @@
         LEFT JOIN(SELECT probe.probe_name AS parent_name,probe.id AS parent_id FROM probe
         WHERE id in (SELECT upstream_id FROM probe)) parent
         ON parent.parent_id = probe.upstream_id
-        <if test="group_id != null and group_id != ''">
-            AND group_id = #{group_id}
-        </if>
     </select>
 
     <select id="queryTotal" resultType="int">

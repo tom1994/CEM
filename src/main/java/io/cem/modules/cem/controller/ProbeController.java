@@ -58,11 +58,11 @@ public class ProbeController {
         return R.ok().put("page", pageUtil);
     }
 
-    @RequestMapping("/download")
+    @RequestMapping("/download/{id}")
     @RequiresPermissions("probe:download")
-    public void downloadProbe(HttpServletResponse response) throws RRException {
+    public void downloadProbe(HttpServletResponse response,@PathVariable("id") Integer id) throws RRException {
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("probeId",11);
+        System.out.println(id);
         List<ProbeEntity> list = probeService.queryList(map);
         CollectionToFile.collectionToFile(response, list, ProbeEntity.class);
     }
@@ -73,7 +73,6 @@ public class ProbeController {
      * 按区县信息搜索探针信息
      */
     @RequestMapping("/info/{id}")
-    @RequiresPermissions("probe:info")
     public R info(@PathVariable("id") Integer id) {
         List<ProbeEntity> probeList = probeService.queryProbe(id);
         System.out.println(probeList);
@@ -84,7 +83,6 @@ public class ProbeController {
      * 按地市信息搜索探针信息
      */
     @RequestMapping("/infoByCity/{id}")
-    @RequiresPermissions("probe:info")
     public R infoByCity(@PathVariable("id") Integer id) {
         List<ProbeEntity> probeList = probeService.queryProbeByCity(id);
         return R.ok().put("probe", probeList);

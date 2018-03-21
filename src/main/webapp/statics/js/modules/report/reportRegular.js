@@ -1,6 +1,7 @@
 var status;
 var idArray = new Array();
 var names = new Array();
+var cityNames = new Array();var names = new Array();
 
 var st = new Map();//servicetype字典，可通过get方法查对应字符串。
 st.set(0, "综合业务");
@@ -14,7 +15,39 @@ st.set(6, "网络游戏业务");
 var spdata_handle = new Vue({
     el: '#handle',
     data: {},
-    mounted: function() {},
+    mounted: function(){         /*动态加载测试任务组数据*/
+        //城市列表
+        $.ajax({
+            type: "POST",   /*GET会乱码*/
+            url: "../../cem/city/list",//Todo:改成测试任务组的list方法
+            cache: false,  //禁用缓存
+            dataType: "json",
+            /* contentType:"application/json",  /!*必须要,不可少*!/*/
+            success: function (result) {
+                //console.log(result);
+                for(var i=0;i<result.page.list.length;i++){
+                    cityNames[i] = {message: result.page.list[i]}
+                }
+                spform_data.cityNames = cityNames;
+            }
+        });
+        $.ajax({
+            url: "../../cem/probe/list",//探针列表
+            type: "POST",
+            cache: false,  //禁用缓存
+            dataType: "json",
+            contentType: "application/json",
+            success: function (result) {
+                var probes = [];
+                for (var i = 0; i < result.page.list.length; i++) {
+                    probes[i] = {message: result.page.list[i]}
+                }
+                spform_data.probe = probes;
+            }
+        });
+
+
+    },
     methods: {
         spadd: function () {   /*监听新增触发事件*/
             status = 0;
@@ -39,38 +72,56 @@ var spform_data = new Vue({
     el: '#myModal_sp',
     data: {
         modaltitle: "", /*定义模态框标题*/
-        cityNames:[],
-        /*name: [],
-         scheduler: [],
-         remark: []*/
+        reportName:[],
+        countyNames: [],
+        cityNames: [],
+        probe:[]
     },
     // 在 `methods` 对象中定义方法
     methods: {
         /*模态框中选择区县*/
         queryArea: function(){
-            //console.log($("#city").val());
+            console.log($("#city").val());
             this.countyNames = queryArea($("#city").val());
         },
+        areachange: function () {
+            this.probe = getProbe($("#county").val());
+
+        },
+        // probeCity:function () {
+        //   this.probe=getProbeCity($("#city").val());
+        // },
         submit: function () {
             var spJson = getFormJson($('#spform_data'));
             console.log(spJson);
-            var datevalue = $('input:radio[name="choosedate"]:checked').val();
-            console.log(datevalue);
-            if (spJson.methodName == "") {
-                toastr.warning("请输入名称!");
-            } else if (spJson.cronExpression == "") {
-                toastr.warning("请输入cron表达式!");
+            if (spJson.reportName == "") {
+                toastr.warning("请输入策略名称!");
+            } else if (spJson.probeId == "") {
+                toastr.warning("请选择探针!");
+            }else if(spJson.service_type==""){
+                toastr.warning("请选择业务类型!");
+            } else if (spJson.interval=="0"){
+                toastr.warning("请选择统计粒度!");
+            } else if(spJson.startTime==""&&spJson.endTime==""){
+                toastr.warning("请选择起止时间!");
+            }else if(spJson.startTime>spJson.endTime){
+                toastr.warning("选择的起始时间有误,请正确选择!")
             } else {
                 spJson.createTime = new Date().Format("yyyy-MM-dd hh:mm:ss");//获取日期与时间
-                spJson.beanName = "testTask";
-                spJson.status = 1;
-                spJson.methodName = spJson.methodName+"Report";
+                spJson.endTime=spJson.endTime+":00"
+                spJson.startTime=spJson.startTime+":00"
+                if(spJson.interval==""){
+                    spJson.queryType="0";
+                }else {
+                    spJson.queryType='0';
+                }
+
                 var sp = JSON.stringify(spJson);
                 /*封装成json数组*/
                 console.log(sp);
                 $.ajax({
                     type: "POST", /*GET会乱码*/
-                    url: "../../sys/schedule/save" ,
+                    url: "../../reportpolicy/save" ,
                     cache: false,  //禁用缓存
                     data: sp,  //传入组装的参数
                     dataType: "json",
@@ -111,45 +162,9 @@ var spform_data = new Vue({
                 });
             }
         }
-    },
-    mounted: function() {         /*动态加载测试任务组数据*/
-        $.ajax({
-            type: "POST", /*GET会乱码*/
-            url: "../../cem/city/list",//Todo:改成测试任务组的list方法
-            cache: false,  //禁用缓存
-            dataType: "json",
-            /* contentType:"application/json",  /!*必须要,不可少*!/*/
-            success: function (result) {
-                //console.log(result);
-                for (var i = 0; i < result.page.list.length; i++) {
-                    cityNames[i] = {message: result.page.list[i]}
-                }
-                search_data.cities = cityNames;
-
-            }
-        })
     }
 });
-
-var search_data = new Vue({
-    el:'#probesearch',
-    data:{
-        areas:[],
-        cities:[],
-        probegroup_names:[],
-        accessLayers:[],
-        types:[],
-        status:[]
-    },
-    methods:{
-        citychange: function () {
-            //console.log($("#selectcity").val());
- //           this.areas = getArea($("#selectcity").val());
-        }
-    }
-});
-
-/*详情里的联动选择地市和区县*/
+/*新建里的联动选择地市和区县*/
 var queryArea = function (cityid) {
     $.ajax({
         url: "../../cem/county/info/"+cityid,
@@ -158,13 +173,62 @@ var queryArea = function (cityid) {
         dataType: "json",
         contentType: "application/json",
         success: function (result) {
+            debugger
             var areaNames_detail = new Array();
             for(var i=0;i<result.county.length;i++){
                 areaNames_detail[i] = {message: result.county[i]}
             }
+            spform_data .countyNames = areaNames_detail;
+
         }
     });
 }
+//探针
+var getProbe = function (countyid) {
+    $.ajax({//探针信息
+        url: "../../cem/probe/info/" + countyid,
+        type: "POST",
+        cache: false,  //禁用缓存
+        dataType: "json",
+        contentType: "application/json",
+        success: function (result) {
+            var probes = [];
+            for (var i = 0; i < result.probe.length; i++) {
+                probes[i] = {message: result.probe[i]}
+            }
+            spform_data.probe = probes;
+        }
+    });
+};
+
+//城市探针
+function getProbeCity(cityid) {
+    $.ajax({//探针信息
+        url: "../../cem/probe/infoByCity/" + cityid,
+        type: "POST",
+        cache: false,  //禁用缓存
+        dataType: "json",
+        contentType: "application/json",
+        success: function (result) {
+            var probes = [];
+            for (var i = 0; i < result.probe.length; i++) {
+                probes[i] = {message: result.probe[i]}
+            }
+            spform_data.probe = probes;
+        }
+    })
+};
+
+//download
+function download_this(obj) {
+    var id=parseInt(obj.id);
+    console.log(obj.id);
+   // $('#download+obj.id').attr('href','../../cem/probe/download/'+id);
+    document.getElementById(download+obj.id).href = encodeURI('../../reportpolicy/download/'+id);
+    document.getElementById(download+obj.id).click();
+   // $("#download+obj.id").trigger("click");
+}
+
 
 function getFormJson(form) {      /*将表单对象变为json对象*/
     var o = {};
@@ -381,7 +445,7 @@ var sptable = new Vue({
                             row.push(item.createTime)
                             row.push(item.remark);
                             row.push('<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>&nbsp;' +
-                            '<a class="fontcolor" style="white-space: nowrap" onclick="delete_this(this)" id='+item.id+'>下载</a>');
+                            '<a id='+download+item.id+' href="" style="display: none"><a class="fontcolor" style="white-space: nowrap" onclick="download_this(this)" id='+item.id+'>下载</a></a>');
                             rows.push(row);
                         });
                         returnData.data = rows;

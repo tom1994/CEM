@@ -41,7 +41,9 @@
 	</select>
 
 	<select id="queryCountyList" resultType="io.cem.modules.cem.entity.CountyEntity">
-		select * from county
+		select * ,
+		county_id AS area_id
+		from county
 		WHERE city_id = #{value}
 		order by id
 	</select>
