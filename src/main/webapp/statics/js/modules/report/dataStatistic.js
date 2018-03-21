@@ -451,9 +451,9 @@ var search_data = new Vue({
             }
 
             if (data.interval == "") {
-                data.queryType = "1";
+                data.queryType = "1";//原始数据
             } else {
-                data.queryType = "0";
+                data.queryType = "0";//统计数据
             }
             console.log(data);
 

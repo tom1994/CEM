@@ -1,12 +1,10 @@
 package io.cem.modules.cem.controller;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.alibaba.fastjson.JSONObject;
 import io.cem.common.exception.RRException;
 import io.cem.common.utils.*;
+import io.cem.modules.cem.entity.ProbeEntity;
+import io.cem.modules.cem.service.ProbeService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.cem.modules.cem.entity.ProbeEntity;
-import io.cem.modules.cem.service.ProbeService;
-
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -64,6 +62,7 @@ public class ProbeController {
     @RequiresPermissions("probe:download")
     public void downloadProbe(HttpServletResponse response) throws RRException {
         Map<String, Object> map = new HashMap<String, Object>();
+        map.put("probeId",11);
         List<ProbeEntity> list = probeService.queryList(map);
         CollectionToFile.collectionToFile(response, list, ProbeEntity.class);
     }
