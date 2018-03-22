@@ -1,6 +1,7 @@
 package io.cem.modules.cem.entity;
 
 import java.io.Serializable;
+import java.sql.Time;
 import java.util.Date;
 
 
@@ -24,9 +25,9 @@ public class ReportPolicyEntity implements Serializable {
 	//查询粒度
 	private Integer interval;
 	//
-	private Date startTime;
+	private Time startTime;
 	//
-	private Date endTime;
+	private Time endTime;
 	//
 	private String remark;
 	//建立时间
@@ -110,25 +111,25 @@ public class ReportPolicyEntity implements Serializable {
 	/**
 	 * 设置：
 	 */
-	public void setStartTime(Date startTime) {
+	public void setStartTime(Time startTime) {
 		this.startTime = startTime;
 	}
 	/**
 	 * 获取：
 	 */
-	public Date getStartTime() {
+	public Time getStartTime() {
 		return startTime;
 	}
 	/**
 	 * 设置：
 	 */
-	public void setEndTime(Date endTime) {
+	public void setEndTime(Time endTime) {
 		this.endTime = endTime;
 	}
 	/**
 	 * 获取：
 	 */
-	public Date getEndTime() {
+	public Time getEndTime() {
 		return endTime;
 	}
 	/**

@@ -1,5 +1,6 @@
 var status;
 var idArray = new Array();
+var reportdata = new Array();
 var names = new Array();
 var cityNames = new Array();var names = new Array();
 
@@ -219,12 +220,44 @@ function getProbeCity(cityid) {
     })
 };
 
+function downloadShow(obj) {
+    $('#myModal_download').modal('show');
+    reportdata[0]=obj.id;
+    console.log(reportdata[0]);
+    document.getElementById(download).href = encodeURI('../../reportpolicy/download/'+reportdata);
+
+}
+
+var download_data = new Vue({
+    el: '#myModal_download',
+    data: {
+        id: null
+    },
+    methods: {
+        show_Modal: function () {
+            $(this.$el).modal('show');
+            /*弹出确认模态框*/
+        },
+        close_modal: function (obj) {
+            $(this.$el).modal('hide');
+
+        },
+        cancel_delete: function () {
+
+        },
+
+    }
+});
+
 //download
 function download_this(obj) {
     var id=parseInt(obj.id);
-    console.log(obj.id);
+   // console.log(obj.id);
+    reportdata[0]=id;
+   // reportdata[1]="201803";
+   // reportdata[2]="20180320";
    // $('#download+obj.id').attr('href','../../cem/probe/download/'+id);
-    document.getElementById(download+obj.id).href = encodeURI('../../reportpolicy/download/'+id);
+    document.getElementById(download+obj.id).href = encodeURI('../../reportpolicy/download/'+reportdata);
     document.getElementById(download+obj.id).click();
    // $("#download+obj.id").trigger("click");
 }
@@ -332,6 +365,15 @@ var delete_data = new Vue({
     }
 });
 
+function transString(string,i,j) {
+    if(string ==null) {
+        return "";
+    }
+    else {
+        return string.substr(i,j);
+    }
+}
+
 
 var sptable = new Vue({
     el: '#spdata_table',
@@ -343,8 +385,8 @@ var sptable = new Vue({
             {title: '<div style="width:100px">区县</div>'},
             {title: '<div style="width:160px">探针名称</div>'},
             {title: '<div style="width:160px">业务类型</div>'},
-            {title: '<div style="width:160px">开始时间</div>'},
-            {title: '<div style="width:160px">结束时间</div>'},
+            {title: '<div style="width:100px">开始时间</div>'},
+            {title: '<div style="width:100px">结束时间</div>'},
             {title: '<div style="width:50px">时间间隔</div>'},
             {title: '<div style="width:160px">创建时间</div>'},
             {title: '<div style="width:160px">备注</div>'},
@@ -439,13 +481,13 @@ var sptable = new Vue({
                             row.push(item.countyName);
                             row.push(item.probeName);
                             row.push(st.get(item.serviceType));
-                            row.push(item.startTime)
-                            row.push(item.endTime);
+                            row.push(transString(item.startTime,11,19));
+                            row.push(transString(item.endTime,11,19));
                             row.push(item.interval);
                             row.push(item.createTime)
                             row.push(item.remark);
                             row.push('<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>&nbsp;' +
-                            '<a id='+download+item.id+' href="" style="display: none"><a class="fontcolor" style="white-space: nowrap" onclick="download_this(this)" id='+item.id+'>下载</a></a>');
+                            '<a id='+download+item.id+' href="" ><a class="fontcolor" style="white-space: nowrap" onclick="download_this(this)" id='+item.id+'>下载</a></a>');
                             rows.push(row);
                         });
                         returnData.data = rows;

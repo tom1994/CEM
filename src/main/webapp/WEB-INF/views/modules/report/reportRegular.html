@@ -34,9 +34,7 @@
 <div class="row" id="sp_table">
     <div class="col-lg-12 col-md-12 col-sm-12">
         <div class="ibox float-e-margins">
-            <div class="col-lg-3 col-md-3 col-sm-3" style="display: inline-block ;position: absolute;left: 319px;">
-                <a id="download" href="" style="display: none"></a>
-            </div>
+            <a id="download" href="" style="display: none"></a>
             <div class="ibox-title fontcolor box" id="handle" style="padding-bottom: 0px !important;">
                 <!--<button type="button" class="btn btn-default ui-button" v-on:click="schedulepolicyadd"><span-->
                 <button type="button" class="btn btn-sm btn-success Btn" v-on:click="spadd"><span
@@ -152,18 +150,16 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <div class="input-group searchspan">
-                                <label class="searchname  search left " title="日期" style="width: 60px;margin-right: 6px">起始时间</label>
-                                <input type="text" id="start_date" class="form-control  input"
+                            <label class="col-lg-2 col-md-2 col-sm-2 input-label form_border" title="时间" >起止时间</label>
+                            <div class="form_border col-lg-2 col-md-2 col-sm-2">
+                                <input type="text" id="start_time" class="form-control selectdata input"
                                        name="startTime"
-                                       style="width: 134px"
                                        value="">
                             </div>
-                            <div class="input-group searchspan">
-                                <label class="searchname search left " title="日期" style="width: 60px">结束时间</label>
-                                <input type="text" id="terminal_date" class="form-control input clear "
+                            <span class="searchname search " style="width: 10px;line-height: 1.5">---</span>
+                            <div class="form_border col-lg-2 col-md-2 col-sm-2">
+                                <input type="text" id="terminal_time" class="form-control selectdata input"
                                        name="endTime"
-                                       style="width: 134px"
                                        value="">
                             </div>
                             <label for="remark" class="col-lg-2 col-md-2 col-sm-2 control-label form_border"
@@ -182,6 +178,7 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
 </div>
+
 
 <div class="modal fade" id="myModal_delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
@@ -207,6 +204,57 @@
     </div><!-- /.modal -->
 </div>
 
+<div class="modal fade" id="myModal_download" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" style="width: 500px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h3 class="modal-title" id="myModalLabel_download">
+                    请选择报表
+                </h3>
+            </div>
+            <div class="modal-body" style="font-size: medium">
+                <div class="form-group row">
+                    <label for="Month" class="col-lg-2 col-md-2 col-sm-2 control-label form_border">
+                        <input type="radio" id="Month" name="download_table">月表</label>
+                    <select name="selectMonth" id="selectMonth" style="margin-left: 4px" disabled="disabled">
+                        <option value="">--请选择--</option>
+                        <option value="1">一月</option>
+                        <option value="2">二月</option>
+                        <option value="3">三月</option>
+                        <option value="4">四月</option>
+                        <option value="5">五月</option>
+                        <option value="6">六月</option>
+                        <option value="7">七月</option>
+                        <option value="8">八月</option>
+                        <option value="9">九月</option>
+                        <option value="10">十月</option>
+                        <option value="11">十一月</option>
+                        <option value="12">十二月</option>
+                    </select>
+                </div>
+                <div  class="form-group row">
+                    <label for="Day" class="col-lg-2 col-md-2 col-sm-2 control-label form_border">
+                        <input type="radio" id="Day" name="download_table" checked>日表</label>
+                    <input type="text" id="SelectDate" class="form-control selectdata input"
+                           name="Select_date"
+                           style="width: 96px;display: inline-block"
+                           value="2018-3-22">
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" v-on:click="close_modal">取消
+                </button>
+                <button id="submit" type="button" class="btn btn-success" @click="download_this()">确定</button>
+
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
 
 <script type="text/javascript" src="${rc.contextPath}/statics/js/modules/report/reportRegular.js?_${date.systemTime}"></script>
 
