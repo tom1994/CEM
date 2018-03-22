@@ -6,6 +6,7 @@
 	<!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="io.cem.modules.cem.entity.ReportPolicyEntity" id="reportPolicyMap">
         <result property="id" column="id"/>
+		<result property="report_name" column="report_name"/>
         <result property="probeId" column="probe_id"/>
         <result property="serviceType" column="service_type"/>
         <result property="queryType" column="query_type"/>
@@ -14,6 +15,9 @@
         <result property="endTime" column="end_time"/>
         <result property="remark" column="remark"/>
         <result property="createTime" column="create_time"/>
+		<result property="city_name" column="city_name"/>
+		<result property="county_name" column="county_name"/>
+		<result property="probe_name" column="probe_name"/>
     </resultMap>
 
 	<select id="queryObject" resultType="io.cem.modules.cem.entity.ReportPolicyEntity">
@@ -21,7 +25,17 @@
 	</select>
 
 	<select id="queryList" resultType="io.cem.modules.cem.entity.ReportPolicyEntity">
-		select * from report_policy
+		select report_policy.*,
+		probe.probe_name AS probe_name,
+		city.city_name AS city_name,
+		county.county_name AS county_name
+		from report_policy
+		LEFT JOIN probe
+		ON report_policy.probe_id = probe.id
+		LEFT JOIN city
+		ON probe.city_id = city.city_id
+		LEFT JOIN county
+		ON probe.county_id = county.county_id
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
                 order by ${sidx} ${order}
@@ -42,7 +56,8 @@
 	<insert id="save" parameterType="io.cem.modules.cem.entity.ReportPolicyEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into report_policy
 		(
-			`probe_id`, 
+			`report_name`,
+			`probe_id`,
 			`service_type`, 
 			`query_type`, 
 			`interval`, 
@@ -53,7 +68,8 @@
 		)
 		values
 		(
-			#{probeId}, 
+			#{reportName},
+			#{probeId},
 			#{serviceType}, 
 			#{queryType}, 
 			#{interval}, 

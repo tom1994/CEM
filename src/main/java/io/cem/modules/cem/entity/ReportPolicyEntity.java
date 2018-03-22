@@ -1,7 +1,6 @@
 package io.cem.modules.cem.entity;
 
 import java.io.Serializable;
-import java.sql.Time;
 import java.util.Date;
 
 
@@ -11,7 +10,9 @@ import java.util.Date;
  */
 public class ReportPolicyEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
+	//
+	private String reportName;
 	//
 	private Integer id;
 	//
@@ -23,13 +24,28 @@ public class ReportPolicyEntity implements Serializable {
 	//查询粒度
 	private Integer interval;
 	//
-	private Time startTime;
+	private Date startTime;
 	//
-	private Time endTime;
+	private Date endTime;
 	//
 	private String remark;
 	//建立时间
 	private Date createTime;
+
+	private String cityName;
+
+	private String countyName;
+
+	private String probeName;
+
+
+	public String getReportName() {
+		return reportName;
+	}
+
+	public void setReportName(String reportName) {
+		this.reportName = reportName;
+	}
 
 	/**
 	 * 设置：
@@ -94,25 +110,25 @@ public class ReportPolicyEntity implements Serializable {
 	/**
 	 * 设置：
 	 */
-	public void setStartTime(Time startTime) {
+	public void setStartTime(Date startTime) {
 		this.startTime = startTime;
 	}
 	/**
 	 * 获取：
 	 */
-	public Time getStartTime() {
+	public Date getStartTime() {
 		return startTime;
 	}
 	/**
 	 * 设置：
 	 */
-	public void setEndTime(Time endTime) {
+	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
 	}
 	/**
 	 * 获取：
 	 */
-	public Time getEndTime() {
+	public Date getEndTime() {
 		return endTime;
 	}
 	/**
@@ -138,5 +154,29 @@ public class ReportPolicyEntity implements Serializable {
 	 */
 	public Date getCreateTime() {
 		return createTime;
+	}
+
+	public String getCityName() {
+		return cityName;
+	}
+
+	public void setCityName(String cityName) {
+		this.cityName = cityName;
+	}
+
+	public String getCountyName() {
+		return countyName;
+	}
+
+	public void setCountyName(String countyName) {
+		this.countyName = countyName;
+	}
+
+	public String getProbeName() {
+		return probeName;
+	}
+
+	public void setProbeName(String probeName) {
+		this.probeName = probeName;
 	}
 }

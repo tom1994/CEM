@@ -425,7 +425,7 @@ public class DiagnoseController {
                     }else if(map.get("probe_id")==null){
                         scoreList = recordHourPingService.probeChart1(scoreList);
                     }
-                } else if (service == 4) {
+                } else if (service == 40) {
                     //下载类业务代码为3
                     List<RecordHourWebDownloadEntity> webDownloadList = recordHourWebDownloadService.queryWebDownloadList(map);
                     List<RecordHourFtpEntity> ftpList = recordHourFtpService.queryFtpList(map);

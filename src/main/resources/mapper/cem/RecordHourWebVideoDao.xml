@@ -214,6 +214,12 @@
 		rhp.id,rhp.probe_id,rhp.port,rhp.task_id,rhp.service_type,rhp.target_id,rhp.target_ip,rhp.record_date,rhp.remark,
 		floor(time_format(record_time, '%H')/#{interval}) AS rt
 		FROM record_hour_web_video rhp
+		INNER JOIN probe
+		ON rhp.probe_id = probe.id
+		INNER JOIN task
+		ON rhp.task_id = task.id
+		INNER JOIN target
+		ON rhp.target_id = target.id
 		WHERE
 		rhp.service_type = #{service_type}
 		AND rhp.record_date BETWEEN #{startDate} AND #{terminalDate}

@@ -261,6 +261,7 @@
 		ON  record_ping.probe_id =probe.id
 		INNER JOIN task
 		ON record_ping.task_id = task.id
+		AND task.is_ondemand = 0
 		INNER JOIN target
 		ON record_ping.target_id = target.id
 		WHERE
