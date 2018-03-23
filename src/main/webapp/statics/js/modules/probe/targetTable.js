@@ -13,8 +13,8 @@ var serviceSelected;
 /*创建业务类型字典表*/
 var sst = new Map();
 sst.set(0, "综合业务");
-sst.set(1, "网络连通性测试业务");
-sst.set(2, "网络层质量测试业务");
+sst.set(1, "网络连通性业务");
+sst.set(2, "网络层质量业务");
 sst.set(3,  "网页浏览类业务");
 sst.set(4, "文件下载类业务");
 sst.set(5, "在线视频类业务");

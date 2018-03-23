@@ -89,7 +89,7 @@ public class ReportPolicyController {
 		map.put("start_time",detail.getStartTime());
 		map.put("end_time",detail.getEndTime());
 
-		if (queryType== 1) {
+		if (queryType== 0) {
 			if(service == 1||service==2||service==3){
 				List<RecordPingEntity> list = recordPingService.queryPingList(map);
 				CollectionToFile.collectionToFile(response, list, RecordPingEntity.class);

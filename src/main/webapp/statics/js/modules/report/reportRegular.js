@@ -109,8 +109,6 @@ var spform_data = new Vue({
                 toastr.warning("选择的起始时间有误,请正确选择!")
             } else {
                 spJson.createTime = new Date().Format("yyyy-MM-dd hh:mm:ss");//获取日期与时间
-                spJson.endTime=spJson.endTime+":00"
-                spJson.startTime=spJson.startTime+":00"
                 if(spJson.interval==""){
                     spJson.queryType="0";
                 }else {
@@ -174,7 +172,6 @@ var queryArea = function (cityid) {
         dataType: "json",
         contentType: "application/json",
         success: function (result) {
-            debugger
             var areaNames_detail = new Array();
             for(var i=0;i<result.county.length;i++){
                 areaNames_detail[i] = {message: result.county[i]}
@@ -254,6 +251,7 @@ function download_this(obj) {
     var id=parseInt(obj.id);
    // console.log(obj.id);
     reportdata[0]=id;
+    console.log(reportdata[0]);
    // reportdata[1]="201803";
    // reportdata[2]="20180320";
    // $('#download+obj.id').attr('href','../../cem/probe/download/'+id);

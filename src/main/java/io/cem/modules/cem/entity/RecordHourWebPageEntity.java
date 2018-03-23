@@ -73,6 +73,8 @@ public class RecordHourWebPageEntity implements Serializable {
 
 	private Integer total;
 
+	private Double loadDelay;
+
 	private Integer accessLayer;
 
 	public Integer getFail() {
@@ -410,5 +412,13 @@ public class RecordHourWebPageEntity implements Serializable {
 
 	public void setAccessLayer(Integer accessLayer) {
 		this.accessLayer = accessLayer;
+	}
+
+	public Double getLoadDelay() {
+		return loadDelay;
+	}
+
+	public void setLoadDelay(Double loadDelay) {
+		this.loadDelay = loadDelay;
 	}
 }

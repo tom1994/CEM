@@ -56,23 +56,27 @@ recordtype.set(50,"game");
 function getFormJson(form) {      /*将表单对象变为json对象*/
     var o = {};
     var a = $(form).serializeArray();
-   if(citySelected!=0){
-       a[4]={};
-       a[4].name="city_id";
-       a[4].value=citySelected;
-   }
-   if(countrySelected!=0){
-       a[5]={};
-       a[5].name="country_id";
-       a[5].value=countrySelected;
-   }
-   
+    if(citySelected!=0){
+        a[4]={};
+        a[4].name="city_id";
+        a[4].value=citySelected;
+    }
+    if(countrySelected!=0){
+        a[5]={};
+        a[5].name="country_id";
+        a[5].value=countrySelected;
+    }
+
     if(probeSelected!=0){
         a[6]={};
         a[6].name="probe_id";
         a[6].value=probeSelected;
     }
-    if(serviceSelected!=-1){
+    if(serviceSelected==''){
+        a[7]={};
+        a[7].name="service_type";
+        a[7].value=1;
+    }else  if(serviceSelected!='-1'){
         a[7]={};
         a[7].name="service_type";
         a[7].value=serviceSelected;
@@ -145,6 +149,7 @@ var getProbeCity = function (cityid) {
     }
 
 };
+
 function clearArea(a) {
     if(a=="所有地市"){
         $('#country .combo-input').val("所有区县");
@@ -228,90 +233,8 @@ function clearArea(a) {
     }
 }
 
-$(document).ready(function () {
-    $('#city .jq22').comboSelect()
-    $('#country .jq22').comboSelect();
-    $('#task .jq22').comboSelect();
-    $('#target .jq22').comboSelect();
-    $.ajax({
-        type: "POST",   /*GET会乱码*/
-        url: "../../cem/city/list",
-        cache: false,  //禁用缓存
-        dataType: "json",
-        success: function (result) {
-            var cities = [];
-            for (var i = 0; i < result.page.list.length; i++) {
-                cities[i] = {message: result.page.list[i]}
-            }
-            search_data.city = cities;
-            setTimeout(function () {
-                $('div#city .jq22').comboSelect();
-                $('.combo-dropdown').css("z-index","3");
-                $('div#city .option-item').click(function (city) {
-                    setTimeout(function () {
-                        var a = $(city.currentTarget)[0].innerText;
-                        citySelected = $($(city.currentTarget)[0]).data('value');
-                        $('div#city .combo-input').val(a);
-                        $('div#city .combo-select select').val(a);
-                        clearArea(a);
-                        getArea(citySelected);
-                        getProbeCity(citySelected);
-                    }, 30);
-                });
-                $('#city input[type=text] ').keyup(function (city) {
-                    if( city.keyCode=='13'){
-                        var b = $("#city .option-hover.option-selected").text();
-                        clearArea(b);
-                        var c=($("#city .option-hover.option-selected"));
-                        var c=c[0].dataset
-                        citySelected = c.value;
-                        clearArea(a);
-                        getArea(citySelected);
-                        getProbeCity(citySelected);
-                        $('#city .combo-input').val(b);
-                        $('#city .combo-select select').val(b);
-                    }
-                })
-            }, 200);
 
-        }
-    });
-    $.ajax({
-        type: "POST",   /*GET会乱码*/
-        url: "../../cem/probe/list",
-        cache: false,  //禁用缓存
-        dataType: "json",
-        success: function (result) {
-            var probes = [];
-            for (var i = 0; i < result.page.list.length; i++) {
-                probes[i] = {message: result.page.list[i]}
-            }
-            search_data.probe = probes;
-            setTimeout(function () {
-                $('#probe .jq22').comboSelect();
-                $(".combo-dropdown").css("z-index",'3');
-                $('#probe .option-item').click(function (probe) {
-                    setTimeout(function () {
-                        var a = $(probe.currentTarget)[0].innerText;
-                        probeSelected = $($(probe.currentTarget)[0]).data('value');
-                        $('#probe .combo-input').val(a);
-                        $('#probe .combo-select select').val(a);
-                    }, 30);
-                });
-                $('#probe input[type=text] ').keyup(function (probe) {
-                    if( probe.keyCode=='13'){
-                        var b = $("#probe .option-hover.option-selected").text();
-                        probeSelected=$("#probe .option-hover.option-selected")[0].dataset.value;
-                        $('#probe .combo-input').val(b);
-                        $('#probe .combo-select select').val(b);
-                    }
 
-                })
-            }, 200);
-
-        }
-    });
-});
 var resultdata_handle = new Vue({
     el: '#resulthandle',
     data: {},
@@ -432,6 +355,7 @@ var search_data = new Vue({
             console.log(recordtag);
             $("#" + recordtag + "_record ").removeClass("service_unselected");
             var data = getFormJson($('#resultsearch .selectdata'));
+
             /*得到查询条件*/
             /*获取表单元素的值*/
             var starttemp = data.start_time;
@@ -452,7 +376,8 @@ var search_data = new Vue({
             if (termtemp != "") {
                 data.end_time = termtemp + ":00";
             }
-console.log(data);
+            console.log(data);
+
             if (data.interval == "" || data.interval == undefined) {
                 data.queryType = "1";
             } else {
@@ -612,7 +537,7 @@ var getProbe = function (countyid) {
                         countrySelected = $($(areas.currentTarget)[0]).data('value');
                         $('#country .combo-input').val(a);
                         $('#country .combo-select select').val(a);
-                         
+
                         getProbe(countrySelected);
                     },20)
 
@@ -673,6 +598,7 @@ var getTask = function (servicetype) {
 
 /*此处的serviceId其实是superservice的*/
 var getTarget = function (serviceId) {
+    targetSelected=0;
     $.ajax({
         url: "../../target/infobat/"+serviceId,
         type: "POST", /*GET会乱码*/
@@ -692,6 +618,7 @@ var getTarget = function (serviceId) {
                     setTimeout(function () {
                         var a = $(target.currentTarget)[0].innerText.trim();
                         targetSelected = $($(target.currentTarget)[0]).data('value');
+                        debugger
                         $('#target .combo-input').val(a);
                         $('#target .combo-select select').val(a);
                     },20)
@@ -763,7 +690,6 @@ var pingresulttable = new Vue({
             {title: '<div style="width:70px">丢包率(%)</div>'},
             {title: '<div style="width:130px">记录日期</div>'},
             {title: '<div style="width:150px">记录时间</div>'},
-            {title: '<div style="width:90px">备注</div>'}
         ],
         rows: [],
         dtHandle: null,
@@ -876,7 +802,6 @@ var pingresulttable = new Vue({
                             row.push(item.lossRate);
                             row.push(item.recordDate.substr(0, 10));
                             row.push(item.recordTime);
-                            row.push(item.remark);
                             rows.push(row);
                         });
                         returnData.data = rows;
@@ -919,7 +844,6 @@ var tracertresulttable = new Vue({
             {title: '<div style="width:130px">单跳测试结果</div>'},
             {title: '<div style="width:130px">记录日期</div>'},
             {title: '<div style="width:130px">记录时间</div>'},
-            {title: '<div style="width:90px">备注</div>'}
         ],
         rows: [],
         dtHandle: null,
@@ -1022,7 +946,6 @@ var tracertresulttable = new Vue({
                             row.push(item.hopRecord);
                             row.push(item.recordDate.substr(0, 10));
                             row.push(item.recordTime);
-                            row.push(item.remark);
                             rows.push(row);
                         });
                         returnData.data = rows;
@@ -1074,7 +997,6 @@ var slaresulttable = new Vue({
             {title: '<div style="width:90px">测试目标IP</div>'},
             {title: '<div style="width:100px">日期</div>'},
             {title: '<div style="width:60px">时间</div>'},
-            {title: '<div style="width:90px">备注</div>'}
         ],
         rows: [],
         dtHandle: null,
@@ -1183,11 +1105,10 @@ var slaresulttable = new Vue({
                             row.push(item.gJitterVar);
                             row.push(item.rJitterVar);
                             row.push(item.lossRate);
-                            row.push(item.targetId);
+                            row.push(item.targetName);
                             row.push(item.targetIp);
                             row.push(item.recordDate.substr(0,10));
                             row.push(item.recordTime);
-                            row.push(item.remark);
                             rows.push(row);
                         });
                         returnData.data = rows;
@@ -1222,7 +1143,6 @@ var dhcpresult_Table = new Vue({
             {title: '<div style="width:90px">测试目标IP</div>'},
             {title: '<div style="width:100px">日期</div>'},
             {title: '<div style="width:60px">时间</div>'},
-            {title: '<div style="width:90px">备注</div>'}
         ],
         rows: [],
         dtHandle: null,
@@ -1318,7 +1238,6 @@ var dhcpresult_Table = new Vue({
                             row.push(item.targetIp);
                             row.push(item.recordDate.substr(0,10));
                             row.push(item.recordTime);
-                            row.push(item.remark);
                             rows.push(row);
                         });
                         returnData.data = rows;
@@ -1353,7 +1272,6 @@ var dnsresult_Table = new Vue({
             {title: '<div style="width:90px">测试目标IP</div>'},
             {title: '<div style="width:100px">日期</div>'},
             {title: '<div style="width:60px">时间</div>'},
-            {title: '<div style="width:90px">备注</div>'}
         ],
         rows: [],
         dtHandle: null,
@@ -1450,7 +1368,6 @@ var dnsresult_Table = new Vue({
                             row.push(item.targetIp);
                             row.push(item.recordDate.substr(0,10));
                             row.push(item.recordTime);
-                            row.push(item.remark);
                             rows.push(row);
                         });
                         returnData.data = rows;
@@ -1485,7 +1402,6 @@ var radiusresult_Table = new Vue({
             {title: '<div style="width:90px">测试目标IP</div>'},
             {title: '<div style="width:100px">日期</div>'},
             {title: '<div style="width:60px">时间</div>'},
-            {title: '<div style="width:90px">备注</div>'}
         ],
         rows: [],
         dtHandle: null,
@@ -1553,7 +1469,7 @@ var radiusresult_Table = new Vue({
                 param.resultdata = JSON.stringify(vm.resultdata);
                 var timeTag = (vm.resultdata).queryType;
                 //ajax请求数据
-                
+
                 $.ajax({
                     type: "POST", /*GET会乱码*/
                     url: "../../recordradius/list",
@@ -1580,7 +1496,6 @@ var radiusresult_Table = new Vue({
                             row.push(item.targetIp);
                             row.push(item.recordDate.substr(0,10));
                             row.push(item.recordTime);
-                            row.push(item.remark);
                             rows.push(row);
                         });
                         returnData.data = rows;
@@ -1619,7 +1534,6 @@ var ftpresult_Table = new Vue({
             {title: '<div style="width:90px">测试目标IP</div>'},
             {title: '<div style="width:100px">日期</div>'},
             {title: '<div style="width:60px">时间</div>'},
-            {title: '<div style="width:90px">备注</div>'}
         ],
         rows: [],
         dtHandle: null,
@@ -1692,7 +1606,7 @@ var ftpresult_Table = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                       console.log(result);
+                        console.log(result);
                         // 封装返回数据
                         let returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -1718,7 +1632,6 @@ var ftpresult_Table = new Vue({
                             row.push(item.targetIp);
                             row.push(item.recordDate.substr(0,10));
                             row.push(item.recordTime);
-                            row.push(item.remark);
                             rows.push(row);
                         });
                         returnData.data = rows;
@@ -1755,7 +1668,6 @@ var webdownloadresult_Table = new Vue({
             {title: '<div style="width:90px">测试目标IP</div>'},
             {title: '<div style="width:100px">日期</div>'},
             {title: '<div style="width:60px">时间</div>'},
-            {title: '<div style="width:90px">备注</div>'}
         ],
         rows: [],
         dtHandle: null,
@@ -1852,7 +1764,6 @@ var webdownloadresult_Table = new Vue({
                             row.push(item.targetIp);
                             row.push(item.recordDate.substr(0,10));
                             row.push(item.recordTime);
-                            row.push(item.remark);
                             rows.push(row);
                         });
                         returnData.data = rows;
@@ -1893,7 +1804,6 @@ var webpageresult_Table = new Vue({
             {title: '<div style="width:90px">测试目标IP</div>'},
             {title: '<div style="width:100px">日期</div>'},
             {title: '<div style="width:60px">时间</div>'},
-            {title: '<div style="width:90px">备注</div>'}
         ],
         rows: [],
         dtHandle: null,
@@ -1995,7 +1905,6 @@ var webpageresult_Table = new Vue({
                             row.push(item.targetIp);
                             row.push(item.recordDate.substr(0,10));
                             row.push(item.recordTime);
-                            row.push(item.remark);
                             rows.push(row);
                         });
                         returnData.data = rows;
@@ -2040,7 +1949,6 @@ var webvideoresult_Table = new Vue({
             {title: '<div style="width:90px">测试目标IP</div>'},
             {title: '<div style="width:100px">日期</div>'},
             {title: '<div style="width:60px">时间</div>'},
-            {title: '<div style="width:90px">备注</div>'}
         ],
         rows: [],
         dtHandle: null,
@@ -2145,7 +2053,6 @@ var webvideoresult_Table = new Vue({
                             row.push(item.targetIp);
                             row.push(item.recordDate.substr(0,10));
                             row.push(item.recordTime);
-                            row.push(item.remark);
                             rows.push(row);
                         });
                         returnData.data = rows;
@@ -2183,7 +2090,6 @@ var gameresult_Table = new Vue({
             {title: '<div style="width:90px">测试目标IP</div>'},
             {title: '<div style="width:90px">日期</div>'},
             {title: '<div style="width:90px">时间</div>'},
-            {title: '<div style="width:90px">备注</div>'}
         ],
         rows: [],
         dtHandle: null,
@@ -2280,7 +2186,6 @@ var gameresult_Table = new Vue({
                             row.push(item.targetIp);
                             row.push(item.recordDate.substr(0,10));
                             row.push(item.recordTime);
-                            row.push(item.remark);
                             rows.push(row);
                         });
                         returnData.data = rows;
@@ -2316,34 +2221,132 @@ $(document).ready(
     }
 )
 /*
-var toExcel = new Vue({
-    el:'#resulthandle',
-    data:{
-        name: '导出'
-    },
-    mounted:function() {},
-    methods:{
-        toExcel: function(id){
-            alert(this.name);
-            console.log(recordtag);
-            $("#" + id + "data_table").dataTable({
-                "bJQueryUI": false,
-                'bPaginate': false, //是否分页
-                "bRetrieve": false, //是否允许从新生成表格
-                "bInfo": false, //显示表格的相关信息
-                "bDestroy": true,
-                "bServerSide": false,
-                "bProcessing": true, //当处理大量数据时，显示进度，进度条等
-                "bFilter": false, //搜索框
-                "bLengthChange": false, //动态指定分页后每页显示的记录数
-                "bSort": false, //排序
-                "bStateSave": false, //缓存
-                "sAjaxDataProp": "data",
-                "sDom": 'T<"clear">lfrtip',
-                "oTableTools": {
-                    "sSwfPath": "DataTables-1.9.4/extras/TableTools/media/swf/copy_csv_xls_pdf.swf"
-                }
-            });
+ var toExcel = new Vue({
+ el:'#resulthandle',
+ data:{
+ name: '导出'
+ },
+ mounted:function() {},
+ methods:{
+ toExcel: function(id){
+ alert(this.name);
+ console.log(recordtag);
+ $("#" + id + "data_table").dataTable({
+ "bJQueryUI": false,
+ 'bPaginate': false, //是否分页
+ "bRetrieve": false, //是否允许从新生成表格
+ "bInfo": false, //显示表格的相关信息
+ "bDestroy": true,
+ "bServerSide": false,
+ "bProcessing": true, //当处理大量数据时，显示进度，进度条等
+ "bFilter": false, //搜索框
+ "bLengthChange": false, //动态指定分页后每页显示的记录数
+ "bSort": false, //排序
+ "bStateSave": false, //缓存
+ "sAjaxDataProp": "data",
+ "sDom": 'T<"clear">lfrtip',
+ "oTableTools": {
+ "sSwfPath": "DataTables-1.9.4/extras/TableTools/media/swf/copy_csv_xls_pdf.swf"
+ }
+ });
+ }
+ }
+ })*/
+function probe() {
+    probeSelected=0;
+    $.ajax({
+        url: "../../cem/probe/list",//探针列表
+        type: "POST",
+        cache: false,  //禁用缓存
+        dataType: "json",
+        contentType: "application/json",
+        success: function (result) {
+            var probes = [];
+            for (var i = 0; i < result.page.list.length; i++) {
+                probes[i] = {message: result.page.list[i]}
+            }
+            search_data.probe = probes;
+            setTimeout(function () {
+                $('#probe .jq22').comboSelect();
+                $('.combo-dropdown').css("z-index","3");
+                $('#probe .option-item').click(function (probe) {
+                    setTimeout(function () {
+                        var a = $(probe.currentTarget)[0].innerText;
+                        probeSelected = $($(probe.currentTarget)[0]).data('value');
+                        $('#probe .combo-input').val(a);
+                        $('#probe .combo-select select').val(a);
+                    }, 30);
+                });
+                $('#probe input[type=text] ').keyup(function (probe) {
+                    if( probe.keyCode=='13'){
+                        var b = $("#probe .option-hover.option-selected").text();
+                        probeSelected=$("#probe .option-hover.option-selected")[0].dataset.value;
+                        $('#probe .combo-input').val(b);
+                        $('#probe .combo-select select').val(b);
+                    }
+                })
+            },50);
+        }
+    });
+}
+$(document).ready(function () {
+    $('#country .jq22').comboSelect();
+    $('#probe .jq22').comboSelect();
+    $('#city .jq22').comboSelect();
+    $('#target .jq22').comboSelect();
+    citySelected=0
+    $.ajax({
+        type: "POST", /*GET会乱码*/
+        url: "../../cem/city/list",//c城市列表
+        cache: false,  //禁用缓存
+        dataType: "json",
+        success: function (result) {
+            var cities = [];
+            for (var i = 0; i < result.page.list.length; i++) {
+                cities[i] = {message: result.page.list[i]}
+            }
+            search_data.city = cities;
+            setTimeout(function () {
+                $('div#city .jq22').comboSelect();
+                $('.combo-dropdown').css("z-index","3");
+                $('div#city .option-item').click(function (city) {
+                    setTimeout(function () {
+                        var a = $(city.currentTarget)[0].innerText;
+                        clearArea(a);
+                        citySelected = $($(city.currentTarget)[0]).data('value');
+                        getArea(citySelected);
+                        getProbeCity(citySelected);
+                        $('div#city .combo-input').val(a);
+                        $('div#city .combo-select select').val(a);
+                    }, 50);
+                });
+                $('#city input[type=text] ').keyup(function (city) {
+                    if( city.keyCode=='13'){
+                        var b = $("#city .option-hover.option-selected").text();
+                        clearArea(b);
+                        citySelected=$("#city .option-hover.option-selected")[0].dataset.value
+                        getArea(citySelected);
+                        getProbeCity(citySelected);
+                        $('#city .combo-input').val(b);
+                        $('#city .combo-select select').val(b);
+                    }
+                })
+            }, 100);
+        }
+    });
+
+    function clearArea(a) {
+        if(a=="所有地市"){
+            $('#country .combo-input').val("所有区县");
+            $('#country .combo-select select').val("所有区县");
+            search_data.areas = [];
+            $('#country ul').html("");
+            $("#country ul").append("<li class='option-item option-hover option-selected' data-index=='0' data-value=''>"+"所有区县"+"</li>");
+            probe()
+        }
+        if(a=="所有区县"){
+            probe()
         }
     }
-})*/
+    probe()
+});

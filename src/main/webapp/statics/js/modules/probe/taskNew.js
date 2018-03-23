@@ -698,7 +698,7 @@ var taskform_data = new Vue({
                 toastr.warning("请选择任务类型!");
             } else if (tasknewJson.schPolicyId == "") {
                 toastr.warning("请选择调度策略!");
-            } else if (tasknewJson.parameter) {
+            }  else if (tasknewJson.parameter) {
                 var paramnew = JSON.parse(tasknewJson.parameter)
                 if ((tasknewJson.serviceType== "1" ||  tasknewJson.serviceType == "2" ||tasknewJson.serviceType == "3" ||tasknewJson.serviceType == "10"||tasknewJson.serviceType == "11"||tasknewJson.serviceType == "50")&&
                     (paramnew.count < 3 || paramnew.count > 10000)) {
@@ -802,7 +802,7 @@ var taskform_data = new Vue({
                         success: function (result) {
                             var code = result.code;
                             var msg = result.msg;
-                            task_table.redraw();
+                            // console.log(result);
                             if (status == 0) {
                                 switch (code) {
                                     case 0:
@@ -834,6 +834,7 @@ var taskform_data = new Vue({
                     });
                 }
             }
+
         },
         cancel: function () {
             $(this.$el).modal('hide');
@@ -1120,7 +1121,7 @@ var dispatch_table = new Vue({
             {title: '<div style="width:77px">探针名称</div>'},
             {title: '<div style="width:78px">位置</div>'},
             {title: '<div style="width:57px">层级</div>'},
-            {title: '<div style="width:160px">测试目标</div>'},
+            {title: '<div style="width:212px">测试目标</div>'},
             {title: '<div style="width:67px">操作</div>'}
         ],
         rows: [],
@@ -1217,7 +1218,7 @@ var dispatch_table = new Vue({
                             row.push(item.probeName);
                             row.push('<span title="' + item.location + '" style="white-space: nowrap">' + (item.location).substr(0, 10) + '</span>');
                             row.push(item.layerName);
-                            row.push('<span title="' + item.target + '" style="white-space: nowrap">' + (item.target).substr(0, 25) + '</span>');
+                            row.push('<span title="' + item.target + '" style="white-space: nowrap;">' + (item.target).substr(0, 24) + '</span>');
                             // row.push(item.targetName);
                             row.push('<a class="fontcolor" onclick="cancel_task(this)" id=' + item.id + '>取消任务</a>');
                             rows.push(row);
