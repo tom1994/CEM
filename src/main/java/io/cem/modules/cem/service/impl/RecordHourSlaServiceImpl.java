@@ -1010,6 +1010,7 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 					finalScore.setServiceType(2);
 					finalScore.setTargetId(ite.getTargetId());
 					finalScore.setTargetName(ite.getTargetName());
+					finalScore.setAccessLayer(ite.getAccessLayer());
 					finalScore.setScore(0.0);
 					finalScore.setBase(0.0);
 					Map<String, ScoreBaseEntity> map1 = connection.get(ite);
@@ -1081,6 +1082,7 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				scoreTarget.setCountyName(slaTcp.get(i).getCountyName());
 				scoreTarget.setProbeName(slaTcp.get(i).getProbeName());
 				scoreTarget.setTargetName(slaTcp.get(i).getTargetName());
+				scoreTarget.setAccessLayer(slaTcp.get(i).getAccessLayer());
 				scoreTarget.setFail(slaTcp.get(i).getFail());
 				scoreTarget.setTotal(slaTcp.get(i).getTotal());
 				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
@@ -1112,6 +1114,7 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				finalScore.setServiceType(2);
 				finalScore.setTargetId(ite.getTargetId());
 				finalScore.setTargetName(ite.getTargetName());
+				finalScore.setAccessLayer(ite.getAccessLayer());
 				finalScore.setScore(((connection.get(ite).getScore()) / (connection.get(ite).getBase()))*(1-(ite.getFail())/ite.getTotal()));
 				finalScore.setBase(Double.parseDouble(pros.getValue("qualityweight")));
 				connectionScore.add(finalScore);
@@ -1140,6 +1143,7 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				scoreTarget.setTargetName(slaTcp.get(i).getTargetName());
 				scoreTarget.setRecordDate(slaTcp.get(i).getRecordDate());
 				scoreTarget.setRecordTime(slaTcp.get(i).getRecordTime());
+				scoreTarget.setAccessLayer(slaTcp.get(i).getAccessLayer());
 				scoreTarget.setFail(slaTcp.get(i).getFail());
 				scoreTarget.setTotal(slaTcp.get(i).getTotal());
 				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
@@ -1168,6 +1172,7 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				finalScore.setCountyName(ite.getCountyName());
 				finalScore.setProbeId(ite.getProbeId());
 				finalScore.setProbeName(ite.getProbeName());
+				finalScore.setAccessLayer(ite.getAccessLayer());
 				finalScore.setServiceType(2);
 				finalScore.setTargetId(ite.getTargetId());
 				finalScore.setTargetName(ite.getTargetName());

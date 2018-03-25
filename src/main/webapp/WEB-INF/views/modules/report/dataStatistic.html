@@ -356,17 +356,7 @@
 </script>
 
 <script>
-    $('#terminal_time').flatpickr({
-        enableTime: true,
-        noCalendar: true,
-        dateFormat: "H:i",
-        time_24hr: true,
-        minuteIncrement: 1
-    });
-</script>
-<script>
     $(function () {
-        serviceSelected=0;
         $('#service .jq22').comboSelect();
         $('#city .jq22').comboSelect()
         $('#country .jq22').comboSelect();
@@ -374,6 +364,7 @@
         $('#target .jq22').comboSelect();
         $('#service input[type=text]').val('PING(ICMP ECHO)');
         $('.combo-dropdown').css("z-index","3");
+        serviceSelected=0;
         $('#service .option-item').click(function (service) {
             var a = $(service.currentTarget)[0].innerText;
             serviceSelected = $($(service.currentTarget)[0]).data('value');
@@ -394,8 +385,8 @@
                 $('#service .combo-select select').val(b);
             }
         });
-
         intervalSelected=0;
+        $('.combo-dropdown').css("z-index","3");
         $('#interval .jq22').comboSelect()
         $('.combo-dropdown').css("z-index","3");
         $('#interval .option-item').click(function (interval) {
@@ -412,9 +403,93 @@
                 $('#interval .combo-input').val(b);
                 $('#interval .combo-select select').val(b);
             }
+            $.ajax({
+                type: "POST",   /*GET会乱码*/
+                url: "../../cem/city/list",
+                cache: false,  //禁用缓存
+                dataType: "json",
+                success: function (result) {
+                    var cities = [];
+                    for (var i = 0; i < result.page.list.length; i++) {
+                        cities[i] = {message: result.page.list[i]}
+                    }
+                    search_data.city = cities;
+                    setTimeout(function () {
+                        $('div#city .jq22').comboSelect();
+                        $('.combo-dropdown').css("z-index","3");
+                        $('div#city .option-item').click(function (city) {
+                            setTimeout(function () {
+                                var a = $(city.currentTarget)[0].innerText;
+                                citySelected = $($(city.currentTarget)[0]).data('value');
+                                $('div#city .combo-input').val(a);
+                                $('div#city .combo-select select').val(a);
+                                clearArea(a);
+                                getArea(citySelected);
+                                getProbeCity(citySelected);
+                            }, 30);
+                        });
+                        $('#city input[type=text] ').keyup(function (city) {
+                            if( city.keyCode=='13'){
+                                var b = $("#city .option-hover.option-selected").text();
+                                clearArea(b);
+                                var c=($("#city .option-hover.option-selected"));
+                                var c=c[0].dataset
+                                citySelected = c.value;
+                                clearArea(a);
+                                getArea(citySelected);
+                                getProbeCity(citySelected);
+                                $('#city .combo-input').val(b);
+                                $('#city .combo-select select').val(b);
+                            }
+                        })
+                    }, 200);
+
+                }
+            });
+            $.ajax({
+                type: "POST",   /*GET会乱码*/
+                url: "../../cem/probe/list",
+                cache: false,  //禁用缓存
+                dataType: "json",
+                success: function (result) {
+                    var probes = [];
+                    for (var i = 0; i < result.page.list.length; i++) {
+                        probes[i] = {message: result.page.list[i]}
+                    }
+                    search_data.probe = probes;
+                    setTimeout(function () {
+                        $('#probe .jq22').comboSelect();
+                        $(".combo-dropdown").css("z-index",'3');
+                        $('#probe .option-item').click(function (probe) {
+                            setTimeout(function () {
+                                var a = $(probe.currentTarget)[0].innerText;
+                                probeSelected = $($(probe.currentTarget)[0]).data('value');
+                                $('#probe .combo-input').val(a);
+                                $('#probe .combo-select select').val(a);
+                            }, 30);
+                        });
+                        $('#probe input[type=text] ').keyup(function (probe) {
+                            if( probe.keyCode=='13'){
+                                var b = $("#probe .option-hover.option-selected").text();
+                                probeSelected=$("#probe .option-hover.option-selected")[0].dataset.value;
+                                $('#probe .combo-input').val(b);
+                                $('#probe .combo-select select').val(b);
+                            }
+
+                        })
+                    }, 200);
+
+                }
+            });
         });
     })
-
+    $('#terminal_time').flatpickr({
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true,
+        minuteIncrement: 1
+    });
 </script>
 <!--<script>-->
 <!--$(document).ready(function(){-->

@@ -10,40 +10,40 @@ var cityNames = new Array();
 var typeNames = new Array();
 var statusNames = new Array();
 var probegroup_names = new Array();
-var citySelected=0
-var countrySelected=0
-var groupSelected=0;
-var accessSelected=0;
-var typeSelected=0;
-var statusSelected=0
+var citySelected = 0
+var countrySelected = 0
+var groupSelected = 0;
+var accessSelected = 0;
+var typeSelected = 0;
+var statusSelected = 0
 
 function getFormJson(form) {      /*将表单对象变为json对象*/
     var o = {};
     var a = $(form).serializeArray();
-    if(countrySelected!=0){
-        a[2]={}
-        a[2].name="country_id"
-        a[2].value=countrySelected
+    if (countrySelected != 0) {
+        a[2] = {}
+        a[2].name = "country_id"
+        a[2].value = countrySelected
     }
-    if(groupSelected!=0){
-        a[3]={}
-        a[3].name="group_id"
-        a[3].value=groupSelected
+    if (groupSelected != 0) {
+        a[3] = {}
+        a[3].name = "group_id"
+        a[3].value = groupSelected
     }
-    if(accessSelected!=0){
-        a[4]={}
-        a[4].name="access_layer"
-        a[4].value=accessSelected
+    if (accessSelected != 0) {
+        a[4] = {}
+        a[4].name = "access_layer"
+        a[4].value = accessSelected
     }
-    if(typeSelected!=0){
-        a[5]={}
-        a[5].name="type"
-        a[5].value=typeSelected;
+    if (typeSelected != 0) {
+        a[5] = {}
+        a[5].name = "type"
+        a[5].value = typeSelected;
     }
-    if(statusSelected!=0){
-        a[6]={}
-        a[6].name="status"
-        a[6].value=statusSelected
+    if (statusSelected != 0) {
+        a[6] = {}
+        a[6].name = "status"
+        a[6].value = statusSelected
 
     }
     // if(citySelected!=0){
@@ -63,6 +63,7 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
     });
     return o;
 }
+
 var st = new Map();//servicetype字典，可通过get方法查对应字符串。
 st.set(1, "PING(ICMP Echo)");
 st.set(2, "PING(TCP Echo)");
@@ -81,54 +82,56 @@ st.set(31, "FTP下载");
 st.set(32, "FTP上传");
 st.set(40, "在线视频");
 st.set(50, "网络游戏");
+
 function clearArea(a) {
-    if(a=="所有地市"){
+    if (a == "所有地市") {
         $('#country .combo-input').val("所有区县");
         $('#country .combo-select select').val("所有区县");
         search_data.areas = [];
         $('#country ul').html("");
         // $('#country ul').append(<li class="option-item option-hover option-selected" data-index="0" data-value="">所有区县</li>);
-        $("#country ul").append("<li class='option-item option-hover option-selected' data-index=='0' data-value=''>"+"所有区县"+"</li>");
+        $("#country ul").append("<li class='option-item option-hover option-selected' data-index=='0' data-value=''>" + "所有区县" + "</li>");
     }
 
 }
+
 $(document).ready(function () {
     $('div#cities .jq22').comboSelect();
     $('div#country .jq22').comboSelect();
     $('div#group .jq22').comboSelect();
-    typeSelected=0;
-    statusSelected=0;
+    typeSelected = 0;
+    statusSelected = 0;
     $('#Selecttype .jq22').comboSelect()
-    $('.combo-dropdown').css("z-index","3");
+    $('.combo-dropdown').css("z-index", "3");
     $('#Selecttype .option-item').click(function (type) {
         var a = $(type.currentTarget)[0].innerText;
         typeSelected = $($(type.currentTarget)[0]).data('value');
-        setTimeout(function(){
+        setTimeout(function () {
             $('#Selecttype .combo-input').val(a);
-        },20)
+        }, 20)
     });
 
     $('#Selecttype input[type=text] ').keyup(function (type) {
-        if( type.keyCode=='13'){
+        if (type.keyCode == '13') {
             var b = $("#Selecttype .option-hover.option-selected").text();
-            typeSelected=$("#Selecttype .option-hover.option-selected")[0].dataset.value;
+            typeSelected = $("#Selecttype .option-hover.option-selected")[0].dataset.value;
             $('#Selecttype .combo-input').val(b);
             $('#Selecttype .combo-select select').val(b);
         }
     });
     $('#Selectstatus .jq22').comboSelect();
-    $('.combo-dropdown').css("z-index","3");
+    $('.combo-dropdown').css("z-index", "3");
     $('#Selectstatus .option-item').click(function (status) {
         var a = $(status.currentTarget)[0].innerText;
         statusSelected = $($(status.currentTarget)[0]).data('value');
-        setTimeout(function(){
+        setTimeout(function () {
             $('#Selectstatus .combo-input').val(a);
-        },20)
+        }, 20)
     });
     $('#Selectstatus input[type=text] ').keyup(function (status) {
-        if( status.keyCode=='13'){
+        if (status.keyCode == '13') {
             var b = $("#Selectstatus .option-hover.option-selected").text();
-            statusSelected=$("#Selecttype .option-hover.option-selected")[0].dataset.value;
+            statusSelected = $("#Selecttype .option-hover.option-selected")[0].dataset.value;
             $('#Selectstatus .combo-input').val(b);
             $('#Selectstatus .combo-select select').val(b);
         }
@@ -137,23 +140,23 @@ $(document).ready(function () {
 var probedata_handle = new Vue({
     el: '#probehandle',
     data: {},
-    mounted: function(){         /*动态加载测试任务组数据*/
+    mounted: function () {         /*动态加载测试任务组数据*/
         $.ajax({
-            type: "POST",   /*GET会乱码*/
+            type: "POST", /*GET会乱码*/
             url: "../../cem/city/list",//Todo:改成测试任务组的list方法
             cache: false,  //禁用缓存
             dataType: "json",
             /* contentType:"application/json",  /!*必须要,不可少*!/*/
             success: function (result) {
                 //console.log(result);
-                for(var i=0;i<result.page.list.length;i++){
+                for (var i = 0; i < result.page.list.length; i++) {
                     cityNames[i] = {message: result.page.list[i]}
                 }
                 search_data.cities = cityNames;
                 probeform_data.cityNames = cityNames;
                 setTimeout(function () {
                     $('div#cities .jq22').comboSelect();
-                    $('.combo-dropdown').css("z-index","3");
+                    $('.combo-dropdown').css("z-index", "3");
                     $('div#cities .option-item').click(function (city) {
                         setTimeout(function () {
                             var a = $(city.currentTarget)[0].innerText;
@@ -165,11 +168,11 @@ var probedata_handle = new Vue({
                         }, 30);
                     });
                     $('#cities input[type=text] ').keyup(function (city) {
-                        if( city.keyCode=='13'){
+                        if (city.keyCode == '13') {
                             var b = $("#cities .option-hover.option-selected").text();
                             clearArea(b);
-                            var c=($("#cities .option-hover.option-selected"));
-                            var c=c[0].dataset
+                            var c = ($("#cities .option-hover.option-selected"));
+                            var c = c[0].dataset
                             citySelected = c.value;
                             clearArea(a);
                             getArea(citySelected);
@@ -182,13 +185,13 @@ var probedata_handle = new Vue({
         });
 
         $.ajax({
-            type: "POST",   /*GET会乱码*/
+            type: "POST", /*GET会乱码*/
             url: "../../cem/probe/list",
             cache: false,  //禁用缓存
             dataType: "json",
             success: function (result) {
                 //console.log(result);
-                for(var i=0;i<result.page.list.length;i++){
+                for (var i = 0; i < result.page.list.length; i++) {
                     probeNames[i] = {message: result.page.list[i]}
                 }
                 probeform_data.upstreams = probeNames;
@@ -198,20 +201,22 @@ var probedata_handle = new Vue({
             }
         });
         $.ajax({
-            type: "POST",   /*GET会乱码*/
+            type: "POST", /*GET会乱码*/
             url: "../../cem/probegroup/list",
             cache: false,  //禁用缓存
             dataType: "json",
             success: function (result) {
                 //console.log(result);
-                for(var i=0;i<result.page.list.length;i++){
-                    probeGroupNames[i] = {message: result.page.list[i]}
+                probeGroupNames[0] = {message: {id: 0, name: '无'}};
+                for (var i = 0; i < result.page.list.length; i++) {
+                    probeGroupNames[i + 1] = {message: result.page.list[i]}
                 }
+                console.log(probeGroupNames);
                 probeform_data.groupNames = probeGroupNames;
                 search_data.probegroup_names = probeGroupNames;
                 setTimeout(function () {
                     $('div#group .jq22').comboSelect();
-                    $('.combo-dropdown').css("z-index","3");
+                    $('.combo-dropdown').css("z-index", "3");
                     $('div#group .option-item').click(function (group) {
                         setTimeout(function () {
                             var a = $(group.currentTarget)[0].innerText;
@@ -222,10 +227,10 @@ var probedata_handle = new Vue({
                         }, 30);
                     });
                     $('#group input[type=text] ').keyup(function (group) {
-                        if( group.keyCode=='13'){
+                        if (group.keyCode == '13') {
                             var b = $("#group .option-hover.option-selected").text();
-                            var c=($("#group .option-hover.option-selected"));
-                            var c=c[0].dataset;
+                            var c = ($("#group .option-hover.option-selected"));
+                            var c = c[0].dataset;
                             groupSelected = c.value;
                             $('#group .combo-input').val(b);
                             $('#group .combo-select select').val(b);
@@ -268,34 +273,34 @@ var probedata_handle = new Vue({
     }
 });
 
-function transString(string,i,j) {
-    if(string ==null) {
+function transString(string, i, j) {
+    if (string == null) {
         return "";
     }
     else {
-        return string.substr(i,j);
+        return string.substr(i, j);
     }
 }
 
 var layer_handle = new Vue({
     el: '#probehandle',
     data: {},
-    mounted: function(){         /*动态加载测试任务组数据*/
+    mounted: function () {         /*动态加载测试任务组数据*/
         $.ajax({
-            type: "POST",   /*GET会乱码*/
+            type: "POST", /*GET会乱码*/
             url: "../../cem/layer/searchlist",//Todo:改成测试任务组的list方法
             cache: false,  //禁用缓存
             dataType: "json",
             /* contentType:"application/json",  /!*必须要,不可少*!/*/
             success: function (result) {
-                for(var i=0;i<result.page.list.length;i++){
+                for (var i = 0; i < result.page.list.length; i++) {
                     probeLayer[i] = {message: result.page.list[i]}
                 }
                 search_data.accessLayers = probeLayer;
                 probeform_data.accessLayers = probeLayer;
                 setTimeout(function () {
                     $('div#access .jq22').comboSelect();
-                    $('.combo-dropdown').css("z-index","3");
+                    $('.combo-dropdown').css("z-index", "3");
                     $('div#access .option-item').click(function (access) {
                         setTimeout(function () {
                             var a = $(access.currentTarget)[0].innerText;
@@ -306,10 +311,10 @@ var layer_handle = new Vue({
                         }, 30);
                     });
                     $('#access input[type=text] ').keyup(function (access) {
-                        if( access.keyCode=='13'){
+                        if (access.keyCode == '13') {
                             var b = $("#access .option-hover.option-selected").text();
-                            var c=($("#access .option-hover.option-selected"));
-                            var c=c[0].dataset
+                            var c = ($("#access .option-hover.option-selected"));
+                            var c = c[0].dataset
                             accessSelected = c.value;
                             $('#access .combo-input').val(b);
                             $('#access .combo-select select').val(b);
@@ -320,11 +325,7 @@ var layer_handle = new Vue({
             }
         });
     },
-    methods: {
-
-
-
-    }
+    methods: {}
 });
 
 var search_list = new Vue({
@@ -350,7 +351,7 @@ var search_list = new Vue({
 var probegroupdata_handle = new Vue({
     el: '#groupSearch',
     data: {},
-    mounted: function(){
+    mounted: function () {
 
     },
     methods: {
@@ -398,8 +399,8 @@ var probegroup_handle = new Vue({
                 toastr.warning('请选择编辑项目！');
             } else if (trs.length == 1) {
                 $.ajax({
-                    type: "POST",   /*GET会乱码*/
-                    url: "../../cem/probegroup/info/"+id,
+                    type: "POST", /*GET会乱码*/
+                    url: "../../cem/probegroup/info/" + id,
                     cache: false,  //禁用缓存
                     dataType: "json",
                     /* contentType:"application/json",  /!*必须要,不可少*!/*/
@@ -425,7 +426,7 @@ var probegroup_handle = new Vue({
 });
 
 /*查看任务*/
-function dispatch_info (obj) {
+function dispatch_info(obj) {
     dispatch_table.probeid = parseInt(obj.id);
     //console.log(obj.id)
     /*获取当前行探针数据id*/
@@ -446,7 +447,7 @@ var dispatch_table = new Vue({
         dtHandle: null,
         taskdata: {},
         //taskid: 1,
-        probeid:1,
+        probeid: 1,
     },
 
     methods: {
@@ -547,15 +548,16 @@ var dispatch_table = new Vue({
 });
 
 /*探针列表详情功能*/
-function update_this (obj) {     /*监听修改触发事件*/
+function update_this(obj) {     /*监听修改触发事件*/
     var update_data_id = parseInt(obj.id);
     /*获取当前行探针数据id*/
-    status = 1;      /*状态1表示修改*/
+    status = 1;
+    /*状态1表示修改*/
     var forms = $('#probeform_data .form-control');
 
     /*渲染区县的下拉列表，否则无法显示county对应的countyName*/
     $.ajax({
-        url: "../../cem/county/infoByProbe/"+update_data_id,
+        url: "../../cem/county/infoByProbe/" + update_data_id,
         type: "POST",
         cache: false,  //禁用缓存
         dataType: "json",
@@ -563,13 +565,13 @@ function update_this (obj) {     /*监听修改触发事件*/
         success: function (result_county) {
             //console.log(result_county);
             var areaNames = [];
-            for(var i=0;i<result_county.county.length;i++){
+            for (var i = 0; i < result_county.county.length; i++) {
                 areaNames[i] = {message: result_county.county[i]}
             }
             probeform_data.countyNames = areaNames;
             $.ajax({
                 type: "POST", /*GET会乱码*/
-                url: "../../cem/probe/detail/"+update_data_id,
+                url: "../../cem/probe/detail/" + update_data_id,
                 cache: false,  //禁用缓存
                 dataType: "json",
                 // contentType: "application/json", /*必须要,不可少*/
@@ -580,9 +582,9 @@ function update_this (obj) {     /*监听修改触发事件*/
                     forms[2].value = result.probe.serialNumber;
                     forms[3].value = result.probe.type;
                     forms[4].value = result.probe.city;
-                    setTimeout( function () {
+                    setTimeout(function () {
                         forms[5].value = result.probe.county;
-                    },100);
+                    }, 100);
                     forms[6].value = result.probe.location;
                     forms[7].value = result.probe.brasName;
                     forms[8].value = result.probe.brasIp;
@@ -603,79 +605,79 @@ function update_this (obj) {     /*监听修改触发事件*/
                     forms[23].value = result.probe.registerTime;
                     forms[24].value = result.probe.lastReportTime;
                     forms[25].value = result.probe.lastUpdateTime;
-                    portIP=JSON.parse(result.probe.portIp)
-                    if(portIP.length=="1"){
-                        $('#con').css('display','none')
+                    portIP = JSON.parse(result.probe.portIp)
+                    if (portIP.length == "1") {
+                        $('#con').css('display', 'none')
                         $('#portIP').removeAttr('style')
                         forms[26].value = portIP[0].port;
                         forms[27].value = portIP[0].ip;
-                        if(portIP[0].ip_type=='1'){
-                            forms[28].value ="静态IP"
+                        if (portIP[0].ip_type == '1') {
+                            forms[28].value = "静态IP"
                         }
-                        if(portIP[0].ip_type=="2"){
-                            forms[28].value ="DHCP动态分配"
+                        if (portIP[0].ip_type == "2") {
+                            forms[28].value = "DHCP动态分配"
                         }
-                        if(portIP[0].ip_type=="3"){
-                            forms[28].value ="PPPoE拨号"
+                        if (portIP[0].ip_type == "3") {
+                            forms[28].value = "PPPoE拨号"
                         }
                     }
-                    else{
-                        $('#portIP').css('display','none')
+                    else {
+                        $('#portIP').css('display', 'none')
                         $('#con').removeAttr('style')
                         forms[29].value = portIP[0].port;
                         forms[30].value = portIP[0].ip;
-                        if(portIP[0].ip_type=='1'){
-                            forms[31].value ="静态IP"
+                        if (portIP[0].ip_type == '1') {
+                            forms[31].value = "静态IP"
                         }
-                        if(portIP[0].ip_type=="2"){
-                            forms[31].value ="DHCP动态分配"
+                        if (portIP[0].ip_type == "2") {
+                            forms[31].value = "DHCP动态分配"
                         }
-                        if(portIP[0].ip_type=="3"){
-                            forms[31].value ="PPPoE拨号"
+                        if (portIP[0].ip_type == "3") {
+                            forms[31].value = "PPPoE拨号"
                         }
                         forms[32].value = portIP[1].port;
                         forms[33].value = portIP[1].ip;
-                        if(portIP[1].ip_type=='1'){
-                            forms[34].value ="静态IP"
+                        if (portIP[1].ip_type == '1') {
+                            forms[34].value = "静态IP"
                         }
-                        if(portIP[1].ip_type=="2"){
-                            forms[34].value ="DHCP动态分配"
+                        if (portIP[1].ip_type == "2") {
+                            forms[34].value = "DHCP动态分配"
                         }
-                        if(portIP[1].ip_type=="3"){
-                            forms[34].value ="PPPoE拨号"
+                        if (portIP[1].ip_type == "3") {
+                            forms[34].value = "PPPoE拨号"
                         }
                         forms[35].value = portIP[2].port;
                         forms[36].value = portIP[2].ip;
-                        if(portIP[2].ip_type=='1'){
-                            forms[37].value ="静态IP"
+                        if (portIP[2].ip_type == '1') {
+                            forms[37].value = "静态IP"
                         }
-                        if(portIP[2].ip_type=="2"){
-                            forms[37].value ="DHCP动态分配"
+                        if (portIP[2].ip_type == "2") {
+                            forms[37].value = "DHCP动态分配"
                         }
-                        if(portIP[2].ip_type=="3"){
-                            forms[37].value ="PPPoE拨号"
+                        if (portIP[2].ip_type == "3") {
+                            forms[37].value = "PPPoE拨号"
                         }
                         forms[38].value = portIP[3].port;
                         forms[39].value = portIP[3].ip;
-                        if(portIP[3].ip_type=='1'){
-                            forms[40].value ="静态IP"
+                        if (portIP[3].ip_type == '1') {
+                            forms[40].value = "静态IP"
                         }
-                        if(portIP[3].ip_type=="2"){
-                            forms[40].value ="DHCP动态分配"
+                        if (portIP[3].ip_type == "2") {
+                            forms[40].value = "DHCP动态分配"
                         }
-                        if(portIP[3].ip_type=="3"){
-                            forms[40].value ="PPPoE拨号"
+                        if (portIP[3].ip_type == "3") {
+                            forms[40].value = "PPPoE拨号"
                         }
                         forms[41].value = portIP[4].port;
                         forms[42].value = portIP[4].ip;
-                        if(portIP[4].ip_type=='1'){
-                            forms[43].value ="静态IP"
+                        if (portIP[4].ip_type == '1') {
+                            forms[43].value = "静态IP"
                         }
-                        if(portIP[4].ip_type=="2"){
-                            forms[43].value ="DHCP动态分配"
+                        if (portIP[4].ip_type == "2") {
+                            forms[43].value = "DHCP动态分配"
                         }
-                        if(portIP[4].ip_type=="3"){
-                            forms[43].value ="PPPoE拨号"
+                        if (portIP[4].ip_type == "3") {
+                            forms[43].value = "PPPoE拨号"
                         }
 
                     }
@@ -685,7 +687,7 @@ function update_this (obj) {     /*监听修改触发事件*/
     });
     $.ajax({
         type: "POST", /*GET会乱码*/
-        url: "../../cem/probe/detail/"+update_data_id,
+        url: "../../cem/probe/detail/" + update_data_id,
         cache: false,  //禁用缓存
         dataType: "json",
         // contentType: "application/json", /*必须要,不可少*/
@@ -696,9 +698,9 @@ function update_this (obj) {     /*监听修改触发事件*/
             forms[2].value = result.probe.serialNumber;
             forms[3].value = result.probe.type;
             forms[4].value = result.probe.city;
-            setTimeout( function () {
+            setTimeout(function () {
                 forms[5].value = result.probe.county;
-            },100);
+            }, 100);
             forms[6].value = result.probe.location;
             forms[7].value = result.probe.brasName;
             forms[8].value = result.probe.brasIp;
@@ -719,81 +721,81 @@ function update_this (obj) {     /*监听修改触发事件*/
             forms[23].value = result.probe.registerTime;
             forms[24].value = result.probe.lastReportTime;
             forms[25].value = result.probe.lastUpdateTime;
-            portIP=JSON.parse(result.probe.portIp);
-            if(portIP.length=="1"){
-                $('#con').css('display','none')
+            portIP = JSON.parse(result.probe.portIp);
+            if (portIP.length == "1") {
+                $('#con').css('display', 'none')
                 $('#portIP').removeAttr('style')
                 forms[26].value = portIP[0].port;
                 forms[27].value = portIP[0].ip;
-                if(portIP[0].ip_type=='1'){
-                    forms[28].value ="静态IP"
+                if (portIP[0].ip_type == '1') {
+                    forms[28].value = "静态IP"
                 }
-                if(portIP[0].ip_type=="2"){
-                    forms[28].value ="DHCP动态分配"
+                if (portIP[0].ip_type == "2") {
+                    forms[28].value = "DHCP动态分配"
                 }
-                if(portIP[0].ip_type=="3"){
-                    forms[28].value ="PPPoE拨号"
+                if (portIP[0].ip_type == "3") {
+                    forms[28].value = "PPPoE拨号"
                 }
             }
-            else{
-                $('#portIP').css('display','none')
+            else {
+                $('#portIP').css('display', 'none')
                 $('#con').removeAttr('style');
                 console.log(portIP)
                 forms[29].value = portIP[0].port;
-                console.log( forms[29].value );
+                console.log(forms[29].value);
                 forms[30].value = portIP[0].ip;
-                if(portIP[0].ip_type=='1'){
-                    forms[31].value ="静态IP"
+                if (portIP[0].ip_type == '1') {
+                    forms[31].value = "静态IP"
                 }
-                if(portIP[0].ip_type=="2"){
-                    forms[31].value ="DHCP动态分配"
+                if (portIP[0].ip_type == "2") {
+                    forms[31].value = "DHCP动态分配"
                 }
-                if(portIP[0].ip_type=="3"){
-                    forms[31].value ="PPPoE拨号"
+                if (portIP[0].ip_type == "3") {
+                    forms[31].value = "PPPoE拨号"
                 }
                 forms[32].value = portIP[1].port;
                 forms[33].value = portIP[1].ip;
-                if(portIP[1].ip_type=='1'){
-                    forms[34].value ="静态IP"
+                if (portIP[1].ip_type == '1') {
+                    forms[34].value = "静态IP"
                 }
-                if(portIP[1].ip_type=="2"){
-                    forms[34].value ="DHCP动态分配"
+                if (portIP[1].ip_type == "2") {
+                    forms[34].value = "DHCP动态分配"
                 }
-                if(portIP[1].ip_type=="3"){
-                    forms[34].value ="PPPoE拨号"
+                if (portIP[1].ip_type == "3") {
+                    forms[34].value = "PPPoE拨号"
                 }
                 forms[35].value = portIP[2].port;
                 forms[36].value = portIP[2].ip;
-                if(portIP[2].ip_type=='1'){
-                    forms[37].value ="静态IP"
+                if (portIP[2].ip_type == '1') {
+                    forms[37].value = "静态IP"
                 }
-                if(portIP[2].ip_type=="2"){
-                    forms[37].value ="DHCP动态分配"
+                if (portIP[2].ip_type == "2") {
+                    forms[37].value = "DHCP动态分配"
                 }
-                if(portIP[2].ip_type=="3"){
-                    forms[37].value ="PPPoE拨号"
+                if (portIP[2].ip_type == "3") {
+                    forms[37].value = "PPPoE拨号"
                 }
                 forms[38].value = portIP[3].port;
                 forms[39].value = portIP[3].ip;
-                if(portIP[3].ip_type=='1'){
-                    forms[40].value ="静态IP"
+                if (portIP[3].ip_type == '1') {
+                    forms[40].value = "静态IP"
                 }
-                if(portIP[3].ip_type=="2"){
-                    forms[40].value ="DHCP动态分配"
+                if (portIP[3].ip_type == "2") {
+                    forms[40].value = "DHCP动态分配"
                 }
-                if(portIP[3].ip_type=="3"){
-                    forms[40].value ="PPPoE拨号"
+                if (portIP[3].ip_type == "3") {
+                    forms[40].value = "PPPoE拨号"
                 }
                 forms[41].value = portIP[4].port;
                 forms[42].value = portIP[4].ip;
-                if(portIP[4].ip_type=='1'){
-                    forms[43].value ="静态IP"
+                if (portIP[4].ip_type == '1') {
+                    forms[43].value = "静态IP"
                 }
-                if(portIP[4].ip_type=="2"){
-                    forms[43].value ="DHCP动态分配"
+                if (portIP[4].ip_type == "2") {
+                    forms[43].value = "DHCP动态分配"
                 }
-                if(portIP[4].ip_type=="3"){
-                    forms[43].value ="PPPoE拨号"
+                if (portIP[4].ip_type == "3") {
+                    forms[43].value = "PPPoE拨号"
                 }
 
 
@@ -807,11 +809,12 @@ function update_this (obj) {     /*监听修改触发事件*/
 }
 
 //探针组列表编辑功能
-function updategroup_this (obj) {     /*监听修改触发事件*/
+function updategroup_this(obj) {     /*监听修改触发事件*/
     groupdata_id = parseInt(obj.id);
     /*获取当前行探针组数据id*/
     console.log(groupdata_id);
-    status = 1;      /*状态1表示修改*/
+    status = 1;
+    /*状态1表示修改*/
     /*find被选中的行*/
     var forms = $('#groupform_data .form-control');
     /*去除只读状态*/
@@ -819,7 +822,7 @@ function updategroup_this (obj) {     /*监听修改触发事件*/
 
     $.ajax({
         type: "POST", /*GET会乱码*/
-        url: "../../cem/probegroup/info/"+groupdata_id,
+        url: "../../cem/probegroup/info/" + groupdata_id,
         cache: false,  //禁用缓存
         dataType: "json",
         contentType: "application/json", /*必须要,不可少*/
@@ -860,6 +863,7 @@ function delete_ajax() {
         }
     });
 }
+
 function delete_this(obj) {
 
     delete_data.show_deleteModal();
@@ -918,6 +922,7 @@ function deletegroup_ajax() {
         }
     });
 }
+
 function deletegroup_this(obj) {
     deletegroup_data.show_deleteModal();
     deletegroup_data.id = parseInt(obj.id);
@@ -960,17 +965,17 @@ var probeform_data = new Vue({
         modaltitle: "", /*定义模态框标题*/
         countyNames: [],
         cityNames: [],
-        typeNames:[],
-        statusNames:[],
+        typeNames: [],
+        statusNames: [],
         iptypeNames: [],
         groupNames: [],
-        accessLayers:[],
-        upstreams:[]
+        accessLayers: [],
+        upstreams: []
     },
     // 在 `methods` 对象中定义方法
     methods: {
         /*模态框中选择区县*/
-        queryArea: function(){
+        queryArea: function () {
             //console.log($("#city").val());
             this.countyNames = queryArea($("#city").val());
         },
@@ -1047,16 +1052,16 @@ Date.prototype.Format = function (fmt) {
         "S+": this.getMilliseconds()             //毫秒
     };
     for (var k in o) {
-        if (new RegExp("(" + k + ")").test(fmt)){
-            if(k == "y+"){
+        if (new RegExp("(" + k + ")").test(fmt)) {
+            if (k == "y+") {
                 fmt = fmt.replace(RegExp.$1, ("" + o[k]).substr(4 - RegExp.$1.length));
             }
-            else if(k=="S+"){
+            else if (k == "S+") {
                 var lens = RegExp.$1.length;
-                lens = lens==1?3:lens;
-                fmt = fmt.replace(RegExp.$1, ("00" + o[k]).substr(("" + o[k]).length - 1,lens));
+                lens = lens == 1 ? 3 : lens;
+                fmt = fmt.replace(RegExp.$1, ("00" + o[k]).substr(("" + o[k]).length - 1, lens));
             }
-            else{
+            else {
                 fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
             }
         }
@@ -1135,18 +1140,17 @@ var groupform_data = new Vue({
 });
 
 
-
 var search_data = new Vue({
-    el:'#probesearch',
-    data:{
-        areas:[],
-        cities:[],
-        probegroup_names:[],
-        accessLayers:[],
-        types:[],
-        status:[]
+    el: '#probesearch',
+    data: {
+        areas: [],
+        cities: [],
+        probegroup_names: [],
+        accessLayers: [],
+        types: [],
+        status: []
     },
-    methods:{
+    methods: {
         citychange: function () {
             //console.log($("#selectcity").val());
             this.areas = getArea($("#selectcity").val());
@@ -1156,7 +1160,7 @@ var search_data = new Vue({
 
 /*搜索框中的联动选择地市和区县*/
 var getArea = function (cityid) {
-    countrySeleted=0;
+    countrySeleted = 0;
     $.ajax({
         url: "../../cem/county/info/" + cityid,
         type: "POST",
@@ -1172,20 +1176,20 @@ var getArea = function (cityid) {
             search_data.areas = areaNames;
             setTimeout(function () {
                 $('#country .jq22').comboSelect();
-                $('.combo-dropdown').css("z-index","3");
+                $('.combo-dropdown').css("z-index", "3");
                 $('#country .option-item').click(function (areas) {
                     setTimeout(function () {
                         var a = $(areas.currentTarget)[0].innerText;
                         countrySelected = $($(areas.currentTarget)[0]).data('value');
                         $('#country .combo-input').val(a);
                         $('#country .combo-select select').val(a);
-                    },20)
+                    }, 20)
 
                 });
                 $('#country input[type=text] ').keyup(function (areas) {
-                    if( areas.keyCode=='13'){
+                    if (areas.keyCode == '13') {
                         var b = $("#country .option-hover.option-selected").text();
-                        countrySelected=$("#country .option-hover.option-selected")[0].dataset.value;
+                        countrySelected = $("#country .option-hover.option-selected")[0].dataset.value;
                         $('#country .combo-input').val(b);
                         $('#country .combo-select select').val(b);
                     }
@@ -1198,14 +1202,14 @@ var getArea = function (cityid) {
 /*详情里的联动选择地市和区县*/
 var queryArea = function (cityid) {
     $.ajax({
-        url: "../../cem/county/info/"+cityid,
+        url: "../../cem/county/info/" + cityid,
         type: "POST",
         cache: false,  //禁用缓存
         dataType: "json",
         contentType: "application/json",
         success: function (result) {
             var areaNames_detail = new Array();
-            for(var i=0;i<result.county.length;i++){
+            for (var i = 0; i < result.county.length; i++) {
                 areaNames_detail[i] = {message: result.county[i]}
             }
             probeform_data.countyNames = areaNames_detail;
@@ -1214,9 +1218,9 @@ var queryArea = function (cityid) {
 }
 
 var searchgroup_data = new Vue({
-    el:'#searchgroup',
-    data:{
-        probegroup_names:[ ]
+    el: '#searchgroup',
+    data: {
+        probegroup_names: []
     }
 });
 
@@ -1320,7 +1324,7 @@ var probetable = new Vue({
             /*重绘*/
         }
     },
-    mounted: function() {
+    mounted: function () {
         let vm = this;
         // Instantiate the datatable and store the reference to the instance in our dtHandle element.
         vm.dtHandle = $(this.$el).DataTable({
@@ -1370,12 +1374,12 @@ var probetable = new Vue({
                         //console.log(result.page);
                         // 重新整理返回数据以匹配表格
                         let rows = [];
-                        var i = param.start+1;
+                        var i = param.start + 1;
                         result.page.list.forEach(function (item) {
                             let row = [];
                             row.push(i++);
                             row.push('<div class="checkbox"> <label> <input type="checkbox" name="selectFlag"></label> </div>');
-                            row.push('<a onclick="update_this(this)" id='+item.id+'><span style="color: black;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">'+item.name+'</span></a>');
+                            row.push('<a onclick="update_this(this)" id=' + item.id + '><span style="color: black;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">' + item.name + '</span></a>');
                             row.push(item.cityName);
                             row.push(item.areaName);
                             row.push(item.location);
@@ -1384,11 +1388,11 @@ var probetable = new Vue({
                             row.push(item.statusName);
                             row.push(item.typeName);
                             row.push(item.registerTime);
-                            row.push('<span title="'+item.lastHbTime+'" style="white-space: nowrap">' + transString(item.lastHbTime,0,10) + '</span>');
-                            row.push('<span title="'+item.lastReportTime+'" style="white-space: nowrap">' + transString(item.lastReportTime,0,10) + '</span>');
-                            row.push('<a class="fontcolor" style="white-space: nowrap" onclick="update_this(this)" id='+item.id+'>详情</a>&nbsp;' +
-                                '<a class="fontcolor" style="white-space: nowrap" onclick="delete_this(this)" id='+item.id+'>删除</a>&nbsp;'+
-                                '<a class="fontcolor" style="white-space: nowrap" onclick="dispatch_info(this)" id='+item.id+'>查看任务</a>');
+                            row.push('<span title="' + item.lastHbTime + '" style="white-space: nowrap">' + transString(item.lastHbTime, 0, 10) + '</span>');
+                            row.push('<span title="' + item.lastReportTime + '" style="white-space: nowrap">' + transString(item.lastReportTime, 0, 10) + '</span>');
+                            row.push('<a class="fontcolor" style="white-space: nowrap" onclick="update_this(this)" id=' + item.id + '>详情</a>&nbsp;' +
+                                '<a class="fontcolor" style="white-space: nowrap" onclick="delete_this(this)" id=' + item.id + '>删除</a>&nbsp;' +
+                                '<a class="fontcolor" style="white-space: nowrap" onclick="dispatch_info(this)" id=' + item.id + '>查看任务</a>');
                             rows.push(row);
                         });
                         returnData.data = rows;
@@ -1397,10 +1401,10 @@ var probetable = new Vue({
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);
                         $("#probedata_table").colResizable({
-                            liveDrag:true,
-                            gripInnerHtml:"<div class='grip'></div>",
-                            draggingClass:"dragging",
-                            resizeMode:'overflow',
+                            liveDrag: true,
+                            gripInnerHtml: "<div class='grip'></div>",
+                            draggingClass: "dragging",
+                            resizeMode: 'overflow',
                         });
                         // $('td').closest('table').find('th').eq(1).attr('style', 'text-align: center;');
                         // $('#probe_table tbody').find('td').eq(1).attr('style', 'text-align: center;');
@@ -1454,7 +1458,7 @@ var grouptable = new Vue({
             /*重绘*/
         }
     },
-    mounted: function() {
+    mounted: function () {
         let vm = this;
         vm.dtHandle = $(this.$el).DataTable({
             columns: vm.headers,
@@ -1498,22 +1502,22 @@ var grouptable = new Vue({
                         // returnData.data = result.page.list;//返回的数据列表
                         // 重新整理返回数据以匹配表格
                         let rows = [];
-                        var i = param.start+1;
+                        var i = param.start + 1;
                         result.page.list.forEach(function (item) {
                             let row = [];
                             row.push(i++);
                             row.push(item.name);
                             row.push(item.remark);
-                            row.push('<a class="fontcolor" onclick="updategroup_this(this)" id='+item.id+'>编辑</a>&nbsp&nbsp;<a class="fontcolor" onclick="deletegroup_this(this)" id='+item.id+'>删除</a>');
+                            row.push('<a class="fontcolor" onclick="updategroup_this(this)" id=' + item.id + '>编辑</a>&nbsp&nbsp;<a class="fontcolor" onclick="deletegroup_this(this)" id=' + item.id + '>删除</a>');
                             rows.push(row);
                         });
                         returnData.data = rows;
                         //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);
-                        $("#Section").on("click",function(){
+                        $("#Section").on("click", function () {
                             $("#probegroup_table").colResizable({
-                                minWidth:40,
+                                minWidth: 40,
                             });
                         })
 

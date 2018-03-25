@@ -3,7 +3,7 @@
 
 <mapper namespace="io.cem.modules.cem.dao.RecordHourGameDao">
 
-	<!-- 可根据自己的需求，是否要使用 -->
+    <!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="io.cem.modules.cem.entity.RecordHourGameEntity" id="recordHourGameMap">
         <result property="id" column="id"/>
         <result property="cityId" column="city_id"/>
@@ -22,34 +22,34 @@
         <result property="packetJitter" column="packet_jitter"/>
         <result property="lossRate" column="loss_rate"/>
         <result property="remark" column="remark"/>
-		<result property="cityName" column="city_name"/>
-		<result property="areaName" column="area_name"/>
-		<result property="probeName" column="probe_name"/>
-		<result property="targetName" column="target_name"/>
-		<result property="fail" column="fail"/>
-		<result property="total" column="total"/>
+        <result property="cityName" column="city_name"/>
+        <result property="areaName" column="area_name"/>
+        <result property="probeName" column="probe_name"/>
+        <result property="targetName" column="target_name"/>
+        <result property="fail" column="fail"/>
+        <result property="total" column="total"/>
     </resultMap>
 
-	<select id="queryObject" resultType="io.cem.modules.cem.entity.RecordHourGameEntity">
+    <select id="queryObject" resultType="io.cem.modules.cem.entity.RecordHourGameEntity">
 		select * from record_hour_game where id = #{value}
 	</select>
 
-	<select id="queryList" resultType="io.cem.modules.cem.entity.RecordHourGameEntity">
-		select * from record_hour_game
+    <select id="queryList" resultType="io.cem.modules.cem.entity.RecordHourGameEntity">
+        select * from record_hour_game
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
                 order by ${sidx} ${order}
             </when>
-			<otherwise>
+            <otherwise>
                 order by id desc
-			</otherwise>
+            </otherwise>
         </choose>
-		<if test="offset != null and limit != null">
-			limit #{offset}, #{limit}
-		</if>
-	</select>
-	
- 	<select id="queryTotal" resultType="int">
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="queryTotal" resultType="int">
 		select count(*) from record_hour_game 
 	</select>
 
@@ -168,7 +168,7 @@
 		</if>
 		GROUP BY record_hour_game.city_id,record_hour_game.county_id,record_hour_game.service_type
 
-	</select>
+    </select>
 
 	<select id="queryDayList" resultType="io.cem.modules.cem.entity.RecordHourGameEntity">
 		select game.id,game.city_id,game.county_id,game.probe_id,game.port,game.task_id,game.service_type,game.target_id,game.target_ip,game.record_date,game.remark,
@@ -206,87 +206,93 @@
 			AND game.probe_id = #{probe_id}
 		</if>
 		GROUP BY game.city_id,game.county_id,game.service_type,game.probe_id,date_format(game.record_date,'%Y-%m-%d'),time_format(game.record_time, '%H')
+    </select>
 
-	</select>
+    <!--根据统计粒度查询小时表-->
+    <select id="queryIntervalList" resultType="io.cem.modules.cem.entity.RecordHourGameEntity">
+        select
+        rhp.id,rhp.probe_id,rhp.port,rhp.task_id,rhp.service_type,rhp.target_id,rhp.target_ip,rhp.record_date,rhp.remark,
+        probe.probe_name AS probe_name,
+        task.task_name AS task_name,
+        target.target_name AS target_name,
+        target.value AS targetip_name,
+        floor(time_format(record_time, '%H')/#{interval}) AS rt,
+        concat('从',floor(time_format(record_time, '%H')/#{interval})*#{interval},'点至',floor(time_format(record_time,
+        '%H')/#{interval})*#{interval}+#{interval},'点') AS record_time,
+        round(AVG(rhp.dns_delay),2) AS dns_delay,
+        round(AVG(rhp.conn_delay),2) AS conn_delay,
+        round(AVG(rhp.packet_delay),2) AS packet_delay,
+        round(AVG(rhp.packet_jitter),2) AS packet_jitter,
+        round(AVG(rhp.loss_rate),2) AS loss_rate,
+        d.data_name AS servicetype_name
+        FROM record_hour_game rhp
+        INNER JOIN probe
+        ON rhp.probe_id = probe.id
+        INNER JOIN task
+        ON rhp.task_id = task.id
+        INNER JOIN target
+        ON rhp.target_id = target.id
+        LEFT JOIN dic_data d
+        ON (d.dic_type_id = 5 AND rhp.service_type = d.data_id)
+        WHERE
+        rhp.service_type = #{service_type}
+        AND rhp.record_date BETWEEN #{startDate} AND #{terminalDate}
+        AND rhp.record_time BETWEEN #{start_time} AND #{end_time}
+        <if test="task_id != null and task_id != ''">
+            AND rhp.task_id = #{task_id}
+        </if>
+        <if test="target_id != null and target_id != ''">
+            AND rhp.target_id = #{target_id}
+        </if>
+        <if test="probe_id != null and probe_id != ''">
+            AND rhp.probe_id = #{probe_id}
+        </if>
+        GROUP BY
+        rhp.service_type,rhp.target_id,rhp.task_id,rhp.probe_id,date_format(rhp.record_date,'%Y-%m-%d'),rt
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                ORDER BY ${sidx} ${order}
+            </when>
+            <otherwise>
+                ORDER BY record_date DESC,rt DESC
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
 
-	<!--根据统计粒度查询小时表-->
-	<select id="queryIntervalList" resultType="io.cem.modules.cem.entity.RecordHourGameEntity">
-		select
-		rhp.id,rhp.probe_id,rhp.port,rhp.task_id,rhp.service_type,rhp.target_id,rhp.target_ip,rhp.record_date,rhp.remark,
-		probe.probe_name AS probe_name,
-		task.task_name AS task_name,
-		target.target_name AS target_name,
-		target.value AS targetip_name,
-		floor(time_format(record_time, '%H')/#{interval}) AS rt,
-		concat('从',floor(time_format(record_time, '%H')/#{interval})*#{interval},'点至',floor(time_format(record_time,
-		'%H')/#{interval})*#{interval}+#{interval},'点') AS record_time,
-		round(AVG(rhp.dns_delay),2) AS dns_delay,
-		round(AVG(rhp.conn_delay),2) AS conn_delay,
-		round(AVG(rhp.packet_delay),2) AS packet_delay,
-		round(AVG(rhp.packet_jitter),2) AS packet_jitter,
-		round(AVG(rhp.loss_rate),2) AS loss_rate,
-		d.data_name AS servicetype_name
-		FROM record_hour_game rhp
-		INNER JOIN probe
-		ON rhp.probe_id = probe.id
-		INNER JOIN task
-		ON rhp.task_id = task.id
-		INNER JOIN target
-		ON rhp.target_id = target.id
-		LEFT JOIN dic_data d
-		ON (d.dic_type_id = 5 AND rhp.service_type = d.data_id)
-		WHERE
-		rhp.service_type = #{service_type}
-		AND rhp.record_date BETWEEN #{startDate} AND #{terminalDate}
-		AND rhp.record_time BETWEEN #{start_time} AND #{end_time}
-		<if test="task_id != null and task_id != ''">
-			AND rhp.task_id = #{task_id}
-		</if>
-		<if test="target_id != null and target_id != ''">
-			AND rhp.target_id = #{target_id}
-		</if>
-		<if test="probe_id != null and probe_id != ''">
-			AND rhp.probe_id = #{probe_id}
-		</if>
-		GROUP BY
-		rhp.service_type,rhp.target_id,rhp.task_id,rhp.probe_id,date_format(rhp.record_date,'%Y-%m-%d'),rt
-		<choose>
-			<when test="sidx != null and sidx.trim() != ''">
-				ORDER BY ${sidx} ${order}
-			</when>
-			<otherwise>
-				ORDER BY record_date DESC,rt DESC
-			</otherwise>
-		</choose>
-		<if test="offset != null and limit != null">
-			limit #{offset}, #{limit}
-		</if>
-	</select>
+    <select id="queryIntervalTotal" resultType="int">
+        SELECT count(*) FROM (
+        select
+        rhp.id,rhp.probe_id,rhp.port,rhp.task_id,rhp.service_type,rhp.target_id,rhp.target_ip,rhp.record_date,rhp.remark,
+        floor(time_format(record_time, '%H')/#{interval}) AS rt
+        FROM record_hour_game rhp
+        INNER JOIN probe
+        ON rhp.probe_id = probe.id
+        INNER JOIN task
+        ON rhp.task_id = task.id
+        INNER JOIN target
+        ON rhp.target_id = target.id
+        WHERE
+        rhp.service_type = #{service_type}
+        AND rhp.record_date BETWEEN #{startDate} AND #{terminalDate}
+        AND rhp.record_time BETWEEN #{start_time} AND #{end_time}
+        <if test="task_id != null and task_id != ''">
+            AND rhp.task_id = #{task_id}
+        </if>
+        <if test="target_id != null and target_id != ''">
+            AND rhp.target_id = #{target_id}
+        </if>
+        <if test="probe_id != null and probe_id != ''">
+            AND rhp.probe_id = #{probe_id}
+        </if>
+        GROUP BY
+        rhp.service_type,rhp.target_id,rhp.task_id,rhp.probe_id,date_format(rhp.record_date,'%Y-%m-%d'),rt) t
+    </select>
 
-	<select id="queryIntervalTotal" resultType="int">
-		SELECT count(*) FROM (
-		select
-		rhp.id,rhp.probe_id,rhp.port,rhp.task_id,rhp.service_type,rhp.target_id,rhp.target_ip,rhp.record_date,rhp.remark,
-		floor(time_format(record_time, '%H')/#{interval}) AS rt,AVG(rhp.delay) AS delay,
-		FROM record_hour_game rhp
-		WHERE
-		rhp.service_type = #{service_type}
-		AND rhp.record_date BETWEEN #{startDate} AND #{terminalDate}
-		AND rhp.record_time BETWEEN #{start_time} AND #{end_time}
-		<if test="task_id != null and task_id != ''">
-			AND rhp.task_id = #{task_id}
-		</if>
-		<if test="target_id != null and target_id != ''">
-			AND rhp.target_id = #{target_id}
-		</if>
-		<if test="probe_id != null and probe_id != ''">
-			AND rhp.probe_id = #{probe_id}
-		</if>
-		GROUP BY
-		rhp.service_type,rhp.target_id,rhp.task_id,rhp.probe_id,date_format(rhp.record_date,'%Y-%m-%d'),rt) t
-	</select>
-	
-	<insert id="save" parameterType="io.cem.modules.cem.entity.RecordHourGameEntity" useGeneratedKeys="true" keyProperty="id">
+    <insert id="save" parameterType="io.cem.modules.cem.entity.RecordHourGameEntity" useGeneratedKeys="true"
+            keyProperty="id">
 		insert into record_hour_game
 		(
 			`city_id`, 
@@ -326,39 +332,39 @@
 			#{remark}
 		)
 	</insert>
-	 
-	<update id="update" parameterType="io.cem.modules.cem.entity.RecordHourGameEntity">
-		update record_hour_game 
-		<set>
-			<if test="cityId != null">`city_id` = #{cityId}, </if>
-			<if test="countyId != null">`county_id` = #{countyId}, </if>
-			<if test="probeId != null">`probe_id` = #{probeId}, </if>
-			<if test="port != null">`port` = #{port}, </if>
-			<if test="taskId != null">`task_id` = #{taskId}, </if>
-			<if test="serviceType != null">`service_type` = #{serviceType}, </if>
-			<if test="targetId != null">`target_id` = #{targetId}, </if>
-			<if test="targetIp != null">`target_ip` = #{targetIp}, </if>
-			<if test="recordDate != null">`record_date` = #{recordDate}, </if>
-			<if test="recordTime != null">`record_time` = #{recordTime}, </if>
-			<if test="dnsDelay != null">`dns_delay` = #{dnsDelay}, </if>
-			<if test="connDelay != null">`conn_delay` = #{connDelay}, </if>
-			<if test="packetDelay != null">`packet_delay` = #{packetDelay}, </if>
-			<if test="packetJitter != null">`packet_jitter` = #{packetJitter}, </if>
-			<if test="lossRate != null">`loss_rate` = #{lossRate}, </if>
-			<if test="remark != null">`remark` = #{remark}</if>
-		</set>
-		where id = #{id}
-	</update>
-	
-	<delete id="delete">
+
+    <update id="update" parameterType="io.cem.modules.cem.entity.RecordHourGameEntity">
+        update record_hour_game
+        <set>
+            <if test="cityId != null">`city_id` = #{cityId},</if>
+            <if test="countyId != null">`county_id` = #{countyId},</if>
+            <if test="probeId != null">`probe_id` = #{probeId},</if>
+            <if test="port != null">`port` = #{port},</if>
+            <if test="taskId != null">`task_id` = #{taskId},</if>
+            <if test="serviceType != null">`service_type` = #{serviceType},</if>
+            <if test="targetId != null">`target_id` = #{targetId},</if>
+            <if test="targetIp != null">`target_ip` = #{targetIp},</if>
+            <if test="recordDate != null">`record_date` = #{recordDate},</if>
+            <if test="recordTime != null">`record_time` = #{recordTime},</if>
+            <if test="dnsDelay != null">`dns_delay` = #{dnsDelay},</if>
+            <if test="connDelay != null">`conn_delay` = #{connDelay},</if>
+            <if test="packetDelay != null">`packet_delay` = #{packetDelay},</if>
+            <if test="packetJitter != null">`packet_jitter` = #{packetJitter},</if>
+            <if test="lossRate != null">`loss_rate` = #{lossRate},</if>
+            <if test="remark != null">`remark` = #{remark}</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="delete">
 		delete from record_hour_game where id = #{value}
 	</delete>
-	
-	<delete id="deleteBatch">
-		delete from record_hour_game where id in 
-		<foreach item="id" collection="array" open="(" separator="," close=")">
-			#{id}
-		</foreach>
-	</delete>
+
+    <delete id="deleteBatch">
+        delete from record_hour_game where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
 
 </mapper>

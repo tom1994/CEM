@@ -311,6 +311,7 @@ public class RecordHourWebPageServiceImpl implements RecordHourWebPageService {
 				finalScore.setTargetId(webPageList.get(i).getTargetId());
 				finalScore.setTargetName(webPageList.get(i).getTargetName());
 				finalScore.setRecordTime(webPageList.get(i).getRecordTime());
+				finalScore.setAccessLayer(webPageList.get(i).getAccessLayer());
 				finalScore.setRecordDate(webPageList.get(i).getRecordDate());
 				finalScore.setWebpageDnsDelay(webPageList.get(i).getDnsDelay());
 				finalScore.setWebpageConnDelay(webPageList.get(i).getConnDelay());

@@ -345,7 +345,4 @@ public class RecordGameEntity implements Serializable {
 	/**
 	 * 获取：备注
 	 */
-	public String getRemark() {
-		return remark;
-	}
 }

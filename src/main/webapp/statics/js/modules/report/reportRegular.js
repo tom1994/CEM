@@ -173,7 +173,6 @@ var queryArea = function (cityid) {
         dataType: "json",
         contentType: "application/json",
         success: function (result) {
-            debugger
             var areaNames_detail = new Array();
             for(var i=0;i<result.county.length;i++){
                 areaNames_detail[i] = {message: result.county[i]}

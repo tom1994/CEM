@@ -53,6 +53,8 @@ public class RecordDayWebPageEntity implements Serializable {
 	private Double pageElementDelay;
 	//下载速率
 	private Double downloadRate;
+
+	private Double loadDelay;
 	//备注
 	private String remark;
 	private Integer fail;
@@ -314,5 +316,13 @@ public class RecordDayWebPageEntity implements Serializable {
 	 */
 	public String getRemark() {
 		return remark;
+	}
+
+	public Double getLoadDelay() {
+		return loadDelay;
+	}
+
+	public void setLoadDelay(Double loadDelay) {
+		this.loadDelay = loadDelay;
 	}
 }

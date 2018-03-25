@@ -1614,6 +1614,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 			finalScore.setServiceType(1);
 			finalScore.setTargetId(ite.getTargetId());
 			finalScore.setTargetName(ite.getTargetName());
+			finalScore.setAccessLayer(ite.getAccessLayer());
 			finalScore.setRecordDate(ite.getRecordDate());
 			finalScore.setRecordTime(ite.getRecordTime());
 			finalScore.setScore(connection.get(ite).getScore());
@@ -1673,6 +1674,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 			finalScore.setServiceType(1);
 			finalScore.setTargetId(ite.getTargetId());
 			finalScore.setTargetName(ite.getTargetName());
+			finalScore.setAccessLayer(ite.getAccessLayer());
 			finalScore.setRecordDate(ite.getRecordDate());
 			finalScore.setRecordTime(ite.getRecordTime());
 			finalScore.setScore(connection.get(ite).getScore());
@@ -1732,6 +1734,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 			finalScore.setServiceType(1);
 			finalScore.setTargetId(ite.getTargetId());
 			finalScore.setTargetName(ite.getTargetName());
+			finalScore.setAccessLayer(ite.getAccessLayer());
 			finalScore.setRecordDate(ite.getRecordDate());
 			finalScore.setRecordTime(ite.getRecordTime());
 			finalScore.setScore(connection.get(ite).getScore());

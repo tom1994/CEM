@@ -68,8 +68,8 @@
         <if test="group_id != null and group_id != ''">
             AND target.group_id = #{group_id}
         </if>
-        <if test="superservice_type != null and superservice_type != ''">
-            AND target.superservice_type = #{superservice_type}
+        <if test="superservice_type != null and superservice_type != '' or superservice_type == 0">
+        AND target.superservice_type = #{superservice_type}
         </if>
     </select>
 
@@ -86,9 +86,10 @@
         <if test="group_id != null and group_id != ''">
             AND target.group_id = #{group_id}
         </if>
-        <if test="superservice_type != null and superservice_type != ''">
+        <if test="superservice_type != null and superservice_type != '' or superservice_type == 0">
             AND target.superservice_type = #{superservice_type}
         </if>
+
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
                 order by ${sidx} ${order}

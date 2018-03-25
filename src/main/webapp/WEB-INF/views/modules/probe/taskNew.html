@@ -35,6 +35,9 @@
         }
         .clear::-ms-clear { display: none;}
         .clear::-ms-reveal { display: none;}
+        .modal-open .modal{
+            overflow-y: hidden;
+        }
     </style>
 </head>
 <body>
@@ -60,9 +63,9 @@
     </div>
     <!--任务分配数查询模态框-->
     <div class="modal fade" id="myModal_dispatch" tabindex="-1" role="dialog"
-         aria-labelledby="myModalLabel" aria-hidden="" true>
+         aria-labelledby="myModalLabel" aria-hidden="" true >
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content"style="width: 800px;">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                         &times;

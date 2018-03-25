@@ -58,6 +58,8 @@ public class RecordWebPageEntity implements Serializable {
 
 	private String probeName;
 
+	private Double loadDelay;
+
 	private String targetName;
 
 	private String taskName;
@@ -389,5 +391,13 @@ public class RecordWebPageEntity implements Serializable {
 	 */
 	public String getRemark() {
 		return remark;
+	}
+
+	public Double getLoadDelay() {
+		return loadDelay;
+	}
+
+	public void setLoadDelay(Double loadDelay) {
+		this.loadDelay = loadDelay;
 	}
 }

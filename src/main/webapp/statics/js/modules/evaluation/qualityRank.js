@@ -121,7 +121,7 @@ var area_data = new Vue({
 });
 
 var getArea = function (cityid) {
-    countrySeleted=0
+    countrySeleted=0;
     $.ajax({
         url: "../../cem/county/info/"+cityid,
         type: "POST",
@@ -158,11 +158,11 @@ var getArea = function (cityid) {
             }, 50);
         }
     });
-}
+};
 
 var getService = function (serviceId) {
     console.log("I'm here!!!!"+serviceId);
-    targetSelected=0
+    targetSelected=0;
     $.ajax({
         url: "../../target/infobat/"+serviceId,
         type: "POST", /*GET会乱码*/
