@@ -122,10 +122,6 @@ public class DiagnoseController {
                             scoreList = recordHourPingService.probeChart1(scoreList);
                         }
                     } else if (service == 3) {
-<<<<<<< HEAD
-=======
-                        //网络浏览类业务代码为4
->>>>>>> e27280179d11e6ffa3136e903a7973b163a868d9
                         List<RecordHourWebPageEntity> webPageList = recordHourWebPageService.queryDayList(map);
                         scoreList.addAll(recordHourWebPageService.calculateService3(webPageList));
                         if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
@@ -136,10 +132,6 @@ public class DiagnoseController {
                             scoreList = recordHourPingService.probeChart1(scoreList);
                         }
                     } else if (service == 4) {
-<<<<<<< HEAD
-=======
-                        //网络下载类业务代码为3
->>>>>>> e27280179d11e6ffa3136e903a7973b163a868d9
                         List<RecordHourWebDownloadEntity> webDownloadList = recordHourWebDownloadService.queryDayList(map);
                         List<RecordHourFtpEntity> ftpList = recordHourFtpService.queryDayList(map);
                         List<ScoreEntity> webDownload = recordHourWebDownloadService.calculateWebDownload(webDownloadList);
