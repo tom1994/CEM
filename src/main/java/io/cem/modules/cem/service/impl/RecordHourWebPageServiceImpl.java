@@ -45,6 +45,16 @@ public class RecordHourWebPageServiceImpl implements RecordHourWebPageService {
 	}
 
 	@Override
+	public List<RecordHourWebPageEntity> queryWebAreaList(Map<String, Object> map){
+		return recordHourWebPageDao.queryWebList(map);
+	}
+
+	@Override
+	public List<RecordHourWebPageEntity> queryWebRankList(Map<String, Object> map){
+		return recordHourWebPageDao.queryWebRankList(map);
+	}
+
+	@Override
 	public List<RecordHourWebPageEntity> queryDayList(Map<String, Object> map){
 		return recordHourWebPageDao.queryDayList(map);
 	}
@@ -297,11 +307,19 @@ public class RecordHourWebPageServiceImpl implements RecordHourWebPageService {
 				finalScore.setCountyName(webPageList.get(i).getAreaName());
 				finalScore.setProbeId(webPageList.get(i).getProbeId());
 				finalScore.setProbeName(webPageList.get(i).getProbeName());
-				finalScore.setServiceType(4);
+				finalScore.setServiceType(3);
 				finalScore.setTargetId(webPageList.get(i).getTargetId());
 				finalScore.setTargetName(webPageList.get(i).getTargetName());
 				finalScore.setRecordTime(webPageList.get(i).getRecordTime());
 				finalScore.setRecordDate(webPageList.get(i).getRecordDate());
+				finalScore.setWebpageDnsDelay(webPageList.get(i).getDnsDelay());
+				finalScore.setWebpageConnDelay(webPageList.get(i).getConnDelay());
+				finalScore.setWebpageHeadbyteDelay(webPageList.get(i).getHeadbyteDelay());
+				finalScore.setWebpagePageFileDelay(webPageList.get(i).getPageFileDelay());
+				finalScore.setWebpageRedirectDelay(webPageList.get(i).getRedirectDelay());
+				finalScore.setWebpageAboveFoldDelay(webPageList.get(i).getAboveFoldDelay());
+				finalScore.setWebpagePageElementDelay(webPageList.get(i).getPageElementDelay());
+				finalScore.setWebpageDownloadRate(webPageList.get(i).getDownloadRate());
 				finalScore.setFail(webPageList.get(i).getFail());
 				finalScore.setTotal(webPageList.get(i).getTotal());
 				finalScore.setScore(score*(1-(webPageList.get(i).getFail()/webPageList.get(i).getTotal())));

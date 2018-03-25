@@ -184,6 +184,10 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 				WEBDL.setTargetId(webDownloadList.get(i).getTargetId());
 				WEBDL.setRecordDate(webDownloadList.get(i).getRecordDate());
 				WEBDL.setRecordTime(webDownloadList.get(i).getRecordTime());
+				WEBDL.setWebDownloadDnsDelay(webDownloadList.get(i).getDnsDelay());
+				WEBDL.setWebDownloadConnDelay(webDownloadList.get(i).getConnDelay());
+				WEBDL.setWebDownloadHeadbyteDelay(webDownloadList.get(i).getHeadbyteDelay());
+				WEBDL.setWebDownloadDownloadRate(webDownloadList.get(i).getDownloadRate());
 				WEBDL.setFail(webDownloadList.get(i).getFail());
 				WEBDL.setTotal(webDownloadList.get(i).getTotal());
 				WEBDL.setScore(score);
@@ -364,6 +368,11 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 					FTPD.setTargetId(ftpList.get(i).getTargetId());
 					FTPD.setRecordTime(ftpList.get(i).getRecordTime());
 					FTPD.setRecordDate(ftpList.get(i).getRecordDate());
+					FTPD.setFtpDownloadDnsDelay(ftpList.get(i).getDnsDelay());
+					FTPD.setFtpDownloadConnDelay(ftpList.get(i).getConnDelay());
+					FTPD.setFtpDownloadLoginDelay(ftpList.get(i).getLoginDelay());
+					FTPD.setFtpDownloadHeadbyteDelay(ftpList.get(i).getHeadbyteDelay());
+					FTPD.setFtpDownloadDownloadRate(ftpList.get(i).getDownloadRate());
 					FTPD.setFail(ftpList.get(i).getFail());
 					FTPD.setTotal(ftpList.get(i).getTotal());
 					FTPD.setScore(score);
@@ -544,6 +553,11 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 					FTPU.setTargetId(ftpList.get(i).getTargetId());
 					FTPU.setRecordTime(ftpList.get(i).getRecordTime());
 					FTPU.setRecordDate(ftpList.get(i).getRecordDate());
+					FTPU.setFtpUploadDnsDelay(ftpList.get(i).getDnsDelay());
+					FTPU.setFtpUploadConnDelay(ftpList.get(i).getConnDelay());
+					FTPU.setFtpUploadLoginDelay(ftpList.get(i).getLoginDelay());
+					FTPU.setFtpUploadHeadbyteDelay(ftpList.get(i).getHeadbyteDelay());
+					FTPU.setFtpUploadUploadRate(ftpList.get(i).getUploadRate());
 					FTPU.setFail(ftpList.get(i).getFail());
 					FTPU.setTotal(ftpList.get(i).getTotal());
 					FTPU.setScore(score);
@@ -562,7 +576,7 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 		RecordHourPingServiceImpl pingService = new RecordHourPingServiceImpl();
 		try{
 			PropertiesUtils pros = new PropertiesUtils();
-			Map<ScoreTargetEntity, ScoreBaseEntity> connection = new HashMap<>();
+			Map<ScoreTargetEntity,Map<String,ScoreBaseEntity>> connection= new HashMap<>();
 			for (int i = 0; i < webDownload.size(); i++) {
 				ScoreTargetEntity scoreTarget = new ScoreTargetEntity();
 				scoreTarget.setCityId(webDownload.get(i).getCityId());
@@ -578,12 +592,18 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 				scoreTarget.setFail(webDownload.get(i).getFail());
 				scoreTarget.setTotal(webDownload.get(i).getTotal());
 				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
+				scoreBase.setWebDownloadDnsDelay(webDownload.get(i).getWebDownloadDnsDelay());
+				scoreBase.setWebDownloadConnDelay(webDownload.get(i).getWebDownloadConnDelay());
+				scoreBase.setWebDownloadHeadbyteDelay(webDownload.get(i).getWebDownloadHeadbyteDelay());
+				scoreBase.setWebDownloadDownloadRate(webDownload.get(i).getWebDownloadDownloadRate());
 				scoreBase.setScore((webDownload.get(i).getScore()) * (webDownload.get(i).getBase()));
 				scoreBase.setBase(webDownload.get(i).getBase());
-				connection.put(scoreTarget, scoreBase);
+				Map<String,ScoreBaseEntity> webdownload = new HashMap<>();
+				webdownload.put("webDownload",scoreBase);
+				connection.put(scoreTarget,webdownload);
 			}
-	//		connection=pingService.putMap(ftpDownload,connection,"ftpDownload");
-	//		connection=pingService.putMap(ftpUpload,connection,"ftpUpload");
+			connection=pingService.putMap(ftpDownload,connection,"ftpDownload");
+			connection=pingService.putMap(ftpUpload,connection,"ftpUpload");
 
 			System.out.println("MAP:"+connection);
 
@@ -601,12 +621,42 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 					finalScore.setCountyName(ite.getCountyName());
 					finalScore.setProbeId(ite.getProbeId());
 					finalScore.setProbeName(ite.getProbeName());
-					finalScore.setServiceType(3);
+					finalScore.setServiceType(4);
 					finalScore.setTargetId(ite.getTargetId());
 					finalScore.setTargetName(ite.getTargetName());
 					finalScore.setRecordTime(ite.getRecordTime());
 					finalScore.setRecordDate(ite.getRecordDate());
-					finalScore.setScore(((connection.get(ite).getScore()) / (connection.get(ite).getBase()))*(1-(ite.getFail())/ite.getTotal()));
+					finalScore.setScore(0.0);
+					finalScore.setBase(0.0);
+					Map<String, ScoreBaseEntity> map1 = connection.get(ite);
+					Set<String> keyType = map1.keySet();
+					Iterator<String> iterator1 = keyType.iterator();
+					int i=1;
+					while(iterator1.hasNext()) {
+						String typ = iterator1.next();
+						if (typ.equals("webDownload")) {
+							finalScore.setWebDownloadDnsDelay(map1.get(typ).getWebDownloadDnsDelay());
+							finalScore.setWebDownloadConnDelay(map1.get(typ).getWebDownloadConnDelay());
+							finalScore.setWebDownloadHeadbyteDelay(map1.get(typ).getWebDownloadHeadbyteDelay());
+							finalScore.setWebDownloadDownloadRate(map1.get(typ).getWebDownloadDownloadRate());
+						}else if(typ.equals("ftpDownload")){
+							finalScore.setFtpDownloadDnsDelay(map1.get(typ).getFtpDownloadDnsDelay());
+							finalScore.setFtpDownloadConnDelay(map1.get(typ).getFtpDownloadConnDelay());
+							finalScore.setFtpDownloadLoginDelay(map1.get(typ).getFtpDownloadLoginDelay());
+							finalScore.setFtpDownloadHeadbyteDelay(map1.get(typ).getFtpDownloadHeadbyteDelay());
+							finalScore.setFtpDownloadDownloadRate(map1.get(typ).getFtpDownloadDownloadRate());
+						}else if(typ.equals("ftpUpload")){
+							finalScore.setFtpUploadDnsDelay(map1.get(typ).getFtpUploadDnsDelay());
+							finalScore.setFtpUploadConnDelay(map1.get(typ).getFtpUploadConnDelay());
+							finalScore.setFtpUploadLoginDelay(map1.get(typ).getFtpUploadLoginDelay());
+							finalScore.setFtpUploadHeadbyteDelay(map1.get(typ).getFtpUploadHeadbyteDelay());
+							finalScore.setFtpUploadUploadRate(map1.get(typ).getFtpUploadUploadRate());
+						}else{}
+						finalScore.setScore(finalScore.getScore() + (map1.get(typ).getScore()) * (map1.get(typ).getBase()));
+						finalScore.setBase(finalScore.getBase()+map1.get(typ).getBase());
+						i++;
+					}
+					finalScore.setScore(finalScore.getScore()/finalScore.getBase());
 					finalScore.setBase(Double.parseDouble(pros.getValue("downloadweight")));
 					connectionScore.add(finalScore);
 				} catch (IOException e) {}

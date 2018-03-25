@@ -88,6 +88,8 @@ public class ReportPolicyController {
 		map.put("service_type",detail.getServiceType());
 		map.put("start_time",detail.getStartTime());
 		map.put("end_time",detail.getEndTime());
+		map.put("startDate",reportdata[1]);
+		map.put("terminalDate",reportdata[2]);
 
 		if (queryType== 1) {
 			if(service == 1||service==2||service==3){
@@ -104,7 +106,7 @@ public class ReportPolicyController {
 
 		} else {
 			map.put("interval",detail.getInterval());
-			if(service == 01||service==2||service==3){
+			if(service == 1||service==2||service==3){
 				List<RecordHourPingEntity> list = recordPingService.queryIntervalList(map);
 				CollectionToFile.collectionToFile(response, list, RecordHourPingEntity.class);
 			}else if(service==4||service==5){

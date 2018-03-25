@@ -1813,6 +1813,18 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 			}else if(type.equals("radius")){
 				scoreBase.setRadiusDelay(list.get(i).getRadiusDelay());
 				scoreBase.setRadiusSuccessRate(list.get(i).getRadiusSuccessRate());
+			}else if(type.equals("ftpDownload")){
+				scoreBase.setFtpDownloadDnsDelay(list.get(i).getFtpDownloadDnsDelay());
+				scoreBase.setFtpDownloadConnDelay(list.get(i).getFtpDownloadConnDelay());
+				scoreBase.setFtpDownloadLoginDelay(list.get(i).getFtpDownloadLoginDelay());
+				scoreBase.setFtpDownloadHeadbyteDelay(list.get(i).getFtpDownloadHeadbyteDelay());
+				scoreBase.setFtpDownloadDownloadRate(list.get(i).getFtpDownloadDownloadRate());
+			}else if(type.equals("ftpUpload")){
+				scoreBase.setFtpUploadDnsDelay(list.get(i).getFtpUploadDnsDelay());
+				scoreBase.setFtpUploadConnDelay(list.get(i).getFtpUploadConnDelay());
+				scoreBase.setFtpUploadLoginDelay(list.get(i).getFtpUploadLoginDelay());
+				scoreBase.setFtpUploadHeadbyteDelay(list.get(i).getFtpUploadHeadbyteDelay());
+				scoreBase.setFtpUploadUploadRate(list.get(i).getFtpUploadUploadRate());
 			}else{}
 			scoreBase.setScore(list.get(i).getScore());
 			scoreBase.setBase(list.get(i).getBase());

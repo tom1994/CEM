@@ -1,12 +1,10 @@
 package io.cem.modules.cem.controller;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
-
 import com.alibaba.fastjson.JSONObject;
 import io.cem.common.exception.RRException;
 import io.cem.common.utils.JSONUtils;
+import io.cem.common.utils.PageUtils;
+import io.cem.common.utils.R;
 import io.cem.modules.cem.entity.*;
 import io.cem.modules.cem.service.*;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -14,12 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.cem.common.utils.PageUtils;
-import io.cem.common.utils.Query;
-import io.cem.common.utils.R;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 
 /**
@@ -156,11 +153,11 @@ public class RecordHourTracertController {
 				List<ScoreEntity> radius = recordHourSlaService.calculateRadius(radiusList);
 				scoreList = recordHourSlaService.calculateArea2(slaTcp,slaUdp,dns,dhcp,pppoe,radius);
 			}
-			else if (service==4){
+			else if (service==3){
 				List<RecordHourWebPageEntity> webPageList = recordHourWebPageService.queryDayList(map);
 				scoreList = recordHourWebPageService.calculateService3(webPageList);
 			}
-			else if (service==3){
+			else if (service==4){
 				List<RecordHourWebDownloadEntity> webDownloadList = recordHourWebDownloadService.queryDayList(map);
 				List<RecordHourFtpEntity> ftpList = recordHourFtpService.queryDayList(map);
 				List<ScoreEntity> webDownload = recordHourWebDownloadService.calculateWebDownload(webDownloadList);
@@ -229,7 +226,7 @@ public class RecordHourTracertController {
 				List<ScoreEntity> pingUdp = recordHourPingService.calculatePingUdp(pingList);
 				List<ScoreEntity> tracertIcmp = recordHourPingService.calculateTracertIcmp(tracertList);
 				List<ScoreEntity> tracertUdp = recordHourPingService.calculateTracertUdp(tracertList);
-				scoreList = recordHourPingService.calculateService1(pingIcmp,pingTcp,pingUdp,tracertIcmp,tracertUdp);
+				scoreList = recordHourPingService.calculateArea1(pingIcmp,pingTcp,pingUdp,tracertIcmp,tracertUdp);
 			} else if (service == 2) {
 				List<RecordHourSlaEntity> slaList = recordHourSlaService.querySlaList(map);
 				List<RecordHourDnsEntity> dnsList = recordHourDnsService.queryDnsList(map);
@@ -242,26 +239,32 @@ public class RecordHourTracertController {
 				List<ScoreEntity> dhcp = recordHourSlaService.calculateDhcp(dhcpList);
 				List<ScoreEntity> pppoe = recordHourSlaService.calculatePppoe(pppoeList);
 				List<ScoreEntity> radius = recordHourSlaService.calculateRadius(radiusList);
-				scoreList = recordHourSlaService.calculateService2(slaTcp,slaUdp,dns,dhcp,pppoe,radius);
-			} else if (service == 4) {
-				List<RecordHourWebPageEntity> webPageList = recordHourWebPageService.queryWebList(map);
-				scoreList = recordHourWebPageService.calculateService3(webPageList);
+				scoreList = recordHourSlaService.calculateArea2(slaTcp,slaUdp,dns,dhcp,pppoe,radius);
 			} else if (service == 3) {
+				List<RecordHourWebPageEntity> webPageList = recordHourWebPageService.queryWebAreaList(map);
+				scoreList = recordHourWebPageService.calculateService3(webPageList);
+			} else if (service == 4) {
 				List<RecordHourWebDownloadEntity> webDownloadList = recordHourWebDownloadService.queryWebDownloadList(map);
 				List<RecordHourFtpEntity> ftpList = recordHourFtpService.queryFtpList(map);
 				List<ScoreEntity> webDownload = recordHourWebDownloadService.calculateWebDownload(webDownloadList);
 				List<ScoreEntity> ftpDownload = recordHourWebDownloadService.calculateFtpDownload(ftpList);
 				List<ScoreEntity> ftpUpload = recordHourWebDownloadService.calculateFtpUpload(ftpList);
-				scoreList = recordHourWebDownloadService.calculateService4(webDownload,ftpDownload,ftpUpload);
+				scoreList = recordHourWebDownloadService.calculateArea4(webDownload,ftpDownload,ftpUpload);
 			} else if (service == 5) {
-				List<RecordHourWebVideoEntity> videoList = recordHourWebVideoService.queryVideoList(map);
+				List<RecordHourWebVideoEntity> videoList = recordHourWebVideoService.queryVideoAreaList(map);
 				scoreList = recordHourWebVideoService.calculateService5(videoList);
 			} else if (service == 6) {
-				List<RecordHourGameEntity> gameList = recordHourGameService.queryGameList(map);
+				List<RecordHourGameEntity> gameList = recordHourGameService.queryGameAreaList(map);
 				scoreList = recordHourGameService.calculateService6(gameList);
 			} else {
 			}
 		}
+
+		if(map.get("target_id")==null){
+			for(int i=0;i<scoreList.size();i++){
+				scoreList.get(i).setTargetName("");
+			}
+		}else{}
 
 		int total = 0;
 		if(page==null) {              /*没有传入page,则取全部值*/

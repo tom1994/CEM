@@ -3,7 +3,7 @@ var idArray = new Array();
 var reportdata = new Array();
 var names = new Array();
 var cityNames = new Array();var names = new Array();
-
+var obj;
 var st = new Map();//servicetype字典，可通过get方法查对应字符串。
 st.set(0, "综合业务");
 st.set(1, "网络连通性业务");
@@ -59,8 +59,8 @@ var spdata_handle = new Vue({
             /*去除只读状态*/
             $('#spform_data select').prop("disabled", false);
 
-           // for (var i = 0; i <6; i++) {
-             //   forms[i].value = "";
+            // for (var i = 0; i <6; i++) {
+            //   forms[i].value = "";
             //}
             spform_data.modaltitle = "新建报表";
             /*修改模态框标题*/
@@ -68,6 +68,7 @@ var spdata_handle = new Vue({
         }
     }
 });
+
 
 var spform_data = new Vue({
     el: '#myModal_sp',
@@ -109,10 +110,8 @@ var spform_data = new Vue({
                 toastr.warning("选择的起始时间有误,请正确选择!")
             } else {
                 spJson.createTime = new Date().Format("yyyy-MM-dd hh:mm:ss");//获取日期与时间
-                spJson.endTime=spJson.endTime+":00"
-                spJson.startTime=spJson.startTime+":00"
                 if(spJson.interval==""){
-                    spJson.queryType="0";
+                    spJson.queryType="1";
                 }else {
                     spJson.queryType='0';
                 }
@@ -220,46 +219,23 @@ function getProbeCity(cityid) {
     })
 };
 
-function downloadShow(obj) {
-    $('#myModal_download').modal('show');
-    reportdata[0]=obj.id;
-    console.log(reportdata[0]);
-    document.getElementById(download).href = encodeURI('../../reportpolicy/download/'+reportdata);
-
-}
-
-var download_data = new Vue({
-    el: '#myModal_download',
-    data: {
-        id: null
-    },
-    methods: {
-        show_Modal: function () {
-            $(this.$el).modal('show');
-            /*弹出确认模态框*/
-        },
-        close_modal: function (obj) {
-            $(this.$el).modal('hide');
-
-        },
-        cancel_delete: function () {
-
-        },
-
-    }
-});
-
 //download
-function download_this(obj) {
-    var id=parseInt(obj.id);
-   // console.log(obj.id);
-    reportdata[0]=id;
-   // reportdata[1]="201803";
-   // reportdata[2]="20180320";
-   // $('#download+obj.id').attr('href','../../cem/probe/download/'+id);
-    document.getElementById(download+obj.id).href = encodeURI('../../reportpolicy/download/'+reportdata);
-    document.getElementById(download+obj.id).click();
-   // $("#download+obj.id").trigger("click");
+function download_this() {
+    var id = $("#SaveId").val();
+    reportdata[0] = id;
+    var spJson = getFormJson($('#download_form'));
+    console.log(spJson);
+    if(spJson.Select_date!=null){
+        var year=transString(spJson.Select_date,0,4);
+        var month=transString(spJson.Select_date,5,5);
+        console.log(month);
+        reportdata[1] = spJson.Select_date;
+        reportdata[2] = spJson.Select_date;
+    }else{}
+    // $('#download+obj.id').attr('href','../../cem/probe/download/'+id);
+    document.getElementById(download+id).href = encodeURI('../../reportpolicy/download/'+reportdata);
+    document.getElementById(download+id).click();
+    // $("#download+obj.id").trigger("click");
 }
 
 
@@ -365,6 +341,27 @@ var delete_data = new Vue({
     }
 });
 
+var download_data = new Vue({
+    el: '#myModal_download',
+    data: {
+        id: null
+    },
+    methods: {
+        show_Modal: function () {
+            $(this.$el).modal('show');
+            /*弹出确认模态框*/
+        },
+        close_modal: function (obj) {
+            $(this.$el).modal('hide');
+
+        },
+        cancel_delete: function () {
+
+        },
+
+    }
+});
+
 function transString(string,i,j) {
     if(string ==null) {
         return "";
@@ -373,7 +370,6 @@ function transString(string,i,j) {
         return string.substr(i,j);
     }
 }
-
 
 var sptable = new Vue({
     el: '#spdata_table',
@@ -385,8 +381,8 @@ var sptable = new Vue({
             {title: '<div style="width:100px">区县</div>'},
             {title: '<div style="width:160px">探针名称</div>'},
             {title: '<div style="width:160px">业务类型</div>'},
-            {title: '<div style="width:100px">开始时间</div>'},
-            {title: '<div style="width:100px">结束时间</div>'},
+            {title: '<div style="width:160px">开始时间</div>'},
+            {title: '<div style="width:160px">结束时间</div>'},
             {title: '<div style="width:50px">时间间隔</div>'},
             {title: '<div style="width:160px">创建时间</div>'},
             {title: '<div style="width:160px">备注</div>'},
@@ -481,13 +477,15 @@ var sptable = new Vue({
                             row.push(item.countyName);
                             row.push(item.probeName);
                             row.push(st.get(item.serviceType));
-                            row.push(transString(item.startTime,11,19));
+                            row.push(transString(item.startTime,11,19))
                             row.push(transString(item.endTime,11,19));
                             row.push(item.interval);
                             row.push(item.createTime)
                             row.push(item.remark);
                             row.push('<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>&nbsp;' +
-                            '<a id='+download+item.id+' href="" ><a class="fontcolor" style="white-space: nowrap" onclick="download_this(this)" id='+item.id+'>下载</a></a>');
+                                '<a id='+download+item.id+' href="" style="display: none">' +
+                                '<a class="fontcolor" style="white-space: nowrap" onclick="downloadShow(this)" id='+item.id+'>下载</a></a>'
+                            );
                             rows.push(row);
                         });
                         returnData.data = rows;
@@ -508,3 +506,9 @@ var sptable = new Vue({
         });
     }
 });
+
+function downloadShow(obj) {
+    $("#SaveId").val(obj.id);
+    $("#SaveId").val(obj.id);
+    $('#myModal_download').modal('show');
+}

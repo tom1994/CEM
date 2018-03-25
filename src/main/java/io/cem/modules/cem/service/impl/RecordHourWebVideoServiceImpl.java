@@ -46,6 +46,16 @@ public class RecordHourWebVideoServiceImpl implements RecordHourWebVideoService 
 	}
 
 	@Override
+	public List<RecordHourWebVideoEntity> queryVideoAreaList(Map<String, Object> map){
+		return recordHourWebVideoDao.queryVideoList(map);
+	}
+
+	@Override
+	public List<RecordHourWebVideoEntity> queryVideoRankList(Map<String, Object> map){
+		return recordHourWebVideoDao.queryVideoRankList(map);
+	}
+
+	@Override
 	public List<RecordHourWebVideoEntity> queryDayList(Map<String, Object> map){
 		return recordHourWebVideoDao.queryDayList(map);
 	}
@@ -333,6 +343,18 @@ public class RecordHourWebVideoServiceImpl implements RecordHourWebVideoService 
 				finalScore.setRecordDate(videoList.get(i).getRecordDate());
 				finalScore.setRecordTime(videoList.get(i).getRecordTime());
 				finalScore.setAccessLayer(videoList.get(i).getAccessLayer());
+				finalScore.setWebVideoDnsDelay(videoList.get(i).getDnsDelay());
+				finalScore.setWebVideoWsConnDelay(videoList.get(i).getWsConnDelay());
+				finalScore.setWebVideoWebPageDelay(videoList.get(i).getWebPageDelay());
+				finalScore.setWebVideoSsConnDelay(videoList.get(i).getSsConnDelay());
+				finalScore.setWebVideoAddressDelay(videoList.get(i).getAddressDelay());
+				finalScore.setWebVideoMsConnDelay(videoList.get(i).getMsConnDelay());
+				finalScore.setWebVideoHeadFrameDelay(videoList.get(i).getHeadFrameDelay());
+				finalScore.setWebVideoInitBufferDelay(videoList.get(i).getInitBufferDelay());
+				finalScore.setWebVideoLoadDelay(videoList.get(i).getLoadDelay());
+				finalScore.setWebVideoTotalBufferDelay(videoList.get(i).getTotalBufferDelay());
+				finalScore.setWebVideoDownloadRate(videoList.get(i).getDownloadRate());
+				finalScore.setWebVideoBufferTime(videoList.get(i).getBufferTime());
 				finalScore.setFail(videoList.get(i).getFail());
 				finalScore.setTotal(videoList.get(i).getTotal());
 				finalScore.setScore(score*(1-(videoList.get(i).getFail()/videoList.get(i).getTotal())));

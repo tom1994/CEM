@@ -88,7 +88,85 @@
 		<if test="probe_id != null and probe_id != ''">
 			AND record_hour_game.probe_id = #{probe_id}
 		</if>
-		GROUP BY record_hour_game.city_id,record_hour_game.county_id,record_hour_game.service_type,record_hour_game.target_id,record_hour_game.probe_id,date_format(record_hour_game.record_date,'%Y-%m-%d'),time_format(record_hour_game.record_time, '%H')
+		GROUP BY record_hour_game.city_id,record_hour_game.county_id,record_hour_game.service_type,record_hour_game.probe_id,date_format(record_hour_game.record_date,'%Y-%m-%d'),time_format(record_hour_game.record_time, '%H')
+
+	</select>
+
+	<select id="queryGameRankList" resultType="io.cem.modules.cem.entity.RecordHourGameEntity">
+		select record_hour_game.id,record_hour_game.city_id,record_hour_game.county_id,record_hour_game.probe_id,record_hour_game.port,record_hour_game.task_id,record_hour_game.service_type,record_hour_game.target_id,record_hour_game.target_ip,record_hour_game.record_date,record_hour_game.remark,
+		city.city_name AS city_name,
+		county.county_name AS area_name,
+		probe.probe_name AS probe_name,
+		target.target_name AS target_name,
+		time_format(record_hour_game.record_time, '%H') AS record_time,
+		AVG(record_hour_game.conn_delay) AS conn_delay,
+		AVG(record_hour_game.packet_delay) AS packet_delay,
+		AVG(record_hour_game.packet_jitter) AS packet_jitter,
+		AVG(record_hour_game.loss_rate) AS loss_rate,
+		SUM(record_hour_game.fail) AS fail,
+		SUM(record_hour_game.total) AS total
+		FROM record_hour_game
+		LEFT JOIN city
+		ON record_hour_game.city_id = city.city_id
+		LEFT JOIN county
+		ON record_hour_game.county_id = county.county_id
+		INNER JOIN probe
+		ON record_hour_game.probe_id = probe.id
+		LEFT JOIN target
+		ON record_hour_game.target_id = target.id
+		WHERE record_hour_game.record_date BETWEEN #{ava_start} AND #{ava_terminal}
+		<if test="city_id != null and city_id != ''">
+			AND record_hour_game.city_id = #{city_id}
+		</if>
+		<if test="county_id != null and county_id != ''">
+			AND record_hour_game.county_id = #{county_id}
+		</if>
+		<if test="target_id != null and target_id != ''">
+			AND record_hour_game.target_id = #{target_id}
+		</if>
+		<if test="probe_id != null and probe_id != ''">
+			AND record_hour_game.probe_id = #{probe_id}
+		</if>
+		GROUP BY record_hour_game.city_id,record_hour_game.county_id,record_hour_game.service_type,record_hour_game.probe_id
+
+	</select>
+
+	<select id="queryGameAreaList" resultType="io.cem.modules.cem.entity.RecordHourGameEntity">
+		select record_hour_game.id,record_hour_game.city_id,record_hour_game.county_id,record_hour_game.probe_id,record_hour_game.port,record_hour_game.task_id,record_hour_game.service_type,record_hour_game.target_id,record_hour_game.target_ip,record_hour_game.record_date,record_hour_game.remark,
+		city.city_name AS city_name,
+		county.county_name AS area_name,
+		probe.probe_name AS probe_name,
+		target.target_name AS target_name,
+		time_format(record_hour_game.record_time, '%H') AS record_time,
+		AVG(record_hour_game.conn_delay) AS conn_delay,
+		AVG(record_hour_game.packet_delay) AS packet_delay,
+		AVG(record_hour_game.packet_jitter) AS packet_jitter,
+		AVG(record_hour_game.loss_rate) AS loss_rate,
+		SUM(record_hour_game.fail) AS fail,
+		SUM(record_hour_game.total) AS total
+		FROM record_hour_game
+		LEFT JOIN city
+		ON record_hour_game.city_id = city.city_id
+		LEFT JOIN county
+		ON record_hour_game.county_id = county.county_id
+		INNER JOIN probe
+		ON record_hour_game.probe_id = probe.id
+		LEFT JOIN target
+		ON record_hour_game.target_id = target.id
+		WHERE record_hour_game.record_date BETWEEN #{ava_start} AND #{ava_terminal}
+		<if test="city_id != null and city_id != ''">
+			AND record_hour_game.city_id = #{city_id}
+		</if>
+		<if test="county_id != null and county_id != ''">
+			AND record_hour_game.county_id = #{county_id}
+		</if>
+		<if test="target_id != null and target_id != ''">
+			AND record_hour_game.target_id = #{target_id}
+		</if>
+		<if test="probe_id != null and probe_id != ''">
+			AND record_hour_game.probe_id = #{probe_id}
+		</if>
+		GROUP BY record_hour_game.city_id,record_hour_game.county_id,record_hour_game.service_type
 
 	</select>
 
@@ -127,7 +205,7 @@
 		<if test="probe_id != null and probe_id != ''">
 			AND game.probe_id = #{probe_id}
 		</if>
-		GROUP BY game.city_id,game.county_id,game.service_type,game.target_id,game.probe_id,date_format(game.record_date,'%Y-%m-%d'),time_format(game.record_time, '%H')
+		GROUP BY game.city_id,game.county_id,game.service_type,game.probe_id,date_format(game.record_date,'%Y-%m-%d'),time_format(game.record_time, '%H')
 
 	</select>
 
