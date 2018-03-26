@@ -172,11 +172,95 @@ public class ScoreEntity {
     //认证成功率
     private Double radiusSuccessRate;
 
+    /*web page details*/
+    //DNS时延
+    private Double webpageDnsDelay;
+    //连接时延
+    private Double webpageConnDelay;
+    //首字节时延
+    private Double webpageHeadbyteDelay;
+    //页面文件时延
+    private Double webpagePageFileDelay;
+    //重定向时延
+    private Double webpageRedirectDelay;
+    //首屏时延
+    private Double webpageAboveFoldDelay;
+    //页面元素时延
+    private Double webpagePageElementDelay;
+    //下载速率
+    private Double webpageDownloadRate;
 
+    /*web download details*/
+    //DNS时延
+    private Double webDownloadDnsDelay;
+    //连接时延
+    private Double webDownloadConnDelay;
+    //首字节时延
+    private Double webDownloadHeadbyteDelay;
+    //下载速率
+    private Double webDownloadDownloadRate;
 
+    /*ftp download details*/
+    //DNS时延
+    private Double ftpDownloadDnsDelay;
+    //连接时延
+    private Double ftpDownloadConnDelay;
+    //登录时延
+    private Double ftpDownloadLoginDelay;
+    //首字节时延
+    private Double ftpDownloadHeadbyteDelay;
+    //下载速率
+    private Double ftpDownloadDownloadRate;
 
+    /*ftp upload details*/
+    //DNS时延
+    private Double ftpUploadDnsDelay;
+    //连接时延
+    private Double ftpUploadConnDelay;
+    //登录时延
+    private Double ftpUploadLoginDelay;
+    //首字节时延
+    private Double ftpUploadHeadbyteDelay;
+    //上传速率
+    private Double ftpUploadUploadRate;
 
+    /*web video details*/
+    //DNS时延
+    private Double webVideoDnsDelay;
+    //连接WEB服务器时延
+    private Double webVideoWsConnDelay;
+    //WEB页面时延
+    private Double webVideoWebPageDelay;
+    //连接调度服务器时延
+    private Double webVideoSsConnDelay;
+    //获取视频地址时延
+    private Double webVideoAddressDelay;
+    //连接媒体服务器时延
+    private Double webVideoMsConnDelay;
+    //首帧时延
+    private Double webVideoHeadFrameDelay;
+    //首次缓冲时延
+    private Double webVideoInitBufferDelay;
+    //视频加载时延
+    private Double webVideoLoadDelay;
+    //总体缓冲时间
+    private Double webVideoTotalBufferDelay;
+    //下载速率
+    private Double webVideoDownloadRate;
+    //缓冲次数
+    private Integer webVideoBufferTime;
 
+    /*game details*/
+    //DNS时延
+    private Double gameDnsDelay;
+    //连接时延
+    private Double gameConnDelay;
+    //游戏数据包时延
+    private Double gamePacketDelay;
+    //游戏数据包抖动
+    private Double gamePacketJitter;
+    //游戏数据包丢包率
+    private Double gameLossRate;
 
 
 
@@ -796,5 +880,317 @@ public class ScoreEntity {
 
     public void setRadiusSuccessRate(Double radiusSuccessRate) {
         this.radiusSuccessRate = radiusSuccessRate;
+    }
+
+    public Double getWebpageDnsDelay() {
+        return webpageDnsDelay;
+    }
+
+    public void setWebpageDnsDelay(Double webpageDnsDelay) {
+        this.webpageDnsDelay = webpageDnsDelay;
+    }
+
+    public Double getWebpageConnDelay() {
+        return webpageConnDelay;
+    }
+
+    public void setWebpageConnDelay(Double webpageConnDelay) {
+        this.webpageConnDelay = webpageConnDelay;
+    }
+
+    public Double getWebpageHeadbyteDelay() {
+        return webpageHeadbyteDelay;
+    }
+
+    public void setWebpageHeadbyteDelay(Double webpageHeadbyteDelay) {
+        this.webpageHeadbyteDelay = webpageHeadbyteDelay;
+    }
+
+    public Double getWebpagePageFileDelay() {
+        return webpagePageFileDelay;
+    }
+
+    public void setWebpagePageFileDelay(Double webpagePageFileDelay) {
+        this.webpagePageFileDelay = webpagePageFileDelay;
+    }
+
+    public Double getWebpageRedirectDelay() {
+        return webpageRedirectDelay;
+    }
+
+    public void setWebpageRedirectDelay(Double webpageRedirectDelay) {
+        this.webpageRedirectDelay = webpageRedirectDelay;
+    }
+
+    public Double getWebpageAboveFoldDelay() {
+        return webpageAboveFoldDelay;
+    }
+
+    public void setWebpageAboveFoldDelay(Double webpageAboveFoldDelay) {
+        this.webpageAboveFoldDelay = webpageAboveFoldDelay;
+    }
+
+    public Double getWebpagePageElementDelay() {
+        return webpagePageElementDelay;
+    }
+
+    public void setWebpagePageElementDelay(Double webpagePageElementDelay) {
+        this.webpagePageElementDelay = webpagePageElementDelay;
+    }
+
+    public Double getWebpageDownloadRate() {
+        return webpageDownloadRate;
+    }
+
+    public void setWebpageDownloadRate(Double webpageDownloadRate) {
+        this.webpageDownloadRate = webpageDownloadRate;
+    }
+
+    public Double getWebDownloadDnsDelay() {
+        return webDownloadDnsDelay;
+    }
+
+    public void setWebDownloadDnsDelay(Double webDownloadDnsDelay) {
+        this.webDownloadDnsDelay = webDownloadDnsDelay;
+    }
+
+    public Double getWebDownloadConnDelay() {
+        return webDownloadConnDelay;
+    }
+
+    public void setWebDownloadConnDelay(Double webDownloadConnDelay) {
+        this.webDownloadConnDelay = webDownloadConnDelay;
+    }
+
+    public Double getWebDownloadHeadbyteDelay() {
+        return webDownloadHeadbyteDelay;
+    }
+
+    public void setWebDownloadHeadbyteDelay(Double webDownloadHeadbyteDelay) {
+        this.webDownloadHeadbyteDelay = webDownloadHeadbyteDelay;
+    }
+
+    public Double getWebDownloadDownloadRate() {
+        return webDownloadDownloadRate;
+    }
+
+    public void setWebDownloadDownloadRate(Double webDownloadDownloadRate) {
+        this.webDownloadDownloadRate = webDownloadDownloadRate;
+    }
+
+    public Double getFtpDownloadDnsDelay() {
+        return ftpDownloadDnsDelay;
+    }
+
+    public void setFtpDownloadDnsDelay(Double ftpDownloadDnsDelay) {
+        this.ftpDownloadDnsDelay = ftpDownloadDnsDelay;
+    }
+
+    public Double getFtpDownloadConnDelay() {
+        return ftpDownloadConnDelay;
+    }
+
+    public void setFtpDownloadConnDelay(Double ftpDownloadConnDelay) {
+        this.ftpDownloadConnDelay = ftpDownloadConnDelay;
+    }
+
+    public Double getFtpDownloadLoginDelay() {
+        return ftpDownloadLoginDelay;
+    }
+
+    public void setFtpDownloadLoginDelay(Double ftpDownloadLoginDelay) {
+        this.ftpDownloadLoginDelay = ftpDownloadLoginDelay;
+    }
+
+    public Double getFtpDownloadHeadbyteDelay() {
+        return ftpDownloadHeadbyteDelay;
+    }
+
+    public void setFtpDownloadHeadbyteDelay(Double ftpDownloadHeadbyteDelay) {
+        this.ftpDownloadHeadbyteDelay = ftpDownloadHeadbyteDelay;
+    }
+
+    public Double getFtpDownloadDownloadRate() {
+        return ftpDownloadDownloadRate;
+    }
+
+    public void setFtpDownloadDownloadRate(Double ftpDownloadDownloadRate) {
+        this.ftpDownloadDownloadRate = ftpDownloadDownloadRate;
+    }
+
+    public Double getFtpUploadDnsDelay() {
+        return ftpUploadDnsDelay;
+    }
+
+    public void setFtpUploadDnsDelay(Double ftpUploadDnsDelay) {
+        this.ftpUploadDnsDelay = ftpUploadDnsDelay;
+    }
+
+    public Double getFtpUploadConnDelay() {
+        return ftpUploadConnDelay;
+    }
+
+    public void setFtpUploadConnDelay(Double ftpUploadConnDelay) {
+        this.ftpUploadConnDelay = ftpUploadConnDelay;
+    }
+
+    public Double getFtpUploadLoginDelay() {
+        return ftpUploadLoginDelay;
+    }
+
+    public void setFtpUploadLoginDelay(Double ftpUploadLoginDelay) {
+        this.ftpUploadLoginDelay = ftpUploadLoginDelay;
+    }
+
+    public Double getFtpUploadHeadbyteDelay() {
+        return ftpUploadHeadbyteDelay;
+    }
+
+    public void setFtpUploadHeadbyteDelay(Double ftpUploadHeadbyteDelay) {
+        this.ftpUploadHeadbyteDelay = ftpUploadHeadbyteDelay;
+    }
+
+    public Double getFtpUploadUploadRate() {
+        return ftpUploadUploadRate;
+    }
+
+    public void setFtpUploadUploadRate(Double ftpUploadUploadRate) {
+        this.ftpUploadUploadRate = ftpUploadUploadRate;
+    }
+
+    public Double getWebVideoDnsDelay() {
+        return webVideoDnsDelay;
+    }
+
+    public void setWebVideoDnsDelay(Double webVideoDnsDelay) {
+        this.webVideoDnsDelay = webVideoDnsDelay;
+    }
+
+    public Double getWebVideoWsConnDelay() {
+        return webVideoWsConnDelay;
+    }
+
+    public void setWebVideoWsConnDelay(Double webVideoWsConnDelay) {
+        this.webVideoWsConnDelay = webVideoWsConnDelay;
+    }
+
+    public Double getWebVideoWebPageDelay() {
+        return webVideoWebPageDelay;
+    }
+
+    public void setWebVideoWebPageDelay(Double webVideoWebPageDelay) {
+        this.webVideoWebPageDelay = webVideoWebPageDelay;
+    }
+
+    public Double getWebVideoSsConnDelay() {
+        return webVideoSsConnDelay;
+    }
+
+    public void setWebVideoSsConnDelay(Double webVideoSsConnDelay) {
+        this.webVideoSsConnDelay = webVideoSsConnDelay;
+    }
+
+    public Double getWebVideoAddressDelay() {
+        return webVideoAddressDelay;
+    }
+
+    public void setWebVideoAddressDelay(Double webVideoAddressDelay) {
+        this.webVideoAddressDelay = webVideoAddressDelay;
+    }
+
+    public Double getWebVideoMsConnDelay() {
+        return webVideoMsConnDelay;
+    }
+
+    public void setWebVideoMsConnDelay(Double webVideoMsConnDelay) {
+        this.webVideoMsConnDelay = webVideoMsConnDelay;
+    }
+
+    public Double getWebVideoHeadFrameDelay() {
+        return webVideoHeadFrameDelay;
+    }
+
+    public void setWebVideoHeadFrameDelay(Double webVideoHeadFrameDelay) {
+        this.webVideoHeadFrameDelay = webVideoHeadFrameDelay;
+    }
+
+    public Double getWebVideoInitBufferDelay() {
+        return webVideoInitBufferDelay;
+    }
+
+    public void setWebVideoInitBufferDelay(Double webVideoInitBufferDelay) {
+        this.webVideoInitBufferDelay = webVideoInitBufferDelay;
+    }
+
+    public Double getWebVideoLoadDelay() {
+        return webVideoLoadDelay;
+    }
+
+    public void setWebVideoLoadDelay(Double webVideoLoadDelay) {
+        this.webVideoLoadDelay = webVideoLoadDelay;
+    }
+
+    public Double getWebVideoTotalBufferDelay() {
+        return webVideoTotalBufferDelay;
+    }
+
+    public void setWebVideoTotalBufferDelay(Double webVideoTotalBufferDelay) {
+        this.webVideoTotalBufferDelay = webVideoTotalBufferDelay;
+    }
+
+    public Double getWebVideoDownloadRate() {
+        return webVideoDownloadRate;
+    }
+
+    public void setWebVideoDownloadRate(Double webVideoDownloadRate) {
+        this.webVideoDownloadRate = webVideoDownloadRate;
+    }
+
+    public Integer getWebVideoBufferTime() {
+        return webVideoBufferTime;
+    }
+
+    public void setWebVideoBufferTime(Integer webVideoBufferTime) {
+        this.webVideoBufferTime = webVideoBufferTime;
+    }
+
+    public Double getGameDnsDelay() {
+        return gameDnsDelay;
+    }
+
+    public void setGameDnsDelay(Double gameDnsDelay) {
+        this.gameDnsDelay = gameDnsDelay;
+    }
+
+    public Double getGameConnDelay() {
+        return gameConnDelay;
+    }
+
+    public void setGameConnDelay(Double gameConnDelay) {
+        this.gameConnDelay = gameConnDelay;
+    }
+
+    public Double getGamePacketDelay() {
+        return gamePacketDelay;
+    }
+
+    public void setGamePacketDelay(Double gamePacketDelay) {
+        this.gamePacketDelay = gamePacketDelay;
+    }
+
+    public Double getGamePacketJitter() {
+        return gamePacketJitter;
+    }
+
+    public void setGamePacketJitter(Double gamePacketJitter) {
+        this.gamePacketJitter = gamePacketJitter;
+    }
+
+    public Double getGameLossRate() {
+        return gameLossRate;
+    }
+
+    public void setGameLossRate(Double gameLossRate) {
+        this.gameLossRate = gameLossRate;
     }
 }

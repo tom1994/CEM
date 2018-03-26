@@ -27,8 +27,8 @@ var st = new Map();//servicetype字典，可通过get方法查对应字符串。
 st.set(0, "综合业务");
 st.set(1, "网络连通性业务");
 st.set(2, "网络层质量业务");
-st.set(3, "文件下载业务");
-st.set(4, "网页浏览业务");
+
+st.set(4, "文件下载业务");
 st.set(5, "在线视频业务");
 st.set(6, "网络游戏业务");
 
@@ -303,7 +303,7 @@ var search_area_service = new Vue({
                 var search = new Object();
                 search.city_id = searchJson.city_id;
                 search.couty_id = searchJson.county_id;
-                search.service = searchJson.servicetype;
+                search.service = searchJson.service_type;
                 search.target_id = searchJson.target_id;
                 if (searchJson.startDate.length != 0 && searchJson.terminalDate.length != 0 ) {
                     var ava_start = searchJson.startDate.substr(0, 10);

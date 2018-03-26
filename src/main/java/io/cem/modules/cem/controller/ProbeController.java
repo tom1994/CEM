@@ -58,11 +58,10 @@ public class ProbeController {
         return R.ok().put("page", pageUtil);
     }
 
-    @RequestMapping("/download/{id}")
+    @RequestMapping("/download")
     @RequiresPermissions("probe:download")
-    public void downloadProbe(HttpServletResponse response,@PathVariable("id") Integer id) throws RRException {
+    public void downloadProbe(HttpServletResponse response) throws RRException {
         Map<String, Object> map = new HashMap<String, Object>();
-        System.out.println(id);
         List<ProbeEntity> list = probeService.queryList(map);
         CollectionToFile.collectionToFile(response, list, ProbeEntity.class);
     }

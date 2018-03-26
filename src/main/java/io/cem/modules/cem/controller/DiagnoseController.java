@@ -1,35 +1,21 @@
 package io.cem.modules.cem.controller;
 
-import java.util.*;
-import java.io.IOException;
-import java.io.InputStream;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import io.cem.common.exception.RRException;
-import io.cem.common.utils.*;
+import io.cem.common.utils.JSONUtils;
+import io.cem.common.utils.PageUtils;
+import io.cem.common.utils.R;
 import io.cem.modules.cem.entity.*;
 import io.cem.modules.cem.service.*;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
-import io.cem.common.utils.PageUtils;
-import io.cem.common.utils.excel.ExcelUtils;
-import io.cem.common.utils.Query;
-import io.cem.common.utils.R;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 
 @RestController
@@ -136,7 +122,6 @@ public class DiagnoseController {
                             scoreList = recordHourPingService.probeChart1(scoreList);
                         }
                     } else if (service == 3) {
-                        //网络浏览类业务代码为4
                         List<RecordHourWebPageEntity> webPageList = recordHourWebPageService.queryDayList(map);
                         scoreList.addAll(recordHourWebPageService.calculateService3(webPageList));
                         if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
@@ -147,7 +132,6 @@ public class DiagnoseController {
                             scoreList = recordHourPingService.probeChart1(scoreList);
                         }
                     } else if (service == 4) {
-                        //网络下载类业务代码为3
                         List<RecordHourWebDownloadEntity> webDownloadList = recordHourWebDownloadService.queryDayList(map);
                         List<RecordHourFtpEntity> ftpList = recordHourFtpService.queryDayList(map);
                         List<ScoreEntity> webDownload = recordHourWebDownloadService.calculateWebDownload(webDownloadList);
@@ -223,7 +207,6 @@ public class DiagnoseController {
                             scoreList = recordHourPingService.probeChart1(scoreList);
                         }
                     } else if (service == 3) {
-                        //网页浏览类业务代码为4
                         List<RecordHourWebPageEntity> webPageList = recordHourWebPageService.queryWebList(map);
                         scoreList.addAll(recordHourWebPageService.calculateService3(webPageList));
                         if(map.get("city_Id")==null&&map.get("county_id")==null&&map.get("probe_id")==null){
@@ -234,7 +217,6 @@ public class DiagnoseController {
                             scoreList = recordHourPingService.probeChart1(scoreList);
                         }
                     } else if (service == 4) {
-                        //下载类业务代码为3
                         List<RecordHourWebDownloadEntity> webDownloadList = recordHourWebDownloadService.queryWebDownloadList(map);
                         List<RecordHourFtpEntity> ftpList = recordHourFtpService.queryFtpList(map);
                         List<ScoreEntity> webDownload = recordHourWebDownloadService.calculateWebDownload(webDownloadList);

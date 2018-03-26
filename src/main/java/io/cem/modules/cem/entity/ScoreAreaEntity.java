@@ -130,7 +130,7 @@ public class ScoreAreaEntity {
     @Override
     public boolean equals(Object obj) {
         ScoreAreaEntity temp = (ScoreAreaEntity) obj;
-        if(this.getCityId().equals(temp.getCityId())&&this.getCountyId().equals(temp.getCountyId())&&this.getTargetId().equals(temp.getTargetId())){
+        if(this.getCityId().equals(temp.getCityId())&&this.getCountyId().equals(temp.getCountyId())){
             return true;
         }
         return false;
@@ -140,8 +140,8 @@ public class ScoreAreaEntity {
     @Override
     public int hashCode() {
 
-        if(this.getCityId()!=null&&this.getCountyId()!=null&&this.getTargetId()!=null)
-            return this.getCityId()&this.getCountyId()&this.getTargetId();
+        if(this.getCityId()!=null&&this.getCountyId()!=null)
+            return this.getCityId()&this.getCountyId();
         return super.hashCode();
     }
 
