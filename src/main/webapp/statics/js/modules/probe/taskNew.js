@@ -689,17 +689,38 @@ var taskform_data = new Vue({
             tasknewJson.alarmTemplateId = "0";
             tasknewJson.createTime = oDate.Format("yyyy-MM-dd hh:mm:ss");
             tasknewJson.remark = "无";
-            var tasknew = JSON.stringify(tasknewJson);
-            console.log(tasknewJson);
-            console.log(tasknewJson.serviceType)
+            var reg = /^(?=^.{3,255}$)[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+$/;
+            debugger
+            if(tasknewJson.serviceType== "14"&&paramnewJson.domains!=''){
+                var domains=paramnewJson.domains;
+                var stringSplit=domains.split(';');
+                for (let i = 0;i<stringSplit.length;i++){
+                   var str = stringSplit[i];
+                        if(tasknewJson.serviceType== "14"&&!reg.test(str)){
+                            toastr.warning("您输入域名有误,请输入正确域名,多个域名之间用英文分号隔开!");
+                            return
+
+                        }
+                }
+
+                tasknewJson.domains=stringSplit;
+                let parameter = tasknewJson.parameter;
+                var param = JSON.parse(parameter);
+                param.domains = stringSplit;
+                parameter = JSON.stringify(param);
+                tasknewJson.parameter = parameter;
+            }
+            // var tasknew = JSON.stringify(tasknewJson);
+            // console.log(tasknew);
+            // console.log(tasknewJson.serviceType)
             if (tasknewJson.taskName == "") {
                 toastr.warning("请输入任务名称!");
-            } else if (tasknewJson.serviceType == "") {
+            }else if (tasknewJson.serviceType == "") {
                 toastr.warning("请选择任务类型!");
             } else if (tasknewJson.schPolicyId == "") {
                 toastr.warning("请选择调度策略!");
             }  else if (tasknewJson.parameter) {
-                var paramnew = JSON.parse(tasknewJson.parameter)
+                var paramnew = JSON.parse(tasknewJson.parameter);
                 if ((tasknewJson.serviceType== "1" ||  tasknewJson.serviceType == "2" ||tasknewJson.serviceType == "3" ||tasknewJson.serviceType == "10"||tasknewJson.serviceType == "11"||tasknewJson.serviceType == "50")&&
                     (paramnew.count < 3 || paramnew.count > 10000)) {
                     toastr.warning("您输入的发包个数有误，请正确输入!");
@@ -739,7 +760,7 @@ var taskform_data = new Vue({
                     toastr.warning("您输入的查询间隔有误，请正确输入!");
                 } else if (tasknewJson.serviceType== "14"&&paramnew.count < 1 || paramnew.count > 10000) {
                     toastr.warning("您输入的单次发包次数有误，请正确输入!");
-                } else if (paramnew.domains == "") {
+                } else if (paramnew.domains == ""||paramnew.domains==null) {
                     toastr.warning("请输入待查询域名");
                 } else if (paramnew.auth_port < 1 || paramnew.auth_port > 65535) {
                     toastr.warning("您输入的服务器认证端口有误，请正确输入!");
@@ -791,7 +812,7 @@ var taskform_data = new Vue({
                     toastr.warning("您输入的持续时长有误，请正确输入!");
                 } else {
                     var tasknew = JSON.stringify(tasknewJson);
-                    console.log(tasknewJson);
+                    console.log(tasknew);
                     $.ajax({
                         type: "POST", /*GET会乱码*/
                         url: "../../cem/task/save",
@@ -910,11 +931,13 @@ function getFormJson(form) {
 function getFormJson2(form) {      /*将表单对象变为json对象*/
     var o = {};
     var a = $(form).serializeArray();
+    debugger
     for (var i = 0; i < a.length; i++) {
         if (a[i].value != null && a[i].value != "") {
             switch (a[i].name) {
                 case "domains":
-                    a[i].value = JSON.parse(a[i].value);break;
+                    debugger
+                    a[i].value =a[i].value; break;
                 case "user_agent":
                 case "username":
                 case "secret":

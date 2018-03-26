@@ -180,7 +180,7 @@ public class TaskDispatchController {
             taskDispatch.setProbeId(probeList.get(i).getId());
             if (probeList.get(i).getType() == 10) {
                 taskDispatch.setProbePort("port2");
-            }else{
+            } else {
                 taskDispatch.setProbePort("port1");
             }
             if (map.containsKey("ping")) {
@@ -352,9 +352,16 @@ public class TaskDispatchController {
     @RequestMapping("/delete")
     @RequiresPermissions("taskdispatch:delete")
     public R delete(@RequestBody Integer[] ids) {
-        taskDispatchService.deleteBatch(ids);
-
-        return R.ok();
+        int result = 0;
+        for (int i = 0; i < ids.length; i++) {
+            result = BypassHttps.sendRequestIgnoreSSL("DELETE", "https://114.236.91.16:23456/web/v1/tasks/" + ids[i]);
+        }
+        if (result != 0 & result != 404 & result != 500) {
+            taskDispatchService.deleteBatch(ids);
+            return R.ok();
+        }else{
+            return R.error(404,"该任务有误，暂时无法删除");
+        }
     }
 
     @RequestMapping("/cancel/{id}")

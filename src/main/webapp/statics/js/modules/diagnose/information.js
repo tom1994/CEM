@@ -243,7 +243,8 @@ function PING() {
                                 row.push(item.jitterVar);
                                 row.push(item.lossRate);
                                 row.push(item.targetName);
-                                row.push(item.targetIp);
+                                var targetip= numberToIp(item.targetIp);
+                                row.push(targetip);
                                 row.push(item.targetLoc);
                                 if(item.state==0){
                                     row.push("成功");
@@ -393,7 +394,8 @@ function PING() {
                                 row.push(item.jitterVar);
                                 row.push(item.lossRate);
                                 row.push(item.targetName);
-                                row.push(item.targetIp);
+                                var targetip= numberToIp(item.targetIp);
+                                row.push(targetip);
                                 row.push(item.targetLoc);
                                 if(item.state==0){
                                     row.push("成功");
@@ -542,7 +544,8 @@ function PING() {
                                 row.push(item.jitterVar);
                                 row.push(item.lossRate);
                                 row.push(item.targetName);
-                                row.push(item.targetIp);
+                                var targetip= numberToIp(item.targetIp);
+                                row.push(targetip);
                                 row.push(item.targetLoc);
                                 if(item.state==0){
                                     row.push("成功");
@@ -665,6 +668,7 @@ function PING() {
                         dataType: "json",
                         contentType:"application/json",
                         success: function (result) {
+                            debugger
                             $('.warning').css('display', 'none')
                             $('.loader').hide();
                             // 封装返回数据
@@ -679,6 +683,7 @@ function PING() {
                             result.page.list.forEach(function (item) {
                                 //console.log(item);
                                 let row = [];
+                                var  aa=[];
                                 row.push(i++);
                                 row.push(item.probeName);
                                 row.push(item.port);
@@ -689,9 +694,28 @@ function PING() {
                                 row.push(item.jitterStd);
                                 row.push(item.jitterVar);
                                 row.push(item.lossRate);
+                                // new Vue({
+                                //     data:{
+                                //         headers:[
+                                //             {title: '<div style="width:10px">跳数</div>'},
+                                //             {title: '<div style="width:10px">目的地址</div>'},
+                                //             {title: '<div style="width:10px">时延(ms)</div>'},
+                                //             {title: '<div style="width:10px">丢包率(%)</div>'},
+                                //         ]
+                                //     },
+                                //     mounted:function () {
+                                //         vm.dtHandle = $(this.$el).DataTable({
+                                //             columns: vm.headers,
+                                //             data: vm.aa,
+                                //
+                                //         })
+                                //     }
+                                //
+                                // })
                                 row.push(item.hopRecord);
                                 row.push(item.targetName);
-                                row.push(item.targetIp);
+                                var targetip= numberToIp(item.targetIp);
+                                row.push(targetip);
                                 row.push(item.targetLoc);
                                 if(item.state==0){
                                     row.push("成功");
@@ -837,15 +861,17 @@ function PING() {
                                 row.push(item.jitterVar);
                                 row.push(item.lossRate);
                                 row.push(item.hopRecord);
+                                // console.log(typeof item.hopRecord)
                                 row.push(item.targetName);
-                                row.push(item.targetIp);
+                                var targetip= numberToIp(item.targetIp);
+                                row.push(targetip);
                                 row.push(item.targetLoc);
                                 if(item.state==0){
                                     row.push("成功");
                                 }else {
                                     row.push("失败");
                                 }
-                                 
+
                                 rows.push(row);
                             });
                             returnData.data = rows;
@@ -1009,7 +1035,8 @@ function quality() {
                                 row.push(item.rJitterVar);
                                 row.push(item.lossRate);
                                 row.push(item.targetName);
-                                row.push(item.targetIp);
+                                var targetip= numberToIp(item.targetIp);
+                                row.push(targetip);
                                 row.push(item.targetLoc);
                                 if(item.state==0){
                                     row.push("成功");
@@ -1177,7 +1204,8 @@ function quality() {
                                 row.push(item.rJitterVar);
                                 row.push(item.lossRate);
                                 row.push(item.targetName);
-                                row.push(item.targetIp);
+                                var targetip= numberToIp(item.targetIp);
+                                row.push(targetip);
                                 row.push(item.targetLoc);
                                 if(item.state==0){
                                     row.push("成功");
@@ -1313,7 +1341,8 @@ function quality() {
                                 row.push(item.delay);
                                 row.push(item.successRate);
                                 row.push(item.targetName);
-                                row.push(item.targetIp);
+                                var targetip= numberToIp(item.targetIp);
+                                row.push(targetip);
                                 row.push(item.targetLoc);
                                 if(item.state==0){
                                     row.push("成功");
@@ -1581,7 +1610,8 @@ function quality() {
                                 row.push(item.delay);
                                 row.push(item.successRate);
                                 row.push(item.targetName);
-                                row.push(item.targetIp);
+                                var targetip= numberToIp(item.targetIp);
+                                row.push(targetip);
                                 row.push(item.targetLoc);
                                 if(item.state==0){
                                     row.push("成功");
@@ -1610,7 +1640,6 @@ function quality() {
     });
 
 }
-
 function download() {
     //FTPupdate_table
     var FTPTable = new Vue({
@@ -1728,7 +1757,8 @@ function download() {
                                 row.push(item.headbyteDelay);
                                 row.push(item.uploadRate);
                                 row.push(item.targetName);
-                                row.push(item.targetIp);
+                                var targetip= numberToIp(item.targetIp);
+                                row.push(targetip);
                                 row.push(item.targetLoc);
                                 if(item.state==0){
                                     row.push("成功");
@@ -1871,7 +1901,8 @@ function download() {
                                 row.push(item.headbyteDelay);
                                 row.push(item.downloadRate);
                                 row.push(item.targetName);
-                                row.push(item.targetIp);
+                                var targetip= numberToIp(item.targetIp);
+                                row.push(targetip);
                                 row.push(item.targetLoc);
                                 if(item.state==0){
                                     row.push("成功");
@@ -2012,7 +2043,8 @@ function download() {
                                 row.push(item.headbyteDelay);
                                 row.push(item.downloadRate);
                                 row.push(item.targetName);
-                                row.push(item.targetIp);
+                                var targetip= numberToIp(item.targetIp);
+                                row.push(targetip);
                                 row.push(item.targetLoc);
                                 if(item.state==0){
                                     row.push("成功");
@@ -2041,7 +2073,6 @@ function download() {
     });
 
 }
-
 function page() {
     //HTTP_table
     var HTTPTable = new Vue({
@@ -2165,7 +2196,8 @@ function page() {
                                 row.push(item.loadDelay);
                                 row.push(item.downloadRate);
                                 row.push(item.targetName);
-                                row.push(item.targetIp);
+                               var targetip= numberToIp(item.targetIp);
+                                row.push(targetip);
                                 row.push(item.targetLoc);
                                 if(item.state==0){
                                     row.push("成功");
@@ -2318,7 +2350,8 @@ function video() {
                                 row.push(item.bufferTime);
                                 row.push(item.downloadRate);
                                 row.push(item.targetName);
-                                row.push(item.targetIp);
+                                var targetip= numberToIp(item.targetIp);
+                                    row.push(targetip);
                                 row.push(item.targetLoc);
                                 if(item.state==0){
                                     row.push("成功");
@@ -2346,8 +2379,6 @@ function video() {
         }
     });
 }
-
-
 function game() {
     //game_table
     var gameTable = new Vue({
@@ -2440,7 +2471,6 @@ function game() {
                         dataType: "json",
                         contentType:"application/json",
                         success: function (result) {
-                            debugger;
                             $('.warning').css('display', 'none')
                             $('.loader').hide();
                             //封装返回数据
@@ -2463,7 +2493,8 @@ function game() {
                                 row.push(item.packetJitter);
                                 row.push(item.lossRate);
                                 row.push(item.targetName);
-                                row.push(item.targetIp);
+                               var targetip= numberToIp(item.targetIp);
+                                row.push(targetip);
                                 row.push(item.targetLoc);
                                 if(item.state==0){
                                     row.push("成功");
@@ -2490,4 +2521,20 @@ function game() {
             });
         }
     });
+}
+
+//转换为ip类型
+function numberToIp(number) {
+    var ip = "";
+    if(number <= 0) {
+        return number;
+    }
+    var ip3 = (number << 0 ) >>> 24;
+    var ip2 = (number << 8 ) >>> 24;
+    var ip1 = (number << 16) >>> 24;
+    var ip0 = (number << 24) >>> 24
+
+    ip += ip3 + "." + ip2 + "." + ip1 + "." + ip0;
+
+    return ip;
 }

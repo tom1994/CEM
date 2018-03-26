@@ -13,9 +13,9 @@
         }
         .clear::-ms-clear { display: none;}
         .clear::-ms-reveal { display: none;}
-        
+
         .float-e-margins .btn {
-             margin-bottom: 0px;
+            margin-bottom: 0px;
         }
 
         .search{
@@ -30,7 +30,7 @@
             padding-top: 0px;
         }
         /*.left{*/
-            /*margin-left:52px;*/
+        /*margin-left:52px;*/
         /*}*/
         .box{
             padding-bottom: 0px !important;
@@ -87,7 +87,7 @@
 </head>
 <body>
 <div class="htmleaf-container">
-   <div class="tab" role="tabpanel">
+    <div class="tab" role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active"><a href="#Section1" aria-controls="home" role="tab"
                                                       data-toggle="tab">探针管理</a></li>
@@ -244,10 +244,10 @@
                                                 class="glyphicon glyphicon-open"></span>导出
                                         </button>
                                     </a>
-                                 <!--   <button type="button" id="flip" class="btn btn-sm btn-success"
-                                            style="position:relative; left:35%;" onClick="toggle1('searchbox')"><span
-                                            class="glyphicon glyphicon-menu-up"></span>
-                                    </button>-->
+                                    <!--   <button type="button" id="flip" class="btn btn-sm btn-success"
+                                               style="position:relative; left:35%;" onClick="toggle1('searchbox')"><span
+                                               class="glyphicon glyphicon-menu-up"></span>
+                                       </button>-->
                                     <p id="flip" style="position:relative; left:35%;" class="glyphicon glyphicon-menu-up" onClick="toggle1('searchbox')"></p>
                                 </div>
                                 <div class="ibox-content">
@@ -297,6 +297,22 @@
                                                     <input type="text" class="form-control input clear" id="serialNumber" name="serialNumber"
                                                            readonly="readonly" unselectable='on'>
                                                 </div>
+                                                <label for="status"
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">状态</label>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
+                                                    <select id="status" class="form-control input clear" name="status"
+                                                            disabled="disabled" unselectable='on'>
+                                                        <!--VUE列表渲染-->
+                                                        <option v-for="item in statusNames"
+                                                                v-bind:value="item.message.status">
+                                                            {{ item.message.statusName }}
+                                                        </option>
+                                                    </select>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="form-group row">
                                                 <label for="type"
                                                        class="col-lg-2 col-md-2 col-sm-2 input-label form_border">探针类型</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border">
@@ -308,6 +324,28 @@
                                                         <option value="32">OLT软探针</option>
                                                     </select>
                                                 </div>
+                                                <label for="groupId"
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">所属探针组</label>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
+                                                    <select id="groupId" class="form-control " name="groupId">
+                                                        <!--VUE列表渲染-->
+                                                        <option v-for="item in groupNames"
+                                                                v-bind:value="item.message.id">
+                                                            {{ item.message.name }}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <label for="isp"
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">接入运营商</label>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
+                                                    <select id="isp" class="form-control input clear" name="isp">  <!--VUE列表渲染-->
+                                                        <option value="0">广电</option>
+                                                        <option value="1">移动</option>
+                                                        <option value="2">联通</option>
+                                                        <option value="3">电信</option>
+                                                    </select>
+                                                </div>
+
                                             </div>
 
                                             <div class="form-group row">
@@ -341,30 +379,6 @@
                                             </div>
 
                                             <div class="form-group row">
-                                                <label for="brasName"
-                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">BRAS名称</label>
-                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
-                                                    <input type="text" class="form-control input clear" id="brasName"
-                                                           name="brasName"
-                                                           placeholder="请输入">
-                                                </div>
-                                                <label for="brasIp"
-                                                    class="col-lg-2 col-md-2 col-sm-2 input-label form_border">BRAS IP</label>
-                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
-                                                    <input type="text" class="form-control input clear" id="brasIp"
-                                                           name="brasIp"
-                                                           placeholder="请输入">
-                                                </div>
-                                                <label for="brasPort"
-                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">BRAS端口</label>
-                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
-                                                    <input type="text" class="form-control input clear" id="brasPort"
-                                                           name="brasPort"
-                                                           placeholder="请输入">
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group row">
                                                 <label for="access_layer"
                                                        class="col-lg-2 col-md-2 col-sm-2 input-label form_border">接入层级</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border">
@@ -385,78 +399,38 @@
                                                         </option>
                                                     </select>
                                                 </div>
-                                                <label for="status"
-                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">状态</label>
-                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
-                                                    <select id="status" class="form-control input clear" name="status"
-                                                            disabled="disabled" unselectable='on'>
-                                                        <!--VUE列表渲染-->
-                                                        <option v-for="item in statusNames"
-                                                                v-bind:value="item.message.status">
-                                                            {{ item.message.statusName }}
-                                                        </option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <!--unselectable属性解决IE鼠标光标聚焦问题-->
-                                            <div class="form-group row">
                                                 <label for="device"
                                                        class="col-lg-2 col-md-2 col-sm-2 input-label form_border">设备型号</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                                     <input type="text" class="form-control input clear" id="device" name="device"
                                                            readonly="readonly" unselectable='on'>
                                                 </div>
-                                                <label for="version"
-                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">软件版本</label>
-                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
-                                                    <input type="text" class="form-control input clear" id="version" name="version"
-                                                           readonly="readonly" unselectable='on'>
-                                                </div>
-                                                <label for="concurrentTask"
-                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">最大任务数</label>
-                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
-                                                    <input type="text" class="form-control input clear" id="concurrentTask" name="concurrentTask"
-                                                           readonly="readonly" unselectable='on'>
-                                                </div>
-
                                             </div>
-
                                             <div class="form-group row">
-                                                <label for="groupId"
-                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">所属探针组</label>
+                                                <label for="brasName"
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">BRAS名称</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border">
-                                                    <select id="groupId" class="form-control " name="groupId">
-                                                        <!--VUE列表渲染-->
-                                                        <option v-for="item in groupNames"
-                                                                v-bind:value="item.message.id">
-                                                            {{ item.message.name }}
-                                                        </option>
-                                                    </select>
+                                                    <input type="text" class="form-control input clear" id="brasName"
+                                                           name="brasName"
+                                                           placeholder="请输入">
                                                 </div>
-                                                <label for="ipType"
-                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">IP类型</label>
+                                                <label for="brasIp"
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">BRAS IP</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border">
-                                                    <select id="ipType" class="form-control input clear" name="ipType"
-                                                            disabled="disabled" unselectable='on'>
-                                                        <!--VUE列表渲染-->
-                                                        <option v-for="item in iptypeNames"
-                                                                v-bind:value="item.message.ipType">
-                                                            {{ item.message.iptypeName }}
-                                                        </option>
-                                                    </select>
+                                                    <input type="text" class="form-control input clear" id="brasIp"
+                                                           name="brasIp"
+                                                           placeholder="请输入">
                                                 </div>
-                                                <label for="isp"
-                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">接入运营商</label>
+                                                <label for="brasPort"
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">BRAS端口</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border">
-                                                    <select id="isp" class="form-control input clear" name="isp">  <!--VUE列表渲染-->
-                                                        <option value="0">广电</option>
-                                                        <option value="1">移动</option>
-                                                        <option value="2">联通</option>
-                                                        <option value="3">电信</option>
-                                                    </select>
+                                                    <input type="text" class="form-control input clear" id="brasPort"
+                                                           name="brasPort"
+                                                           placeholder="请输入">
                                                 </div>
-                                            </div>
 
+                                            </div>
+                                            <!--unselectable属性解决IE鼠标光标聚焦问题-->
                                             <div class="form-group row">
                                                 <label for="hbInterval"
                                                        class="col-lg-2 col-md-2 col-sm-2 input-label form_border">心跳间隔(s)</label>
@@ -472,6 +446,47 @@
                                                            name="reportInterval"
                                                            placeholder="15">
                                                 </div>
+                                                <label for="concurrentTask"
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">最大任务数</label>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
+                                                    <input type="text" class="form-control input clear" id="concurrentTask" name="concurrentTask"
+                                                           readonly="readonly" unselectable='on'>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="registerTime" style="text-align: right !important"
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">注册时间</label>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
+                                                    <a  href="#" class="tooltip-test" data-toggle="tooltip" title="默认的 Tooltip">
+                                                        <input type="text" class="form-control input clear" id="registerTime" name="registerTime"
+                                                           readonly="readonly" unselectable='on'></a>
+                                                </div>
+                                                <label for="lastHbtime" style="text-align: right !important;padding-left:15px !important;
+                                                        margin-left: 9px;margin-right: -10px;"
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">最后心跳时间</label>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
+                                                    <input type="text" class="form-control input clear" id="lastHbtime"
+                                                           name="lastHbtime" readonly="readonly" unselectable='on'>
+                                                </div>
+                                                <label for="lastReportTime" style="text-align: right !important;padding-left:15px !important;
+                                                margin-left: 9px;margin-right: -10px;"
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">最后上报时间</label>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
+                                                    <input type="text" class="form-control input clear" id="lastReportTime"
+                                                           name="lastReportTime" readonly="readonly" unselectable='on'>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="version"
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">软件版本</label>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
+                                                    <input type="text" class="form-control input clear" id="version" name="version"
+                                                           readonly="readonly" unselectable='on'>
+                                                </div>
+
                                                 <label for="updateInterval" style="padding-left:0 !important;padding-right:13px !important; "
                                                        class="col-lg-2 col-md-2 col-sm-2 input-label form_border">升级检测间隔(h)</label>
                                                 <div class="col-lg-1 col-md-1 col-sm-1 form_border" style="width:158px">
@@ -479,40 +494,13 @@
                                                            name="updateInterval"
                                                            placeholder="24">
                                                 </div>
-                                            </div>
-
-                                            <div class="form-group row">
-                                                <label for="lastHbtime" style="text-align: right !important;padding-left:15px !important;
-                                                        margin-left: 9px;margin-right: -10px;"
-                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">最后心跳时间</label>
-                                                <div class="col-lg-4 col-md-4 col-sm-4 form_border">
-                                                    <input type="text" class="form-control input clear" id="lastHbtime"
-                                                           name="lastHbtime" readonly="readonly" unselectable='on'>
-                                                </div>
-                                                <label for="registerTime" style="text-align: right !important"
-                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">注册时间</label>
-                                                <div class="col-lg-4 col-md-4 col-sm-4 form_border">
-                                                    <input type="text" class="form-control input clear" id="registerTime" name="registerTime"
-                                                           readonly="readonly" unselectable='on'>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group row">
-                                                <label for="lastReportTime" style="text-align: right !important;padding-left:15px !important;
-                                                margin-left: 9px;margin-right: -10px;"
-                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">最后上报时间</label>
-                                                <div class="col-lg-4 col-md-4 col-sm-4 form_border">
-                                                    <input type="text" class="form-control input clear" id="lastReportTime"
-                                                           name="lastReportTime" readonly="readonly" unselectable='on'>
-                                                </div>
                                                 <label for="lastUpdateTime" style="text-align: right !important"
                                                        class="col-lg-2 col-md-2 col-sm-2 input-label form_border">最后升级时间</label>
-                                                <div class="col-lg-4 col-md-4 col-sm-4 form_border">
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                                     <input type="text" class="form-control input clear" id="lastUpdateTime"
                                                            name="lastUpdateTime" readonly="readonly" unselectable='on'>
                                                 </div>
                                             </div>
-
                                             <div class="form-group row" id="portIP">
                                                 <label for="port"
                                                        class="col-lg-2 col-md-2 col-sm-2 input-label form_border">端口</label>
@@ -524,13 +512,13 @@
                                                        class="col-lg-2 col-md-2 col-sm-2 input-label form_border">IP地址</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                                     <input type="text" class="form-control input clear" id="IP"
-                                                            readonly="readonly" unselectable='on'>
+                                                           readonly="readonly" unselectable='on'>
                                                 </div>
                                                 <label for="IP_type"
                                                        class="col-lg-2 col-md-2 col-sm-2 input-label form_border">IP类型</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                                     <input type="text" class="form-control input clear" id="IP_type"
-                                                            readonly="readonly" unselectable='on'>
+                                                           readonly="readonly" unselectable='on'>
                                                 </div>
                                             </div>
                                             <div id="con" style="display: none">
@@ -539,7 +527,7 @@
                                                            class="col-lg-2 col-md-2 col-sm-2 input-label form_border">端口</label>
                                                     <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                                         <input type="text" class="form-control input clear" id="port1"
-                                                                readonly="readonly" unselectable='on'>
+                                                               readonly="readonly" unselectable='on'>
                                                     </div>
                                                     <label for="IP1"
                                                            class="col-lg-2 col-md-2 col-sm-2 input-label form_border">IP地址</label>
@@ -551,7 +539,7 @@
                                                            class="col-lg-2 col-md-2 col-sm-2 input-label form_border">IP类型</label>
                                                     <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                                         <input type="text" class="form-control input clear" id="IP_type1"
-                                                              readonly="readonly" unselectable='on'>
+                                                               readonly="readonly" unselectable='on'>
                                                     </div>
                                                 </div>
                                                 <div class="form-group row" id="portIP2">
@@ -559,7 +547,7 @@
                                                            class="col-lg-2 col-md-2 col-sm-2 input-label form_border">端口</label>
                                                     <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                                         <input type="text" class="form-control input clear" id="port2"
-                                                                readonly="readonly" unselectable='on'>
+                                                               readonly="readonly" unselectable='on'>
                                                     </div>
                                                     <label for="IP2"
                                                            class="col-lg-2 col-md-2 col-sm-2 input-label form_border">IP地址</label>
@@ -571,7 +559,7 @@
                                                            class="col-lg-2 col-md-2 col-sm-2 input-label form_border">IP类型</label>
                                                     <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                                         <input type="text" class="form-control input clear" id="IP_type2"
-                                                                readonly="readonly" unselectable='on'>
+                                                               readonly="readonly" unselectable='on'>
                                                     </div>
                                                 </div>
                                                 <div class="form-group row" id="portIP3">
@@ -585,7 +573,7 @@
                                                            class="col-lg-2 col-md-2 col-sm-2 input-label form_border">IP地址</label>
                                                     <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                                         <input type="text" class="form-control input clear" id="IP3"
-                                                                readonly="readonly" unselectable='on'>
+                                                               readonly="readonly" unselectable='on'>
                                                     </div>
                                                     <label for="IP_type3"
                                                            class="col-lg-2 col-md-2 col-sm-2 input-label form_border">IP类型</label>
@@ -605,13 +593,13 @@
                                                            class="col-lg-2 col-md-2 col-sm-2 input-label form_border">IP地址</label>
                                                     <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                                         <input type="text" class="form-control input clear" id="IP4"
-                                                                readonly="readonly" unselectable='on'>
+                                                               readonly="readonly" unselectable='on'>
                                                     </div>
                                                     <label for="IP_type4"
                                                            class="col-lg-2 col-md-2 col-sm-2 input-label form_border">IP类型</label>
                                                     <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                                         <input type="text" class="form-control input clear" id="IP_type4"
-                                                              readonly="readonly" unselectable='on'>
+                                                               readonly="readonly" unselectable='on'>
                                                     </div>
                                                 </div>
                                                 <div class="form-group row" id="portIP5">
@@ -619,7 +607,7 @@
                                                            class="col-lg-2 col-md-2 col-sm-2 input-label form_border">端口</label>
                                                     <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                                         <input type="text" class="form-control input clear" id="port5"
-                                                                readonly="readonly" unselectable='on'>
+                                                               readonly="readonly" unselectable='on'>
                                                     </div>
                                                     <label for="IP5"
                                                            class="col-lg-2 col-md-2 col-sm-2 input-label form_border">IP地址</label>
@@ -788,7 +776,7 @@
                                     <div class="form-group row">
                                         <label for="groupname"
                                                class="col-lg-3 col-md-3 col-sm-3 input-label "
-                                            style="text-align: center"   >探针组名</label>
+                                               style="text-align: center"   >探针组名</label>
                                         <div class="col-lg-3 col-md-3 col-sm-3 ">
                                             <input type="text" class="form-control input clear" id="groupname" name="name"
                                                    placeholder="请输入">
@@ -850,6 +838,7 @@
 <!--<script type="text/javascript" src="${rc.contextPath}/statics/js/index.js"></script>-->
 
 <script type="text/javascript">
+    $(function () { $("[data-toggle='tooltip']").tooltip(); });
     $(function () {
         $('#cities .jq22').comboSelect();
         $('#country .jq22').comboSelect();
@@ -857,6 +846,44 @@
         $('#Selecttype .jq22').comboSelect();
         $('#Selectstatus .jq22').comboSelect();
         $('#access .jq22').comboSelect()
+        typeSelected=0;
+        statusSelected=0;
+        $('#Selecttype .jq22').comboSelect()
+        $('.combo-dropdown').css("z-index","3");
+        $('#Selecttype .option-item').click(function (type) {
+            var a = $(type.currentTarget)[0].innerText;
+            typeSelected = $($(type.currentTarget)[0]).data('value');
+            setTimeout(function(){
+                $('#Selecttype .combo-input').val(a);
+            },40)
+        });
+
+        $('#Selecttype input[type=text] ').keyup(function (type) {
+            if( type.keyCode=='13'){
+                var b = $("#Selecttype .option-hover.option-selected").text();
+                typeSelected=$("#Selecttype .option-hover.option-selected")[0].dataset.value;
+                $('#Selecttype .combo-input').val(b);
+                $('#Selecttype .combo-select select').val(b);
+            }
+        });
+        $('#Selectstatus .jq22').comboSelect();
+        $('.combo-dropdown').css("z-index","3");
+        $('#Selectstatus  .option-item').click(function (status) {
+
+            var a = $(status.currentTarget)[0].innerText;
+            statusSelected = $($(status.currentTarget)[0]).data('value');
+            setTimeout(function(){
+                $('#Selectstatus  .combo-input').val(a);
+            },40)
+        });
+        $('#Selectstatus  input[type=text] ').keyup(function (status) {
+            if( status.keyCode=='13'){
+                var b = $("#Selectstatus .option-hover.option-selected").text();
+                statusSelected=$("#Selecttype .option-hover.option-selected")[0].dataset.value;
+                $('#Selectstatus .combo-input').val(b);
+                $('#Selectstatus .combo-select select').val(b);
+            }
+        });
     })
     //参数para1：希望隐藏元素的id值
     function toggle1(param){

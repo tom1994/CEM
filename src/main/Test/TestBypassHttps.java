@@ -7,8 +7,6 @@ import java.net.URL;
 
 public class TestBypassHttps {
 
-
-
     public void sendRequestIgnoreSSL(String url)  {
         HttpsURLConnection con = null;
         // Create a trust manager that does not validate certificate chains
