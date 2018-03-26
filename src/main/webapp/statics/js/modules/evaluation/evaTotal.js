@@ -172,7 +172,7 @@ function xChange(param) {
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                         
+
                         var dateDiff = datedifference(param.ava_start,param.ava_terminal);
                         if(dateDiff > 5){
                             for(var i=0;i<result.scoreList.length;i++){
@@ -180,7 +180,7 @@ function xChange(param) {
                             }
                         }else{
                             for(var i=0;i<result.scoreList.length;i++){
-                                arr.push(result.scoreList[i].recordTime);
+                                arr.push(result.scoreList[i].recordTime+":00");
                             }
                         }
 
@@ -201,10 +201,10 @@ function xChange(param) {
             }
         },
         tooltip: {
-        crosshairs: true,
-        headerFormat: '<b>{series.name}</b><br>',
-        pointFormat: '  分数:{point.y:.2f}分',
-    },
+            crosshairs: true,
+            headerFormat: '<b>{series.name}</b><br>',
+            pointFormat: '  分数:{point.y:.2f}分',
+        },
         plotOptions: {
             stickyTracking: false,
             column: {
@@ -265,7 +265,7 @@ function xChange(param) {
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                         
+
                         var dateDiff = datedifference(param.ava_start,param.ava_terminal);
                         if(dateDiff > 5){
                             for(var i=0;i<result.scoreList.length;i++){
@@ -273,7 +273,7 @@ function xChange(param) {
                             }
                         }else{
                             for(var i=0;i<result.scoreList.length;i++){
-                                arr.push(result.scoreList[i].recordTime);
+                                arr.push(result.scoreList[i].recordTime+":00");
                             }
                         }
 
@@ -294,10 +294,10 @@ function xChange(param) {
             }
         },
         tooltip: {
-        crosshairs: true,
-        headerFormat: '<b>{series.name}</b><br>',
-        pointFormat: '  分数:{point.y:.2f}分',
-    },
+            crosshairs: true,
+            headerFormat: '<b>{series.name}</b><br>',
+            pointFormat: '  分数:{point.y:.2f}分',
+        },
         plotOptions: {
             stickyTracking: false,
             column: {
@@ -358,7 +358,7 @@ function xChange(param) {
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                         
+
                         var dateDiff = datedifference(param.ava_start,param.ava_terminal);
                         if(dateDiff > 5){
                             for(var i=0;i<result.scoreList.length;i++){
@@ -366,7 +366,7 @@ function xChange(param) {
                             }
                         }else{
                             for(var i=0;i<result.scoreList.length;i++){
-                                arr.push(result.scoreList[i].recordTime);
+                                arr.push(result.scoreList[i].recordTime+":00");
                             }
                         }
 
@@ -387,10 +387,10 @@ function xChange(param) {
             }
         },
         tooltip: {
-        crosshairs: true,
-        headerFormat: '<b>{series.name}</b><br>',
-        pointFormat: '日期:{point.x}  分数:{point.y:.2f}分',
-    },
+            crosshairs: true,
+            headerFormat: '<b>{series.name}</b><br>',
+            pointFormat: '日期:{point.x}  分数:{point.y:.2f}分',
+        },
         plotOptions: {
             stickyTracking: false,
             column: {
@@ -451,7 +451,7 @@ function xChange(param) {
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                         
+
                         var dateDiff = datedifference(param.ava_start,param.ava_terminal);
                         if(dateDiff > 5){
                             for(var i=0;i<result.scoreList.length;i++){
@@ -459,7 +459,7 @@ function xChange(param) {
                             }
                         }else{
                             for(var i=0;i<result.scoreList.length;i++){
-                                arr.push(result.scoreList[i].recordTime);
+                                arr.push(result.scoreList[i].recordTime+":00");
                             }
                         }
 
@@ -480,10 +480,10 @@ function xChange(param) {
             }
         },
         tooltip: {
-        crosshairs: true,
-        headerFormat: '<b>{series.name}</b><br>',
-        pointFormat: '  分数:{point.y:.2f}分',
-    },
+            crosshairs: true,
+            headerFormat: '<b>{series.name}</b><br>',
+            pointFormat: '  分数:{point.y:.2f}分',
+        },
         plotOptions: {
             stickyTracking: false,
             column: {
@@ -544,7 +544,7 @@ function xChange(param) {
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                         
+
                         var dateDiff = datedifference(param.ava_start,param.ava_terminal);
                         if(dateDiff > 5){
                             for(var i=0;i<result.scoreList.length;i++){
@@ -552,7 +552,7 @@ function xChange(param) {
                             }
                         }else{
                             for(var i=0;i<result.scoreList.length;i++){
-                                arr.push(result.scoreList[i].recordTime);
+                                arr.push(result.scoreList[i].recordTime+":00");
                             }
                         }
 
@@ -573,10 +573,10 @@ function xChange(param) {
             }
         },
         tooltip: {
-        crosshairs: true,
-        headerFormat: '<b>{series.name}</b><br>',
-        pointFormat: '  分数:{point.y:.2f}分',
-    },
+            crosshairs: true,
+            headerFormat: '<b>{series.name}</b><br>',
+            pointFormat: '  分数:{point.y:.2f}分',
+        },
         plotOptions: {
             stickyTracking: false,
             column: {
@@ -637,7 +637,7 @@ function xChange(param) {
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                         
+
                         var dateDiff = datedifference(param.ava_start,param.ava_terminal);
                         if(dateDiff > 5){
                             for(var i=0;i<result.scoreList.length;i++){
@@ -645,7 +645,7 @@ function xChange(param) {
                             }
                         }else{
                             for(var i=0;i<result.scoreList.length;i++){
-                                arr.push(result.scoreList[i].recordTime);
+                                arr.push(result.scoreList[i].recordTime+":00");
                             }
                         }
 
@@ -666,10 +666,10 @@ function xChange(param) {
             }
         },
         tooltip: {
-        crosshairs: true,
-        headerFormat: '<b>{series.name}</b><br>',
-        pointFormat: '  分数:{point.y:.2f}分',
-    },
+            crosshairs: true,
+            headerFormat: '<b>{series.name}</b><br>',
+            pointFormat: '  分数:{point.y:.2f}分',
+        },
         plotOptions: {
             stickyTracking: false,
             column: {
@@ -709,13 +709,6 @@ function xChange(param) {
     });
 
 }
-
-
-
-
-
-
-
 
 function getFormJson(form) {      /*将表单对象变为json对象*/
     var o = {};
@@ -1079,6 +1072,8 @@ var connection_chart = new Vue({
                     rotation: 0//调节倾斜角度偏移
                 },
                 categories: (function () {
+                    var date=new Date();
+                    point=date.getDate();
                     var arr = [];
                     $.ajax({
                         type: "POST",
@@ -1088,9 +1083,8 @@ var connection_chart = new Vue({
                         data: param,  //传入组装的参数
                         dataType: "json",
                         success: function (result) {
-                             
                             for(var i=0;i<result.scoreList.length;i++){
-                                arr.push(result.scoreList[i].recordTime);
+                                arr.push(result.scoreList[i].recordTime+":00");
                             }
                         }
                     })
@@ -1105,12 +1099,15 @@ var connection_chart = new Vue({
                 min: 60,
                 title: {
                     text: ' '
-                }
+                },
             },
             tooltip: {
-                crosshairs: true,
-                headerFormat: '<b>{series.name}</b><br>',
-                pointFormat: '  分数:{point.y:.2f}分',
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y:.1f} Q</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
             },
             plotOptions: {
                 stickyTracking: false,
@@ -1188,7 +1185,7 @@ var quality_chart = new Vue({
                         dataType: "json",
                         success: function (result) {
                             for(var i=0;i<result.scoreList.length;i++){
-                                arr.push(result.scoreList[i].recordTime);
+                                arr.push(result.scoreList[i].recordTime+":00");
                             }
                         }
                     })
@@ -1205,9 +1202,12 @@ var quality_chart = new Vue({
                 }
             },
             tooltip: {
-                crosshairs: true,
-                headerFormat: '<b>{series.name}</b><br>',
-                pointFormat: '  分数:{point.y:.2f}分',
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y:.1f} Q</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
             },
             plotOptions: {
                 stickyTracking: false,
@@ -1288,7 +1288,7 @@ var download_chart = new Vue({
                         dataType: "json",
                         success: function (result) {
                             for(var i=0;i<result.scoreList.length;i++){
-                                arr.push(result.scoreList[i].recordTime);
+                                arr.push(result.scoreList[i].recordTime+":00");
                             }
                         }
                     })
@@ -1305,9 +1305,12 @@ var download_chart = new Vue({
                 }
             },
             tooltip: {
-                crosshairs: true,
-                headerFormat: '<b>{series.name}</b><br>',
-                pointFormat: '  分数:{point.y:.2f}分',
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y:.1f} Q</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
             },
             plotOptions: {
                 stickyTracking: false,
@@ -1388,7 +1391,7 @@ var page_chart = new Vue({
                         dataType: "json",
                         success: function (result) {
                             for(var i=0;i<result.scoreList.length;i++){
-                                arr.push(result.scoreList[i].recordTime);
+                                arr.push(result.scoreList[i].recordTime+":00");
                             }
                         }
                     })
@@ -1405,9 +1408,12 @@ var page_chart = new Vue({
                 }
             },
             tooltip: {
-                crosshairs: true,
-                headerFormat: '<b>{series.name}</b><br>',
-                pointFormat: '  分数:{point.y:.2f}分',
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y:.1f} Q</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
             },
             plotOptions: {
                 stickyTracking: false,
@@ -1488,9 +1494,9 @@ var video_chart = new Vue({
                         data: param,  //传入组装的参数
                         dataType: "json",
                         success: function (result) {
-                            debugger;
+                            debugger
                             for(var i=0;i<result.scoreList.length;i++){
-                                arr.push(result.scoreList[i].recordTime);
+                                arr.push(result.scoreList[i].recordTime+":00");
                             }
                         }
                     })
@@ -1507,9 +1513,12 @@ var video_chart = new Vue({
                 }
             },
             tooltip: {
-                crosshairs: true,
-                headerFormat: '<b>{series.name}</b><br>',
-                pointFormat: '  分数:{point.y:.2f}分',
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y:.1f} Q</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
             },
             plotOptions: {
                 stickyTracking: false,
@@ -1591,8 +1600,8 @@ var game_chart = new Vue({
                         dataType: "json",
                         success: function (result) {
                             for(var i=0;i<result.scoreList.length;i++){
-                                 
-                                arr.push(result.scoreList[i].recordTime);
+
+                                arr.push(result.scoreList[i].recordTime+":00");
                             }
                         }
                     })
@@ -1609,9 +1618,12 @@ var game_chart = new Vue({
                 }
             },
             tooltip: {
-                crosshairs: true,
-                headerFormat: '<b>{series.name}</b><br>',
-                pointFormat: '  分数:{point.y:.2f}分',
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y:.1f} Q</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
             },
             plotOptions: {
                 stickyTracking: false,

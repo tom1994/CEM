@@ -1176,6 +1176,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				finalScore.setServiceType(2);
 				finalScore.setTargetId(ite.getTargetId());
 				finalScore.setTargetName(ite.getTargetName());
+				finalScore.setRecordDate(ite.getRecordDate());
+				finalScore.setRecordTime(ite.getRecordTime());
 				finalScore.setScore(((connection.get(ite).getScore()) / (connection.get(ite).getBase()))*(1-(ite.getFail())/ite.getTotal()));
 				finalScore.setBase(Double.parseDouble(pros.getValue("qualityweight")));
 				connectionScore.add(finalScore);

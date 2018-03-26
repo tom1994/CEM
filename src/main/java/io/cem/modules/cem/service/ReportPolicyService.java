@@ -2,6 +2,7 @@ package io.cem.modules.cem.service;
 
 import io.cem.modules.cem.entity.ReportPolicyEntity;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
@@ -23,4 +24,6 @@ public interface ReportPolicyService {
 	void delete(Integer id);
 	
 	void deleteBatch(Integer[] ids);
+
+	String strToDateFormat(String date) throws ParseException;
 }

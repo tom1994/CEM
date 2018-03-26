@@ -52,11 +52,12 @@
 	</select>
 
 	<select id="queryPppoeList" resultType="io.cem.modules.cem.entity.RecordHourPppoeEntity">
-		select record_hour_pppoe.id,record_hour_pppoe.city_id,record_hour_pppoe.county_id,record_hour_pppoe.probe_id,record_hour_pppoe.port,record_hour_pppoe.task_id,record_hour_pppoe.service_type,record_hour_pppoe.target_id,record_hour_pppoe.target_ip,record_hour_pppoe.record_date,record_hour_pppoe.record_time,record_hour_pppoe.remark,
+		select record_hour_pppoe.id,record_hour_pppoe.city_id,record_hour_pppoe.county_id,record_hour_pppoe.probe_id,record_hour_pppoe.port,record_hour_pppoe.task_id,record_hour_pppoe.service_type,record_hour_pppoe.target_id,record_hour_pppoe.target_ip,record_hour_pppoe.record_date,record_hour_pppoe.remark,
 		city.city_name AS city_name,
 		county.county_name AS area_name,
 		probe.probe_name AS probe_name,
 		target.target_name AS target_name,
+		time_format(record_time, '%H') AS record_time,
 		AVG(record_hour_pppoe.delay) AS delay,
 		AVG(record_hour_pppoe.drop_rate) AS drop_rate,
 		AVG(record_hour_pppoe.success_rate) AS success_rate,
@@ -89,11 +90,12 @@
 	</select>
 
 	<select id="queryDayList" resultType="io.cem.modules.cem.entity.RecordHourPppoeEntity">
-		select pppoe.id,pppoe.city_id,pppoe.county_id,pppoe.probe_id,pppoe.port,pppoe.task_id,pppoe.service_type,pppoe.target_id,pppoe.target_ip,pppoe.record_date,pppoe.record_time,pppoe.remark,
+		select pppoe.id,pppoe.city_id,pppoe.county_id,pppoe.probe_id,pppoe.port,pppoe.task_id,pppoe.service_type,pppoe.target_id,pppoe.target_ip,pppoe.record_date,pppoe.remark,
 		city.city_name AS city_name,
 		county.county_name AS area_name,
 		probe.probe_name AS probe_name,
 		target.target_name AS target_name,
+		time_format(record_time, '%H') AS record_time,
 		AVG(pppoe.delay) AS delay,
 		AVG(pppoe.drop_rate) AS drop_rate,
 		AVG(pppoe.success_rate) AS success_rate,

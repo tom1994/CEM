@@ -924,7 +924,7 @@
                                     <span class="col-lg-2 col-md-2 col-sm-2  Range"><span style="color:red">*</span>(5-300)</span>
                                     <label for="download_size"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border" style="padding-right: 0px"
-                                    >上传文件大小(KB)</label>
+                                    >下载文件大小(KB)</label>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <input type="text"   class="form-control input clear" id="download_size"
                                                onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
@@ -1283,7 +1283,7 @@
             //当敲Backspace键时，事件源类型为密码或单行、多行文本的，
             //并且readonly属性为true或enabled属性为false的，则退格键失效
             var flag1=(ev.keyCode == 8 && (t=="password" || t=="text" || t=="textarea")
-            && vReadOnly=="readonly")?true:false;
+                && vReadOnly=="readonly")?true:false;
             //当敲Backspace键时，事件源类型非密码或单行、多行文本的，则退格键失效
             var flag2=(ev.keyCode == 8 && t != "password" && t != "text" && t != "textarea")
                 ?true:false;

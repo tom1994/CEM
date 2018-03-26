@@ -1,25 +1,24 @@
 package io.cem.modules.cem.controller;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.alibaba.fastjson.JSONObject;
 import io.cem.common.exception.RRException;
 import io.cem.common.utils.JSONUtils;
+import io.cem.common.utils.PageUtils;
+import io.cem.common.utils.R;
+import io.cem.modules.cem.entity.AlarmRecordEntity;
+import io.cem.modules.cem.entity.RecordPingEntity;
+import io.cem.modules.cem.service.AlarmRecordService;
+import io.cem.modules.cem.service.RecordPingService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.cem.modules.cem.entity.AlarmRecordEntity;
-import io.cem.modules.cem.service.AlarmRecordService;
-import io.cem.common.utils.PageUtils;
-import io.cem.common.utils.Query;
-import io.cem.common.utils.R;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -29,6 +28,8 @@ import io.cem.common.utils.R;
 public class AlarmRecordController {
 	@Autowired
 	private AlarmRecordService alarmRecordService;
+	@Autowired
+	private RecordPingService recordPingService;
 	
 	/**
 	 * 列表
@@ -68,6 +69,33 @@ public class AlarmRecordController {
 	public R detail(@PathVariable("id") Integer id){
 //		ProbeEntity probeList = probeService.queryDetail(id);
 		AlarmRecordEntity alarmList = alarmRecordService.queryObject(id);
+		int service = alarmList.getServiceType();
+		int record = alarmList.getRecordId();
+		if(service==1||service==2||service==3){
+			RecordPingEntity recordPing = recordPingService.queryObject(record);
+		}else if(service==4||service==5){
+
+		}else if(service==10||service==11){
+
+		}else if(service==12){
+
+		}else if(service==13){
+
+		}else if(service==14){
+
+		}else if(service==15){
+
+		}else if(service==20){
+
+		}else if(service==30){
+
+		}else if(service==31||service==32){
+
+		}else if(service==40){
+
+		}else if(service==50){
+
+		}else{}
 		System.out.println(alarmList);
 		return R.ok().put("alarm", alarmList);
 	}

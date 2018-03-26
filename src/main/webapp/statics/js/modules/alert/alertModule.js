@@ -26,6 +26,7 @@ var task_handle = new Vue({
         newTask: function () {
             $('#title').show();
             $("#title2").hide();
+            $('.modal-body').removeAttr('style');
             status = 0;
             var forms = $('#taskform_data .form-control');
             taskform_data.atemplates = [];
@@ -133,8 +134,22 @@ var taskform_data = new Vue({
         servicechange: function () {
             $(".service").addClass("service_unselected");
             this.servicetype = parseInt($('#serviceType').val());
+
             var servicetypeid = stid.get(this.servicetype);
             var selectst = "#" + servicetypeid;
+            if(selectst=="#sla" ){
+                $('.modal-body').css('height','450px')
+                $('.modal-body').css('overflow-y','auto')
+            }else if (selectst=="#video"){
+                $('.modal-body').css('height','450px')
+                $('.modal-body').css('overflow-y','auto')
+            }else if(selectst=="#web_page"){
+                $('.modal-body').css('height','450px')
+                $('.modal-body').css('overflow-y','auto')
+            }else {
+                $('.modal-body').removeAttr('style');
+            }
+
             $("#" + servicetypeid).removeClass("service_unselected");
             $("#" + servicetypeid + " input[type=text]").prop("disabled", false);
             $("#" + servicetypeid + " select").prop("disabled", false);
