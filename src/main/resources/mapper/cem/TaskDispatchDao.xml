@@ -72,6 +72,7 @@
 		LEFT JOIN schedule_policy ON task.sch_policy_id = schedule_policy.id
 		WHERE probe_id = #{probeid}
 		AND task_dispatch.is_ondemand = 0
+		AND task_dispatch.status = 1
 		<choose>
 			<when test="sidx != null and sidx.trim() != ''">
 				order by ${sidx} ${order}

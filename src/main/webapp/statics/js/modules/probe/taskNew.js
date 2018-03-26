@@ -699,7 +699,6 @@ var taskform_data = new Vue({
             tasknewJson.createTime = oDate.Format("yyyy-MM-dd hh:mm:ss");
             tasknewJson.remark = "无";
             var reg = /^(?=^.{3,255}$)[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+$/;
-
             if(tasknewJson.serviceType== "14"&&paramnewJson.domains!=''){
                 var domains=paramnewJson.domains;
                 var stringSplit=domains.split(';');
@@ -710,6 +709,7 @@ var taskform_data = new Vue({
                         return
 
                     }
+
                 }
 
                 tasknewJson.domains=stringSplit;
@@ -766,7 +766,7 @@ var taskform_data = new Vue({
                     toastr.warning("您输入的查询间隔有误，请正确输入!");
                 } else if (tasknewJson.serviceType== "14"&&paramnew.count < 1 || paramnew.count > 10000) {
                     toastr.warning("您输入的单次发包次数有误，请正确输入!");
-                } else if (paramnew.domains == "") {
+                } else if (paramnew.domains == ""||paramnew.domains==null) {
                     toastr.warning("请输入待查询域名");
                 } else if (paramnew.auth_port < 1 || paramnew.auth_port > 65535) {
                     toastr.warning("您输入的服务器认证端口有误，请正确输入!");
