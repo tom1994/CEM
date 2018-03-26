@@ -1,7 +1,6 @@
 package io.cem.modules.cem.entity;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 
 
@@ -38,47 +37,47 @@ public class RecordSlaEntity implements Serializable {
 	//记录时间
 	private String recordTime;
 	//时延平均值
-	private BigDecimal delay;
+	private Double delay;
 	//往向时延
-	private BigDecimal gDelay;
+	private Double gDelay;
 	//返向时延
-	private BigDecimal rDelay;
+	private Double rDelay;
 	//时延标准差
-	private BigDecimal delayStd;
+	private Double delayStd;
 	//往向时延标准差
-	private BigDecimal gDelayStd;
+	private Double gDelayStd;
 	//返向时延标准差
-	private BigDecimal rDelayStd;
+	private Double rDelayStd;
 	//时延方差
-	private BigDecimal delayVar;
+	private Double delayVar;
 	//往向时延方差
-	private BigDecimal gDelayVar;
+	private Double gDelayVar;
 	//返向时延方差
-	private BigDecimal rDelayVar;
+	private Double rDelayVar;
 	//抖动平均值
-	private BigDecimal jitter;
+	private Double jitter;
 	//往向抖动
-	private BigDecimal gJitter;
+	private Double gJitter;
 	//返向抖动
-	private BigDecimal rJitter;
+	private Double rJitter;
 	//抖动标准差
-	private BigDecimal jitterStd;
+	private Double jitterStd;
 	//往向抖动标准差
-	private BigDecimal gJitterStd;
+	private Double gJitterStd;
 	//返向抖动标准差
-	private BigDecimal rJitterStd;
+	private Double rJitterStd;
 	//抖动方差
-	private BigDecimal jitterVar;
+	private Double jitterVar;
 	//往向抖动方差
-	private BigDecimal gJitterVar;
+	private Double gJitterVar;
 	//返向抖动方差
-	private BigDecimal rJitterVar;
+	private Double rJitterVar;
 	//丢包率
-	private BigDecimal lossRate;
+	private Double lossRate;
 	//往向丢包率
-	private BigDecimal gLossRate;
+	private Double gLossRate;
 	//返向丢包率
-	private BigDecimal rLossRate;
+	private Double rLossRate;
 	//备注
 	private String remark;
 
@@ -311,253 +310,253 @@ public class RecordSlaEntity implements Serializable {
 	/**
 	 * 设置：时延平均值
 	 */
-	public void setDelay(BigDecimal delay) {
+	public void setDelay(Double delay) {
 		this.delay = delay;
 	}
 	/**
 	 * 获取：时延平均值
 	 */
-	public BigDecimal getDelay() {
+	public Double getDelay() {
 		return delay;
 	}
 	/**
 	 * 设置：往向时延
 	 */
-	public void setGDelay(BigDecimal gDelay) {
+	public void setGDelay(Double gDelay) {
 		this.gDelay = gDelay;
 	}
 	/**
 	 * 获取：往向时延
 	 */
-	public BigDecimal getGDelay() {
+	public Double getGDelay() {
 		return gDelay;
 	}
 	/**
 	 * 设置：返向时延
 	 */
-	public void setRDelay(BigDecimal rDelay) {
+	public void setRDelay(Double rDelay) {
 		this.rDelay = rDelay;
 	}
 	/**
 	 * 获取：返向时延
 	 */
-	public BigDecimal getRDelay() {
+	public Double getRDelay() {
 		return rDelay;
 	}
 	/**
 	 * 设置：时延标准差
 	 */
-	public void setDelayStd(BigDecimal delayStd) {
+	public void setDelayStd(Double delayStd) {
 		this.delayStd = delayStd;
 	}
 	/**
 	 * 获取：时延标准差
 	 */
-	public BigDecimal getDelayStd() {
+	public Double getDelayStd() {
 		return delayStd;
 	}
 	/**
 	 * 设置：往向时延标准差
 	 */
-	public void setGDelayStd(BigDecimal gDelayStd) {
+	public void setGDelayStd(Double gDelayStd) {
 		this.gDelayStd = gDelayStd;
 	}
 	/**
 	 * 获取：往向时延标准差
 	 */
-	public BigDecimal getGDelayStd() {
+	public Double getGDelayStd() {
 		return gDelayStd;
 	}
 	/**
 	 * 设置：返向时延标准差
 	 */
-	public void setRDelayStd(BigDecimal rDelayStd) {
+	public void setRDelayStd(Double rDelayStd) {
 		this.rDelayStd = rDelayStd;
 	}
 	/**
 	 * 获取：返向时延标准差
 	 */
-	public BigDecimal getRDelayStd() {
+	public Double getRDelayStd() {
 		return rDelayStd;
 	}
 	/**
 	 * 设置：时延方差
 	 */
-	public void setDelayVar(BigDecimal delayVar) {
+	public void setDelayVar(Double delayVar) {
 		this.delayVar = delayVar;
 	}
 	/**
 	 * 获取：时延方差
 	 */
-	public BigDecimal getDelayVar() {
+	public Double getDelayVar() {
 		return delayVar;
 	}
 	/**
 	 * 设置：往向时延方差
 	 */
-	public void setGDelayVar(BigDecimal gDelayVar) {
+	public void setGDelayVar(Double gDelayVar) {
 		this.gDelayVar = gDelayVar;
 	}
 	/**
 	 * 获取：往向时延方差
 	 */
-	public BigDecimal getGDelayVar() {
+	public Double getGDelayVar() {
 		return gDelayVar;
 	}
 	/**
 	 * 设置：返向时延方差
 	 */
-	public void setRDelayVar(BigDecimal rDelayVar) {
+	public void setRDelayVar(Double rDelayVar) {
 		this.rDelayVar = rDelayVar;
 	}
 	/**
 	 * 获取：返向时延方差
 	 */
-	public BigDecimal getRDelayVar() {
+	public Double getRDelayVar() {
 		return rDelayVar;
 	}
 	/**
 	 * 设置：抖动平均值
 	 */
-	public void setJitter(BigDecimal jitter) {
+	public void setJitter(Double jitter) {
 		this.jitter = jitter;
 	}
 	/**
 	 * 获取：抖动平均值
 	 */
-	public BigDecimal getJitter() {
+	public Double getJitter() {
 		return jitter;
 	}
 	/**
 	 * 设置：往向抖动
 	 */
-	public void setGJitter(BigDecimal gJitter) {
+	public void setGJitter(Double gJitter) {
 		this.gJitter = gJitter;
 	}
 	/**
 	 * 获取：往向抖动
 	 */
-	public BigDecimal getGJitter() {
+	public Double getGJitter() {
 		return gJitter;
 	}
 	/**
 	 * 设置：返向抖动
 	 */
-	public void setRJitter(BigDecimal rJitter) {
+	public void setRJitter(Double rJitter) {
 		this.rJitter = rJitter;
 	}
 	/**
 	 * 获取：返向抖动
 	 */
-	public BigDecimal getRJitter() {
+	public Double getRJitter() {
 		return rJitter;
 	}
 	/**
 	 * 设置：抖动标准差
 	 */
-	public void setJitterStd(BigDecimal jitterStd) {
+	public void setJitterStd(Double jitterStd) {
 		this.jitterStd = jitterStd;
 	}
 	/**
 	 * 获取：抖动标准差
 	 */
-	public BigDecimal getJitterStd() {
+	public Double getJitterStd() {
 		return jitterStd;
 	}
 	/**
 	 * 设置：往向抖动标准差
 	 */
-	public void setGJitterStd(BigDecimal gJitterStd) {
+	public void setGJitterStd(Double gJitterStd) {
 		this.gJitterStd = gJitterStd;
 	}
 	/**
 	 * 获取：往向抖动标准差
 	 */
-	public BigDecimal getGJitterStd() {
+	public Double getGJitterStd() {
 		return gJitterStd;
 	}
 	/**
 	 * 设置：返向抖动标准差
 	 */
-	public void setRJitterStd(BigDecimal rJitterStd) {
+	public void setRJitterStd(Double rJitterStd) {
 		this.rJitterStd = rJitterStd;
 	}
 	/**
 	 * 获取：返向抖动标准差
 	 */
-	public BigDecimal getRJitterStd() {
+	public Double getRJitterStd() {
 		return rJitterStd;
 	}
 	/**
 	 * 设置：抖动方差
 	 */
-	public void setJitterVar(BigDecimal jitterVar) {
+	public void setJitterVar(Double jitterVar) {
 		this.jitterVar = jitterVar;
 	}
 	/**
 	 * 获取：抖动方差
 	 */
-	public BigDecimal getJitterVar() {
+	public Double getJitterVar() {
 		return jitterVar;
 	}
 	/**
 	 * 设置：往向抖动方差
 	 */
-	public void setGJitterVar(BigDecimal gJitterVar) {
+	public void setGJitterVar(Double gJitterVar) {
 		this.gJitterVar = gJitterVar;
 	}
 	/**
 	 * 获取：往向抖动方差
 	 */
-	public BigDecimal getGJitterVar() {
+	public Double getGJitterVar() {
 		return gJitterVar;
 	}
 	/**
 	 * 设置：返向抖动方差
 	 */
-	public void setRJitterVar(BigDecimal rJitterVar) {
+	public void setRJitterVar(Double rJitterVar) {
 		this.rJitterVar = rJitterVar;
 	}
 	/**
 	 * 获取：返向抖动方差
 	 */
-	public BigDecimal getRJitterVar() {
+	public Double getRJitterVar() {
 		return rJitterVar;
 	}
 	/**
 	 * 设置：丢包率
 	 */
-	public void setLossRate(BigDecimal lossRate) {
+	public void setLossRate(Double lossRate) {
 		this.lossRate = lossRate;
 	}
 	/**
 	 * 获取：丢包率
 	 */
-	public BigDecimal getLossRate() {
+	public Double getLossRate() {
 		return lossRate;
 	}
 	/**
 	 * 设置：往向丢包率
 	 */
-	public void setGLossRate(BigDecimal gLossRate) {
+	public void setGLossRate(Double gLossRate) {
 		this.gLossRate = gLossRate;
 	}
 	/**
 	 * 获取：往向丢包率
 	 */
-	public BigDecimal getGLossRate() {
+	public Double getGLossRate() {
 		return gLossRate;
 	}
 	/**
 	 * 设置：返向丢包率
 	 */
-	public void setRLossRate(BigDecimal rLossRate) {
+	public void setRLossRate(Double rLossRate) {
 		this.rLossRate = rLossRate;
 	}
 	/**
 	 * 获取：返向丢包率
 	 */
-	public BigDecimal getRLossRate() {
+	public Double getRLossRate() {
 		return rLossRate;
 	}
 	/**

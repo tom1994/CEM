@@ -1,19 +1,15 @@
 package io.cem.modules.cem.controller;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.alibaba.fastjson.JSONObject;
 import io.cem.common.exception.RRException;
 import io.cem.common.utils.JSONUtils;
+import io.cem.common.utils.PageUtils;
+import io.cem.common.utils.R;
 import io.cem.common.utils.excel.ExcelUtils;
 import io.cem.modules.cem.entity.DiagnoseEntity;
 import io.cem.modules.cem.entity.RecordHourPingEntity;
-import io.cem.modules.cem.entity.DiagnoseEntity;
+import io.cem.modules.cem.entity.RecordPingEntity;
+import io.cem.modules.cem.service.RecordPingService;
 import io.cem.modules.cem.service.TaskDispatchService;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -21,17 +17,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import io.cem.modules.cem.entity.RecordPingEntity;
-import io.cem.modules.cem.service.RecordPingService;
-import io.cem.common.utils.PageUtils;
-import io.cem.common.utils.Query;
-import io.cem.common.utils.R;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static java.lang.Thread.sleep;
 

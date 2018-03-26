@@ -1,7 +1,6 @@
 package io.cem.modules.cem.entity;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 
 
@@ -38,15 +37,15 @@ public class RecordGameEntity implements Serializable {
 	//记录时间
 	private String recordTime;
 	//DNS时延
-	private BigDecimal dnsDelay;
+	private Double dnsDelay;
 	//连接时延
-	private BigDecimal connDelay;
+	private Double connDelay;
 	//游戏数据包时延
-	private BigDecimal packetDelay;
+	private Double packetDelay;
 	//游戏数据包抖动
-	private BigDecimal packetJitter;
+	private Double packetJitter;
 	//游戏数据包丢包率
-	private BigDecimal lossRate;
+	private Double lossRate;
 	//备注
 	private String remark;
 
@@ -279,61 +278,61 @@ public class RecordGameEntity implements Serializable {
 	/**
 	 * 设置：DNS时延
 	 */
-	public void setDnsDelay(BigDecimal dnsDelay) {
+	public void setDnsDelay(Double dnsDelay) {
 		this.dnsDelay = dnsDelay;
 	}
 	/**
 	 * 获取：DNS时延
 	 */
-	public BigDecimal getDnsDelay() {
+	public Double getDnsDelay() {
 		return dnsDelay;
 	}
 	/**
 	 * 设置：连接时延
 	 */
-	public void setConnDelay(BigDecimal connDelay) {
+	public void setConnDelay(Double connDelay) {
 		this.connDelay = connDelay;
 	}
 	/**
 	 * 获取：连接时延
 	 */
-	public BigDecimal getConnDelay() {
+	public Double getConnDelay() {
 		return connDelay;
 	}
 	/**
 	 * 设置：游戏数据包时延
 	 */
-	public void setPacketDelay(BigDecimal packetDelay) {
+	public void setPacketDelay(Double packetDelay) {
 		this.packetDelay = packetDelay;
 	}
 	/**
 	 * 获取：游戏数据包时延
 	 */
-	public BigDecimal getPacketDelay() {
+	public Double getPacketDelay() {
 		return packetDelay;
 	}
 	/**
 	 * 设置：游戏数据包抖动
 	 */
-	public void setPacketJitter(BigDecimal packetJitter) {
+	public void setPacketJitter(Double packetJitter) {
 		this.packetJitter = packetJitter;
 	}
 	/**
 	 * 获取：游戏数据包抖动
 	 */
-	public BigDecimal getPacketJitter() {
+	public Double getPacketJitter() {
 		return packetJitter;
 	}
 	/**
 	 * 设置：游戏数据包丢包率
 	 */
-	public void setLossRate(BigDecimal lossRate) {
+	public void setLossRate(Double lossRate) {
 		this.lossRate = lossRate;
 	}
 	/**
 	 * 获取：游戏数据包丢包率
 	 */
-	public BigDecimal getLossRate() {
+	public Double getLossRate() {
 		return lossRate;
 	}
 	/**

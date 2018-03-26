@@ -1,7 +1,6 @@
 package io.cem.modules.cem.dao;
 
 import io.cem.modules.cem.entity.RecordHourPingEntity;
-import io.cem.modules.cem.entity.RecordPingEntity;
 import io.cem.modules.sys.dao.BaseDao;
 
 import java.util.List;

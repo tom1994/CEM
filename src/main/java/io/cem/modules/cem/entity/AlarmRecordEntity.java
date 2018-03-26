@@ -84,14 +84,42 @@ public class AlarmRecordEntity implements Serializable {
 	private Double slaGDelay;
 	//返向时延
 	private Double slaRDelay;
+	//时延标准差
+	private Double slaDelayStd;
+	//往向时延标准差
+	private Double slaGDelayStd;
+	//返向时延标准差
+	private Double slaRDelayStd;
+	//时延方差
+	private Double slaDelayVar;
+	//往向时延方差
+	private Double slaGDelayVar;
+	//返向时延方差
+	private Double slaRDelayVar;
 	//抖动平均值
 	private Double slaJitter;
 	//往向抖动
 	private Double slaGJitter;
 	//返向抖动
 	private Double slaRJitter;
+	//抖动标准差
+	private Double slaJitterStd;
+	//往向抖动标准差
+	private Double slaGJitterStd;
+	//返向抖动标准差
+	private Double slaRJitterStd;
+	//抖动方差
+	private Double slaJitterVar;
+	//往向抖动方差
+	private Double slaGJitterVar;
+	//返向抖动方差
+	private Double slaRJitterVar;
 	//丢包率
 	private Double slaLossRate;
+	//往向丢包率
+	private Double slaGLossRate;
+	//返向丢包率
+	private Double slaRLossRate;
 
 
 	/*dns details*/
@@ -889,5 +917,117 @@ public class AlarmRecordEntity implements Serializable {
 
 	public void setGameLossRate(Double gameLossRate) {
 		this.gameLossRate = gameLossRate;
+	}
+
+	public Double getSlaDelayStd() {
+		return slaDelayStd;
+	}
+
+	public void setSlaDelayStd(Double slaDelayStd) {
+		this.slaDelayStd = slaDelayStd;
+	}
+
+	public Double getSlaGDelayStd() {
+		return slaGDelayStd;
+	}
+
+	public void setSlaGDelayStd(Double slaGDelayStd) {
+		this.slaGDelayStd = slaGDelayStd;
+	}
+
+	public Double getSlaRDelayStd() {
+		return slaRDelayStd;
+	}
+
+	public void setSlaRDelayStd(Double slaRDelayStd) {
+		this.slaRDelayStd = slaRDelayStd;
+	}
+
+	public Double getSlaDelayVar() {
+		return slaDelayVar;
+	}
+
+	public void setSlaDelayVar(Double slaDelayVar) {
+		this.slaDelayVar = slaDelayVar;
+	}
+
+	public Double getSlaGDelayVar() {
+		return slaGDelayVar;
+	}
+
+	public void setSlaGDelayVar(Double slaGDelayVar) {
+		this.slaGDelayVar = slaGDelayVar;
+	}
+
+	public Double getSlaRDelayVar() {
+		return slaRDelayVar;
+	}
+
+	public void setSlaRDelayVar(Double slaRDelayVar) {
+		this.slaRDelayVar = slaRDelayVar;
+	}
+
+	public Double getSlaJitterStd() {
+		return slaJitterStd;
+	}
+
+	public void setSlaJitterStd(Double slaJitterStd) {
+		this.slaJitterStd = slaJitterStd;
+	}
+
+	public Double getSlaGJitterStd() {
+		return slaGJitterStd;
+	}
+
+	public void setSlaGJitterStd(Double slaGJitterStd) {
+		this.slaGJitterStd = slaGJitterStd;
+	}
+
+	public Double getSlaRJitterStd() {
+		return slaRJitterStd;
+	}
+
+	public void setSlaRJitterStd(Double slaRJitterStd) {
+		this.slaRJitterStd = slaRJitterStd;
+	}
+
+	public Double getSlaJitterVar() {
+		return slaJitterVar;
+	}
+
+	public void setSlaJitterVar(Double slaJitterVar) {
+		this.slaJitterVar = slaJitterVar;
+	}
+
+	public Double getSlaGJitterVar() {
+		return slaGJitterVar;
+	}
+
+	public void setSlaGJitterVar(Double slaGJitterVar) {
+		this.slaGJitterVar = slaGJitterVar;
+	}
+
+	public Double getSlaRJitterVar() {
+		return slaRJitterVar;
+	}
+
+	public void setSlaRJitterVar(Double slaRJitterVar) {
+		this.slaRJitterVar = slaRJitterVar;
+	}
+
+	public Double getSlaGLossRate() {
+		return slaGLossRate;
+	}
+
+	public void setSlaGLossRate(Double slaGLossRate) {
+		this.slaGLossRate = slaGLossRate;
+	}
+
+	public Double getSlaRLossRate() {
+		return slaRLossRate;
+	}
+
+	public void setSlaRLossRate(Double slaRLossRate) {
+		this.slaRLossRate = slaRLossRate;
 	}
 }

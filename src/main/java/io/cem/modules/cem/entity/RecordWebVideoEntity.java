@@ -1,7 +1,6 @@
 package io.cem.modules.cem.entity;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 
 
@@ -38,27 +37,27 @@ public class RecordWebVideoEntity implements Serializable {
 	//记录时间
 	private String recordTime;
 	//DNS时延
-	private BigDecimal dnsDelay;
+	private Double dnsDelay;
 	//连接WEB服务器时延
-	private BigDecimal wsConnDelay;
+	private Double wsConnDelay;
 	//WEB页面时延
-	private BigDecimal webPageDelay;
+	private Double webPageDelay;
 	//连接调度服务器时延
-	private BigDecimal ssConnDelay;
+	private Double ssConnDelay;
 	//获取视频地址时延
-	private BigDecimal addressDelay;
+	private Double addressDelay;
 	//连接媒体服务器时延
-	private BigDecimal msConnDelay;
+	private Double msConnDelay;
 	//首帧时延
-	private BigDecimal headFrameDelay;
+	private Double headFrameDelay;
 	//首次缓冲时延
-	private BigDecimal initBufferDelay;
+	private Double initBufferDelay;
 	//视频加载时延
-	private BigDecimal loadDelay;
+	private Double loadDelay;
 	//总体缓冲时间
-	private BigDecimal totalBufferDelay;
+	private Double totalBufferDelay;
 	//下载速率
-	private BigDecimal downloadRate;
+	private Double downloadRate;
 	//缓冲次数
 	private Integer bufferTime;
 	//备注
@@ -293,133 +292,133 @@ public class RecordWebVideoEntity implements Serializable {
 	/**
 	 * 设置：DNS时延
 	 */
-	public void setDnsDelay(BigDecimal dnsDelay) {
+	public void setDnsDelay(Double dnsDelay) {
 		this.dnsDelay = dnsDelay;
 	}
 	/**
 	 * 获取：DNS时延
 	 */
-	public BigDecimal getDnsDelay() {
+	public Double getDnsDelay() {
 		return dnsDelay;
 	}
 	/**
 	 * 设置：连接WEB服务器时延
 	 */
-	public void setWsConnDelay(BigDecimal wsConnDelay) {
+	public void setWsConnDelay(Double wsConnDelay) {
 		this.wsConnDelay = wsConnDelay;
 	}
 	/**
 	 * 获取：连接WEB服务器时延
 	 */
-	public BigDecimal getWsConnDelay() {
+	public Double getWsConnDelay() {
 		return wsConnDelay;
 	}
 	/**
 	 * 设置：WEB页面时延
 	 */
-	public void setWebPageDelay(BigDecimal webPageDelay) {
+	public void setWebPageDelay(Double webPageDelay) {
 		this.webPageDelay = webPageDelay;
 	}
 	/**
 	 * 获取：WEB页面时延
 	 */
-	public BigDecimal getWebPageDelay() {
+	public Double getWebPageDelay() {
 		return webPageDelay;
 	}
 	/**
 	 * 设置：连接调度服务器时延
 	 */
-	public void setSsConnDelay(BigDecimal ssConnDelay) {
+	public void setSsConnDelay(Double ssConnDelay) {
 		this.ssConnDelay = ssConnDelay;
 	}
 	/**
 	 * 获取：连接调度服务器时延
 	 */
-	public BigDecimal getSsConnDelay() {
+	public Double getSsConnDelay() {
 		return ssConnDelay;
 	}
 	/**
 	 * 设置：获取视频地址时延
 	 */
-	public void setAddressDelay(BigDecimal addressDelay) {
+	public void setAddressDelay(Double addressDelay) {
 		this.addressDelay = addressDelay;
 	}
 	/**
 	 * 获取：获取视频地址时延
 	 */
-	public BigDecimal getAddressDelay() {
+	public Double getAddressDelay() {
 		return addressDelay;
 	}
 	/**
 	 * 设置：连接媒体服务器时延
 	 */
-	public void setMsConnDelay(BigDecimal msConnDelay) {
+	public void setMsConnDelay(Double msConnDelay) {
 		this.msConnDelay = msConnDelay;
 	}
 	/**
 	 * 获取：连接媒体服务器时延
 	 */
-	public BigDecimal getMsConnDelay() {
+	public Double getMsConnDelay() {
 		return msConnDelay;
 	}
 	/**
 	 * 设置：首帧时延
 	 */
-	public void setHeadFrameDelay(BigDecimal headFrameDelay) {
+	public void setHeadFrameDelay(Double headFrameDelay) {
 		this.headFrameDelay = headFrameDelay;
 	}
 	/**
 	 * 获取：首帧时延
 	 */
-	public BigDecimal getHeadFrameDelay() {
+	public Double getHeadFrameDelay() {
 		return headFrameDelay;
 	}
 	/**
 	 * 设置：首次缓冲时延
 	 */
-	public void setInitBufferDelay(BigDecimal initBufferDelay) {
+	public void setInitBufferDelay(Double initBufferDelay) {
 		this.initBufferDelay = initBufferDelay;
 	}
 	/**
 	 * 获取：首次缓冲时延
 	 */
-	public BigDecimal getInitBufferDelay() {
+	public Double getInitBufferDelay() {
 		return initBufferDelay;
 	}
 	/**
 	 * 设置：视频加载时延
 	 */
-	public void setLoadDelay(BigDecimal loadDelay) {
+	public void setLoadDelay(Double loadDelay) {
 		this.loadDelay = loadDelay;
 	}
 	/**
 	 * 获取：视频加载时延
 	 */
-	public BigDecimal getLoadDelay() {
+	public Double getLoadDelay() {
 		return loadDelay;
 	}
 	/**
 	 * 设置：总体缓冲时间
 	 */
-	public void setTotalBufferDelay(BigDecimal totalBufferDelay) {
+	public void setTotalBufferDelay(Double totalBufferDelay) {
 		this.totalBufferDelay = totalBufferDelay;
 	}
 	/**
 	 * 获取：总体缓冲时间
 	 */
-	public BigDecimal getTotalBufferDelay() {
+	public Double getTotalBufferDelay() {
 		return totalBufferDelay;
 	}
 	/**
 	 * 设置：下载速率
 	 */
-	public void setDownloadRate(BigDecimal downloadRate) {
+	public void setDownloadRate(Double downloadRate) {
 		this.downloadRate = downloadRate;
 	}
 	/**
 	 * 获取：下载速率
 	 */
-	public BigDecimal getDownloadRate() {
+	public Double getDownloadRate() {
 		return downloadRate;
 	}
 	/**
