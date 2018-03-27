@@ -646,7 +646,7 @@ Date.prototype.Format = function (fmt) {
         "m+": this.getMinutes(),                 //分
         "s+": this.getSeconds(),                 //秒
         "q+": Math.floor((this.getMonth() + 3) / 3), //季度
-        "S+": this.getMilliseconds()             //毫秒
+        "S+": this.getMilliseconds()             //ms
     };
     for (var k in o) {
         if (new RegExp("(" + k + ")").test(fmt)) {
@@ -681,7 +681,7 @@ var pingresulttable = new Vue({
             {title: '<div style="width:110px">测试任务名称</div>'},
             {title: '<div style="width:110px">测试目标</div>'},
             {title: '<div style="width:90px">测试目标IP</div>'},
-            {title: '<div style="width:65px">时延(ms)</div>'},
+            {title: '<div style="width:90px">往返时延(ms)</div>'},
             {title: '<div style="width:100px">时延标准差(ms)</div>'},
             {title: '<div style="width:90px">时延方差(ms)</div>'},
             {title: '<div style="width:65px">抖动(ms)</div>'},
@@ -834,13 +834,13 @@ var tracertresulttable = new Vue({
             {title: '<div style="width:110px">测试任务名称</div>'},
             {title: '<div style="width:145px">测试目标</div>'},
             {title: '<div style="width:90px">测试目标IP</div>'},
-            {title: '<div style="width:50px">时延(毫秒)</div>'},
-            {title: '<div style="width:90px">时延标准差(毫秒)</div>'},
-            {title: '<div style="width:75px">时延方差(毫秒)</div>'},
-            {title: '<div style="width:50px">抖动(毫秒)</div>'},
-            {title: '<div style="width:90px">抖动标准差(毫秒)</div>'},
-            {title: '<div style="width:75px">抖动方差(毫秒)</div>'},
-            {title: '<div style="width:60px">丢包率(%)</div>'},
+            {title: '<div style="width:90px">单跳往返时延(ms)</div>'},
+            {title: '<div style="width:120px">单跳时延标准差(ms)</div>'},
+            {title: '<div style="width:100px">单跳时延方差(ms)</div>'},
+            {title: '<div style="width:75px">单跳抖动(ms)</div>'},
+            {title: '<div style="width:100px">单跳抖动标准差(ms)</div>'},
+            {title: '<div style="width:90px">单跳抖动方差(ms)</div>'},
+            {title: '<div style="width:60px">单跳丢包率(%)</div>'},
             {title: '<div style="width:130px">单跳测试结果</div>'},
             {title: '<div style="width:130px">记录日期</div>'},
             {title: '<div style="width:130px">记录时间</div>'},
@@ -1137,8 +1137,8 @@ var dhcpresult_Table = new Vue({
             {title: '<div style="width:10px"></div>'},
             {title: '<div style="width:70px">探针名</div>'},
             {title: '<div style="width:60px">探针端口</div>'},
-            {title: '<div style="width:75px">时延(ms)</div>'},
-            {title: '<div style="width:100px">分配成功率(%)</div>'},
+            {title: '<div style="width:100px">分配时延(ms)</div>'},
+            {title: '<div style="width:75px">成功率(%)</div>'},
             {title: '<div style="width:60px">测试目标</div>'},
             {title: '<div style="width:90px">测试目标IP</div>'},
             {title: '<div style="width:100px">日期</div>'},
@@ -1266,8 +1266,8 @@ var dnsresult_Table = new Vue({
             {title: '<div style="width:10px"></div>'},
             {title: '<div style="width:70px">探针名</div>'},
             {title: '<div style="width:60px">探针端口</div>'},
-            {title: '<div style="width:75px">时延(ms)</div>'},
-            {title: '<div style="width:100px">查询成功率(%)</div>'},
+            {title: '<div style="width:100px">解析时延(ms)</div>'},
+            {title: '<div style="width:60px">成功率(%)</div>'},
             {title: '<div style="width:60px">测试目标</div>'},
             {title: '<div style="width:90px">测试目标IP</div>'},
             {title: '<div style="width:100px">日期</div>'},
@@ -1397,7 +1397,7 @@ var radiusresult_Table = new Vue({
             {title: '<div style="width:70px">探针名</div>'},
             {title: '<div style="width:60px">探针端口</div>'},
             {title: '<div style="width:90px">认证时延(ms)</div>'},
-            {title: '<div style="width:100px">认证成功率(%)</div>'},
+            {title: '<div style="width:100px">成功率(%)</div>'},
             {title: '<div style="width:60px">测试目标</div>'},
             {title: '<div style="width:90px">测试目标IP</div>'},
             {title: '<div style="width:100px">日期</div>'},
@@ -1524,7 +1524,7 @@ var ftpresult_Table = new Vue({
             {title: '<div style="width:10px"></div>'},
             {title: '<div style="width:70px">探针名</div>'},
             {title: '<div style="width:60px">探针端口</div>'},
-            {title: '<div style="width:90px">DNS时延(ms)</div>'},
+            {title: '<div style="width:100px">DNS解析时延(ms)</div>'},
             {title: '<div style="width:90px">连接时延(ms)</div>'},
             {title: '<div style="width:90px">登录时延(ms)</div>'},
             {title: '<div style="width:100px">上传速率(KB/s)</div>'},
@@ -1660,7 +1660,7 @@ var webdownloadresult_Table = new Vue({
             {title: '<div style="width:10px"></div>'},
             {title: '<div style="width:70px">探针名</div>'},
             {title: '<div style="width:60px">探针端口</div>'},
-            {title: '<div style="width:90px">DNS时延(ms)</div>'},
+            {title: '<div style="width:110px">DNS解析时延(ms)</div>'},
             {title: '<div style="width:90px">连接时延(ms)</div>'},
             {title: '<div style="width:100px">下载速率(KB/s)</div>'},
             {title: '<div style="width:130px">首字节到达时延(ms)</div>'},
@@ -1792,14 +1792,14 @@ var webpageresult_Table = new Vue({
             {title: '<div style="width:10px"></div>'},
             {title: '<div style="width:70px">探针名</div>'},
             {title: '<div style="width:60px">探针端口</div>'},
-            {title: '<div style="width:110px">DNS时延(ms)</div>'},
+            {title: '<div style="width:120px">DNS解析时延(ms)</div>'},
             {title: '<div style="width:110px">连接时延(ms)</div>'},
             {title: '<div style="width:130px"> 首字节到达时延(ms)</div>'},
             {title: '<div style="width:110px">首屏时延(ms)</div>'},
             {title: '<div style="width:110px">下载速率(KB/s)</div>'},
             {title: '<div style="width:120px"> 重定向时延(ms)</div>'},
             {title: '<div style="width:120px">页面文件时延(ms)</div>'},
-            {title: '<div style="width:120px"> 页面元素时延(ms)</div>'},
+            {title: '<div style="width:120px"> 页面加载时延(ms)</div>'},
             {title: '<div style="width:60px">测试目标</div>'},
             {title: '<div style="width:90px">测试目标IP</div>'},
             {title: '<div style="width:100px">日期</div>'},
@@ -1900,7 +1900,7 @@ var webpageresult_Table = new Vue({
                             row.push(item.downloadRate);
                             row.push(item.redirectDelay);
                             row.push(item.pageFileDelay);
-                            row.push(item.pageElementDelay);
+                            row.push(item.loadDelay);
                             row.push(item.targetName);
                             row.push(item.targetIp);
                             row.push(item.recordDate.substr(0,10));

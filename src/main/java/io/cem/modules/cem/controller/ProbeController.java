@@ -58,6 +58,13 @@ public class ProbeController {
         return R.ok().put("page", pageUtil);
     }
 
+    @RequestMapping("/listOnline/{id}")
+    @RequiresPermissions("probe:list")
+    public R listOnline(@PathVariable("id") Integer taskId){
+        List<ProbeEntity> probeList = probeService.queryOnlineList(taskId);
+        return R.ok().put("probe", probeList);
+    }
+
     @RequestMapping("/download")
     @RequiresPermissions("probe:download")
     public void downloadProbe(HttpServletResponse response) throws RRException {

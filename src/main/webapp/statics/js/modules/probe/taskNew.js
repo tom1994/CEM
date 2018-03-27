@@ -202,28 +202,32 @@ function get_viewModal(update_data_id) {
                 paramforms[6].value = param.interval;
             }
             if (stid.get(servicetypeid) == "ftp_upload") {
-
                 paramforms[0].value = param.port;
                 paramforms[1].value = param.filename;
                 paramforms[2].value = param.lasting_time;
                 paramforms[3].value = param.upload_size;
-                paramforms[4].value = param.is_delete;
-                paramforms[5].value = param.is_anonymous;
+                if(param.is_delete=='1'){
+                    $('#is_delete').val('1')
+                }else{
+                    $('#is_delete').val('0')
+                }
+                if(param.is_anonymous=='1'){
+                    $('#is_anonymous').val('1')
+                }else{
+                    $('#is_anonymous').val('0')
+                }
                 paramforms[6].value = param.username;
                 paramforms[7].value = param.password;
             }
             if (stid.get(servicetypeid) == "ftp_download") {
-                console.log(param);
-
                 paramforms[0].value = param.port;
                 paramforms[1].value = param.filename;
                 paramforms[2].value = param.lasting_time;
                 paramforms[3].value = param.download_size;
                 if(param.is_anonymous=='1'){
-                    paramforms[4].value='是'
-                }
-                else{
-                    paramforms[4].value='否'
+                    $('#ftpdown_is_anonymous').val('1')
+                }else{
+                    $('#ftpdown_is_anonymous').val('0')
                 }
 
                 paramforms[5].value = param.username;
@@ -238,7 +242,12 @@ function get_viewModal(update_data_id) {
                 paramforms[2].value = param.page_timeout;
                 paramforms[3].value = param.max_size;
                 paramforms[4].value = param.user_agent;
-                paramforms[5].value = param.is_http_proxy;
+                // paramforms[5].value = param.is_http_proxy;
+                if( param.is_http_proxy=='1'){
+                    $('#is_http_proxy').val('1')
+                }else{
+                    $('#is_http_proxy').val('0')
+                }
                 paramforms[6].value = param.address;
                 paramforms[7].value = param.port;
                 paramforms[8].value = param.username;
@@ -385,13 +394,13 @@ function task_assign(obj) {
     // var s = [{roleId:"1",roleName:"zhangsan"},{roleId:"2","roleName":"lisi"},{"roleId":"3","roleName":"wangwu"}];
     $.ajax({
         type: "POST", /*GET会乱码*/
-        url: "../../cem/probe/list",
+        url: "../../cem/probe/listOnline/"+parseInt(obj.id),
         cache: false,  //禁用缓存
         // data: ids,  //传入组装的参数
         dataType: "json",
         contentType: "application/json", /*必须要,不可少*/
         success: function (result) {
-            probetoSelect = result.page.list;
+            probetoSelect = result.probe;
             var selectprobe = $('#selectprobe').doublebox({
                 nonSelectedListLabel: '待选探针',
                 selectedListLabel: '已选探针',
@@ -699,19 +708,18 @@ var taskform_data = new Vue({
             tasknewJson.createTime = oDate.Format("yyyy-MM-dd hh:mm:ss");
             tasknewJson.remark = "无";
             var reg = /^(?=^.{3,255}$)[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+$/;
+
             if(tasknewJson.serviceType== "14"&&paramnewJson.domains!=''){
                 var domains=paramnewJson.domains;
                 var stringSplit=domains.split(';');
                 for (let i = 0;i<stringSplit.length;i++){
-                    var str = stringSplit[i];
-                    if(tasknewJson.serviceType== "14"&&!reg.test(str)){
-                        toastr.warning("您输入域名有误,请输入正确域名,多个域名之间用英文分号隔开!");
-                        return
+                   var str = stringSplit[i];
+                        if(tasknewJson.serviceType== "14"&&!reg.test(str)){
+                            toastr.warning("您输入域名有误,请输入正确域名,多个域名之间用英文分号隔开!");
+                            return
 
-                    }
-
+                        }
                 }
-
                 tasknewJson.domains=stringSplit;
                 let parameter = tasknewJson.parameter;
                 var param = JSON.parse(parameter);
@@ -766,7 +774,7 @@ var taskform_data = new Vue({
                     toastr.warning("您输入的查询间隔有误，请正确输入!");
                 } else if (tasknewJson.serviceType== "14"&&paramnew.count < 1 || paramnew.count > 10000) {
                     toastr.warning("您输入的单次发包次数有误，请正确输入!");
-                } else if (paramnew.domains == ""||paramnew.domains==null) {
+                } else if (paramnew.domains == "") {
                     toastr.warning("请输入待查询域名");
                 } else if (paramnew.auth_port < 1 || paramnew.auth_port > 65535) {
                     toastr.warning("您输入的服务器认证端口有误，请正确输入!");

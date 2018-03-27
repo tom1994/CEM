@@ -292,11 +292,19 @@ function delete_ajax() {
 
 /*列表编辑功能*/
 function update_this (obj) {     /*监听修改触发事件*/
+    $('.modal-body').removeAttr('style')
     $('#title').hide();
     $("#title2").show();
     update_data_id = parseInt(obj.id);
     /*获取当前行探针数据id*/
     console.log(update_data_id);
+    if(update_data_id=='40'){
+        $('.modal-body').css('height','450px')
+        $('.modal-body').css('overflow-y','auto')
+    }else if(update_data_id=='40'){
+        $('.modal-body').css('height','450px')
+        $('.modal-body').css('overflow-y','auto')
+    }
     status = 1;      /*状态1表示修改*/
     var forms = $('#taskform_data .form-control');
     var formparam = $('#taskform_param .form-control');
