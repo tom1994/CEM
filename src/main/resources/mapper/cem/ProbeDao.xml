@@ -110,6 +110,12 @@
         ON parent.parent_id = probe.upstream_id
     </select>
 
+    <select id="queryOnlineList" resultType="io.cem.modules.cem.entity.ProbeEntity">
+    SELECT id,probe.probe_name AS `name`
+    FROM probe
+    WHERE probe.status = 1
+    </select>
+
     <select id="queryTotal" resultType="int">
         select count(*) from probe
         WHERE id IS NOT NULL

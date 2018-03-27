@@ -104,6 +104,7 @@
 		select count(*) from task_dispatch
 		WHERE probe_id = #{probeid} AND task_dispatch.status = 1
 		AND task_dispatch.is_ondemand = 0
+		AND task_dispatch.task_id IN (SELECT id FROM task)
 	</select>
 
 	<insert id="save" parameterType="io.cem.modules.cem.entity.TaskDispatchEntity" useGeneratedKeys="true" keyProperty="id">

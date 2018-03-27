@@ -22,6 +22,8 @@ public interface ProbeService {
 
 	List<ProbeEntity> queryProbeByCity(Integer id);
 
+	List<ProbeEntity> queryOnlineList(Integer id);
+
 	List<ProbeEntity> queryProbeListByGroup(Integer id);
 
 	ProbeEntity queryDetail(Integer id);

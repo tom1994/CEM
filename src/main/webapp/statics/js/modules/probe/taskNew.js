@@ -117,6 +117,7 @@ function view_this(obj) {     /*监听详情触发事件*/
                 alarmtemplates[i] = {message: result.page.list[i]}
             }
             taskform_data.atemplates = alarmtemplates;
+
             get_viewModal(update_data_id);
         }
     });
@@ -205,8 +206,16 @@ function get_viewModal(update_data_id) {
                 paramforms[1].value = param.filename;
                 paramforms[2].value = param.lasting_time;
                 paramforms[3].value = param.upload_size;
-                paramforms[4].value = param.is_delete;
-                paramforms[5].value = param.is_anonymous;
+                if(param.is_delete=='1'){
+                    $('#is_delete').val('1')
+                }else{
+                    $('#is_delete').val('0')
+                }
+                if(param.is_anonymous=='1'){
+                    $('#is_anonymous').val('1')
+                }else{
+                    $('#is_anonymous').val('0')
+                }
                 paramforms[6].value = param.username;
                 paramforms[7].value = param.password;
             }
@@ -215,10 +224,14 @@ function get_viewModal(update_data_id) {
                 paramforms[1].value = param.filename;
                 paramforms[2].value = param.lasting_time;
                 paramforms[3].value = param.download_size;
-                paramforms[4].value = param.is_delete;
-                paramforms[5].value = param.is_anonymous;
-                paramforms[6].value = param.username;
-                // paramforms[7].value = param.password;
+                if(param.is_anonymous=='1'){
+                    $('#ftpdown_is_anonymous').val('1')
+                }else{
+                    $('#ftpdown_is_anonymous').val('0')
+                }
+
+                paramforms[5].value = param.username;
+                paramforms[6].value = param.password;
             }
             if (stid.get(servicetypeid) == "web_download") {
                 paramforms[0].value = param.lasting_time;
@@ -229,7 +242,12 @@ function get_viewModal(update_data_id) {
                 paramforms[2].value = param.page_timeout;
                 paramforms[3].value = param.max_size;
                 paramforms[4].value = param.user_agent;
-                paramforms[5].value = param.is_http_proxy;
+                // paramforms[5].value = param.is_http_proxy;
+                if( param.is_http_proxy=='1'){
+                    $('#is_http_proxy').val('1')
+                }else{
+                    $('#is_http_proxy').val('0')
+                }
                 paramforms[6].value = param.address;
                 paramforms[7].value = param.port;
                 paramforms[8].value = param.username;
@@ -376,13 +394,13 @@ function task_assign(obj) {
     // var s = [{roleId:"1",roleName:"zhangsan"},{roleId:"2","roleName":"lisi"},{"roleId":"3","roleName":"wangwu"}];
     $.ajax({
         type: "POST", /*GET会乱码*/
-        url: "../../cem/probe/list",
+        url: "../../cem/probe/listOnline/"+parseInt(obj.id),
         cache: false,  //禁用缓存
         // data: ids,  //传入组装的参数
         dataType: "json",
         contentType: "application/json", /*必须要,不可少*/
         success: function (result) {
-            probetoSelect = result.page.list;
+            probetoSelect = result.probe;
             var selectprobe = $('#selectprobe').doublebox({
                 nonSelectedListLabel: '待选探针',
                 selectedListLabel: '已选探针',
@@ -690,7 +708,7 @@ var taskform_data = new Vue({
             tasknewJson.createTime = oDate.Format("yyyy-MM-dd hh:mm:ss");
             tasknewJson.remark = "无";
             var reg = /^(?=^.{3,255}$)[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+$/;
-            debugger
+
             if(tasknewJson.serviceType== "14"&&paramnewJson.domains!=''){
                 var domains=paramnewJson.domains;
                 var stringSplit=domains.split(';');
@@ -710,9 +728,6 @@ var taskform_data = new Vue({
                 parameter = JSON.stringify(param);
                 tasknewJson.parameter = parameter;
             }
-            // var tasknew = JSON.stringify(tasknewJson);
-            // console.log(tasknew);
-            // console.log(tasknewJson.serviceType)
             if (tasknewJson.taskName == "") {
                 toastr.warning("请输入任务名称!");
             }else if (tasknewJson.serviceType == "") {
@@ -760,7 +775,7 @@ var taskform_data = new Vue({
                     toastr.warning("您输入的查询间隔有误，请正确输入!");
                 } else if (tasknewJson.serviceType== "14"&&paramnew.count < 1 || paramnew.count > 10000) {
                     toastr.warning("您输入的单次发包次数有误，请正确输入!");
-                } else if (paramnew.domains == ""||paramnew.domains==null) {
+                } else if (paramnew.domains == "") {
                     toastr.warning("请输入待查询域名");
                 } else if (paramnew.auth_port < 1 || paramnew.auth_port > 65535) {
                     toastr.warning("您输入的服务器认证端口有误，请正确输入!");
@@ -824,6 +839,7 @@ var taskform_data = new Vue({
                             var code = result.code;
                             var msg = result.msg;
                             // console.log(result);
+                            task_table.currReset();
                             if (status == 0) {
                                 switch (code) {
                                     case 0:
@@ -880,7 +896,6 @@ var taskform_data = new Vue({
 
         },
         servicechange: function () {
-
             $(".service").addClass("service_unselected");
             this.servicetype = parseInt($('#servicetype').val());
             var servicetypeid = stid.get(this.servicetype);
@@ -931,12 +946,11 @@ function getFormJson(form) {
 function getFormJson2(form) {      /*将表单对象变为json对象*/
     var o = {};
     var a = $(form).serializeArray();
-    debugger
+
     for (var i = 0; i < a.length; i++) {
         if (a[i].value != null && a[i].value != "") {
             switch (a[i].name) {
                 case "domains":
-                    debugger
                     a[i].value =a[i].value; break;
                 case "user_agent":
                 case "username":

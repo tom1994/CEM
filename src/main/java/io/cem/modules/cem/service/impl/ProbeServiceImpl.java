@@ -34,6 +34,12 @@ public class ProbeServiceImpl implements ProbeService {
     }
 
     @Override
+    public List<ProbeEntity> queryOnlineList(Integer id) {
+
+        return probeDao.queryOnlineList(id);
+    }
+
+    @Override
     public List<ProbeEntity> queryProbeByLayer(Integer id) {
         List<ProbeEntity> probeList = new ArrayList<>();
         if(probeDao.queryProbeByLayer(id)!=null) {

@@ -352,16 +352,8 @@ public class TaskDispatchController {
     @RequestMapping("/delete")
     @RequiresPermissions("taskdispatch:delete")
     public R delete(@RequestBody Integer[] ids) {
-        int result = 0;
-        for (int i = 0; i < ids.length; i++) {
-            result = BypassHttps.sendRequestIgnoreSSL("DELETE", "https://114.236.91.16:23456/web/v1/tasks/" + ids[i]);
-        }
-        if (result != 0 & result != 404 & result != 500) {
-            taskDispatchService.deleteBatch(ids);
-            return R.ok();
-        }else{
-            return R.error(404,"该任务有误，暂时无法删除");
-        }
+        taskDispatchService.deleteBatch(ids);
+        return R.ok();
     }
 
     @RequestMapping("/cancel/{id}")
