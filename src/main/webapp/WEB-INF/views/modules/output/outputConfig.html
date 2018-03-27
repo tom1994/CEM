@@ -1,11 +1,242 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <h>出口配置</h>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>出口配置</title>
+    #parse("cemHeader.html")  <!--导入CSS和js文件-->
+    <link href="${rc.contextPath}/statics/css/formStyle.css" rel="stylesheet">  <!--自定义CSS-->
+    <style type="text/css">
+        tr:hover{background:#E5E5E5 }
+        .form_border {
+            text-align: right !important;
+        }
+        .clear::-ms-clear { display: none;}
+        .clear::-ms-reveal { display: none;}
+
+        .float-e-margins .btn {
+            margin-bottom: 0px;
+        }
+
+        .search{
+            margin-top: 0px;
+            text-align: center;
+        }
+        .input{
+            margin-bottom: -3px;
+            height: 28px;
+            line-height: 28px;
+            /*//text-align: center;*/
+            padding-top: 0px;
+        }
+        /*.left{*/
+        /*margin-left:52px;*/
+        /*}*/
+        .box{
+            padding-bottom: 0px !important;
+            padding: 0px; min-height: 0px;
+        }
+        .Btn{
+            margin-bottom:0
+        }
+        #dispatch_table_wrapper{
+            height: 400px;
+            overflow-y: auto;
+        }
+        input[type=text]::-ms-clear{
+            display: none;
+        }
+        .combo-select{
+            display: inline-block;
+            max-width: 110px;
+            margin-top: 11px;
+            left:4px
+        }
+        .combo-dropdown{
+            max-height:200px!important;
+        }
+        .combo-dropdown li{
+            padding: 5px;
+        }
+        .option-item{
+            border-bottom:0px
+        }
+        .combo-arrow:before{
+            border-top: 5px solid 	Gray
+        }
+        .combo-open .combo-arrow{
+            border-color: #0EB690;
+        }
+        .combo-focus input{
+            border-color: #0EB690;
+        }
+        .combo-focus{
+            border-color: #0EB690;
+            box-shadow: none
+        }
+        input:focus {
+            border-color: #0EB690;
+            box-shadow: none;
+        }
+        .clear::-ms-clear { display: none;}
+        .clear::-ms-reveal { display: none;}
+        .combo-input{
+            text-overflow: clip;
+        }
+    </style>
 </head>
 <body>
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content" style="padding-bottom: 0 !important;">
+                    <div class="row" id="searchbox" style="border: none !important;">
+                        <form class="col-lg-9 col-md-9 col-sm-9 form-horizontal" id="probesearch"
+                              role="form">
+                            <div class="input-group searchspan" style="position: relative;top: 2px;">
+                                <span class="searchname search" title="名称"
+                                      style="width: 40px;text-align: center">名称</span>
+                                <input type="text" class="form-control input clear" name="probe_name"
+                                       style="width: 110px;height: 33px"
+                                       value="">
+                            </div>
+                        </form>
+                        <div class="col-lg-2 col-md-2 col-sm-2 pull-left"
+                             style="text-align:center;height:50px;position: relative;" id="search" >
+                            <button type="button" class="btn btn-sm btn-success"
+                                    style="margin-right: 5px"
+                                    v-on:click="testagentListsearch"><span
+                                    class="glyphicon glyphicon-zoom-in"></span>查询
+                            </button>
+                            <button type="button" class="btn btn-sm btn-success"
+                                    v-on:click="reset"><span
+                                    class="glyphicon glyphicon-refresh"></span>重置
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12" id="probe_table">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title fontcolor box " id="probehandle" >
+                    <button type="button" class="btn btn-sm btn-success Btn" v-on:click="spadd"><span
+                            class="glyphicon glyphicon-plus "></span>新建
+                    </button>
+                </div>
+                <div class="ibox-content">
+                    <div class="row " style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                        <table  class="table table-bordered  " id="exit_table" style="margin-top: 2px !important;"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+</div>
+
+<script type="text/javascript" src="${rc.contextPath}/statics/js/modules/output/outputConfig.js?_${date.systemTime}"></script>
 </body>
+
+<script>
+
+    /** 拖拽模态框*/
+    var dragModal={
+        mouseStartPoint:{"left":0,"top":  0},
+        mouseEndPoint : {"left":0,"top":  0},
+        mouseDragDown : false,
+        basePoint : {"left":0,"top":  0},
+        moveTarget:null,
+        topleng:0
+    }
+    $(document).on("mousedown",".modal-header",function(e){
+        //webkit内核和火狐禁止文字被选中
+        $('body').addClass('select')
+        //ie浏览器禁止文字选中
+        document.body.onselectstart=document.body.ondrag=function(){
+            return false;
+        }
+        if($(e.target).hasClass("close"))//点关闭按钮不能移动对话框
+            return;
+        dragModal.mouseDragDown = true;
+        dragModal.moveTarget = $(this).parent().parent();
+        dragModal.mouseStartPoint = {"left":e.clientX,"top":  e.pageY};
+        dragModal.basePoint = dragModal.moveTarget.offset();
+        dragModal.topLeng=e.pageY-e.clientY;
+    });
+    $(document).on("mouseup",function(e){
+        dragModal.mouseDragDown = false;
+        dragModal.moveTarget = undefined;
+        dragModal.mouseStartPoint = {"left":0,"top":  0};
+        dragModal.basePoint = {"left":0,"top":  0};
+    });
+    $(document).on("mousemove",function(e){
+        if(!dragModal.mouseDragDown || dragModal.moveTarget == undefined)return;
+        var mousX = e.clientX;
+        var mousY = e.pageY;
+        if(mousX < 0)mousX = 0;
+        if(mousY < 0)mousY = 25;
+        dragModal.mouseEndPoint = {"left":mousX,"top": mousY};
+        var width = dragModal.moveTarget.width();
+        var height = dragModal.moveTarget.height();
+        var clientWidth=document.body.clientWidth
+        var clientHeight=document.body.clientHeight;
+        if(dragModal.mouseEndPoint.left<dragModal.mouseStartPoint.left - dragModal.basePoint.left){
+            dragModal.mouseEndPoint.left=0;
+        }
+        else if(dragModal.mouseEndPoint.left>=clientWidth-width+dragModal.mouseStartPoint.left - dragModal.basePoint.left){
+            dragModal.mouseEndPoint.left=clientWidth-width-38;
+        }else{
+            dragModal.mouseEndPoint.left =dragModal.mouseEndPoint.left-(dragModal.mouseStartPoint.left - dragModal.basePoint.left);//移动修正，更平滑
+
+        }
+        if(dragModal.mouseEndPoint.top-(dragModal.mouseStartPoint.top - dragModal.basePoint.top)<dragModal.topLeng){
+            dragModal.mouseEndPoint.top=dragModal.topLeng;
+        }else if(dragModal.mouseEndPoint.top-dragModal.topLeng>clientHeight-height+dragModal.mouseStartPoint.top - dragModal.basePoint.top){
+            dragModal.mouseEndPoint.top=clientHeight-height-38+dragModal.topLeng;
+        }
+        else{
+            dragModal.mouseEndPoint.top = dragModal.mouseEndPoint.top - (dragModal.mouseStartPoint.top - dragModal.basePoint.top);
+        }
+        dragModal.moveTarget.offset(dragModal.mouseEndPoint);
+    });
+    $(document).on('hidden.bs.modal','.modal',function(e){
+        $('.modal-dialog').css({'top': '0px','left': '0px'})
+        $('body').removeClass('select')
+        document.body.onselectstart=document.body.ondrag=null;
+    })
+</script>
+
+<script>
+    $('#startDate').flatpickr({
+        enableTime: false,
+        dateFormat: "Y-m-d"
+    });
+</script>
+
+<script>
+    $('#endDate').flatpickr({
+        enableTime: false,
+        dateFormat: "Y-m-d"
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $(function(){
+            $('input:reset').click(function(){
+                $('.input #startDate').val("");
+                $('.input #endDate').val("");
+            });
+        });
+    });
+</script>
+
 </html>

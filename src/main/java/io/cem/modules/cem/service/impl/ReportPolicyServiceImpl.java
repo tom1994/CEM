@@ -1,14 +1,16 @@
 package io.cem.modules.cem.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Map;
-
 import io.cem.modules.cem.dao.ReportPolicyDao;
 import io.cem.modules.cem.entity.ReportPolicyEntity;
 import io.cem.modules.cem.service.ReportPolicyService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 
 
@@ -50,6 +52,15 @@ public class ReportPolicyServiceImpl implements ReportPolicyService {
 	@Override
 	public void deleteBatch(Integer[] ids){
 		reportPolicyDao.deleteBatch(ids);
+	}
+
+	@Override
+	public String strToDateFormat(String date) throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+		formatter.setLenient(false);
+		Date newDate= formatter.parse(date);
+		formatter = new SimpleDateFormat("yyyy-MM-dd");
+		return formatter.format(newDate);
 	}
 	
 }

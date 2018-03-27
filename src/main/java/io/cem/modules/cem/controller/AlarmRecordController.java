@@ -1,26 +1,22 @@
 package io.cem.modules.cem.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.alibaba.fastjson.JSONObject;
 import io.cem.common.exception.RRException;
 import io.cem.common.utils.JSONUtils;
+import io.cem.common.utils.PageUtils;
+import io.cem.common.utils.R;
+import io.cem.modules.cem.entity.*;
+import io.cem.modules.cem.service.*;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.cem.modules.cem.entity.AlarmRecordEntity;
-import io.cem.modules.cem.service.AlarmRecordService;
-import io.cem.common.utils.PageUtils;
-import io.cem.common.utils.Query;
-import io.cem.common.utils.R;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -30,6 +26,30 @@ import io.cem.common.utils.R;
 public class AlarmRecordController {
 	@Autowired
 	private AlarmRecordService alarmRecordService;
+	@Autowired
+	private RecordPingService recordPingService;
+	@Autowired
+	private RecordTracertService recordTracertService;
+	@Autowired
+	private RecordSlaService recordSlaService;
+	@Autowired
+	private RecordDnsService recordDnsService;
+	@Autowired
+	private RecordDhcpService recordDhcpService;
+	@Autowired
+	private RecordPppoeService recordPppoeService;
+	@Autowired
+	private RecordRadiusService recordRadiusService;
+	@Autowired
+	private RecordWebPageService recordWebPageService;
+	@Autowired
+	private RecordWebDownloadService recordWebDownloadService;
+	@Autowired
+	private RecordFtpService recordFtpService;
+	@Autowired
+	private RecordWebVideoService recordWebVideoService;
+	@Autowired
+	private RecordGameService recordGameService;
 
 	/**
 	 * 列表
@@ -69,6 +89,113 @@ public class AlarmRecordController {
 	public R detail(@PathVariable("id") Integer id){
 //		ProbeEntity probeList = probeService.queryDetail(id);
 		AlarmRecordEntity alarmList = alarmRecordService.queryObject(id);
+		int service = alarmList.getServiceType();
+		int record = alarmList.getRecordId();
+		if(service==1||service==2||service==3){
+			RecordPingEntity recordPing = recordPingService.queryObject(id);
+			alarmList.setPingDelay(recordPing.getDelay());
+			alarmList.setPingDelayStd(recordPing.getDelayStd());
+			alarmList.setPingDelayVar(recordPing.getDelayVar());
+			alarmList.setPingJitter(recordPing.getJitter());
+			alarmList.setPingJitterStd(recordPing.getJitterStd());
+			alarmList.setPingJitterVar(recordPing.getJitterVar());
+			alarmList.setPingLossRate(recordPing.getLossRate());
+		}else if(service==4||service==5){
+			RecordTracertEntity recordTracert = recordTracertService.queryObject(record);
+			alarmList.setTracertDelay(recordTracert.getDelay());
+			alarmList.setTracertDelayStd(recordTracert.getDelayStd());
+			alarmList.setTracertDelayVar(recordTracert.getDelayVar());
+			alarmList.setTracertJitter(recordTracert.getJitter());
+			alarmList.setTracertJitterStd(recordTracert.getJitterStd());
+			alarmList.setTracertJitterVar(recordTracert.getJitterVar());
+			alarmList.setTracertLossRate(recordTracert.getLossRate());
+		}else if(service==10||service==11){
+			RecordSlaEntity recordSla = recordSlaService.queryObject(record);
+			alarmList.setSlaDelay(recordSla.getDelay());
+			alarmList.setSlaGDelay(recordSla.getGDelay());
+			alarmList.setSlaRDelay(recordSla.getRDelay());
+			alarmList.setSlaDelayStd(recordSla.getDelayStd());
+			alarmList.setSlaGDelayStd(recordSla.getGDelayStd());
+			alarmList.setSlaRDelayStd(recordSla.getRDelayStd());
+			alarmList.setSlaDelayVar(recordSla.getDelayVar());
+			alarmList.setSlaGDelayVar(recordSla.getGDelayVar());
+			alarmList.setSlaRDelayVar(recordSla.getRDelayVar());
+			alarmList.setSlaJitter(recordSla.getJitter());
+			alarmList.setSlaGJitter(recordSla.getGJitter());
+			alarmList.setSlaRJitter(recordSla.getRJitter());
+			alarmList.setSlaJitterStd(recordSla.getJitterStd());
+			alarmList.setSlaGJitterStd(recordSla.getGJitterStd());
+			alarmList.setSlaRJitterStd(recordSla.getRJitterStd());
+			alarmList.setSlaJitterVar(recordSla.getJitterVar());
+			alarmList.setSlaGJitterVar(recordSla.getGJitterVar());
+			alarmList.setSlaRJitterVar(recordSla.getRJitterVar());
+			alarmList.setSlaLossRate(recordSla.getLossRate());
+			alarmList.setSlaGLossRate(recordSla.getGLossRate());
+			alarmList.setSlaRLossRate(recordSla.getRLossRate());
+		}else if(service==12){
+			RecordDnsEntity recordDns = recordDnsService.queryObject(record);
+			alarmList.setDnsDelay(recordDns.getDelay());
+			alarmList.setDnsSuccessRate(recordDns.getSuccessRate());
+		}else if(service==13){
+			RecordDhcpEntity recordDhcp = recordDhcpService.queryObject(record);
+			alarmList.setDhcpDelay(recordDhcp.getDelay());
+			alarmList.setDhcpSuccessRate(recordDhcp.getSuccessRate());
+		}else if(service==14){
+			RecordPppoeEntity recordPppoe = recordPppoeService.queryObject(record);
+			alarmList.setPppoeDelay(recordPppoe.getDelay());
+			alarmList.setPppoeDropRate(recordPppoe.getDropRate());
+			alarmList.setPppoeSuccessRate(recordPppoe.getSuccessRate());
+		}else if(service==15){
+			RecordRadiusEntity recordRadius = recordRadiusService.queryObject(record);
+			alarmList.setRadiusDelay(recordRadius.getDelay());
+			alarmList.setRadiusSuccessRate(recordRadius.getSuccessRate());
+		}else if(service==20){
+			RecordWebPageEntity recordWebPage = recordWebPageService.queryObject(record);
+			alarmList.setWebpageDnsDelay(recordWebPage.getDnsDelay());
+			alarmList.setWebpageConnDelay(recordWebPage.getConnDelay());
+			alarmList.setWebpageHeadbyteDelay(recordWebPage.getHeadbyteDelay());
+			alarmList.setWebpagePageFileDelay(recordWebPage.getPageFileDelay());
+			alarmList.setWebpageRedirectDelay(recordWebPage.getRedirectDelay());
+			alarmList.setWebpageAboveFoldDelay(recordWebPage.getAboveFoldDelay());
+			alarmList.setWebpagePageElementDelay(recordWebPage.getPageElementDelay());
+			alarmList.setWebpageDownloadRate(recordWebPage.getDownloadRate());
+		}else if(service==30){
+			RecordWebDownloadEntity recordWebDownload = recordWebDownloadService.queryObject(record);
+			alarmList.setWebDownloadDnsDelay(recordWebDownload.getDnsDelay());
+			alarmList.setWebDownloadConnDelay(recordWebDownload.getConnDelay());
+			alarmList.setWebDownloadHeadbyteDelay(recordWebDownload.getHeadbyteDelay());
+			alarmList.setWebDownloadDownloadRate(recordWebDownload.getDownloadRate());
+		}else if(service==31||service==32){
+			RecordFtpEntity recordFtp = recordFtpService.queryObject(record);
+			alarmList.setFtpDnsDelay(recordFtp.getDnsDelay());
+			alarmList.setFtpConnDelay(recordFtp.getConnDelay());
+			alarmList.setFtpLoginDelay(recordFtp.getLoginDelay());
+			alarmList.setFtpHeadbyteDelay(recordFtp.getHeadbyteDelay());
+			alarmList.setFtpDownloadRate(recordFtp.getDownloadRate());
+			alarmList.setFtpUploadRate(recordFtp.getUploadRate());
+		}else if(service==40){
+			RecordWebVideoEntity recordWebVideo = recordWebVideoService.queryObject(record);
+			alarmList.setWebVideoDnsDelay(recordWebVideo.getDnsDelay());
+			alarmList.setWebVideoWsConnDelay(recordWebVideo.getWsConnDelay());
+			alarmList.setWebVideoWebPageDelay(recordWebVideo.getWebPageDelay());
+			alarmList.setWebVideoSsConnDelay(recordWebVideo.getSsConnDelay());
+			alarmList.setWebVideoAddressDelay(recordWebVideo.getAddressDelay());
+			alarmList.setWebVideoMsConnDelay(recordWebVideo.getMsConnDelay());
+			alarmList.setWebVideoHeadFrameDelay(recordWebVideo.getHeadFrameDelay());
+			alarmList.setWebVideoInitBufferDelay(recordWebVideo.getInitBufferDelay());
+			alarmList.setWebVideoLoadDelay(recordWebVideo.getLoadDelay());
+			alarmList.setWebVideoTotalBufferDelay(recordWebVideo.getTotalBufferDelay());
+			alarmList.setWebVideoDownloadRate(recordWebVideo.getDownloadRate());
+			alarmList.setWebVideoBufferTime(recordWebVideo.getBufferTime());
+		}else if(service==50){
+			RecordGameEntity recordGame = recordGameService.queryObject(record);
+			alarmList.setGameDnsDelay(recordGame.getDnsDelay());
+			alarmList.setGameConnDelay(recordGame.getConnDelay());
+			alarmList.setGamePacketDelay(recordGame.getPacketDelay());
+			alarmList.setGamePacketJitter(recordGame.getPacketJitter());
+			alarmList.setGameLossRate(recordGame.getLossRate());
+
+		}else{}
 		System.out.println(alarmList);
 		return R.ok().put("alarm", alarmList);
 	}

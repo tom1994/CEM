@@ -1,7 +1,6 @@
 package io.cem.modules.cem.entity;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 
 
@@ -38,17 +37,17 @@ public class RecordFtpEntity implements Serializable {
 	//记录时间
 	private String recordTime;
 	//DNS时延
-	private BigDecimal dnsDelay;
+	private Double dnsDelay;
 	//连接时延
-	private BigDecimal connDelay;
+	private Double connDelay;
 	//登录时延
-	private BigDecimal loginDelay;
+	private Double loginDelay;
 	//首字节时延
-	private BigDecimal headbyteDelay;
+	private Double headbyteDelay;
 	//下载速率
-	private BigDecimal downloadRate;
+	private Double downloadRate;
 	//上传速率
-	private BigDecimal uploadRate;
+	private Double uploadRate;
 	//备注
 	private String remark;
 
@@ -225,73 +224,73 @@ public class RecordFtpEntity implements Serializable {
 	/**
 	 * 设置：DNS时延
 	 */
-	public void setDnsDelay(BigDecimal dnsDelay) {
+	public void setDnsDelay(Double dnsDelay) {
 		this.dnsDelay = dnsDelay;
 	}
 	/**
 	 * 获取：DNS时延
 	 */
-	public BigDecimal getDnsDelay() {
+	public Double getDnsDelay() {
 		return dnsDelay;
 	}
 	/**
 	 * 设置：连接时延
 	 */
-	public void setConnDelay(BigDecimal connDelay) {
+	public void setConnDelay(Double connDelay) {
 		this.connDelay = connDelay;
 	}
 	/**
 	 * 获取：连接时延
 	 */
-	public BigDecimal getConnDelay() {
+	public Double getConnDelay() {
 		return connDelay;
 	}
 	/**
 	 * 设置：登录时延
 	 */
-	public void setLoginDelay(BigDecimal loginDelay) {
+	public void setLoginDelay(Double loginDelay) {
 		this.loginDelay = loginDelay;
 	}
 	/**
 	 * 获取：登录时延
 	 */
-	public BigDecimal getLoginDelay() {
+	public Double getLoginDelay() {
 		return loginDelay;
 	}
 	/**
 	 * 设置：首字节时延
 	 */
-	public void setHeadbyteDelay(BigDecimal headbyteDelay) {
+	public void setHeadbyteDelay(Double headbyteDelay) {
 		this.headbyteDelay = headbyteDelay;
 	}
 	/**
 	 * 获取：首字节时延
 	 */
-	public BigDecimal getHeadbyteDelay() {
+	public Double getHeadbyteDelay() {
 		return headbyteDelay;
 	}
 	/**
 	 * 设置：下载速率
 	 */
-	public void setDownloadRate(BigDecimal downloadRate) {
+	public void setDownloadRate(Double downloadRate) {
 		this.downloadRate = downloadRate;
 	}
 	/**
 	 * 获取：下载速率
 	 */
-	public BigDecimal getDownloadRate() {
+	public Double getDownloadRate() {
 		return downloadRate;
 	}
 	/**
 	 * 设置：上传速率
 	 */
-	public void setUploadRate(BigDecimal uploadRate) {
+	public void setUploadRate(Double uploadRate) {
 		this.uploadRate = uploadRate;
 	}
 	/**
 	 * 获取：上传速率
 	 */
-	public BigDecimal getUploadRate() {
+	public Double getUploadRate() {
 		return uploadRate;
 	}
 	/**

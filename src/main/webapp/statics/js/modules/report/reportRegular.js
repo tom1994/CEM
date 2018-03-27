@@ -115,7 +115,8 @@ var spform_data = new Vue({
                 }else {
                     spJson.queryType='0';
                 }
-
+                spJson.startTime=spJson.startTime+":00";
+                spJson.endTime=spJson.endTime+":00";
                 var sp = JSON.stringify(spJson);
                 /*封装成json数组*/
                 console.log(sp);
@@ -225,17 +226,40 @@ function download_this() {
     var spJson = getFormJson($('#download_form'));
     console.log(spJson);
     if(spJson.Select_date!=null){
-        var year=transString(spJson.Select_date,0,4);
-        var month=transString(spJson.Select_date,5,5);
-        console.log(month);
-        reportdata[1] = spJson.Select_date;
-        reportdata[2] = spJson.Select_date;
-    }else{}
+        var number=spJson.Select_date.split("-");
+        var day=number[0]+number[1]+number[2];
+        console.log(day);
+        reportdata[1] = day;
+        reportdata[2] = day;
+    }else{
+        var today = new Date();
+        var thisYear=today.getFullYear();
+        var lastYear=today.getFullYear()-1;
+        var month=today.getMonth()+1;
+        if(spJson.selectMonth>=month){
+            var start_day=lastYear+spJson.selectMonth+"01";
+            var temp=new Date(lastYear,spJson.selectMonth,0);
+            var last_day_in_month = temp.getDate()
+            var end_day= lastYear+spJson.selectMonth+last_day_in_month;
+            reportdata[1] = start_day;
+            reportdata[2] = end_day;
+
+        }else{
+            var start_day=thisYear+spJson.selectMonth+"01";
+            var temp=new Date(thisYear,spJson.selectMonth,0);
+            var last_day_in_month = temp.getDate()
+            var end_day= thisYear+spJson.selectMonth+last_day_in_month;
+            reportdata[1] = start_day;
+            reportdata[2] = end_day;
+        }
+    }
     // $('#download+obj.id').attr('href','../../cem/probe/download/'+id);
     document.getElementById(download+id).href = encodeURI('../../reportpolicy/download/'+reportdata);
     document.getElementById(download+id).click();
     // $("#download+obj.id").trigger("click");
 }
+
+
 
 
 function getFormJson(form) {      /*将表单对象变为json对象*/

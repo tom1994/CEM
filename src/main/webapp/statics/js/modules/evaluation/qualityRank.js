@@ -27,7 +27,7 @@ var st = new Map();//servicetype字典，可通过get方法查对应字符串。
 st.set(0, "综合业务");
 st.set(1, "网络连通性业务");
 st.set(2, "网络层质量业务");
-
+st.set(3, "网页浏览业务");
 st.set(4, "文件下载业务");
 st.set(5, "在线视频业务");
 st.set(6, "网络游戏业务");
@@ -121,7 +121,7 @@ var area_data = new Vue({
 });
 
 var getArea = function (cityid) {
-    countrySeleted=0;
+    countrySeleted=0
     $.ajax({
         url: "../../cem/county/info/"+cityid,
         type: "POST",
@@ -158,11 +158,11 @@ var getArea = function (cityid) {
             }, 50);
         }
     });
-};
+}
 
 var getService = function (serviceId) {
     console.log("I'm here!!!!"+serviceId);
-    targetSelected=0;
+    targetSelected=0
     $.ajax({
         url: "../../target/infobat/"+serviceId,
         type: "POST", /*GET会乱码*/
@@ -295,7 +295,6 @@ var search_area_service = new Vue({
     methods: {
         testagentListsearch: function () {
             var searchJson = getFormJson($('#areasearch'));
-            debugger;
             if((searchJson.startDate)>(searchJson.terminalDate)){
                 console.log("时间选择有误，请重新选择！");
                 $('#nonavailable_time').modal('show');

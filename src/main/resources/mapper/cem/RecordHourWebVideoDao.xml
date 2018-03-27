@@ -199,12 +199,13 @@
 	</select>
 
 	<select id="queryDayList" resultType="io.cem.modules.cem.entity.RecordHourWebVideoEntity">
-		select webv.id,webv.city_id,webv.county_id,webv.probe_id,webv.port,webv.task_id,webv.service_type,webv.target_id,webv.target_ip,webv.record_date,webv.record_time,webv.remark,
+		select webv.id,webv.city_id,webv.county_id,webv.probe_id,webv.port,webv.task_id,webv.service_type,webv.target_id,webv.target_ip,webv.record_date,webv.remark,
 		city.city_name AS city_name,
 		county.county_name AS area_name,
 		probe.probe_name AS probe_name,
 		target.target_name AS target_name,
 		probe.access_layer AS accessLayer,
+		time_format(record_time, '%H') AS record_time,
 		AVG(webv.dns_delay) AS dns_delay,
 		AVG(webv.ws_conn_delay) AS ws_conn_delay,
 		AVG(webv.web_page_delay) AS web_page_delay,

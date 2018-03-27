@@ -1,17 +1,14 @@
 package io.cem.modules.cem.service.impl;
 
 import io.cem.modules.cem.entity.RecordHourPingEntity;
+import io.cem.modules.cem.entity.RecordPingEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 import io.cem.modules.cem.dao.RecordPingDao;
 import io.cem.modules.cem.dao.RecordHourPingDao;
-import io.cem.modules.cem.entity.RecordPingEntity;
 import io.cem.modules.cem.service.RecordPingService;
 
 

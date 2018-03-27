@@ -80,20 +80,31 @@ public class ReportPolicyController {
 	public void downloadProbe(HttpServletResponse response, @PathVariable("reportdata") Integer[] reportdata) throws RRException {
 		Map<String, Object> map = new HashMap<String, Object>();
 		System.out.println(reportdata[0]);
+		System.out.println(reportdata[1]);
+		System.out.println(reportdata[2]);
 		ReportPolicyEntity detail = reportPolicyService.queryObject(reportdata[0]);
 		int service = detail.getServiceType();
 		int queryType = detail.getQueryType();
+		String startDate = "";
+		String terminalDate = "";
+		try {
+			startDate=reportPolicyService.strToDateFormat(reportdata[1].toString());
+			terminalDate=reportPolicyService.strToDateFormat(reportdata[2].toString());
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		map.put("probe_id",detail.getProbeId());
 		map.put("service_type",detail.getServiceType());
 		map.put("start_time",detail.getStartTime());
 		map.put("end_time",detail.getEndTime());
-		map.put("startDate",reportdata[1]);
-		map.put("terminalDate",reportdata[2]);
+		map.put("startDate",startDate);
+		map.put("terminalDate",terminalDate);
 
 		if (queryType== 0) {
 			if(service == 1||service==2||service==3){
 				List<RecordPingEntity> list = recordPingService.queryPingList(map);
+				System.out.println(list);
 				CollectionToFile.collectionToFile(response, list, RecordPingEntity.class);
 			}else if(service==4||service==5){
 				List<RecordTracertEntity> list = recordTracertService.queryTracertList(map);

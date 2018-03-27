@@ -720,7 +720,6 @@ var taskform_data = new Vue({
 
                         }
                 }
-
                 tasknewJson.domains=stringSplit;
                 let parameter = tasknewJson.parameter;
                 var param = JSON.parse(parameter);
@@ -839,7 +838,6 @@ var taskform_data = new Vue({
                             var code = result.code;
                             var msg = result.msg;
                             // console.log(result);
-                            task_table.currReset();
                             if (status == 0) {
                                 switch (code) {
                                     case 0:

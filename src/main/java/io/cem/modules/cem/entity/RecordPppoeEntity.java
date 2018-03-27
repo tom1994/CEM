@@ -1,7 +1,6 @@
 package io.cem.modules.cem.entity;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 
 
@@ -38,11 +37,11 @@ public class RecordPppoeEntity implements Serializable {
 	//记录时间
 	private String recordTime;
 	//时延平均值
-	private BigDecimal delay;
+	private Double delay;
 	//掉线率
-	private BigDecimal dropRate;
+	private Double dropRate;
 	//查询成功率
-	private BigDecimal successRate;
+	private Double successRate;
 	//备注
 	private String remark;
 
@@ -275,37 +274,37 @@ public class RecordPppoeEntity implements Serializable {
 	/**
 	 * 设置：时延平均值
 	 */
-	public void setDelay(BigDecimal delay) {
+	public void setDelay(Double delay) {
 		this.delay = delay;
 	}
 	/**
 	 * 获取：时延平均值
 	 */
-	public BigDecimal getDelay() {
+	public Double getDelay() {
 		return delay;
 	}
 	/**
 	 * 设置：掉线率
 	 */
-	public void setDropRate(BigDecimal dropRate) {
+	public void setDropRate(Double dropRate) {
 		this.dropRate = dropRate;
 	}
 	/**
 	 * 获取：掉线率
 	 */
-	public BigDecimal getDropRate() {
+	public Double getDropRate() {
 		return dropRate;
 	}
 	/**
 	 * 设置：查询成功率
 	 */
-	public void setSuccessRate(BigDecimal successRate) {
+	public void setSuccessRate(Double successRate) {
 		this.successRate = successRate;
 	}
 	/**
 	 * 获取：查询成功率
 	 */
-	public BigDecimal getSuccessRate() {
+	public Double getSuccessRate() {
 		return successRate;
 	}
 	/**
