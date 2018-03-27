@@ -24,6 +24,10 @@ public interface ProbeService {
 
 	List<ProbeEntity> queryProbeListByGroup(Integer id);
 
+	List<ProbeEntity> queryExitList(Map<String, Object> map);
+
+	List<ProbeEntity> queryPortList(Integer id);
+
 	ProbeEntity queryDetail(Integer id);
 
 	int queryTotal(Map<String, Object> map);

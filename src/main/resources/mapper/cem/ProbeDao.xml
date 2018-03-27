@@ -110,6 +110,38 @@
         ON parent.parent_id = probe.upstream_id
     </select>
 
+    <select id="queryExitList" resultType="io.cem.modules.cem.entity.ProbeEntity">
+        SELECT probe.*,
+        probe.upstream_id AS upstream,
+        probe.probe_name AS `name`,
+        city.city_name AS city_name,
+        county.county_name AS area_name,
+        a.data_name AS type_name,
+        b.data_name AS status_name,
+        c.data_name AS iptype_name,
+        layer.layer_name AS layer_name,
+        parent.parent_name AS upstream_name
+        FROM probe
+        LEFT JOIN city
+        ON probe.city_id = city.city_id
+        LEFT JOIN county
+        ON probe.county_id = county.county_id
+        LEFT JOIN dic_data a
+        ON (probe.type = a.data_id AND a.dic_type_id = 1 )
+        LEFT JOIN dic_data b
+        ON (probe.status = b.data_id AND b.dic_type_id = 3)
+        LEFT JOIN dic_data c
+        ON (probe.ip_type = c.data_id AND c.dic_type_id = 2)
+        LEFT JOIN layer
+        ON probe.access_layer = layer.layer_tag
+        LEFT JOIN probe_group
+        ON probe.group_id = probe_group.id
+        LEFT JOIN(SELECT probe.probe_name AS parent_name,probe.id AS parent_id FROM probe
+        WHERE id in (SELECT upstream_id FROM probe)) parent
+        ON parent.parent_id = probe.upstream_id
+        WHERE type = 10
+    </select>
+
     <select id="queryTotal" resultType="int">
         select count(*) from probe
         WHERE id IS NOT NULL
@@ -206,6 +238,12 @@
         SELECT id
         FROM probe
         WHERE group_id = #{value}
+    </select>
+
+    <select id="queryPortList" resultType="io.cem.modules.cem.entity.ProbeEntity">
+        SELECT *
+        FROM probe
+        WHERE id = #{value}
     </select>
 
     <select id="queryProbeByLayer" resultType="io.cem.modules.cem.entity.ProbeEntity">

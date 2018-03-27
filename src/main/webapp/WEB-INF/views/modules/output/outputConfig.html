@@ -97,7 +97,7 @@
                             <div class="input-group searchspan" style="position: relative;top: 2px;">
                                 <span class="searchname search" title="名称"
                                       style="width: 40px;text-align: center">名称</span>
-                                <input type="text" class="form-control input clear" name="probe_name"
+                                <input type="text" class="form-control input clear" name="exit"
                                        style="width: 110px;height: 33px"
                                        value="">
                             </div>
@@ -123,7 +123,7 @@
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12" id="probe_table">
             <div class="ibox float-e-margins">
-                <div class="ibox-title fontcolor box " id="probehandle" >
+                <div class="ibox-title fontcolor box " id="handle" >
                     <button type="button" class="btn btn-sm btn-success Btn" v-on:click="spadd"><span
                             class="glyphicon glyphicon-plus "></span>新建
                     </button>
@@ -136,10 +136,89 @@
             </div>
         </div>
     </div>
+</div>
 
 
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal_sp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width: 800px"> <!--修改bootstrap modal模态框的宽度-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3 class="modal-title" id="myModalLabel">{{modaltitle}}</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <form class="form-horizontal" id="spform_data" role="form">
+                        <div class="form-group row">
+                            <label for="id" class="col-lg-3 col-md-3 col-sm-3 control-label form_border"
+                                   style="display: none">id</label>
+                            <div class="col-lg-8 col-md-8 col-sm-8 form_border"
+                                 style="display: none">
+                                <input type="text" class="form-control input clear" id="id" name="id"  >
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exit" class="col-lg-2 col-md-2 col-sm-2 control-label form_border"
+                                   style="line-height: 1.5">出口名称</label>
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                <input type="text" class="form-control input clear" id="exit" name="exit"  >
+                            </div>
+                            <label for="probe"
+                                   class="col-lg-2 col-md-2 col-sm-2 input-label form_border">探针</label>
+                            <div class="col-lg-2 col-md-2 col-sm-2 form_border">
+                                <select id="probe" class="form-control input clear" name="probe_id" v-on:change="queryPort()" >  <!--VUE列表渲染-->
+                                    <option value="">--请选择--</option>
+                                    <option v-for="item in probe" v-bind:value="item.message.id">
+                                        {{ item.message.name }}
+                                    </option>
+                                </select>
+                            </div>
+                            <label for="port"
+                                   class="col-lg-2 col-md-2 col-sm-2 input-label form_border">端口</label>
+                            <div class="col-lg-2 col-md-2 col-sm-2 form_border">
+                                <select id="port" class="form-control input clear" name="port">
+                                    <!--VUE列表渲染-->
+                                    <option value="">--请选择--</option>
+                                    <option v-for="item in port">
+                                        {{ item.message.portIp }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-success" v-on:click="submit">保存</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
 
-
+<div class="modal fade" id="myModal_delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" style="width: 500px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h3 class="modal-title" id="myModalLabel_delete">
+                    确认
+                </h3>
+            </div>
+            <div class="modal-body" style="font-size: medium">
+                <b>确定删除吗?</b>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" v-on:click="cancel_delete">取消
+                </button>
+                <button type="button" class="btn btn-success" v-on:click="delete_data">确定</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
 </div>
 
 <script type="text/javascript" src="${rc.contextPath}/statics/js/modules/output/outputConfig.js?_${date.systemTime}"></script>

@@ -18,7 +18,14 @@
 	</select>
 
 	<select id="queryList" resultType="io.cem.modules.cem.entity.ProbeExitEntity">
-		select * from probe_exit
+		select probe_exit.*,
+		probe.probe_name AS probe_name
+		from probe_exit
+		LEFT JOIN probe
+		ON probe_exit.probe_id = probe.id
+		<if test="exit != null and exit != ''">
+			AND exit LIKE concat('%',#{exit},'%')
+		</if>
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
                 order by ${sidx} ${order}
@@ -63,7 +70,24 @@
 		</set>
 		where id = #{id}
 	</update>
-	
+
+	<update id="operateStatus0" parameterType="Integer">
+		update probe_exit
+		<set>
+			`status` = 1
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="operateStatus1" parameterType="Integer">
+		update probe_exit
+		<set>
+			`status` = 0
+		</set>
+		where id = #{id}
+	</update>
+
+
 	<delete id="delete">
 		delete from probe_exit where id = #{value}
 	</delete>

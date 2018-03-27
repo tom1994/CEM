@@ -11,5 +11,6 @@ import io.cem.modules.sys.dao.BaseDao;
  * @date 2018-03-26 19:47:28
  */
 public interface ProbeExitDao extends BaseDao<ProbeExitEntity> {
-	
+    void operateStatus0(Integer id);
+    void operateStatus1(Integer id);
 }

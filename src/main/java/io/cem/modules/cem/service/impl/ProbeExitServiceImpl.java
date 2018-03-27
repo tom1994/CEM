@@ -41,6 +41,12 @@ public class ProbeExitServiceImpl implements ProbeExitService {
 	public void update(ProbeExitEntity probeExit){
 		probeExitDao.update(probeExit);
 	}
+
+	@Override
+	public void operateStatus0(Integer id){probeExitDao.operateStatus0(id);}
+
+	@Override
+	public void operateStatus1(Integer id){probeExitDao.operateStatus1(id);}
 	
 	@Override
 	public void delete(Integer id){
