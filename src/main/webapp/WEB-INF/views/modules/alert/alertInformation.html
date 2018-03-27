@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -164,8 +164,8 @@
     <div class="col-lg-12 col-md-12 col-sm-12">
         <div class="ibox float-e-margins">
             <div class="ibox-title fontcolor box" id="probehandle" style="padding-bottom: 0px !important;">
-                <button type="button" class="btn btn-sm btn-success Btn"><span
-                        class="glyphicon glyphicon-ok"></span>批量确认
+                <button type="button" class="btn btn-sm btn-success Btn" onclick="delete_All()"><span
+                        class="glyphicon glyphicon-ok"  ></span>批量确认
                 </button>
                 <p id="flip" style="position:relative; left:45%;" class="glyphicon glyphicon-menu-up" onClick="toggle1('searchbox')"></p>
             </div>
@@ -354,63 +354,63 @@
                         </div>
                         <div class="service service_unselected" id="trance">
                             <div class="form-group row">
-                                <label for="ping_delay"
+                                <label for="trance_delay"
                                        class="col-lg-3 col-md-3 col-sm-3 form_border"
                                 >时延平均值(ms)</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
-                                    <input type="text" class="form-control input clear" id="ping_delay"
-                                           disabled="disabled" name="ping_delay" placeholder="">
+                                    <input type="text" class="form-control input clear" id="trance_delay"
+                                           disabled="disabled" name="trance_delay" placeholder="">
                                 </div>
-                                <label for="ping_delay_std"
+                                <label for="trance_delay_std"
                                        class="col-lg-3 col-md-3 col-sm-3 form_border"
                                 >时延标准差(ms)</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
-                                    <input type="text" class="form-control input clear" id="ping_delay_std"
-                                           disabled="disabled" name="ping_delay_std" placeholder="">
+                                    <input type="text" class="form-control input clear" id="trance_delay_std"
+                                           disabled="disabled" name="trance_delay_std" placeholder="">
                                 </div>
                             </div>
                             <div class="form_group row">
-                                <label for="ping_delay_var"
+                                <label for="trance_delay_var"
                                        class="col-lg-3 col-md-3 col-sm-3 form_border"
                                 >时延方差(ms)</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
-                                    <input type="text" class="form-control input clear" id="ping_delay_var"
-                                           value="100" disabled="disabled" name="ping_delay_var" placeholder="">
+                                    <input type="text" class="form-control input clear" id="trance_delay_var"
+                                           value="100" disabled="disabled" name="trance_delay_var" placeholder="">
                                 </div>
-                                <label for="ping_jitter"
+                                <label for="trance_jitter"
                                        class="col-lg-3 col-md-3 col-sm-3 form_border"
                                 >抖动平均值(ms)</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
-                                    <input type="text" class="form-control input clear" id="ping_jitter"
-                                           value="32" disabled="disabled" name="ping_jitter"
+                                    <input type="text" class="form-control input clear" id="trance_jitter"
+                                           value="32" disabled="disabled" name="trance_jitter"
                                            placeholder="">
                                 </div>
 
                             </div>
                             <div class="form-group row">
-                                <label for="ping_jitter_std"
+                                <label for="trance_jitter_std"
                                        class="col-lg-3 col-md-3 col-sm-3 form_border"
                                 >抖动标准差(ms)</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
-                                    <input type="text" class="form-control input clear" id="ping_jitter_std"
-                                           value="100" disabled="disabled" name="ping_jitter_std" placeholder="">
+                                    <input type="text" class="form-control input clear" id="trance_jitter_std"
+                                           value="100" disabled="disabled" name="trance_jitter_std" placeholder="">
                                 </div>
-                                <label for="ping_jitter_var"
+                                <label for="trance_jitter_var"
                                        class="col-lg-3 col-md-3 col-sm-3 form_border"
                                 >抖动方差(ms)</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
-                                    <input type="text" class="form-control input clear" id="ping_jitter_var"
-                                           value="32" disabled="disabled" name="ping_jitter_var"
+                                    <input type="text" class="form-control input clear" id="trance_jitter_var"
+                                           value="32" disabled="disabled" name="trance_jitter_var"
                                            placeholder="">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="ping_loss_rate"
+                                <label for="trance_loss_rate"
                                        class="col-lg-3 col-md-3 col-sm-3 form_border"
                                 >丢包率(%)</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
-                                    <input type="text" class="form-control input clear" id="ping_loss_rate"
-                                           value="100" disabled="disabled" name="loss_rate" placeholder="">
+                                    <input type="text" class="form-control input clear" id="trance_loss_rate"
+                                           value="100" disabled="disabled" name="trance_loss_rate" placeholder="">
                                 </div>
                             </div>
                         </div>

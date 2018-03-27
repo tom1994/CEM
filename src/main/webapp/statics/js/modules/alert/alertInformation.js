@@ -304,21 +304,47 @@ function update_this (obj) {     /*监听修改触发事件*/
     $('#myModal_update').modal('show');
 }
 
-var probeformData = new Vue({
-    el: '#probeform_data',
-    // 在 `methods` 对象中定义方法
-    methods: {
-        editdata: function (service) {
-            $(".service").addClass("service_unselected");
-            this.servicetype = parseInt(service);
-            var servicetypeid = stid.get(this.servicetype);
-            var selectst = "#" + servicetypeid;
-            $("#" + servicetypeid).removeClass("service_unselected");
-            $("#" + servicetypeid + " input[type=text]").prop("disabled", false);
-            $("#" + servicetypeid + " select").prop("disabled", false);
-        },
+//
+function delete_All(){
+    var CheckALL = document.getElementsByName("selectFlag");
+    var  check_val = [];
+    for( i in CheckALL){
+        if(CheckALL[i].checked)
+            check_val.push(CheckALL[i].value);
     }
-});
+    if(check_val==[]){
+        toastr.warning("请选择要确定的告警信息!");
+    }
+    console.log(check_val);
+    operate_ajax(check_val)
+}
+
+function operate_ajax(check_val) {
+    var ids = new Array();
+    console.log(ids);
+    for(var i=0;i<check_val.length;i++){
+        ids[i]=parseInt(check_val[i]);
+    }
+    console.log(ids);
+    /*对象数组字符串*/
+
+    $.ajax({
+        type: "POST", /*GET会乱码*/
+        url: "../../alarmrecord/change/"+ids,
+        cache: false,  //禁用缓存
+        data: ids,  //传入组装的参数
+        dataType: "json",
+        contentType: "application/json", /*必须要,不可少*/
+        success: function (result) {
+
+            toastr.success("业务信息确认成功!");
+
+            alerttable.currReset();
+
+        }
+    });
+}
+
 
 /*选中表格事件*/
 $(document).ready(function () {
@@ -455,7 +481,7 @@ var alerttable = new Vue({
                         result.page.list.forEach(function (item) {
                             let row = [];
                             row.push(i++);
-                            row.push('<div class="checkbox"> <label> <input type="checkbox" id="checkALl" name="selectFlag"><div style="display: none">'+item.id+'</div></label> </div>');
+                            row.push('<div class="checkbox"> <label> <input type="checkbox" id="checkALl" name="selectFlag" value='+item.id+'><div style="display: none">'+item.id+'</div></label> </div>');
                             row.push(st.get(item.type));
                             row.push(le.get(item.level));
                             row.push(tus.get(item.status));

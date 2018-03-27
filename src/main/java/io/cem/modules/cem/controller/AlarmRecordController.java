@@ -246,6 +246,20 @@ public class AlarmRecordController {
 		return R.ok();
 	}
 
+	/**
+	 * 删除
+	 */
+	@RequestMapping("/change/{ids}")
+	@RequiresPermissions("alarmrecord:change")
+	public R change(@PathVariable("ids") Integer[] ids){
+		System.out.println(ids[0]);
+		for(int i=0;i<ids.length;i++){
+			alarmRecordService.operate(ids[i]);
+		}
+
+		return R.ok();
+	}
+
 	
 	/**
 	 * 删除

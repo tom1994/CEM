@@ -4,9 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import io.cem.common.exception.RRException;
 import io.cem.common.utils.*;
 import io.cem.modules.cem.entity.*;
-import io.cem.modules.cem.service.RecordPingService;
-import io.cem.modules.cem.service.RecordTracertService;
-import io.cem.modules.cem.service.ReportPolicyService;
+import io.cem.modules.cem.service.*;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +27,16 @@ public class ReportPolicyController {
 	private RecordPingService recordPingService;
 	@Autowired
 	private RecordTracertService recordTracertService;
+	@Autowired
+	private RecordSlaService recordSlaService;
+	@Autowired
+	private RecordPppoeService recordPppoeService;
+	@Autowired
+	private RecordDhcpService recordDhcpService;
+	@Autowired
+	private RecordDnsService recordDnsService;
+	@Autowired
+	private RecordRadiusService recordRadiusService;
 	/**
 	 * 列表
 	 */
@@ -101,7 +109,7 @@ public class ReportPolicyController {
 		map.put("startDate",startDate);
 		map.put("terminalDate",terminalDate);
 
-		if (queryType== 0) {
+		if (queryType== 1) {
 			if(service == 1||service==2||service==3){
 				List<RecordPingEntity> list = recordPingService.queryPingList(map);
 				System.out.println(list);
@@ -110,7 +118,21 @@ public class ReportPolicyController {
 				List<RecordTracertEntity> list = recordTracertService.queryTracertList(map);
 				CollectionToFile.collectionToFile(response, list, RecordTracertEntity.class);
 			}else if(service==10||service==11){
-
+				List<RecordSlaEntity> list = recordSlaService.querySlaList(map);
+				CollectionToFile.collectionToFile(response, list, RecordSlaEntity.class);
+			}else if(service==12){
+				List<RecordPppoeEntity> list = recordPppoeService.queryPppoeList(map);
+				CollectionToFile.collectionToFile(response, list, RecordPppoeEntity.class);
+			}else if(service==13){
+				List<RecordDhcpEntity> list = recordDhcpService.queryDhcpList(map);
+				CollectionToFile.collectionToFile(response, list, RecordDhcpEntity.class);
+			}else if(service==14){
+				List<RecordDnsEntity> list = recordDnsService.queryDnsList(map);
+				CollectionToFile.collectionToFile(response, list, RecordDnsEntity.class);
+			}
+			else if(service==15){
+				List<RecordRadiusEntity> list = recordRadiusService.queryRadiusList(map);
+				CollectionToFile.collectionToFile(response, list, RecordRadiusEntity.class);
 			}
 			else{}
 
@@ -123,6 +145,21 @@ public class ReportPolicyController {
 			}else if(service==4||service==5){
 				List<RecordHourTracertEntity> list = recordTracertService.queryIntervalList(map);
 				CollectionToFile.collectionToFile(response, list, RecordHourTracertEntity.class);
+			}else if(service==10||service==11){
+				List<RecordHourSlaEntity> list = recordSlaService.queryIntervalList(map);
+				CollectionToFile.collectionToFile(response, list, RecordHourSlaEntity.class);
+			}else if(service==12){
+				List<RecordHourPppoeEntity> list = recordPppoeService.queryIntervalList(map);
+				CollectionToFile.collectionToFile(response, list, RecordHourPppoeEntity.class);
+			}else if(service==13){
+				List<RecordHourDhcpEntity> list = recordDhcpService.queryIntervalList(map);
+				CollectionToFile.collectionToFile(response, list, RecordHourDhcpEntity.class);
+			}else if(service==14){
+				List<RecordHourDnsEntity> list = recordDnsService.queryIntervalList(map);
+				CollectionToFile.collectionToFile(response, list, RecordHourDnsEntity.class);
+			}else if(service==15){
+				List<RecordHourRadiusEntity> list = recordRadiusService.queryIntervalList(map);
+				CollectionToFile.collectionToFile(response, list, RecordHourRadiusEntity.class);
 			}
 			else{}
 
