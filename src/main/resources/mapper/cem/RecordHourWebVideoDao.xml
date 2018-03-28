@@ -106,6 +106,42 @@
 
 	</select>
 
+	<select id="queryExitList" resultType="io.cem.modules.cem.entity.RecordHourWebVideoEntity">
+		select
+		record_hour_web_video.id,record_hour_web_video.city_id,record_hour_web_video.county_id,record_hour_web_video.probe_id,record_hour_web_video.port,record_hour_web_video.task_id,record_hour_web_video.service_type,record_hour_web_video.target_id,record_hour_web_video.target_ip,record_hour_web_video.record_date,record_hour_web_video.remark,
+		city.city_name AS city_name,
+		county.county_name AS area_name,
+		probe.probe_name AS probe_name,
+		target.target_name AS target_name,
+		probe.access_layer AS accessLayer,
+		time_format(record_hour_web_video.record_time, '%H') AS record_time,
+		AVG(record_hour_web_video.dns_delay) AS dns_delay,
+		AVG(record_hour_web_video.ws_conn_delay) AS ws_conn_delay,
+		AVG(record_hour_web_video.web_page_delay) AS web_page_delay,
+		AVG(record_hour_web_video.head_frame_delay) AS head_frame_delay,
+		AVG(record_hour_web_video.init_buffer_delay) AS init_buffer_delay,
+		AVG(record_hour_web_video.load_delay) AS load_delay,
+		AVG(record_hour_web_video.total_buffer_delay) AS total_buffer_delay,
+		AVG(record_hour_web_video.download_rate) AS download_rate,
+		AVG(record_hour_web_video.buffer_time) AS buffer_time,
+		SUM(record_hour_web_video.fail) AS fail,
+		SUM(record_hour_web_video.total) AS total
+		FROM record_hour_web_video
+		LEFT JOIN city
+		ON record_hour_web_video.city_id = city.city_id
+		LEFT JOIN county
+		ON record_hour_web_video.county_id = county.county_id
+		INNER JOIN probe
+		ON record_hour_web_video.probe_id = probe.id
+		LEFT JOIN target
+		ON record_hour_web_video.target_id = target.id
+		WHERE record_hour_web_video.record_date BETWEEN #{ava_start} AND #{ava_terminal}
+		AND record_hour_web_video.port = #{port}
+        AND record_hour_web_video.probe_id = #{probe_id}
+        GROUP BY
+        record_hour_web_video.port,record_hour_web_video.probe_id;
+	</select>
+
 	<select id="queryVideoRankList" resultType="io.cem.modules.cem.entity.RecordHourWebVideoEntity">
 		select
 		record_hour_web_video.id,record_hour_web_video.city_id,record_hour_web_video.county_id,record_hour_web_video.probe_id,record_hour_web_video.port,record_hour_web_video.task_id,record_hour_web_video.service_type,record_hour_web_video.target_id,record_hour_web_video.target_ip,record_hour_web_video.record_date,record_hour_web_video.remark,

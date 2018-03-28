@@ -16,6 +16,7 @@ public class ScoreEntity {
     private Integer probeId;
     //子业务类型
     private Integer serviceType;
+    private String port;
     //测试目标ID
     private String targetName;
     private Integer targetId;
@@ -33,6 +34,8 @@ public class ScoreEntity {
     private Integer fail;
 
     private Integer total;
+
+    private String exit;
 
     /*ping ICMP details*/
     //时延平均值
@@ -1192,5 +1195,21 @@ public class ScoreEntity {
 
     public void setGameLossRate(Double gameLossRate) {
         this.gameLossRate = gameLossRate;
+    }
+
+    public String getPort() {
+        return port;
+    }
+
+    public void setPort(String port) {
+        this.port = port;
+    }
+
+    public String getExit() {
+        return exit;
+    }
+
+    public void setExit(String exit) {
+        this.exit = exit;
     }
 }

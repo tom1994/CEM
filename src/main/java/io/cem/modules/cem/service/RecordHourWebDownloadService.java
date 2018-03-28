@@ -24,6 +24,8 @@ public interface RecordHourWebDownloadService {
 
 	List<RecordHourWebDownloadEntity> queryWebDownloadList(Map<String, Object> map);
 
+	List<RecordHourWebDownloadEntity> queryExitList(Map<String, Object> map);
+
 	List<RecordHourWebDownloadEntity> queryDayList(Map<String, Object> map);
 
 	List<ScoreEntity> calculateWebDownload(List<RecordHourWebDownloadEntity> webDownloadList);

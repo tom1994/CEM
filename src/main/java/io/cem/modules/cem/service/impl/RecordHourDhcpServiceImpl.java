@@ -41,6 +41,11 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 	}
 
 	@Override
+	public List<RecordHourDhcpEntity> queryExitList(Map<String, Object> map){
+		return recordHourDhcpDao.queryExitList(map);
+	}
+
+	@Override
 	public List<RecordHourDhcpEntity> queryDayList(Map<String, Object> map){
 		return recordHourDhcpDao.queryDayList(map);
 	}

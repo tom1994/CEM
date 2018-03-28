@@ -234,6 +234,7 @@ function operate_this (obj) {     /*监听修改触发事件*/
         dataType: "json",
         // contentType: "application/json", /*必须要,不可少*/
         success: function (result) {
+            toastr.success("监控状态更改成功!");
             sptable.redraw();
         }
     });

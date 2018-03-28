@@ -37,6 +37,16 @@ public class ReportPolicyController {
 	private RecordDnsService recordDnsService;
 	@Autowired
 	private RecordRadiusService recordRadiusService;
+	@Autowired
+	private RecordWebPageService recordWebPageService;
+	@Autowired
+	private RecordWebDownloadService recordWebDownloadService;
+	@Autowired
+	private RecordFtpService recordFtpService;
+	@Autowired
+	private RecordWebVideoService recordWebVideoService;
+	@Autowired
+	private RecordGameService recordGameService;
 	/**
 	 * 列表
 	 */
@@ -129,10 +139,24 @@ public class ReportPolicyController {
 			}else if(service==14){
 				List<RecordDnsEntity> list = recordDnsService.queryDnsList(map);
 				CollectionToFile.collectionToFile(response, list, RecordDnsEntity.class);
-			}
-			else if(service==15){
+			} else if(service==15){
 				List<RecordRadiusEntity> list = recordRadiusService.queryRadiusList(map);
 				CollectionToFile.collectionToFile(response, list, RecordRadiusEntity.class);
+			} else if(service==20){
+				List<RecordWebPageEntity> list = recordWebPageService.queryWebPageList(map);
+				CollectionToFile.collectionToFile(response, list, RecordWebPageEntity.class);
+			}else if(service==30){
+				List<RecordWebDownloadEntity> list = recordWebDownloadService.queryWebDownloadList(map);
+				CollectionToFile.collectionToFile(response, list, RecordWebDownloadEntity.class);
+			}else if(service==31||service==32){
+				List<RecordFtpEntity> list = recordFtpService.queryFtpList(map);
+				CollectionToFile.collectionToFile(response, list, RecordFtpEntity.class);
+			}else if(service==40){
+				List<RecordWebVideoEntity> list = recordWebVideoService.queryWebVideoList(map);
+				CollectionToFile.collectionToFile(response, list, RecordWebVideoEntity.class);
+			}else if(service==50){
+				List<RecordGameEntity> list = recordGameService.queryGameList(map);
+				CollectionToFile.collectionToFile(response, list, RecordGameEntity.class);
 			}
 			else{}
 
@@ -160,6 +184,21 @@ public class ReportPolicyController {
 			}else if(service==15){
 				List<RecordHourRadiusEntity> list = recordRadiusService.queryIntervalList(map);
 				CollectionToFile.collectionToFile(response, list, RecordHourRadiusEntity.class);
+			}else if(service==20){
+				List<RecordHourWebPageEntity> list = recordWebPageService.queryIntervalList(map);
+				CollectionToFile.collectionToFile(response, list, RecordHourWebPageEntity.class);
+			}else if(service==30){
+				List<RecordHourWebDownloadEntity> list = recordWebDownloadService.queryIntervalList(map);
+				CollectionToFile.collectionToFile(response, list, RecordHourWebDownloadEntity.class);
+			}else if(service==31||service==32){
+				List<RecordHourFtpEntity> list = recordFtpService.queryIntervalList(map);
+				CollectionToFile.collectionToFile(response, list, RecordHourFtpEntity.class);
+			}else if(service==40){
+				List<RecordHourWebVideoEntity> list = recordWebVideoService.queryIntervalList(map);
+				CollectionToFile.collectionToFile(response, list, RecordHourWebVideoEntity.class);
+			}else if(service==50){
+				List<RecordHourGameEntity> list = recordGameService.queryIntervalList(map);
+				CollectionToFile.collectionToFile(response, list, RecordHourGameEntity.class);
 			}
 			else{}
 

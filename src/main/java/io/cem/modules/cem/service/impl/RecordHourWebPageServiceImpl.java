@@ -39,6 +39,12 @@ public class RecordHourWebPageServiceImpl implements RecordHourWebPageService {
 		return recordHourWebPageDao.queryList(map);
 	}
 
+
+	@Override
+	public List<RecordHourWebPageEntity> queryExitList(Map<String, Object> map){
+		return recordHourWebPageDao.queryExitList(map);
+	}
+
 	@Override
 	public List<RecordHourWebPageEntity> queryWebList(Map<String, Object> map){
 		return recordHourWebPageDao.queryWebList(map);
@@ -312,6 +318,7 @@ public class RecordHourWebPageServiceImpl implements RecordHourWebPageService {
 				finalScore.setTargetName(webPageList.get(i).getTargetName());
 				finalScore.setRecordTime(webPageList.get(i).getRecordTime());
 				finalScore.setAccessLayer(webPageList.get(i).getAccessLayer());
+				finalScore.setPort(webPageList.get(i).getPort());
 				finalScore.setRecordDate(webPageList.get(i).getRecordDate());
 				finalScore.setWebpageDnsDelay(webPageList.get(i).getDnsDelay());
 				finalScore.setWebpageConnDelay(webPageList.get(i).getConnDelay());

@@ -31,6 +31,11 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 	public List<RecordHourWebDownloadEntity> queryList(Map<String, Object> map){
 		return recordHourWebDownloadDao.queryList(map);
 	}
+
+	@Override
+	public List<RecordHourWebDownloadEntity> queryExitList(Map<String, Object> map){
+		return recordHourWebDownloadDao.queryExitList(map);
+	}
 	@Override
 	public List<RecordHourWebDownloadEntity> queryWebDownload(Map<String, Object> map){
 		return recordWebDownloadDao.queryWebDownload(map);
@@ -183,6 +188,7 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 				WEBDL.setTargetName(webDownloadList.get(i).getTargetName());
 				WEBDL.setTargetId(webDownloadList.get(i).getTargetId());
 				WEBDL.setAccessLayer(webDownloadList.get(i).getAccessLayer());
+				WEBDL.setPort(webDownloadList.get(i).getPort());
 				WEBDL.setRecordDate(webDownloadList.get(i).getRecordDate());
 				WEBDL.setRecordTime(webDownloadList.get(i).getRecordTime());
 				WEBDL.setWebDownloadDnsDelay(webDownloadList.get(i).getDnsDelay());
@@ -368,6 +374,7 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 					FTPD.setTargetName(ftpList.get(i).getTargetName());
 					FTPD.setTargetId(ftpList.get(i).getTargetId());
 					FTPD.setAccessLayer(ftpList.get(i).getAccessLayer());
+					FTPD.setPort(ftpList.get(i).getPort());
 					FTPD.setRecordTime(ftpList.get(i).getRecordTime());
 					FTPD.setRecordDate(ftpList.get(i).getRecordDate());
 					FTPD.setFtpDownloadDnsDelay(ftpList.get(i).getDnsDelay());
@@ -561,6 +568,7 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 					FTPU.setFtpUploadHeadbyteDelay(ftpList.get(i).getHeadbyteDelay());
 					FTPU.setFtpUploadUploadRate(ftpList.get(i).getUploadRate());
 					FTPU.setAccessLayer(ftpList.get(i).getAccessLayer());
+					FTPU.setPort(ftpList.get(i).getPort());
 					FTPU.setFail(ftpList.get(i).getFail());
 					FTPU.setTotal(ftpList.get(i).getTotal());
 					FTPU.setScore(score);
@@ -592,6 +600,8 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 				scoreTarget.setTargetName(webDownload.get(i).getTargetName());
 				scoreTarget.setRecordDate(webDownload.get(i).getRecordDate());
 				scoreTarget.setRecordTime(webDownload.get(i).getRecordTime());
+				scoreTarget.setAccessLayer(webDownload.get(i).getAccessLayer());
+				scoreTarget.setPort(webDownload.get(i).getPort());
 				scoreTarget.setFail(webDownload.get(i).getFail());
 				scoreTarget.setTotal(webDownload.get(i).getTotal());
 				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
@@ -628,6 +638,7 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 					finalScore.setTargetId(ite.getTargetId());
 					finalScore.setTargetName(ite.getTargetName());
 					finalScore.setAccessLayer(ite.getAccessLayer());
+					finalScore.setPort(ite.getPort());
 					finalScore.setRecordTime(ite.getRecordTime());
 					finalScore.setRecordDate(ite.getRecordDate());
 					finalScore.setScore(0.0);

@@ -22,6 +22,8 @@ public interface RecordHourSlaService {
 
 	List<RecordHourSlaEntity> querySlaList(Map<String, Object> map);
 
+	List<RecordHourSlaEntity> queryExitList(Map<String, Object> map);
+
 	List<RecordHourSlaEntity> queryDayList(Map<String, Object> map);
 
 	List<ScoreEntity> calculateSlaTcp(List<RecordHourSlaEntity> slaList);

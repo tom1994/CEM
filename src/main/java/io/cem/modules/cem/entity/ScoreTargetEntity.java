@@ -21,6 +21,8 @@ public class ScoreTargetEntity {
     //测试目标ID
     private Integer targetId;
 
+    private String port;
+
     private Integer accessLayer;
     //记录日期
     private Date recordDate;
@@ -486,6 +488,14 @@ public class ScoreTargetEntity {
 
     public void setTracertTcpLossRate(Double tracertTcpLossRate) {
         this.tracertTcpLossRate = tracertTcpLossRate;
+    }
+
+    public String getPort() {
+        return port;
+    }
+
+    public void setPort(String port) {
+        this.port = port;
     }
 
     @Override

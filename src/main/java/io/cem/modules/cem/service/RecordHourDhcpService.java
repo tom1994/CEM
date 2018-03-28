@@ -22,6 +22,8 @@ public interface RecordHourDhcpService {
 
 	List<RecordHourDhcpEntity> queryDhcpList(Map<String, Object> map);
 
+	List<RecordHourDhcpEntity> queryExitList(Map<String, Object> map);
+
 	List<RecordHourDhcpEntity> queryDayList(Map<String, Object> map);
 
 	int queryTotal(Map<String, Object> map);

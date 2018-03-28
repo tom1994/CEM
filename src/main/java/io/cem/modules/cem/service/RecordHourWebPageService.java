@@ -22,6 +22,8 @@ public interface RecordHourWebPageService {
 	List<RecordHourWebPageEntity> queryWebPage(Map<String,Object> map);
 
 	List<RecordHourWebPageEntity> queryWebList(Map<String, Object> map);
+
+	List<RecordHourWebPageEntity> queryExitList(Map<String, Object> map);
 	List<RecordHourWebPageEntity> queryWebAreaList(Map<String, Object> map);
 
 	List<RecordHourWebPageEntity> queryWebRankList(Map<String, Object> map);
