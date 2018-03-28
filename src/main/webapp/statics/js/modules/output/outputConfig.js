@@ -1,6 +1,283 @@
 var st = new Map();//servicetype字典，可通过get方法查对应字符串。
 st.set(0, "正在监控");
 st.set(1, "未监控");
+
+var spdata_handle = new Vue({
+    el: '#handle',
+    data: {},
+    mounted: function(){         /*动态加载测试任务组数据*/
+        //探针列表
+        $.ajax({
+            url: "../../cem/probe/exitlist",//探针列表
+            type: "POST",
+            cache: false,  //禁用缓存
+            dataType: "json",
+            contentType: "application/json",
+            success: function (result) {
+                var probes = [];
+                console.log(result.page.list[0]);
+                for (var i = 0; i < result.page.list.length; i++) {
+                    probes[i] = {message: result.page.list[i]}
+                }
+                spform_data.probe = probes;
+            }
+        });
+
+
+    },
+    methods: {
+        spadd: function () {   /*监听新增触发事件*/
+            status = 0;
+            /*状态0,表示新增*/
+            var forms = $('#spform_data .form-control');
+
+            //$('#spform_data input[type=text]').prop("readonly", false);
+            /*去除只读状态*/
+            $('#spform_data select').prop("disabled", false);
+
+            spform_data.modaltitle = "新建出口";
+            /*修改模态框标题*/
+            $('#myModal_sp').modal('show');
+        }
+    }
+});
+
+
+var spform_data = new Vue({
+    el: '#myModal_sp',
+    data: {
+        modaltitle: "", /*定义模态框标题*/
+        exitName:[],
+        port: [],
+        probe:[],
+        portName:[],
+    },
+    // 在 `methods` 对象中定义方法
+    methods: {
+        /*模态框中选择区县*/
+        queryPort: function(){
+            console.log($("#probe").val());
+            this.port = queryPort($("#probe").val());
+        },
+        submit: function () {
+            var spJson = getFormJson($('#spform_data'));
+            debugger
+            console.log(spJson);
+            spJson.status=0;
+            if (spJson.exit == "") {
+                toastr.warning("请输入出口名称!");
+            } else if (spJson.probe_id == "") {
+                toastr.warning("请选择探针!");
+            }else if(spJson.port==""){
+                toastr.warning("请选择端口!");
+            }else {
+                var sp = JSON.stringify(spJson);
+                /*封装成json数组*/
+                console.log(sp);
+                $.ajax({
+                    type: "POST", /*GET会乱码*/
+                    url: "../../probeexit/save" ,
+                    cache: false,  //禁用缓存
+                    data: sp,  //传入组装的参数
+                    dataType: "json",
+                    contentType: "application/json", /*必须要,不可少*/
+                    success: function (result) {
+                        let code = result.code;
+                        let msg = result.msg;
+                        console.log(result);
+                        if (status == 0) {
+                            switch (code) {
+                                case 0:
+                                    toastr.success("任务创建成功!");
+                                    $('#myModal_sp').modal('hide');    //jQuery选定
+                                    break;
+                                case 403:
+                                    toastr.error(msg);
+                                    break;
+                                default:
+                                    toastr.error("创建出现未知错误");
+                                    break
+                            }
+                        } else if (status == 1) {
+                            switch (code) {
+                                case 0:
+                                    toastr.success("策略修改成功!");
+                                    $('#myModal_sp').modal('hide');
+                                    break;
+                                case 403:
+                                    toastr.error(msg);
+                                    break;
+                                default:
+                                    toastr.error("未知错误");
+                                    break
+                            }
+                        }
+                        sptable.currReset();
+                    }
+                });
+            }
+        }
+    }
+});
+var queryPort = function (probeid) {
+    $.ajax({
+        url: "../../cem/probe/port/"+probeid,
+        type: "POST",
+        cache: false,  //禁用缓存
+        dataType: "json",
+        contentType: "application/json",
+        success: function (result) {
+            var port_detail = new Array();
+            var port = new Array();
+            console.log(result);
+            for(var i=0;i<result.port.length;i++){
+                port_detail[i] = {message: result.port[i]}
+            }
+            spform_data.port = port_detail;
+            spform_data.portName=JSON.parse(spform_data.port[0].message.portIp);
+
+            for(var i=0;i< spform_data.portName.length;i++){
+                port[i] = {message: spform_data.portName[i]}
+            }
+            spform_data.port = port;
+        }
+    });
+}
+
+function getFormJson(form) {      /*将表单对象变为json对象*/
+    var o = {};
+    var a = $(form).serializeArray();
+    $.each(a, function () {
+        if (o[this.name] !== undefined) {
+            if (!o[this.name].push) {
+                o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '');
+        } else {
+            o[this.name] = this.value || '';
+        }
+    });
+    return o;
+}
+
+function delete_this(obj) {
+    delete_data.show_deleteModal();
+    delete_data.id = parseInt(obj.id);
+    /*获取当前行探针数据id*/
+    console.log(delete_data.id);
+}
+
+var delete_data = new Vue({
+    el: '#myModal_delete',
+    data: {
+        id: null
+    },
+    methods: {
+        show_deleteModal: function () {
+            $(this.$el).modal('show');
+            /*弹出确认模态框*/
+        },
+        close_modal: function (obj) {
+            $(this.$el).modal('hide');
+
+        },
+        cancel_delete: function () {
+
+        },
+        delete_data: function () {
+            idArray = [];
+            /*清空id数组*/
+            idArray[0] = this.id;
+            delete_ajax();
+            /*ajax传输*/
+        }
+    }
+});
+
+function delete_ajax() {
+    var ids = JSON.stringify(idArray);
+    /*对象数组字符串*/
+
+    $.ajax({
+        type: "POST", /*GET会乱码*/
+        url: "../../probeexit/delete",
+        cache: false,  //禁用缓存
+        data: ids,  //传入组装的参数
+        dataType: "json",
+        contentType: "application/json", /*必须要,不可少*/
+        success: function (result) {
+            toastr.success("业务信息删除成功!");
+            sptable.currReset();
+            idArray = [];
+            /*清空id数组*/
+            delete_data.close_modal();
+            /*关闭模态框*/
+        }
+    });
+}
+
+function operate_this (obj) {     /*监听修改触发事件*/
+    operate_data_id = parseInt(obj.id);
+    /*获取当前行探针数据id*/
+    console.log(operate_data_id);
+    $('saveId').val(operate_data_id)
+    status = 1;
+    var forms = $('#opform_data .form-control');
+    $.ajax({
+        type: "POST", /*GET会乱码*/
+        url: "../../probeexit/info/"+operate_data_id,
+        cache: false,  //禁用缓存
+        dataType: "json",
+        // contentType: "application/json", /*必须要,不可少*/
+        success: function (result) {
+            forms[0].value = result.probeExit.id;
+            forms[1].value = result.probeExit.exit;
+            forms[2].value = result.probeExit.probeName;
+            forms[3].value = result.probeExit.port;
+        }
+    });
+    $('#probe1').attr('disabled','disabled');
+    $('#port1').attr('disabled','disabled');
+    $('#myModal_output').modal('show');
+}
+ function  Save() {
+     var id=$('saveId').val()
+    var spJson = getFormJson($('#opform_data'));
+    console.log(spJson);
+    spJson.status=1;
+    var sp = JSON.stringify(spJson);
+    /*封装成json数组*/
+    console.log(sp);
+    $.ajax({
+        type: "POST", /*GET会乱码*/
+        url: "../../probeexit/update/"+id ,
+        cache: false,  //禁用缓存
+        data: sp,  //传入组装的参数
+        dataType: "json",
+        contentType: "application/json", /*必须要,不可少*/
+        success: function (result) {
+            let code = result.code;
+            let msg = result.msg;
+            console.log(result);
+            if (status == 1) {
+                switch (code) {
+                    case 0:
+                        toastr.success("出口修改成功!");
+                        $('#myModal_output').modal('hide');
+                        break;
+                    case 403:
+                        toastr.error(msg);
+                        break;
+                    default:
+                        toastr.error("未知错误");
+                        break
+                }
+            }
+            sptable.currReset();
+        }
+    });
+}
+
 var sptable = new Vue({
     el: '#exit_table',
     data: {
@@ -94,19 +371,20 @@ var sptable = new Vue({
                         let rows = [];
                         var i = param.start+1;
                         result.page.list.forEach(function (item) {
+                            console.log(item);
                             let row = [];
                             row.push(i++);
                             row.push(item.exit);
                             row.push(item.probeName);
                             row.push(item.port);
-                            row.push(item.probeName);
                             row.push(st.get(item.status));
                             row.push('<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>&nbsp;' +
-                                '<a id='+download+item.id+' href="" style="display: none">' +
-                                '<a class="fontcolor" style="white-space: nowrap" onclick="downloadShow(this)" id='+item.id+'>取消监控</a></a>'
+                                '<a class="fontcolor" style="white-space: nowrap" onclick="operate_this(this)" id='+item.id+'>更改监控状态</a>&nbsp;'+
+                                '<a class="fontcolor" onclick="operate_this(this)" id='+item.id+'>编辑</a>'
                             );
                             rows.push(row);
                         });
+
                         returnData.data = rows;
                         console.log(returnData);
 

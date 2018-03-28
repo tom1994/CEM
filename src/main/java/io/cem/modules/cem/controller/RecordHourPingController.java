@@ -1084,7 +1084,7 @@ public class RecordHourPingController {
      */
     @RequestMapping("/connection")
     @RequiresPermissions("recordhourping:connection")
-    public R connectionImage(String chartdata) {
+    public R connectionImage(String chartdata) throws ExecutionException, InterruptedException {
         //查询列表数据
         Map<String, Object> map = new HashMap<>();
         JSONObject chartdata_jsonobject = JSONObject.parseObject(chartdata);
@@ -1109,43 +1109,51 @@ public class RecordHourPingController {
 
         List<ScoreEntity> scoreList = new ArrayList<>();
         //查询天表
-//        if (dateDifferent > 5) {
-//            List<RecordHourPingEntity> pingList = recordHourPingService.queryDayList(map);
-//            List<RecordHourTracertEntity> tracertList = recordHourTracertService.queryDayList(map);
-//            List<ScoreEntity> pingIcmp = recordHourPingService.calculatePingIcmp(pingList);
-//            List<ScoreEntity> pingTcp = recordHourPingService.calculatePingTcp(pingList);
-//            List<ScoreEntity> pingUdp = recordHourPingService.calculatePingUdp(pingList);
-//            List<ScoreEntity> tracertIcmp = recordHourPingService.calculateTracertIcmp(tracertList);
-//            List<ScoreEntity> tracertUdp = recordHourPingService.calculateTracertUdp(tracertList);
-//            scoreList = recordHourPingService.calculateDate1(pingIcmp, pingTcp, pingUdp, tracertIcmp, tracertUdp);
-//            if (map.get("city_Id") == null && map.get("county_id") == null && map.get("probe_id") == null) {
-//                scoreList = recordHourPingService.dateChart1(scoreList);
-//            } else if (map.get("county_id") == null && map.get("probe_id") == null) {
-//                scoreList = recordHourPingService.cityChart1(scoreList);
-//            } else if (map.get("probe_id") == null) {
-//                scoreList = recordHourPingService.probeChart1(scoreList);
-//            } else {
-//            }
-//        }
-//        //查询小时表
-//        else {
-//            List<RecordHourPingEntity> pingList = recordHourPingService.queryPingList(map);
-//            List<RecordHourTracertEntity> tracertList = recordHourTracertService.queryTracertList(map);
-//            List<ScoreEntity> pingIcmp = recordHourPingService.calculatePingIcmp(pingList);
-//            List<ScoreEntity> pingTcp = recordHourPingService.calculatePingTcp(pingList);
-//            List<ScoreEntity> pingUdp = recordHourPingService.calculatePingUdp(pingList);
-//            List<ScoreEntity> tracertIcmp = recordHourPingService.calculateTracertIcmp(tracertList);
-//            List<ScoreEntity> tracertUdp = recordHourPingService.calculateTracertUdp(tracertList);
-//            scoreList = recordHourPingService.calculateDate1(pingIcmp, pingTcp, pingUdp, tracertIcmp, tracertUdp);
-//            if (map.get("city_Id") == null && map.get("county_id") == null && map.get("probe_id") == null) {
-//                scoreList = recordHourPingService.dateChart1(scoreList);
-//            } else if (map.get("county_id") == null && map.get("probe_id") == null) {
-//                scoreList = recordHourPingService.cityChart1(scoreList);
-//            } else if (map.get("probe_id") == null) {
-//                scoreList = recordHourPingService.probeChart1(scoreList);
-//            } else {
-//            }
-//        }
+        if (dateDifferent > 5) {
+            List<RecordHourPingEntity> pingList = recordHourPingService.queryDayList(map);
+            List<RecordHourTracertEntity> tracertList = recordHourTracertService.queryDayList(map);
+            List<ScoreEntity> pingIcmp = recordHourPingService.calculatePingIcmp(pingList);
+            List<ScoreEntity> pingTcp = recordHourPingService.calculatePingTcp(pingList);
+            List<ScoreEntity> pingUdp = recordHourPingService.calculatePingUdp(pingList);
+            List<ScoreEntity> tracertIcmp = recordHourPingService.calculateTracertIcmp(tracertList);
+            List<ScoreEntity> tracertUdp = recordHourPingService.calculateTracertUdp(tracertList);
+            scoreList = recordHourPingService.calculateDate1(pingIcmp, pingTcp, pingUdp, tracertIcmp, tracertUdp);
+            if (map.get("city_Id") == null && map.get("county_id") == null && map.get("probe_id") == null) {
+                scoreList = recordHourPingService.dateChart1(scoreList);
+            } else if (map.get("county_id") == null && map.get("probe_id") == null) {
+                scoreList = recordHourPingService.cityChart1(scoreList);
+            } else if (map.get("probe_id") == null) {
+                scoreList = recordHourPingService.probeChart1(scoreList);
+            } else {
+            }
+        }
+        //查询小时表
+        else {
+            Future<List<RecordHourPingEntity>> pingList_future = recordHourPingService.queryPingList(map);
+            Future<List<RecordHourTracertEntity>> tracertList_future = recordHourTracertService.queryTracertList(map);
+            while (true) {
+                if (pingList_future.isDone() && tracertList_future.isDone()) {
+                    List<RecordHourPingEntity> pingList = pingList_future.get();
+                    List<RecordHourTracertEntity> tracertList = tracertList_future.get();
+                    List<ScoreEntity> pingIcmp = recordHourPingService.calculatePingIcmp(pingList);
+                    List<ScoreEntity> pingTcp = recordHourPingService.calculatePingTcp(pingList);
+                    List<ScoreEntity> pingUdp = recordHourPingService.calculatePingUdp(pingList);
+                    List<ScoreEntity> tracertIcmp = recordHourPingService.calculateTracertIcmp(tracertList);
+                    List<ScoreEntity> tracertUdp = recordHourPingService.calculateTracertUdp(tracertList);
+                    scoreList = recordHourPingService.calculateDate1(pingIcmp, pingTcp, pingUdp, tracertIcmp, tracertUdp);
+                    break;
+                }
+                Thread.sleep(1000);
+            }
+            if (map.get("city_Id") == null && map.get("county_id") == null && map.get("probe_id") == null) {
+                scoreList = recordHourPingService.dateChart1(scoreList);
+            } else if (map.get("county_id") == null && map.get("probe_id") == null) {
+                scoreList = recordHourPingService.cityChart1(scoreList);
+            } else if (map.get("probe_id") == null) {
+                scoreList = recordHourPingService.probeChart1(scoreList);
+            } else {
+            }
+        }
         System.out.println(scoreList);
         return R.ok().put("scoreList", scoreList);
     }
@@ -1222,7 +1230,7 @@ public class RecordHourPingController {
                     List<ScoreEntity> dhcp = recordHourSlaService.calculateDhcp(dhcpList);
                     List<ScoreEntity> pppoe = recordHourSlaService.calculatePppoe(pppoeList);
                     List<ScoreEntity> radius = recordHourSlaService.calculateRadius(radiusList);
-                    scoreList = recordHourSlaService.calculateService2(slaTcp, slaUdp, dns, dhcp, pppoe, radius);
+                    scoreList = recordHourSlaService.calculateDate2(slaTcp, slaUdp, dns, dhcp, pppoe, radius);
                     break;
                 }
                 Thread.sleep(1000);
@@ -1355,7 +1363,7 @@ public class RecordHourPingController {
                     List<ScoreEntity> webDownload = recordHourWebDownloadService.calculateWebDownload(webDownloadList);
                     List<ScoreEntity> ftpDownload = recordHourWebDownloadService.calculateFtpDownload(ftpList);
                     List<ScoreEntity> ftpUpload = recordHourWebDownloadService.calculateFtpUpload(ftpList);
-                    scoreList = recordHourWebDownloadService.calculateService4(webDownload, ftpDownload, ftpUpload);
+                    scoreList = recordHourWebDownloadService.calculateDate4(webDownload, ftpDownload, ftpUpload);
                     break;
                 }
                 Thread.sleep(1000);

@@ -341,6 +341,10 @@ public class RecordGameEntity implements Serializable {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
+
+	public String getRemark() {
+		return remark;
+	}
 	/**
 	 * 获取：备注
 	 */

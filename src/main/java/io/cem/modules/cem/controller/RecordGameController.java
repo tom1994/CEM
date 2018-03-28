@@ -105,7 +105,7 @@ public class RecordGameController {
 			if (taskDispatchService.queryTestStatus(dispatchId) > 0) {
 				break;
 			} else {
-				sleep(20000);
+				sleep(2000);
 			}
 		}
 		List<RecordGameEntity> resultList = new ArrayList<>();

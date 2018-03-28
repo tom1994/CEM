@@ -59,6 +59,7 @@
 		city.city_name AS city_name,
 		county.county_name AS area_name,
 		probe.probe_name AS probe_name,
+		probe.access_layer,
 		target.target_name AS target_name,
 		time_format(record_hour_ftp.record_time, '%H') AS record_time,
 		AVG(record_hour_ftp.dns_delay) AS dns_delay,

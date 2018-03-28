@@ -319,11 +319,12 @@ public class RecordHourDnsEntity implements Serializable {
 		this.targetName = targetName;
 	}
 
+
 	public Integer getAccessLayer() {
 		return accessLayer;
 	}
 
 	public void setAccessLayer(Integer accessLayer) {
-		accessLayer = accessLayer;
+		this.accessLayer = accessLayer;
 	}
 }

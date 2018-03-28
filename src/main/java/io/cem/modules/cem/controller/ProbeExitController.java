@@ -90,11 +90,27 @@ public class ProbeExitController {
 	/**
 	 * 修改
 	 */
-	@RequestMapping("/update")
+	@RequestMapping("/update/{id}")
 	@RequiresPermissions("probeexit:update")
 	public R update(@RequestBody ProbeExitEntity probeExit){
 		probeExitService.update(probeExit);
 		
+		return R.ok();
+	}
+
+	/**
+	 * 修改
+	 */
+	@RequestMapping("/operate/{id}")
+	@RequiresPermissions("probeexit:operate")
+	public R update(@PathVariable("id") Integer id){
+		ProbeExitEntity probeExit = probeExitService.queryObject(id);
+		if(probeExit.getStatus()==0){
+			probeExitService.operateStatus0(id);
+		}else if(probeExit.getStatus()==1){
+			probeExitService.operateStatus1(id);
+		}else{}
+
 		return R.ok();
 	}
 	

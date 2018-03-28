@@ -59,5 +59,6 @@ public class AlarmRecordServiceImpl implements AlarmRecordService {
 	public void deleteBatch(Integer[] ids){
 		alarmRecordDao.deleteBatch(ids);
 	}
+
 	
 }

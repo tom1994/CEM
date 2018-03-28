@@ -356,7 +356,6 @@ var new_search = new Vue({
                 // }
                 let param = {};
                 param.probedata = JSON.stringify(search);
-                debugger
                 console.log(param);
                 $.ajax({
                     /*后台取得数据,赋值给观察者*/

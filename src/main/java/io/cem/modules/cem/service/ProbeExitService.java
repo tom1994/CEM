@@ -23,6 +23,10 @@ public interface ProbeExitService {
 	void save(ProbeExitEntity probeExit);
 	
 	void update(ProbeExitEntity probeExit);
+
+	void operateStatus0(Integer id);
+
+	void operateStatus1(Integer id);
 	
 	void delete(Integer id);
 	

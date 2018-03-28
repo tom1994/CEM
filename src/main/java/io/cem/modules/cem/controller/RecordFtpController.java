@@ -106,7 +106,7 @@ public class RecordFtpController {
 			if (taskDispatchService.queryTestStatus(dispatchId) > 0) {
 				break;
 			} else {
-				sleep(20000);
+				sleep(2000);
 			}
 		}
 		List<RecordFtpEntity> resultList = new ArrayList<>();

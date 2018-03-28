@@ -94,7 +94,7 @@ public class RecordWebDownloadController {
 			if (taskDispatchService.queryTestStatus(dispatchId) > 0) {
 				break;
 			} else {
-				sleep(10000);
+				sleep(2000);
 			}
 		}
 		List<RecordWebDownloadEntity> resultList = new ArrayList<>();

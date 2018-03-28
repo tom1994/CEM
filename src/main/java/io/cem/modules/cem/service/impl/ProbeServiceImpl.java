@@ -34,6 +34,17 @@ public class ProbeServiceImpl implements ProbeService {
     }
 
     @Override
+    public List<ProbeEntity> queryExitList(Map<String, Object> map) {
+
+        return probeDao.queryExitList(map);
+    }
+
+    @Override
+    public List<ProbeEntity> queryPortList(Integer id){
+        return probeDao.queryPortList(id);
+    };
+
+    @Override
     public List<ProbeEntity> queryOnlineList(Integer id) {
 
         return probeDao.queryOnlineList(id);

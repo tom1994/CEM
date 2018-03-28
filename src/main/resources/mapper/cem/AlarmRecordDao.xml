@@ -58,7 +58,7 @@
 		SELECT alarm_record.*,
 		probe.probe_name AS probe_name
 		FROM alarm_record
-		LEFT JOIN probe
+		INNER JOIN probe
 		ON alarm_record.probe_id = probe.id
 
 		WHERE alarm_record.id IS NOT NULL
@@ -168,5 +168,6 @@
 			#{id}
 		</foreach>
 	</delete>
+
 
 </mapper>
