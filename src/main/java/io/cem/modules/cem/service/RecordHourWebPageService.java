@@ -5,6 +5,7 @@ import io.cem.modules.cem.entity.ScoreEntity;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Future;
 
 /**
  * 
@@ -24,7 +25,7 @@ public interface RecordHourWebPageService {
 	List<RecordHourWebPageEntity> queryWebList(Map<String, Object> map);
 	List<RecordHourWebPageEntity> queryWebAreaList(Map<String, Object> map);
 
-	List<RecordHourWebPageEntity> queryWebRankList(Map<String, Object> map);
+	Future<List<RecordHourWebPageEntity>> queryWebRankList(Map<String, Object> map);
 
 	List<RecordHourWebPageEntity> queryDayList(Map<String, Object> map);
 

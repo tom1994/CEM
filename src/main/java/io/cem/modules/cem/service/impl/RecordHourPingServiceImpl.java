@@ -7,12 +7,15 @@ import io.cem.modules.cem.dao.RecordPingDao;
 import io.cem.modules.cem.entity.*;
 import io.cem.modules.cem.service.RecordHourTracertService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.Future;
 
 import io.cem.modules.cem.dao.RecordHourPingDao;
 import io.cem.modules.cem.service.RecordHourPingService;
@@ -42,7 +45,10 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 	}
 
 	@Override
-	public List<RecordHourPingEntity> queryPingList(Map<String, Object> map){ return recordHourPingDao.queryPingList(map); }
+	@Async
+	public Future<List<RecordHourPingEntity>> queryPingList(Map<String, Object> map){ return  new AsyncResult<>
+			(recordHourPingDao.queryPingList(map)); }
+
 
 	@Override
 	public List<RecordHourPingEntity> queryDayList(Map<String, Object> map){ return recordHourPingDao.queryDayList(map); }

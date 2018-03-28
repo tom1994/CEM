@@ -2,10 +2,13 @@ package io.cem.modules.cem.service.impl;
 
 import io.cem.modules.cem.dao.RecordDhcpDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Future;
 
 import io.cem.modules.cem.dao.RecordHourDhcpDao;
 import io.cem.modules.cem.entity.RecordHourDhcpEntity;
@@ -36,8 +39,10 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 	}
 
 	@Override
-	public List<RecordHourDhcpEntity> queryDhcpList(Map<String, Object> map){
-		return recordHourDhcpDao.queryDhcpList(map);
+	@Async
+	public Future<List<RecordHourDhcpEntity>> queryDhcpList(Map<String, Object> map) {
+		return new AsyncResult<>
+				(recordHourDhcpDao.queryDhcpList(map));
 	}
 
 	@Override

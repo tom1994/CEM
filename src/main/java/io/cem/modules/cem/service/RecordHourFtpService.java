@@ -4,6 +4,7 @@ import io.cem.modules.cem.entity.RecordHourFtpEntity;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Future;
 
 /**
  * 
@@ -19,7 +20,7 @@ public interface RecordHourFtpService {
 	List<RecordHourFtpEntity> queryList(Map<String, Object> map);
 	List<RecordHourFtpEntity> queryFtp(Map<String,Object> map);
 
-	List<RecordHourFtpEntity> queryFtpList(Map<String, Object> map);
+	Future<List<RecordHourFtpEntity>> queryFtpList(Map<String, Object> map);
 
 	List<RecordHourFtpEntity> queryDayList(Map<String, Object> map);
 

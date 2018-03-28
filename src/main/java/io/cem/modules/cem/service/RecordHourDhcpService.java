@@ -4,6 +4,7 @@ import io.cem.modules.cem.entity.RecordHourDhcpEntity;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Future;
 
 /**
  * 
@@ -20,7 +21,7 @@ public interface RecordHourDhcpService {
 
 	List<RecordHourDhcpEntity> queryDhcp(Map<String,Object> map);
 
-	List<RecordHourDhcpEntity> queryDhcpList(Map<String, Object> map);
+	Future<List<RecordHourDhcpEntity>> queryDhcpList(Map<String, Object> map);
 
 	List<RecordHourDhcpEntity> queryDayList(Map<String, Object> map);
 

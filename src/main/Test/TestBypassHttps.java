@@ -1,60 +1,73 @@
 
+import io.cem.modules.cem.entity.RecordHourPingEntity;
+import io.cem.modules.cem.entity.RecordHourTracertEntity;
+import io.cem.modules.cem.entity.ScoreEntity;
+import io.cem.modules.cem.service.*;
+import org.springframework.beans.factory.annotation.Autowired;
+
+
 import javax.net.ssl.*;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 
 public class TestBypassHttps {
+    @Autowired
+    private RecordHourPingService recordHourPingService;
+    @Autowired
+    private RecordHourTracertService recordHourTracertService;
+    @Autowired
+    private RecordHourSlaService recordHourSlaService;
+    @Autowired
+    private RecordHourDnsService recordHourDnsService;
+    @Autowired
+    private RecordHourDhcpService recordHourDhcpService;
+    @Autowired
+    private RecordHourPppoeService recordHourPppoeService;
+    @Autowired
+    private RecordHourRadiusService recordHourRadiusService;
+    @Autowired
+    private RecordHourWebPageService recordHourWebPageService;
+    @Autowired
+    private RecordHourWebDownloadService recordHourWebDownloadService;
+    @Autowired
+    private RecordHourFtpService recordHourFtpService;
+    @Autowired
+    private RecordHourWebVideoService recordHourWebVideoService;
+    @Autowired
+    private RecordHourGameService recordHourGameService;
+    @Autowired
+    private ProbeService probeService;
 
-    public void sendRequestIgnoreSSL(String url)  {
-        HttpsURLConnection con = null;
-        // Create a trust manager that does not validate certificate chains
-        TrustManager[] trustAllCerts = new TrustManager[]{
-                new X509TrustManager() {
-                    public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-                        return null;
-                    }
-                    public void checkClientTrusted(
-                            java.security.cert.X509Certificate[] certs, String authType) {
-                    }
-                    public void checkServerTrusted(
-                            java.security.cert.X509Certificate[] certs, String authType) {
-                    }
-                }
-        };
-        // Install the all-trusting trust manager
-        try {
-            SSLContext sc = SSLContext.getInstance("SSL");
-            sc.init(null, trustAllCerts, new java.security.SecureRandom());
-            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
-            HostnameVerifier allHostsValid = new HostnameVerifier() {
-                public boolean verify(String hostname, SSLSession session) {
-                    return true;
-                }
-            };
-            HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
-        // Now you can access an https URL without having the certificate in the truststore
-            URL myurl = new URL(url);
-            con = (HttpsURLConnection)myurl.openConnection();
-            con.setRequestMethod("POST");
-            con.setRequestProperty("Authorization","Bearer 8dd1cac5-7e95-4611-ac31-fc66d94eaefa");
-            con.setDoInput(true);
-            DataInputStream input = new DataInputStream( con.getInputStream() );
-            for( int c = input.read(); c != -1; c = input.read() )
-                System.out.print( (char)c );
-            input.close();
-            System.out.println("Resp Code:"+con .getResponseCode());
-            System.out.println("Resp Message:"+ con .getResponseMessage());
-        } catch (Exception e) {
-            e.printStackTrace();
-            try {
-                if(con!=null&&con.getResponseCode()==400){
-                    System.out.println("请求400了");
-                }
-            } catch (IOException e1) {
-
+    @org.junit.Test
+    public void test() throws ExecutionException, InterruptedException {
+        Map<String, Object> map = new HashMap<>();
+        map.put("ava_start","2018-03-28");
+        map.put("ava_terminal","2018-03-28");
+        map.put("service",0);
+        Future<List<RecordHourPingEntity>> pingList_future = recordHourPingService.queryPingList(map);
+        Future<List<RecordHourTracertEntity>> tracertList_future = recordHourTracertService.queryTracertList(map);
+        List<ScoreEntity> connection;
+        while (true) {
+            if (pingList_future.isDone() && tracertList_future.isDone()) {
+                List<RecordHourPingEntity> pingList = pingList_future.get();
+                List<RecordHourTracertEntity> tracertList = tracertList_future.get();
+                List<ScoreEntity> pingIcmp = recordHourPingService.calculatePingIcmp(pingList);
+                List<ScoreEntity> pingTcp = recordHourPingService.calculatePingTcp(pingList);
+                List<ScoreEntity> pingUdp = recordHourPingService.calculatePingUdp(pingList);
+                List<ScoreEntity> tracertIcmp = recordHourPingService.calculateTracertIcmp(tracertList);
+                List<ScoreEntity> tracertUdp = recordHourPingService.calculateTracertUdp(tracertList);
+                connection = recordHourPingService.calculateService1(pingIcmp, pingTcp, pingUdp, tracertIcmp, tracertUdp);
+                break;
             }
+            Thread.sleep(1000);
         }
+        System.out.println(connection);
     }
 }

@@ -6,10 +6,13 @@ import io.cem.modules.cem.dao.RecordSlaDao;
 import io.cem.modules.cem.entity.*;
 import io.cem.modules.cem.service.RecordHourPingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.Future;
 
 import io.cem.modules.cem.dao.RecordHourSlaDao;
 import io.cem.modules.cem.service.RecordHourSlaService;
@@ -39,8 +42,11 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 	}
 
 	@Override
-	public List<RecordHourSlaEntity> querySlaList(Map<String, Object> map){return recordHourSlaDao.querySlaList(map);}
-
+	@Async
+	public Future<List<RecordHourSlaEntity>> querySlaList(Map<String, Object> map) {
+		return new AsyncResult<>
+				(recordHourSlaDao.querySlaList(map));
+	}
 	@Override
 	public List<RecordHourSlaEntity> queryDayList(Map<String, Object> map){return recordHourSlaDao.queryDayList(map);}
 

@@ -122,7 +122,7 @@
     <div class="modal fade col-lg-12 col-md-12 col-sm-12" id="task_dispatch" tabindex="-1" role="dialog"
          aria-labelledby="myModalLabel"
          aria-hidden="true">
-        <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="col-lg-8 col-md-8 col-sm-8">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
@@ -1283,7 +1283,7 @@
             //当敲Backspace键时，事件源类型为密码或单行、多行文本的，
             //并且readonly属性为true或enabled属性为false的，则退格键失效
             var flag1=(ev.keyCode == 8 && (t=="password" || t=="text" || t=="textarea")
-                && vReadOnly=="readonly")?true:false;
+            && vReadOnly=="readonly")?true:false;
             //当敲Backspace键时，事件源类型非密码或单行、多行文本的，则退格键失效
             var flag2=(ev.keyCode == 8 && t != "password" && t != "text" && t != "textarea")
                 ?true:false;

@@ -4,6 +4,7 @@ import io.cem.modules.cem.entity.RecordHourDnsEntity;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Future;
 
 /**
  * 
@@ -20,7 +21,7 @@ public interface RecordHourDnsService {
 
 	List<RecordHourDnsEntity> queryDns(Map<String,Object> map);
 
-	List<RecordHourDnsEntity> queryDnsList(Map<String, Object> map);
+	Future<List<RecordHourDnsEntity>> queryDnsList(Map<String, Object> map);
 
 	List<RecordHourDnsEntity> queryDayList(Map<String, Object> map);
 

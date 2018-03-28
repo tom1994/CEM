@@ -6,13 +6,9 @@ import io.cem.modules.cem.entity.ScoreEntity;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Future;
 
 /**
- * 
- * 
- * @author ${author}
- * @email ${email}
- * @date 2017-12-02 14:35:31
  */
 public interface RecordHourTracertService {
 	
@@ -22,7 +18,7 @@ public interface RecordHourTracertService {
 
 	List<RecordHourTracertEntity> queryTracert(Map<String,Object> map);
 
-	List<RecordHourTracertEntity> queryTracertList(Map<String, Object> map);
+	Future<List<RecordHourTracertEntity>> queryTracertList(Map<String, Object> map);
 
 	List<RecordHourTracertEntity> queryDayList(Map<String, Object> map);
 
