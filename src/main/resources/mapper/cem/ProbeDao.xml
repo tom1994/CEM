@@ -83,7 +83,7 @@
         SELECT probe.*,
         probe.upstream_id AS upstream,
         probe.probe_name AS `name`,
-        probe_group.pg_name,
+        probe_group.pg_name AS group_name,
         city.city_name AS city_name,
         county.county_name AS area_name,
         a.data_name AS type_name,

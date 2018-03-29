@@ -230,7 +230,6 @@ function operate_this (obj) {     /*监听修改触发事件*/
         dataType: "json",
         // contentType: "application/json", /*必须要,不可少*/
         success: function (result) {
-<<<<<<< HEAD
             forms[0].value = result.probeExit.id;
             forms[1].value = result.probeExit.exit;
             forms[2].value = result.probeExit.probeName;
@@ -275,10 +274,6 @@ function operate_this (obj) {     /*监听修改触发事件*/
                 }
             }
             sptable.currReset();
-=======
-            toastr.success("监控状态更改成功!");
-            sptable.redraw();
->>>>>>> 79a4adf89fb134a39d2216f564f2b85301277239
         }
     });
 }

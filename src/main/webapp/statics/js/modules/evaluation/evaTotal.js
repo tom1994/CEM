@@ -166,7 +166,7 @@ function xChange(param) {
                 var arr = [];
                 $.ajax({
                     type: "POST",
-                    async: false, //同步执行
+                    // async: false, //同步执行
                     url: "../../recordhourping/connection",
                     cache: false,  //禁用缓存
                     data: param,  //传入组装的参数
@@ -224,7 +224,7 @@ function xChange(param) {
                 var arr = [];
                 $.ajax({
                     type: "POST",
-                    async: false, //同步执行
+                    // async: false, //同步执行
                     url: "../../recordhourping/connection",
                     cache: false,  //禁用缓存
                     data: param,  //传入组装的参数
@@ -259,7 +259,7 @@ function xChange(param) {
                 var arr = [];
                 $.ajax({
                     type: "POST",
-                    async: false, //同步执行
+                    // async: false, //同步执行
                     url: "../../recordhourping/quality",
                     cache: false,  //禁用缓存
                     data: param,  //传入组装的参数
@@ -317,7 +317,7 @@ function xChange(param) {
                 var arr = [];
                 $.ajax({
                     type: "POST",
-                    async: false, //同步执行
+                    // async: false, //同步执行
                     url: "../../recordhourping/quality",
                     cache: false,  //禁用缓存
                     data: param,  //传入组装的参数
@@ -352,7 +352,7 @@ function xChange(param) {
                 var arr = [];
                 $.ajax({
                     type: "POST",
-                    async: false, //同步执行
+                    // async: false, //同步执行
                     url: "../../recordhourping/download",
                     cache: false,  //禁用缓存
                     data: param,  //传入组装的参数
@@ -410,7 +410,7 @@ function xChange(param) {
                 var arr = [];
                 $.ajax({
                     type: "POST",
-                    async: false, //同步执行
+                    // async: false, //同步执行
                     url: "../../recordhourping/download",
                     cache: false,  //禁用缓存
                     data: param,  //传入组装的参数
@@ -445,7 +445,7 @@ function xChange(param) {
                 var arr = [];
                 $.ajax({
                     type: "POST",
-                    async: false, //同步执行
+                    // async: false, //同步执行
                     url: "../../recordhourping/page",
                     cache: false,  //禁用缓存
                     data: param,  //传入组装的参数
@@ -503,7 +503,7 @@ function xChange(param) {
                 var arr = [];
                 $.ajax({
                     type: "POST",
-                    async: false, //同步执行
+                    // async: false, //同步执行
                     url: "../../recordhourping/page",
                     cache: false,  //禁用缓存
                     data: param,  //传入组装的参数
@@ -538,7 +538,7 @@ function xChange(param) {
                 var arr = [];
                 $.ajax({
                     type: "POST",
-                    async: false, //同步执行
+                    // async: false, //同步执行
                     url: "../../recordhourping/video",
                     cache: false,  //禁用缓存
                     data: param,  //传入组装的参数
@@ -596,7 +596,7 @@ function xChange(param) {
                 var arr = [];
                 $.ajax({
                     type: "POST",
-                    async: false, //同步执行
+                    // async: false, //同步执行
                     url: "../../recordhourping/video",
                     cache: false,  //禁用缓存
                     data: param,  //传入组装的参数
@@ -631,7 +631,7 @@ function xChange(param) {
                 var arr = [];
                 $.ajax({
                     type: "POST",
-                    async: false, //同步执行
+                    // async: false, //同步执行
                     url: "../../recordhourping/game",
                     cache: false,  //禁用缓存
                     data: param,  //传入组装的参数
@@ -689,7 +689,7 @@ function xChange(param) {
                 var arr = [];
                 $.ajax({
                     type: "POST",
-                    async: false, //同步执行
+                    // async: false, //同步执行
                     url: "../../recordhourping/game",
                     cache: false,  //禁用缓存
                     data: param,  //传入组装的参数
@@ -1077,7 +1077,7 @@ var connection_chart = new Vue({
                     var arr = [];
                     $.ajax({
                         type: "POST",
-                        async: false, //同步执行
+                        // async: false, //同步执行
                         url: "../../recordhourping/connection",
                         cache: false,  //禁用缓存
                         data: param,  //传入组装的参数
@@ -1128,7 +1128,7 @@ var connection_chart = new Vue({
                     var arr = [];
                     $.ajax({
                         type: "POST",
-                        async: false, //同步执行
+                        // async: false, //同步执行
                         url: "../../recordhourping/connection",
                         cache: false,  //禁用缓存
                         data: param,  //传入组装的参数
@@ -1139,8 +1139,8 @@ var connection_chart = new Vue({
                                 arr.push(parseFloat(result.scoreList[i].score));
                             }
                         }
-                    })
-                    return arr.sort();;
+                    });
+                    return arr.sort();
                 })(),
                 showInLegend: false,
             }]
@@ -1178,7 +1178,7 @@ var quality_chart = new Vue({
                     var arr = [];
                     $.ajax({
                         type: "POST",
-                        async: false, //同步执行
+                        // async: false, //同步执行
                         url: "../../recordhourping/quality",
                         cache: false,  //禁用缓存
                         data: param,  //传入组装的参数
@@ -1228,7 +1228,7 @@ var quality_chart = new Vue({
                     var arr = [];
                     $.ajax({
                         type: "POST",
-                        async: false, //同步执行
+                        // async: false, //同步执行
                         url: "../../recordhourping/quality",
                         cache: false,  //禁用缓存
                         data: param,  //传入组装的参数
@@ -1281,7 +1281,7 @@ var download_chart = new Vue({
                     var arr = [];
                     $.ajax({
                         type: "POST",
-                        async: false, //同步执行
+                        // async: false, //同步执行
                         url: "../../recordhourping/download",
                         cache: false,  //禁用缓存
                         data: param,  //传入组装的参数
@@ -1331,7 +1331,7 @@ var download_chart = new Vue({
                     var arr = [];
                     $.ajax({
                         type: "POST",
-                        async: false, //同步执行
+                        // async: false, //同步执行
                         url: "../../recordhourping/download",
                         cache: false,  //禁用缓存
                         data: param,  //传入组装的参数
@@ -1384,7 +1384,7 @@ var page_chart = new Vue({
                     var arr = [];
                     $.ajax({
                         type: "POST",
-                        async: false, //同步执行
+                        // async: false, //同步执行
                         url: "../../recordhourping/page",
                         cache: false,  //禁用缓存
                         data: param,  //传入组装的参数
@@ -1434,7 +1434,7 @@ var page_chart = new Vue({
                     var arr = [];
                     $.ajax({
                         type: "POST",
-                        async: false, //同步执行
+                        // async: false, //同步执行
                         url: "../../recordhourping/page",
                         cache: false,  //禁用缓存
                         data: param,  //传入组装的参数
@@ -1488,7 +1488,7 @@ var video_chart = new Vue({
                     var arr = [];
                     $.ajax({
                         type: "POST",
-                        async: false, //同步执行
+                        // async: false, //同步执行
                         url: "../../recordhourping/video",
                         cache: false,  //禁用缓存
                         data: param,  //传入组装的参数
@@ -1539,7 +1539,7 @@ var video_chart = new Vue({
                     var arr = [];
                     $.ajax({
                         type: "POST",
-                        async: false, //同步执行
+                        // async: false, //同步执行
                         url: "../../recordhourping/video",
                         cache: false,  //禁用缓存
                         data: param,  //传入组装的参数
@@ -1593,7 +1593,7 @@ var game_chart = new Vue({
                     var arr = [];
                     $.ajax({
                         type: "POST",
-                        async: false, //同步执行
+                        // async: false, //同步执行
                         url: "../../recordhourping/game",
                         cache: false,  //禁用缓存
                         data: param,  //传入组装的参数
@@ -1644,7 +1644,7 @@ var game_chart = new Vue({
                     var arr = [];
                     $.ajax({
                         type: "POST",
-                        async: false, //同步执行
+                        // async: false, //同步执行
                         url: "../../recordhourping/game",
                         cache: false,  //禁用缓存
                         data: param,  //传入组装的参数
