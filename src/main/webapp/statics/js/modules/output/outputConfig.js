@@ -220,65 +220,18 @@ function operate_this (obj) {     /*监听修改触发事件*/
     operate_data_id = parseInt(obj.id);
     /*获取当前行探针数据id*/
     console.log(operate_data_id);
-    $('saveId').val(operate_data_id)
-    status = 1;
-    var forms = $('#opform_data .form-control');
     $.ajax({
         type: "POST", /*GET会乱码*/
-        url: "../../probeexit/info/"+operate_data_id,
+        url: "../../probeexit/operate/"+operate_data_id,
         cache: false,  //禁用缓存
         dataType: "json",
         // contentType: "application/json", /*必须要,不可少*/
         success: function (result) {
-            forms[0].value = result.probeExit.id;
-            forms[1].value = result.probeExit.exit;
-            forms[2].value = result.probeExit.probeName;
-            forms[3].value = result.probeExit.port;
+            sptable.redraw();
         }
     });
-    $('#probe1').attr('disabled','disabled');
-    $('#port1').attr('disabled','disabled');
-    $('#myModal_output').modal('show');
-}
- function  Save() {
-     var id=$('saveId').val()
-    var spJson = getFormJson($('#opform_data'));
-    console.log(spJson);
-    spJson.status=1;
-    var sp = JSON.stringify(spJson);
-    /*封装成json数组*/
-    console.log(sp);
-    $.ajax({
-        type: "POST", /*GET会乱码*/
-        url: "../../probeexit/update/"+id ,
-        cache: false,  //禁用缓存
-        data: sp,  //传入组装的参数
-        dataType: "json",
-        contentType: "application/json", /*必须要,不可少*/
-        success: function (result) {
-            let code = result.code;
-            let msg = result.msg;
-            console.log(result);
-            if (status == 1) {
-                switch (code) {
-                    case 0:
-                        toastr.success("出口修改成功!");
-                        $('#myModal_output').modal('hide');
-                        break;
-                    case 403:
-                        toastr.error(msg);
-                        break;
-                    default:
-                        toastr.error("未知错误");
-                        break
-                }
-            }
-            sptable.currReset();
-            toastr.success("监控状态更改成功!");
-        }
-    });
-}
 
+}
 function view_this (obj) {     /*监听修改触发事件*/
     operate_data_id = parseInt(obj.id);
     /*获取当前行探针数据id*/
@@ -322,7 +275,6 @@ function  Save() {
     var id=$('saveId').val()
     var spJson = getFormJson($('#opform_data'));
     console.log(spJson);
-    spJson.status=1;
     var sp = JSON.stringify(spJson);
     /*封装成json数组*/
     console.log(sp);

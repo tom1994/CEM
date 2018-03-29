@@ -500,10 +500,10 @@ var sptable = new Vue({
                             row.push(item.countyName);
                             row.push(item.probeName);
                             row.push(st.get(item.serviceType));
-                            row.push(transString(item.startTime,11,19))
+                            row.push(transString(item.startTime,11,19));
                             row.push(transString(item.endTime,11,19));
                             row.push(item.interval);
-                            row.push(item.createTime)
+                            row.push(item.createTime);
                             row.push(item.remark);
                             row.push('<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>&nbsp;' +
                                 '<a id='+download+item.id+' href="" style="display: none">' +
