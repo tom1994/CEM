@@ -82,14 +82,14 @@
 
     <!--Miao在3.28对此方法进行了性能优化-->
     <select id="queryPingList" resultType="io.cem.modules.cem.entity.RecordHourPingEntity">
-        select t.*,
+        SELECT t.*,
         city.city_name AS city_name,
         county.county_name AS area_name,
         probe.probe_name AS probe_name,
         probe.access_layer,
         target.target_name AS target_name
-        from(select
-        rhp.id,rhp.city_id,rhp.county_id,rhp.probe_id,rhp.port,rhp.task_id,rhp.service_type,rhp.target_id,rhp.target_ip,rhp.record_date,rhp.remark,
+        FROM
+        (SELECT rhp.id,rhp.city_id,rhp.county_id,rhp.probe_id,rhp.port,rhp.task_id,rhp.service_type,rhp.target_id,rhp.target_ip,rhp.record_date,rhp.remark,
         time_format(record_time, '%H') AS record_time,
         AVG(rhp.delay) AS delay,
         AVG(rhp.delay_std) AS delay_std,
@@ -163,8 +163,7 @@
             AND rhp.probe_id = #{probe_id}
         </if>
         GROUP BY
-        rhp.city_id,rhp.county_id,rhp.service_type,rhp.target_id,rhp.probe_id,date_format(rhp.record_date,'%Y-%m-%d'),time_format(record_time,'%H'))
-        a
+        rhp.city_id,rhp.county_id,rhp.service_type,rhp.target_id,rhp.probe_id,date_format(rhp.record_date,'%Y-%m-%d'),time_format(record_time,'%H'));
     </select>
 
     <select id="queryDayList" resultType="io.cem.modules.cem.entity.RecordHourPingEntity">
@@ -211,6 +210,40 @@
         rhp.city_id,rhp.county_id,rhp.service_type,rhp.target_id,rhp.probe_id,date_format(rhp.record_date,'%Y-%m-%d'),time_format(record_time,
         '%H');
 
+    </select>
+
+    <select id="queryExitList" resultType="io.cem.modules.cem.entity.RecordHourPingEntity">
+        select
+        rhp.id,rhp.city_id,rhp.county_id,rhp.probe_id,rhp.port,rhp.task_id,rhp.service_type,rhp.target_id,rhp.target_ip,rhp.record_date,rhp.remark,
+        city.city_name AS city_name,
+        county.county_name AS area_name,
+        probe.probe_name AS probe_name,
+        probe.access_layer,
+        target.target_name AS target_name,
+        time_format(record_time, '%H') AS record_time,
+        AVG(rhp.delay) AS delay,
+        AVG(rhp.delay_std) AS delay_std,
+        AVG(rhp.delay_var) AS delay_var,
+        AVG(rhp.jitter) AS jitter,
+        AVG(rhp.jitter_std) AS jitter_std,
+        AVG(rhp.jitter_var) AS jitter_var,
+        AVG(rhp.loss_rate) AS loss_rate,
+        SUM(rhp.fail) AS fail,
+        SUM(rhp.total) AS total
+        FROM record_hour_ping rhp
+        LEFT JOIN city
+        ON rhp.city_id = city.city_id
+        LEFT JOIN county
+        ON rhp.county_id = county.county_id
+        INNER JOIN probe
+        ON rhp.probe_id = probe.id
+        LEFT JOIN target
+        ON rhp.target_id = target.id
+        WHERE rhp.record_date BETWEEN #{ava_start} AND #{ava_terminal}
+        AND rhp.port = #{port}
+        AND rhp.probe_id = #{probe_id}
+        GROUP BY
+        rhp.port,rhp.probe_id;
     </select>
 
     <!--根据统计粒度查询小时表-->

@@ -37,8 +37,13 @@ public class RecordHourTracertServiceImpl implements RecordHourTracertService {
 
 	@Override
 	@Async
-	public Future<List<RecordHourTracertEntity>> queryTracertList(Map<String, Object> map){
+	public Future<List<RecordHourTracertEntity>> queryTracertList(Map<String, Object> map) {
 		return new AsyncResult<>(recordHourTracertDao.queryTracertList(map));
+	}
+
+	@Override
+	public List<RecordHourTracertEntity> queryExitList(Map<String, Object> map){
+		return recordHourTracertDao.queryExitList(map);
 	}
 
 	@Override
@@ -65,6 +70,8 @@ public class RecordHourTracertServiceImpl implements RecordHourTracertService {
 			scoreTarget.setRecordDate(connection.get(i).getRecordDate());
 			scoreTarget.setRecordTime(connection.get(i).getRecordTime());
 			scoreTarget.setAccessLayer(connection.get(i).getAccessLayer());
+			scoreTarget.setPort(connection.get(i).getPort());
+			scoreTarget.setPort(connection.get(i).getPort());
 			ScoreBaseEntity scoreBase = new ScoreBaseEntity();
 			scoreBase.setScore((connection.get(i).getScore()) * (connection.get(i).getBase()));
 			scoreBase.setBase(connection.get(i).getBase());
@@ -97,6 +104,7 @@ public class RecordHourTracertServiceImpl implements RecordHourTracertService {
 			lastScore.setTargetName(ite.getTargetName());
 			lastScore.setRecordTime(ite.getRecordTime());
 			lastScore.setRecordDate(ite.getRecordDate());
+			lastScore.setPort(ite.getPort());
 			lastScore.setAccessLayer(ite.getAccessLayer());
 			lastScore.setScore(score.get(ite).getScore() / score.get(ite).getBase());
 			lastScore.setBase(score.get(ite).getBase());
@@ -123,6 +131,7 @@ public class RecordHourTracertServiceImpl implements RecordHourTracertService {
 			scoreTarget.setRecordTime(list.get(i).getRecordTime());
 			scoreTarget.setRecordDate(list.get(i).getRecordDate());
 			scoreTarget.setAccessLayer(list.get(i).getAccessLayer());
+			scoreTarget.setPort(list.get(i).getPort());
 
 			if (!map.containsKey(scoreTarget)) {
 				ScoreBaseEntity scoreBase = new ScoreBaseEntity();

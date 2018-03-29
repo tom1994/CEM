@@ -4,7 +4,6 @@ import io.cem.modules.cem.entity.RecordHourPingEntity;
 import io.cem.modules.cem.entity.RecordHourTracertEntity;
 import io.cem.modules.cem.entity.ScoreEntity;
 
-import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +26,8 @@ public interface RecordHourPingService {
 	Future<List<RecordHourPingEntity>> queryPingList(Map<String, Object> map);
 
 	List<RecordHourPingEntity> queryDayList(Map<String, Object> map);
+
+	List<RecordHourPingEntity> queryExitList(Map<String, Object> map);
 
 	List<ScoreEntity> calculatePingIcmp(List<RecordHourPingEntity> pingList);
 

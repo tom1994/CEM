@@ -3,27 +3,27 @@
 
 <mapper namespace="io.cem.modules.cem.dao.RecordPingDao">
 
-	<!-- 可根据自己的需求，是否要使用 -->
+    <!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="io.cem.modules.cem.entity.RecordPingEntity" id="recordPingMap">
         <result property="id" column="id"/>
         <result property="probeId" column="probe_id"/>
-		<result property="probeName" column="probe_name"/>
+        <result property="probeName" column="probe_name"/>
         <result property="port" column="port"/>
         <result property="taskId" column="task_id"/>
-		<result property="taskName" column="task_name"/>
+        <result property="taskName" column="task_name"/>
         <result property="serviceType" column="service_type"/>
-		<result property="servicetypeName" column="servicetype_name"/>
+        <result property="servicetypeName" column="servicetype_name"/>
         <result property="taskType" column="task_type"/>
-		<result property="tasktypeName" column="tasktype_name"/>
+        <result property="tasktypeName" column="tasktype_name"/>
         <result property="targetType" column="target_type"/>
-		<result property="targettypeName" column="targettype_name"/>
+        <result property="targettypeName" column="targettype_name"/>
         <result property="targetId" column="target_id"/>
-		<result property="targetName" column="target_name"/>
+        <result property="targetName" column="target_name"/>
         <result property="targetIp" column="target_ip"/>
-		<result property="targetipName" column="targetip_name"/>
+        <result property="targetipName" column="targetip_name"/>
         <result property="targetLoc" column="target_loc"/>
         <result property="state" column="state"/>
-		<result property="stateName" column="state_name"/>
+        <result property="stateName" column="state_name"/>
         <result property="recordDate" column="record_date"/>
         <result property="recordTime" column="record_time"/>
         <result property="delay" column="delay"/>
@@ -36,82 +36,82 @@
         <result property="remark" column="remark"/>
     </resultMap>
 
-	<resultMap type="io.cem.modules.cem.entity.RecordHourPingEntity" id="recordHourPingMap">
-		<result property="id" column="id"/>
-		<result property="cityId" column="city_id"/>
-		<result property="countyId" column="county_id"/>
-		<result property="probeId" column="probe_id"/>
-		<result property="port" column="port"/>
-		<result property="taskId" column="task_id"/>
-		<result property="taskName" column="task_name"/>
-		<result property="serviceType" column="service_type"/>
-		<result property="servicetypeName" column="servicetype_name"/>
-		<result property="targetId" column="target_id"/>
-		<result property="targetIp" column="target_ip"/>
-		<result property="recordDate" column="record_date"/>
-		<result property="recordTime" column="record_time"/>
-		<result property="delay" column="delay"/>
-		<result property="delayStd" column="delay_std"/>
-		<result property="delayVar" column="delay_var"/>
-		<result property="jitter" column="jitter"/>
-		<result property="jitterStd" column="jitter_std"/>
-		<result property="jitterVar" column="jitter_var"/>
-		<result property="lossRate" column="loss_rate"/>
-		<result property="remark" column="remark"/>
-		<result property="cityName" column="city_name"/>
-		<result property="areaName" column="area_name"/>
-		<result property="probeName" column="probe_name"/>
-		<result property="targetName" column="target_name"/>
-		<result property="targetipName" column="targetip_name"/>
-		<result property="accessLayer" column="access_layer"/>
-		<result property="fail" column="fail"/>
-		<result property="total" column="total"/>
-	</resultMap>
+    <resultMap type="io.cem.modules.cem.entity.RecordHourPingEntity" id="recordHourPingMap">
+        <result property="id" column="id"/>
+        <result property="cityId" column="city_id"/>
+        <result property="countyId" column="county_id"/>
+        <result property="probeId" column="probe_id"/>
+        <result property="port" column="port"/>
+        <result property="taskId" column="task_id"/>
+        <result property="taskName" column="task_name"/>
+        <result property="serviceType" column="service_type"/>
+        <result property="servicetypeName" column="servicetype_name"/>
+        <result property="targetId" column="target_id"/>
+        <result property="targetIp" column="target_ip"/>
+        <result property="recordDate" column="record_date"/>
+        <result property="recordTime" column="record_time"/>
+        <result property="delay" column="delay"/>
+        <result property="delayStd" column="delay_std"/>
+        <result property="delayVar" column="delay_var"/>
+        <result property="jitter" column="jitter"/>
+        <result property="jitterStd" column="jitter_std"/>
+        <result property="jitterVar" column="jitter_var"/>
+        <result property="lossRate" column="loss_rate"/>
+        <result property="remark" column="remark"/>
+        <result property="cityName" column="city_name"/>
+        <result property="areaName" column="area_name"/>
+        <result property="probeName" column="probe_name"/>
+        <result property="targetName" column="target_name"/>
+        <result property="targetipName" column="targetip_name"/>
+        <result property="accessLayer" column="access_layer"/>
+        <result property="fail" column="fail"/>
+        <result property="total" column="total"/>
+    </resultMap>
 
-	<resultMap type="io.cem.modules.cem.entity.RecordDayPingEntity" id="recordDayPingMap">
-		<result property="id" column="id"/>
-		<result property="cityId" column="city_id"/>
-		<result property="countyId" column="county_id"/>
-		<result property="probeId" column="probe_id"/>
-		<result property="port" column="port"/>
-		<result property="taskId" column="task_id"/>
-		<result property="serviceType" column="service_type"/>
-		<result property="targetId" column="target_id"/>
-		<result property="targetIp" column="target_ip"/>
-		<result property="recordDate" column="record_date"/>
-		<result property="recordTime" column="record_time"/>
-		<result property="delay" column="delay"/>
-		<result property="delayStd" column="delay_std"/>
-		<result property="delayVar" column="delay_var"/>
-		<result property="jitter" column="jitter"/>
-		<result property="jitterStd" column="jitter_std"/>
-		<result property="jitterVar" column="jitter_var"/>
-		<result property="lossRate" column="loss_rate"/>
-		<result property="remark" column="remark"/>
-		<result property="fail" column="fail"/>
-		<result property="total" column="total"/>
-	</resultMap>
+    <resultMap type="io.cem.modules.cem.entity.RecordDayPingEntity" id="recordDayPingMap">
+        <result property="id" column="id"/>
+        <result property="cityId" column="city_id"/>
+        <result property="countyId" column="county_id"/>
+        <result property="probeId" column="probe_id"/>
+        <result property="port" column="port"/>
+        <result property="taskId" column="task_id"/>
+        <result property="serviceType" column="service_type"/>
+        <result property="targetId" column="target_id"/>
+        <result property="targetIp" column="target_ip"/>
+        <result property="recordDate" column="record_date"/>
+        <result property="recordTime" column="record_time"/>
+        <result property="delay" column="delay"/>
+        <result property="delayStd" column="delay_std"/>
+        <result property="delayVar" column="delay_var"/>
+        <result property="jitter" column="jitter"/>
+        <result property="jitterStd" column="jitter_std"/>
+        <result property="jitterVar" column="jitter_var"/>
+        <result property="lossRate" column="loss_rate"/>
+        <result property="remark" column="remark"/>
+        <result property="fail" column="fail"/>
+        <result property="total" column="total"/>
+    </resultMap>
 
-	<select id="queryObject" resultType="io.cem.modules.cem.entity.RecordPingEntity">
+    <select id="queryObject" resultType="io.cem.modules.cem.entity.RecordPingEntity">
 		select * from record_ping where id = #{value}
 	</select>
 
-	<select id="queryList" resultType="io.cem.modules.cem.entity.RecordPingEntity">
-		select * from record_ping
+    <select id="queryList" resultType="io.cem.modules.cem.entity.RecordPingEntity">
+        select * from record_ping
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
                 order by ${sidx} ${order}
             </when>
-			<otherwise>
+            <otherwise>
                 order by id desc
-			</otherwise>
+            </otherwise>
         </choose>
-		<if test="offset != null and limit != null">
-			limit #{offset}, #{limit}
-		</if>
-	</select>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
 
-	<select id="queryPing" resultType="io.cem.modules.cem.entity.RecordHourPingEntity">
+    <select id="queryPing" resultType="io.cem.modules.cem.entity.RecordHourPingEntity">
 		select rp.probe_id AS probe_id,
 		rp.port AS port,
 		rp.task_id AS task_id,
@@ -154,7 +154,7 @@
 		GROUP BY rp.port,rp.service_type,rp.target_id,rp.task_id,rp.probe_id;
 	</select>
 
-	<select id="queryDay" resultType="io.cem.modules.cem.entity.RecordDayPingEntity">
+    <select id="queryDay" resultType="io.cem.modules.cem.entity.RecordDayPingEntity">
 		select rp.probe_id AS probe_id,
 		rp.port AS port,
 		rp.task_id AS task_id,
@@ -196,122 +196,124 @@
 		GROUP BY rp.port,rp.service_type,rp.target_id,rp.task_id,rp.probe_id;
 	</select>
 
-	<!--根据条件查询测试结果-->
-	<select id="queryPingList" resultType="io.cem.modules.cem.entity.RecordPingEntity">
-		select rp.*,
-		probe.probe_name AS probe_name,
-		task.task_name AS task_name,
-		target.target_name AS target_name,
-		target.value AS targetip_name,
-		a.data_name AS tasktype_name,
-		b.data_name AS targettype_name,
-		c.data_name AS state_name,
-		d.data_name AS servicetype_name
-		FROM (SELECT * FROM record_ping
-		WHERE service_type=#{service_type}
-		AND probe_id IN (SELECT id FROM probe)
-		AND task_id IN (SELECT id FROM task WHERE is_ondemand = 0)
-		AND target_id IN (SELECT id FROM target)
-		<if test="task_id != null and task_id != ''">
-		AND task_id = #{task_id}
-		</if>
-		<if test="target_id != null and target_id != ''">
-			AND target_id = #{target_id}
-		</if>
-		<if test="probe_id != null and probe_id != ''">
-			AND probe_id = #{probe_id}
-		</if>
-		<if test="startDate != null and startDate != '' and terminalDate != null and terminalDate != '' ">
-			AND record_date BETWEEN #{startDate} AND #{terminalDate}
-		</if>
-		<if test="start_time != null and end_time != null">
-			AND record_date BETWEEN #{startDate} AND #{terminalDate}
-		</if>
-		<choose>
-			<when test="sidx != null and sidx.trim() != ''">
-				order by ${sidx} ${order}
-			</when>
-			<otherwise>
-				order by record_date desc,record_time desc
-			</otherwise>
-		</choose>
-		<if test="offset != null and limit != null">
-			limit #{offset}, #{limit}
-		</if>) rp
-		INNER JOIN probe
-		ON  rp.probe_id =probe.id
-		INNER JOIN task
-		ON rp.task_id = task.id
-		INNER JOIN target
-		ON rp.target_id = target.id
-		LEFT JOIN dic_data a
-		ON (a.dic_type_id = 6 AND rp.task_type = a.data_id)
-		LEFT JOIN dic_data b
-		ON (b.dic_type_id = 8 AND rp.target_type = b.data_id)
-		LEFT JOIN dic_data c
-		ON (c.dic_type_id = 9 AND rp.state = c.data_id)
-		LEFT JOIN dic_data d
-		ON (d.dic_type_id = 5 AND rp.service_type = d.data_id)
-	</select>
+    <!--根据条件查询测试结果-->
+    <select id="queryPingList" resultType="io.cem.modules.cem.entity.RecordPingEntity">
+        select rp.*,
+        probe.probe_name AS probe_name,
+        task.task_name AS task_name,
+        target.target_name AS target_name,
+        target.value AS targetip_name,
+        a.data_name AS tasktype_name,
+        b.data_name AS targettype_name,
+        c.data_name AS state_name,
+        d.data_name AS servicetype_name
+        FROM (SELECT * FROM record_ping
+        WHERE service_type=#{service_type}
+        AND probe_id IN (SELECT id FROM probe)
+        AND task_id IN (SELECT id FROM task WHERE is_ondemand = 0)
+        AND target_id IN (SELECT id FROM target)
+        <if test="task_id != null and task_id != ''">
+            AND task_id = #{task_id}
+        </if>
+        <if test="target_id != null and target_id != ''">
+            AND target_id = #{target_id}
+        </if>
+        <if test="probe_id != null and probe_id != ''">
+            AND probe_id = #{probe_id}
+        </if>
+        <if test="startDate != null and startDate != '' and terminalDate != null and terminalDate != '' ">
+            AND record_date BETWEEN #{startDate} AND #{terminalDate}
+        </if>
+        <if test="start_time != null and end_time != null">
+            AND record_date BETWEEN #{startDate} AND #{terminalDate}
+        </if>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+            <otherwise>
+                order by record_date desc,record_time desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>) rp
+        INNER JOIN probe
+        ON rp.probe_id =probe.id
+        INNER JOIN task
+        ON rp.task_id = task.id
+        INNER JOIN target
+        ON rp.target_id = target.id
+        LEFT JOIN dic_data a
+        ON (a.dic_type_id = 6 AND rp.task_type = a.data_id)
+        LEFT JOIN dic_data b
+        ON (b.dic_type_id = 8 AND rp.target_type = b.data_id)
+        LEFT JOIN dic_data c
+        ON (c.dic_type_id = 9 AND rp.state = c.data_id)
+        LEFT JOIN dic_data d
+        ON (d.dic_type_id = 5 AND rp.service_type = d.data_id)
+    </select>
 
-	<select id="queryPingTotal" resultType="int">
-	select count(*)
-		FROM record_ping
-		INNER JOIN probe
-		ON  record_ping.probe_id =probe.id
-		INNER JOIN task
-		ON record_ping.task_id = task.id
-		AND task.is_ondemand = 0
-		INNER JOIN target
-		ON record_ping.target_id = target.id
-		WHERE
-		record_ping.service_type = #{service_type}
-		AND
-		record_date BETWEEN #{startDate} AND #{terminalDate}
-		<if test="task_id != null and task_id != ''">
-			AND task_id = #{task_id}
-		</if>
-		<if test="target_id != null and target_id != ''">
-			AND target_id = #{target_id}
-		</if>
-		<if test="probe_id != null and probe_id != ''">
-			AND probe_id = #{probe_id}
-		</if>
-		<if test="start_time != null and start_time != '' and end_time != null and end_time != '' ">
-			AND record_time BETWEEN #{start_time} AND #{end_time}
-		</if>
-	</select>
+    <select id="queryPingTotal" resultType="int">
+        select count(*)
+        FROM record_ping
+        INNER JOIN probe
+        ON record_ping.probe_id =probe.id
+        INNER JOIN task
+        ON record_ping.task_id = task.id
+        AND task.is_ondemand = 0
+        INNER JOIN target
+        ON record_ping.target_id = target.id
+        WHERE
+        record_ping.service_type = #{service_type}
+        AND
+        record_date BETWEEN #{startDate} AND #{terminalDate}
+        <if test="task_id != null and task_id != ''">
+            AND task_id = #{task_id}
+        </if>
+        <if test="target_id != null and target_id != ''">
+            AND target_id = #{target_id}
+        </if>
+        <if test="probe_id != null and probe_id != ''">
+            AND probe_id = #{probe_id}
+        </if>
+        <if test="start_time != null and start_time != '' and end_time != null and end_time != '' ">
+            AND record_time BETWEEN #{start_time} AND #{end_time}
+        </if>
+    </select>
 
-	<select id="queryPingTest" resultType="io.cem.modules.cem.entity.RecordPingEntity">
-		select record_ping.*,
-		probe.probe_name AS probe_name,
-		target.target_name AS target_name,
-		target.value AS targetip_name
-		FROM record_ping
-		INNER JOIN probe
-		ON  record_ping.probe_id =probe.id
-		LEFT JOIN target
-		ON record_ping.target_id = target.id
-		WHERE
-		record_ping.dispatch_id = #{dispatch_id}
-		<choose>
-			<when test="sidx != null and sidx.trim() != ''">
-				order by ${sidx} ${order}
-			</when>
-			<otherwise>
-				order by id desc
-			</otherwise>
-		</choose>
-		<if test="offset != null and limit != null">
-			limit #{offset}, #{limit}
-		</if>
-	</select>
+    <select id="queryPingTest" resultType="io.cem.modules.cem.entity.RecordPingEntity">
+        SELECT t.*,
+        probe.probe_name AS probe_name,
+        target.target_name AS target_name,
+        target.value AS targetip_name
+        FROM (SELECT record_ping.*
+        FROM record_ping
+        WHERE
+        record_ping.dispatch_id = #{dispatch_id}) t
+        INNER JOIN probe
+        ON t.probe_id =probe.id
+        LEFT JOIN target
+        ON t.target_id = target.id
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+            <otherwise>
+                order by id desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
 
-	<select id="queryTotal" resultType="int">
+    <select id="queryTotal" resultType="int">
 		select count(*) from record_ping 
 	</select>
-	 
-	<insert id="save" parameterType="io.cem.modules.cem.entity.RecordPingEntity" useGeneratedKeys="true" keyProperty="id">
+
+    <insert id="save" parameterType="io.cem.modules.cem.entity.RecordPingEntity" useGeneratedKeys="true"
+            keyProperty="id">
 		insert into record_ping
 		(
 			`probe_id`, 
@@ -359,43 +361,43 @@
 			#{remark}
 		)
 	</insert>
-	 
-	<update id="update" parameterType="io.cem.modules.cem.entity.RecordPingEntity">
-		update record_ping 
-		<set>
-			<if test="probeId != null">`probe_id` = #{probeId}, </if>
-			<if test="port != null">`port` = #{port}, </if>
-			<if test="taskId != null">`task_id` = #{taskId}, </if>
-			<if test="serviceType != null">`service_type` = #{serviceType}, </if>
-			<if test="taskType != null">`task_type` = #{taskType}, </if>
-			<if test="targetType != null">`target_type` = #{targetType}, </if>
-			<if test="targetId != null">`target_id` = #{targetId}, </if>
-			<if test="targetIp != null">`target_ip` = #{targetIp}, </if>
-			<if test="targetLoc != null">`target_loc` = #{targetLoc}, </if>
-			<if test="state != null">`state` = #{state}, </if>
-			<if test="recordDate != null">`record_date` = #{recordDate}, </if>
-			<if test="recordTime != null">`record_time` = #{recordTime}, </if>
-			<if test="delay != null">`delay` = #{delay}, </if>
-			<if test="delayStd != null">`delay_std` = #{delayStd}, </if>
-			<if test="delayVar != null">`delay_var` = #{delayVar}, </if>
-			<if test="jitter != null">`jitter` = #{jitter}, </if>
-			<if test="jitterStd != null">`jitter_std` = #{jitterStd}, </if>
-			<if test="jitterVar != null">`jitter_var` = #{jitterVar}, </if>
-			<if test="lossRate != null">`loss_rate` = #{lossRate}, </if>
-			<if test="remark != null">`remark` = #{remark}</if>
-		</set>
-		where id = #{id}
-	</update>
-	
-	<delete id="delete">
+
+    <update id="update" parameterType="io.cem.modules.cem.entity.RecordPingEntity">
+        update record_ping
+        <set>
+            <if test="probeId != null">`probe_id` = #{probeId},</if>
+            <if test="port != null">`port` = #{port},</if>
+            <if test="taskId != null">`task_id` = #{taskId},</if>
+            <if test="serviceType != null">`service_type` = #{serviceType},</if>
+            <if test="taskType != null">`task_type` = #{taskType},</if>
+            <if test="targetType != null">`target_type` = #{targetType},</if>
+            <if test="targetId != null">`target_id` = #{targetId},</if>
+            <if test="targetIp != null">`target_ip` = #{targetIp},</if>
+            <if test="targetLoc != null">`target_loc` = #{targetLoc},</if>
+            <if test="state != null">`state` = #{state},</if>
+            <if test="recordDate != null">`record_date` = #{recordDate},</if>
+            <if test="recordTime != null">`record_time` = #{recordTime},</if>
+            <if test="delay != null">`delay` = #{delay},</if>
+            <if test="delayStd != null">`delay_std` = #{delayStd},</if>
+            <if test="delayVar != null">`delay_var` = #{delayVar},</if>
+            <if test="jitter != null">`jitter` = #{jitter},</if>
+            <if test="jitterStd != null">`jitter_std` = #{jitterStd},</if>
+            <if test="jitterVar != null">`jitter_var` = #{jitterVar},</if>
+            <if test="lossRate != null">`loss_rate` = #{lossRate},</if>
+            <if test="remark != null">`remark` = #{remark}</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="delete">
 		delete from record_ping where id = #{value}
 	</delete>
-	
-	<delete id="deleteBatch">
-		delete from record_ping where id in 
-		<foreach item="id" collection="array" open="(" separator="," close=")">
-			#{id}
-		</foreach>
-	</delete>
+
+    <delete id="deleteBatch">
+        delete from record_ping where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
 
 </mapper>

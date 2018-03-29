@@ -389,7 +389,7 @@ var Reset = new Vue({
         probedata: {
             ava_start: new Date(new Date() - 1000 * 60 * 60 * 24).Format("yyyy-MM-dd"),
             ava_terminal: (new Date()).Format("yyyy-MM-dd"),
-            city_id: '110100',
+            city_id: '',
             service: '1'
         }
     },

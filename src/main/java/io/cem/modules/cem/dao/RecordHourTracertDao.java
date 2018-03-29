@@ -11,6 +11,7 @@ import java.util.Map;
 public interface RecordHourTracertDao extends BaseDao<RecordHourTracertEntity> {
     List<RecordHourTracertEntity> queryTracertList(Map<String, Object> map);
     List<RecordHourTracertEntity> queryDayList(Map<String, Object> map);
+    List<RecordHourTracertEntity> queryExitList(Map<String, Object> map);
     List<RecordHourTracertEntity> queryIntervalList(Map<String,Object> map);
     int queryIntervalTotal(Map<String,Object> map);
 }

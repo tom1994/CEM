@@ -48,6 +48,9 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				(recordHourSlaDao.querySlaList(map));
 	}
 	@Override
+	public List<RecordHourSlaEntity> queryExitList(Map<String, Object> map){return recordHourSlaDao.queryExitList(map);}
+
+	@Override
 	public List<RecordHourSlaEntity> queryDayList(Map<String, Object> map){return recordHourSlaDao.queryDayList(map);}
 
 	@Override
@@ -276,6 +279,7 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 					tcpSla.setTargetName(slaList.get(i).getTargetName());
 					tcpSla.setTargetId(slaList.get(i).getTargetId());
 					tcpSla.setAccessLayer(slaList.get(i).getAccessLayer());
+					tcpSla.setPort(slaList.get(i).getPort());
 					tcpSla.setRecordDate(slaList.get(i).getRecordDate());
 					tcpSla.setRecordTime(slaList.get(i).getRecordTime());
 					tcpSla.setSlaTcpDelay(slaList.get(i).getDelay());
@@ -524,6 +528,7 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 					udpSla.setTargetName(slaList.get(i).getTargetName());
 					udpSla.setTargetId(slaList.get(i).getTargetId());
 					udpSla.setAccessLayer(slaList.get(i).getAccessLayer());
+					udpSla.setPort(slaList.get(i).getPort());
 					udpSla.setRecordDate(slaList.get(i).getRecordDate());
 					udpSla.setRecordTime(slaList.get(i).getRecordTime());
 					udpSla.setSlaUdpDelay(slaList.get(i).getDelay());
@@ -625,6 +630,7 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				DNS.setTargetName(dnsList.get(i).getTargetName());
 				DNS.setTargetId(dnsList.get(i).getTargetId());
 				DNS.setAccessLayer(dnsList.get(i).getAccessLayer());
+				DNS.setPort(dnsList.get(i).getPort());
 				DNS.setRecordDate(dnsList.get(i).getRecordDate());
 				DNS.setRecordTime(dnsList.get(i).getRecordTime());
 				DNS.setDnsDelay(dnsList.get(i).getDelay());
@@ -721,6 +727,7 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				DHCP.setTargetName(dhcpList.get(i).getTargetName());
 				DHCP.setTargetId(dhcpList.get(i).getTargetId());
 				DHCP.setAccessLayer(dhcpList.get(i).getAccessLayer());
+				DHCP.setPort(dhcpList.get(i).getPort());
 				DHCP.setRecordDate(dhcpList.get(i).getRecordDate());
 				DHCP.setRecordTime(dhcpList.get(i).getRecordTime());
 				DHCP.setDhcpDelay(dhcpList.get(i).getDelay());
@@ -845,6 +852,7 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				PPPOE.setTargetName(pppoeList.get(i).getTargetName());
 				PPPOE.setTargetId(pppoeList.get(i).getTargetId());
 				PPPOE.setAccessLayer(pppoeList.get(i).getAccessLayer());
+				PPPOE.setPort(pppoeList.get(i).getPort());
 				PPPOE.setRecordDate(pppoeList.get(i).getRecordDate());
 				PPPOE.setRecordTime(pppoeList.get(i).getRecordTime());
 				PPPOE.setPppoeDelay(pppoeList.get(i).getDelay());
@@ -941,6 +949,7 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				RADIUS.setTargetName(radiusList.get(i).getTargetName());
 				RADIUS.setTargetId(radiusList.get(i).getTargetId());
 				RADIUS.setAccessLayer(radiusList.get(i).getAccessLayer());
+				RADIUS.setPort(radiusList.get(i).getPort());
 				RADIUS.setRecordDate(radiusList.get(i).getRecordDate());
 				RADIUS.setRecordTime(radiusList.get(i).getRecordTime());
 				RADIUS.setRadiusDelay(radiusList.get(i).getDelay());
@@ -975,6 +984,7 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				scoreTarget.setProbeName(slaTcp.get(i).getProbeName());
 				scoreTarget.setTargetName(slaTcp.get(i).getTargetName());
 				scoreTarget.setAccessLayer(slaTcp.get(i).getAccessLayer());
+				scoreTarget.setPort(slaTcp.get(i).getPort());
 				scoreTarget.setFail(slaTcp.get(i).getFail());
 				scoreTarget.setTotal(slaTcp.get(i).getTotal());
 				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
@@ -1017,6 +1027,7 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 					finalScore.setTargetId(ite.getTargetId());
 					finalScore.setTargetName(ite.getTargetName());
 					finalScore.setAccessLayer(ite.getAccessLayer());
+					finalScore.setPort(ite.getPort());
 					finalScore.setScore(0.0);
 					finalScore.setBase(0.0);
 					Map<String, ScoreBaseEntity> map1 = connection.get(ite);

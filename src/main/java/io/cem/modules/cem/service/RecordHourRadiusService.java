@@ -18,6 +18,8 @@ public interface RecordHourRadiusService {
 
 	Future<List<RecordHourRadiusEntity>> queryRadiusList(Map<String, Object> map);
 
+	List<RecordHourRadiusEntity> queryExitList(Map<String, Object> map);
+
 	List<RecordHourRadiusEntity> queryDayList(Map<String, Object> map);
 
 	int queryTotal(Map<String, Object> map);

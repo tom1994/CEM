@@ -17,6 +17,7 @@ public interface RecordHourGameService {
 	List<RecordHourGameEntity> queryGame(Map<String,Object> map);
 
 	List<RecordHourGameEntity> queryGameList(Map<String, Object> map);
+	List<RecordHourGameEntity> queryExitList(Map<String, Object> map);
 	List<RecordHourGameEntity> queryGameAreaList(Map<String, Object> map);
 	Future<List<RecordHourGameEntity>> queryGameRankList(Map<String, Object> map);
 

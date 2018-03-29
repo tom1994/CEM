@@ -1,6 +1,5 @@
 package io.cem.modules.cem.service;
 
-import io.cem.modules.cem.entity.EvaluationEntity;
 import io.cem.modules.cem.entity.RecordHourTracertEntity;
 import io.cem.modules.cem.entity.ScoreEntity;
 
@@ -19,6 +18,8 @@ public interface RecordHourTracertService {
 	List<RecordHourTracertEntity> queryTracert(Map<String,Object> map);
 
 	Future<List<RecordHourTracertEntity>> queryTracertList(Map<String, Object> map);
+
+	List<RecordHourTracertEntity> queryExitList(Map<String, Object> map);
 
 	List<RecordHourTracertEntity> queryDayList(Map<String, Object> map);
 

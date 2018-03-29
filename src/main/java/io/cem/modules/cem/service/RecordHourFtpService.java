@@ -22,6 +22,8 @@ public interface RecordHourFtpService {
 
 	Future<List<RecordHourFtpEntity>> queryFtpList(Map<String, Object> map);
 
+	List<RecordHourFtpEntity> queryExitList(Map<String, Object> map);
+
 	List<RecordHourFtpEntity> queryDayList(Map<String, Object> map);
 
 	int queryTotal(Map<String, Object> map);

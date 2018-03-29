@@ -37,6 +37,11 @@ public class RecordHourWebVideoServiceImpl implements RecordHourWebVideoService 
 	public List<RecordHourWebVideoEntity> queryList(Map<String, Object> map){
 		return recordHourWebVideoDao.queryList(map);
 	}
+
+	@Override
+	public List<RecordHourWebVideoEntity> queryExitList(Map<String, Object> map){
+		return recordHourWebVideoDao.queryExitList(map);
+	}
 	@Override
 	public List<RecordHourWebVideoEntity> queryWebVideo(Map<String, Object> map){
 		return recordWebVideoDao.queryWebVideo(map);
@@ -348,6 +353,7 @@ public class RecordHourWebVideoServiceImpl implements RecordHourWebVideoService 
 				finalScore.setRecordDate(videoList.get(i).getRecordDate());
 				finalScore.setRecordTime(videoList.get(i).getRecordTime());
 				finalScore.setAccessLayer(videoList.get(i).getAccessLayer());
+				finalScore.setPort(videoList.get(i).getPort());
 				finalScore.setWebVideoDnsDelay(videoList.get(i).getDnsDelay());
 				finalScore.setWebVideoWsConnDelay(videoList.get(i).getWsConnDelay());
 				finalScore.setWebVideoWebPageDelay(videoList.get(i).getWebPageDelay());

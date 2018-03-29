@@ -38,6 +38,18 @@
 			limit #{offset}, #{limit}
 		</if>
 	</select>
+
+	<select id="queryscoreList" resultType="io.cem.modules.cem.entity.ProbeExitEntity">
+		select probe_exit.*,
+		probe.probe_name AS probe_name
+		from probe_exit
+		LEFT JOIN probe
+		ON probe_exit.probe_id = probe.id
+		WHERE probe_exit.status=0
+		<if test="exit != null and exit != ''">
+			AND exit LIKE concat('%',#{exit},'%')
+		</if>
+	</select>
 	
  	<select id="queryTotal" resultType="int">
 		select count(*) from probe_exit 

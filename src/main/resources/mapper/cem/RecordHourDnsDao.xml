@@ -88,6 +88,33 @@
 
 	</select>
 
+	<select id="queryExitList" resultType="io.cem.modules.cem.entity.RecordHourDnsEntity">
+		select record_hour_dns.id,record_hour_dns.city_id,record_hour_dns.county_id,record_hour_dns.probe_id,record_hour_dns.port,record_hour_dns.task_id,record_hour_dns.service_type,record_hour_dns.target_id,record_hour_dns.target_ip,record_hour_dns.record_date,record_hour_dns.remark,
+		city.city_name AS city_name,
+		county.county_name AS area_name,
+		probe.probe_name AS probe_name,
+		target.target_name AS target_name,
+		time_format(record_time, '%H') AS record_time,
+		AVG(record_hour_dns.delay) AS delay,
+		AVG(record_hour_dns.success_rate) AS success_rate,
+		SUM(record_hour_dns.fail) AS fail,
+		SUM(record_hour_dns.total) AS total
+		FROM record_hour_dns
+		LEFT JOIN city
+		ON record_hour_dns.city_id = city.city_id
+		LEFT JOIN county
+		ON record_hour_dns.county_id = county.county_id
+		INNER JOIN probe
+		ON record_hour_dns.probe_id = probe.id
+		LEFT JOIN target
+		ON record_hour_dns.target_id = target.id
+		WHERE record_hour_dns.record_date BETWEEN #{ava_start} AND #{ava_terminal}
+		AND record_hour_dns.port = #{port}
+		AND record_hour_dns.probe_id = #{probe_id}
+		GROUP BY
+		record_hour_dns.port,record_hour_dns.probe_id;
+	</select>
+
 	<select id="queryDayList" resultType="io.cem.modules.cem.entity.RecordHourDnsEntity">
 		select dns.id,dns.city_id,dns.county_id,dns.probe_id,dns.port,dns.task_id,dns.service_type,dns.target_id,dns.target_ip,dns.record_date,dns.remark,
 		city.city_name AS city_name,

@@ -46,6 +46,11 @@ public class RecordHourGameServiceImpl implements RecordHourGameService {
 	public List<RecordHourGameEntity> queryGameList(Map<String, Object> map){
 		return recordHourGameDao.queryGameList(map);
 	}
+
+	@Override
+	public List<RecordHourGameEntity> queryExitList(Map<String, Object> map){
+		return recordHourGameDao.queryExitList(map);
+	}
 	@Override
 	public List<RecordHourGameEntity> queryGameAreaList(Map<String, Object> map){
 		return recordHourGameDao.queryGameList(map);
@@ -199,6 +204,7 @@ public class RecordHourGameServiceImpl implements RecordHourGameService {
 				finalScore.setTargetId(gameList.get(i).getTargetId());
 				finalScore.setTargetName(gameList.get(i).getTargetName());
 				finalScore.setAccessLayer(gameList.get(i).getAccessLayer());
+				finalScore.setPort(gameList.get(i).getPort());
 				finalScore.setRecordDate(gameList.get(i).getRecordDate());
 				finalScore.setRecordTime(gameList.get(i).getRecordTime());
 				finalScore.setGameDnsDelay(gameList.get(i).getDnsDelay());
