@@ -60,7 +60,6 @@
 		FROM alarm_record
 		INNER JOIN probe
 		ON alarm_record.probe_id = probe.id
-
 		WHERE alarm_record.id IS NOT NULL
 		<if test="type != null and type != ''">
 			AND alarm_record.type = #{type}

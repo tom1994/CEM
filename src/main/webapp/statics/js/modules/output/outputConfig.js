@@ -49,7 +49,8 @@ var spform_data = new Vue({
         modaltitle: "", /*定义模态框标题*/
         exitName:[],
         port: [],
-        probe:[]
+        probe:[],
+        portName:[],
     },
     // 在 `methods` 对象中定义方法
     methods: {
@@ -59,30 +60,17 @@ var spform_data = new Vue({
             this.port = queryPort($("#probe").val());
         },
         submit: function () {
-            //
             var spJson = getFormJson($('#spform_data'));
+            debugger
             console.log(spJson);
-            if (spJson.reportName == "") {
-                toastr.warning("请输入策略名称!");
-            } else if (spJson.probeId == "") {
+            spJson.status=0;
+            if (spJson.exit == "") {
+                toastr.warning("请输入出口名称!");
+            } else if (spJson.probe_id == "") {
                 toastr.warning("请选择探针!");
-            }else if(spJson.service_type==""){
-                toastr.warning("请选择业务类型!");
-            } else if (spJson.interval=="0"){
-                toastr.warning("请选择统计粒度!");
-            } else if(spJson.startTime==""&&spJson.endTime==""){
-                toastr.warning("请选择起止时间!");
-            }else if(spJson.startTime>spJson.endTime){
-                toastr.warning("选择的起始时间有误,请正确选择!")
-            } else {
-                spJson.createTime = new Date().Format("yyyy-MM-dd hh:mm:ss");//获取日期与时间
-                if(spJson.interval==""){
-                    spJson.queryType="1";
-                }else {
-                    spJson.queryType='0';
-                }
-                spJson.startTime=spJson.startTime+":00";
-                spJson.endTime=spJson.endTime+":00";
+            }else if(spJson.port==""){
+                toastr.warning("请选择端口!");
+            }else {
                 var sp = JSON.stringify(spJson);
                 /*封装成json数组*/
                 console.log(sp);
@@ -131,7 +119,6 @@ var spform_data = new Vue({
         }
     }
 });
-
 var queryPort = function (probeid) {
     $.ajax({
         url: "../../cem/probe/port/"+probeid,
@@ -141,12 +128,18 @@ var queryPort = function (probeid) {
         contentType: "application/json",
         success: function (result) {
             var port_detail = new Array();
+            var port = new Array();
             console.log(result);
             for(var i=0;i<result.port.length;i++){
                 port_detail[i] = {message: result.port[i]}
             }
-            spform_data .port = port_detail;
+            spform_data.port = port_detail;
+            spform_data.portName=JSON.parse(spform_data.port[0].message.portIp);
 
+            for(var i=0;i< spform_data.portName.length;i++){
+                port[i] = {message: spform_data.portName[i]}
+            }
+            spform_data.port = port;
         }
     });
 }
@@ -234,13 +227,87 @@ function operate_this (obj) {     /*监听修改触发事件*/
         dataType: "json",
         // contentType: "application/json", /*必须要,不可少*/
         success: function (result) {
-            toastr.success("监控状态更改成功!");
             sptable.redraw();
         }
     });
 
 }
-
+function view_this (obj) {     /*监听修改触发事件*/
+    operate_data_id = parseInt(obj.id);
+    /*获取当前行探针数据id*/
+    console.log(operate_data_id);
+    $('saveId').val(operate_data_id)
+    status = 1;
+    var forms = $('#opform_data .form-control');
+    $.ajax({
+        url: "../../cem/probe/exitlist",//探针列表
+        type: "POST",
+        cache: false,  //禁用缓存
+        dataType: "json",
+        contentType: "application/json",
+        success: function (result) {
+            var probes = [];
+            console.log(result.page.list[0]);
+            for (var i = 0; i < result.page.list.length; i++) {
+                probes[i] = {message: result.page.list[i]}
+            }
+            spform_data.probe = probes;
+        }
+    });
+    $.ajax({
+        type: "POST", /*GET会乱码*/
+        url: "../../probeexit/info/"+operate_data_id,
+        cache: false,  //禁用缓存
+        dataType: "json",
+        // contentType: "application/json", /*必须要,不可少*/
+        success: function (result) {
+            forms[0].value = result.probeExit.id;
+            forms[1].value = result.probeExit.exit;
+            forms[2].value = result.probeExit.probeName;
+            forms[3].value = result.probeExit.port;
+        }
+    });
+    $('#probe1').attr('disabled','disabled');
+    $('#port1').attr('disabled','disabled');
+    $('#myModal_output').modal('show');
+}
+function  Save() {
+    var id=$('saveId').val()
+    var spJson = getFormJson($('#opform_data'));
+    console.log(spJson);
+    spJson.status=1;
+    var sp = JSON.stringify(spJson);
+    /*封装成json数组*/
+    console.log(sp);
+    $.ajax({
+        type: "POST", /*GET会乱码*/
+        url: "../../probeexit/update/"+id ,
+        cache: false,  //禁用缓存
+        data: sp,  //传入组装的参数
+        dataType: "json",
+        contentType: "application/json", /*必须要,不可少*/
+        success: function (result) {
+            let code = result.code;
+            let msg = result.msg;
+            console.log(result);
+            if (status == 1) {
+                switch (code) {
+                    case 0:
+                        toastr.success("出口修改成功!");
+                        $('#myModal_output').modal('hide');
+                        break;
+                    case 403:
+                        toastr.error(msg);
+                        break;
+                    default:
+                        toastr.error("未知错误");
+                        break
+                }
+            }
+            sptable.currReset();
+        }
+    });
+}
 
 var sptable = new Vue({
     el: '#exit_table',
@@ -343,10 +410,12 @@ var sptable = new Vue({
                             row.push(item.port);
                             row.push(st.get(item.status));
                             row.push('<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>&nbsp;' +
-                                '<a class="fontcolor" style="white-space: nowrap" onclick="operate_this(this)" id='+item.id+'>更改监控状态</a>'
+                                '<a class="fontcolor" style="white-space: nowrap" onclick="operate_this(this)" id='+item.id+'>更改监控状态</a>&nbsp;'+
+                                '<a class="fontcolor" onclick="view_this(this)" id='+item.id+'>编辑</a>'
                             );
                             rows.push(row);
                         });
+
                         returnData.data = rows;
                         console.log(returnData);
 

@@ -139,7 +139,7 @@
 </div>
 
 
-<!-- 模态框（Modal） -->
+<!-- 新建模态框（Modal） -->
 <div class="modal fade" id="myModal_sp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="width: 800px"> <!--修改bootstrap modal模态框的宽度-->
         <div class="modal-content">
@@ -180,8 +180,8 @@
                                 <select id="port" class="form-control input clear" name="port">
                                     <!--VUE列表渲染-->
                                     <option value="">--请选择--</option>
-                                    <option v-for="item in port">
-                                        {{ item.message.portIp }}
+                                    <option v-for="item in port"  v-bind:value="item.message.port">
+                                        {{ item.message.port }}
                                     </option>
                                 </select>
                             </div>
@@ -192,6 +192,62 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                 <button type="button" class="btn btn-success" v-on:click="submit">保存</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<!-- 编辑模态框（Modal） -->
+<div class="modal fade" id="myModal_output" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width: 800px"> <!--修改bootstrap modal模态框的宽度-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3 class="modal-title" id="myModalLabe">编辑出口</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <form class="form-horizontal" id="opform_data" role="form">
+                        <div class="form-group row">
+                            <label for="id" class="col-lg-3 col-md-3 col-sm-3 control-label form_border"
+                                   style="display: none">id</label>
+                            <div class="col-lg-8 col-md-8 col-sm-8 form_border"
+                                 style="display: none">
+                                <input type="text" class="form-control input clear" id="id1" name="id"  >
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exit" class="col-lg-2 col-md-2 col-sm-2 control-label form_border"
+                                   style="line-height: 1.5">出口名称</label>
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                <input type="text" class="form-control input clear" id="exit1" name="exit"  >
+                            </div>
+                            <label for="probe"
+                                   class="col-lg-2 col-md-2 col-sm-2 input-label form_border">探针</label>
+                            <div class="col-lg-2 col-md-2 col-sm-2 form_border">
+                                <select id="probe1" class="form-control input clear" name="probe_id" >  <!--VUE列表渲染-->
+                                    <option v-for="item in probe" v-bind:value="item.message.id">
+                                        {{ item.message.name }}
+                                    </option>
+                                </select>
+                            </div>
+                            <label for="port"
+                                   class="col-lg-2 col-md-2 col-sm-2 input-label form_border">端口</label>
+                            <div class="col-lg-2 col-md-2 col-sm-2 form_border">
+                                <input type="text" id="port1"  class="form-control input clear" name="port">
+                                <!--<select id="port1" class="form-control input clear" name="port">-->
+                                <!--&lt;!&ndash;VUE列表渲染&ndash;&gt;-->
+                                <!--<option v-for="item in port"  v-bind:value="item.message.port">-->
+                                <!--{{ item.message.port }}-->
+                                <!--</option>-->
+                                <!--</select>-->
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-success" v-on:click="Save">保存</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->

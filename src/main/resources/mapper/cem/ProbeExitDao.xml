@@ -14,7 +14,12 @@
     </resultMap>
 
 	<select id="queryObject" resultType="io.cem.modules.cem.entity.ProbeExitEntity">
-		select * from probe_exit where id = #{value}
+		select probe_exit.*,
+		probe.probe_name AS probe_name
+		from probe_exit
+		LEFT JOIN probe
+		ON probe_exit.probe_id = probe.id
+		where probe_exit.id = #{value}
 	</select>
 
 	<select id="queryList" resultType="io.cem.modules.cem.entity.ProbeExitEntity">
@@ -24,7 +29,7 @@
 		LEFT JOIN probe
 		ON probe_exit.probe_id = probe.id
 		<if test="exit != null and exit != ''">
-			AND exit LIKE concat('%',#{exit},'%')
+			AND probe_exit.exit LIKE concat('%',#{exit},'%')
 		</if>
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
@@ -47,7 +52,7 @@
 		ON probe_exit.probe_id = probe.id
 		WHERE probe_exit.status=0
 		<if test="exit != null and exit != ''">
-			AND exit LIKE concat('%',#{exit},'%')
+			AND probe_exit.exit LIKE concat('%',#{exit},'%')
 		</if>
 	</select>
 	
