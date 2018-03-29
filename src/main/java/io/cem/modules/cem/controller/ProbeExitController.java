@@ -65,6 +65,24 @@ public class ProbeExitController {
 		
 		return R.ok().put("page", pageUtil);
 	}
+
+	/**
+	 * 列表
+	 */
+	@RequestMapping("/total")
+	@RequiresPermissions("probeexit:total")
+	public R list(String probedata) throws Exception {
+		//查询列表数据
+		Map<String, Object> map = new HashMap<>();
+		JSONObject probedata_jsonobject = JSONObject.parseObject(probedata);
+		try {
+			map.putAll(JSONUtils.jsonToMap(probedata_jsonobject));
+		} catch (RuntimeException e) {
+			throw new RRException("内部参数错误，请重试！");
+		}
+		int total = probeExitService.queryTotal(map);
+		return R.ok().put("total", total);
+	}
 	
 	
 	/**

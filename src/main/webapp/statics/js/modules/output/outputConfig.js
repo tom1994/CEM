@@ -220,9 +220,40 @@ function operate_this (obj) {     /*监听修改触发事件*/
     operate_data_id = parseInt(obj.id);
     /*获取当前行探针数据id*/
     console.log(operate_data_id);
+    $.ajax({
+        type: "POST", /*GET会乱码*/
+        url: "../../probeexit/operate/"+operate_data_id,
+        cache: false,  //禁用缓存
+        dataType: "json",
+        // contentType: "application/json", /*必须要,不可少*/
+        success: function (result) {
+            sptable.redraw();
+        }
+    });
+
+}
+function view_this (obj) {     /*监听修改触发事件*/
+    operate_data_id = parseInt(obj.id);
+    /*获取当前行探针数据id*/
+    console.log(operate_data_id);
     $('saveId').val(operate_data_id)
     status = 1;
     var forms = $('#opform_data .form-control');
+    $.ajax({
+        url: "../../cem/probe/exitlist",//探针列表
+        type: "POST",
+        cache: false,  //禁用缓存
+        dataType: "json",
+        contentType: "application/json",
+        success: function (result) {
+            var probes = [];
+            console.log(result.page.list[0]);
+            for (var i = 0; i < result.page.list.length; i++) {
+                probes[i] = {message: result.page.list[i]}
+            }
+            spform_data.probe = probes;
+        }
+    });
     $.ajax({
         type: "POST", /*GET会乱码*/
         url: "../../probeexit/info/"+operate_data_id,
@@ -240,11 +271,10 @@ function operate_this (obj) {     /*监听修改触发事件*/
     $('#port1').attr('disabled','disabled');
     $('#myModal_output').modal('show');
 }
- function  Save() {
-     var id=$('saveId').val()
+function  Save() {
+    var id=$('saveId').val()
     var spJson = getFormJson($('#opform_data'));
     console.log(spJson);
-    spJson.status=1;
     var sp = JSON.stringify(spJson);
     /*封装成json数组*/
     console.log(sp);
@@ -380,7 +410,7 @@ var sptable = new Vue({
                             row.push(st.get(item.status));
                             row.push('<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>&nbsp;' +
                                 '<a class="fontcolor" style="white-space: nowrap" onclick="operate_this(this)" id='+item.id+'>更改监控状态</a>&nbsp;'+
-                                '<a class="fontcolor" onclick="operate_this(this)" id='+item.id+'>编辑</a>'
+                                '<a class="fontcolor" onclick="view_this(this)" id='+item.id+'>编辑</a>'
                             );
                             rows.push(row);
                         });

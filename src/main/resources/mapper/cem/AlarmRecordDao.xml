@@ -60,8 +60,10 @@
 		FROM alarm_record
 		INNER JOIN probe
 		ON alarm_record.probe_id = probe.id
-
 		WHERE alarm_record.id IS NOT NULL
+		<if test="startDate != null and startDate != '' and terminalDate != null and terminalDate != '' ">
+			AND alarm_record.record_time BETWEEN #{startDate} AND #{terminalDate}
+		</if>
 		<if test="type != null and type != ''">
 			AND alarm_record.type = #{type}
 		</if>
@@ -90,6 +92,9 @@
  	<select id="queryTotal" resultType="int">
 		select count(*) from alarm_record
 		WHERE id IS NOT NULL
+		<if test="startDate != null and startDate != '' and terminalDate != null and terminalDate != '' ">
+			AND alarm_record.record_time BETWEEN #{startDate} AND #{terminalDate}
+		</if>
 		<if test="type != null and type != ''">
 			AND alarm_record.type = #{type}
 		</if>

@@ -26,7 +26,7 @@ var new_search = new Vue({
             } else {
                 var search = {};
                 search.service = searchJson.service;
-                search.exit=searchJson.output_name
+                search.exit=searchJson.exit;
                 search.ava_start = searchJson.startDate.substr(0, 10);
                 search.ava_terminal = searchJson.terminalDate.substr(0, 10);
                 if (search.ava_start.length != 0 && search.ava_terminal.length != 0) {
@@ -34,6 +34,7 @@ var new_search = new Vue({
                     search.ava_start =  new Date(new Date() - 1000 * 60 * 60 * 24 * 4).Format("yyyy-MM-dd");
                     search.ava_terminal = (new Date()).Format("yyyy-MM-dd");
                 }
+                console.log(search);
                 probetable.probedata = search;
                 probetable.redraw();
                 // $.ajax({
