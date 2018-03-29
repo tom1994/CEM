@@ -356,7 +356,6 @@ var new_search = new Vue({
                 // }
                 let param = {};
                 param.probedata = JSON.stringify(search);
-                debugger
                 console.log(param);
                 $.ajax({
                     /*后台取得数据,赋值给观察者*/
@@ -390,7 +389,7 @@ var Reset = new Vue({
         probedata: {
             ava_start: new Date(new Date() - 1000 * 60 * 60 * 24).Format("yyyy-MM-dd"),
             ava_terminal: (new Date()).Format("yyyy-MM-dd"),
-            city_id: '110100',
+            city_id: '',
             service: '1'
         }
     },

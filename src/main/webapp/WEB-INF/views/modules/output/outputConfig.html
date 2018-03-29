@@ -224,22 +224,18 @@
                             <label for="probe"
                                    class="col-lg-2 col-md-2 col-sm-2 input-label form_border">探针</label>
                             <div class="col-lg-2 col-md-2 col-sm-2 form_border">
-                                <select id="probe1" class="form-control input clear" name="probe_id" >  <!--VUE列表渲染-->
-                                    <option v-for="item in probe" v-bind:value="item.message.id">
-                                        {{ item.message.name }}
-                                    </option>
-                                </select>
+                                <input type="text" id="probe1" class="form-control input clear" name="probe_id">
+                                <!--<select id="probe1" class="form-control input clear" name="probe_id" >  &lt;!&ndash;VUE列表渲染&ndash;&gt;-->
+                                    <!--<option v-for="item in probe" v-bind:value="item.message.id">-->
+                                        <!--{{ item.message.name }}-->
+                                    <!--</option>-->
+                                <!--</select>-->
                             </div>
                             <label for="port"
                                    class="col-lg-2 col-md-2 col-sm-2 input-label form_border">端口</label>
                             <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                 <input type="text" id="port1"  class="form-control input clear" name="port">
-                                <!--<select id="port1" class="form-control input clear" name="port">-->
-                                <!--&lt;!&ndash;VUE列表渲染&ndash;&gt;-->
-                                <!--<option v-for="item in port"  v-bind:value="item.message.port">-->
-                                <!--{{ item.message.port }}-->
-                                <!--</option>-->
-                                <!--</select>-->
+                                <input type="text" id="saveId" style="display: none">
                             </div>
                         </div>
                     </form>
@@ -247,7 +243,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-success" v-on:click="Save">保存</button>
+                <button type="button" class="btn btn-success" onclick="Save()">保存</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->

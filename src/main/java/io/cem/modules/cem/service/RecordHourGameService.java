@@ -5,13 +5,9 @@ import io.cem.modules.cem.entity.ScoreEntity;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Future;
 
 /**
- * 
- * 
- * @author ${author}
- * @email ${email}
- * @date 2017-12-13 17:02:51
  */
 public interface RecordHourGameService {
 	
@@ -23,7 +19,7 @@ public interface RecordHourGameService {
 	List<RecordHourGameEntity> queryGameList(Map<String, Object> map);
 	List<RecordHourGameEntity> queryExitList(Map<String, Object> map);
 	List<RecordHourGameEntity> queryGameAreaList(Map<String, Object> map);
-	List<RecordHourGameEntity> queryGameRankList(Map<String, Object> map);
+	Future<List<RecordHourGameEntity>> queryGameRankList(Map<String, Object> map);
 
 	List<RecordHourGameEntity> queryDayList(Map<String, Object> map);
 

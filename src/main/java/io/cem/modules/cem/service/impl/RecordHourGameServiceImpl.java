@@ -4,12 +4,15 @@ import io.cem.common.utils.PropertiesUtils;
 import io.cem.modules.cem.dao.RecordGameDao;
 import io.cem.modules.cem.entity.ScoreEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Future;
 
 import io.cem.modules.cem.dao.RecordHourGameDao;
 import io.cem.modules.cem.entity.RecordHourGameEntity;
@@ -54,8 +57,10 @@ public class RecordHourGameServiceImpl implements RecordHourGameService {
 	}
 
 	@Override
-	public List<RecordHourGameEntity> queryGameRankList(Map<String, Object> map){
-		return recordHourGameDao.queryGameRankList(map);
+	@Async
+	public Future<List<RecordHourGameEntity>> queryGameRankList(Map<String, Object> map) {
+		return new AsyncResult<>
+				(recordHourGameDao.queryGameRankList(map));
 	}
 
 	@Override

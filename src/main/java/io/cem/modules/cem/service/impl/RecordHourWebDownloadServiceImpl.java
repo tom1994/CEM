@@ -5,23 +5,25 @@ import io.cem.common.utils.PropertiesUtils;
 import io.cem.modules.cem.dao.RecordWebDownloadDao;
 import io.cem.modules.cem.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.Future;
 
 import io.cem.modules.cem.dao.RecordHourWebDownloadDao;
 import io.cem.modules.cem.service.RecordHourWebDownloadService;
 
 
-
 @Service("recordHourWebDownloadService")
 public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadService {
-	@Autowired
-	private RecordHourWebDownloadDao recordHourWebDownloadDao;
-	@Autowired
-	private RecordWebDownloadDao recordWebDownloadDao;
-	
+    @Autowired
+    private RecordHourWebDownloadDao recordHourWebDownloadDao;
+    @Autowired
+    private RecordWebDownloadDao recordWebDownloadDao;
+
 	@Override
 	public RecordHourWebDownloadEntity queryObject(Integer id){
 		return recordHourWebDownloadDao.queryObject(id);
@@ -41,11 +43,12 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 		return recordWebDownloadDao.queryWebDownload(map);
 	}
 
-
-	@Override
-	public List<RecordHourWebDownloadEntity> queryWebDownloadList(Map<String, Object> map){
-		return recordHourWebDownloadDao.queryWebDownloadList(map);
-	}
+    @Override
+    @Async
+    public Future<List<RecordHourWebDownloadEntity>> queryWebDownloadList(Map<String, Object> map) {
+        return new AsyncResult<>
+                (recordHourWebDownloadDao.queryWebDownloadList(map));
+    }
 
 	@Override
 	public List<RecordHourWebDownloadEntity> queryDayList(Map<String, Object> map){
@@ -829,5 +832,5 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 	public void deleteBatch(Integer[] ids){
 		recordHourWebDownloadDao.deleteBatch(ids);
 	}
-	
+
 }

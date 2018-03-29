@@ -2,10 +2,13 @@ package io.cem.modules.cem.service.impl;
 
 import io.cem.modules.cem.dao.RecordPppoeDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Future;
 
 import io.cem.modules.cem.dao.RecordHourPppoeDao;
 import io.cem.modules.cem.entity.RecordHourPppoeEntity;
@@ -36,8 +39,10 @@ public class RecordHourPppoeServiceImpl implements RecordHourPppoeService {
 	}
 
 	@Override
-	public List<RecordHourPppoeEntity> queryPppoeList(Map<String, Object> map){
-		return recordHourPppoeDao.queryPppoeList(map);
+	@Async
+	public Future<List<RecordHourPppoeEntity>> queryPppoeList(Map<String, Object> map) {
+		return new AsyncResult<>
+				(recordHourPppoeDao.queryPppoeList(map));
 	}
 
 	@Override

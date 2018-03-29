@@ -4,12 +4,15 @@ import io.cem.common.utils.PropertiesUtils;
 import io.cem.modules.cem.dao.RecordWebPageDao;
 import io.cem.modules.cem.entity.ScoreEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Future;
 
 import io.cem.modules.cem.dao.RecordHourWebPageDao;
 import io.cem.modules.cem.entity.RecordHourWebPageEntity;
@@ -56,8 +59,10 @@ public class RecordHourWebPageServiceImpl implements RecordHourWebPageService {
 	}
 
 	@Override
-	public List<RecordHourWebPageEntity> queryWebRankList(Map<String, Object> map){
-		return recordHourWebPageDao.queryWebRankList(map);
+	@Async
+	public Future<List<RecordHourWebPageEntity>> queryWebRankList(Map<String, Object> map) {
+		return new AsyncResult<>
+				(recordHourWebPageDao.queryWebRankList(map));
 	}
 
 	@Override

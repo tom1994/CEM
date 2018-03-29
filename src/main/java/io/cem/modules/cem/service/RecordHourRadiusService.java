@@ -4,13 +4,9 @@ import io.cem.modules.cem.entity.RecordHourRadiusEntity;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Future;
 
 /**
- * 
- * 
- * @author ${author}
- * @email ${email}
- * @date 2017-12-12 15:11:23
  */
 public interface RecordHourRadiusService {
 	
@@ -20,7 +16,7 @@ public interface RecordHourRadiusService {
 
 	List<RecordHourRadiusEntity> queryRadius(Map<String,Object> map);
 
-	List<RecordHourRadiusEntity> queryRadiusList(Map<String, Object> map);
+	Future<List<RecordHourRadiusEntity>> queryRadiusList(Map<String, Object> map);
 
 	List<RecordHourRadiusEntity> queryExitList(Map<String, Object> map);
 

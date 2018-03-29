@@ -4,13 +4,13 @@ var probeNames = new Array();
 var taskNames = new Array();
 var targetNames = new Array();
 var recordtag = "0";
-var citySelected=0
-var countrySelected=0
+var citySelected=0;
+var countrySelected=0;
 var probeSelected=0;
 var serviceSelected=0;
-var taskSelected=0
+var taskSelected=0;
 var targetSelected=0;
-var intervalSelected=0
+var intervalSelected=0;
 
 //key:service_type value:superservice_type
 var spst = new Map();
@@ -33,10 +33,10 @@ spst.set(50, 6);
 
 /*key:service_type value:用来表示不同datatable的字符串，便于查询id从而改变class*/
 var recordtype = new Map();
-for (let i = 1; i < 4; i++) {
+for (let i = 0; i < 3; i++) {
     recordtype.set(i, "ping")
 }
-for (let i = 4; i < 6; i++) {
+for (let i = 3; i < 5; i++) {
     recordtype.set(i, "tracert")
 }
 for (let i = 10; i < 12; i++) {

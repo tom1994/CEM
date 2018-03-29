@@ -5,12 +5,15 @@ import io.cem.modules.cem.dao.RecordWebVideoDao;
 import io.cem.modules.cem.entity.ScoreEntity;
 import io.cem.modules.cem.service.RecordWebVideoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Future;
 
 import io.cem.modules.cem.dao.RecordHourWebVideoDao;
 import io.cem.modules.cem.entity.RecordHourWebVideoEntity;
@@ -56,8 +59,10 @@ public class RecordHourWebVideoServiceImpl implements RecordHourWebVideoService 
 	}
 
 	@Override
-	public List<RecordHourWebVideoEntity> queryVideoRankList(Map<String, Object> map){
-		return recordHourWebVideoDao.queryVideoRankList(map);
+	@Async
+	public Future<List<RecordHourWebVideoEntity>> queryVideoRankList(Map<String, Object> map) {
+		return new AsyncResult<>
+				(recordHourWebVideoDao.queryVideoRankList(map));
 	}
 
 	@Override

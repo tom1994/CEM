@@ -2,10 +2,13 @@ package io.cem.modules.cem.service.impl;
 
 import io.cem.modules.cem.dao.RecordDnsDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Future;
 
 import io.cem.modules.cem.dao.RecordHourDnsDao;
 import io.cem.modules.cem.entity.RecordHourDnsEntity;
@@ -36,8 +39,10 @@ public class RecordHourDnsServiceImpl implements RecordHourDnsService {
 	}
 
 	@Override
-	public List<RecordHourDnsEntity> queryDnsList(Map<String, Object> map){
-		return recordHourDnsDao.queryDnsList(map);
+	@Async
+	public Future<List<RecordHourDnsEntity>> queryDnsList(Map<String, Object> map) {
+		return new AsyncResult<>
+				(recordHourDnsDao.queryDnsList(map));
 	}
 
 	@Override

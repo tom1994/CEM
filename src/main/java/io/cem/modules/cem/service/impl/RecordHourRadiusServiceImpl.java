@@ -2,10 +2,13 @@ package io.cem.modules.cem.service.impl;
 
 import io.cem.modules.cem.dao.RecordRadiusDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Future;
 
 import io.cem.modules.cem.dao.RecordHourRadiusDao;
 import io.cem.modules.cem.entity.RecordHourRadiusEntity;
@@ -36,10 +39,11 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 	}
 
 	@Override
-	public List<RecordHourRadiusEntity> queryRadiusList(Map<String, Object> map){
-		return recordHourRadiusDao.queryRadiusList(map);
+	@Async
+	public Future<List<RecordHourRadiusEntity>> queryRadiusList(Map<String, Object> map) {
+		return new AsyncResult<>
+				(recordHourRadiusDao.queryRadiusList(map));
 	}
-
 	@Override
 	public List<RecordHourRadiusEntity> queryExitList(Map<String, Object> map){
 		return recordHourRadiusDao.queryExitList(map);

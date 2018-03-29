@@ -83,16 +83,16 @@
                                 <div style="display:inline-block;">
                                     <span class="searchname" title="告警类型" style="width:80px; text-align: center">告警类型</span>
                                     <div class="input-group searchspan" id="Selecttype1" style="top: -10px;">
-                                        <div class="jq22">
-                                            <select id="selecttype" class="form-control" style="display: none">
-                                                <option value="">所有类型</option>
-                                                <option value="1">离线告警</option>
-                                                <option value="2">性能告警</option>
-                                                <option value="3">中断告警</option>
-                                                <option value="4">阈值告警</option>
-                                            </select>
-                                        </div>
+                                    <div class="jq22">
+                                        <select id="selecttype" class="form-control" style="display: none">
+                                            <option value="">所有类型</option>
+                                            <option value="1">离线告警</option>
+                                            <option value="2">性能告警</option>
+                                            <option value="3">中断告警</option>
+                                            <option value="4">阈值告警</option>
+                                        </select>
                                     </div>
+                                </div>
                                 </div>
                                 <div style="display: inline-block;">
                                     <span class="searchname search left" title="告警级别" style="width: 80px;margin-left: 61px">告警级别</span>
@@ -421,7 +421,7 @@
                                 >时延平均值(ms)</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <input type="text" class="form-control input" id="sla_delay"
-                                           disabled="disabled" name="sla_delay"
+                                          disabled="disabled" name="sla_delay"
                                            placeholder="">
                                 </div>
                                 <label for="sla_g_delay"
@@ -429,7 +429,7 @@
                                 >往向时延(ms)</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <input type="text" class="form-control input" id="sla_g_delay"
-                                           disabled="disabled" name="g_delay" placeholder="">
+                                          disabled="disabled" name="g_delay" placeholder="">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -438,7 +438,7 @@
                                 >返向时延(ms)</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <input type="text" class="form-control input" id="sla_r_delay"
-                                           disabled="disabled" name="r_delay"
+                                         disabled="disabled" name="r_delay"
                                            placeholder="">
                                 </div>
                                 <label for="sla_delay_std"
@@ -456,7 +456,7 @@
                                 >往向时延标准差(ms)</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <input type="text" class="form-control input" id="sla_g_delay_std"
-                                           disabled="disabled" name="g_delay_std"
+                                          disabled="disabled" name="g_delay_std"
                                            placeholder="">
                                 </div>
                                 <label for="sla_r_delay_std"
@@ -464,7 +464,7 @@
                                 >返向时延标准差(ms)</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <input type="text" class="form-control input" id="sla_r_delay_std"
-                                           disabled="disabled" name="r_delay_std"
+                                          disabled="disabled" name="r_delay_std"
                                            placeholder="">
                                 </div>
                             </div>
@@ -474,7 +474,7 @@
                                 >时延方差(ms)</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <input type="text" class="form-control input" id="sla_delay_var"
-                                           disabled="disabled" name="sla_delay_var"
+                                            disabled="disabled" name="sla_delay_var"
                                            placeholder="">
                                 </div>
                                 <label for="sla_g_delay_var"
@@ -482,7 +482,7 @@
                                 >往向时延方差(ms)</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <input type="text" class="form-control input" id="sla_g_delay_var"
-                                           disabled="disabled" name="g_delay_var"
+                                            disabled="disabled" name="g_delay_var"
                                            placeholder="">
                                 </div>
                             </div>
@@ -510,7 +510,7 @@
                                 >往向抖动(ms)</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <input type="text" class="form-control input" id="sla_g_jitter"
-                                           disabled="disabled" name="g_jitter"
+                                            disabled="disabled" name="g_jitter"
                                            placeholder="">
                                 </div>
                                 <label for="sla_r_jitter"
@@ -518,7 +518,7 @@
                                 >返向抖动(ms)</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <input type="text" class="form-control input" id="sla_r_jitter"
-                                           disabled="disabled" name="r_jitter"
+                                          disabled="disabled" name="r_jitter"
                                            placeholder="">
                                 </div>
                             </div>
@@ -528,7 +528,7 @@
                                 >抖动标准差(ms)</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <input type="text" class="form-control input" id="sla_jitter_std"
-                                           disabled="disabled" name="jitter_std"
+                                            disabled="disabled" name="jitter_std"
                                            placeholder="">
                                 </div>
                                 <label for="sla_g_jitter_std"
@@ -546,7 +546,7 @@
                                 >返向抖动标准差(ms)</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <input type="text" class="form-control input" id="sla_r_jitter_std"
-                                           disabled="disabled" name="r_jitter_std"
+                                            disabled="disabled" name="r_jitter_std"
                                            placeholder="">
                                 </div>
                                 <label for="sla_jitter_var"
@@ -554,7 +554,7 @@
                                 >抖动方差(ms)</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <input type="text" class="form-control input" id="sla_jitter_var"
-                                           disabled="disabled" name="sla_jitter_var"
+                                            disabled="disabled" name="sla_jitter_var"
                                            placeholder="">
                                 </div>
                             </div>
@@ -564,7 +564,7 @@
                                 >往向抖动方差(ms)</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <input type="text" class="form-control input" id="sla_g_jitter_var"
-                                           disabled="disabled" name="g_jitter_var"
+                                          disabled="disabled" name="g_jitter_var"
                                            placeholder="">
                                 </div>
                                 <label for="sla_r_jitter_var"
@@ -590,7 +590,7 @@
                                 >往向丢包率(%)</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <input type="text" class="form-control input" id="g_loss_rate"
-                                           disabled="disabled" name="g_loss_rate"
+                                            disabled="disabled" name="g_loss_rate"
                                            placeholder="">
                                 </div>
                             </div>
@@ -632,7 +632,7 @@
                                 >时延平均值(ms)</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <input type="text" class="form-control input" id="dhcp_delay"
-                                           disabled="disabled" name="dhcp_delay" placeholder="">
+                                            disabled="disabled" name="dhcp_delay" placeholder="">
                                 </div>
                                 <label for="dhcp_success_rate"
                                        class="col-lg-3 col-md-3 col-sm-3 form_border"
@@ -650,8 +650,8 @@
                                 >时延平均值(ms)</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <input type="text" class="form-control input" id="adsl_delay"
-                                           disabled="disabled" name="adsl_delay"
-                                           placeholder="">
+                                         disabled="disabled" name="adsl_delay"
+                                          placeholder="">
                                 </div>
                                 <label for="adsl_drop_rate"
                                        class="col-lg-3 col-md-3 col-sm-3 form_border"
@@ -737,7 +737,7 @@
                                 >重定向时延时延(ms)</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <input type="text" class="form-control input" id="web_page_redirect_delay"
-                                           disabled="disabled" name="wp_redirect_delay"
+                                            disabled="disabled" name="wp_redirect_delay"
                                            placeholder="">
                                 </div>
                                 <label for="web_page_above_fold_delay"
@@ -745,7 +745,7 @@
                                 >首屏时延(ms)</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <input type="text" class="form-control input" id="web_page_above_fold_delay"
-                                           disabled="disabled" name="wp_above_fold_delay"
+                                            disabled="disabled" name="wp_above_fold_delay"
                                            placeholder="">
                                 </div>
 
@@ -756,7 +756,7 @@
                                 >页面元素时延(ms)</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <input type="text" class="form-control input" id="web_page_page_element_delay"
-                                           disabled="disabled" name="wp_page_element_delay"
+                                          disabled="disabled" name="wp_page_element_delay"
                                            placeholder="">
                                 </div>
                                 <label for="web_page_download_speed"
@@ -764,7 +764,7 @@
                                 >下载速率(kb/s)</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <input type="text" class="form-control input" id="web_page_download_speed"
-                                           disabled="disabled" name="wp_download_speed"
+                                          disabled="disabled" name="wp_download_speed"
                                            placeholder="">
                                 </div>
                             </div>
@@ -794,7 +794,7 @@
                                 >首字节到达时延(ms)</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <input type="text" class="form-control input" id="web_download_headbyte_delay"
-                                           disabled="disabled" name="wd_headbyte_delay"
+                                         disabled="disabled" name="wd_headbyte_delay"
                                            placeholder="">
                                 </div>
                                 <label for="web_download_download_speed"
@@ -851,7 +851,7 @@
                                 >下载速率(kb/s)</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <input type="text" class="form-control input" id="ftp_download_speed"
-                                           disabled="disabled" name="ftp_download_speed"
+                                            disabled="disabled" name="ftp_download_speed"
                                            placeholder="">
                                 </div>
                                 <label for="ftp_upload_speed"
@@ -859,7 +859,7 @@
                                 >上传速率(kb/s)</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <input type="text" class="form-control input" id="ftp_upload_speed"
-                                           disabled="disabled" name="ftp_upload_speed"
+                                          disabled="disabled" name="ftp_upload_speed"
                                            placeholder="">
                                 </div>
                             </div>
@@ -879,7 +879,7 @@
                                 >连接WEB服务器时延(ms)</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <input type="text" class="form-control input" id="video_ws_conn_delay"
-                                           disabled="disabled" name="ws_conn_delay"
+                                            disabled="disabled" name="ws_conn_delay"
                                            placeholder="">
                                 </div>
                             </div>
@@ -897,7 +897,7 @@
                                 >连接调度服务器时延(ms)</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <input type="text" class="form-control input" id="video_ss_conn_delay"
-                                           disabled="disabled" name="ss_conn_delay"
+                                          disabled="disabled" name="ss_conn_delay"
                                            placeholder="">
                                 </div>
                             </div>
@@ -907,7 +907,7 @@
                                 >获取视频地址时延(ms)</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <input type="text" class="form-control input" id="video_address_delay"
-                                           disabled="disabled" name="address_delay"
+                                          disabled="disabled" name="address_delay"
                                            placeholder="">
                                 </div>
                                 <label for="video_ms_conn_delay"
@@ -933,7 +933,7 @@
                                 >首次缓冲时延(ms)</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <input type="text" class="form-control input" id="video_init_buffer_delay"
-                                           disabled="disabled" name="init_buffer_delay"
+                                          disabled="disabled" name="init_buffer_delay"
                                            placeholder="">
                                 </div>
                             </div>
@@ -943,7 +943,7 @@
                                 >视频加载时延(ms)</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <input type="text" class="form-control input" id="video_load_delay"
-                                           disabled="disabled" name="load_delay"
+                                          disabled="disabled" name="load_delay"
                                            placeholder="">
                                 </div>
                                 <label for="video_total_buffer_delay"
@@ -951,7 +951,7 @@
                                 >总缓冲时延(ms)</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <input type="text" class="form-control input" id="video_total_buffer_delay"
-                                           disabled="disabled" name="total_buffer_delay"
+                                            disabled="disabled" name="total_buffer_delay"
                                            placeholder="">
                                 </div>
                             </div>

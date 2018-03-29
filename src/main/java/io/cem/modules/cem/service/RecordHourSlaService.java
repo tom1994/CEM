@@ -4,13 +4,9 @@ import io.cem.modules.cem.entity.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Future;
 
 /**
- * 
- * 
- * @author ${author}
- * @email ${email}
- * @date 2017-12-12 15:11:35
  */
 public interface RecordHourSlaService {
 	
@@ -20,7 +16,7 @@ public interface RecordHourSlaService {
 
 	List<RecordHourSlaEntity> querySla(Map<String,Object> map);
 
-	List<RecordHourSlaEntity> querySlaList(Map<String, Object> map);
+	Future<List<RecordHourSlaEntity>> querySlaList(Map<String, Object> map);
 
 	List<RecordHourSlaEntity> queryExitList(Map<String, Object> map);
 

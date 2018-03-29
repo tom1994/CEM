@@ -4,6 +4,7 @@ import io.cem.modules.cem.entity.RecordHourPppoeEntity;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Future;
 
 /**
  * 
@@ -20,7 +21,7 @@ public interface RecordHourPppoeService {
 
 	List<RecordHourPppoeEntity> queryPppoe(Map<String,Object> map);
 
-	List<RecordHourPppoeEntity> queryPppoeList(Map<String, Object> map);
+	Future<List<RecordHourPppoeEntity>> queryPppoeList(Map<String, Object> map);
 
 	List<RecordHourPppoeEntity> queryExitList(Map<String, Object> map);
 

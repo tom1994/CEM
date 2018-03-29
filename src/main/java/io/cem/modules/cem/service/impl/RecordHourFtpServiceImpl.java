@@ -2,10 +2,13 @@ package io.cem.modules.cem.service.impl;
 
 import io.cem.modules.cem.dao.RecordFtpDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Future;
 
 import io.cem.modules.cem.dao.RecordHourFtpDao;
 import io.cem.modules.cem.entity.RecordHourFtpEntity;
@@ -36,8 +39,10 @@ public class RecordHourFtpServiceImpl implements RecordHourFtpService {
 	}
 
 	@Override
-	public List<RecordHourFtpEntity> queryFtpList(Map<String, Object> map){
-		return recordHourFtpDao.queryFtpList(map);
+	@Async
+	public Future<List<RecordHourFtpEntity>> queryFtpList(Map<String, Object> map) {
+		return new AsyncResult<>
+				(recordHourFtpDao.queryFtpList(map));
 	}
 
 	@Override

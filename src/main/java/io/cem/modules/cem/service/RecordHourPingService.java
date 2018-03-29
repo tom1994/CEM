@@ -7,6 +7,7 @@ import io.cem.modules.cem.entity.ScoreEntity;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Future;
 
 /**
  */
@@ -22,7 +23,7 @@ public interface RecordHourPingService {
 
 	List<RecordHourPingEntity> queryPing(Map<String, Object> map);
 
-	List<RecordHourPingEntity> queryPingList(Map<String, Object> map);
+	Future<List<RecordHourPingEntity>> queryPingList(Map<String, Object> map);
 
 	List<RecordHourPingEntity> queryDayList(Map<String, Object> map);
 

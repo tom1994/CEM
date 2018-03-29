@@ -325,6 +325,6 @@ public class RecordHourDhcpEntity implements Serializable {
 	}
 
 	public void setAccessLayer(Integer accessLayer) {
-		accessLayer = accessLayer;
+		this.accessLayer = accessLayer;
 	}
 }

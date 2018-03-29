@@ -3,10 +3,13 @@ package io.cem.modules.cem.service.impl;
 import io.cem.modules.cem.dao.RecordTracertDao;
 import io.cem.modules.cem.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.Future;
 
 import io.cem.modules.cem.dao.RecordHourTracertDao;
 import io.cem.modules.cem.service.RecordHourTracertService;
@@ -33,13 +36,14 @@ public class RecordHourTracertServiceImpl implements RecordHourTracertService {
 	}
 
 	@Override
-	public List<RecordHourTracertEntity> queryExitList(Map<String, Object> map){
-		return recordHourTracertDao.queryExitList(map);
+	@Async
+	public Future<List<RecordHourTracertEntity>> queryTracertList(Map<String, Object> map) {
+		return new AsyncResult<>(recordHourTracertDao.queryTracertList(map));
 	}
 
 	@Override
-	public List<RecordHourTracertEntity> queryTracertList(Map<String, Object> map){
-		return recordHourTracertDao.queryTracertList(map);
+	public List<RecordHourTracertEntity> queryExitList(Map<String, Object> map){
+		return recordHourTracertDao.queryExitList(map);
 	}
 
 	@Override

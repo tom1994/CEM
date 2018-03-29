@@ -6,6 +6,7 @@ import io.cem.modules.cem.entity.ScoreEntity;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Future;
 
 /**
  * 
@@ -22,7 +23,7 @@ public interface RecordHourWebDownloadService {
 	
 	List<RecordHourWebDownloadEntity> queryList(Map<String, Object> map);
 
-	List<RecordHourWebDownloadEntity> queryWebDownloadList(Map<String, Object> map);
+	Future<List<RecordHourWebDownloadEntity>> queryWebDownloadList(Map<String, Object> map);
 
 	List<RecordHourWebDownloadEntity> queryExitList(Map<String, Object> map);
 

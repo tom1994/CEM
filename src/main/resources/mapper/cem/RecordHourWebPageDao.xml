@@ -56,11 +56,12 @@
 		select count(*) from record_hour_web_page 
 	</select>
 
-	<select id="queryWebList" resultType="io.cem.modules.cem.entity.RecordHourWebPageEntity">
+<!--	<select id="queryWebList" resultType="io.cem.modules.cem.entity.RecordHourWebPageEntity">
 		select record_hour_web_page.id,record_hour_web_page.city_id,record_hour_web_page.county_id,record_hour_web_page.probe_id,record_hour_web_page.port,record_hour_web_page.task_id,record_hour_web_page.service_type,record_hour_web_page.target_id,record_hour_web_page.target_ip,record_hour_web_page.record_date,record_hour_web_page.remark,
 		city.city_name AS city_name,
 		county.county_name AS area_name,
 		probe.probe_name AS probe_name,
+		probe.access_layer,
 		target.target_name AS target_name,
 		time_format(record_hour_web_page.record_time, '%H') AS record_time,
 		AVG(record_hour_web_page.dns_delay) AS dns_delay,
@@ -96,7 +97,54 @@
 			AND record_hour_web_page.probe_id = #{probe_id}
 		</if>
 		GROUP BY record_hour_web_page.city_id,record_hour_web_page.county_id,record_hour_web_page.service_type,record_hour_web_page.probe_id,date_format(record_hour_web_page.record_date,'%Y-%m-%d'),time_format(record_hour_web_page.record_time, '%H')
+	</select>-->
 
+	<select id="queryWebList" resultType="io.cem.modules.cem.entity.RecordHourWebPageEntity">
+		select t.*,
+		city.city_name AS city_name,
+		county.county_name AS area_name,
+		probe.probe_name AS probe_name,
+		probe.access_layer,
+		target.target_name AS target_name
+		FROM (SELECT
+		record_hour_web_page.id,record_hour_web_page.city_id,record_hour_web_page.county_id,record_hour_web_page.probe_id,record_hour_web_page.port,record_hour_web_page.task_id,record_hour_web_page.service_type,record_hour_web_page.target_id,record_hour_web_page.target_ip,record_hour_web_page.record_date,record_hour_web_page.remark,
+		time_format(record_hour_web_page.record_time, '%H') AS record_time,
+		AVG(record_hour_web_page.dns_delay) AS dns_delay,
+		AVG(record_hour_web_page.conn_delay) AS conn_delay,
+		AVG(record_hour_web_page.headbyte_delay) AS headbyte_delay,
+		AVG(record_hour_web_page.page_file_delay) AS page_file_delay,
+		AVG(record_hour_web_page.redirect_delay) AS redirect_delay,
+		AVG(record_hour_web_page.above_fold_delay) AS above_fold_delay,
+		AVG(record_hour_web_page.page_element_delay) AS page_element_delay,
+		AVG(record_hour_web_page.download_rate) AS download_rate,
+		SUM(record_hour_web_page.fail) AS fail,
+		SUM(record_hour_web_page.total) AS total
+		FROM record_hour_web_page
+		WHERE record_hour_web_page.record_date BETWEEN #{ava_start} AND #{ava_terminal}
+		<if test="city_id != null and city_id != ''">
+			AND record_hour_web_page.city_id = #{city_id}
+		</if>
+		<if test="county_id != null and county_id != ''">
+			AND record_hour_web_page.county_id = #{county_id}
+		</if>
+		<if test="target_id != null and target_id != ''">
+			AND record_hour_web_page.target_id = #{target_id}
+		</if>
+		<if test="probe_id != null and probe_id != ''">
+			AND record_hour_web_page.probe_id = #{probe_id}
+		</if>
+		GROUP BY
+		record_hour_web_page.city_id,record_hour_web_page.county_id,record_hour_web_page.service_type,record_hour_web_page.probe_id,date_format(record_hour_web_page.record_date,'%Y-%m-%d'),time_format(record_hour_web_page.record_time,
+		'%H')
+		) t
+		LEFT JOIN city
+		ON t.city_id = city.city_id
+		LEFT JOIN county
+		ON t.county_id = county.county_id
+		INNER JOIN probe
+		ON t.probe_id = probe.id
+		LEFT JOIN target
+		ON t.target_id = target.id
 	</select>
 
 	<select id="queryExitList" resultType="io.cem.modules.cem.entity.RecordHourWebPageEntity">
