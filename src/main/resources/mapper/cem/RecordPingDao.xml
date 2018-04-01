@@ -287,10 +287,10 @@
         probe.probe_name AS probe_name,
         target.target_name AS target_name,
         target.value AS targetip_name
-        FROM (SELECT record_ping.*
-        FROM record_ping
+        FROM (SELECT * FROM record_ping
+        USE INDEX(idx_dispatch)
         WHERE
-        record_ping.dispatch_id = #{dispatch_id}) t
+        dispatch_id = #{dispatch_id}) t
         INNER JOIN probe
         ON t.probe_id =probe.id
         LEFT JOIN target

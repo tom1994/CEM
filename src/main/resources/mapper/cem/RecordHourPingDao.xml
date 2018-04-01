@@ -101,6 +101,7 @@
         SUM(rhp.fail) AS fail,
         SUM(rhp.total) AS total
         FROM record_hour_ping rhp
+        USE INDEX(idx_combine)
         WHERE rhp.record_date BETWEEN #{ava_start} AND #{ava_terminal}
         <if test="city_id != null and city_id != ''">
             AND rhp.city_id = #{city_id}
@@ -139,12 +140,7 @@
         select count(*) FROM (
         SELECT
         rhp.id,rhp.city_id,rhp.county_id,rhp.probe_id,rhp.port,rhp.task_id,rhp.service_type,rhp.target_id,rhp.target_ip,rhp.record_date,rhp.remark,
-        AVG(rhp.delay) AS delay
         FROM record_hour_ping rhp
-        LEFT JOIN city
-        ON rhp.city_id = city.city_id
-        LEFT JOIN county
-        ON rhp.county_id = county.county_id
         INNER JOIN probe
         ON rhp.probe_id = probe.id
         LEFT JOIN target
