@@ -3,7 +3,6 @@ var idArray = new Array();
 var names = new Array();
 var schedulepolicies = new Array();
 var alarmtemplates = new Array();
-
 var st = new Map();//servicetype字典，可通过get方法查对应字符串。
 st.set(1, "PING(ICMP Echo)");
 st.set(2, "PING(TCP Echo)");
@@ -117,7 +116,6 @@ function view_this(obj) {     /*监听详情触发事件*/
                 alarmtemplates[i] = {message: result.page.list[i]}
             }
             taskform_data.atemplates = alarmtemplates;
-
             get_viewModal(update_data_id);
         }
     });
@@ -179,11 +177,13 @@ function get_viewModal(update_data_id) {
                 paramforms[2].value = param.is_renew;
             }
             if (stid.get(servicetypeid) == "dns") {
+                debugger
                 paramforms[0].value = param.times;
                 paramforms[1].value = param.interval;
                 paramforms[2].value = param.count;
                 paramforms[3].value = param.timeout;
-                paramforms[4].value = JSON.stringify(param.domains);
+                 var domains = param.domains;
+                paramforms[4].value=domains
             }
             if (stid.get(servicetypeid) == "pppoe") {
                 paramforms[0].value = param.username;
@@ -271,6 +271,8 @@ function get_viewModal(update_data_id) {
             $("#taskform_data select").attr('disabled', 'disabled');
             $("#taskform_data input[type=text]").attr('disabled', 'disabled');
             $("#taskform_data input[type=text]").attr('unselectable', 'on');
+           $('#domains').attr('disabled', 'disabled');
+            $('#domains').attr('unselectable', 'on');
             $(".service input[type=text]").attr('disabled', 'disabled');
             $(".service input[type=text]").attr('unselectable', 'on');
             $(".service select").attr('disabled', 'disabled');
@@ -290,6 +292,7 @@ function delete_ajax() {
         dataType: "json",
         contentType: "application/json", /*必须要,不可少*/
         success: function (result) {
+            debugger
             toastr.success("任务删除成功!");
             task_table.currReset();
             idArray = [];
@@ -300,6 +303,7 @@ function delete_ajax() {
 }
 
 function delete_this(obj) {
+    debugger
     delete_data.show_deleteModal();
     delete_data.id = parseInt(obj.id);
     /*获取当前行探针数据id*/
@@ -376,6 +380,34 @@ function dispatch_info(obj) {
     $('#myModal_dispatch').modal('show');
 }
 
+function selectOnchang(obj) {
+    var value = obj.options[obj.selectedIndex].value;
+    queryPort(value)
+}
+var queryPort = function (probeid) {
+    var id=parseInt(probeid);
+    $.ajax({
+        type: "POST", /*GET会乱码*/
+        url: "../../cem/probe/detail/"+id,
+        cache: false,  //禁用缓存
+        dataType: "json",
+        // contentType: "application/json", /*必须要,不可少*/
+        success: function (result) {
+            debugger
+            var port = [];
+            if(result.probe){
+                port=JSON.parse(result.probe.portIp);
+
+                for(var i=0;i<port.length;i++){
+                    $('#second').append("<option value=" + port[i].port + ">" + port[i].port+ "</option>");
+                }
+                $('#second').selectpicker('refresh');
+                $('#second').selectpicker('render');
+            }
+
+            }
+        })
+}
 function task_assign(obj) {
     $("#selectprobe").find("option").remove();
     $("#selectprobegroup").find("option").remove();
@@ -390,8 +422,25 @@ function task_assign(obj) {
     // console.log($('#taskId').val());
     var servicetype = parseInt(obj.name);
     var sp_service = spst.get(servicetype);
-    // 多选列表的数据传入格式
-    // var s = [{roleId:"1",roleName:"zhangsan"},{roleId:"2","roleName":"lisi"},{"roleId":"3","roleName":"wangwu"}];
+    $.ajax({
+        type: "POST", /*GET会乱码*/
+        url: "../../cem/probe/listCenter/"+parseInt(obj.id),
+        cache: false,  //禁用缓存
+        dataType: "json",
+        contentType: "application/json", /*必须要,不可少*/
+        success: function (result) {
+            var probes = [];
+
+            for (var i = 0; i < result.probe.length; i++) {
+                probes[i] = {message: result.probe[i]};
+                $('#first').append("<option value=" + probes[i].message.id + ">" + probes[i].message.name + "</option>");
+            }
+
+            $('#first').selectpicker('refresh');
+            $('#first').selectpicker('render');
+        },
+
+    })
     $.ajax({
         type: "POST", /*GET会乱码*/
         url: "../../cem/probe/listOnline/"+parseInt(obj.id),
@@ -478,15 +527,26 @@ function task_assign(obj) {
                 doubleMove: true,
             });
             $('#task_dispatch').modal('show');
+            $('.box1').removeClass(' col-md-5');
+             $('.box1').addClass(' col-md-4');
+            $('.box2').removeClass(' col-md-5');
+            $('.box2').addClass(' col-md-4');
+            $('.btn-box').removeClass(' col-md-2');
+            $('.btn-box').addClass(' col-md-3');
+            $('.clear1 ').css('display','none');
+            $('.clear2 ').css('display','none');
+            $('.clear3 ').css('display','none');
+            $('.clear4 ').css('display','none');
         }
     });
 }
 
-//a=1 选择探针 a=0 选择探针组 b=1 测试目标 b=0 测试目标组
+//a=1 选择探针 a=0 选择探针组 b=1 测试目标 b=0 测试目标组 a=2选择核心探针 c=0 选择
 function submit_dispatch() {
     var a = parseInt($('input[name=chooseprobe]:checked', '#dispatch_probe').val());
     var b = parseInt($('input[name=choosetarget]:checked', '#dispatch_target').val());
     console.log(a, b);
+        debugger
     var probeList = getFormJson2($('#dispatch_probe'));
     var targetList = getFormJson2($('#dispatch_target'));
     console.log(probeList);
@@ -560,7 +620,8 @@ function submit_dispatch() {
             // });
         }
 
-    } else if (a == 0) {
+    }
+    else if (a == 0) {
         var taskDispatch = {};
         taskDispatch.probePort = "port1";
         taskDispatch.status = 0;
@@ -613,6 +674,82 @@ function submit_dispatch() {
             //     cache: false,  //禁用缓存
             //     headers: {
             //         Authorization: "Bearer 6b7544ae-63d3-4db6-9cc8-1dc95a991d50"
+            //     },
+            //     success: function (result) {
+            //         console.log(result);
+            //     }
+            // });
+        }
+
+    }
+    else if(a==2){
+        var taskDispatch = {};
+        // taskDispatch.probePort = "port1";
+        taskDispatch.status = 0;
+        if (b == 1) {
+            if (typeof targetList.targetId == "number") {
+                taskDispatch.targetIds = [];
+                taskDispatch.targetIds.push(targetList.targetId)
+            } else {
+                taskDispatch.targetIds = targetList.targetId
+            }
+        } else if (b == 0) {
+            if (typeof targetList.targetGroupId == "number") {
+                taskDispatch.targetGroupIds = [];
+                taskDispatch.targetGroupIds.push(targetList.targetGroupId)
+            } else {
+                taskDispatch.targetGroupIds = targetList.targetGroupId
+            }
+        }
+        taskDispatch.taskId = targetList.taskId;
+        taskDispatch.isOndemand = 0;
+        // taskDispatch.probeIds = probeList.probeId;
+        taskDispatch.testNumber = 0;
+        if (typeof probeList.probe == "number") {
+            taskDispatch.probe = probeList.probe;
+        }
+        if(typeof probeList.probePort == "number"){
+            taskDispatch.probePort = [];
+            taskDispatch.probePort.push(probeList.probePort);
+        }else {
+            taskDispatch.probePort = probeList.probePort;
+        }
+        console.log(taskDispatch);
+        if (typeof taskDispatch.probe == "undefined") {
+            toastr.warning("请选择探针!");
+        } else if (b == 1 && typeof taskDispatch.targetIds == "undefined") {
+            toastr.warning("请选择测试目标!");
+        } else if (b == 0 && typeof taskDispatch.targetGroupIds == "undefined") {
+            toastr.warning("请选择测试目标组!");
+        } else {
+            console.log(taskDispatch);
+            $.ajax({
+                type: "POST", /*GET会乱码*/
+                url: "../../cem/taskdispatch/saveAll",
+                cache: false,  //禁用缓存
+                data: JSON.stringify(taskDispatch),
+                dataType: "json",
+                contentType: "application/json", /*必须要,不可少*/
+                success: function (result) {
+                    debugger
+                    console.log(result);
+                    toastr.success("任务下发成功!");
+                    $('#task_dispatch').modal('hide');
+                    task_table.currReset();
+                }
+            });
+            // var invocation = new XMLHttpRequest();
+            // var url = "https://114.236.91.16:23456/web/v1/tasks/" + targetList.taskId;
+            // invocation.open('post', url, true);
+            // invocation.setRequestHeader("Authorization","Bearer 8dd1cac5-7e95-4611-ac31-fc66d94eaefa");
+            // //invocation.onreadystatechange = handler;
+            // invocation.send();
+            // $.ajax({
+            //     type: "POST", /*GET会乱码*/
+            //     url: "https://114.236.91.16:23456/web/v1/tasks/" + targetList.taskId,
+            //     WebSecurityDisabled: true,
+            //     headers: {
+            //         "Authorization": "Bearer 8dd1cac5-7e95-4611-ac31-fc66d94eaefa"
             //     },
             //     success: function (result) {
             //         console.log(result);
@@ -720,6 +857,7 @@ var taskform_data = new Vue({
 
                         }
                 }
+
                 tasknewJson.domains=stringSplit;
                 let parameter = tasknewJson.parameter;
                 var param = JSON.parse(parameter);
@@ -948,8 +1086,8 @@ function getFormJson2(form) {      /*将表单对象变为json对象*/
     for (var i = 0; i < a.length; i++) {
         if (a[i].value != null && a[i].value != "") {
             switch (a[i].name) {
-                case "domains":
-                    a[i].value =a[i].value; break;
+                case "domains":a[i].value =a[i].value; break;
+                case "probePort":
                 case "user_agent":
                 case "username":
                 case "secret":

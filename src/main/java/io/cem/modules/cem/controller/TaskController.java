@@ -114,7 +114,7 @@ public class TaskController {
         Map<String, Object> map = new HashMap<>();
         map.put("taskid", ids[0]);
         List<TaskDispatchEntity> taskDispatchEntity = taskDispatchService.queryDispatchList(map);
-        if (taskDispatchEntity != null) {
+        if (taskDispatchEntity != null && taskDispatchEntity.size() != 0) {
             for (int i = 0; i < taskDispatchEntity.size(); i++) {
                 result = BypassHttps.sendRequestIgnoreSSL("DELETE", "https://114.236.91.16:23456/web/v1/tasks/" + taskDispatchEntity.get(i).getId());
             }
@@ -124,7 +124,7 @@ public class TaskController {
             } else {
                 return R.error(404, "该任务有误，暂时无法删除");
             }
-        }else {
+        } else {
             taskService.deleteBatch(ids);
             return R.ok();
         }

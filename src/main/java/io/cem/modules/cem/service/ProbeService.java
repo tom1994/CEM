@@ -24,6 +24,8 @@ public interface ProbeService {
 
 	List<ProbeEntity> queryOnlineList(Integer id);
 
+	List<ProbeEntity> queryCenterList(Integer id);
+
 	List<ProbeEntity> queryProbeListByGroup(Integer id);
 
 	List<ProbeEntity> queryExitList(Map<String, Object> map);

@@ -277,6 +277,12 @@ var search_service = new Vue({
         reset: function () {    /*重置*/
             document.getElementById("probesearch").reset();
             var data = {ava_start:today.Format("yyyy-MM-dd"), ava_terminal:(new Date()).Format("yyyy-MM-dd"),service:'0'};
+             citySelected=0;
+             countrySelected=0;
+             serviceSelected=0;
+             area_Selected=0;
+             probeSelected=0
+             targetSelected=0;
             probetable.probedata = data;
             probetable.redraw();
         }
