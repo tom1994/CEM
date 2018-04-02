@@ -46,13 +46,15 @@ public class RecordHourPppoeServiceImpl implements RecordHourPppoeService {
 	}
 
 	@Override
-	public List<RecordHourPppoeEntity> queryExitList(Map<String, Object> map){
-		return recordHourPppoeDao.queryExitList(map);
+	@Async
+	public Future<List<RecordHourPppoeEntity>> queryExitList(Map<String, Object> map){
+		return new AsyncResult<> (recordHourPppoeDao.queryExitList(map));
 	}
 
 	@Override
-	public List<RecordHourPppoeEntity> queryDayList(Map<String, Object> map){
-		return recordHourPppoeDao.queryDayList(map);
+	@Async
+	public Future<List<RecordHourPppoeEntity>> queryDayList(Map<String, Object> map){
+		return new AsyncResult<> (recordHourPppoeDao.queryDayList(map));
 	}
 
 	@Override

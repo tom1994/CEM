@@ -48,10 +48,12 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				(recordHourSlaDao.querySlaList(map));
 	}
 	@Override
-	public List<RecordHourSlaEntity> queryExitList(Map<String, Object> map){return recordHourSlaDao.queryExitList(map);}
+	@Async
+	public Future<List<RecordHourSlaEntity>> queryExitList(Map<String, Object> map){return new AsyncResult<> (recordHourSlaDao.queryExitList(map));}
 
 	@Override
-	public List<RecordHourSlaEntity> queryDayList(Map<String, Object> map){return recordHourSlaDao.queryDayList(map);}
+	@Async
+	public Future<List<RecordHourSlaEntity>> queryDayList(Map<String, Object> map){return new AsyncResult<> (recordHourSlaDao.queryDayList(map));}
 
 	@Override
 	public List<ScoreEntity> calculateSlaTcp(List<RecordHourSlaEntity> slaList){

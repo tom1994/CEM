@@ -5,6 +5,7 @@ import io.cem.modules.cem.entity.ScoreEntity;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 /**
  * 端口-出口对照表
@@ -21,7 +22,7 @@ public interface ProbeExitService {
 
 	List<ProbeExitEntity> queryscoreList(Map<String, Object> map);
 
-	ScoreEntity calculateScore(Map<String, Object> map);
+	ScoreEntity calculateScore(Map<String, Object> map) throws ExecutionException, InterruptedException;
 	
 	int queryTotal(Map<String, Object> map);
 	

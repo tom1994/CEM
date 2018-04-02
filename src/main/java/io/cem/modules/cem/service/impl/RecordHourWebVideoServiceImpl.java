@@ -39,8 +39,9 @@ public class RecordHourWebVideoServiceImpl implements RecordHourWebVideoService 
 	}
 
 	@Override
-	public List<RecordHourWebVideoEntity> queryExitList(Map<String, Object> map){
-		return recordHourWebVideoDao.queryExitList(map);
+	@Async
+	public Future<List<RecordHourWebVideoEntity>> queryExitList(Map<String, Object> map){
+		return new AsyncResult<> (recordHourWebVideoDao.queryExitList(map));
 	}
 	@Override
 	public List<RecordHourWebVideoEntity> queryWebVideo(Map<String, Object> map){
@@ -49,13 +50,15 @@ public class RecordHourWebVideoServiceImpl implements RecordHourWebVideoService 
 
 
 	@Override
-	public List<RecordHourWebVideoEntity> queryVideoList(Map<String, Object> map){
-		return recordHourWebVideoDao.queryVideoList(map);
+	@Async
+	public Future<List<RecordHourWebVideoEntity>> queryVideoList(Map<String, Object> map){
+		return new AsyncResult<> (recordHourWebVideoDao.queryVideoList(map));
 	}
 
 	@Override
-	public List<RecordHourWebVideoEntity> queryVideoAreaList(Map<String, Object> map){
-		return recordHourWebVideoDao.queryVideoList(map);
+	@Async
+	public Future<List<RecordHourWebVideoEntity>> queryVideoAreaList(Map<String, Object> map){
+		return new AsyncResult<> (recordHourWebVideoDao.queryVideoAreaList(map));
 	}
 
 	@Override
@@ -66,9 +69,23 @@ public class RecordHourWebVideoServiceImpl implements RecordHourWebVideoService 
 	}
 
 	@Override
-	public List<RecordHourWebVideoEntity> queryDayList(Map<String, Object> map){
-		return recordHourWebVideoDao.queryDayList(map);
+	@Async
+	public Future<List<RecordHourWebVideoEntity>> queryDayList(Map<String, Object> map){
+		return new AsyncResult<> (recordHourWebVideoDao.queryDayList(map));
 	}
+
+	@Override
+	@Async
+	public Future<List<RecordHourWebVideoEntity>> queryDayAreaList(Map<String, Object> map){
+		return new AsyncResult<> (recordHourWebVideoDao.queryDayAreaList(map));
+	}
+
+	@Override
+	@Async
+	public Future<List<RecordHourWebVideoEntity>> queryDayRankList(Map<String, Object> map){
+		return new AsyncResult<> (recordHourWebVideoDao.queryDayRankList(map));
+	}
+
 
 	@Override
 	public List<ScoreEntity> calculateService5 (List<RecordHourWebVideoEntity> videoList){

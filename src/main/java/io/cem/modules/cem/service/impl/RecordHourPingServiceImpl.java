@@ -40,8 +40,9 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 	}
 
 	@Override
-	public List<RecordHourPingEntity> queryExitList(Map<String, Object> map){
-		return recordHourPingDao.queryExitList(map);
+	@Async
+	public Future<List<RecordHourPingEntity>> queryExitList(Map<String, Object> map){
+		return new AsyncResult<> (recordHourPingDao.queryExitList(map));
 	}
 
 	@Override
@@ -56,7 +57,8 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 
 
 	@Override
-	public List<RecordHourPingEntity> queryDayList(Map<String, Object> map){ return recordHourPingDao.queryDayList(map); }
+	@Async
+	public Future<List<RecordHourPingEntity>> queryDayList(Map<String, Object> map){ return new AsyncResult<> (recordHourPingDao.queryDayList(map)); }
 
 	@Override
 	public List<ScoreEntity> calculatePingIcmp(List<RecordHourPingEntity> pingList){

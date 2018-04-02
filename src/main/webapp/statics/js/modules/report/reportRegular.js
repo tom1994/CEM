@@ -5,13 +5,23 @@ var names = new Array();
 var cityNames = new Array();var names = new Array();
 var obj;
 var st = new Map();//servicetype字典，可通过get方法查对应字符串。
-st.set(0, "综合业务");
-st.set(1, "网络连通性业务");
-st.set(2, "网络层质量业务");
-st.set(3, "文件下载业务");
-st.set(4, "网页浏览业务");
-st.set(5, "在线视频业务");
-st.set(6, "网络游戏业务");
+st.set(1, "PING (ICMP Echo)");
+st.set(2, "PING (TCP Echo)");
+st.set(3, "PING (UDP Echo)");
+st.set(4, "Trace Route (ICMP)");
+st.set(5, "Trace Route (UDP)");
+st.set(10, "SLA (TCP)");
+st.set(11, "SLA (UDP)");
+st.set(12, "ADSL接入");
+st.set(13, "DHCP");
+st.set(14, "DNS");
+st.set(15, "Radius认证");
+st.set(20, "WEB页面访问");
+st.set(30, "WEB下载");
+st.set(31, "FTP下载");
+st.set(32, "FTP上传");
+st.set(40, "在线视频");
+st.set(50, "网络游戏");
 
 var spdata_handle = new Vue({
     el: '#handle',

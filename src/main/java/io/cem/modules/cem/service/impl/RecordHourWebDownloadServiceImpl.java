@@ -35,8 +35,9 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 	}
 
 	@Override
-	public List<RecordHourWebDownloadEntity> queryExitList(Map<String, Object> map){
-		return recordHourWebDownloadDao.queryExitList(map);
+	@Async
+	public Future<List<RecordHourWebDownloadEntity>> queryExitList(Map<String, Object> map){
+		return new AsyncResult<> (recordHourWebDownloadDao.queryExitList(map));
 	}
 	@Override
 	public List<RecordHourWebDownloadEntity> queryWebDownload(Map<String, Object> map){
@@ -51,8 +52,9 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
     }
 
 	@Override
-	public List<RecordHourWebDownloadEntity> queryDayList(Map<String, Object> map){
-		return recordHourWebDownloadDao.queryDayList(map);
+	@Async
+	public Future<List<RecordHourWebDownloadEntity>> queryDayList(Map<String, Object> map){
+		return new AsyncResult<> (recordHourWebDownloadDao.queryDayList(map));
 	}
 
 	@Override

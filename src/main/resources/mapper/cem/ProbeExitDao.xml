@@ -28,6 +28,7 @@
 		from probe_exit
 		LEFT JOIN probe
 		ON probe_exit.probe_id = probe.id
+		WHERE probe_exit.id IS NOT NULL
 		<if test="exit != null and exit != ''">
 			AND probe_exit.exit LIKE concat('%',#{exit},'%')
 		</if>
@@ -57,7 +58,11 @@
 	</select>
 	
  	<select id="queryTotal" resultType="int">
-		select count(*) from probe_exit 
+		select count(*) from probe_exit
+		WHERE probe_exit.id IS NOT NULL
+		<if test="exit != null and exit != ''">
+			AND probe_exit.exit LIKE concat('%',#{exit},'%')
+		</if>
 	</select>
 	 
 	<insert id="save" parameterType="io.cem.modules.cem.entity.ProbeExitEntity" useGeneratedKeys="true" keyProperty="id">

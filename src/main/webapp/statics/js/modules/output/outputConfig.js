@@ -39,6 +39,7 @@ var spdata_handle = new Vue({
             /*修改模态框标题*/
             $('#myModal_sp').modal('show');
         }
+
     }
 });
 
@@ -61,7 +62,6 @@ var spform_data = new Vue({
         },
         submit: function () {
             var spJson = getFormJson($('#spform_data'));
-            debugger
             console.log(spJson);
             spJson.status=0;
             if (spJson.exit == "") {
@@ -308,6 +308,30 @@ function  Save() {
     });
 }
 
+var search_list = new Vue({
+    el: '#search',
+    data: {},
+    methods: {
+        testagentListsearch: function () {   /*查询监听事件*/
+            var data = getFormJson($('#outputsearch'));
+            var search = {};
+            search.exit=data.exit;
+            console.log(data);
+            /*得到查询条件*/
+            /*获取表单元素的值*/
+            sptable.probedata = search;
+            console.log(search);
+            sptable.redraw();
+            /*根据查询条件重绘*/
+        },
+        reset: function () {    /*重置*/
+            document.getElementById("outputsearch").reset();
+            // $('#outputsearch input[type=text]').reset();
+            sptable.redraw();
+        }
+    }
+});
+
 var sptable = new Vue({
     el: '#exit_table',
     data: {
@@ -321,14 +345,13 @@ var sptable = new Vue({
         ],
         rows: [],
         dtHandle: null,
-        reportdata: {}
+        probedata: {}
     },
 
     methods: {
         reset: function () {
             let vm = this;
-            vm.spdata = {};
-            /*清空spdata*/
+            vm.probedata = {};
             vm.dtHandle.clear();
             console.log("重置");
             vm.dtHandle.draw();
@@ -379,7 +402,7 @@ var sptable = new Vue({
                 param.limit = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
                 param.start = data.start;//开始的记录序号
                 param.page = (data.start / data.length) + 1;//当前页码
-                param.reportdata = JSON.stringify(vm.spdata);
+                param.probedata = JSON.stringify(vm.probedata);
                 /*用于查询sp数据*/
                 console.log(param);
                 //ajax请求数据
@@ -390,7 +413,6 @@ var sptable = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                        console.log(result);
                         //封装返回数据
                         let returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回

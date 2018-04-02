@@ -14,7 +14,8 @@ public interface RecordHourGameDao extends BaseDao<RecordHourGameEntity> {
     List<RecordHourGameEntity> queryGameAreaList(Map<String, Object> map);
     List<RecordHourGameEntity> queryGameRankList(Map<String, Object> map);
     List<RecordHourGameEntity> queryDayList(Map<String, Object> map);
-
+    List<RecordHourGameEntity> queryDayRankList(Map<String, Object> map);
+    List<RecordHourGameEntity> queryDayAreaList(Map<String, Object> map);
     List<RecordHourGameEntity> queryIntervalList(Map<String, Object> map);
 
     int queryIntervalTotal(Map<String, Object> map);

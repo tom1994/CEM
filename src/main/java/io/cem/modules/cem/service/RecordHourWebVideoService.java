@@ -22,14 +22,18 @@ public interface RecordHourWebVideoService {
 
 	List<RecordHourWebVideoEntity> queryWebVideo(Map<String,Object> map);
 
-	List<RecordHourWebVideoEntity> queryVideoList(Map<String, Object> map);
+	Future<List<RecordHourWebVideoEntity>> queryVideoList(Map<String, Object> map);
 
-	List<RecordHourWebVideoEntity> queryExitList(Map<String, Object> map);
-	List<RecordHourWebVideoEntity> queryVideoAreaList(Map<String, Object> map);
+	Future<List<RecordHourWebVideoEntity>> queryExitList(Map<String, Object> map);
+	Future<List<RecordHourWebVideoEntity>> queryVideoAreaList(Map<String, Object> map);
 
 	Future<List<RecordHourWebVideoEntity>> queryVideoRankList(Map<String, Object> map);
 
-	List<RecordHourWebVideoEntity> queryDayList(Map<String, Object> map);
+	Future<List<RecordHourWebVideoEntity>> queryDayAreaList(Map<String, Object> map);
+
+	Future<List<RecordHourWebVideoEntity>> queryDayRankList(Map<String, Object> map);
+
+	Future<List<RecordHourWebVideoEntity>> queryDayList(Map<String, Object> map);
 
 	List<ScoreEntity> calculateService5 (List<RecordHourWebVideoEntity> videoList);
 	
