@@ -147,6 +147,14 @@
     SELECT id,probe.probe_name AS `name`
     FROM probe
     WHERE probe.status = 1
+    AND probe.type != 10
+    </select>
+
+    <select id="queryCenterList" resultType="io.cem.modules.cem.entity.ProbeEntity">
+        SELECT id,probe.probe_name AS `name`
+        FROM probe
+        WHERE probe.status = 1
+        AND probe.type = 10
     </select>
 
     <select id="queryTotal" resultType="int">

@@ -101,22 +101,22 @@
         SUM(rhp.fail) AS fail,
         SUM(rhp.total) AS total
         FROM record_hour_ping rhp
-        USE INDEX(idx_combine)
+        USE INDEX(idx_date_target_probe)
         WHERE rhp.record_date BETWEEN #{ava_start} AND #{ava_terminal}
-        <if test="city_id != null and city_id != ''">
-            AND rhp.city_id = #{city_id}
-        </if>
-        <if test="county_id != null and county_id != ''">
-            AND rhp.county_id = #{county_id}
-        </if>
         <if test="target_id != null and target_id != ''">
             AND rhp.target_id = #{target_id}
         </if>
         <if test="probe_id != null and probe_id != ''">
             AND rhp.probe_id = #{probe_id}
         </if>
+        <if test="city_id != null and city_id != ''">
+            AND rhp.city_id = #{city_id}
+        </if>
+        <if test="county_id != null and county_id != ''">
+            AND rhp.county_id = #{county_id}
+        </if>
         GROUP BY
-        rhp.city_id,rhp.county_id,rhp.service_type,rhp.target_id,rhp.probe_id,date_format(rhp.record_date,'%Y-%m-%d'),time_format(record_time,'%H')) t
+        rhp.city_id,rhp.county_id,rhp.target_id,rhp.probe_id,rhp.service_type,date_format(rhp.record_date,'%Y-%m-%d'),time_format(record_time,'%H')) t
         LEFT JOIN city
         ON t.city_id = city.city_id
         LEFT JOIN county

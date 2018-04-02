@@ -8,6 +8,8 @@
     <title>任务创建</title>
     #parse("cemHeader.html")  <!--导入CSS和js文件-->
     <link href="${rc.contextPath}/statics/css/formStyle.css" rel="stylesheet">  <!--自定义CSS-->
+    <link rel="stylesheet" href="${rc.contextPath}/statics/css//bootstrap-select.css">
+
     <style type="text/css">
         tr:hover{background:#E5E5E5 }
         .box{
@@ -37,6 +39,31 @@
         .clear::-ms-reveal { display: none;}
         .modal-open .modal{
             overflow-y: hidden;
+        }
+        .btn-box {
+            padding: 9% 0 0 0;
+            text-align: center;
+        }
+        .btn{
+            padding: 4px 11px;
+        }
+        .padd{
+            padding:0px;
+        }
+        .modal{
+            left: 100px;
+        }
+        .bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn){
+            width: 155px;
+        }
+        .btn-default.active, .btn-default:active, .open > .dropdown-toggle.btn-default{
+            background: white;
+        }
+        .btn-default.active.focus, .btn-default.active:focus, .btn-default.active:hover, .btn-default:active.focus, .btn-default:active:focus, .btn-default:active:hover, .open > .dropdown-toggle.btn-default.focus, .open > .dropdown-toggle.btn-default:focus, .open > .dropdown-toggle.btn-default:hover{
+              background: white;
+          }
+        .btn-default.active.focus, .btn-default.active:focus, .btn-default.active:hover, .btn-default:active.focus, .btn-default:active:focus, .btn-default:active:hover, .open > .dropdown-toggle.btn-default.focus, .open > .dropdown-toggle.btn-default:focus, .open > .dropdown-toggle.btn-default:hover{
+            background: white;
         }
     </style>
 </head>
@@ -122,7 +149,7 @@
     <div class="modal fade col-lg-12 col-md-12 col-sm-12" id="task_dispatch" tabindex="-1" role="dialog"
          aria-labelledby="myModalLabel"
          aria-hidden="true">
-        <div class="col-lg-8 col-md-8 col-sm-8">
+        <div class="col-lg-7 col-md-7 col-sm-7">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
@@ -133,16 +160,21 @@
                 <div class="modal-body" style="padding-bottom: 5px">
                     <form class="form-horizontal" id="dispatch_probe" role="form">
                         <div class="row">
-                            <div>
+                            <div >
                                 <label>
                                     <input type="radio" name="chooseprobe"
-                                           onclick="$('#probeselected').removeAttr('style', 'display:none');$('#probegroupselected').attr('style', 'display:none')"
+                                           onclick="$('#probeselected').removeAttr('style', 'display:none');$('#probegroupselected').attr('style', 'display:none');$('#heartselected').attr('style', 'display:none')"
                                            checked value="1"><i></i>选择探针
                                 </label>
                                 <label>
                                     <input type="radio" name="chooseprobe"
-                                           onclick="$('#probegroupselected').removeAttr('style', 'display:none');$('#probeselected').attr('style', 'display:none')"
+                                           onclick="$('#probegroupselected').removeAttr('style', 'display:none');$('#probeselected').attr('style', 'display:none');$('#heartselected').attr('style', 'display:none')"
                                            value="0"><i></i>选择探针组
+                                </label>
+                                <label>
+                                    <input type="radio" name="chooseprobe"
+                                           onclick="$('#heartselected').removeAttr('style', 'display:none');$('#probegroupselected').attr('style', 'display:none');$('#probeselected').attr('style', 'display:none')"
+                                           value="2"><i></i>选择核心探针
                                 </label>
                             </div>
                         </div>
@@ -156,6 +188,21 @@
                             <div class="multi-container">
                                 <select multiple="multiple" size="10" id="selectprobegroup" name="probeGroupId">
                                 </select>
+                            </div>
+                        </div>
+                        <div class="row" id="heartselected"  style="display: none">
+                            <div class="col-lg-7 col-md-7 col-sm-7">
+                                <h4>待选探针</h4>
+                                <select id="first" class="selectpicker" name="probe" onchange="selectOnchang(this)" >
+                                    <option value="">请选择</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-5 col-md-5 col-sm-5">
+                                <h4>待选择的端口号</h4>
+                                <select id="second" class="selectpicker" name="probePort" title="请选择">
+
+                                </select>
+
                             </div>
                         </div>
                     </form>
@@ -188,6 +235,7 @@
                             </div>
                         </div>
                     </form>
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                         <button type="button" class="btn btn-success" onclick="submit_dispatch()">确定</button>
@@ -1204,8 +1252,16 @@
 <script type="text/javascript" src="${rc.contextPath}/statics/js/modules/probe/taskNew.js?_${date.systemTime}"></script>
 <!--<script type="text/javascript" src="${rc.contextPath}/statics/js/index.js"></script>-->
 <script type="text/javascript" src="${rc.contextPath}/statics/js/doublebox-bootstrap.js"></script>
+<!--<script type="text/javascript" src=${rc.contextPath}/statics/js/bootstrap-select.js"></script>-->
+<script src="https://cdn.bootcss.com/bootstrap-select/2.0.0-beta1/js/bootstrap-select.js"></script>
+
 <script type="text/javascript">
-    function Domains(){
+    $(function() {
+        $(".selectpicker").selectpicker({
+            noneSelectedText: '请选择'//默认显示内容
+        });
+    })
+        function Domains(){
         var maxl=6000//总长
         var s=document.getElementById("domains").value.trim().length +1;
         if(s>maxl)document.getElementById("domains").value=document.getElementById("domains").value.substr(0,maxl-1);

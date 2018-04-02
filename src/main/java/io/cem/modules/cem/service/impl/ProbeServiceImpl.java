@@ -40,9 +40,10 @@ public class ProbeServiceImpl implements ProbeService {
     }
 
     @Override
-    public List<ProbeEntity> queryPortList(Integer id){
+    public List<ProbeEntity> queryPortList(Integer id) {
         return probeDao.queryPortList(id);
-    };
+    }
+
 
     @Override
     public List<ProbeEntity> queryOnlineList(Integer id) {
@@ -51,16 +52,22 @@ public class ProbeServiceImpl implements ProbeService {
     }
 
     @Override
+    public List<ProbeEntity> queryCenterList(Integer id) {
+
+        return probeDao.queryCenterList(id);
+    }
+
+    @Override
     public List<ProbeEntity> queryProbeByLayer(Integer id) {
         List<ProbeEntity> probeList = new ArrayList<>();
-        if(probeDao.queryProbeByLayer(id)!=null) {
+        if (probeDao.queryProbeByLayer(id) != null) {
             ProbeEntity probeLayer = probeDao.queryProbeByLayer(id);
             while (probeLayer.getUpstream() != null && probeLayer.getUpstream() != 0) {
                 probeList.add(probeLayer);
                 probeLayer = probeDao.queryProbeByLayer(probeLayer.getUpstream());
             }
             probeList.add(probeLayer);
-        }else{
+        } else {
             probeList.add(probeDao.queryObject(id));
         }
         return probeList;
@@ -68,7 +75,7 @@ public class ProbeServiceImpl implements ProbeService {
 
     @Override
     public void updateUpstream(Integer id) {
-         probeDao.updateUpstream(id);
+        probeDao.updateUpstream(id);
     }
 
     @Override

@@ -60,19 +60,38 @@ public class ProbeController {
 
     @RequestMapping("/listOnline/{id}")
     @RequiresPermissions("probe:list")
-    public R listOnline(@PathVariable("id") Integer taskId){
+    public R listOnline(@PathVariable("id") Integer taskId) {
         List<ProbeEntity> probeList = probeService.queryOnlineList(taskId);
         return R.ok().put("probe", probeList);
     }
 
-    @RequestMapping("/download")
-    @RequiresPermissions("probe:download")
-    public void downloadProbe(HttpServletResponse response) throws RRException {
-        Map<String, Object> map = new HashMap<String, Object>();
-        List<ProbeEntity> list = probeService.queryList(map);
-        CollectionToFile.collectionToFile(response, list, ProbeEntity.class);
+    @RequestMapping("/listCenter/{id}")
+    @RequiresPermissions("probe:list")
+    public R listCenter(@PathVariable("id") Integer taskId) {
+        List<ProbeEntity> probeList = probeService.queryCenterList(taskId);
+        return R.ok().put("probe", probeList);
     }
 
+    //    @RequestMapping("/download")
+//    @RequiresPermissions("probe:download")
+//    public void downloadProbe(HttpServletResponse response) throws RRException {
+//        Map<String, Object> map = new HashMap<String, Object>();
+//        List<ProbeEntity> list = probeService.queryList(map);
+//        CollectionToFile.collectionToFile(response, list, ProbeEntity.class);
+//    }
+    @RequestMapping("/download/{probedata}")
+    @RequiresPermissions("probe:download")
+    public void downloadProbe(HttpServletResponse response,@PathVariable String probedata) throws RRException {
+        Map<String, Object> map = new HashMap<>();
+        JSONObject jsonobject = JSONObject.parseObject(probedata);
+        try {
+            map.putAll(JSONUtils.jsonToMap(jsonobject));
+        } catch (RuntimeException e) {
+            throw new RRException("内部参数错误，请重试！");
+        }
+        List<ProbeEntity> probeList = probeService.queryProbeList(map);
+        CollectionToFile.collectionToFile(response, probeList, ProbeEntity.class);
+    }
 
 
     /**
@@ -125,7 +144,6 @@ public class ProbeController {
     }
 
 
-
     /**
      * 详细信息
      */
@@ -174,10 +192,10 @@ public class ProbeController {
 
         int result;
         for (int id : ids) {
-            result = BypassHttps.sendRequestIgnoreSSL("DELETE","https://114.236.91.16:23456/web/v1/probes/" + id + "/unregister/1");
+            result = BypassHttps.sendRequestIgnoreSSL("DELETE", "https://114.236.91.16:23456/web/v1/probes/" + id + "/unregister/1");
             if (result == 200 || result == 206) {
             } else {
-                return R.error(404,"删除探针失败");
+                return R.error(404, "删除探针失败");
             }
         }
         return R.ok();
@@ -188,7 +206,7 @@ public class ProbeController {
      * 信息
      */
     @RequestMapping("/port/{id}")
-    public R port(@PathVariable("id") Integer id){
+    public R port(@PathVariable("id") Integer id) {
         List<ProbeEntity> portList = probeService.queryPortList(id);
         System.out.println(portList);
         return R.ok().put("port", portList);

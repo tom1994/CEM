@@ -298,10 +298,14 @@ function update_this (obj) {     /*监听修改触发事件*/
     update_data_id = parseInt(obj.id);
     /*获取当前行探针数据id*/
     console.log(update_data_id);
-    if(update_data_id=='40'){
+    debugger
+    if(update_data_id=='54'){
         $('.modal-body').css('height','450px')
         $('.modal-body').css('overflow-y','auto')
-    }else if(update_data_id=='40'){
+    }else if(update_data_id=='55'){
+        $('.modal-body').css('height','450px')
+        $('.modal-body').css('overflow-y','auto')
+    }else if(update_data_id=='64'){
         $('.modal-body').css('height','450px')
         $('.modal-body').css('overflow-y','auto')
     }
@@ -317,6 +321,7 @@ function update_this (obj) {     /*监听修改触发事件*/
         dataType: "json",
         // contentType: "application/json", /*必须要,不可少*/
         success: function (result) {
+            debugger
             console.log(result.atList);
             //console.log("I'm here!!!!"+result.atList[0].serviceType);
             var service=parseInt(result.atList[0].serviceType);
@@ -325,88 +330,157 @@ function update_this (obj) {     /*监听修改触发事件*/
             forms[0].value = result.atList[0].id;
             forms[1].value = result.atList[0].atName;
             forms[2].value = result.atList[0].serviceType;
-
             if(service==1||service==2||service==3||service==4||service==5){
-                formparam[0].value = param.conn_delay;
-                formparam[1].value = param.conn_delay_std;
-                formparam[2].value = param.conn_delay_var;
-                formparam[3].value = param.conn_jitter;
-                formparam[4].value = param.conn_jitter_std;
-                formparam[5].value = param.conn_jitter_var;
-                formparam[6].value = param.loss_rate;
+                formparam[0].value = param.conn_delay[0];
+                formparam[1].value = param.conn_delay[1];
+                formparam[2].value = param.conn_delay_std[0];
+                formparam[3].value = param.conn_delay_std[1];
+                formparam[4].value = param.conn_delay_var[0];
+                formparam[5].value = param.conn_delay_var[1];
+                formparam[6].value = param.conn_jitter[0];
+                formparam[7].value = param.conn_jitter[1];
+                formparam[8].value = param.conn_jitter_std[0];
+                formparam[9].value = param.conn_jitter_std[1];
+                formparam[10].value = param.conn_jitter_var[0];
+                formparam[11].value = param.conn_jitter_var[1];
+                formparam[12].value = param.loss_rate[0];
+                formparam[13].value = param.loss_rate[1];
             }else if(service==10||service==11){
-                formparam[7].value = param.sla_delay;
-                formparam[8].value = param.g_delay;
-                formparam[9].value = param.r_delay;
-                formparam[10].value = param.sla_delay_std;
-                formparam[11].value = param.g_delay_std;
-                formparam[12].value = param.r_delay_std;
-                formparam[13].value = param.sla_delay_var;
-                formparam[14].value = param.g_delay_var;
-                formparam[15].value = param.r_delay_var;
-                formparam[16].value = param.sla_jitter;
-                formparam[17].value = param.g_jitter;
-                formparam[18].value = param.r_jitter;
-                formparam[19].value = param.jitter_std;
-                formparam[20].value = param.g_jitter_std;
-                formparam[21].value = param.r_jitter_std;
-                formparam[22].value = param.sla_jitter_var;
-                formparam[23].value = param.g_jitter_var;
-                formparam[24].value = param.r_jitter_var;
-                formparam[25].value = param.sla_loss_rate;
+                formparam[14].value = param.sla_delay[0];
+                formparam[15].value = param.sla_delay[1];
+                formparam[16].value = param.g_delay[0];
+                formparam[17].value = param.g_delay[1];
+                formparam[18].value = param.r_delay[0];
+                formparam[19].value = param.r_delay[1];
+                formparam[20].value = param.sla_delay_std[0];
+                formparam[21].value = param.sla_delay_std[1];
+                formparam[22].value = param.g_delay_std[0];
+                formparam[23].value = param.g_delay_std[1];
+                formparam[24].value = param.r_delay_std[0];
+                formparam[25].value = param.r_delay_std[1];
+                formparam[26].value = param.sla_delay_var[0];
+                formparam[27].value = param.sla_delay_var[1];
+                formparam[28].value = param.g_delay_var[0];
+                formparam[29].value = param.g_delay_var[1];
+                formparam[30].value = param.r_delay_var[0];
+                formparam[31].value = param.r_delay_var[1];
+                formparam[32].value = param.sla_jitter[0];
+                formparam[33].value = param.sla_jitter[1];
+                formparam[34].value = param.g_jitter[0];
+                formparam[35].value = param.g_jitter[1];
+                formparam[36].value = param.r_jitter[0];
+                formparam[37].value = param.r_jitter[1];
+                formparam[38].value = param.jitter_std[0];
+                formparam[39].value = param.jitter_std[1];
+                formparam[40].value = param.g_jitter_std[0];
+                formparam[41].value = param.g_jitter_std[1];
+                formparam[42].value = param.r_jitter_std[0];
+                formparam[43].value = param.r_jitter_std[1];
+                formparam[44].value = param.sla_jitter_var[0];
+                formparam[45].value = param.sla_jitter_var[1];
+                formparam[46].value = param.g_jitter_var[0];
+                formparam[47].value = param.g_jitter_var[1];
+                formparam[48].value = param.r_jitter_var[0];
+                formparam[49].value = param.r_jitter_var[1];
+                formparam[50].value = param.sla_loss_rate[0];
+                formparam[51].value = param.sla_loss_rate[1];
             }else if(service==14){
-                formparam[26].value = param.dns_delay;
-                formparam[27].value = param.dns_success_rate;
+                formparam[52].value = param.dns_delay[0];
+                formparam[53].value = param.dns_delay[1];
+                formparam[54].value = param.dns_success_rate[0];
+                formparam[55].value = param.dns_success_rate[1];
             }else if(service==13){
-                formparam[28].value = param.dhcp_delay;
-                formparam[29].value = param.dhcp_success_rate;
+                formparam[56].value = param.dhcp_delay[0];
+                formparam[57].value = param.dhcp_delay[1];
+                formparam[58].value = param.dhcp_success_rate[0];
+                formparam[59].value = param.dhcp_success_rate[1];
             }else if(service==12){
-                formparam[30].value = param.adsl_delay;
-                formparam[31].value = param.adsl_drop_rate;
-                formparam[32].value = param.adsl_success_rate;
+                formparam[60].value = param.adsl_delay[0];
+                formparam[61].value = param.adsl_delay[1];
+                formparam[62].value = param.adsl_drop_rate[0];
+                formparam[63].value = param.adsl_drop_rate[1];
+                formparam[64].value = param.adsl_success_rate[0];
+                formparam[65].value = param.adsl_success_rate[1];
             }else if(service==15){
-                formparam[33].value = param.radius_delay;
-                formparam[34].value = param.radius_success_rate;
+                formparam[66].value = param.radius_delay[0];
+                formparam[67].value = param.radius_delay[1];
+                formparam[68].value = param.radius_success_rate[0];
+                formparam[69].value = param.radius_success_rate[1];
             }else if(service==20){
-                formparam[35].value = param.wp_dns_delay;
-                formparam[36].value = param.wp_conn_delay;
-                formparam[37].value = param.wp_redirect_delay;
-                formparam[38].value = param.wp_headbyte_delay;
-                formparam[39].value = param.wp_page_file_delay;
-                formparam[40].value = param.wp_page_element_delay;
-                formparam[41].value = param.wp_above_fold_delay;
-                formparam[42].value = param.wp_download_speed;
+                formparam[70].value = param.wp_dns_delay[0];
+                formparam[71].value = param.wp_dns_delay[1];
+                formparam[72].value = param.wp_conn_delay[0];
+                formparam[73].value = param.wp_conn_delay[1];
+                formparam[74].value = param.wp_redirect_delay[0];
+                formparam[75].value = param.wp_redirect_delay[1];
+                formparam[76].value = param.wp_headbyte_delay[0];
+                formparam[77].value = param.wp_headbyte_delay[1];
+                formparam[78].value = param.wp_page_file_delay[0];
+                formparam[79].value = param.wp_page_file_delay[1];
+                formparam[80].value = param.wp_page_element_delay[0];
+                formparam[81].value = param.wp_page_element_delay[1];
+                formparam[82].value = param.wp_above_fold_delay[0];
+                formparam[83].value = param.wp_above_fold_delay[1];
+                formparam[84].value = param.wp_download_speed[0];
+                formparam[85].value = param.wp_download_speed[1];
             }else if(service==30){
-                formparam[43].value = param.wd_dns_delay;
-                formparam[44].value = param.wd_conn_delay;
-                formparam[45].value = param.wd_download_speed;
-                formparam[46].value = param.wd_headbyte_delay;
+                formparam[86].value = param.wd_dns_delay[0];
+                formparam[87].value = param.wd_dns_delay[1];
+                formparam[88].value = param.wd_conn_delay[0];
+                formparam[89].value = param.wd_conn_delay[1];
+                formparam[90].value = param.wd_download_speed[0];
+                formparam[91].value = param.wd_download_speed[1];
+                formparam[92].value = param.wd_headbyte_delay[0];
+                formparam[83].value = param.wd_headbyte_delay[1];
             }else if(service==31||service==32){
-                formparam[47].value = param.ftp_dns_delay;
-                formparam[48].value = param.ftp_conn_delay;
-                formparam[49].value = param.ftp_login_delay;
-                formparam[50].value = param.ftp_download_speed;
-                formparam[51].value = param.ftp_headbyte_delay;
-                formparam[52].value = param.ftp_upload_speed;
+                formparam[94].value = param.ftp_dns_delay[0];
+                formparam[95].value = param.ftp_dns_delay[1];
+                formparam[96].value = param.ftp_conn_delay[0];
+                formparam[97].value = param.ftp_conn_delay[1];
+                formparam[98].value = param.ftp_login_delay[0];
+                formparam[99].value = param.ftp_login_delay[1];
+                formparam[100].value = param.ftp_download_speed[0];
+                formparam[101].value = param.ftp_download_speed[1];
+                formparam[102].value = param.ftp_headbyte_delay[0];
+                formparam[103].value = param.ftp_headbyte_delay[1];
+                formparam[104].value = param.ftp_upload_speed[0];
+                formparam[105].value = param.ftp_upload_speed[1];
             }else if(service==40){
-                formparam[53].value = param.video_dns_delay;
-                formparam[54].value = param.ws_conn_delay;
-                formparam[55].value = param.video_wp_delay;
-                formparam[56].value = param.ss_conn_delay;
-                formparam[57].value = param.address_delay;
-                formparam[58].value = param.ms_conn_delay;
-                formparam[59].value = param.head_frame_delay;
-                formparam[60].value = param.init_buffer_delay;
-                formparam[61].value = param.load_delay;
-                formparam[62].value = param.total_buffer_delay;
-                formparam[63].value = param.video_download_speed;
-                formparam[64].value = param.buffer_time;
+                formparam[106].value = param.video_dns_delay[0];
+                formparam[107].value = param.video_dns_delay[1];
+                formparam[108].value = param.ws_conn_delay[0];
+                formparam[109].value = param.ws_conn_delay[1];
+                formparam[110].value = param.video_wp_delay[0];
+                formparam[111].value = param.video_wp_delay[1];
+                formparam[112].value = param.ss_conn_delay[0];
+                formparam[113].value = param.ss_conn_delay[1];
+                formparam[114].value = param.address_delay[0];
+                formparam[115].value = param.address_delay[1];
+                formparam[116].value = param.ms_conn_delay[0];
+                formparam[117].value = param.ms_conn_delay[1];
+                formparam[118].value = param.head_frame_delay[0];
+                formparam[119].value = param.head_frame_delay[1];
+                formparam[120].value = param.init_buffer_delay[0];
+                formparam[121].value = param.init_buffer_delay[1];
+                formparam[122].value = param.load_delay[0];
+                formparam[123].value = param.load_delay[1];
+                formparam[124].value = param.total_buffer_delay[0];
+                formparam[125].value = param.total_buffer_delay[1];
+                formparam[126].value = param.video_download_speed[0];
+                formparam[127].value = param.video_download_speed[1];
+                formparam[128].value = param.buffer_time[0];
+                formparam[129].value = param.buffer_time[1];
             }else if(service==50) {
-                formparam[65].value = param.game_dns_delay;
-                formparam[66].value = param.game_conn_delay;
-                formparam[67].value = param.packet_delay;
-                formparam[68].value = param.packet_jitter;
-                formparam[69].value = param.packet_loss_rate;
+                formparam[130].value = param.game_dns_delay[0];
+                formparam[131].value = param.game_dns_delay[1];
+                formparam[132].value = param.game_conn_delay[0];
+                formparam[133].value = param.game_conn_delay[1];
+                formparam[134].value = param.packet_delay[0];
+                formparam[135].value = param.packet_delay[1];
+                formparam[136].value = param.packet_jitter[0];
+                formparam[137].value = param.packet_jitter[1];
+                formparam[138].value = param.packet_loss_rate[0];
+                formparam[139].value = param.packet_loss_rate[1];
             }
 
         }

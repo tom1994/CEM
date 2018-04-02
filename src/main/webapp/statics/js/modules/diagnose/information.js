@@ -1,4 +1,3 @@
-var hopRecord=[];
 $(function () {
     var url = decodeURI(location.search);//获取url中"?"符后的字串
     console.log(url);
@@ -244,7 +243,7 @@ function PING() {
                                 row.push(item.jitter);
                                 row.push(item.jitterStd);
                                 row.push(item.jitterVar);
-                                row.push(item.lossRate);
+                               row.push((item.lossRate).toFixed(3)*100.00);
                                 row.push(item.targetName);
                                 var targetip= numberToIp(item.targetIp);
                                 row.push(targetip);
@@ -395,7 +394,7 @@ function PING() {
                                 row.push(item.jitter);
                                 row.push(item.jitterStd);
                                 row.push(item.jitterVar);
-                                row.push(item.lossRate);
+                                 row.push((item.lossRate).toFixed(3)*100.00);
                                 row.push(item.targetName);
                                 var targetip= numberToIp(item.targetIp);
                                 row.push(targetip);
@@ -545,7 +544,7 @@ function PING() {
                                 row.push(item.jitter);
                                 row.push(item.jitterStd);
                                 row.push(item.jitterVar);
-                                row.push(item.lossRate);
+                               row.push((item.lossRate).toFixed(3)*100.00);
                                 row.push(item.targetName);
                                 var targetip= numberToIp(item.targetIp);
                                 row.push(targetip);
@@ -695,7 +694,7 @@ function PING() {
                                 row.push(item.jitter);
                                 row.push(item.jitterStd);
                                 row.push(item.jitterVar);
-                                row.push(item.lossRate);
+                               row.push((item.lossRate).toFixed(3)*100.00);
                                 row.push('<a class="fontcolor" style="white-space: nowrap" onclick="hopRecord_info()" id='+item.id+'>详情</a>');
                                 var a = JSON.parse(item.hopRecord);
                                 var tables = $('table[id=hop_table]');
@@ -855,20 +854,20 @@ function PING() {
                                 row.push(item.jitter);
                                 row.push(item.jitterStd);
                                 row.push(item.jitterVar);
-                                row.push(item.lossRate);
-                                row.push('<a class="fontcolor" style="white-space: nowrap" onclick="hopRecord_info()" id='+item.id+'>详情</a>');
+                               row.push((item.lossRate).toFixed(3)*100.00);
+                                row.push('<a class="fontcolor" style="white-space: nowrap" onclick="Record()" id='+item.id+'>详情</a>');
                                 var a = JSON.parse(item.hopRecord);
-                                var tables = $('table[id=hop_table]');
+                                var tables = $('table[id=Record_table]');
                                 debugger
                                 for (let i =0;i<a.length;i++){
                                     var j = i+1;
                                     var trtd = $("<tr><td>"+j+"</td><td>"+a[i].hop_ip +"</td><td>"+a[i].delay+"</td><td>"+a[i].loss_rate+"</td></tr>");
                                     trtd.appendTo(tables);
                                 }
-                                $('#hop_table>tbody tr:eq(0)').css("display",'none');
-                                $('#hop_table_paginate').css('display','none');
-                                $('#hop_table_wrapper').css('height','450px');
-                                $('#hop_table_wrapper').css('overflow-y','auto');
+                                $('#Record_table>tbody tr:eq(0)').css("display",'none');
+                                $('#Record_table_paginate').css('display','none');
+                                $('#Record_table_wrapper').css('height','450px');
+                                $('#Record_table_wrapper').css('overflow-y','auto');
                                 row.push(item.targetName);
                                 var targetip= numberToIp(item.targetIp);
                                 row.push(targetip);
@@ -898,8 +897,6 @@ function PING() {
             });
         }
     });
-
-
 }
 var Routertrance= new Vue({
     el:"#hop_table",
@@ -938,11 +935,54 @@ var Routertrance= new Vue({
     }
 
 })
+var Router1trance= new Vue({
+    el:"#Record_table",
+    data: {
+        headers:[
+            {title: '<div style="width:50px">跳数</div>'},
+            {title: '<div style="width:90px">目的地址</div>'},
+            {title: '<div style="width:80px">时延(ms)</div>'},
+            {title: '<div style="width:75px">丢包率(%)</div>'},
+        ],
+        rows: [],
+        dtHandle: null,
+        probedata: {}
 
+    },
+    mounted:function (hopRecord) {
+        var vm=this;
+        vm.dtHandle = $(this.$el).DataTable({
+            columns: vm.headers,
+            data: '',
+            searching: false,
+            paging: true,
+            // serverSide: true,
+            info: false,
+            ordering: false, /*禁用排序功能*/
+            /*bInfo: false,*/
+            /*bLengthChange: false,*/    /*禁用Show entries*/
+            scroll: false,
+        });
+
+    },
+    method:{
+        gethopRecord:function (hopRecord) {
+            debugger
+        }
+    }
+
+})
 function hopRecord_info() {
     $('.col-md-6').css('display','none');
     $('#myModal_hopRecord').modal('show');
 }
+function Record() {
+    $('.col-md-6').css('display','none');
+    $('#myModal_Record').modal('show');
+
+
+}
+
 function quality() {
     //SLA_Table
     var SLATable = new Vue({
@@ -1083,7 +1123,7 @@ function quality() {
                                 row.push(item.jitterVar);
                                 row.push(item.gJitterVar);
                                 row.push(item.rJitterVar);
-                                row.push(item.lossRate);
+                              row.push((item.lossRate).toFixed(3)*100.00);
                                 row.push(item.targetName);
                                 var targetip= numberToIp(item.targetIp);
                                 row.push(targetip);
@@ -1252,7 +1292,7 @@ function quality() {
                                 row.push(item.jitterVar);
                                 row.push(item.gJitterVar);
                                 row.push(item.rJitterVar);
-                                row.push(item.lossRate);
+                              row.push((item.lossRate).toFixed(3)*100.00);
                                 row.push(item.targetName);
                                 var targetip= numberToIp(item.targetIp);
                                 row.push(targetip);
@@ -1389,7 +1429,7 @@ function quality() {
                                 row.push(item.probeName);
                                 row.push(item.port);
                                 row.push(item.delay);
-                                row.push(item.successRate);
+                                row.push((item.successRate).toFixed(3)*100.00);
                                 row.push(item.targetName);
                                 var targetip= numberToIp(item.targetIp);
                                 row.push(targetip);
@@ -1525,7 +1565,7 @@ function quality() {
                                 row.push(item.probeName);
                                 row.push(item.port);
                                 row.push(item.delay);
-                                row.push(item.successRate);
+                                row.push((item.successRate).toFixed(3)*100.00);
                                 row.push(item.targetName);
                                 row.push(item.targetIp);
                                 row.push(item.targetLoc);
@@ -1659,7 +1699,7 @@ function quality() {
                                 row.push(item.probeName);
                                 row.push(item.port);
                                 row.push(item.delay);
-                                row.push(item.successRate);
+                                row.push((item.successRate).toFixed(3)*100.00);
                                 row.push(item.targetName);
                                 var targetip= numberToIp(item.targetIp);
                                 row.push(targetip);
@@ -2542,7 +2582,7 @@ function game() {
                                 row.push(item.connDelay);
                                 row.push(item.packetDelay);
                                 row.push(item.packetJitter);
-                                row.push(item.lossRate);
+                              row.push((item.lossRate).toFixed(3)*100.00);
                                 row.push(item.targetName);
                                var targetip= numberToIp(item.targetIp);
                                 row.push(targetip);
@@ -2585,7 +2625,7 @@ function numberToIp(number) {
     var ip1 = (number << 16) >>> 24;
     var ip0 = (number << 24) >>> 24
 
-    ip += ip3 + "." + ip2 + "." + ip1 + "." + ip0;
+    ip += ip0 + "." + ip1 + "." + ip2 + "." + ip3;
 
     return ip;
 }
