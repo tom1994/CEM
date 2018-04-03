@@ -21,6 +21,8 @@ public interface RecordHourTracertService {
 
 	Future<List<RecordHourTracertEntity>> queryExitList(Map<String, Object> map);
 
+	Future<List<RecordHourTracertEntity>> queryDayExitList(Map<String, Object> map);
+
 	Future<List<RecordHourTracertEntity>> queryDayList(Map<String, Object> map);
 
 	List<ScoreEntity> calculateService0(List<ScoreEntity> connection,List<ScoreEntity> quality,List<ScoreEntity> broswer,List<ScoreEntity> download,List<ScoreEntity> video,List<ScoreEntity> game);

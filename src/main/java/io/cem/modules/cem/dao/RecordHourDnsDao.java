@@ -12,7 +12,7 @@ public interface RecordHourDnsDao extends BaseDao<RecordHourDnsEntity> {
     List<RecordHourDnsEntity> queryDnsList(Map<String, Object> map);
     List<RecordHourDnsEntity> queryExitList(Map<String, Object> map);
     List<RecordHourDnsEntity> queryDayList(Map<String, Object> map);
-
+    List<RecordHourDnsEntity> queryDayExitList(Map<String, Object> map);
     List<RecordHourDnsEntity> queryIntervalList(Map<String, Object> map);
 
     int queryIntervalTotal(Map<String, Object> map);}

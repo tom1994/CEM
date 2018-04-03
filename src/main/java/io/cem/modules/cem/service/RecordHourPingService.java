@@ -29,6 +29,8 @@ public interface RecordHourPingService {
 
 	Future<List<RecordHourPingEntity>> queryExitList(Map<String, Object> map);
 
+	Future<List<RecordHourPingEntity>> queryDayExitList(Map<String, Object> map);
+
 	List<ScoreEntity> calculatePingIcmp(List<RecordHourPingEntity> pingList);
 
 	List<ScoreEntity> calculatePingTcp(List<RecordHourPingEntity> pingList);

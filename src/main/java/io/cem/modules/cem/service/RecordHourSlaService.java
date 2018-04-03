@@ -20,6 +20,8 @@ public interface RecordHourSlaService {
 
 	Future<List<RecordHourSlaEntity>> queryExitList(Map<String, Object> map);
 
+	Future<List<RecordHourSlaEntity>> queryDayExitList(Map<String, Object> map);
+
 	Future<List<RecordHourSlaEntity>> queryDayList(Map<String, Object> map);
 
 	List<ScoreEntity> calculateSlaTcp(List<RecordHourSlaEntity> slaList);

@@ -53,6 +53,10 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 
 	@Override
 	@Async
+	public Future<List<RecordHourSlaEntity>> queryDayExitList(Map<String, Object> map){return new AsyncResult<> (recordHourSlaDao.queryDayExitList(map));}
+
+	@Override
+	@Async
 	public Future<List<RecordHourSlaEntity>> queryDayList(Map<String, Object> map){return new AsyncResult<> (recordHourSlaDao.queryDayList(map));}
 
 	@Override

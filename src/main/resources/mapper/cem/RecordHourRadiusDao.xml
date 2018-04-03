@@ -115,6 +115,33 @@
 		record_hour_radius.port,record_hour_radius.probe_id;
 	</select>
 
+	<select id="queryDayExitList" resultType="io.cem.modules.cem.entity.RecordHourRadiusEntity">
+		select record_day_radius.id,record_day_radius.city_id,record_day_radius.county_id,record_day_radius.probe_id,record_day_radius.port,record_day_radius.task_id,record_day_radius.service_type,record_day_radius.target_id,record_day_radius.target_ip,record_day_radius.record_date,record_day_radius.remark,
+		city.city_name AS city_name,
+		county.county_name AS area_name,
+		probe.probe_name AS probe_name,
+		target.target_name AS target_name,
+		time_format(record_time, '%H') AS record_time,
+		AVG(record_day_radius.delay) AS delay,
+		AVG(record_day_radius.success_rate) AS success_rate,
+		SUM(record_day_radius.fail) AS fail,
+		SUM(record_day_radius.total) AS total
+		FROM record_day_radius
+		LEFT JOIN city
+		ON record_day_radius.city_id = city.city_id
+		LEFT JOIN county
+		ON record_day_radius.county_id = county.county_id
+		INNER JOIN probe
+		ON record_day_radius.probe_id = probe.id
+		LEFT JOIN target
+		ON record_day_radius.target_id = target.id
+		WHERE record_day_radius.record_date BETWEEN #{ava_start} AND #{ava_terminal}
+		AND record_day_radius.port = #{port}
+		AND record_day_radius.probe_id = #{probe_id}
+		GROUP BY
+		record_day_radius.port,record_day_radius.probe_id;
+	</select>
+
 	<select id="queryDayList" resultType="io.cem.modules.cem.entity.RecordHourRadiusEntity">
 		select radius.id,radius.city_id,radius.county_id,radius.probe_id,radius.port,radius.task_id,radius.service_type,radius.target_id,radius.target_ip,radius.record_date,radius.remark,
 		city.city_name AS city_name,

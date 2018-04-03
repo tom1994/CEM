@@ -27,6 +27,8 @@ public interface RecordHourWebDownloadService {
 
 	Future<List<RecordHourWebDownloadEntity>> queryExitList(Map<String, Object> map);
 
+	Future<List<RecordHourWebDownloadEntity>> queryDayExitList(Map<String, Object> map);
+
 	Future<List<RecordHourWebDownloadEntity>> queryDayList(Map<String, Object> map);
 
 	List<ScoreEntity> calculateWebDownload(List<RecordHourWebDownloadEntity> webDownloadList);

@@ -43,6 +43,13 @@ public class RecordHourWebVideoServiceImpl implements RecordHourWebVideoService 
 	public Future<List<RecordHourWebVideoEntity>> queryExitList(Map<String, Object> map){
 		return new AsyncResult<> (recordHourWebVideoDao.queryExitList(map));
 	}
+
+	@Override
+	@Async
+	public Future<List<RecordHourWebVideoEntity>> queryDayExitList(Map<String, Object> map){
+		return new AsyncResult<> (recordHourWebVideoDao.queryDayExitList(map));
+	}
+
 	@Override
 	public List<RecordHourWebVideoEntity> queryWebVideo(Map<String, Object> map){
 		return recordWebVideoDao.queryWebVideo(map);

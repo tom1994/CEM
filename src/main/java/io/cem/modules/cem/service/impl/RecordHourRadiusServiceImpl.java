@@ -52,6 +52,12 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 
 	@Override
 	@Async
+	public Future<List<RecordHourRadiusEntity>> queryDayExitList(Map<String, Object> map){
+		return new AsyncResult<> (recordHourRadiusDao.queryDayExitList(map));
+	}
+
+	@Override
+	@Async
 	public Future<List<RecordHourRadiusEntity>> queryDayList(Map<String, Object> map){
 		return new AsyncResult<> (recordHourRadiusDao.queryDayList(map));
 	}

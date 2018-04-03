@@ -53,6 +53,12 @@ public class RecordHourGameServiceImpl implements RecordHourGameService {
 	public Future<List<RecordHourGameEntity>> queryExitList(Map<String, Object> map){
 		return new AsyncResult<> (recordHourGameDao.queryExitList(map));
 	}
+
+	@Override
+	@Async
+	public Future<List<RecordHourGameEntity>> queryDayExitList(Map<String, Object> map){
+		return new AsyncResult<> (recordHourGameDao.queryDayExitList(map));
+	}
 	@Override
 	@Async
 	public Future<List<RecordHourGameEntity>> queryGameAreaList(Map<String, Object> map){

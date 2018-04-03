@@ -18,6 +18,7 @@ public interface RecordHourGameService {
 
 	Future<List<RecordHourGameEntity>> queryGameList(Map<String, Object> map);
 	Future<List<RecordHourGameEntity>> queryExitList(Map<String, Object> map);
+	Future<List<RecordHourGameEntity>> queryDayExitList(Map<String, Object> map);
 	Future<List<RecordHourGameEntity>> queryGameAreaList(Map<String, Object> map);
 	Future<List<RecordHourGameEntity>> queryGameRankList(Map<String, Object> map);
 

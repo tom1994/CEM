@@ -12,6 +12,7 @@ public interface RecordHourPingDao extends BaseDao<RecordHourPingEntity> {
     List<RecordHourPingEntity> queryPingList(Map<String, Object> map);
     List<RecordHourPingEntity> queryDayList(Map<String, Object> map);
     List<RecordHourPingEntity> queryExitList(Map<String, Object> map);
+    List<RecordHourPingEntity> queryDayExitList(Map<String, Object> map);
     List<RecordHourPingEntity> queryIntervalList(Map<String,Object> map);
     int queryIntervalTotal(Map<String,Object> map);
 }

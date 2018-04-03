@@ -22,6 +22,8 @@ public interface RecordHourRadiusService {
 
 	Future<List<RecordHourRadiusEntity>> queryExitList(Map<String, Object> map);
 
+	Future<List<RecordHourRadiusEntity>> queryDayExitList(Map<String, Object> map);
+
 	Future<List<RecordHourRadiusEntity>> queryDayList(Map<String, Object> map);
 
 	List<ScoreEntity> calculateDayScore(Map<String, Object> map) throws ExecutionException, InterruptedException;
