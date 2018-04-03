@@ -104,5 +104,7 @@
 	        </bean>
 	    </property>
 	</bean>
+
+	<bean id="SpringApplicationContext" class="io.cem.common.utils.SpringContextUtils"></bean>
 	
 </beans>

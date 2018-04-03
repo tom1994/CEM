@@ -26,6 +26,8 @@ public class ScoreAreaEntity {
 
     private Integer accessLayer;
 
+    private String port;
+
     private Integer fail;
 
     private Integer total;
@@ -125,6 +127,14 @@ public class ScoreAreaEntity {
 
     public void setTotal(Integer total) {
         this.total = total;
+    }
+
+    public String getPort() {
+        return port;
+    }
+
+    public void setPort(String port) {
+        this.port = port;
     }
 
     @Override

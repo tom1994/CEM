@@ -1,6 +1,9 @@
 package io.cem.modules.cem.service.impl;
 
+import io.cem.common.utils.SpringContextUtils;
 import io.cem.modules.cem.dao.RecordFtpDao;
+import io.cem.modules.cem.entity.*;
+import io.cem.modules.cem.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
@@ -8,12 +11,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 import io.cem.modules.cem.dao.RecordHourFtpDao;
-import io.cem.modules.cem.entity.RecordHourFtpEntity;
-import io.cem.modules.cem.service.RecordHourFtpService;
-
 
 
 @Service("recordHourFtpService")
@@ -46,13 +47,15 @@ public class RecordHourFtpServiceImpl implements RecordHourFtpService {
 	}
 
 	@Override
-	public List<RecordHourFtpEntity> queryExitList(Map<String, Object> map){
-		return recordHourFtpDao.queryExitList(map);
+	@Async
+	public Future<List<RecordHourFtpEntity>> queryExitList(Map<String, Object> map){
+		return new AsyncResult<> (recordHourFtpDao.queryExitList(map));
 	}
 
 	@Override
-	public List<RecordHourFtpEntity> queryDayList(Map<String, Object> map){
-		return recordHourFtpDao.queryDayList(map);
+	@Async
+	public Future<List<RecordHourFtpEntity>> queryDayList(Map<String, Object> map){
+		return new AsyncResult<> (recordHourFtpDao.queryDayList(map));
 	}
 
 	@Override
@@ -78,6 +81,609 @@ public class RecordHourFtpServiceImpl implements RecordHourFtpService {
 	@Override
 	public void deleteBatch(Integer[] ids){
 		recordHourFtpDao.deleteBatch(ids);
+	}
+
+	@Override
+	public EvaluationEntity calculateDayQualityScore(Map<String, Object> map) throws ExecutionException, InterruptedException{
+		EvaluationEntity score = new EvaluationEntity();
+		RecordHourPingService recordHourPingService= (RecordHourPingService) SpringContextUtils.getBean("recordHourPingService");
+		RecordHourTracertService recordHourTracertService= (RecordHourTracertService) SpringContextUtils.getBean("recordHourTracertService");
+		RecordHourSlaService recordHourSlaService= (RecordHourSlaService) SpringContextUtils.getBean("recordHourSlaService");
+		RecordHourDnsService recordHourDnsService= (RecordHourDnsService) SpringContextUtils.getBean("recordHourDnsService");
+		RecordHourDhcpService recordHourDhcpService= (RecordHourDhcpService) SpringContextUtils.getBean("recordHourDhcpService");
+		RecordHourPppoeService recordHourPppoeService= (RecordHourPppoeService) SpringContextUtils.getBean("recordHourPppoeService");
+		RecordHourRadiusService recordHourRadiusService= (RecordHourRadiusService) SpringContextUtils.getBean("recordHourRadiusService");
+		RecordHourWebPageService recordHourWebPageService= (RecordHourWebPageService) SpringContextUtils.getBean("recordHourWebPageService");
+		RecordHourWebDownloadService recordHourWebDownloadService= (RecordHourWebDownloadService) SpringContextUtils.getBean("recordHourWebDownloadService");
+		RecordHourFtpService recordHourFtpService= (RecordHourFtpService) SpringContextUtils.getBean("recordHourFtpService");
+		RecordHourWebVideoService recordHourWebVideoService= (RecordHourWebVideoService) SpringContextUtils.getBean("recordHourWebVideoService");
+		RecordHourGameService recordHourGameService= (RecordHourGameService) SpringContextUtils.getBean("recordHourGameService");
+		//网络连通性业务
+		Future<List<RecordHourPingEntity>> pingList_future = recordHourPingService.queryDayList(map);
+		Future<List<RecordHourTracertEntity>> tracertList_future = recordHourTracertService.queryDayList(map);
+		//网络层质量业务
+		Future<List<RecordHourSlaEntity>> slaList_future = recordHourSlaService.queryDayList(map);
+		Future<List<RecordHourDnsEntity>> dnsList_future = recordHourDnsService.queryDayList(map);
+		Future<List<RecordHourDhcpEntity>> dhcpList_future = recordHourDhcpService.queryDayList(map);
+		Future<List<RecordHourPppoeEntity>> pppoeList_future = recordHourPppoeService.queryDayList(map);
+		Future<List<RecordHourRadiusEntity>> radiusList_future = recordHourRadiusService.queryDayList(map);
+		//网页浏览类业务
+		Future<List<RecordHourWebPageEntity>> webPageList_future = recordHourWebPageService.queryDayList(map);
+		//文件下载业务
+		Future<List<RecordHourWebDownloadEntity>> webDownloadList_future = recordHourWebDownloadService.queryDayList(map);
+		Future<List<RecordHourFtpEntity>> ftpList_future = recordHourFtpService.queryDayList(map);
+		//在线视频业务
+		Future<List<RecordHourWebVideoEntity>> videoList_future = recordHourWebVideoService.queryDayList(map);
+		//网络游戏业务
+		Future<List<RecordHourGameEntity>> gameList_future = recordHourGameService.queryDayList(map);
+		List<ScoreEntity> connectionList;
+		List<ScoreEntity> qualityList;
+		List<ScoreEntity> pageList;
+		List<ScoreEntity> downloadList;
+		List<ScoreEntity> videoServiceList;
+		List<ScoreEntity> gameServiceList;
+
+		while (true) {
+			if (pingList_future.isDone() && tracertList_future.isDone()) {
+				List<RecordHourPingEntity> pingList = pingList_future.get();
+				List<RecordHourTracertEntity> tracertList = tracertList_future.get();
+				List<ScoreEntity> pingIcmp = recordHourPingService.calculatePingIcmp(pingList);
+				List<ScoreEntity> pingTcp = recordHourPingService.calculatePingTcp(pingList);
+				List<ScoreEntity> pingUdp = recordHourPingService.calculatePingUdp(pingList);
+				List<ScoreEntity> tracertIcmp = recordHourPingService.calculateTracertIcmp(tracertList);
+				List<ScoreEntity> tracertUdp = recordHourPingService.calculateTracertUdp(tracertList);
+				connectionList = recordHourPingService.calculateService1(pingIcmp, pingTcp, pingUdp, tracertIcmp, tracertUdp);
+				break;
+			}
+			Thread.sleep(1000);
+		}
+		connectionList=recordHourDhcpService.combination(map,connectionList);
+		if (connectionList.size() != 0) {
+			double maxConnection = connectionList.get(0).getScore();
+			double averageConnection = 0;
+			double sumConnection = 0;
+			double minConnection = connectionList.get(0).getScore();
+			for (int i = 1; i < connectionList.size(); i++) {
+				if (connectionList.get(i).getScore() > maxConnection) {
+					maxConnection = connectionList.get(i).getScore();
+				} else {
+				}
+			}
+			score.setConnectionMax(maxConnection);
+			for (int i = 1; i < connectionList.size(); i++) {
+				if (connectionList.get(i).getScore() < minConnection) {
+					minConnection = connectionList.get(i).getScore();
+				} else {
+				}
+			}
+			score.setConnectionMin(minConnection);
+
+			for (int i = 0; i < connectionList.size(); i++) {
+				sumConnection += connectionList.get(i).getScore();
+			}
+			averageConnection = sumConnection / connectionList.size();
+			score.setConnectionAverage(averageConnection);
+		} else {
+			score.setConnectionMax(0.0);
+			score.setConnectionAverage(0.0);
+			score.setConnectionMin(0.0);
+		}
+
+		while (true) {
+			if (slaList_future.isDone() && dnsList_future.isDone() && dhcpList_future.isDone() && dnsList_future.isDone() && pppoeList_future.isDone() && radiusList_future.isDone()) {
+				List<RecordHourSlaEntity> slaList = slaList_future.get();
+				List<RecordHourDnsEntity> dnsList = dnsList_future.get();
+				List<RecordHourDhcpEntity> dhcpList = dhcpList_future.get();
+				List<RecordHourPppoeEntity> pppoeList = pppoeList_future.get();
+				List<RecordHourRadiusEntity> radiusList = radiusList_future.get();
+				List<ScoreEntity> slaTcp = recordHourSlaService.calculateSlaTcp(slaList);
+				List<ScoreEntity> slaUdp = recordHourSlaService.calculateSlaUdp(slaList);
+				List<ScoreEntity> dns = recordHourSlaService.calculateDns(dnsList);
+				List<ScoreEntity> dhcp = recordHourSlaService.calculateDhcp(dhcpList);
+				List<ScoreEntity> pppoe = recordHourSlaService.calculatePppoe(pppoeList);
+				List<ScoreEntity> radius = recordHourSlaService.calculateRadius(radiusList);
+				qualityList = recordHourSlaService.calculateService2(slaTcp, slaUdp, dns, dhcp, pppoe, radius);
+				break;
+			}
+			Thread.sleep(1000);
+		}
+		qualityList=recordHourDhcpService.combination(map,qualityList);
+		if (qualityList.size() != 0) {
+			double maxQuality = qualityList.get(0).getScore();
+			double averageQuality = 0;
+			double sumQuality = 0;
+			double minQuality = qualityList.get(0).getScore();
+			for (int i = 1; i < qualityList.size(); i++) {
+				if (qualityList.get(i).getScore() > maxQuality) {
+					maxQuality = qualityList.get(i).getScore();
+				} else {
+				}
+			}
+			score.setQualityMax(maxQuality);
+			for (int i = 1; i < qualityList.size(); i++) {
+				if (qualityList.get(i).getScore() < minQuality) {
+					minQuality = qualityList.get(i).getScore();
+				} else {
+				}
+			}
+			score.setQualityMin(minQuality);
+
+			for (int i = 0; i < qualityList.size(); i++) {
+				sumQuality += qualityList.get(i).getScore();
+			}
+			averageQuality = sumQuality / qualityList.size();
+			score.setQualityAverage(averageQuality);
+		} else {
+			score.setQualityMax(0.0);
+			score.setQualityAverage(0.0);
+			score.setQualityMin(0.0);
+		}
+
+		while (true) {
+			if (webPageList_future.isDone()) {
+				List<RecordHourWebPageEntity> webPageList = webPageList_future.get();
+				pageList = recordHourWebPageService.calculateService3(webPageList);
+				break;
+			}
+			Thread.sleep(1000);
+		}
+		pageList=recordHourDhcpService.combination(map,pageList);
+		if (pageList.size() != 0) {
+			double maxPage = pageList.get(0).getScore();
+			double averagePage = 0;
+			double sumPage = 0;
+			double minPage = pageList.get(0).getScore();
+			for (int i = 1; i < pageList.size(); i++) {
+				if (pageList.get(i).getScore() > maxPage) {
+					maxPage = pageList.get(i).getScore();
+				} else {
+				}
+			}
+			score.setPageMax(maxPage);
+			for (int i = 1; i < pageList.size(); i++) {
+				if (pageList.get(i).getScore() < minPage) {
+					minPage = pageList.get(i).getScore();
+				} else {
+				}
+			}
+			score.setPageMin(minPage);
+
+			for (int i = 0; i < pageList.size(); i++) {
+				sumPage += pageList.get(i).getScore();
+			}
+			averagePage = sumPage / pageList.size();
+			score.setPageAverage(averagePage);
+		} else {
+			score.setPageMax(0.0);
+			score.setPageAverage(0.0);
+			score.setPageMin(0.0);
+		}
+
+		while (true) {
+			if (webDownloadList_future.isDone() && ftpList_future.isDone()) {
+				List<RecordHourWebDownloadEntity> webDownloadList = webDownloadList_future.get();
+				List<RecordHourFtpEntity> ftpList = ftpList_future.get();
+				List<ScoreEntity> webDownload = recordHourWebDownloadService.calculateWebDownload(webDownloadList);
+				List<ScoreEntity> ftpDownload = recordHourWebDownloadService.calculateFtpDownload(ftpList);
+				List<ScoreEntity> ftpUpload = recordHourWebDownloadService.calculateFtpUpload(ftpList);
+				downloadList = recordHourWebDownloadService.calculateService4(webDownload, ftpDownload, ftpUpload);
+				break;
+			}
+			Thread.sleep(1000);
+		}
+		downloadList=recordHourDhcpService.combination(map,downloadList);
+		if (downloadList.size() != 0) {
+			double maxDownload = downloadList.get(0).getScore();
+			double averageDownload = 0;
+			double sumDownload = 0;
+			double minDownload = downloadList.get(0).getScore();
+			for (int i = 1; i < downloadList.size(); i++) {
+				if (downloadList.get(i).getScore() > maxDownload) {
+					maxDownload = downloadList.get(i).getScore();
+				} else {
+				}
+			}
+			score.setDownloadMax(maxDownload);
+			for (int i = 1; i < downloadList.size(); i++) {
+				if (downloadList.get(i).getScore() < minDownload) {
+					minDownload = downloadList.get(i).getScore();
+				} else {
+				}
+			}
+			score.setDownloadMin(minDownload);
+
+			for (int i = 0; i < downloadList.size(); i++) {
+				sumDownload += downloadList.get(i).getScore();
+			}
+			averageDownload = sumDownload / downloadList.size();
+			score.setDownloadAverage(averageDownload);
+		} else {
+			score.setDownloadMax(0.0);
+			score.setDownloadAverage(0.0);
+			score.setDownloadMin(0.0);
+		}
+
+		while (true) {
+			if (videoList_future.isDone()) {
+				List<RecordHourWebVideoEntity> videoList = videoList_future.get();
+				videoServiceList = recordHourWebVideoService.calculateService5(videoList);
+				break;
+			}
+			Thread.sleep(1000);
+		}
+		videoServiceList=recordHourDhcpService.combination(map,videoServiceList);
+		if (videoServiceList.size() != 0) {
+			double maxVideo = videoServiceList.get(0).getScore();
+			double averageVideo = 0;
+			double sumVideo = 0;
+			double minVideo = videoServiceList.get(0).getScore();
+			for (int i = 1; i < videoServiceList.size(); i++) {
+				if (videoServiceList.get(i).getScore() > maxVideo) {
+					maxVideo = videoServiceList.get(i).getScore();
+				} else {
+				}
+			}
+			score.setVideoMax(maxVideo);
+			for (int i = 1; i < videoServiceList.size(); i++) {
+				if (videoServiceList.get(i).getScore() < minVideo) {
+					minVideo = videoServiceList.get(i).getScore();
+				} else {
+				}
+			}
+			score.setVideoMin(minVideo);
+
+			for (int i = 0; i < videoServiceList.size(); i++) {
+				sumVideo += videoServiceList.get(i).getScore();
+			}
+			averageVideo = sumVideo / videoServiceList.size();
+			score.setVideoAverage(averageVideo);
+		} else {
+			score.setVideoMax(0.0);
+			score.setVideoAverage(0.0);
+			score.setVideoMin(0.0);
+		}
+
+		while (true) {
+			if (gameList_future.isDone()) {
+				List<RecordHourGameEntity> gameList = gameList_future.get();
+				gameServiceList = recordHourGameService.calculateService6(gameList);
+				break;
+			}
+			Thread.sleep(1000);
+		}
+		gameServiceList=recordHourDhcpService.combination(map,gameServiceList);
+		if (gameServiceList.size() != 0) {
+			double maxGame = gameServiceList.get(0).getScore();
+			double averageGame = 0;
+			double sumGame = 0;
+			double minGame = gameServiceList.get(0).getScore();
+			for (int i = 1; i < gameServiceList.size(); i++) {
+				if (gameServiceList.get(i).getScore() > maxGame) {
+					maxGame = gameServiceList.get(i).getScore();
+				} else {
+				}
+			}
+			score.setGameMax(maxGame);
+			for (int i = 1; i < gameServiceList.size(); i++) {
+				if (gameServiceList.get(i).getScore() < minGame) {
+					minGame = gameServiceList.get(i).getScore();
+				} else {
+				}
+			}
+			score.setGameMin(minGame);
+
+			for (int i = 0; i < gameServiceList.size(); i++) {
+				sumGame += gameServiceList.get(i).getScore();
+			}
+			averageGame = sumGame / gameServiceList.size();
+			score.setGameAverage(averageGame);
+		} else {
+			score.setGameMax(0.0);
+			score.setGameAverage(0.0);
+			score.setGameMin(0.0);
+		}
+		return score;
+	}
+
+	@Override
+	public EvaluationEntity calculateHourQualityScore(Map<String, Object> map) throws ExecutionException, InterruptedException{
+		EvaluationEntity score = new EvaluationEntity();
+		RecordHourPingService recordHourPingService= (RecordHourPingService) SpringContextUtils.getBean("recordHourPingService");
+		RecordHourTracertService recordHourTracertService= (RecordHourTracertService) SpringContextUtils.getBean("recordHourTracertService");
+		RecordHourSlaService recordHourSlaService= (RecordHourSlaService) SpringContextUtils.getBean("recordHourSlaService");
+		RecordHourDnsService recordHourDnsService= (RecordHourDnsService) SpringContextUtils.getBean("recordHourDnsService");
+		RecordHourDhcpService recordHourDhcpService= (RecordHourDhcpService) SpringContextUtils.getBean("recordHourDhcpService");
+		RecordHourPppoeService recordHourPppoeService= (RecordHourPppoeService) SpringContextUtils.getBean("recordHourPppoeService");
+		RecordHourRadiusService recordHourRadiusService= (RecordHourRadiusService) SpringContextUtils.getBean("recordHourRadiusService");
+		RecordHourWebPageService recordHourWebPageService= (RecordHourWebPageService) SpringContextUtils.getBean("recordHourWebPageService");
+		RecordHourWebDownloadService recordHourWebDownloadService= (RecordHourWebDownloadService) SpringContextUtils.getBean("recordHourWebDownloadService");
+		RecordHourFtpService recordHourFtpService= (RecordHourFtpService) SpringContextUtils.getBean("recordHourFtpService");
+		RecordHourWebVideoService recordHourWebVideoService= (RecordHourWebVideoService) SpringContextUtils.getBean("recordHourWebVideoService");
+		RecordHourGameService recordHourGameService= (RecordHourGameService) SpringContextUtils.getBean("recordHourGameService");
+        //网络连通性业务
+		Future<List<RecordHourPingEntity>> pingList_future = recordHourPingService.queryPingList(map);
+		Future<List<RecordHourTracertEntity>> tracertList_future = recordHourTracertService.queryTracertList(map);
+		//网络层质量业务
+		Future<List<RecordHourSlaEntity>> slaList_future = recordHourSlaService.querySlaList(map);
+		Future<List<RecordHourDnsEntity>> dnsList_future = recordHourDnsService.queryDnsList(map);
+		Future<List<RecordHourDhcpEntity>> dhcpList_future = recordHourDhcpService.queryDhcpList(map);
+		Future<List<RecordHourPppoeEntity>> pppoeList_future = recordHourPppoeService.queryPppoeList(map);
+		Future<List<RecordHourRadiusEntity>> radiusList_future = recordHourRadiusService.queryRadiusList(map);
+		//网页浏览类业务
+		Future<List<RecordHourWebPageEntity>> webPageList_future = recordHourWebPageService.queryWebList(map);
+		//文件下载类业务
+		Future<List<RecordHourWebDownloadEntity>> webDownloadList_future = recordHourWebDownloadService.queryWebDownloadList(map);
+		Future<List<RecordHourFtpEntity>> ftpList_future = recordHourFtpService.queryFtpList(map);
+		//在线视频业务
+		Future<List<RecordHourWebVideoEntity>> videoList_future = recordHourWebVideoService.queryVideoList(map);
+		//网络游戏业务
+		Future<List<RecordHourGameEntity>> gameList_future = recordHourGameService.queryGameList(map);
+		List<ScoreEntity> gameServiceList;
+		List<ScoreEntity> videoServiceList;
+		List<ScoreEntity> downloadList;
+		List<ScoreEntity> pageList;
+		List<ScoreEntity> qualityList;
+		List<ScoreEntity> connectionList;
+		while (true) {
+			if (pingList_future.isDone() && tracertList_future.isDone()) {
+				List<RecordHourPingEntity> pingList = pingList_future.get();
+				List<RecordHourTracertEntity> tracertList = tracertList_future.get();
+				List<ScoreEntity> pingIcmp = recordHourPingService.calculatePingIcmp(pingList);
+				List<ScoreEntity> pingTcp = recordHourPingService.calculatePingTcp(pingList);
+				List<ScoreEntity> pingUdp = recordHourPingService.calculatePingUdp(pingList);
+				List<ScoreEntity> tracertIcmp = recordHourPingService.calculateTracertIcmp(tracertList);
+				List<ScoreEntity> tracertUdp = recordHourPingService.calculateTracertUdp(tracertList);
+				connectionList = recordHourPingService.calculateService1(pingIcmp, pingTcp, pingUdp, tracertIcmp, tracertUdp);
+				break;
+			}
+			Thread.sleep(1000);
+		}
+		connectionList=recordHourDhcpService.combination(map,connectionList);
+		if (connectionList.size() != 0) {
+			double maxConnection = connectionList.get(0).getScore();
+			double averageConnection = 0;
+			double sumConnection = 0;
+			double minConnection = connectionList.get(0).getScore();
+			for (int i = 1; i < connectionList.size(); i++) {
+				if (connectionList.get(i).getScore() > maxConnection) {
+					maxConnection = connectionList.get(i).getScore();
+				} else {
+				}
+			}
+			score.setConnectionMax(maxConnection);
+			for (int i = 1; i < connectionList.size(); i++) {
+				if (connectionList.get(i).getScore() < minConnection) {
+					minConnection = connectionList.get(i).getScore();
+				} else {
+				}
+			}
+			score.setConnectionMin(minConnection);
+
+			for (int i = 0; i < connectionList.size(); i++) {
+				sumConnection += connectionList.get(i).getScore();
+			}
+			averageConnection = sumConnection / connectionList.size();
+			score.setConnectionAverage(averageConnection);
+		} else {
+			score.setConnectionMax(0.0);
+			score.setConnectionAverage(0.0);
+			score.setConnectionMin(0.0);
+		}
+
+		while (true) {
+			if (slaList_future.isDone() && dnsList_future.isDone() && dhcpList_future.isDone() && dnsList_future.isDone() && pppoeList_future.isDone() && radiusList_future.isDone()) {
+				List<RecordHourSlaEntity> slaList = slaList_future.get();
+				List<RecordHourDnsEntity> dnsList = dnsList_future.get();
+				List<RecordHourDhcpEntity> dhcpList = dhcpList_future.get();
+				List<RecordHourPppoeEntity> pppoeList = pppoeList_future.get();
+				List<RecordHourRadiusEntity> radiusList = radiusList_future.get();
+				List<ScoreEntity> slaTcp = recordHourSlaService.calculateSlaTcp(slaList);
+				List<ScoreEntity> slaUdp = recordHourSlaService.calculateSlaUdp(slaList);
+				List<ScoreEntity> dns = recordHourSlaService.calculateDns(dnsList);
+				List<ScoreEntity> dhcp = recordHourSlaService.calculateDhcp(dhcpList);
+				List<ScoreEntity> pppoe = recordHourSlaService.calculatePppoe(pppoeList);
+				List<ScoreEntity> radius = recordHourSlaService.calculateRadius(radiusList);
+				qualityList = recordHourSlaService.calculateService2(slaTcp, slaUdp, dns, dhcp, pppoe, radius);
+				break;
+			}
+			Thread.sleep(1000);
+		}
+		qualityList=recordHourDhcpService.combination(map,qualityList);
+		if (qualityList.size() != 0) {
+			double maxQuality = qualityList.get(0).getScore();
+			double averageQuality = 0;
+			double sumQuality = 0;
+			double minQuality = qualityList.get(0).getScore();
+			for (int i = 1; i < qualityList.size(); i++) {
+				if (qualityList.get(i).getScore() > maxQuality) {
+					maxQuality = qualityList.get(i).getScore();
+				} else {
+				}
+			}
+			score.setQualityMax(maxQuality);
+			for (int i = 1; i < qualityList.size(); i++) {
+				if (qualityList.get(i).getScore() < minQuality) {
+					minQuality = qualityList.get(i).getScore();
+				} else {
+				}
+			}
+			score.setQualityMin(minQuality);
+
+			for (int i = 0; i < qualityList.size(); i++) {
+				sumQuality += qualityList.get(i).getScore();
+			}
+			averageQuality = sumQuality / qualityList.size();
+			score.setQualityAverage(averageQuality);
+		} else {
+			score.setQualityMax(0.0);
+			score.setQualityAverage(0.0);
+			score.setQualityMin(0.0);
+		}
+
+		while (true) {
+			if (webPageList_future.isDone()) {
+				List<RecordHourWebPageEntity> webPageList = webPageList_future.get();
+				pageList = recordHourWebPageService.calculateService3(webPageList);
+				break;
+			}
+			Thread.sleep(1000);
+		}
+		pageList=recordHourDhcpService.combination(map,pageList);
+		if (pageList.size() != 0) {
+			double maxPage = pageList.get(0).getScore();
+			double averagePage = 0;
+			double sumPage = 0;
+			double minPage = pageList.get(0).getScore();
+			for (int i = 1; i < pageList.size(); i++) {
+				if (pageList.get(i).getScore() > maxPage) {
+					maxPage = pageList.get(i).getScore();
+				} else {
+				}
+			}
+			score.setPageMax(maxPage);
+			for (int i = 1; i < pageList.size(); i++) {
+				if (pageList.get(i).getScore() < minPage) {
+					minPage = pageList.get(i).getScore();
+				} else {
+				}
+			}
+			score.setPageMin(minPage);
+
+			for (int i = 0; i < pageList.size(); i++) {
+				sumPage += pageList.get(i).getScore();
+			}
+			averagePage = sumPage / pageList.size();
+			score.setPageAverage(averagePage);
+		} else {
+			score.setPageMax(0.0);
+			score.setPageAverage(0.0);
+			score.setPageMin(0.0);
+		}
+
+		while (true) {
+			if (webDownloadList_future.isDone() && ftpList_future.isDone()) {
+				List<RecordHourWebDownloadEntity> webDownloadList = webDownloadList_future.get();
+				List<RecordHourFtpEntity> ftpList = ftpList_future.get();
+				List<ScoreEntity> webDownload = recordHourWebDownloadService.calculateWebDownload(webDownloadList);
+				List<ScoreEntity> ftpDownload = recordHourWebDownloadService.calculateFtpDownload(ftpList);
+				List<ScoreEntity> ftpUpload = recordHourWebDownloadService.calculateFtpUpload(ftpList);
+				downloadList = recordHourWebDownloadService.calculateService4(webDownload, ftpDownload, ftpUpload);
+				break;
+			}
+			Thread.sleep(1000);
+		}
+		downloadList=recordHourDhcpService.combination(map,downloadList);
+		if (downloadList.size() != 0) {
+			double maxDownload = downloadList.get(0).getScore();
+			double averageDownload = 0;
+			double sumDownload = 0;
+			double minDownload = downloadList.get(0).getScore();
+			for (int i = 1; i < downloadList.size(); i++) {
+				if (downloadList.get(i).getScore() > maxDownload) {
+					maxDownload = downloadList.get(i).getScore();
+				} else {
+				}
+			}
+			score.setDownloadMax(maxDownload);
+			for (int i = 1; i < downloadList.size(); i++) {
+				if (downloadList.get(i).getScore() < minDownload) {
+					minDownload = downloadList.get(i).getScore();
+				} else {
+				}
+			}
+			score.setDownloadMin(minDownload);
+
+			for (int i = 0; i < downloadList.size(); i++) {
+				sumDownload += downloadList.get(i).getScore();
+			}
+			averageDownload = sumDownload / downloadList.size();
+			score.setDownloadAverage(averageDownload);
+		} else {
+			score.setDownloadMax(0.0);
+			score.setDownloadAverage(0.0);
+			score.setDownloadMin(0.0);
+		}
+
+		while (true) {
+			if (videoList_future.isDone()) {
+				List<RecordHourWebVideoEntity> videoList = videoList_future.get();
+				videoServiceList = recordHourWebVideoService.calculateService5(videoList);
+				break;
+			}
+			Thread.sleep(1000);
+		}
+		videoServiceList=recordHourDhcpService.combination(map,videoServiceList);
+		if (videoServiceList.size() != 0) {
+			double maxVideo = videoServiceList.get(0).getScore();
+			double averageVideo = 0;
+			double sumVideo = 0;
+			double minVideo = videoServiceList.get(0).getScore();
+			for (int i = 1; i < videoServiceList.size(); i++) {
+				if (videoServiceList.get(i).getScore() > maxVideo) {
+					maxVideo = videoServiceList.get(i).getScore();
+				} else {
+				}
+			}
+			score.setVideoMax(maxVideo);
+			for (int i = 1; i < videoServiceList.size(); i++) {
+				if (videoServiceList.get(i).getScore() < minVideo) {
+					minVideo = videoServiceList.get(i).getScore();
+				} else {
+				}
+			}
+			score.setVideoMin(minVideo);
+
+			for (int i = 0; i < videoServiceList.size(); i++) {
+				sumVideo += videoServiceList.get(i).getScore();
+			}
+			averageVideo = sumVideo / videoServiceList.size();
+			score.setVideoAverage(averageVideo);
+		} else {
+			score.setVideoMax(0.0);
+			score.setVideoAverage(0.0);
+			score.setVideoMin(0.0);
+		}
+
+		while (true) {
+			if (gameList_future.isDone()) {
+				List<RecordHourGameEntity> gameList = gameList_future.get();
+				gameServiceList = recordHourGameService.calculateService6(gameList);
+				break;
+			}
+			Thread.sleep(1000);
+		}
+		gameServiceList=recordHourDhcpService.combination(map,gameServiceList);
+		if (gameServiceList.size() != 0) {
+			double maxGame = gameServiceList.get(0).getScore();
+			double averageGame = 0;
+			double sumGame = 0;
+			double minGame = gameServiceList.get(0).getScore();
+			for (int i = 1; i < gameServiceList.size(); i++) {
+				if (gameServiceList.get(i).getScore() > maxGame) {
+					maxGame = gameServiceList.get(i).getScore();
+				} else {
+				}
+			}
+			score.setGameMax(maxGame);
+			for (int i = 1; i < gameServiceList.size(); i++) {
+				if (gameServiceList.get(i).getScore() < minGame) {
+					minGame = gameServiceList.get(i).getScore();
+				} else {
+				}
+			}
+			score.setGameMin(minGame);
+
+			for (int i = 0; i < gameServiceList.size(); i++) {
+				sumGame += gameServiceList.get(i).getScore();
+			}
+			averageGame = sumGame / gameServiceList.size();
+			score.setGameAverage(averageGame);
+		} else {
+			score.setGameMax(0.0);
+			score.setGameAverage(0.0);
+			score.setGameMin(0.0);
+		}
+		return score;
 	}
 	
 }

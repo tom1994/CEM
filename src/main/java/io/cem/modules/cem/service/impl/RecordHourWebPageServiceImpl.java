@@ -44,18 +44,21 @@ public class RecordHourWebPageServiceImpl implements RecordHourWebPageService {
 
 
 	@Override
-	public List<RecordHourWebPageEntity> queryExitList(Map<String, Object> map){
-		return recordHourWebPageDao.queryExitList(map);
+	@Async
+	public Future< List<RecordHourWebPageEntity>> queryExitList(Map<String, Object> map){
+		return new AsyncResult<> (recordHourWebPageDao.queryExitList(map));
 	}
 
 	@Override
-	public List<RecordHourWebPageEntity> queryWebList(Map<String, Object> map){
-		return recordHourWebPageDao.queryWebList(map);
+	@Async
+	public Future<List<RecordHourWebPageEntity>> queryWebList(Map<String, Object> map){
+		return new AsyncResult<> (recordHourWebPageDao.queryWebList(map));
 	}
 
 	@Override
-	public List<RecordHourWebPageEntity> queryWebAreaList(Map<String, Object> map){
-		return recordHourWebPageDao.queryWebList(map);
+	@Async
+	public Future<List<RecordHourWebPageEntity>> queryWebAreaList(Map<String, Object> map){
+		return new AsyncResult<> (recordHourWebPageDao.queryWebAreaList(map));
 	}
 
 	@Override
@@ -66,8 +69,22 @@ public class RecordHourWebPageServiceImpl implements RecordHourWebPageService {
 	}
 
 	@Override
-	public List<RecordHourWebPageEntity> queryDayList(Map<String, Object> map){
-		return recordHourWebPageDao.queryDayList(map);
+	@Async
+	public Future<List<RecordHourWebPageEntity>> queryDayAreaList(Map<String, Object> map){
+		return new AsyncResult<> (recordHourWebPageDao.queryDayAreaList(map));
+	}
+
+	@Override
+	@Async
+	public Future<List<RecordHourWebPageEntity>> queryDayRankList(Map<String, Object> map) {
+		return new AsyncResult<>
+				(recordHourWebPageDao.queryDayRankList(map));
+	}
+
+	@Override
+	@Async
+	public Future<List<RecordHourWebPageEntity>> queryDayList(Map<String, Object> map){
+		return new AsyncResult<> (recordHourWebPageDao.queryDayList(map));
 	}
 	
 	@Override

@@ -46,13 +46,15 @@ public class RecordHourDnsServiceImpl implements RecordHourDnsService {
 	}
 
 	@Override
-	public List<RecordHourDnsEntity> queryExitList(Map<String, Object> map){
-		return recordHourDnsDao.queryExitList(map);
+	@Async
+	public Future<List<RecordHourDnsEntity>> queryExitList(Map<String, Object> map){
+		return new AsyncResult<> (recordHourDnsDao.queryExitList(map));
 	}
 
 	@Override
-	public List<RecordHourDnsEntity> queryDayList(Map<String, Object> map){
-		return recordHourDnsDao.queryDayList(map);
+	@Async
+	public Future<List<RecordHourDnsEntity>> queryDayList(Map<String, Object> map){
+		return new AsyncResult<> (recordHourDnsDao.queryDayList(map));
 	}
 
 	@Override

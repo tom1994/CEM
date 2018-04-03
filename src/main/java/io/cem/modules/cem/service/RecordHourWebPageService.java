@@ -22,14 +22,18 @@ public interface RecordHourWebPageService {
 
 	List<RecordHourWebPageEntity> queryWebPage(Map<String,Object> map);
 
-	List<RecordHourWebPageEntity> queryWebList(Map<String, Object> map);
+	Future<List<RecordHourWebPageEntity>> queryWebList(Map<String, Object> map);
 
-	List<RecordHourWebPageEntity> queryExitList(Map<String, Object> map);
-	List<RecordHourWebPageEntity> queryWebAreaList(Map<String, Object> map);
+	Future<List<RecordHourWebPageEntity>> queryExitList(Map<String, Object> map);
+	Future<List<RecordHourWebPageEntity>> queryWebAreaList(Map<String, Object> map);
 
 	Future<List<RecordHourWebPageEntity>> queryWebRankList(Map<String, Object> map);
 
-	List<RecordHourWebPageEntity> queryDayList(Map<String, Object> map);
+	Future<List<RecordHourWebPageEntity>> queryDayAreaList(Map<String, Object> map);
+
+	Future<List<RecordHourWebPageEntity>> queryDayRankList(Map<String, Object> map);
+
+	Future<List<RecordHourWebPageEntity>> queryDayList(Map<String, Object> map);
 
 	List<ScoreEntity> calculateService3(List<RecordHourWebPageEntity> webPageList);
 	

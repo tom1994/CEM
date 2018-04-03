@@ -40,8 +40,9 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 	}
 
 	@Override
-	public List<RecordHourPingEntity> queryExitList(Map<String, Object> map){
-		return recordHourPingDao.queryExitList(map);
+	@Async
+	public Future<List<RecordHourPingEntity>> queryExitList(Map<String, Object> map){
+		return new AsyncResult<> (recordHourPingDao.queryExitList(map));
 	}
 
 	@Override
@@ -56,7 +57,8 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 
 
 	@Override
-	public List<RecordHourPingEntity> queryDayList(Map<String, Object> map){ return recordHourPingDao.queryDayList(map); }
+	@Async
+	public Future<List<RecordHourPingEntity>> queryDayList(Map<String, Object> map){ return new AsyncResult<> (recordHourPingDao.queryDayList(map)); }
 
 	@Override
 	public List<ScoreEntity> calculatePingIcmp(List<RecordHourPingEntity> pingList){
@@ -1347,6 +1349,8 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 				scoreTarget.setTargetName(pingIcmp.get(i).getTargetName());
 				scoreTarget.setAccessLayer(pingIcmp.get(i).getAccessLayer());
 				scoreTarget.setPort(pingIcmp.get(i).getPort());
+				scoreTarget.setRecordDate(pingIcmp.get(i).getRecordDate());
+				scoreTarget.setRecordTime(pingIcmp.get(i).getRecordTime());
 				scoreTarget.setFail(pingIcmp.get(i).getFail());
 				scoreTarget.setTotal(pingIcmp.get(i).getTotal());
 				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
@@ -1375,6 +1379,136 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 			int id = 1;
 			while (iterator.hasNext()) {
 				ScoreTargetEntity ite = iterator.next();
+				try {
+					ScoreEntity finalScore = new ScoreEntity();
+					finalScore.setId(id);
+					finalScore.setCityId(ite.getCityId());
+					finalScore.setCityName(ite.getCityName());
+					finalScore.setCountyId(ite.getCountyId());
+					finalScore.setCountyName(ite.getCountyName());
+					finalScore.setProbeId(ite.getProbeId());
+					finalScore.setProbeName(ite.getProbeName());
+					finalScore.setServiceType(1);
+					finalScore.setTargetId(ite.getTargetId());
+					finalScore.setTargetName(ite.getTargetName());
+					finalScore.setAccessLayer(ite.getAccessLayer());
+					finalScore.setRecordDate(ite.getRecordDate());
+					finalScore.setRecordTime(ite.getRecordTime());
+					finalScore.setPort(ite.getPort());
+					finalScore.setRecordTime(ite.getRecordTime());
+					finalScore.setRecordDate(ite.getRecordDate());
+					finalScore.setScore(0.0);
+					finalScore.setBase(0.0);
+					Map<String, ScoreBaseEntity> map1 = connection.get(ite);
+					Set<String> keyType = map1.keySet();
+					Iterator<String> iterator1 = keyType.iterator();
+					int i=1;
+					while(iterator1.hasNext()) {
+						String typ = iterator1.next();
+						if (typ.equals("pingIcmp")) {
+							finalScore.setPingIcmpDelay(map1.get(typ).getPingIcmpDelay());
+							finalScore.setPingIcmpDelayStd(map1.get(typ).getPingIcmpDelayStd());
+							finalScore.setPingIcmpDelayVar(map1.get(typ).getPingIcmpDelayVar());
+							finalScore.setPingIcmpJitter(map1.get(typ).getPingIcmpJitter());
+							finalScore.setPingIcmpJitterStd(map1.get(typ).getPingIcmpJitterStd());
+							finalScore.setPingIcmpJitterVar(map1.get(typ).getPingIcmpJitterVar());
+							finalScore.setPingIcmpLossRate(map1.get(typ).getPingIcmpLossRate());
+						} else if (typ.equals("pingTcp")) {
+							finalScore.setPingTcpDelay(map1.get(typ).getPingTcpDelay());
+							finalScore.setPingTcpDelayStd(map1.get(typ).getPingTcpDelayStd());
+							finalScore.setPingTcpDelayVar(map1.get(typ).getPingTcpDelayVar());
+							finalScore.setPingTcpJitter(map1.get(typ).getPingTcpJitter());
+							finalScore.setPingTcpJitterStd(map1.get(typ).getPingTcpJitterStd());
+							finalScore.setPingTcpJitterVar(map1.get(typ).getPingTcpJitterVar());
+							finalScore.setPingTcpLossRate(map1.get(typ).getPingTcpLossRate());
+						} else if (typ.equals("pingUdp")) {
+							finalScore.setPingUdpDelay(map1.get(typ).getPingUdpDelay());
+							finalScore.setPingUdpDelayStd(map1.get(typ).getPingUdpDelayStd());
+							finalScore.setPingUdpDelayVar(map1.get(typ).getPingUdpDelayVar());
+							finalScore.setPingUdpJitter(map1.get(typ).getPingUdpJitter());
+							finalScore.setPingUdpJitterStd(map1.get(typ).getPingUdpJitterStd());
+							finalScore.setPingUdpJitterVar(map1.get(typ).getPingUdpJitterVar());
+							finalScore.setPingUdpLossRate(map1.get(typ).getPingUdpLossRate());
+						} else if (typ.equals("tracertIcmp")) {
+							finalScore.setTracertIcmpDelay(map1.get(typ).getTracertIcmpDelay());
+							finalScore.setTracertIcmpDelayStd(map1.get(typ).getTracertIcmpDelayStd());
+							finalScore.setTracertIcmpDelayVar(map1.get(typ).getTracertIcmpDelayVar());
+							finalScore.setTracertIcmpJitter(map1.get(typ).getTracertIcmpJitter());
+							finalScore.setTracertIcmpJitterStd(map1.get(typ).getTracertIcmpJitterStd());
+							finalScore.setTracertIcmpJitterVar(map1.get(typ).getTracertIcmpJitterVar());
+							finalScore.setTracertIcmpLossRate(map1.get(typ).getTracertIcmpLossRate());
+						} else if (typ.equals("tracertUdp")) {
+							finalScore.setTracertIcmpDelay(map1.get(typ).getTracertTcpDelay());
+							finalScore.setTracertIcmpDelayStd(map1.get(typ).getTracertTcpDelayStd());
+							finalScore.setTracertIcmpDelayVar(map1.get(typ).getTracertTcpDelayVar());
+							finalScore.setTracertIcmpJitter(map1.get(typ).getTracertTcpJitter());
+							finalScore.setTracertIcmpJitterStd(map1.get(typ).getTracertTcpJitterStd());
+							finalScore.setTracertIcmpJitterVar(map1.get(typ).getTracertTcpJitterVar());
+							finalScore.setTracertIcmpLossRate(map1.get(typ).getTracertTcpLossRate());
+						} else {
+						}
+						finalScore.setScore(finalScore.getScore() + (map1.get(typ).getScore()) * (map1.get(typ).getBase()));
+						finalScore.setBase(finalScore.getBase()+map1.get(typ).getBase());
+						i++;
+					}
+					finalScore.setScore(finalScore.getScore()/finalScore.getBase());
+					finalScore.setBase(Double.parseDouble(pros.getValue("connectionweight")));
+					connectionScore.add(finalScore);
+				} catch (IOException e) {
+				}
+				id++;
+			}
+		}catch(IOException e){}
+
+		return connectionScore;
+	}
+
+	@Override
+	public List<ScoreEntity> calculateDate1(List<ScoreEntity> pingIcmp,List<ScoreEntity> pingTcp,List<ScoreEntity> pingUdp,List<ScoreEntity> tracertIcmp,List<ScoreEntity> tracertUdp){
+		List<ScoreEntity> connectionScore = new ArrayList<>();
+		try {
+			PropertiesUtils pros = new PropertiesUtils();
+			Map<ScoreDateEntity,Map<String,ScoreBaseEntity>> connection= new HashMap<>();
+			for (int i = 0; i < pingIcmp.size(); i++) {
+				ScoreDateEntity scoreDate = new ScoreDateEntity();
+				scoreDate.setCityId(pingIcmp.get(i).getCityId());
+				scoreDate.setCountyId(pingIcmp.get(i).getCountyId());
+				scoreDate.setProbeId(pingIcmp.get(i).getProbeId());
+				scoreDate.setTargetId(pingIcmp.get(i).getTargetId());
+				scoreDate.setCityName(pingIcmp.get(i).getCityName());
+				scoreDate.setCountyName(pingIcmp.get(i).getCountyName());
+				scoreDate.setProbeName(pingIcmp.get(i).getProbeName());
+				scoreDate.setTargetName(pingIcmp.get(i).getTargetName());
+				scoreDate.setAccessLayer(pingIcmp.get(i).getAccessLayer());
+				scoreDate.setRecordDate(pingIcmp.get(i).getRecordDate());
+				scoreDate.setRecordTime(pingIcmp.get(i).getRecordTime());
+				scoreDate.setPort(pingIcmp.get(i).getPort());
+				scoreDate.setFail(pingIcmp.get(i).getFail());
+				scoreDate.setTotal(pingIcmp.get(i).getTotal());
+				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
+				scoreBase.setPingIcmpDelay(pingIcmp.get(i).getPingIcmpDelay());
+				scoreBase.setPingIcmpDelayStd(pingIcmp.get(i).getPingIcmpDelayStd());
+				scoreBase.setPingIcmpDelayVar(pingIcmp.get(i).getPingIcmpDelayVar());
+				scoreBase.setPingIcmpJitter(pingIcmp.get(i).getPingIcmpJitter());
+				scoreBase.setPingIcmpJitterStd(pingIcmp.get(i).getPingIcmpJitterStd());
+				scoreBase.setPingIcmpJitterVar(pingIcmp.get(i).getPingIcmpJitterVar());
+				scoreBase.setPingIcmpLossRate(pingIcmp.get(i).getPingIcmpLossRate());
+				scoreBase.setScore(pingIcmp.get(i).getScore());
+				scoreBase.setBase(pingIcmp.get(i).getBase());
+				Map<String,ScoreBaseEntity> ping1 = new HashMap<>();
+				ping1.put("pingIcmp",scoreBase);
+				connection.put(scoreDate,ping1 );
+			}
+			connection=putMapDate(pingTcp,connection,"pingTcp");
+			connection=putMapDate(pingUdp,connection,"pingUdp");
+			connection=putMapDate(tracertIcmp,connection,"tracertIcmp");
+			connection=putMapDate(tracertUdp,connection,"tracertUdp");
+
+			Set<ScoreDateEntity> key = connection.keySet();
+			Iterator<ScoreDateEntity> iterator = key.iterator();
+			int id = 1;
+			while (iterator.hasNext()) {
+				ScoreDateEntity ite = iterator.next();
 				try {
 					ScoreEntity finalScore = new ScoreEntity();
 					finalScore.setId(id);
@@ -1457,100 +1591,47 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 		return connectionScore;
 	}
 
-
 	@Override
-	public List<ScoreEntity> calculateDate1(List<ScoreEntity> pingIcmp,List<ScoreEntity> pingTcp,List<ScoreEntity> pingUdp,List<ScoreEntity> tracertIcmp,List<ScoreEntity> tracertUdp){
-		List<ScoreEntity> connectionScore = new ArrayList<>();
-		try {
-			PropertiesUtils pros = new PropertiesUtils();
-			Map<ScoreDateEntity, ScoreBaseEntity> connection = new HashMap<>();
-			for (int i = 0; i < pingIcmp.size(); i++) {
-				ScoreDateEntity scoreTarget = new ScoreDateEntity();
-				scoreTarget.setCityId(pingIcmp.get(i).getCityId());
-				scoreTarget.setCountyId(pingIcmp.get(i).getCountyId());
-				scoreTarget.setProbeId(pingIcmp.get(i).getProbeId());
-				scoreTarget.setTargetId(pingIcmp.get(i).getTargetId());
-				scoreTarget.setCityName(pingIcmp.get(i).getCityName());
-				scoreTarget.setCountyName(pingIcmp.get(i).getCountyName());
-				scoreTarget.setProbeName(pingIcmp.get(i).getProbeName());
-				scoreTarget.setTargetName(pingIcmp.get(i).getTargetName());
-				scoreTarget.setRecordDate(pingIcmp.get(i).getRecordDate());
-				scoreTarget.setRecordTime(pingIcmp.get(i).getRecordTime());
-				scoreTarget.setAccessLayer(pingIcmp.get(i).getAccessLayer());
-				scoreTarget.setFail(pingIcmp.get(i).getFail());
-				scoreTarget.setTotal(pingIcmp.get(i).getTotal());
-				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
-				scoreBase.setScore((pingIcmp.get(i).getScore()) * (pingIcmp.get(i).getBase()));
-				scoreBase.setBase(pingIcmp.get(i).getBase());
-				connection.put(scoreTarget, scoreBase);
-			}
-			connection=putMapDate(pingTcp,connection);
-			connection=putMapDate(pingUdp,connection);
-			connection=putMapDate(tracertIcmp,connection);
-			connection=putMapDate(tracertUdp,connection);
-
-			System.out.println("MAP:"+connection);
-
-			Set<ScoreDateEntity> key = connection.keySet();
-			Iterator<ScoreDateEntity> iterator = key.iterator();
-			int id = 1;
-			while (iterator.hasNext()) {
-				ScoreDateEntity ite = iterator.next();
-				try {
-					ScoreEntity finalScore = new ScoreEntity();
-					finalScore.setId(id);
-					finalScore.setCityId(ite.getCityId());
-					finalScore.setCityName(ite.getCityName());
-					finalScore.setCountyId(ite.getCountyId());
-					finalScore.setCountyName(ite.getCountyName());
-					finalScore.setProbeId(ite.getProbeId());
-					finalScore.setProbeName(ite.getProbeName());
-					finalScore.setServiceType(1);
-					finalScore.setTargetId(ite.getTargetId());
-					finalScore.setTargetName(ite.getTargetName());
-					finalScore.setAccessLayer(ite.getAccessLayer());
-					finalScore.setRecordDate(ite.getRecordDate());
-					finalScore.setRecordTime(ite.getRecordTime());
-					finalScore.setScore(((connection.get(ite).getScore()) / (connection.get(ite).getBase()))*(1-(ite.getFail())/ite.getTotal()));
-					finalScore.setBase(Double.parseDouble(pros.getValue("connectionweight")));
-					connectionScore.add(finalScore);
-				} catch (IOException e) {
-				}
-				id++;
-			}
-		}catch(IOException e){}
-
-		return connectionScore;
-	}
-
-	@Override
+	//For quality rank page
 	public List<ScoreEntity> calculateArea1(List<ScoreEntity> pingIcmp,List<ScoreEntity> pingTcp,List<ScoreEntity> pingUdp,List<ScoreEntity> tracertIcmp,List<ScoreEntity> tracertUdp){
 		List<ScoreEntity> connectionScore = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
-			Map<ScoreAreaEntity, ScoreBaseEntity> connection = new HashMap<>();
+			Map<ScoreAreaEntity,Map<String,ScoreBaseEntity>> connection= new HashMap<>();
 			for (int i = 0; i < pingIcmp.size(); i++) {
-				ScoreAreaEntity scoreTarget = new ScoreAreaEntity();
-				scoreTarget.setCityId(pingIcmp.get(i).getCityId());
-				scoreTarget.setCountyId(pingIcmp.get(i).getCountyId());
-				scoreTarget.setProbeId(pingIcmp.get(i).getProbeId());
-				scoreTarget.setTargetId(pingIcmp.get(i).getTargetId());
-				scoreTarget.setCityName(pingIcmp.get(i).getCityName());
-				scoreTarget.setCountyName(pingIcmp.get(i).getCountyName());
-				scoreTarget.setProbeName(pingIcmp.get(i).getProbeName());
-				scoreTarget.setTargetName(pingIcmp.get(i).getTargetName());
-				scoreTarget.setAccessLayer(pingIcmp.get(i).getAccessLayer());
-				scoreTarget.setFail(pingIcmp.get(i).getFail());
-				scoreTarget.setTotal(pingIcmp.get(i).getTotal());
+				ScoreAreaEntity scoreArea = new ScoreAreaEntity();
+				scoreArea.setCityId(pingIcmp.get(i).getCityId());
+				scoreArea.setCountyId(pingIcmp.get(i).getCountyId());
+				scoreArea.setProbeId(pingIcmp.get(i).getProbeId());
+				scoreArea.setTargetId(pingIcmp.get(i).getTargetId());
+				scoreArea.setCityName(pingIcmp.get(i).getCityName());
+				scoreArea.setCountyName(pingIcmp.get(i).getCountyName());
+				scoreArea.setProbeName(pingIcmp.get(i).getProbeName());
+				scoreArea.setTargetName(pingIcmp.get(i).getTargetName());
+				scoreArea.setAccessLayer(pingIcmp.get(i).getAccessLayer());
+				scoreArea.setRecordDate(pingIcmp.get(i).getRecordDate());
+				scoreArea.setRecordTime(pingIcmp.get(i).getRecordTime());
+				scoreArea.setPort(pingIcmp.get(i).getPort());
+				scoreArea.setFail(pingIcmp.get(i).getFail());
+				scoreArea.setTotal(pingIcmp.get(i).getTotal());
 				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
-				scoreBase.setScore((pingIcmp.get(i).getScore()) * (pingIcmp.get(i).getBase()));
+				scoreBase.setPingIcmpDelay(pingIcmp.get(i).getPingIcmpDelay());
+				scoreBase.setPingIcmpDelayStd(pingIcmp.get(i).getPingIcmpDelayStd());
+				scoreBase.setPingIcmpDelayVar(pingIcmp.get(i).getPingIcmpDelayVar());
+				scoreBase.setPingIcmpJitter(pingIcmp.get(i).getPingIcmpJitter());
+				scoreBase.setPingIcmpJitterStd(pingIcmp.get(i).getPingIcmpJitterStd());
+				scoreBase.setPingIcmpJitterVar(pingIcmp.get(i).getPingIcmpJitterVar());
+				scoreBase.setPingIcmpLossRate(pingIcmp.get(i).getPingIcmpLossRate());
+				scoreBase.setScore(pingIcmp.get(i).getScore());
 				scoreBase.setBase(pingIcmp.get(i).getBase());
-				connection.put(scoreTarget, scoreBase);
+				Map<String,ScoreBaseEntity> ping1 = new HashMap<>();
+				ping1.put("pingIcmp",scoreBase);
+				connection.put(scoreArea,ping1 );
 			}
-			connection=putMapArea(pingTcp,connection);
-			connection=putMapArea(pingUdp,connection);
-			connection=putMapArea(tracertIcmp,connection);
-			connection=putMapArea(tracertUdp,connection);
+			connection=putMapArea(pingTcp,connection,"pingTcp");
+			connection=putMapArea(pingUdp,connection,"pingUdp");
+			connection=putMapArea(tracertIcmp,connection,"tracertIcmp");
+			connection=putMapArea(tracertUdp,connection,"tracertUdp");
 
 			System.out.println("MAP:"+connection);
 
@@ -1571,7 +1652,65 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 					finalScore.setServiceType(1);
 					finalScore.setTargetId(ite.getTargetId());
 					finalScore.setTargetName(ite.getTargetName());
-					finalScore.setScore(((connection.get(ite).getScore()) / (connection.get(ite).getBase()))*(1-(ite.getFail())/ite.getTotal()));
+					finalScore.setAccessLayer(ite.getAccessLayer());
+					finalScore.setPort(ite.getPort());
+					finalScore.setRecordTime(ite.getRecordTime());
+					finalScore.setRecordDate(ite.getRecordDate());
+					finalScore.setScore(0.0);
+					finalScore.setBase(0.0);
+					Map<String, ScoreBaseEntity> map1 = connection.get(ite);
+					Set<String> keyType = map1.keySet();
+					Iterator<String> iterator1 = keyType.iterator();
+					int i=1;
+					while(iterator1.hasNext()) {
+						String typ = iterator1.next();
+						if (typ.equals("pingIcmp")) {
+							finalScore.setPingIcmpDelay(map1.get(typ).getPingIcmpDelay());
+							finalScore.setPingIcmpDelayStd(map1.get(typ).getPingIcmpDelayStd());
+							finalScore.setPingIcmpDelayVar(map1.get(typ).getPingIcmpDelayVar());
+							finalScore.setPingIcmpJitter(map1.get(typ).getPingIcmpJitter());
+							finalScore.setPingIcmpJitterStd(map1.get(typ).getPingIcmpJitterStd());
+							finalScore.setPingIcmpJitterVar(map1.get(typ).getPingIcmpJitterVar());
+							finalScore.setPingIcmpLossRate(map1.get(typ).getPingIcmpLossRate());
+						} else if (typ.equals("pingTcp")) {
+							finalScore.setPingTcpDelay(map1.get(typ).getPingTcpDelay());
+							finalScore.setPingTcpDelayStd(map1.get(typ).getPingTcpDelayStd());
+							finalScore.setPingTcpDelayVar(map1.get(typ).getPingTcpDelayVar());
+							finalScore.setPingTcpJitter(map1.get(typ).getPingTcpJitter());
+							finalScore.setPingTcpJitterStd(map1.get(typ).getPingTcpJitterStd());
+							finalScore.setPingTcpJitterVar(map1.get(typ).getPingTcpJitterVar());
+							finalScore.setPingTcpLossRate(map1.get(typ).getPingTcpLossRate());
+						} else if (typ.equals("pingUdp")) {
+							finalScore.setPingUdpDelay(map1.get(typ).getPingUdpDelay());
+							finalScore.setPingUdpDelayStd(map1.get(typ).getPingUdpDelayStd());
+							finalScore.setPingUdpDelayVar(map1.get(typ).getPingUdpDelayVar());
+							finalScore.setPingUdpJitter(map1.get(typ).getPingUdpJitter());
+							finalScore.setPingUdpJitterStd(map1.get(typ).getPingUdpJitterStd());
+							finalScore.setPingUdpJitterVar(map1.get(typ).getPingUdpJitterVar());
+							finalScore.setPingUdpLossRate(map1.get(typ).getPingUdpLossRate());
+						} else if (typ.equals("tracertIcmp")) {
+							finalScore.setTracertIcmpDelay(map1.get(typ).getTracertIcmpDelay());
+							finalScore.setTracertIcmpDelayStd(map1.get(typ).getTracertIcmpDelayStd());
+							finalScore.setTracertIcmpDelayVar(map1.get(typ).getTracertIcmpDelayVar());
+							finalScore.setTracertIcmpJitter(map1.get(typ).getTracertIcmpJitter());
+							finalScore.setTracertIcmpJitterStd(map1.get(typ).getTracertIcmpJitterStd());
+							finalScore.setTracertIcmpJitterVar(map1.get(typ).getTracertIcmpJitterVar());
+							finalScore.setTracertIcmpLossRate(map1.get(typ).getTracertIcmpLossRate());
+						} else if (typ.equals("tracertUdp")) {
+							finalScore.setTracertIcmpDelay(map1.get(typ).getTracertTcpDelay());
+							finalScore.setTracertIcmpDelayStd(map1.get(typ).getTracertTcpDelayStd());
+							finalScore.setTracertIcmpDelayVar(map1.get(typ).getTracertTcpDelayVar());
+							finalScore.setTracertIcmpJitter(map1.get(typ).getTracertTcpJitter());
+							finalScore.setTracertIcmpJitterStd(map1.get(typ).getTracertTcpJitterStd());
+							finalScore.setTracertIcmpJitterVar(map1.get(typ).getTracertTcpJitterVar());
+							finalScore.setTracertIcmpLossRate(map1.get(typ).getTracertTcpLossRate());
+						} else {
+						}
+						finalScore.setScore(finalScore.getScore() + (map1.get(typ).getScore()) * (map1.get(typ).getBase()));
+						finalScore.setBase(finalScore.getBase()+map1.get(typ).getBase());
+						i++;
+					}
+					finalScore.setScore(finalScore.getScore()/finalScore.getBase());
 					finalScore.setBase(Double.parseDouble(pros.getValue("connectionweight")));
 					connectionScore.add(finalScore);
 				} catch (IOException e) {
@@ -1582,6 +1721,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 
 		return connectionScore;
 	}
+
 
 	@Override
 	public List<ScoreEntity> dateChart1(List<ScoreEntity> scoreList){
@@ -1867,78 +2007,214 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 		return map;
 	}
 
-	//MapDate Function
-	public Map<ScoreDateEntity,ScoreBaseEntity> putMapDate(List<ScoreEntity> list,Map<ScoreDateEntity,ScoreBaseEntity> map){
+	//Map Date function
+	public Map<ScoreDateEntity,Map<String,ScoreBaseEntity>> putMapDate(List<ScoreEntity> list,Map<ScoreDateEntity,Map<String,ScoreBaseEntity>> map,String type){
 		for (int i = 0; i < list.size(); i++) {
-			ScoreDateEntity scoreTarget = new ScoreDateEntity();
-			scoreTarget.setCityId(list.get(i).getCityId());
-			scoreTarget.setCountyId(list.get(i).getCountyId());
-			scoreTarget.setProbeId(list.get(i).getProbeId());
-			scoreTarget.setTargetId(list.get(i).getTargetId());
-			scoreTarget.setCityName(list.get(i).getCityName());
-			scoreTarget.setCountyName(list.get(i).getCountyName());
-			scoreTarget.setProbeName(list.get(i).getProbeName());
-			scoreTarget.setTargetName(list.get(i).getTargetName());
-			scoreTarget.setAccessLayer(list.get(i).getAccessLayer());
-			scoreTarget.setRecordDate(list.get(i).getRecordDate());
-			scoreTarget.setRecordTime(list.get(i).getRecordTime());
-			scoreTarget.setFail(list.get(i).getFail());
-			scoreTarget.setTotal(list.get(i).getTotal());
+			ScoreDateEntity scoreDate = new ScoreDateEntity();
+			scoreDate.setCityId(list.get(i).getCityId());
+			scoreDate.setCountyId(list.get(i).getCountyId());
+			scoreDate.setProbeId(list.get(i).getProbeId());
+			scoreDate.setTargetId(list.get(i).getTargetId());
+			scoreDate.setCityName(list.get(i).getCityName());
+			scoreDate.setCountyName(list.get(i).getCountyName());
+			scoreDate.setProbeName(list.get(i).getProbeName());
+			scoreDate.setTargetName(list.get(i).getTargetName());
+			scoreDate.setAccessLayer(list.get(i).getAccessLayer());
+			scoreDate.setPort(list.get(i).getPort());
+			scoreDate.setRecordDate(list.get(i).getRecordDate());
+			scoreDate.setRecordTime(list.get(i).getRecordTime());
+			scoreDate.setFail(list.get(i).getFail());
+			scoreDate.setTotal(list.get(i).getTotal());
+			ScoreBaseEntity scoreBase = new ScoreBaseEntity();
+			if(type.equals("pingTcp")){
+				scoreBase.setPingTcpDelay(list.get(i).getPingTcpDelay());
+				scoreBase.setPingTcpDelayStd(list.get(i).getPingTcpDelayStd());
+				scoreBase.setPingTcpDelayVar(list.get(i).getPingTcpDelayVar());
+				scoreBase.setPingTcpJitter(list.get(i).getPingTcpJitter());
+				scoreBase.setPingTcpJitterStd(list.get(i).getPingTcpJitterStd());
+				scoreBase.setPingTcpJitterVar(list.get(i).getPingTcpJitterVar());
+				scoreBase.setPingTcpLossRate(list.get(i).getPingTcpLossRate());
+			}else if(type.equals("pingUdp")){
+				scoreBase.setPingUdpDelay(list.get(i).getPingUdpDelay());
+				scoreBase.setPingUdpDelayStd(list.get(i).getPingUdpDelayStd());
+				scoreBase.setPingUdpDelayVar(list.get(i).getPingUdpDelayVar());
+				scoreBase.setPingUdpJitter(list.get(i).getPingUdpJitter());
+				scoreBase.setPingUdpJitterStd(list.get(i).getPingUdpJitterStd());
+				scoreBase.setPingUdpJitterVar(list.get(i).getPingUdpJitterVar());
+				scoreBase.setPingUdpLossRate(list.get(i).getPingUdpLossRate());
+			}else if(type.equals("tracertIcmp")){
+				scoreBase.setTracertIcmpDelay(list.get(i).getTracertIcmpDelay());
+				scoreBase.setTracertIcmpDelayStd(list.get(i).getTracertIcmpDelayStd());
+				scoreBase.setTracertIcmpDelayVar(list.get(i).getTracertIcmpDelayVar());
+				scoreBase.setTracertIcmpJitter(list.get(i).getTracertIcmpJitter());
+				scoreBase.setTracertIcmpJitterStd(list.get(i).getTracertIcmpJitterStd());
+				scoreBase.setTracertIcmpJitterVar(list.get(i).getTracertIcmpJitterVar());
+				scoreBase.setTracertIcmpLossRate(list.get(i).getTracertIcmpLossRate());
+			}else if(type.equals("tracertTcp")){
+				scoreBase.setTracertTcpDelay(list.get(i).getTracertIcmpDelay());
+				scoreBase.setTracertTcpDelayStd(list.get(i).getTracertIcmpDelayStd());
+				scoreBase.setTracertTcpDelayVar(list.get(i).getTracertIcmpDelayVar());
+				scoreBase.setTracertTcpJitter(list.get(i).getTracertIcmpJitter());
+				scoreBase.setTracertTcpJitterStd(list.get(i).getTracertIcmpJitterStd());
+				scoreBase.setTracertTcpJitterVar(list.get(i).getTracertIcmpJitterVar());
+				scoreBase.setTracertTcpLossRate(list.get(i).getTracertIcmpLossRate());
+			}else if(type.equals("slaUdp")){
+				scoreBase.setSlaUdpDelay(list.get(i).getSlaUdpDelay());
+				scoreBase.setSlaUdpGDelay(list.get(i).getSlaUdpGDelay());
+				scoreBase.setSlaUdpRDelay(list.get(i).getSlaUdpRDelay());
+				scoreBase.setSlaUdpJitter(list.get(i).getSlaUdpJitter());
+				scoreBase.setSlaUdpGJitter(list.get(i).getSlaUdpGJitter());
+				scoreBase.setSlaUdpRJitter(list.get(i).getSlaUdpRJitter());
+				scoreBase.setSlaUdpLossRate(list.get(i).getSlaUdpLossRate());
+			}else if(type.equals("dns")){
+				scoreBase.setDnsDelay(list.get(i).getDnsDelay());
+				scoreBase.setDnsSuccessRate(list.get(i).getDnsSuccessRate());
+			}else if(type.equals("dhcp")){
+				scoreBase.setDhcpDelay(list.get(i).getDhcpDelay());
+				scoreBase.setDhcpSuccessRate(list.get(i).getDhcpSuccessRate());
+			}else if(type.equals("pppoe")){
+				scoreBase.setPppoeDelay(list.get(i).getPppoeDelay());
+				scoreBase.setPppoeDropRate(list.get(i).getPppoeDropRate());
+				scoreBase.setPppoeSuccessRate(list.get(i).getPppoeSuccessRate());
+			}else if(type.equals("radius")){
+				scoreBase.setRadiusDelay(list.get(i).getRadiusDelay());
+				scoreBase.setRadiusSuccessRate(list.get(i).getRadiusSuccessRate());
+			}else if(type.equals("ftpDownload")){
+				scoreBase.setFtpDownloadDnsDelay(list.get(i).getFtpDownloadDnsDelay());
+				scoreBase.setFtpDownloadConnDelay(list.get(i).getFtpDownloadConnDelay());
+				scoreBase.setFtpDownloadLoginDelay(list.get(i).getFtpDownloadLoginDelay());
+				scoreBase.setFtpDownloadHeadbyteDelay(list.get(i).getFtpDownloadHeadbyteDelay());
+				scoreBase.setFtpDownloadDownloadRate(list.get(i).getFtpDownloadDownloadRate());
+			}else if(type.equals("ftpUpload")){
+				scoreBase.setFtpDownloadDnsDelay(list.get(i).getFtpDownloadDnsDelay());
+				scoreBase.setFtpDownloadConnDelay(list.get(i).getFtpDownloadConnDelay());
+				scoreBase.setFtpDownloadLoginDelay(list.get(i).getFtpDownloadLoginDelay());
+				scoreBase.setFtpDownloadHeadbyteDelay(list.get(i).getFtpDownloadHeadbyteDelay());
+				scoreBase.setFtpDownloadDownloadRate(list.get(i).getFtpDownloadDownloadRate());
+			}else{}
+			scoreBase.setScore(list.get(i).getScore());
+			scoreBase.setBase(list.get(i).getBase());
 
 
-			if (!map.containsKey(scoreTarget)) {
-				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
-				scoreBase.setScore((list.get(i).getScore()) * (list.get(i).getBase()));
-				scoreBase.setBase(list.get(i).getBase());
+			if (!map.containsKey(scoreDate)) {
+				Map<String,ScoreBaseEntity> map1 = new HashMap<>();
 
-				map.put(scoreTarget, scoreBase);
+				map1.put(type,scoreBase);
+				map.put(scoreDate,map1);
+
 			} else {
-				ScoreBaseEntity scoreBaseDul = map.get(scoreTarget);
-				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
-				scoreBase.setScore((scoreBaseDul.getScore()) + (list.get(i).getScore()) * (list.get(i).getBase()));
-				scoreBase.setBase((scoreBaseDul.getBase()) + list.get(i).getBase());
-
-				map.put(scoreTarget, scoreBase);
+				Map<String,ScoreBaseEntity> map1= map.get(scoreDate);
+				map1.put(type,scoreBase);
+				map.put(scoreDate,map1);
 			}
 		}
 		return map;
 	}
 
-	//MapArea Function
-	public Map<ScoreAreaEntity,ScoreBaseEntity> putMapArea(List<ScoreEntity> list,Map<ScoreAreaEntity,ScoreBaseEntity> map){
+	//Map Area Function
+	public Map<ScoreAreaEntity,Map<String,ScoreBaseEntity>> putMapArea(List<ScoreEntity> list,Map<ScoreAreaEntity,Map<String,ScoreBaseEntity>> map,String type){
 		for (int i = 0; i < list.size(); i++) {
-			ScoreAreaEntity scoreTarget = new ScoreAreaEntity();
-			scoreTarget.setCityId(list.get(i).getCityId());
-			scoreTarget.setCountyId(list.get(i).getCountyId());
-			scoreTarget.setProbeId(list.get(i).getProbeId());
-			scoreTarget.setTargetId(list.get(i).getTargetId());
-			scoreTarget.setCityName(list.get(i).getCityName());
-			scoreTarget.setCountyName(list.get(i).getCountyName());
-			scoreTarget.setProbeName(list.get(i).getProbeName());
-			scoreTarget.setTargetName(list.get(i).getTargetName());
-			scoreTarget.setAccessLayer(list.get(i).getAccessLayer());
-			scoreTarget.setRecordDate(list.get(i).getRecordDate());
-			scoreTarget.setRecordTime(list.get(i).getRecordTime());
-			scoreTarget.setFail(list.get(i).getFail());
-			scoreTarget.setTotal(list.get(i).getTotal());
+			ScoreAreaEntity scoreArea = new ScoreAreaEntity();
+			scoreArea.setCityId(list.get(i).getCityId());
+			scoreArea.setCountyId(list.get(i).getCountyId());
+			scoreArea.setProbeId(list.get(i).getProbeId());
+			scoreArea.setTargetId(list.get(i).getTargetId());
+			scoreArea.setCityName(list.get(i).getCityName());
+			scoreArea.setCountyName(list.get(i).getCountyName());
+			scoreArea.setProbeName(list.get(i).getProbeName());
+			scoreArea.setTargetName(list.get(i).getTargetName());
+			scoreArea.setAccessLayer(list.get(i).getAccessLayer());
+			scoreArea.setPort(list.get(i).getPort());
+			scoreArea.setRecordDate(list.get(i).getRecordDate());
+			scoreArea.setRecordTime(list.get(i).getRecordTime());
+			scoreArea.setFail(list.get(i).getFail());
+			scoreArea.setTotal(list.get(i).getTotal());
+			ScoreBaseEntity scoreBase = new ScoreBaseEntity();
+			if(type.equals("pingTcp")){
+				scoreBase.setPingTcpDelay(list.get(i).getPingTcpDelay());
+				scoreBase.setPingTcpDelayStd(list.get(i).getPingTcpDelayStd());
+				scoreBase.setPingTcpDelayVar(list.get(i).getPingTcpDelayVar());
+				scoreBase.setPingTcpJitter(list.get(i).getPingTcpJitter());
+				scoreBase.setPingTcpJitterStd(list.get(i).getPingTcpJitterStd());
+				scoreBase.setPingTcpJitterVar(list.get(i).getPingTcpJitterVar());
+				scoreBase.setPingTcpLossRate(list.get(i).getPingTcpLossRate());
+			}else if(type.equals("pingUdp")){
+				scoreBase.setPingUdpDelay(list.get(i).getPingUdpDelay());
+				scoreBase.setPingUdpDelayStd(list.get(i).getPingUdpDelayStd());
+				scoreBase.setPingUdpDelayVar(list.get(i).getPingUdpDelayVar());
+				scoreBase.setPingUdpJitter(list.get(i).getPingUdpJitter());
+				scoreBase.setPingUdpJitterStd(list.get(i).getPingUdpJitterStd());
+				scoreBase.setPingUdpJitterVar(list.get(i).getPingUdpJitterVar());
+				scoreBase.setPingUdpLossRate(list.get(i).getPingUdpLossRate());
+			}else if(type.equals("tracertIcmp")){
+				scoreBase.setTracertIcmpDelay(list.get(i).getTracertIcmpDelay());
+				scoreBase.setTracertIcmpDelayStd(list.get(i).getTracertIcmpDelayStd());
+				scoreBase.setTracertIcmpDelayVar(list.get(i).getTracertIcmpDelayVar());
+				scoreBase.setTracertIcmpJitter(list.get(i).getTracertIcmpJitter());
+				scoreBase.setTracertIcmpJitterStd(list.get(i).getTracertIcmpJitterStd());
+				scoreBase.setTracertIcmpJitterVar(list.get(i).getTracertIcmpJitterVar());
+				scoreBase.setTracertIcmpLossRate(list.get(i).getTracertIcmpLossRate());
+			}else if(type.equals("tracertTcp")){
+				scoreBase.setTracertTcpDelay(list.get(i).getTracertIcmpDelay());
+				scoreBase.setTracertTcpDelayStd(list.get(i).getTracertIcmpDelayStd());
+				scoreBase.setTracertTcpDelayVar(list.get(i).getTracertIcmpDelayVar());
+				scoreBase.setTracertTcpJitter(list.get(i).getTracertIcmpJitter());
+				scoreBase.setTracertTcpJitterStd(list.get(i).getTracertIcmpJitterStd());
+				scoreBase.setTracertTcpJitterVar(list.get(i).getTracertIcmpJitterVar());
+				scoreBase.setTracertTcpLossRate(list.get(i).getTracertIcmpLossRate());
+			}else if(type.equals("slaUdp")){
+				scoreBase.setSlaUdpDelay(list.get(i).getSlaUdpDelay());
+				scoreBase.setSlaUdpGDelay(list.get(i).getSlaUdpGDelay());
+				scoreBase.setSlaUdpRDelay(list.get(i).getSlaUdpRDelay());
+				scoreBase.setSlaUdpJitter(list.get(i).getSlaUdpJitter());
+				scoreBase.setSlaUdpGJitter(list.get(i).getSlaUdpGJitter());
+				scoreBase.setSlaUdpRJitter(list.get(i).getSlaUdpRJitter());
+				scoreBase.setSlaUdpLossRate(list.get(i).getSlaUdpLossRate());
+			}else if(type.equals("dns")){
+				scoreBase.setDnsDelay(list.get(i).getDnsDelay());
+				scoreBase.setDnsSuccessRate(list.get(i).getDnsSuccessRate());
+			}else if(type.equals("dhcp")){
+				scoreBase.setDhcpDelay(list.get(i).getDhcpDelay());
+				scoreBase.setDhcpSuccessRate(list.get(i).getDhcpSuccessRate());
+			}else if(type.equals("pppoe")){
+				scoreBase.setPppoeDelay(list.get(i).getPppoeDelay());
+				scoreBase.setPppoeDropRate(list.get(i).getPppoeDropRate());
+				scoreBase.setPppoeSuccessRate(list.get(i).getPppoeSuccessRate());
+			}else if(type.equals("radius")){
+				scoreBase.setRadiusDelay(list.get(i).getRadiusDelay());
+				scoreBase.setRadiusSuccessRate(list.get(i).getRadiusSuccessRate());
+			}else if(type.equals("ftpDownload")){
+				scoreBase.setFtpDownloadDnsDelay(list.get(i).getFtpDownloadDnsDelay());
+				scoreBase.setFtpDownloadConnDelay(list.get(i).getFtpDownloadConnDelay());
+				scoreBase.setFtpDownloadLoginDelay(list.get(i).getFtpDownloadLoginDelay());
+				scoreBase.setFtpDownloadHeadbyteDelay(list.get(i).getFtpDownloadHeadbyteDelay());
+				scoreBase.setFtpDownloadDownloadRate(list.get(i).getFtpDownloadDownloadRate());
+			}else if(type.equals("ftpUpload")){
+				scoreBase.setFtpDownloadDnsDelay(list.get(i).getFtpDownloadDnsDelay());
+				scoreBase.setFtpDownloadConnDelay(list.get(i).getFtpDownloadConnDelay());
+				scoreBase.setFtpDownloadLoginDelay(list.get(i).getFtpDownloadLoginDelay());
+				scoreBase.setFtpDownloadHeadbyteDelay(list.get(i).getFtpDownloadHeadbyteDelay());
+				scoreBase.setFtpDownloadDownloadRate(list.get(i).getFtpDownloadDownloadRate());
+			}else{}
+			scoreBase.setScore(list.get(i).getScore());
+			scoreBase.setBase(list.get(i).getBase());
 
-			if (!map.containsKey(scoreTarget)) {
-				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
-				scoreBase.setScore((list.get(i).getScore()) * (list.get(i).getBase()));
-				scoreBase.setBase(list.get(i).getBase());
 
-				map.put(scoreTarget, scoreBase);
+			if (!map.containsKey(scoreArea)) {
+				Map<String,ScoreBaseEntity> map1 = new HashMap<>();
+
+				map1.put(type,scoreBase);
+				map.put(scoreArea,map1);
+
 			} else {
-				ScoreBaseEntity scoreBaseDul = map.get(scoreTarget);
-				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
-				scoreBase.setScore((scoreBaseDul.getScore()) + (list.get(i).getScore()) * (list.get(i).getBase()));
-				scoreBase.setBase((scoreBaseDul.getBase()) + list.get(i).getBase());
-
-				map.put(scoreTarget, scoreBase);
+				Map<String,ScoreBaseEntity> map1= map.get(scoreArea);
+				map1.put(type,scoreBase);
+				map.put(scoreArea,map1);
 			}
 		}
 		return map;
 	}
+
 
 	@Override
 	public int differentDays(Date date1,Date date2)

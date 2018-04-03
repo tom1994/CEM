@@ -166,7 +166,7 @@ function xChange(param) {
                 var arr = [];
                 $.ajax({
                     type: "POST",
-                    // async: false, //同步执行
+                    async: false, //同步执行
                     url: "../../recordhourping/connection",
                     cache: false,  //禁用缓存
                     data: param,  //传入组装的参数
@@ -180,7 +180,8 @@ function xChange(param) {
                             }
                         }else{
                             for(var i=0;i<result.scoreList.length;i++){
-                                arr.push(result.scoreList[i].recordTime+":00");
+                                var dateStrs = result.scoreList[i].recordDate.split(" ");
+                                arr.push(dateStrs[0] + " " + result.scoreList[i].recordTime+":00");
                             }
                         }
 
@@ -201,12 +202,14 @@ function xChange(param) {
             }
         },
         tooltip: {
-            crosshairs: true,
-            headerFormat: '<b>{series.name}</b><br>',
-            pointFormat: '  分数:{point.y:.2f}分',
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
+            footerFormat: '</table>',
+            // shared: true,
+            useHTML: true
         },
         plotOptions: {
-            stickyTracking: false,
             column: {
                 pointPadding: 0.2,
                 borderWidth: 0
@@ -224,7 +227,7 @@ function xChange(param) {
                 var arr = [];
                 $.ajax({
                     type: "POST",
-                    // async: false, //同步执行
+                    async: false, //同步执行
                     url: "../../recordhourping/connection",
                     cache: false,  //禁用缓存
                     data: param,  //传入组装的参数
@@ -259,7 +262,7 @@ function xChange(param) {
                 var arr = [];
                 $.ajax({
                     type: "POST",
-                    // async: false, //同步执行
+                    async: false, //同步执行
                     url: "../../recordhourping/quality",
                     cache: false,  //禁用缓存
                     data: param,  //传入组装的参数
@@ -273,7 +276,8 @@ function xChange(param) {
                             }
                         }else{
                             for(var i=0;i<result.scoreList.length;i++){
-                                arr.push(result.scoreList[i].recordTime+":00");
+                                var dateStrs = result.scoreList[i].recordDate.split(" ");
+                                arr.push(dateStrs[0] + " " + result.scoreList[i].recordTime+":00");
                             }
                         }
 
@@ -294,12 +298,14 @@ function xChange(param) {
             }
         },
         tooltip: {
-            crosshairs: true,
-            headerFormat: '<b>{series.name}</b><br>',
-            pointFormat: '  分数:{point.y:.2f}分',
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
+            footerFormat: '</table>',
+            // shared: true,
+            useHTML: true
         },
         plotOptions: {
-            stickyTracking: false,
             column: {
                 pointPadding: 0.2,
                 borderWidth: 0
@@ -317,7 +323,7 @@ function xChange(param) {
                 var arr = [];
                 $.ajax({
                     type: "POST",
-                    // async: false, //同步执行
+                    async: false, //同步执行
                     url: "../../recordhourping/quality",
                     cache: false,  //禁用缓存
                     data: param,  //传入组装的参数
@@ -352,7 +358,7 @@ function xChange(param) {
                 var arr = [];
                 $.ajax({
                     type: "POST",
-                    // async: false, //同步执行
+                    async: false, //同步执行
                     url: "../../recordhourping/download",
                     cache: false,  //禁用缓存
                     data: param,  //传入组装的参数
@@ -366,7 +372,8 @@ function xChange(param) {
                             }
                         }else{
                             for(var i=0;i<result.scoreList.length;i++){
-                                arr.push(result.scoreList[i].recordTime+":00");
+                                var dateStrs = result.scoreList[i].recordDate.split(" ");
+                                arr.push(dateStrs[0] + " " + result.scoreList[i].recordTime+":00");
                             }
                         }
 
@@ -387,12 +394,14 @@ function xChange(param) {
             }
         },
         tooltip: {
-            crosshairs: true,
-            headerFormat: '<b>{series.name}</b><br>',
-            pointFormat: '日期:{point.x}  分数:{point.y:.2f}分',
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
+            footerFormat: '</table>',
+            // shared: true,
+            useHTML: true
         },
         plotOptions: {
-            stickyTracking: false,
             column: {
                 pointPadding: 0.2,
                 borderWidth: 0
@@ -410,7 +419,7 @@ function xChange(param) {
                 var arr = [];
                 $.ajax({
                     type: "POST",
-                    // async: false, //同步执行
+                    async: false, //同步执行
                     url: "../../recordhourping/download",
                     cache: false,  //禁用缓存
                     data: param,  //传入组装的参数
@@ -445,7 +454,7 @@ function xChange(param) {
                 var arr = [];
                 $.ajax({
                     type: "POST",
-                    // async: false, //同步执行
+                    async: false, //同步执行
                     url: "../../recordhourping/page",
                     cache: false,  //禁用缓存
                     data: param,  //传入组装的参数
@@ -459,7 +468,8 @@ function xChange(param) {
                             }
                         }else{
                             for(var i=0;i<result.scoreList.length;i++){
-                                arr.push(result.scoreList[i].recordTime+":00");
+                                var dateStrs = result.scoreList[i].recordDate.split(" ");
+                                arr.push(dateStrs[0] + " " + result.scoreList[i].recordTime+":00");
                             }
                         }
 
@@ -480,12 +490,14 @@ function xChange(param) {
             }
         },
         tooltip: {
-            crosshairs: true,
-            headerFormat: '<b>{series.name}</b><br>',
-            pointFormat: '  分数:{point.y:.2f}分',
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
+            footerFormat: '</table>',
+            // shared: true,
+            useHTML: true
         },
         plotOptions: {
-            stickyTracking: false,
             column: {
                 pointPadding: 0.2,
                 borderWidth: 0
@@ -503,7 +515,7 @@ function xChange(param) {
                 var arr = [];
                 $.ajax({
                     type: "POST",
-                    // async: false, //同步执行
+                    async: false, //同步执行
                     url: "../../recordhourping/page",
                     cache: false,  //禁用缓存
                     data: param,  //传入组装的参数
@@ -538,7 +550,7 @@ function xChange(param) {
                 var arr = [];
                 $.ajax({
                     type: "POST",
-                    // async: false, //同步执行
+                    async: false, //同步执行
                     url: "../../recordhourping/video",
                     cache: false,  //禁用缓存
                     data: param,  //传入组装的参数
@@ -552,7 +564,8 @@ function xChange(param) {
                             }
                         }else{
                             for(var i=0;i<result.scoreList.length;i++){
-                                arr.push(result.scoreList[i].recordTime+":00");
+                                var dateStrs = result.scoreList[i].recordDate.split(" ");
+                                arr.push(dateStrs[0] + " " + result.scoreList[i].recordTime+":00");
                             }
                         }
 
@@ -573,12 +586,14 @@ function xChange(param) {
             }
         },
         tooltip: {
-            crosshairs: true,
-            headerFormat: '<b>{series.name}</b><br>',
-            pointFormat: '  分数:{point.y:.2f}分',
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
+            footerFormat: '</table>',
+            // shared: true,
+            useHTML: true
         },
         plotOptions: {
-            stickyTracking: false,
             column: {
                 pointPadding: 0.2,
                 borderWidth: 0
@@ -596,7 +611,7 @@ function xChange(param) {
                 var arr = [];
                 $.ajax({
                     type: "POST",
-                    // async: false, //同步执行
+                    async: false, //同步执行
                     url: "../../recordhourping/video",
                     cache: false,  //禁用缓存
                     data: param,  //传入组装的参数
@@ -631,7 +646,7 @@ function xChange(param) {
                 var arr = [];
                 $.ajax({
                     type: "POST",
-                    // async: false, //同步执行
+                    async: false, //同步执行
                     url: "../../recordhourping/game",
                     cache: false,  //禁用缓存
                     data: param,  //传入组装的参数
@@ -645,7 +660,8 @@ function xChange(param) {
                             }
                         }else{
                             for(var i=0;i<result.scoreList.length;i++){
-                                arr.push(result.scoreList[i].recordTime+":00");
+                                var dateStrs = result.scoreList[i].recordDate.split(" ");
+                                arr.push(dateStrs[0] + " " + result.scoreList[i].recordTime+":00");
                             }
                         }
 
@@ -666,12 +682,14 @@ function xChange(param) {
             }
         },
         tooltip: {
-            crosshairs: true,
-            headerFormat: '<b>{series.name}</b><br>',
-            pointFormat: '  分数:{point.y:.2f}分',
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
+            footerFormat: '</table>',
+            // shared: true,
+            useHTML: true
         },
         plotOptions: {
-            stickyTracking: false,
             column: {
                 pointPadding: 0.2,
                 borderWidth: 0
@@ -689,7 +707,7 @@ function xChange(param) {
                 var arr = [];
                 $.ajax({
                     type: "POST",
-                    // async: false, //同步执行
+                    async: false, //同步执行
                     url: "../../recordhourping/game",
                     cache: false,  //禁用缓存
                     data: param,  //传入组装的参数
@@ -920,7 +938,6 @@ var getProbe = function (countyid) {
 };
 
 
-
 var connection_service = new Vue({
     el: '#v-for-connection',
     data: {
@@ -1060,7 +1077,6 @@ var connection_chart = new Vue({
         // var chart = new Highcharts.Chart('container_connection', options)
         $('#container_connection').highcharts({
             chart: {
-                type: 'spline',
                 backgroundColor: 'rgba(0,0,0,0)'
             },
             title: {
@@ -1077,14 +1093,15 @@ var connection_chart = new Vue({
                     var arr = [];
                     $.ajax({
                         type: "POST",
-                        // async: false, //同步执行
+                        async: false, //同步执行
                         url: "../../recordhourping/connection",
                         cache: false,  //禁用缓存
                         data: param,  //传入组装的参数
                         dataType: "json",
                         success: function (result) {
                             for(var i=0;i<result.scoreList.length;i++){
-                                arr.push(result.scoreList[i].recordTime+":00");
+                                var dateStrs = result.scoreList[i].recordDate.split(" ");
+                                arr.push(dateStrs[0] + " " + result.scoreList[i].recordTime+":00");
                             }
                         }
                     })
@@ -1102,22 +1119,24 @@ var connection_chart = new Vue({
                 },
             },
             tooltip: {
+                xDateFormat: '%Y-%m-%d',
                 headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
                 pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.1f} Q</b></td></tr>',
+                '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
                 footerFormat: '</table>',
-                shared: true,
-                useHTML: true
+                useHTML: true,
             },
             plotOptions: {
-                stickyTracking: false,
+                series: {
+                    stickyTracking: false,
+                    // pointStart: Date.UTC(2018, 3, 26),
+                    // pointInterval: 24 * 3600 * 1000
+                },
                 column: {
                     pointPadding: 0.2,
                     borderWidth: 0
                 },
-                series: {
-                    stickyTracking: false
-                }
+
             },
             exporting: {
                 enabled:false
@@ -1128,7 +1147,7 @@ var connection_chart = new Vue({
                     var arr = [];
                     $.ajax({
                         type: "POST",
-                        // async: false, //同步执行
+                        async: false, //同步执行
                         url: "../../recordhourping/connection",
                         cache: false,  //禁用缓存
                         data: param,  //传入组装的参数
@@ -1139,8 +1158,8 @@ var connection_chart = new Vue({
                                 arr.push(parseFloat(result.scoreList[i].score));
                             }
                         }
-                    });
-                    return arr.sort();
+                    })
+                    return arr.sort();;
                 })(),
                 showInLegend: false,
             }]
@@ -1178,14 +1197,15 @@ var quality_chart = new Vue({
                     var arr = [];
                     $.ajax({
                         type: "POST",
-                        // async: false, //同步执行
+                        async: false, //同步执行
                         url: "../../recordhourping/quality",
                         cache: false,  //禁用缓存
                         data: param,  //传入组装的参数
                         dataType: "json",
                         success: function (result) {
                             for(var i=0;i<result.scoreList.length;i++){
-                                arr.push(result.scoreList[i].recordTime+":00");
+                                var dateStrs = result.scoreList[i].recordDate.split(" ");
+                                arr.push(dateStrs[0] + " " + result.scoreList[i].recordTime+":00");
                             }
                         }
                     })
@@ -1204,20 +1224,20 @@ var quality_chart = new Vue({
             tooltip: {
                 headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
                 pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.1f} Q</b></td></tr>',
+                '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
                 footerFormat: '</table>',
-                shared: true,
+                // shared: true,
                 useHTML: true
             },
             plotOptions: {
-                stickyTracking: false,
+                series: {
+                    stickyTracking: false
+                },
                 column: {
                     pointPadding: 0.2,
                     borderWidth: 0
                 },
-                series: {
-                    stickyTracking: false
-                }
+
             },
             exporting: {
                 enabled:false
@@ -1228,7 +1248,7 @@ var quality_chart = new Vue({
                     var arr = [];
                     $.ajax({
                         type: "POST",
-                        // async: false, //同步执行
+                        async: false, //同步执行
                         url: "../../recordhourping/quality",
                         cache: false,  //禁用缓存
                         data: param,  //传入组装的参数
@@ -1281,14 +1301,15 @@ var download_chart = new Vue({
                     var arr = [];
                     $.ajax({
                         type: "POST",
-                        // async: false, //同步执行
+                        async: false, //同步执行
                         url: "../../recordhourping/download",
                         cache: false,  //禁用缓存
                         data: param,  //传入组装的参数
                         dataType: "json",
                         success: function (result) {
                             for(var i=0;i<result.scoreList.length;i++){
-                                arr.push(result.scoreList[i].recordTime+":00");
+                                var dateStrs = result.scoreList[i].recordDate.split(" ");
+                                arr.push(dateStrs[0] + " " + result.scoreList[i].recordTime+":00");
                             }
                         }
                     })
@@ -1307,13 +1328,12 @@ var download_chart = new Vue({
             tooltip: {
                 headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
                 pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.1f} Q</b></td></tr>',
+                '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
                 footerFormat: '</table>',
-                shared: true,
+                // shared: true,
                 useHTML: true
             },
             plotOptions: {
-                stickyTracking: false,
                 column: {
                     pointPadding: 0.2,
                     borderWidth: 0
@@ -1331,7 +1351,7 @@ var download_chart = new Vue({
                     var arr = [];
                     $.ajax({
                         type: "POST",
-                        // async: false, //同步执行
+                        async: false, //同步执行
                         url: "../../recordhourping/download",
                         cache: false,  //禁用缓存
                         data: param,  //传入组装的参数
@@ -1384,14 +1404,15 @@ var page_chart = new Vue({
                     var arr = [];
                     $.ajax({
                         type: "POST",
-                        // async: false, //同步执行
+                        async: false, //同步执行
                         url: "../../recordhourping/page",
                         cache: false,  //禁用缓存
                         data: param,  //传入组装的参数
                         dataType: "json",
                         success: function (result) {
                             for(var i=0;i<result.scoreList.length;i++){
-                                arr.push(result.scoreList[i].recordTime+":00");
+                                var dateStrs = result.scoreList[i].recordDate.split(" ");
+                                arr.push(dateStrs[0] + " " + result.scoreList[i].recordTime+":00");
                             }
                         }
                     })
@@ -1410,13 +1431,12 @@ var page_chart = new Vue({
             tooltip: {
                 headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
                 pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.1f} Q</b></td></tr>',
+                '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
                 footerFormat: '</table>',
-                shared: true,
+                // shared: true,
                 useHTML: true
             },
             plotOptions: {
-                stickyTracking: false,
                 column: {
                     pointPadding: 0.2,
                     borderWidth: 0
@@ -1434,7 +1454,7 @@ var page_chart = new Vue({
                     var arr = [];
                     $.ajax({
                         type: "POST",
-                        // async: false, //同步执行
+                        async: false, //同步执行
                         url: "../../recordhourping/page",
                         cache: false,  //禁用缓存
                         data: param,  //传入组装的参数
@@ -1488,15 +1508,15 @@ var video_chart = new Vue({
                     var arr = [];
                     $.ajax({
                         type: "POST",
-                        // async: false, //同步执行
+                        async: false, //同步执行
                         url: "../../recordhourping/video",
                         cache: false,  //禁用缓存
                         data: param,  //传入组装的参数
                         dataType: "json",
                         success: function (result) {
-                            debugger
                             for(var i=0;i<result.scoreList.length;i++){
-                                arr.push(result.scoreList[i].recordTime+":00");
+                                var dateStrs = result.scoreList[i].recordDate.split(" ");
+                                arr.push(dateStrs[0] + " " + result.scoreList[i].recordTime+":00");
                             }
                         }
                     })
@@ -1515,13 +1535,12 @@ var video_chart = new Vue({
             tooltip: {
                 headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
                 pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.1f} Q</b></td></tr>',
+                '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
                 footerFormat: '</table>',
-                shared: true,
+                // shared: true,
                 useHTML: true
             },
             plotOptions: {
-                stickyTracking: false,
                 column: {
                     pointPadding: 0.2,
                     borderWidth: 0
@@ -1539,7 +1558,7 @@ var video_chart = new Vue({
                     var arr = [];
                     $.ajax({
                         type: "POST",
-                        // async: false, //同步执行
+                        async: false, //同步执行
                         url: "../../recordhourping/video",
                         cache: false,  //禁用缓存
                         data: param,  //传入组装的参数
@@ -1593,15 +1612,15 @@ var game_chart = new Vue({
                     var arr = [];
                     $.ajax({
                         type: "POST",
-                        // async: false, //同步执行
+                        async: false, //同步执行
                         url: "../../recordhourping/game",
                         cache: false,  //禁用缓存
                         data: param,  //传入组装的参数
                         dataType: "json",
                         success: function (result) {
                             for(var i=0;i<result.scoreList.length;i++){
-
-                                arr.push(result.scoreList[i].recordTime+":00");
+                                var dateStrs = result.scoreList[i].recordDate.split(" ");
+                                arr.push(dateStrs[0] + " " + result.scoreList[i].recordTime+":00");
                             }
                         }
                     })
@@ -1618,15 +1637,15 @@ var game_chart = new Vue({
                 }
             },
             tooltip: {
+
                 headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
                 pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.1f} Q</b></td></tr>',
+                '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
                 footerFormat: '</table>',
-                shared: true,
+                // shared: true,
                 useHTML: true
             },
             plotOptions: {
-                stickyTracking: false,
                 column: {
                     pointPadding: 0.2,
                     borderWidth: 0
@@ -1644,7 +1663,7 @@ var game_chart = new Vue({
                     var arr = [];
                     $.ajax({
                         type: "POST",
-                        // async: false, //同步执行
+                        async: false, //同步执行
                         url: "../../recordhourping/game",
                         cache: false,  //禁用缓存
                         data: param,  //传入组装的参数
