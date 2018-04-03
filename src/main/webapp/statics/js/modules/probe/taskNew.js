@@ -381,10 +381,10 @@ function dispatch_info(obj) {
 }
 
 function selectOnchang(obj) {
-    var value = obj.options[obj.selectedIndex].value;
-    queryPort(value)
+    queryPort($('#first').val())
 }
 var queryPort = function (probeid) {
+    debugger;
     var id=parseInt(probeid);
     $.ajax({
         type: "POST", /*GET会乱码*/
@@ -393,17 +393,11 @@ var queryPort = function (probeid) {
         dataType: "json",
         // contentType: "application/json", /*必须要,不可少*/
         success: function (result) {
-            debugger
             var port = [];
-            if(result.probe){
                 port=JSON.parse(result.probe.portIp);
-
                 for(var i=0;i<port.length;i++){
                     $('#second').append("<option value=" + port[i].port + ">" + port[i].port+ "</option>");
                 }
-                $('#second').selectpicker('refresh');
-                $('#second').selectpicker('render');
-            }
 
             }
         })
@@ -430,16 +424,12 @@ function task_assign(obj) {
         contentType: "application/json", /*必须要,不可少*/
         success: function (result) {
             var probes = [];
-
             for (var i = 0; i < result.probe.length; i++) {
                 probes[i] = {message: result.probe[i]};
+                console.log(1111)
                 $('#first').append("<option value=" + probes[i].message.id + ">" + probes[i].message.name + "</option>");
             }
-
-            $('#first').selectpicker('refresh');
-            $('#first').selectpicker('render');
         },
-
     })
     $.ajax({
         type: "POST", /*GET会乱码*/
@@ -686,6 +676,7 @@ function submit_dispatch() {
         var taskDispatch = {};
         // taskDispatch.probePort = "port1";
         taskDispatch.status = 0;
+
         if (b == 1) {
             if (typeof targetList.targetId == "number") {
                 taskDispatch.targetIds = [];
@@ -703,10 +694,12 @@ function submit_dispatch() {
         }
         taskDispatch.taskId = targetList.taskId;
         taskDispatch.isOndemand = 0;
-        // taskDispatch.probeIds = probeList.probeId;
         taskDispatch.testNumber = 0;
-        if (typeof probeList.probe == "number") {
-            taskDispatch.probe = probeList.probe;
+        if (typeof probeList.probeIds == "number") {
+            taskDispatch.probeIds = [];
+            taskDispatch.probeIds.push(probeList.probeIds)
+        } else {
+            taskDispatch.probeIds = probeList.probeIds
         }
         if(typeof probeList.probePort == "number"){
             taskDispatch.probePort = [];
@@ -715,7 +708,7 @@ function submit_dispatch() {
             taskDispatch.probePort = probeList.probePort;
         }
         console.log(taskDispatch);
-        if (typeof taskDispatch.probe == "undefined") {
+        if (typeof taskDispatch.probeIds == "undefined") {
             toastr.warning("请选择探针!");
         } else if (b == 1 && typeof taskDispatch.targetIds == "undefined") {
             toastr.warning("请选择测试目标!");
