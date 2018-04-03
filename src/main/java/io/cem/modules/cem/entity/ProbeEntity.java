@@ -66,47 +66,64 @@ public class ProbeEntity implements Serializable {
 	@ExportName(exportName = "接入BRAS名称")
 	private String brasName;
 	//接入BRAS IP
+	@ExportName(exportName = "接入BRASip")
 	private String brasIp;
 	//接入BRAS端口
+	@ExportName(exportName = "接入BRAS端口")
 	private String brasPort;
 	//接入运营商
 	@ExcelIgnore
 	private Integer isp;
 
 	//探针类型
+	@ExportName(exportName = "探针类型")
 	private String typeName;
-
+	@ExportName(exportName = "接入运营商")
 	private String ispName;
 	//探针状态
 	@ExcelIgnore
 	private Integer status;
 	//探针状态
+	@ExportName(exportName = "探针状态")
 	private String statusName;
 	//设备型号
+	@ExportName(exportName = "设备型号")
 	private String device;
 	//软件版本
+	@ExportName(exportName = "软件版本")
 	private String version;
 	//注册时间
+	@ExportName(exportName = "注册时间")
 	private Date registerTime;
 	//并发任务数
+	@ExcelIgnore
 	private Integer concurrentTask;
 	//心跳间隔
+	@ExportName(exportName = "心跳间隔")
 	private Integer hbInterval;
 	//上次心跳时间
+	@ExportName(exportName = "上次心跳时间")
 	private Date lastHbTime;
 	//任务间隔
+	@ExcelIgnore
 	private Integer taskInterval;
 	//上报间隔
+	@ExcelIgnore
 	private Integer reportInterval;
 	//上次上报时间
+	@ExportName(exportName = "上次上报时间")
 	private Date lastReportTime;
 	//更新间隔
+	@ExcelIgnore
 	private Integer updateInterval;
 	//上次更新时间
+	@ExportName(exportName = "上次更新时间")
 	private Date lastUpdateTime;
 	//备注
+	@ExportName(exportName = "备注")
 	private String remark;
 	//创建时间
+	@ExportName(exportName = "创建时间")
 	private Date createTime;
 
 
