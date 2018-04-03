@@ -985,6 +985,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				scoreTarget.setCountyName(slaTcp.get(i).getCountyName());
 				scoreTarget.setProbeName(slaTcp.get(i).getProbeName());
 				scoreTarget.setTargetName(slaTcp.get(i).getTargetName());
+				scoreTarget.setRecordTime(slaTcp.get(i).getRecordTime());
+				scoreTarget.setRecordDate(slaTcp.get(i).getRecordDate());
 				scoreTarget.setAccessLayer(slaTcp.get(i).getAccessLayer());
 				scoreTarget.setPort(slaTcp.get(i).getPort());
 				scoreTarget.setFail(slaTcp.get(i).getFail());
@@ -1029,6 +1031,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 					finalScore.setTargetId(ite.getTargetId());
 					finalScore.setTargetName(ite.getTargetName());
 					finalScore.setAccessLayer(ite.getAccessLayer());
+					finalScore.setRecordTime(ite.getRecordTime());
+					finalScore.setRecordDate(ite.getRecordDate());
 					finalScore.setPort(ite.getPort());
 					finalScore.setScore(0.0);
 					finalScore.setBase(0.0);
@@ -1090,30 +1094,42 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 		List<ScoreEntity> connectionScore = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
-			Map<ScoreAreaEntity, ScoreBaseEntity> connection = new HashMap<>();
+			Map<ScoreAreaEntity, Map<String,ScoreBaseEntity>> connection = new HashMap<>();
 			for (int i = 0; i < slaTcp.size(); i++) {
-				ScoreAreaEntity scoreTarget = new ScoreAreaEntity();
-				scoreTarget.setCityId(slaTcp.get(i).getCityId());
-				scoreTarget.setCountyId(slaTcp.get(i).getCountyId());
-				scoreTarget.setProbeId(slaTcp.get(i).getProbeId());
-				scoreTarget.setTargetId(slaTcp.get(i).getTargetId());
-				scoreTarget.setCityName(slaTcp.get(i).getCityName());
-				scoreTarget.setCountyName(slaTcp.get(i).getCountyName());
-				scoreTarget.setProbeName(slaTcp.get(i).getProbeName());
-				scoreTarget.setTargetName(slaTcp.get(i).getTargetName());
-				scoreTarget.setAccessLayer(slaTcp.get(i).getAccessLayer());
-				scoreTarget.setFail(slaTcp.get(i).getFail());
-				scoreTarget.setTotal(slaTcp.get(i).getTotal());
+				ScoreAreaEntity scoreArea = new ScoreAreaEntity();
+				scoreArea.setCityId(slaTcp.get(i).getCityId());
+				scoreArea.setCountyId(slaTcp.get(i).getCountyId());
+				scoreArea.setProbeId(slaTcp.get(i).getProbeId());
+				scoreArea.setTargetId(slaTcp.get(i).getTargetId());
+				scoreArea.setCityName(slaTcp.get(i).getCityName());
+				scoreArea.setCountyName(slaTcp.get(i).getCountyName());
+				scoreArea.setProbeName(slaTcp.get(i).getProbeName());
+				scoreArea.setTargetName(slaTcp.get(i).getTargetName());
+				scoreArea.setAccessLayer(slaTcp.get(i).getAccessLayer());
+				scoreArea.setRecordTime(slaTcp.get(i).getRecordTime());
+				scoreArea.setRecordDate(slaTcp.get(i).getRecordDate());
+				scoreArea.setPort(slaTcp.get(i).getPort());
+				scoreArea.setFail(slaTcp.get(i).getFail());
+				scoreArea.setTotal(slaTcp.get(i).getTotal());
 				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
+				scoreBase.setSlaTcpDelay(slaTcp.get(i).getSlaTcpDelay());
+				scoreBase.setSlaTcpGDelay(slaTcp.get(i).getSlaTcpGDelay());
+				scoreBase.setSlaTcpRDelay(slaTcp.get(i).getSlaTcpRDelay());
+				scoreBase.setSlaTcpJitter(slaTcp.get(i).getSlaTcpJitter());
+				scoreBase.setSlaTcpGJitter(slaTcp.get(i).getSlaTcpGJitter());
+				scoreBase.setSlaTcpRJitter(slaTcp.get(i).getSlaTcpRJitter());
+				scoreBase.setSlaTcpLossRate(slaTcp.get(i).getSlaTcpLossRate());
 				scoreBase.setScore((slaTcp.get(i).getScore()) * (slaTcp.get(i).getBase()));
 				scoreBase.setBase(slaTcp.get(i).getBase());
-				connection.put(scoreTarget, scoreBase);
+				Map<String,ScoreBaseEntity> sla1 = new HashMap<>();
+				sla1.put("slaTcp",scoreBase);
+				connection.put(scoreArea, sla1);
 			}
-			connection=pingService.putMapArea(slaUdp,connection);
-			connection=pingService.putMapArea(dns,connection);
-			connection=pingService.putMapArea(dhcp,connection);
-			connection=pingService.putMapArea(pppoe,connection);
-			connection=pingService.putMapArea(radius,connection);
+			connection=pingService.putMapArea(slaUdp,connection,"slaUdp");
+			connection=pingService.putMapArea(dns,connection,"dns");
+			connection=pingService.putMapArea(dhcp,connection,"dhcp");
+			connection=pingService.putMapArea(pppoe,connection,"pppoe");
+			connection=pingService.putMapArea(radius,connection,"radius");
 
 			System.out.println("MAP:"+connection);
 
@@ -1122,23 +1138,72 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 			int id = 1;
 			while (iterator.hasNext()) {
 				ScoreAreaEntity ite = iterator.next();
-				ScoreEntity finalScore = new ScoreEntity();
-				finalScore.setId(id);
-				finalScore.setCityId(ite.getCityId());
-				finalScore.setCityName(ite.getCityName());
-				finalScore.setCountyId(ite.getCountyId());
-				finalScore.setCountyName(ite.getCountyName());
-				finalScore.setProbeId(ite.getProbeId());
-				finalScore.setProbeName(ite.getProbeName());
-				finalScore.setServiceType(2);
-				finalScore.setTargetId(ite.getTargetId());
-				finalScore.setTargetName(ite.getTargetName());
-				finalScore.setAccessLayer(ite.getAccessLayer());
-				finalScore.setScore(((connection.get(ite).getScore()) / (connection.get(ite).getBase()))*(1-(ite.getFail())/ite.getTotal()));
-				finalScore.setBase(Double.parseDouble(pros.getValue("qualityweight")));
-				connectionScore.add(finalScore);
+				try {
+					ScoreEntity finalScore = new ScoreEntity();
+					finalScore.setId(id);
+					finalScore.setCityId(ite.getCityId());
+					finalScore.setCityName(ite.getCityName());
+					finalScore.setCountyId(ite.getCountyId());
+					finalScore.setCountyName(ite.getCountyName());
+					finalScore.setProbeId(ite.getProbeId());
+					finalScore.setProbeName(ite.getProbeName());
+					finalScore.setServiceType(2);
+					finalScore.setRecordDate(ite.getRecordDate());
+					finalScore.setRecordTime(ite.getRecordTime());
+					finalScore.setTargetId(ite.getTargetId());
+					finalScore.setTargetName(ite.getTargetName());
+					finalScore.setAccessLayer(ite.getAccessLayer());
+					finalScore.setPort(ite.getPort());
+					finalScore.setScore(0.0);
+					finalScore.setBase(0.0);
+					Map<String, ScoreBaseEntity> map1 = connection.get(ite);
+					Set<String> keyType = map1.keySet();
+					Iterator<String> iterator1 = keyType.iterator();
+					int i=1;
+					while(iterator1.hasNext()) {
+						String typ = iterator1.next();
+						if(typ.equals("slaTcp")){
+							finalScore.setSlaTcpDelay(map1.get(typ).getSlaTcpDelay());
+							finalScore.setSlaTcpGDelay(map1.get(typ).getSlaTcpGDelay());
+							finalScore.setSlaTcpRDelay(map1.get(typ).getSlaTcpRDelay());
+							finalScore.setSlaTcpJitter(map1.get(typ).getSlaTcpJitter());
+							finalScore.setSlaTcpGJitter(map1.get(typ).getSlaTcpGJitter());
+							finalScore.setSlaTcpRJitter(map1.get(typ).getSlaTcpRJitter());
+							finalScore.setSlaTcpLossRate(map1.get(typ).getSlaTcpLossRate());
+						}else if(typ.equals("slaUdp")){
+							finalScore.setSlaUdpDelay(map1.get(typ).getSlaUdpDelay());
+							finalScore.setSlaUdpGDelay(map1.get(typ).getSlaUdpGDelay());
+							finalScore.setSlaUdpRDelay(map1.get(typ).getSlaUdpRDelay());
+							finalScore.setSlaUdpJitter(map1.get(typ).getSlaUdpJitter());
+							finalScore.setSlaUdpGJitter(map1.get(typ).getSlaUdpGJitter());
+							finalScore.setSlaUdpRJitter(map1.get(typ).getSlaUdpRJitter());
+							finalScore.setSlaUdpLossRate(map1.get(typ).getSlaUdpLossRate());
+						}else if(typ.equals("dns")){
+							finalScore.setDnsDelay(map1.get(typ).getDnsDelay());
+							finalScore.setDnsSuccessRate(map1.get(typ).getDnsSuccessRate());
+						}else if(typ.equals("dhcp")){
+							finalScore.setDhcpDelay(map1.get(typ).getDhcpDelay());
+							finalScore.setDhcpSuccessRate(map1.get(typ).getDhcpSuccessRate());
+						}else if(typ.equals("pppoe")){
+							finalScore.setPppoeDelay(map1.get(typ).getPppoeDelay());
+							finalScore.setPppoeDropRate(map1.get(typ).getPppoeDropRate());
+							finalScore.setPppoeSuccessRate(map1.get(typ).getPppoeSuccessRate());
+						}else if(typ.equals("radius")){
+							finalScore.setRadiusDelay(map1.get(typ).getRadiusDelay());
+							finalScore.setRadiusSuccessRate(map1.get(typ).getRadiusSuccessRate());
+						}else{}
+						finalScore.setScore(finalScore.getScore()+map1.get(typ).getScore()*map1.get(typ).getBase());
+						finalScore.setBase(finalScore.getBase()+map1.get(typ).getBase());
+						i++;
+					}
+					finalScore.setScore(finalScore.getScore()/finalScore.getBase());
+					finalScore.setBase(Double.parseDouble(pros.getValue("qualityweight")));
+					connectionScore.add(finalScore);
+				} catch (IOException e) {
+				}
 				id++;
 			}
+
 		}catch(IOException e){}
 		return connectionScore;
 	}
@@ -1149,32 +1214,42 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 		List<ScoreEntity> connectionScore = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
-			Map<ScoreDateEntity, ScoreBaseEntity> connection = new HashMap<>();
+			Map<ScoreDateEntity, Map<String,ScoreBaseEntity>> connection = new HashMap<>();
 			for (int i = 0; i < slaTcp.size(); i++) {
-				ScoreDateEntity scoreTarget = new ScoreDateEntity();
-				scoreTarget.setCityId(slaTcp.get(i).getCityId());
-				scoreTarget.setCountyId(slaTcp.get(i).getCountyId());
-				scoreTarget.setProbeId(slaTcp.get(i).getProbeId());
-				scoreTarget.setTargetId(slaTcp.get(i).getTargetId());
-				scoreTarget.setCityName(slaTcp.get(i).getCityName());
-				scoreTarget.setCountyName(slaTcp.get(i).getCountyName());
-				scoreTarget.setProbeName(slaTcp.get(i).getProbeName());
-				scoreTarget.setTargetName(slaTcp.get(i).getTargetName());
-				scoreTarget.setRecordDate(slaTcp.get(i).getRecordDate());
-				scoreTarget.setRecordTime(slaTcp.get(i).getRecordTime());
-				scoreTarget.setAccessLayer(slaTcp.get(i).getAccessLayer());
-				scoreTarget.setFail(slaTcp.get(i).getFail());
-				scoreTarget.setTotal(slaTcp.get(i).getTotal());
+				ScoreDateEntity scoreDate = new ScoreDateEntity();
+				scoreDate.setCityId(slaTcp.get(i).getCityId());
+				scoreDate.setCountyId(slaTcp.get(i).getCountyId());
+				scoreDate.setProbeId(slaTcp.get(i).getProbeId());
+				scoreDate.setTargetId(slaTcp.get(i).getTargetId());
+				scoreDate.setCityName(slaTcp.get(i).getCityName());
+				scoreDate.setCountyName(slaTcp.get(i).getCountyName());
+				scoreDate.setProbeName(slaTcp.get(i).getProbeName());
+				scoreDate.setTargetName(slaTcp.get(i).getTargetName());
+				scoreDate.setRecordDate(slaTcp.get(i).getRecordDate());
+				scoreDate.setRecordTime(slaTcp.get(i).getRecordTime());
+				scoreDate.setAccessLayer(slaTcp.get(i).getAccessLayer());
+				scoreDate.setPort(slaTcp.get(i).getPort());
+				scoreDate.setFail(slaTcp.get(i).getFail());
+				scoreDate.setTotal(slaTcp.get(i).getTotal());
 				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
+				scoreBase.setSlaTcpDelay(slaTcp.get(i).getSlaTcpDelay());
+				scoreBase.setSlaTcpGDelay(slaTcp.get(i).getSlaTcpGDelay());
+				scoreBase.setSlaTcpRDelay(slaTcp.get(i).getSlaTcpRDelay());
+				scoreBase.setSlaTcpJitter(slaTcp.get(i).getSlaTcpJitter());
+				scoreBase.setSlaTcpGJitter(slaTcp.get(i).getSlaTcpGJitter());
+				scoreBase.setSlaTcpRJitter(slaTcp.get(i).getSlaTcpRJitter());
+				scoreBase.setSlaTcpLossRate(slaTcp.get(i).getSlaTcpLossRate());
 				scoreBase.setScore((slaTcp.get(i).getScore()) * (slaTcp.get(i).getBase()));
 				scoreBase.setBase(slaTcp.get(i).getBase());
-				connection.put(scoreTarget, scoreBase);
+				Map<String,ScoreBaseEntity> sla1 = new HashMap<>();
+				sla1.put("slaTcp",scoreBase);
+				connection.put(scoreDate, sla1);
 			}
-			connection=pingService.putMapDate(slaUdp,connection);
-			connection=pingService.putMapDate(dns,connection);
-			connection=pingService.putMapDate(dhcp,connection);
-			connection=pingService.putMapDate(pppoe,connection);
-			connection=pingService.putMapDate(radius,connection);
+			connection=pingService.putMapDate(slaUdp,connection,"slaUdp");
+			connection=pingService.putMapDate(dns,connection,"dns");
+			connection=pingService.putMapDate(dhcp,connection,"dhcp");
+			connection=pingService.putMapDate(pppoe,connection,"pppoe");
+			connection=pingService.putMapDate(radius,connection,"radius");
 
 			System.out.println("MAP:"+connection);
 
@@ -1183,28 +1258,76 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 			int id = 1;
 			while (iterator.hasNext()) {
 				ScoreDateEntity ite = iterator.next();
-				ScoreEntity finalScore = new ScoreEntity();
-				finalScore.setId(id);
-				finalScore.setCityId(ite.getCityId());
-				finalScore.setCityName(ite.getCityName());
-				finalScore.setCountyId(ite.getCountyId());
-				finalScore.setCountyName(ite.getCountyName());
-				finalScore.setProbeId(ite.getProbeId());
-				finalScore.setProbeName(ite.getProbeName());
-				finalScore.setAccessLayer(ite.getAccessLayer());
-				finalScore.setServiceType(2);
-				finalScore.setTargetId(ite.getTargetId());
-				finalScore.setTargetName(ite.getTargetName());
-				finalScore.setRecordDate(ite.getRecordDate());
-				finalScore.setRecordTime(ite.getRecordTime());
-				finalScore.setScore(((connection.get(ite).getScore()) / (connection.get(ite).getBase()))*(1-(ite.getFail())/ite.getTotal()));
-				finalScore.setBase(Double.parseDouble(pros.getValue("qualityweight")));
-				connectionScore.add(finalScore);
+				try {
+					ScoreEntity finalScore = new ScoreEntity();
+					finalScore.setId(id);
+					finalScore.setCityId(ite.getCityId());
+					finalScore.setCityName(ite.getCityName());
+					finalScore.setCountyId(ite.getCountyId());
+					finalScore.setCountyName(ite.getCountyName());
+					finalScore.setProbeId(ite.getProbeId());
+					finalScore.setProbeName(ite.getProbeName());
+					finalScore.setServiceType(2);
+					finalScore.setRecordTime(ite.getRecordTime());
+					finalScore.setRecordDate(ite.getRecordDate());
+					finalScore.setTargetId(ite.getTargetId());
+					finalScore.setTargetName(ite.getTargetName());
+					finalScore.setAccessLayer(ite.getAccessLayer());
+					finalScore.setPort(ite.getPort());
+					finalScore.setScore(0.0);
+					finalScore.setBase(0.0);
+					Map<String, ScoreBaseEntity> map1 = connection.get(ite);
+					Set<String> keyType = map1.keySet();
+					Iterator<String> iterator1 = keyType.iterator();
+					int i=1;
+					while(iterator1.hasNext()) {
+						String typ = iterator1.next();
+						if(typ.equals("slaTcp")){
+							finalScore.setSlaTcpDelay(map1.get(typ).getSlaTcpDelay());
+							finalScore.setSlaTcpGDelay(map1.get(typ).getSlaTcpGDelay());
+							finalScore.setSlaTcpRDelay(map1.get(typ).getSlaTcpRDelay());
+							finalScore.setSlaTcpJitter(map1.get(typ).getSlaTcpJitter());
+							finalScore.setSlaTcpGJitter(map1.get(typ).getSlaTcpGJitter());
+							finalScore.setSlaTcpRJitter(map1.get(typ).getSlaTcpRJitter());
+							finalScore.setSlaTcpLossRate(map1.get(typ).getSlaTcpLossRate());
+						}else if(typ.equals("slaUdp")){
+							finalScore.setSlaUdpDelay(map1.get(typ).getSlaUdpDelay());
+							finalScore.setSlaUdpGDelay(map1.get(typ).getSlaUdpGDelay());
+							finalScore.setSlaUdpRDelay(map1.get(typ).getSlaUdpRDelay());
+							finalScore.setSlaUdpJitter(map1.get(typ).getSlaUdpJitter());
+							finalScore.setSlaUdpGJitter(map1.get(typ).getSlaUdpGJitter());
+							finalScore.setSlaUdpRJitter(map1.get(typ).getSlaUdpRJitter());
+							finalScore.setSlaUdpLossRate(map1.get(typ).getSlaUdpLossRate());
+						}else if(typ.equals("dns")){
+							finalScore.setDnsDelay(map1.get(typ).getDnsDelay());
+							finalScore.setDnsSuccessRate(map1.get(typ).getDnsSuccessRate());
+						}else if(typ.equals("dhcp")){
+							finalScore.setDhcpDelay(map1.get(typ).getDhcpDelay());
+							finalScore.setDhcpSuccessRate(map1.get(typ).getDhcpSuccessRate());
+						}else if(typ.equals("pppoe")){
+							finalScore.setPppoeDelay(map1.get(typ).getPppoeDelay());
+							finalScore.setPppoeDropRate(map1.get(typ).getPppoeDropRate());
+							finalScore.setPppoeSuccessRate(map1.get(typ).getPppoeSuccessRate());
+						}else if(typ.equals("radius")){
+							finalScore.setRadiusDelay(map1.get(typ).getRadiusDelay());
+							finalScore.setRadiusSuccessRate(map1.get(typ).getRadiusSuccessRate());
+						}else{}
+						finalScore.setScore(finalScore.getScore()+map1.get(typ).getScore()*map1.get(typ).getBase());
+						finalScore.setBase(finalScore.getBase()+map1.get(typ).getBase());
+						i++;
+					}
+					finalScore.setScore(finalScore.getScore()/finalScore.getBase());
+					finalScore.setBase(Double.parseDouble(pros.getValue("qualityweight")));
+					connectionScore.add(finalScore);
+				} catch (IOException e) {
+				}
 				id++;
 			}
+
 		}catch(IOException e){}
 		return connectionScore;
 	}
+
 
 	@Override
 	public int queryTotal(Map<String, Object> map){

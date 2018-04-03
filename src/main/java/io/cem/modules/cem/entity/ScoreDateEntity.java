@@ -1,6 +1,5 @@
 package io.cem.modules.cem.entity;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -28,6 +27,8 @@ public class ScoreDateEntity {
     private String recordTime;
 
     private Integer accessLayer;
+
+    private String port;
 
     private Integer fail;
 
@@ -127,6 +128,14 @@ public class ScoreDateEntity {
 
     public void setTotal(Integer total) {
         this.total = total;
+    }
+
+    public String getPort() {
+        return port;
+    }
+
+    public void setPort(String port) {
+        this.port = port;
     }
 
     @Override
