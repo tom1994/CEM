@@ -142,6 +142,38 @@
 		record_hour_sla.port,record_hour_sla.probe_id;
 	</select>
 
+	<select id="queryDayExitList" resultType="io.cem.modules.cem.entity.RecordHourSlaEntity">
+		select record_day_sla.id,record_day_sla.city_id,record_day_sla.county_id,record_day_sla.probe_id,record_day_sla.port,record_day_sla.task_id,record_day_sla.service_type,record_day_sla.target_id,record_day_sla.target_ip,record_day_sla.record_date,record_day_sla.remark,
+		city.city_name AS city_name,
+		county.county_name AS area_name,
+		probe.probe_name AS probe_name,
+		target.target_name AS target_name,
+		time_format(record_time, '%H') AS record_time,
+		AVG(record_day_sla.delay) AS delay,
+		AVG(record_day_sla.g_delay) AS g_delay,
+		AVG(record_day_sla.r_delay) AS r_delay,
+		AVG(record_day_sla.jitter) AS jitter,
+		AVG(record_day_sla.g_jitter) AS g_jitter,
+		AVG(record_day_sla.r_jitter) AS r_jitter,
+		AVG(record_day_sla.loss_rate) AS loss_rate,
+		SUM(record_day_sla.fail) AS fail,
+		SUM(record_day_sla.total) AS total
+		FROM record_day_sla
+		LEFT JOIN city
+		ON record_day_sla.city_id = city.city_id
+		LEFT JOIN county
+		ON record_day_sla.county_id = county.county_id
+		INNER JOIN probe
+		ON record_day_sla.probe_id = probe.id
+		LEFT JOIN target
+		ON record_day_sla.target_id = target.id
+		WHERE record_day_sla.record_date BETWEEN #{ava_start} AND #{ava_terminal}
+		AND record_day_sla.port = #{port}
+		AND record_day_sla.probe_id = #{probe_id}
+		GROUP BY
+		record_day_sla.port,record_day_sla.probe_id;
+	</select>
+
 	<select id="queryDayList" resultType="io.cem.modules.cem.entity.RecordHourSlaEntity">
 		select sla.id,sla.city_id,sla.county_id,sla.probe_id,sla.port,sla.task_id,sla.service_type,sla.target_id,sla.target_ip,sla.record_date,sla.remark,
 		city.city_name AS city_name,

@@ -234,6 +234,20 @@ public class ScoreBaseEntity {
     //游戏数据包丢包率
     private Double gameLossRate;
 
+    //网络连通性业务分数
+    private Double connectionScore;
+    //网络层质量业务分数
+    private Double qualityScore;
+    //网页浏览业务分数
+    private Double broswerScore;
+    //文件下载业务分数
+    private Double downloadScore;
+    //在线视频业务分数
+    private Double videoScore;
+    //网络游戏业务分数
+    private Double gameScore;
+
+
 
 
 
@@ -1027,5 +1041,53 @@ public class ScoreBaseEntity {
 
     public void setGameLossRate(Double gameLossRate) {
         this.gameLossRate = gameLossRate;
+    }
+
+    public Double getConnectionScore() {
+        return connectionScore;
+    }
+
+    public void setConnectionScore(Double connectionScore) {
+        this.connectionScore = connectionScore;
+    }
+
+    public Double getQualityScore() {
+        return qualityScore;
+    }
+
+    public void setQualityScore(Double qualityScore) {
+        this.qualityScore = qualityScore;
+    }
+
+    public Double getBroswerScore() {
+        return broswerScore;
+    }
+
+    public void setBroswerScore(Double broswerScore) {
+        this.broswerScore = broswerScore;
+    }
+
+    public Double getDownloadScore() {
+        return downloadScore;
+    }
+
+    public void setDownloadScore(Double downloadScore) {
+        this.downloadScore = downloadScore;
+    }
+
+    public Double getVideoScore() {
+        return videoScore;
+    }
+
+    public void setVideoScore(Double videoScore) {
+        this.videoScore = videoScore;
+    }
+
+    public Double getGameScore() {
+        return gameScore;
+    }
+
+    public void setGameScore(Double gameScore) {
+        this.gameScore = gameScore;
     }
 }

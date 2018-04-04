@@ -25,6 +25,8 @@ public interface RecordHourWebVideoService {
 	Future<List<RecordHourWebVideoEntity>> queryVideoList(Map<String, Object> map);
 
 	Future<List<RecordHourWebVideoEntity>> queryExitList(Map<String, Object> map);
+
+	Future<List<RecordHourWebVideoEntity>> queryDayExitList(Map<String, Object> map);
 	Future<List<RecordHourWebVideoEntity>> queryVideoAreaList(Map<String, Object> map);
 
 	Future<List<RecordHourWebVideoEntity>> queryVideoRankList(Map<String, Object> map);

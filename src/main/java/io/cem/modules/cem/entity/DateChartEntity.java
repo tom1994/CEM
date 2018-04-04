@@ -26,6 +26,8 @@ public class DateChartEntity {
     //记录时间
     private String recordTime;
 
+    private String port;
+
     private Integer accessLayer;
 
     private Integer fail;
@@ -127,6 +129,14 @@ public class DateChartEntity {
 
     public void setTotal(Integer total) {
         this.total = total;
+    }
+
+    public String getPort() {
+        return port;
+    }
+
+    public void setPort(String port) {
+        this.port = port;
     }
 
     @Override

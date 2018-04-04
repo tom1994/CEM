@@ -27,6 +27,8 @@ public interface RecordHourDhcpService {
 
 	Future<List<RecordHourDhcpEntity>> queryExitList(Map<String, Object> map);
 
+	Future<List<RecordHourDhcpEntity>> queryDayExitList(Map<String, Object> map);
+
 	Future<List<RecordHourDhcpEntity>> queryDayList(Map<String, Object> map);
 
 	List<ScoreEntity> connectionDayChart(Map<String,Object> map) throws ExecutionException, InterruptedException;

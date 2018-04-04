@@ -115,6 +115,33 @@
 		record_hour_dhcp.port,record_hour_dhcp.probe_id;
 	</select>
 
+	<select id="queryDayExitList" resultType="io.cem.modules.cem.entity.RecordHourDhcpEntity">
+		select record_day_dhcp.id,record_day_dhcp.city_id,record_day_dhcp.county_id,record_day_dhcp.probe_id,record_day_dhcp.port,record_day_dhcp.task_id,record_day_dhcp.service_type,record_day_dhcp.target_id,record_day_dhcp.target_ip,record_day_dhcp.record_date,record_day_dhcp.remark,
+		city.city_name AS city_name,
+		county.county_name AS area_name,
+		probe.probe_name AS probe_name,
+		target.target_name AS target_name,
+		time_format(record_time, '%H') AS record_time,
+		AVG(record_day_dhcp.delay) AS delay,
+		AVG(record_day_dhcp.success_rate) AS success_rate,
+		SUM(record_day_dhcp.fail) AS fail,
+		SUM(record_day_dhcp.total) AS total
+		FROM record_day_dhcp
+		LEFT JOIN city
+		ON record_day_dhcp.city_id = city.city_id
+		LEFT JOIN county
+		ON record_day_dhcp.county_id = county.county_id
+		INNER JOIN probe
+		ON record_day_dhcp.probe_id = probe.id
+		LEFT JOIN target
+		ON record_day_dhcp.target_id = target.id
+		WHERE record_day_dhcp.record_date BETWEEN #{ava_start} AND #{ava_terminal}
+		AND record_day_dhcp.port = #{port}
+		AND record_day_dhcp.probe_id = #{probe_id}
+		GROUP BY
+		record_day_dhcp.port,record_day_dhcp.probe_id;
+	</select>
+
 	<select id="queryDayList" resultType="io.cem.modules.cem.entity.RecordHourDhcpEntity">
 		select dhcp.id,dhcp.city_id,dhcp.county_id,dhcp.probe_id,dhcp.port,dhcp.task_id,dhcp.service_type,dhcp.target_id,dhcp.target_ip,dhcp.record_date,dhcp.remark,
 		city.city_name AS city_name,

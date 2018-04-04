@@ -49,6 +49,12 @@ public class RecordHourTracertServiceImpl implements RecordHourTracertService {
 
 	@Override
 	@Async
+	public Future<List<RecordHourTracertEntity>> queryDayExitList(Map<String, Object> map){
+		return new AsyncResult<> (recordHourTracertDao.queryDayExitList(map));
+	}
+
+	@Override
+	@Async
 	public Future<List<RecordHourTracertEntity>> queryDayList(Map<String, Object> map){
 		return new AsyncResult<> (recordHourTracertDao.queryDayList(map));
 	}
@@ -108,6 +114,7 @@ public class RecordHourTracertServiceImpl implements RecordHourTracertService {
 			scoreBase.setTracertTcpJitterStd(connection.get(i).getTracertTcpJitterStd());
 			scoreBase.setTracertTcpJitterVar(connection.get(i).getTracertTcpJitterVar());
 			scoreBase.setTracertTcpLossRate(connection.get(i).getTracertTcpLossRate());
+			scoreBase.setConnectionScore(connection.get(i).getScore());
 			scoreBase.setScore(connection.get(i).getScore());
 			scoreBase.setBase(connection.get(i).getBase());
 			Map<String,ScoreBaseEntity> ping1 = new HashMap<>();
@@ -188,6 +195,7 @@ public class RecordHourTracertServiceImpl implements RecordHourTracertService {
 					lastScore.setTracertTcpJitterStd(map1.get(typ).getTracertTcpJitterStd());
 					lastScore.setTracertTcpJitterVar(map1.get(typ).getTracertTcpJitterVar());
 					lastScore.setTracertTcpLossRate(map1.get(typ).getTracertTcpLossRate());
+					lastScore.setConnectionScore(map1.get(typ).getConnectionScore());
 				}else if (typ.equals("quality")){
 					lastScore.setSlaTcpDelay(map1.get(typ).getSlaTcpDelay());
 					lastScore.setSlaTcpGDelay(map1.get(typ).getSlaTcpGDelay());
@@ -212,6 +220,7 @@ public class RecordHourTracertServiceImpl implements RecordHourTracertService {
 					lastScore.setPppoeSuccessRate(map1.get(typ).getPppoeSuccessRate());
 					lastScore.setRadiusDelay(map1.get(typ).getRadiusDelay());
 					lastScore.setRadiusSuccessRate(map1.get(typ).getRadiusSuccessRate());
+					lastScore.setQualityScore(map1.get(typ).getQualityScore());
 				}else if (typ.equals("broswer")){
 					lastScore.setWebpageDnsDelay(map1.get(typ).getWebpageDnsDelay());
 					lastScore.setWebpageConnDelay(map1.get(typ).getWebpageConnDelay());
@@ -221,6 +230,7 @@ public class RecordHourTracertServiceImpl implements RecordHourTracertService {
 					lastScore.setWebpageAboveFoldDelay(map1.get(typ).getWebpageAboveFoldDelay());
 					lastScore.setWebpagePageElementDelay(map1.get(typ).getWebpagePageElementDelay());
 					lastScore.setWebpageDownloadRate(map1.get(typ).getWebpageDownloadRate());
+					lastScore.setBroswerScore(map1.get(typ).getBroswerScore());
 				}else if(typ.equals("download")){
 					lastScore.setWebDownloadDnsDelay(map1.get(typ).getWebDownloadDnsDelay());
 					lastScore.setWebDownloadConnDelay(map1.get(typ).getWebDownloadConnDelay());
@@ -236,6 +246,7 @@ public class RecordHourTracertServiceImpl implements RecordHourTracertService {
 					lastScore.setFtpDownloadLoginDelay(map1.get(typ).getFtpDownloadLoginDelay());
 					lastScore.setFtpDownloadHeadbyteDelay(map1.get(typ).getFtpDownloadHeadbyteDelay());
 					lastScore.setFtpDownloadDownloadRate(map1.get(typ).getFtpDownloadDownloadRate());
+					lastScore.setDownloadScore(map1.get(typ).getDownloadScore());
 				}else if(typ.equals("video")){
 					lastScore.setWebVideoDnsDelay(map1.get(typ).getWebVideoDnsDelay());
 					lastScore.setWebVideoWsConnDelay(map1.get(typ).getWebVideoWsConnDelay());
@@ -249,12 +260,14 @@ public class RecordHourTracertServiceImpl implements RecordHourTracertService {
 					lastScore.setWebVideoTotalBufferDelay(map1.get(typ).getWebVideoTotalBufferDelay());
 					lastScore.setWebVideoDownloadRate(map1.get(typ).getWebVideoDownloadRate());
 					lastScore.setWebVideoBufferTime(map1.get(typ).getWebVideoBufferTime());
+					lastScore.setVideoScore(map1.get(typ).getVideoScore());
 				}else if(typ.equals("game")){
 					lastScore.setGameDnsDelay(map1.get(typ).getGameDnsDelay());
 					lastScore.setGameConnDelay(map1.get(typ).getGameConnDelay());
 					lastScore.setGamePacketDelay(map1.get(typ).getGamePacketDelay());
 					lastScore.setGamePacketJitter(map1.get(typ).getGamePacketJitter());
 					lastScore.setGameLossRate(map1.get(typ).getGameLossRate());
+					lastScore.setGameScore(map1.get(typ).getGameScore());
 				}else{}
 				lastScore.setScore(lastScore.getScore() + (map1.get(typ).getScore()) * (map1.get(typ).getBase()));
 				lastScore.setBase(lastScore.getBase()+map1.get(typ).getBase());
@@ -311,6 +324,7 @@ public class RecordHourTracertServiceImpl implements RecordHourTracertService {
 				scoreBase.setPppoeSuccessRate(list.get(i).getPppoeSuccessRate());
 				scoreBase.setRadiusDelay(list.get(i).getRadiusDelay());
 				scoreBase.setRadiusSuccessRate(list.get(i).getRadiusSuccessRate());
+				scoreBase.setQualityScore(list.get(i).getScore());
 			}else if(type.equals("broswer")){
 				scoreBase.setWebpageDnsDelay(list.get(i).getWebpageDnsDelay());
 				scoreBase.setWebpageConnDelay(list.get(i).getWebpageConnDelay());
@@ -320,6 +334,7 @@ public class RecordHourTracertServiceImpl implements RecordHourTracertService {
 				scoreBase.setWebpageAboveFoldDelay(list.get(i).getWebpageAboveFoldDelay());
 				scoreBase.setWebpagePageElementDelay(list.get(i).getWebpagePageElementDelay());
 				scoreBase.setWebpageDownloadRate(list.get(i).getWebpageDownloadRate());
+				scoreBase.setBroswerScore(list.get(i).getScore());
 			}else if(type.equals("download")){
 				scoreBase.setWebDownloadDnsDelay(list.get(i).getWebDownloadDnsDelay());
 				scoreBase.setWebDownloadConnDelay(list.get(i).getWebDownloadConnDelay());
@@ -335,6 +350,7 @@ public class RecordHourTracertServiceImpl implements RecordHourTracertService {
 				scoreBase.setFtpDownloadLoginDelay(list.get(i).getFtpDownloadLoginDelay());
 				scoreBase.setFtpDownloadHeadbyteDelay(list.get(i).getFtpDownloadHeadbyteDelay());
 				scoreBase.setFtpDownloadDownloadRate(list.get(i).getFtpDownloadDownloadRate());
+				scoreBase.setDownloadScore(list.get(i).getScore());
 			}else if(type.equals("video")){
 				scoreBase.setWebVideoDnsDelay(list.get(i).getWebVideoDnsDelay());
 				scoreBase.setWebVideoWsConnDelay(list.get(i).getWebVideoWsConnDelay());
@@ -348,12 +364,14 @@ public class RecordHourTracertServiceImpl implements RecordHourTracertService {
 				scoreBase.setWebVideoTotalBufferDelay(list.get(i).getWebVideoTotalBufferDelay());
 				scoreBase.setWebVideoDownloadRate(list.get(i).getWebVideoDownloadRate());
 				scoreBase.setWebVideoBufferTime(list.get(i).getWebVideoBufferTime());
+				scoreBase.setVideoScore(list.get(i).getScore());
 			}else if(type.equals("game")){
 				scoreBase.setGameDnsDelay(list.get(i).getGameDnsDelay());
 				scoreBase.setGameConnDelay(list.get(i).getGameConnDelay());
 				scoreBase.setGamePacketDelay(list.get(i).getGamePacketDelay());
 				scoreBase.setGamePacketJitter(list.get(i).getGamePacketJitter());
 				scoreBase.setGameLossRate(list.get(i).getGameLossRate());
+				scoreBase.setGameScore(list.get(i).getScore());
 			}else{}
 			scoreBase.setScore(list.get(i).getScore());
 			scoreBase.setBase(list.get(i).getBase());
@@ -429,6 +447,7 @@ public class RecordHourTracertServiceImpl implements RecordHourTracertService {
 			scoreBase.setTracertTcpJitterStd(connection.get(i).getTracertTcpJitterStd());
 			scoreBase.setTracertTcpJitterVar(connection.get(i).getTracertTcpJitterVar());
 			scoreBase.setTracertTcpLossRate(connection.get(i).getTracertTcpLossRate());
+			scoreBase.setConnectionScore(connection.get(i).getScore());
 			scoreBase.setScore(connection.get(i).getScore());
 			scoreBase.setBase(connection.get(i).getBase());
 			Map<String,ScoreBaseEntity> ping1 = new HashMap<>();
@@ -509,6 +528,7 @@ public class RecordHourTracertServiceImpl implements RecordHourTracertService {
 					lastScore.setTracertTcpJitterStd(map1.get(typ).getTracertTcpJitterStd());
 					lastScore.setTracertTcpJitterVar(map1.get(typ).getTracertTcpJitterVar());
 					lastScore.setTracertTcpLossRate(map1.get(typ).getTracertTcpLossRate());
+					lastScore.setConnectionScore(map1.get(typ).getConnectionScore());
 				}else if (typ.equals("quality")){
 					lastScore.setSlaTcpDelay(map1.get(typ).getSlaTcpDelay());
 					lastScore.setSlaTcpGDelay(map1.get(typ).getSlaTcpGDelay());
@@ -533,6 +553,7 @@ public class RecordHourTracertServiceImpl implements RecordHourTracertService {
 					lastScore.setPppoeSuccessRate(map1.get(typ).getPppoeSuccessRate());
 					lastScore.setRadiusDelay(map1.get(typ).getRadiusDelay());
 					lastScore.setRadiusSuccessRate(map1.get(typ).getRadiusSuccessRate());
+					lastScore.setQualityScore(map1.get(typ).getQualityScore());
 				}else if (typ.equals("broswer")){
 					lastScore.setWebpageDnsDelay(map1.get(typ).getWebpageDnsDelay());
 					lastScore.setWebpageConnDelay(map1.get(typ).getWebpageConnDelay());
@@ -542,6 +563,7 @@ public class RecordHourTracertServiceImpl implements RecordHourTracertService {
 					lastScore.setWebpageAboveFoldDelay(map1.get(typ).getWebpageAboveFoldDelay());
 					lastScore.setWebpagePageElementDelay(map1.get(typ).getWebpagePageElementDelay());
 					lastScore.setWebpageDownloadRate(map1.get(typ).getWebpageDownloadRate());
+					lastScore.setBroswerScore(map1.get(typ).getBroswerScore());
 				}else if(typ.equals("download")){
 					lastScore.setWebDownloadDnsDelay(map1.get(typ).getWebDownloadDnsDelay());
 					lastScore.setWebDownloadConnDelay(map1.get(typ).getWebDownloadConnDelay());
@@ -557,6 +579,7 @@ public class RecordHourTracertServiceImpl implements RecordHourTracertService {
 					lastScore.setFtpDownloadLoginDelay(map1.get(typ).getFtpDownloadLoginDelay());
 					lastScore.setFtpDownloadHeadbyteDelay(map1.get(typ).getFtpDownloadHeadbyteDelay());
 					lastScore.setFtpDownloadDownloadRate(map1.get(typ).getFtpDownloadDownloadRate());
+					lastScore.setDownloadScore(map1.get(typ).getDownloadScore());
 				}else if(typ.equals("video")){
 					lastScore.setWebVideoDnsDelay(map1.get(typ).getWebVideoDnsDelay());
 					lastScore.setWebVideoWsConnDelay(map1.get(typ).getWebVideoWsConnDelay());
@@ -570,12 +593,14 @@ public class RecordHourTracertServiceImpl implements RecordHourTracertService {
 					lastScore.setWebVideoTotalBufferDelay(map1.get(typ).getWebVideoTotalBufferDelay());
 					lastScore.setWebVideoDownloadRate(map1.get(typ).getWebVideoDownloadRate());
 					lastScore.setWebVideoBufferTime(map1.get(typ).getWebVideoBufferTime());
+					lastScore.setVideoScore(map1.get(typ).getVideoScore());
 				}else if(typ.equals("game")){
 					lastScore.setGameDnsDelay(map1.get(typ).getGameDnsDelay());
 					lastScore.setGameConnDelay(map1.get(typ).getGameConnDelay());
 					lastScore.setGamePacketDelay(map1.get(typ).getGamePacketDelay());
 					lastScore.setGamePacketJitter(map1.get(typ).getGamePacketJitter());
 					lastScore.setGameLossRate(map1.get(typ).getGameLossRate());
+					lastScore.setGameScore(map1.get(typ).getGameScore());
 				}else{}
 				lastScore.setScore(lastScore.getScore() + (map1.get(typ).getScore()) * (map1.get(typ).getBase()));
 				lastScore.setBase(lastScore.getBase()+map1.get(typ).getBase());
@@ -632,6 +657,7 @@ public class RecordHourTracertServiceImpl implements RecordHourTracertService {
 				scoreBase.setPppoeSuccessRate(list.get(i).getPppoeSuccessRate());
 				scoreBase.setRadiusDelay(list.get(i).getRadiusDelay());
 				scoreBase.setRadiusSuccessRate(list.get(i).getRadiusSuccessRate());
+				scoreBase.setQualityScore(list.get(i).getScore());
 			}else if(type.equals("broswer")){
 				scoreBase.setWebpageDnsDelay(list.get(i).getWebpageDnsDelay());
 				scoreBase.setWebpageConnDelay(list.get(i).getWebpageConnDelay());
@@ -641,6 +667,7 @@ public class RecordHourTracertServiceImpl implements RecordHourTracertService {
 				scoreBase.setWebpageAboveFoldDelay(list.get(i).getWebpageAboveFoldDelay());
 				scoreBase.setWebpagePageElementDelay(list.get(i).getWebpagePageElementDelay());
 				scoreBase.setWebpageDownloadRate(list.get(i).getWebpageDownloadRate());
+				scoreBase.setBroswerScore(list.get(i).getScore());
 			}else if(type.equals("download")){
 				scoreBase.setWebDownloadDnsDelay(list.get(i).getWebDownloadDnsDelay());
 				scoreBase.setWebDownloadConnDelay(list.get(i).getWebDownloadConnDelay());
@@ -656,6 +683,7 @@ public class RecordHourTracertServiceImpl implements RecordHourTracertService {
 				scoreBase.setFtpDownloadLoginDelay(list.get(i).getFtpDownloadLoginDelay());
 				scoreBase.setFtpDownloadHeadbyteDelay(list.get(i).getFtpDownloadHeadbyteDelay());
 				scoreBase.setFtpDownloadDownloadRate(list.get(i).getFtpDownloadDownloadRate());
+				scoreBase.setDownloadScore(list.get(i).getScore());
 			}else if(type.equals("video")){
 				scoreBase.setWebVideoDnsDelay(list.get(i).getWebVideoDnsDelay());
 				scoreBase.setWebVideoWsConnDelay(list.get(i).getWebVideoWsConnDelay());
@@ -669,12 +697,14 @@ public class RecordHourTracertServiceImpl implements RecordHourTracertService {
 				scoreBase.setWebVideoTotalBufferDelay(list.get(i).getWebVideoTotalBufferDelay());
 				scoreBase.setWebVideoDownloadRate(list.get(i).getWebVideoDownloadRate());
 				scoreBase.setWebVideoBufferTime(list.get(i).getWebVideoBufferTime());
+				scoreBase.setVideoScore(list.get(i).getScore());
 			}else if(type.equals("game")){
 				scoreBase.setGameDnsDelay(list.get(i).getGameDnsDelay());
 				scoreBase.setGameConnDelay(list.get(i).getGameConnDelay());
 				scoreBase.setGamePacketDelay(list.get(i).getGamePacketDelay());
 				scoreBase.setGamePacketJitter(list.get(i).getGamePacketJitter());
 				scoreBase.setGameLossRate(list.get(i).getGameLossRate());
+				scoreBase.setGameScore(list.get(i).getScore());
 			}else{}
 			scoreBase.setScore(list.get(i).getScore());
 			scoreBase.setBase(list.get(i).getBase());

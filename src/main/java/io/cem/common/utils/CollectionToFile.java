@@ -18,7 +18,7 @@ public class CollectionToFile {
             XSSFWorkbook workbook = ExcelUtils.<T>exportExcel("sheet1", c, list);
             response.setContentType("application/octet-stream");
             // response.setCharacterEncoding("UTF-8");
-            String fileName = c.getSimpleName().toLowerCase().replaceAll("entity", "") + "_all.xlsx";
+            String fileName = c.getSimpleName().toLowerCase().replaceAll("entity", "") + ".xlsx";
             response.addHeader("Content-Disposition", "attachment; filename=" + fileName);
             // File outFile = new File("F://out.xlsx");
             out = response.getOutputStream();

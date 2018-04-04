@@ -92,13 +92,13 @@ public class DiagnoseController {
                     //查询小时表
                     scoreList=recordHourRadiusService.diagnoseHour(map,scoreList);
                 }
-                if (map.get("city_Id") == null && map.get("county_id") == null && map.get("probe_id") == null) {
-                    scoreList = recordHourPingService.dateChart1(scoreList);
-                } else if (map.get("county_id") == null && map.get("probe_id") == null) {
-                    scoreList = recordHourPingService.cityChart1(scoreList);
-                } else if (map.get("probe_id") == null) {
-                    scoreList = recordHourPingService.probeChart1(scoreList);
-                }
+            }
+            if (map.get("city_Id") == null && map.get("county_id") == null && map.get("probe_id") == null) {
+                scoreList = recordHourPingService.dateChart1(scoreList);
+            } else if (map.get("county_id") == null && map.get("probe_id") == null) {
+                scoreList = recordHourPingService.cityChart1(scoreList);
+            } else if (map.get("probe_id") == null) {
+                scoreList = recordHourPingService.probeChart1(scoreList);
             }
         } else {
             String dateStr = map.get("ava_start").toString();

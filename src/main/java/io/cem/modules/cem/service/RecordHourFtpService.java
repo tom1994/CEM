@@ -26,6 +26,8 @@ public interface RecordHourFtpService {
 
 	Future<List<RecordHourFtpEntity>> queryExitList(Map<String, Object> map);
 
+	Future<List<RecordHourFtpEntity>> queryDayExitList(Map<String, Object> map);
+
 	Future<List<RecordHourFtpEntity>> queryDayList(Map<String, Object> map);
 
 	EvaluationEntity calculateDayQualityScore(Map<String, Object> map) throws ExecutionException, InterruptedException;
