@@ -1319,11 +1319,10 @@ var probetable = new Vue({
             // autowidth: true,
             serverSide: true,
             info: false,
-            ordering: false, /*禁用排序功能*/
+            // ordering: false, /*禁用排序功能*/
             /*bInfo: false,*/
             /*bLengthChange: false,*/    /*禁用Show entries*/
             scroll: false,
-            sEmptyTable: "No data available in table",
             oLanguage: {
                 sLengthMenu: "每页 _MENU_ 行数据",
                 oPaginate: {
@@ -1334,6 +1333,7 @@ var probetable = new Vue({
             sDom: 'Rfrtlip', /*显示在左下角*/
             ajax: function (data, callback, settings) {
                 //封装请求参数
+                console.log(data);
                 let param = {};
                 param.limit = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
                 param.start = data.start;//开始的记录序号
