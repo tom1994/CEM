@@ -201,7 +201,6 @@ var probedata_handle = new Vue({
         probedelBatch: function () {   /*批量删除监听事件*/
             status = 2;
             /*状态2表示删除*/
-            debugger
             var trs = $('#probe_table tbody').find('tr:has(:checked)');
             if (trs.length == 0) {
                 toastr.warning('请选择删除项目！');
@@ -241,11 +240,12 @@ function delete_All() {
         if (CheckALL[i].checked)
             check_val.push(CheckALL[i].value);
     }
-    if (check_val != []) {
+    if (check_val == []) {
         toastr.warning("请选择要删除探针!");
     }
     // console.log(check_val);
     delete_ajax(check_val)
+    debugger
 }
 
 function transString(string, i, j) {
@@ -824,10 +824,10 @@ function updategroup_this(obj) {     /*监听修改触发事件*/
 
 //探针列表删除功能
 function delete_ajax(idArray) {
-    // var ids = JSON.stringify(idArray);
+    var ids = JSON.stringify(idArray);
     // console.log(typeof idArray)
-
-    var ids = parseInt(idArray)
+debugger
+    // var ids = parseInt(idArray)
     /*对象数组字符串*/
     $.ajax({
         type: "POST", /*GET会乱码*/
@@ -1319,10 +1319,11 @@ var probetable = new Vue({
             // autowidth: true,
             serverSide: true,
             info: false,
-            // ordering: false, /*禁用排序功能*/
+            ordering: false, /*禁用排序功能*/
             /*bInfo: false,*/
             /*bLengthChange: false,*/    /*禁用Show entries*/
             scroll: false,
+            sEmptyTable: "No data available in table",
             oLanguage: {
                 sLengthMenu: "每页 _MENU_ 行数据",
                 oPaginate: {
@@ -1333,7 +1334,6 @@ var probetable = new Vue({
             sDom: 'Rfrtlip', /*显示在左下角*/
             ajax: function (data, callback, settings) {
                 //封装请求参数
-                console.log(data);
                 let param = {};
                 param.limit = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
                 param.start = data.start;//开始的记录序号

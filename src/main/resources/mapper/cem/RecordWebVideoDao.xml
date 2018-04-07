@@ -187,7 +187,6 @@
                 INNER JOIN probe
                   ON probe_id = probe.id
               WHERE record_date = #{record_date}
-                    AND record_time BETWEEN #{start_time} AND #{terminal_time}
               GROUP BY port, service_type, target_id, task_id, probe_id) t
 		WHERE rp.record_date = #{record_date}
 		AND rp.state = 0

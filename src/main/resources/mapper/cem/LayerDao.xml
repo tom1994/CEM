@@ -3,37 +3,42 @@
 
 <mapper namespace="io.cem.modules.cem.dao.LayerDao">
 
-	<!-- 可根据自己的需求，是否要使用 -->
+    <!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="io.cem.modules.cem.entity.LayerEntity" id="layerMap">
         <result property="id" column="id"/>
         <result property="layerTag" column="layer_tag"/>
         <result property="layerName" column="layer_name"/>
     </resultMap>
 
-	<select id="queryObject" resultType="io.cem.modules.cem.entity.LayerEntity">
+    <select id="queryObject" resultType="io.cem.modules.cem.entity.LayerEntity">
 		select * from layer where id = #{value}
 	</select>
 
-	<select id="queryList" resultMap="layerMap">
-		select * from layer
+    <select id="queryList" resultMap="layerMap">
+        select * from layer
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
                 order by ${sidx} ${order}
             </when>
-			<otherwise>
-                order by id desc
-			</otherwise>
+            <otherwise>
+                order by layer_tag desc
+            </otherwise>
         </choose>
-		<if test="offset != null and limit != null">
-			limit #{offset}, #{limit}
-		</if>
-	</select>
-	
- 	<select id="queryTotal" resultType="int">
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="queryTotal" resultType="int">
 		select count(*) from layer 
 	</select>
-	 
-	<insert id="save" parameterType="io.cem.modules.cem.entity.LayerEntity" useGeneratedKeys="true" keyProperty="id">
+
+    <select id="queryLowLayer" resultType="io.cem.modules.cem.entity.LayerEntity">
+        select max(layer_tag) AS layer_tag from layer
+        where layer_tag &lt; #{layerTag}
+	</select>
+
+    <insert id="save" parameterType="io.cem.modules.cem.entity.LayerEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into layer
 		(
 			`layer_tag`, 
@@ -45,25 +50,25 @@
 			#{layerName}
 		)
 	</insert>
-	 
-	<update id="update" parameterType="io.cem.modules.cem.entity.LayerEntity">
-		update layer 
-		<set>
-			<if test="layerTag != null">`layer_tag` = #{layerTag}, </if>
-			<if test="layerName != null">`layer_name` = #{layerName}</if>
-		</set>
-		where id = #{id}
-	</update>
-	
-	<delete id="delete">
+
+    <update id="update" parameterType="io.cem.modules.cem.entity.LayerEntity">
+        update layer
+        <set>
+            <if test="layerTag != null">`layer_tag` = #{layerTag},</if>
+            <if test="layerName != null">`layer_name` = #{layerName}</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="delete">
 		delete from layer where id = #{value}
 	</delete>
-	
-	<delete id="deleteBatch">
-		delete from layer where id in 
-		<foreach item="id" collection="array" open="(" separator="," close=")">
-			#{id}
-		</foreach>
-	</delete>
+
+    <delete id="deleteBatch">
+        delete from layer where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
 
 </mapper>

@@ -335,7 +335,7 @@ var new_search = new Vue({
                 search.terminalTime = searchJson.startDate.substr(11, 15);
                 if (search.ava_start.length != 0 && search.ava_terminal.length != 0) {
                 } else {
-                    search.ava_start =  new Date(new Date() - 1000 * 60 * 60 * 24 * 4).Format("yyyy-MM-dd");
+                    search.ava_start =  new Date(new Date() - 1000 * 60 * 60 * 24).Format("yyyy-MM-dd");
                     search.ava_terminal = (new Date()).Format("yyyy-MM-dd");
                 }
                 let param = {};
@@ -374,8 +374,8 @@ var Reset = new Vue({
     el: '#reset',
     data: {
         probedata: {
-            ava_start: (new Date()).Format("2017-11-27"),
-            ava_terminal: (new Date()).Format("2017-12-01"),
+            ava_start : new Date(new Date() - 1000 * 60 * 60 * 24).Format("yyyy-MM-dd"),
+            ava_terminal : (new Date()).Format("yyyy-MM-dd"),
             city_id: '110100',
             service: '1'
         }
@@ -386,7 +386,7 @@ var Reset = new Vue({
             var param = {};
             this.probedata.service = status;
             param.probedata = JSON.stringify(this.probedata);
-            param.starttime = new Date(new Date() - 1000 * 60 * 60 * 24 * 4).Format("yyyy-MM-dd") + " 00:00:00";
+            param.starttime = new Date(new Date() - 1000 * 60 * 60 * 24).Format("yyyy-MM-dd") + " 00:00:00";
             /*前4天日期*/
             param.endtime = (new Date()).Format("yyyy-MM-dd") + " 23:59:59";
             /*当前日期*/
@@ -828,9 +828,9 @@ function probe() {
     });
 }
 $(document).ready(function () {
-    $('#country .jq22').comboSelect();
     $('#probe .jq22').comboSelect();
     $('#city .jq22').comboSelect();
+    $('#country .jq22').comboSelect();
     $('#target .jq22').comboSelect();
     citySelected=0
     $.ajax({

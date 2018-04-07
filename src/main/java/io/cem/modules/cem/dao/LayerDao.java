@@ -12,5 +12,5 @@ import java.util.Map;
  * @date 2017-11-23 11:22:22
  */
 public interface LayerDao extends BaseDao<LayerEntity> {
-	
+	LayerEntity queryLowLayer(Integer layerTag);
 }
