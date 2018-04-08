@@ -1,5 +1,8 @@
 package io.cem.modules.cem.entity;
 
+import io.cem.common.utils.excel.annotation.ExcelIgnore;
+import io.cem.common.utils.excel.annotation.ExportName;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -13,62 +16,91 @@ public class RecordTracertEntity implements Serializable {
 	//测试记录ID
 	private Integer id;
 	//探针ID
+	@ExcelIgnore
 	private Integer probeId;
 	//探针名称
+	@ExportName(exportName = "探针名称")
 	private String probeName;
 	//探针端口
+	@ExportName(exportName = "端口")
 	private String port;
 	//任务ID
+	@ExcelIgnore
 	private Integer taskId;
 	//任务名称
+	@ExportName(exportName = "任务名称")
 	private String taskName;
 	//子业务类型代号
+	@ExcelIgnore
 	private Integer serviceType;
 	//子业务类型
+	@ExportName(exportName = "业务类型")
 	private String servicetypeName;
 	//任务类型代号
+	@ExcelIgnore
 	private Integer taskType;
 	//任务类型
+	@ExcelIgnore
 	private String tasktypeName;
 	//测试目标类型代号
+	@ExcelIgnore
 	private Integer targetType;
 	//测试目标类型
+	@ExcelIgnore
 	private String targettypeName;
 	//测试目标ID
+	@ExcelIgnore
 	private Integer targetId;
 	//测试目标名称
+	@ExportName(exportName = "测试目标")
 	private String targetName;
 	//测试目标IP代号
+	@ExcelIgnore
 	private Long targetIp;
 	//测试目标IP
+	@ExportName(exportName = "任务ip")
 	private String targetipName;
 	//测试目标归属地
+	@ExcelIgnore
 	private String targetLoc;
 	//测试结果代号
+	@ExcelIgnore
 	private Integer state;
 	//测试结果
+	@ExcelIgnore
 	private String stateName;
 	//记录日期
+	@ExportName(exportName = "记录日期")
 	private Date recordDate;
 	//记录时间
+	@ExportName(exportName = "记录时间")
 	private String recordTime;
 	//时延平均值
+	@ExportName(exportName = "时延平均值")
 	private Double delay;
 	//时延标准差
+	@ExportName(exportName = "时延标准差")
 	private Double delayStd;
 	//时延方差
+	@ExportName(exportName = "时延方差")
 	private Double delayVar;
 	//抖动平均值
+	@ExportName(exportName = "抖动平均值")
 	private Double jitter;
 	//抖动标准差
+	@ExportName(exportName = "抖动标准差")
 	private Double jitterStd;
 	//抖动方差
+	@ExportName(exportName = "抖动方差")
 	private Double jitterVar;
 	//丢包率
+	@ExportName(exportName = "丢包率")
 	private Double lossRate;
 	//单跳指标记录
+	@ExportName(exportName = "单跳指标记录")
 	private String hopRecord;
 	//备注
+	@ExportName(exportName = "备注")
 	private String remark;
 
 

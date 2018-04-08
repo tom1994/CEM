@@ -1,280 +1,403 @@
 package io.cem.modules.cem.entity;
 
+import io.cem.common.utils.excel.annotation.ExcelIgnore;
+import io.cem.common.utils.excel.annotation.ExportName;
+
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 
 public class ScoreEntity {
     //记录ID
     private Integer id;
     //地市
+    @ExportName(exportName = "地市")
     private String cityName;
+    @ExcelIgnore
     private Integer cityId;
     //区县
+    @ExportName(exportName = "区县")
     private String countyName;
+    @ExcelIgnore
     private Integer countyId;
     //探针ID
+    @ExportName(exportName = "探针")
     private String probeName;
+    @ExcelIgnore
     private Integer probeId;
     //子业务类型
+    @ExcelIgnore
     private Integer serviceType;
+    @ExportName(exportName = "端口")
     private String port;
     //测试目标ID
+    @ExportName(exportName = "测试目标")
     private String targetName;
+    @ExcelIgnore
     private Integer targetId;
     //记录日期
+    @ExportName(exportName = "记录日记")
     private Date recordDate;
     //记录时间
+    @ExportName(exportName = "记录时间")
     private String recordTime;
     //分数
+    @ExportName(exportName = "分数")
     private Double score;
     //权重
+    @ExcelIgnore
     private Double base;
-
+    @ExcelIgnore
     private Integer accessLayer;
-
+    @ExcelIgnore
     private Integer fail;
-
+    @ExcelIgnore
     private Integer total;
-
+    @ExportName(exportName = "出口名称")
     private String exit;
 
     /*ping ICMP details*/
     //时延平均值
+    @ExcelIgnore
     private Double pingIcmpDelay;
     //时延标准差
+    @ExcelIgnore
     private Double pingIcmpDelayStd;
     //时延方差
+    @ExcelIgnore
     private Double pingIcmpDelayVar;
     //抖动平均值
+    @ExcelIgnore
     private Double pingIcmpJitter;
     //抖动标准差
+    @ExcelIgnore
     private Double pingIcmpJitterStd;
     //抖动方差
+    @ExcelIgnore
     private Double pingIcmpJitterVar;
     //丢包率
+    @ExcelIgnore
     private Double pingIcmpLossRate;
 
     /*ping TCP details*/
     //时延平均值
+    @ExcelIgnore
     private Double pingTcpDelay;
     //时延标准差
+    @ExcelIgnore
     private Double pingTcpDelayStd;
     //时延方差
+    @ExcelIgnore
     private Double pingTcpDelayVar;
     //抖动平均值
+    @ExcelIgnore
     private Double pingTcpJitter;
     //抖动标准差
+    @ExcelIgnore
     private Double pingTcpJitterStd;
     //抖动方差
+    @ExcelIgnore
     private Double pingTcpJitterVar;
     //丢包率
+    @ExcelIgnore
     private Double pingTcpLossRate;
 
     /*ping UDP details*/
     //时延平均值
+    @ExcelIgnore
     private Double pingUdpDelay;
     //时延标准差
+    @ExcelIgnore
     private Double pingUdpDelayStd;
     //时延方差
+    @ExcelIgnore
     private Double pingUdpDelayVar;
     //抖动平均值
+    @ExcelIgnore
     private Double pingUdpJitter;
     //抖动标准差
+    @ExcelIgnore
     private Double pingUdpJitterStd;
     //抖动方差
+    @ExcelIgnore
     private Double pingUdpJitterVar;
     //丢包率
+    @ExcelIgnore
     private Double pingUdpLossRate;
 
     /*tracert route ICMP details*/
     //时延平均值
+    @ExcelIgnore
     private Double tracertIcmpDelay;
     //时延标准差
+    @ExcelIgnore
     private Double tracertIcmpDelayStd;
     //时延方差
+    @ExcelIgnore
     private Double tracertIcmpDelayVar;
     //抖动平均值
+    @ExcelIgnore
     private Double tracertIcmpJitter;
     //抖动标准差
+    @ExcelIgnore
     private Double tracertIcmpJitterStd;
     //抖动方差
+    @ExcelIgnore
     private Double tracertIcmpJitterVar;
     //丢包率
+    @ExcelIgnore
     private Double tracertIcmpLossRate;
 
     /*tracert route TCP details*/
     //时延平均值
+    @ExcelIgnore
     private Double tracertTcpDelay;
     //时延标准差
+    @ExcelIgnore
     private Double tracertTcpDelayStd;
     //时延方差
+    @ExcelIgnore
     private Double tracertTcpDelayVar;
     //抖动平均值
+    @ExcelIgnore
     private Double tracertTcpJitter;
     //抖动标准差
+    @ExcelIgnore
     private Double tracertTcpJitterStd;
     //抖动方差
+    @ExcelIgnore
     private Double tracertTcpJitterVar;
     //丢包率
+    @ExcelIgnore
     private Double tracertTcpLossRate;
 
     /*sla tcp details*/
     //时延平均值
+    @ExcelIgnore
     private Double slaTcpDelay;
     //往向时延
+    @ExcelIgnore
     private Double slaTcpGDelay;
     //返向时延
+    @ExcelIgnore
     private Double slaTcpRDelay;
     //抖动平均值
+    @ExcelIgnore
     private Double slaTcpJitter;
     //往向抖动
+    @ExcelIgnore
     private Double slaTcpGJitter;
     //返向抖动
+    @ExcelIgnore
     private Double slaTcpRJitter;
     //丢包率
+    @ExcelIgnore
     private Double slaTcpLossRate;
 
     /*sla UDP details*/
     //时延平均值
+    @ExcelIgnore
     private Double slaUdpDelay;
     //往向时延
+    @ExcelIgnore
     private Double slaUdpGDelay;
     //返向时延
+    @ExcelIgnore
     private Double slaUdpRDelay;
     //抖动平均值
+    @ExcelIgnore
     private Double slaUdpJitter;
     //往向抖动
+    @ExcelIgnore
     private Double slaUdpGJitter;
     //返向抖动
+    @ExcelIgnore
     private Double slaUdpRJitter;
     //丢包率
+    @ExcelIgnore
     private Double slaUdpLossRate;
 
     /*dns details*/
     //时延平均值
+    @ExcelIgnore
     private Double dnsDelay;
     //查询成功率
+    @ExcelIgnore
     private Double dnsSuccessRate;
 
     /*dhcp details*/
     //时延平均值
+    @ExcelIgnore
     private Double dhcpDelay;
     //查询成功率
+    @ExcelIgnore
     private Double dhcpSuccessRate;
 
     /*pppoe details*/
     //时延平均值
+    @ExcelIgnore
     private Double pppoeDelay;
     //掉线率
+    @ExcelIgnore
     private Double pppoeDropRate;
     //查询成功率
+    @ExcelIgnore
     private Double pppoeSuccessRate;
 
     /*radius details*/
     //时延平均值
+    @ExcelIgnore
     private Double radiusDelay;
     //认证成功率
+    @ExcelIgnore
     private Double radiusSuccessRate;
 
     /*web page details*/
     //DNS时延
+    @ExcelIgnore
     private Double webpageDnsDelay;
     //连接时延
+    @ExcelIgnore
     private Double webpageConnDelay;
     //首字节时延
+    @ExcelIgnore
     private Double webpageHeadbyteDelay;
     //页面文件时延
+    @ExcelIgnore
     private Double webpagePageFileDelay;
     //重定向时延
+    @ExcelIgnore
     private Double webpageRedirectDelay;
     //首屏时延
+    @ExcelIgnore
     private Double webpageAboveFoldDelay;
     //页面元素时延
+    @ExcelIgnore
     private Double webpagePageElementDelay;
     //下载速率
+    @ExcelIgnore
     private Double webpageDownloadRate;
 
     /*web download details*/
     //DNS时延
+    @ExcelIgnore
     private Double webDownloadDnsDelay;
     //连接时延
+    @ExcelIgnore
     private Double webDownloadConnDelay;
     //首字节时延
+    @ExcelIgnore
     private Double webDownloadHeadbyteDelay;
     //下载速率
+    @ExcelIgnore
     private Double webDownloadDownloadRate;
 
     /*ftp download details*/
     //DNS时延
+    @ExcelIgnore
     private Double ftpDownloadDnsDelay;
     //连接时延
+    @ExcelIgnore
     private Double ftpDownloadConnDelay;
     //登录时延
+    @ExcelIgnore
     private Double ftpDownloadLoginDelay;
     //首字节时延
+    @ExcelIgnore
     private Double ftpDownloadHeadbyteDelay;
     //下载速率
+    @ExcelIgnore
     private Double ftpDownloadDownloadRate;
 
     /*ftp upload details*/
     //DNS时延
+    @ExcelIgnore
     private Double ftpUploadDnsDelay;
     //连接时延
+    @ExcelIgnore
     private Double ftpUploadConnDelay;
     //登录时延
+    @ExcelIgnore
     private Double ftpUploadLoginDelay;
     //首字节时延
+    @ExcelIgnore
     private Double ftpUploadHeadbyteDelay;
     //上传速率
+    @ExcelIgnore
     private Double ftpUploadUploadRate;
 
     /*web video details*/
     //DNS时延
+    @ExcelIgnore
     private Double webVideoDnsDelay;
     //连接WEB服务器时延
+    @ExcelIgnore
     private Double webVideoWsConnDelay;
     //WEB页面时延
+    @ExcelIgnore
     private Double webVideoWebPageDelay;
     //连接调度服务器时延
+    @ExcelIgnore
     private Double webVideoSsConnDelay;
     //获取视频地址时延
+    @ExcelIgnore
     private Double webVideoAddressDelay;
     //连接媒体服务器时延
+    @ExcelIgnore
     private Double webVideoMsConnDelay;
     //首帧时延
+    @ExcelIgnore
     private Double webVideoHeadFrameDelay;
     //首次缓冲时延
+    @ExcelIgnore
     private Double webVideoInitBufferDelay;
     //视频加载时延
+    @ExcelIgnore
     private Double webVideoLoadDelay;
     //总体缓冲时间
+    @ExcelIgnore
     private Double webVideoTotalBufferDelay;
     //下载速率
+    @ExcelIgnore
     private Double webVideoDownloadRate;
     //缓冲次数
+    @ExcelIgnore
     private Integer webVideoBufferTime;
 
     /*game details*/
     //DNS时延
+    @ExcelIgnore
     private Double gameDnsDelay;
     //连接时延
+    @ExcelIgnore
     private Double gameConnDelay;
     //游戏数据包时延
+    @ExcelIgnore
     private Double gamePacketDelay;
     //游戏数据包抖动
+    @ExcelIgnore
     private Double gamePacketJitter;
     //游戏数据包丢包率
+    @ExcelIgnore
     private Double gameLossRate;
     //网络连通性业务分数
+    @ExcelIgnore
     private Double connectionScore;
     //网络层质量业务分数
+    @ExcelIgnore
     private Double qualityScore;
     //网页浏览业务分数
+    @ExcelIgnore
     private Double broswerScore;
     //文件下载业务分数
+    @ExcelIgnore
     private Double downloadScore;
     //在线视频业务分数
+    @ExcelIgnore
     private Double videoScore;
     //网络游戏业务分数
+    @ExcelIgnore
     private Double gameScore;
 
 
@@ -1271,4 +1394,25 @@ public class ScoreEntity {
     public void setGameScore(Double gameScore) {
         this.gameScore = gameScore;
     }
+
+//    public static Comparator scoreComparator = new Comparator() {
+//        @Override
+//        public int compare(Object o1, Object o2) {
+//            return ( ((ScoreEntity) o1).getScore() > ((ScoreEntity) o2).getScore() ? -1 :
+//                    (((ScoreEntity) o1).getScore() ==((ScoreEntity) o2).getScore() ? 0 : 1));
+//        }
+//    };
+
+    @SuppressWarnings("unchecked")
+    public static void sortStringMethod(List<ScoreEntity> list){
+        Collections.sort(list, new Comparator(){
+            @Override
+            public int compare(Object o1, Object o2) {
+                ScoreEntity stu1=(ScoreEntity) o1;
+                ScoreEntity stu2=(ScoreEntity) o2;
+                return stu2.getScore().compareTo(stu1.getScore());
+            }
+        });
+    }
+
 }

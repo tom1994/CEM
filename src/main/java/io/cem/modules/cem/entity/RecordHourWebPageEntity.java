@@ -1,5 +1,8 @@
 package io.cem.modules.cem.entity;
 
+import io.cem.common.utils.excel.annotation.ExcelIgnore;
+import io.cem.common.utils.excel.annotation.ExportName;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -13,68 +16,91 @@ public class RecordHourWebPageEntity implements Serializable {
 	//记录ID
 	private Integer id;
 	//地市
+	@ExcelIgnore
 	private Integer cityId;
 	//区县
+	@ExcelIgnore
 	private Integer countyId;
 	//探针ID
+	@ExcelIgnore
 	private Integer probeId;
-	//探针端口
-	private String port;
-	//任务ID
-	private Integer taskId;
-	//子业务类型
-	private Integer serviceType;
-	//测试目标ID
-	private Integer targetId;
-	//测试目标IP
-	private Long targetIp;
-	//记录日期
-	private Date recordDate;
-	//记录时间
-	private String recordTime;
-	//DNS时延
-	private Double dnsDelay;
-	//连接时延
-	private Double connDelay;
-	//首字节时延
-	private Double headbyteDelay;
-	//页面文件时延
-	private Double pageFileDelay;
-	//重定向时延
-	private Double redirectDelay;
-	//首屏时延
-	private Double aboveFoldDelay;
-	//页面元素时延
-	private Double pageElementDelay;
-	//下载速率
-	private Double downloadRate;
-	//备注
-	private String remark;
 	//地市名称
+	@ExportName(exportName = "地市")
 	private String cityName;
 	//区县名称
+	@ExportName(exportName = "区县")
 	private String areaName;
 	//探针名称
+	@ExportName(exportName = "探针")
 	private String probeName;
+	//探针端口
+	@ExportName(exportName = "端口")
+	private String port;
+	//任务ID
+	@ExcelIgnore
+	private Integer taskId;
+	//子业务类型
+	@ExcelIgnore
+	private Integer serviceType;
+	//测试目标ID
+	@ExcelIgnore
+	private Integer targetId;
+	//测试目标IP
+	@ExcelIgnore
+	private Long targetIp;
 	//测试目标名称
+	@ExportName(exportName = "测试目标")
 	private String targetName;
-
+	@ExportName(exportName = "任务名称")
 	private String taskName;
-
+	@ExportName(exportName = "任务ip")
 	private String targetipName;
-
+	@ExcelIgnore
 	private String targettypeName;
-
+	@ExcelIgnore
 	private String stateName;
-
+	@ExportName(exportName = "业务名称")
 	private String servicetypeName;
-
+	//记录日期
+	@ExportName(exportName = "记录日期")
+	private Date recordDate;
+	//记录时间
+	@ExportName(exportName = "记录时间")
+	private String recordTime;
+	//DNS时延
+	@ExportName(exportName = "DNS时延")
+	private Double dnsDelay;
+	//连接时延
+	@ExportName(exportName = "连接时延")
+	private Double connDelay;
+	//首字节时延
+	@ExportName(exportName = "首字节时延")
+	private Double headbyteDelay;
+	//页面文件时延
+	@ExportName(exportName = "页面文件时延")
+	private Double pageFileDelay;
+	//重定向时延
+	@ExportName(exportName = "重定向时延")
+	private Double redirectDelay;
+	//首屏时延
+	@ExportName(exportName = "首屏时延")
+	private Double aboveFoldDelay;
+	//页面元素时延
+	@ExportName(exportName = "页面元素时延")
+	private Double pageElementDelay;
+	//下载速率
+	@ExportName(exportName = "下载速率")
+	private Double downloadRate;
+	//备注
+	@ExportName(exportName = "备注")
+	private String remark;
+@ExcelIgnore
 	private Integer fail;
-
+@ExcelIgnore
 	private Integer total;
-
+@ExcelIgnore
 	private Double loadDelay;
-
+@ExcelIgnore
 	private Integer accessLayer;
 
 	public Integer getFail() {

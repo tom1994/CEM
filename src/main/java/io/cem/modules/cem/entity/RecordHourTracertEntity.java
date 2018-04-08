@@ -1,7 +1,9 @@
 package io.cem.modules.cem.entity;
 
+import io.cem.common.utils.excel.annotation.ExcelIgnore;
+import io.cem.common.utils.excel.annotation.ExportName;
+
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 
 
@@ -14,66 +16,89 @@ public class RecordHourTracertEntity implements Serializable {
 	//测试记录ID
 	private Integer id;
 	//地市
+	@ExcelIgnore
 	private Integer cityId;
 	//区县
+	@ExcelIgnore
 	private Integer countyId;
 	//探针ID
+	@ExcelIgnore
 	private Integer probeId;
-	//探针端口
-	private String port;
-	//任务ID
-	private Integer taskId;
-	//子业务类型
-	private Integer serviceType;
-	//测试目标ID
-	private Integer targetId;
-	//测试目标IP
-	private Long targetIp;
-	//记录日期
-	private Date recordDate;
-	//记录时间
-	private String recordTime;
-	//时延平均值
-	private Double delay;
-	//时延标准差
-	private Double delayStd;
-	//时延方差
-	private Double delayVar;
-	//抖动平均值
-	private Double jitter;
-	//抖动标准差
-	private Double jitterStd;
-	//抖动方差
-	private Double jitterVar;
-	//丢包率
-	private Double lossRate;
-	//单跳测试结果
-	private String hopRecord;
-	//备注
-	private String remark;
 	//地市名称
+	@ExportName(exportName = "地市")
 	private String cityName;
 	//区县名称
+	@ExportName(exportName = "区县")
 	private String areaName;
 	//探针名称
+	@ExportName(exportName = "探针")
 	private String probeName;
+	//探针端口
+	@ExportName(exportName = "端口")
+	private String port;
+	//任务ID
+	@ExcelIgnore
+	private Integer taskId;
+	//子业务类型
+	@ExcelIgnore
+	private Integer serviceType;
+	//测试目标ID
+	@ExcelIgnore
+	private Integer targetId;
+	//测试目标IP
+	@ExcelIgnore
+	private Long targetIp;
 	//测试目标名称
+	@ExportName(exportName = "测试目标")
 	private String targetName;
-
+	@ExcelIgnore
 	private Integer accessLayer;
-
+	@ExportName(exportName = "任务名称")
 	private String taskName;
-
+	@ExportName(exportName = "任务ip")
 	private String targetipName;
-
+	@ExcelIgnore
 	private String targettypeName;
-
+	@ExcelIgnore
 	private String stateName;
-
+	@ExportName(exportName = "业务类型")
 	private String servicetypeName;
-
+	//记录日期
+	@ExportName(exportName = "记录日期")
+	private Date recordDate;
+	//记录时间
+	@ExportName(exportName = "记录时间")
+	private String recordTime;
+	//时延平均值
+	@ExportName(exportName = "时延平均值")
+	private Double delay;
+	//时延标准差
+	@ExportName(exportName = "时延标准差")
+	private Double delayStd;
+	//时延方差
+	@ExportName(exportName = "时延方差")
+	private Double delayVar;
+	//抖动平均值
+	@ExportName(exportName = "抖动平均值")
+	private Double jitter;
+	//抖动标准差
+	@ExportName(exportName = "抖动标准差")
+	private Double jitterStd;
+	//抖动方差
+	@ExportName(exportName = "抖动方差")
+	private Double jitterVar;
+	//丢包率
+	@ExportName(exportName = "丢包率")
+	private Double lossRate;
+	//单跳测试结果
+	@ExcelIgnore
+	private String hopRecord;
+	//备注
+	@ExportName(exportName = "备注")
+	private String remark;
+@ExcelIgnore
 	private Integer fail;
-
+@ExcelIgnore
 	private Integer total;
 
 	public Integer getFail() {

@@ -1,5 +1,8 @@
 package io.cem.modules.cem.entity;
 
+import io.cem.common.utils.excel.annotation.ExcelIgnore;
+import io.cem.common.utils.excel.annotation.ExportName;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -13,86 +16,120 @@ public class RecordSlaEntity implements Serializable {
 	//测试记录ID
 	private Integer id;
 	//探针ID
+	@ExcelIgnore
 	private Integer probeId;
 	//探针端口
+	@ExportName(exportName = "端口")
 	private String port;
 	//任务ID
+	@ExcelIgnore
 	private Integer taskId;
 	//子业务类型
+	@ExcelIgnore
 	private Integer serviceType;
 	//任务类型
+	@ExcelIgnore
 	private Integer taskType;
 	//测试目标类型
+	@ExcelIgnore
 	private Integer targetType;
 	//测试目标ID
+	@ExcelIgnore
 	private Integer targetId;
 	//测试目标IP
+	@ExcelIgnore
 	private Long targetIp;
 	//测试目标归属地
+	@ExcelIgnore
 	private String targetLoc;
 	//测试结果
+	@ExcelIgnore
 	private Integer state;
 	//记录日期
+	@ExportName(exportName = "记录日期")
 	private Date recordDate;
 	//记录时间
+	@ExportName(exportName = "记录时间")
 	private String recordTime;
 	//时延平均值
+	@ExportName(exportName = "时延平均值")
 	private Double delay;
 	//往向时延
+	@ExportName(exportName = "往向时延")
 	private Double gDelay;
 	//返向时延
+	@ExportName(exportName = "返向时延")
 	private Double rDelay;
 	//时延标准差
+	@ExportName(exportName = "时延标准差")
 	private Double delayStd;
 	//往向时延标准差
+	@ExportName(exportName = "往向时延标准差")
 	private Double gDelayStd;
 	//返向时延标准差
+	@ExportName(exportName = "返向时延标准差")
 	private Double rDelayStd;
 	//时延方差
+	@ExportName(exportName = "时延方差")
 	private Double delayVar;
 	//往向时延方差
+	@ExportName(exportName = "往向时延方差")
 	private Double gDelayVar;
 	//返向时延方差
+	@ExportName(exportName = "返向时延方差")
 	private Double rDelayVar;
 	//抖动平均值
+	@ExportName(exportName = "抖动平均值")
 	private Double jitter;
 	//往向抖动
+	@ExportName(exportName = "往向抖动")
 	private Double gJitter;
 	//返向抖动
+	@ExportName(exportName = "返向抖动")
 	private Double rJitter;
 	//抖动标准差
+	@ExportName(exportName = "抖动标准差")
 	private Double jitterStd;
 	//往向抖动标准差
+	@ExportName(exportName = "往向抖动标准差")
 	private Double gJitterStd;
 	//返向抖动标准差
+	@ExportName(exportName = "返向抖动标准差")
 	private Double rJitterStd;
 	//抖动方差
+	@ExportName(exportName = "抖动方差")
 	private Double jitterVar;
 	//往向抖动方差
+	@ExportName(exportName = "往向抖动方差")
 	private Double gJitterVar;
 	//返向抖动方差
+	@ExportName(exportName = "返向抖动方差")
 	private Double rJitterVar;
 	//丢包率
+	@ExportName(exportName = "丢包率")
 	private Double lossRate;
 	//往向丢包率
+	@ExportName(exportName = "往向丢包率")
 	private Double gLossRate;
 	//返向丢包率
+	@ExportName(exportName = "返向丢包率")
 	private Double rLossRate;
 	//备注
+	@ExportName(exportName = "备注")
 	private String remark;
-
+	@ExportName(exportName = "探针")
 	private String probeName;
-
+	@ExportName(exportName = "测试目标")
 	private String targetName;
-
+	@ExportName(exportName = "任务名称")
 	private String taskName;
-
+	@ExportName(exportName = "任务ip")
 	private String targetipName;
-
+@ExcelIgnore
 	private String targettypeName;
-
+@ExcelIgnore
 	private String stateName;
-
+@ExcelIgnore
 	private String servicetypeName;
 
 	public String getProbeName() {
