@@ -19,6 +19,8 @@ public interface LayerService {
 	List<LayerEntity> queryList(Map<String, Object> map);
 	
 	int queryTotal(Map<String, Object> map);
+
+	LayerEntity queryLowLayer(Integer layerTag);
 	
 	void save(LayerEntity layer);
 	

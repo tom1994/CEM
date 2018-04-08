@@ -201,7 +201,6 @@ var probedata_handle = new Vue({
         probedelBatch: function () {   /*批量删除监听事件*/
             status = 2;
             /*状态2表示删除*/
-            debugger
             var trs = $('#probe_table tbody').find('tr:has(:checked)');
             if (trs.length == 0) {
                 toastr.warning('请选择删除项目！');
@@ -241,11 +240,12 @@ function delete_All() {
         if (CheckALL[i].checked)
             check_val.push(CheckALL[i].value);
     }
-    if (check_val != []) {
+    if (check_val == []) {
         toastr.warning("请选择要删除探针!");
     }
     // console.log(check_val);
     delete_ajax(check_val)
+    debugger
 }
 
 function transString(string, i, j) {
@@ -824,10 +824,10 @@ function updategroup_this(obj) {     /*监听修改触发事件*/
 
 //探针列表删除功能
 function delete_ajax(idArray) {
-    // var ids = JSON.stringify(idArray);
+    var ids = JSON.stringify(idArray);
     // console.log(typeof idArray)
-
-    var ids = parseInt(idArray)
+debugger
+    // var ids = parseInt(idArray)
     /*对象数组字符串*/
     $.ajax({
         type: "POST", /*GET会乱码*/

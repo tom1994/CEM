@@ -8,8 +8,7 @@
     <title>任务创建</title>
     #parse("cemHeader.html")  <!--导入CSS和js文件-->
     <link href="${rc.contextPath}/statics/css/formStyle.css" rel="stylesheet">  <!--自定义CSS-->
-    <link rel="stylesheet" href="${rc.contextPath}/statics/css//bootstrap-select.css">
-
+    <!--<link rel="stylesheet" href="${rc.contextPath}/statics/css//bootstrap-select.css">-->
     <style type="text/css">
         tr:hover{background:#E5E5E5 }
         .box{
@@ -193,14 +192,14 @@
                         <div class="row" id="heartselected"  style="display: none">
                             <div class="col-lg-7 col-md-7 col-sm-7">
                                 <h4>待选探针</h4>
-                                <select id="first" class="selectpicker" name="probe" onchange="selectOnchang(this)" >
+                                <select id="first" name="probeIds" onchange="selectOnchang(this)" style="width: 180px">
                                     <option value="">请选择</option>
                                 </select>
                             </div>
                             <div class="col-lg-5 col-md-5 col-sm-5">
                                 <h4>待选择的端口号</h4>
-                                <select id="second" class="selectpicker" name="probePort" title="请选择">
-
+                                <select id="second"  name="probePort"  style="width: 180px">
+                                    <option value="">请选择</option>
                                 </select>
 
                             </div>
@@ -1252,15 +1251,8 @@
 <script type="text/javascript" src="${rc.contextPath}/statics/js/modules/probe/taskNew.js?_${date.systemTime}"></script>
 <!--<script type="text/javascript" src="${rc.contextPath}/statics/js/index.js"></script>-->
 <script type="text/javascript" src="${rc.contextPath}/statics/js/doublebox-bootstrap.js"></script>
-<!--<script type="text/javascript" src=${rc.contextPath}/statics/js/bootstrap-select.js"></script>-->
-<script src="https://cdn.bootcss.com/bootstrap-select/2.0.0-beta1/js/bootstrap-select.js"></script>
-
 <script type="text/javascript">
-    $(function() {
-        $(".selectpicker").selectpicker({
-            noneSelectedText: '请选择'//默认显示内容
-        });
-    })
+
         function Domains(){
         var maxl=6000//总长
         var s=document.getElementById("domains").value.trim().length +1;

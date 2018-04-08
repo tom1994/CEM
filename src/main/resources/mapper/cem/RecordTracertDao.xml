@@ -144,7 +144,6 @@
                     AND record_time BETWEEN #{start_time} AND #{terminal_time}
                     GROUP BY port, service_type, target_id, task_id, probe_id) t
 		WHERE rp.record_date = #{record_date}
-		AND rp.record_time BETWEEN #{start_time} AND #{terminal_time}
 		AND rp.state = 0
 		GROUP BY rp.port,rp.service_type,rp.target_id,rp.task_id,rp.probe_id;
 	</select>

@@ -20,6 +20,7 @@ import io.cem.modules.cem.service.LayerService;
 import io.cem.common.utils.PageUtils;
 import io.cem.common.utils.Query;
 import io.cem.common.utils.R;
+import sun.plugin.javascript.navig4.Layer;
 
 
 /**
@@ -35,17 +36,18 @@ public class LayerController {
     /**
      * 列表
      */
-    //这个方法弃用
+
     @RequestMapping("/list")
-    public R list(Integer page, Integer limit) throws Exception {
-        Map<String, Object> map = new HashMap<>();
-        map.put("offset", null);
-        map.put("limit", null);
-        page = 0;
-        limit = 0;
-        int total = layerService.queryTotal(map);
-        List<LayerEntity> layer = layerService.queryList(map);
-        return R.ok().put("page", layer);
+    public R list(@RequestParam Map<String, Object> params){
+        //查询列表数据
+        Query query = new Query(params);
+
+        List<LayerEntity> dicTypeList = layerService.queryList(query);
+        int total = layerService.queryTotal(query);
+
+        PageUtils pageUtil = new PageUtils(dicTypeList, total, query.getLimit(), query.getPage());
+
+        return R.ok().put("page", pageUtil);
     }
 
 
@@ -84,13 +86,20 @@ public class LayerController {
     }
 
     /**
-     * 保存
+     * 新增层级
      */
     @RequestMapping("/save")
     @RequiresPermissions("layer:save")
     public R save(@RequestBody LayerEntity layer) {
+        LayerEntity lowLayer = layerService.queryLowLayer(layer.getLayerTag());
+        int layerTag;
+        if (lowLayer != null && lowLayer.getLayerTag() != null){
+            layerTag = (layer.getLayerTag()+lowLayer.getLayerTag())/2;
+        }else {
+            layerTag = layer.getLayerTag()/2;
+        }
+        layer.setLayerTag(layerTag);
         layerService.save(layer);
-
         return R.ok();
     }
 

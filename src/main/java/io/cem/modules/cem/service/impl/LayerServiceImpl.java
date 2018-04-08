@@ -31,6 +31,11 @@ public class LayerServiceImpl implements LayerService {
 	public int queryTotal(Map<String, Object> map){
 		return layerDao.queryTotal(map);
 	}
+
+	@Override
+	public LayerEntity queryLowLayer(Integer layerTag){
+		return layerDao.queryLowLayer(layerTag);
+	}
 	
 	@Override
 	public void save(LayerEntity layer){
