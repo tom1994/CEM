@@ -24,6 +24,9 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 
+import static io.cem.modules.cem.entity.ScoreEntity.sortDescStringMethod;
+import static io.cem.modules.cem.entity.ScoreEntity.sortStringMethod;
+
 //import static io.cem.modules.cem.entity.ScoreEntity.scoreComparator;
 
 
@@ -64,7 +67,7 @@ public class RecordHourTracertController {
 	 */
 	@RequestMapping("/list")
 	@RequiresPermissions("recordhourtracert:list")
-	public R list(String probedata, Integer page, Integer limit) throws ExecutionException, InterruptedException {
+	public R list(String probedata, Integer page, Integer limit,String order) throws ExecutionException, InterruptedException {
 		//查询列表数据
 		Map<String, Object> map = new HashMap<>();
 		JSONObject probedata_jsonobject = JSONObject.parseObject(probedata);
@@ -87,16 +90,8 @@ public class RecordHourTracertController {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		List<ScoreEntity> scoreList = new ArrayList<>();
-		//查询天表
-		if (dateDifferent>5){
-            //查询天表
-            scoreList = recordHourRadiusService.calculateAreaDayScore(map);
-		}
-		else {
-            //查询小时表
-            scoreList = recordHourRadiusService.calculateAreaHourScore(map);
-		}
+		List<ScoreEntity> scoreList =recordHourRadiusService.calculateAreaHourScore(map);
+
 
 		if(map.get("target_id")==null){
 			for(int i=0;i<scoreList.size();i++){
@@ -117,6 +112,11 @@ public class RecordHourTracertController {
 		}
 
 //		Collections.sort(scoreList,scoreComparator);
+		if (order.equals("asc")) {
+			sortStringMethod(scoreList);
+		}else if(order.equals("desc")){
+			sortDescStringMethod(scoreList);
+		}
 
 		int start = (page-1)*limit;
 		int end;

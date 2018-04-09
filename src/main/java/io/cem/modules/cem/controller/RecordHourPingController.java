@@ -22,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 
+import static io.cem.modules.cem.entity.ScoreEntity.sortDescStringMethod;
 import static io.cem.modules.cem.entity.ScoreEntity.sortStringMethod;
 
 /**
@@ -65,7 +66,7 @@ public class RecordHourPingController {
      */
     @RequestMapping("/list")
     @RequiresPermissions("recordhourping:list")
-    public R list(String probedata, Integer page, Integer limit) throws ExecutionException, InterruptedException {
+    public R list(String probedata, Integer page, Integer limit, String order) throws ExecutionException, InterruptedException {
         //查询列表数据
         Map<String, Object> map = new HashMap<>();
         JSONObject probedata_jsonobject = JSONObject.parseObject(probedata);
@@ -75,18 +76,18 @@ public class RecordHourPingController {
         } catch (RuntimeException e) {
             throw new RRException("内部参数错误，请重试！");
         }
-        int service = Integer.parseInt(map.get("service").toString());
-        String dateStr = map.get("ava_start").toString();
-        String dateStr2 = map.get("ava_terminal").toString();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        int dateDifferent = 0;
-        try {
-            Date date2 = format.parse(dateStr2);
-            Date date = format.parse(dateStr);
-            dateDifferent = recordHourPingService.differentDays(date, date2);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+//        int service = Integer.parseInt(map.get("service").toString());
+//        String dateStr = map.get("ava_start").toString();
+//        String dateStr2 = map.get("ava_terminal").toString();
+//        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+//        int dateDifferent = 0;
+//        try {
+//            Date date2 = format.parse(dateStr2);
+//            Date date = format.parse(dateStr);
+//            dateDifferent = recordHourPingService.differentDays(date, date2);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
 
 		/*int total = 0;
         if(page==null) {              *//*没有传入page,则取全部值*//*
@@ -100,14 +101,7 @@ public class RecordHourPingController {
 			//total = scoreList.size();
 		}*/
 
-        List<ScoreEntity> scoreList = new ArrayList<>();
-        if (dateDifferent > 5) {
-            //查询天表
-            scoreList = recordHourRadiusService.calculateDayScore(map); }
-        else {
-            //查询小时表
-            scoreList = recordHourRadiusService.calculateHourScore(map);
-        }
+        List<ScoreEntity> scoreList = recordHourRadiusService.calculateHourScore(map);
 
         if (map.get("target_id") == null) {
             for (int i = 0; i < scoreList.size(); i++) {
@@ -128,8 +122,11 @@ public class RecordHourPingController {
             total = scoreList.size();
         }
      //   Collections.sort(scoreList,scoreComparator);
-
-        sortStringMethod(scoreList);
+        if (order.equals("asc")) {
+            sortStringMethod(scoreList);
+        }else if(order.equals("desc")){
+            sortDescStringMethod(scoreList);
+        }
 
         int start = (page-1)*limit;
         int end;
