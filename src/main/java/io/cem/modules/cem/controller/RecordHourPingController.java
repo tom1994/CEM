@@ -22,6 +22,8 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 
+import static io.cem.modules.cem.entity.ScoreEntity.sortStringMethod;
+
 /**
  */
 @RestController
@@ -125,11 +127,23 @@ public class RecordHourPingController {
             map.put("limit", limit);
             total = scoreList.size();
         }
-        //List<RecordHourPingEntity> probeList = recordHourPingService.queryList(map);
-        /*if (service == 1) {
-            total = recordHourPingService.pingListTotal(map);
-		}*/
-        PageUtils pageUtil = new PageUtils(scoreList, total, limit, page);
+     //   Collections.sort(scoreList,scoreComparator);
+
+        sortStringMethod(scoreList);
+
+        int start = (page-1)*limit;
+        int end;
+        if((page*limit-1)<scoreList.size()){
+            end = page*limit-1;
+        }else{end = scoreList.size()-1;}
+
+        List<ScoreEntity> newList = new ArrayList<>();
+        for(int i=start;i<=end;i++){
+            newList.add(i-start,scoreList.get(i));
+        }
+
+
+        PageUtils pageUtil = new PageUtils(newList, total, limit, page);
         return R.ok().put("page", pageUtil);
     }
 

@@ -1,5 +1,8 @@
 package io.cem.modules.cem.entity;
 
+import io.cem.common.utils.excel.annotation.ExcelIgnore;
+import io.cem.common.utils.excel.annotation.ExportName;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -13,52 +16,69 @@ public class RecordWebDownloadEntity implements Serializable {
 	//测试记录ID
 	private Integer id;
 	//探针ID
+	@ExcelIgnore
 	private Integer probeId;
 	//探针端口
+	@ExportName(exportName = "端口")
 	private String port;
 	//任务ID
+	@ExcelIgnore
 	private Integer taskId;
 	//子业务类型
+	@ExcelIgnore
 	private Integer serviceType;
 	//任务类型
+	@ExcelIgnore
 	private Integer taskType;
 	//测试目标类型
+	@ExcelIgnore
 	private Integer targetType;
 	//测试目标ID
+	@ExcelIgnore
 	private Integer targetId;
 	//测试目标IP
+	@ExcelIgnore
 	private Long targetIp;
 	//测试目标归属地
+	@ExcelIgnore
 	private String targetLoc;
 	//测试结果
+	@ExcelIgnore
 	private Integer state;
 	//记录日期
+	@ExportName(exportName = "记录日期")
 	private Date recordDate;
 	//记录时间
+	@ExportName(exportName = "记录时间")
 	private String recordTime;
 	//DNS时延
+	@ExportName(exportName = "DNS时延")
 	private Double dnsDelay;
 	//连接时延
+	@ExportName(exportName = "连接时延")
 	private Double connDelay;
 	//首字节时延
+	@ExportName(exportName = "首字节时延")
 	private Double headbyteDelay;
 	//下载速率
+	@ExportName(exportName = "下载速率")
 	private Double downloadRate;
 	//备注
+	@ExportName(exportName = "备注")
 	private String remark;
-
+	@ExportName(exportName = "探针")
 	private String probeName;
-
+	@ExportName(exportName = "测试目标")
 	private String targetName;
-
+	@ExportName(exportName = "测试任务")
 	private String taskName;
-
+@ExcelIgnore
 	private String targetipName;
-
+@ExcelIgnore
 	private String targettypeName;
-
+@ExcelIgnore
 	private String stateName;
-
+	@ExportName(exportName = "业务类型")
 	private String servicetypeName;
 
 	public String getProbeName() {

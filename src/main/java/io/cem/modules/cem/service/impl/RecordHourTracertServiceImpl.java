@@ -241,11 +241,11 @@ public class RecordHourTracertServiceImpl implements RecordHourTracertService {
 					lastScore.setFtpDownloadLoginDelay(map1.get(typ).getFtpDownloadLoginDelay());
 					lastScore.setFtpDownloadHeadbyteDelay(map1.get(typ).getFtpDownloadHeadbyteDelay());
 					lastScore.setFtpDownloadDownloadRate(map1.get(typ).getFtpDownloadDownloadRate());
-					lastScore.setFtpDownloadDnsDelay(map1.get(typ).getFtpDownloadDnsDelay());
-					lastScore.setFtpDownloadConnDelay(map1.get(typ).getFtpDownloadConnDelay());
-					lastScore.setFtpDownloadLoginDelay(map1.get(typ).getFtpDownloadLoginDelay());
-					lastScore.setFtpDownloadHeadbyteDelay(map1.get(typ).getFtpDownloadHeadbyteDelay());
-					lastScore.setFtpDownloadDownloadRate(map1.get(typ).getFtpDownloadDownloadRate());
+					lastScore.setFtpUploadDnsDelay(map1.get(typ).getFtpUploadDnsDelay());
+					lastScore.setFtpUploadConnDelay(map1.get(typ).getFtpUploadConnDelay());
+					lastScore.setFtpUploadLoginDelay(map1.get(typ).getFtpUploadLoginDelay());
+					lastScore.setFtpUploadHeadbyteDelay(map1.get(typ).getFtpUploadHeadbyteDelay());
+					lastScore.setFtpUploadUploadRate(map1.get(typ).getFtpUploadUploadRate());
 					lastScore.setDownloadScore(map1.get(typ).getDownloadScore());
 				}else if(typ.equals("video")){
 					lastScore.setWebVideoDnsDelay(map1.get(typ).getWebVideoDnsDelay());
@@ -345,11 +345,11 @@ public class RecordHourTracertServiceImpl implements RecordHourTracertService {
 				scoreBase.setFtpDownloadLoginDelay(list.get(i).getFtpDownloadLoginDelay());
 				scoreBase.setFtpDownloadHeadbyteDelay(list.get(i).getFtpDownloadHeadbyteDelay());
 				scoreBase.setFtpDownloadDownloadRate(list.get(i).getFtpDownloadDownloadRate());
-				scoreBase.setFtpDownloadDnsDelay(list.get(i).getFtpDownloadDnsDelay());
-				scoreBase.setFtpDownloadConnDelay(list.get(i).getFtpDownloadConnDelay());
-				scoreBase.setFtpDownloadLoginDelay(list.get(i).getFtpDownloadLoginDelay());
-				scoreBase.setFtpDownloadHeadbyteDelay(list.get(i).getFtpDownloadHeadbyteDelay());
-				scoreBase.setFtpDownloadDownloadRate(list.get(i).getFtpDownloadDownloadRate());
+				scoreBase.setFtpUploadDnsDelay(list.get(i).getFtpUploadDnsDelay());
+				scoreBase.setFtpUploadConnDelay(list.get(i).getFtpUploadConnDelay());
+				scoreBase.setFtpUploadLoginDelay(list.get(i).getFtpUploadLoginDelay());
+				scoreBase.setFtpUploadHeadbyteDelay(list.get(i).getFtpUploadHeadbyteDelay());
+				scoreBase.setFtpUploadUploadRate(list.get(i).getFtpUploadUploadRate());
 				scoreBase.setDownloadScore(list.get(i).getScore());
 			}else if(type.equals("video")){
 				scoreBase.setWebVideoDnsDelay(list.get(i).getWebVideoDnsDelay());
@@ -574,11 +574,11 @@ public class RecordHourTracertServiceImpl implements RecordHourTracertService {
 					lastScore.setFtpDownloadLoginDelay(map1.get(typ).getFtpDownloadLoginDelay());
 					lastScore.setFtpDownloadHeadbyteDelay(map1.get(typ).getFtpDownloadHeadbyteDelay());
 					lastScore.setFtpDownloadDownloadRate(map1.get(typ).getFtpDownloadDownloadRate());
-					lastScore.setFtpDownloadDnsDelay(map1.get(typ).getFtpDownloadDnsDelay());
-					lastScore.setFtpDownloadConnDelay(map1.get(typ).getFtpDownloadConnDelay());
-					lastScore.setFtpDownloadLoginDelay(map1.get(typ).getFtpDownloadLoginDelay());
-					lastScore.setFtpDownloadHeadbyteDelay(map1.get(typ).getFtpDownloadHeadbyteDelay());
-					lastScore.setFtpDownloadDownloadRate(map1.get(typ).getFtpDownloadDownloadRate());
+					lastScore.setFtpUploadDnsDelay(map1.get(typ).getFtpUploadDnsDelay());
+					lastScore.setFtpUploadConnDelay(map1.get(typ).getFtpUploadConnDelay());
+					lastScore.setFtpUploadLoginDelay(map1.get(typ).getFtpUploadLoginDelay());
+					lastScore.setFtpUploadHeadbyteDelay(map1.get(typ).getFtpUploadHeadbyteDelay());
+					lastScore.setFtpUploadUploadRate(map1.get(typ).getFtpUploadUploadRate());
 					lastScore.setDownloadScore(map1.get(typ).getDownloadScore());
 				}else if(typ.equals("video")){
 					lastScore.setWebVideoDnsDelay(map1.get(typ).getWebVideoDnsDelay());
@@ -678,11 +678,11 @@ public class RecordHourTracertServiceImpl implements RecordHourTracertService {
 				scoreBase.setFtpDownloadLoginDelay(list.get(i).getFtpDownloadLoginDelay());
 				scoreBase.setFtpDownloadHeadbyteDelay(list.get(i).getFtpDownloadHeadbyteDelay());
 				scoreBase.setFtpDownloadDownloadRate(list.get(i).getFtpDownloadDownloadRate());
-				scoreBase.setFtpDownloadDnsDelay(list.get(i).getFtpDownloadDnsDelay());
-				scoreBase.setFtpDownloadConnDelay(list.get(i).getFtpDownloadConnDelay());
-				scoreBase.setFtpDownloadLoginDelay(list.get(i).getFtpDownloadLoginDelay());
-				scoreBase.setFtpDownloadHeadbyteDelay(list.get(i).getFtpDownloadHeadbyteDelay());
-				scoreBase.setFtpDownloadDownloadRate(list.get(i).getFtpDownloadDownloadRate());
+				scoreBase.setFtpUploadDnsDelay(list.get(i).getFtpUploadDnsDelay());
+				scoreBase.setFtpUploadConnDelay(list.get(i).getFtpUploadConnDelay());
+				scoreBase.setFtpUploadLoginDelay(list.get(i).getFtpUploadLoginDelay());
+				scoreBase.setFtpUploadHeadbyteDelay(list.get(i).getFtpUploadHeadbyteDelay());
+				scoreBase.setFtpUploadUploadRate(list.get(i).getFtpUploadUploadRate());
 				scoreBase.setDownloadScore(list.get(i).getScore());
 			}else if(type.equals("video")){
 				scoreBase.setWebVideoDnsDelay(list.get(i).getWebVideoDnsDelay());

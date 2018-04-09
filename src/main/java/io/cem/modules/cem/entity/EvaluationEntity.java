@@ -1,41 +1,61 @@
 package io.cem.modules.cem.entity;
 
+import io.cem.common.utils.excel.annotation.ExportName;
+
 public class EvaluationEntity {
     //网络连通性最高分
+    @ExportName(exportName = "网络连通性最高分")
     private Double connectionMax;
     //网络连通性平均分
+    @ExportName(exportName = "网络连通性平均分")
     private Double connectionAverage;
     //网络连通性最低分
+    @ExportName(exportName = "网络连通性最低分")
     private Double connectionMin;
     //网络层质量最高分
+    @ExportName(exportName = "网络层质量最高分")
     private Double qualityMax;
     //网络层质量平均分
+    @ExportName(exportName = "网络层质量平均分")
     private Double qualityAverage;
     //网络层质量最低分
+    @ExportName(exportName = "网络层质量最低分")
     private Double qualityMin;
     //文件下载最高分
+    @ExportName(exportName = "文件下载最高分")
     private Double downloadMax;
     //文件下载平均分
+    @ExportName(exportName = "文件下载平均分")
     private Double downloadAverage;
     //文件下载最低分
+    @ExportName(exportName = "文件下载最低分")
     private Double downloadMin;
     //网页浏览最高分
+    @ExportName(exportName = "网页浏览最高分")
     private Double pageMax;
     //网页浏览平均分
+    @ExportName(exportName = "网页浏览平均分")
     private Double pageAverage;
     //网页浏览最低分
+    @ExportName(exportName = "网页浏览最低分")
     private Double pageMin;
     //在线视频最高分
+    @ExportName(exportName = "在线视频最高分")
     private Double videoMax;
     //在线视频平均分
+    @ExportName(exportName = "在线视频平均分")
     private Double videoAverage;
     //在线视频最低分
+    @ExportName(exportName = "在线视频最低分")
     private Double videoMin;
     //网络游戏最高分
+    @ExportName(exportName = "网络游戏最高分")
     private Double gameMax;
     //网络游戏平均分
+    @ExportName(exportName = "网络游戏平均分")
     private Double gameAverage;
     //网络游戏最低分
+    @ExportName(exportName = "网络游戏最低分")
     private Double gameMin;
 
     public Double getConnectionMax() {

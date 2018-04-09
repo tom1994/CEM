@@ -135,6 +135,37 @@ var search_service = new Vue({ //Todo:完成查询条件框
     }
 });
 
+function out() {/*导出事件*/
+    var searchJson = getFormJson($('#probesearch'));
+    if((searchJson.startDate)>(searchJson.terminalDate)){
+        console.log("时间选择有误，请重新选择！");
+        $('#nonavailable_time').modal('show');
+    }else{
+        var search = new Object();
+        search.city_id = searchJson.city;
+        search.couty_id = searchJson.county;
+        search.probe_id = searchJson.probe;
+        if (searchJson.startDate.length != 0 && searchJson.terminalDate.length != 0 ) {
+            var ava_start = searchJson.startDate.substr(0, 10);
+            var ava_terminal = searchJson.terminalDate.substr(0, 10);
+            var startTime = searchJson.startDate.substr(11, 15);
+            var terminalTime = searchJson.terminalDate.substr(11, 15);
+            search.ava_start = ava_start;
+            search.ava_terminal = ava_terminal;
+            search.starTime = startTime;
+            search.terminalTime = terminalTime;
+        }else{
+            search.ava_start = (new Date()).Format("yyyy-MM-dd");
+            search.ava_terminal = (new Date()).Format("yyyy-MM-dd");
+        }
+        var schedulepolicy = JSON.stringify(search);
+        console.log(schedulepolicy);
+
+        document.getElementById("output").href = encodeURI('../../recordhourtracert/qualityDownload/' + schedulepolicy);
+        document.getElementById("output").click();
+    }
+}
+
 
 function datedifference(sDate1, sDate2) {    //sDate1和sDate2是2006-12-18格式
     var dateSpan,

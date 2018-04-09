@@ -1,3 +1,8 @@
+<!--
+* Created by Fern on 2017/11/28.
+-->
+
+
 <!DOCTYPE html>
 <html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
@@ -6,8 +11,9 @@
     <title>质量排名</title>
     #parse("cemHeader.html")  <!--导入CSS和js文件-->
     <link href="${rc.contextPath}/statics/css/formStyle.css" rel="stylesheet">  <!--自定义CSS-->
+    <!--<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">-->
+    <link href="${rc.contextPath}/statics/css/element.css" rel="stylesheet">
     <style type="text/css">
-
         tr:hover{background:#E5E5E5 }
         .search{
             margin-top: 0px;
@@ -71,6 +77,9 @@
         .clear::-ms-reveal { display: none;}
         input[type=text]::-ms-clear{
             display: none;
+        }
+        #information_table_wrapper{
+            overflow:auto;
         }
     </style>
 
@@ -198,11 +207,10 @@
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="ibox float-e-margins">
                             <div class="ibox-title fontcolor box" id="probehandle" style="padding-bottom: 0px !important; ">
-                                <a href="../../cem/probe/download">
-                                    <button type="button" class="btn btn-sm btn-success"><span
-                                            class="glyphicon glyphicon-open  Btn"></span>导出
-                                    </button>
-                                </a>
+                                <button type="button" class="btn btn-sm btn-success" onclick="out()"><span
+                                        class="glyphicon glyphicon-open"></span>导出
+                                </button>
+                                <a id = "output" style="display: none" href=""></a>
                                 <p id="flip" style="position:relative; left:45%;" class="glyphicon glyphicon-menu-up" onClick="toggle1('searchbox')"></p>
                             </div>
                             <div class="ibox-content">
@@ -313,10 +321,10 @@
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="ibox float-e-margins">
                             <div class="ibox-title fontcolor box" id="areahandle" style="padding-bottom: 0px !important;">
-                                <a href="../../cem/probe/download">
-                                    <button type="button" class="btn btn-sm btn-success"><span
-                                            class="glyphicon glyphicon-open  Btn"></span>导出
-                                    </button>
+                                <button type="button" class="btn btn-sm btn-success" onclick="AreaOut()"><span
+                                        class="glyphicon glyphicon-open"></span>导出
+                                </button>
+                                <a id = "areaOutput" style="display: none" href="">
                                 </a>
                                 <p id="area_flip" style="position:relative; left:45%;" class="glyphicon glyphicon-menu-up" onClick="toggle2('area_searchbox')"></p>
                             </div>
@@ -365,10 +373,34 @@
 </div>
 
 
+<!-- 详情模态框（Modal） -->
+<div class="modal fade" id="myModal_update" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+    <div class="modal-dialog" style="width:995px"> <!--修改bootstrap modal模态框的宽度-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h3 class="modal-title myModalLabel">详细信息</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row" >
+                    <table  class="table table-bordered " id="information_table" style="margin-top: 2px!important;" ></table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
 
 <script type="text/javascript"
         src="${rc.contextPath}/statics/js/modules/evaluation/qualityRank.js?_${date.systemTime}"></script>
-
+<!--<script src="https://cdn.bootcss.com/element-ui/2.2.2/index.js"></script>-->
+<script type="text/javascript" src="${rc.contextPath}/statics/js/element-ui.js"></script>
 
 <script>
     $(function () {
@@ -438,9 +470,6 @@
         $("#"+param).toggle();
     }
 </script>
-
-</body>
-
 <script>
     /** 拖拽模态框*/
     var dragModal = {
@@ -509,4 +538,8 @@
 
     })
 </script>
+
+</body>
+
+
 </html>

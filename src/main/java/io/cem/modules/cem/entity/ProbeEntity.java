@@ -128,8 +128,9 @@ public class ProbeEntity implements Serializable {
 
 
 	//接入层级
+	@ExportName(exportName = "接入层级")
 	private String layerName;
-
+	@ExportName(exportName = "上层探针名称")
 	private String upstreamName;
 	/**
 	 * 设置：探针ID
