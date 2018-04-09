@@ -13,4 +13,5 @@ import java.util.Map;
  */
 public interface LayerDao extends BaseDao<LayerEntity> {
 	LayerEntity queryLowLayer(Integer layerTag);
+	int queryExist(String layerName);
 }

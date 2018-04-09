@@ -36,7 +36,12 @@ public class LayerServiceImpl implements LayerService {
 	public LayerEntity queryLowLayer(Integer layerTag){
 		return layerDao.queryLowLayer(layerTag);
 	}
-	
+
+	@Override
+	public int queryExist(String layerName){
+		return layerDao.queryExist(layerName);
+	}
+
 	@Override
 	public void save(LayerEntity layer){
 		layerDao.save(layer);

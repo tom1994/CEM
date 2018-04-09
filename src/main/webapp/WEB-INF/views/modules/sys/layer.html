@@ -1,13 +1,33 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
     <title>层级维护</title>
+    #parse("cemHeader.html")  <!--导入CSS和js文件-->
     #parse("header.html")
+
+    <link href="${rc.contextPath}/statics/css/formStyle.css" rel="stylesheet">  <!--自定义CSS-->
+    <style type="text/css">
+        .btn-success,.btn-success:hover,.btn-success:active,.btn-success:link,.btn-success:visited{
+            background-color: #1c84c6;
+            border-color: #1c84c6;
+            color: #FFFFFF;
+        }
+        .row{
+            border-top:0px;
+            padding: 0px;
+        }
+        .form_border {
+            border-left: 0;
+            line-height: 36px;
+            min-height: 36px;
+            text-align: center !important;
+        }
+    </style>
 </head>
 <body>
 <div id="rrapp" v-cloak>
     <div v-show="showList">
-        <div class="grid-btn">
+        <div class="grid-btn" id="handle">
             <div class="form-group col-sm-2">
                 <input type="text" class="form-control" v-model="q.username" @keyup.enter="query" placeholder="用户名">
             </div>
@@ -19,11 +39,11 @@
         <table id="jqGrid"></table>
         <div id="jqGridPager"></div>
     </div>
-
+<!--新建-->
     <div class="modal fade" id="newlayer" tabindex="-1" role="dialog"
          aria-labelledby="myModalLabel"
          aria-hidden="true">
-        <div class="modal-dialog" style="width: 950px"> <!--修改bootstrap modal模态框的宽度-->
+        <div class="modal-dialog" style="width: 700px"> <!--修改bootstrap modal模态框的宽度-->
             <div class="modal-content">
                 <div class="modal-header" style="">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
@@ -32,12 +52,100 @@
                     <h3 class="modal-title myModalLabel">新增层级</h3>
                 </div>
                 <div class="modal-body" style="padding: 0px 30px 0px 30px !important;">
-                    <div>hello</div>
-                    <div><select name="" id=""></select></div>
+                    <div class="row">
+                        <form class="form-horizontal" id="form_data" role="form">
+                            <div class="form-group row">
+                                <label for="layerName" class="col-lg-2 col-md-2 col-sm-2 control-label form_border"
+                                       style="line-height: 1.5">层级名称</label>
+                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                    <input type="text" class="form-control input clear" id="layerName" name="layerName"  >
+                                </div>
+                                <label for="layerTag"
+                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">上级层级</label>
+                                <div class="col-lg-2 col-md-2 col-sm-2 form_border">
+                                    <select id="layerTag" class="form-control input clear" name="id">
+                                        <!--VUE列表渲染-->
+                                        <option value="">--请选择--</option>
+                                        <option v-for="item in layerTag" v-bind:value="item.id">
+                                            {{ item.layerName }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-success" onclick="submit()">保存</button>
                 </div>
             </div>
         </div>
     </div>
+<!--编辑-->
+    <div class="modal fade" id="layer" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" style="width: 700px"> <!--修改bootstrap modal模态框的宽度-->
+            <div class="modal-content">
+                <div class="modal-header" style="">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h3 class="modal-title myModalLabel">修改名称</h3>
+                </div>
+                <div class="modal-body" style="padding: 0px 30px 0px 30px !important;">
+                    <div class="row">
+                        <form class="form-horizontal" id="layer_data" role="form">
+                            <div class="form-group row">
+                                <label class="col-lg-2 col-md-2 col-sm-2 control-label form_border"
+                                       style="line-height: 1.5">层级名称</label>
+                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                    <input type="text" class="form-control input clear"  name="layerName"  >
+                                </div>
+                                <!--<label-->
+                                       <!--class="col-lg-2 col-md-2 col-sm-2 input-label form_border"></label>-->
+                                <!--<div class="col-lg-2 col-md-2 col-sm-2 form_border">-->
+                                    <!--<input type="text" class="form-control input clear"  disabled="disabled" >-->
+                                <!--</div>-->
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-success" onclick="save()">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 删除确认模态框（Modal） -->
+    <div class="modal fade" id="myModal_delete" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" style="width: 500px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h3 class="modal-title" id="myModalLabel_delet">
+                        确认
+                    </h3>
+                </div>
+                <div class="modal-body" style="font-size: medium">
+                    <b>确定删除吗?</b>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"
+                           >取消
+                    </button>
+                    <button type="button" class="btn btn-success"  onclick="delete_data()">确定</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+
 </div>
 
     <script src="${rc.contextPath}/statics/js/modules/sys/layer.js?_${date.systemTime}"></script>
