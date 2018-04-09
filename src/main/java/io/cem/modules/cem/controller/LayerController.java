@@ -38,16 +38,18 @@ public class LayerController {
      */
 
     @RequestMapping("/list")
-    public R list(@RequestParam Map<String, Object> params){
+    public R list(@RequestParam Map<String, Object> params) {
         //查询列表数据
-        Query query = new Query(params);
-
-        List<LayerEntity> dicTypeList = layerService.queryList(query);
-        int total = layerService.queryTotal(query);
-
-        PageUtils pageUtil = new PageUtils(dicTypeList, total, query.getLimit(), query.getPage());
-
-        return R.ok().put("page", pageUtil);
+        if (!params.containsKey("limit")) {
+            List<LayerEntity> layerList = layerService.queryList(params);
+            return R.ok().put("layerList", layerList);
+        } else {
+            Query query = new Query(params);
+            List<LayerEntity> layerList = layerService.queryList(query);
+            int total = layerService.queryTotal(query);
+            PageUtils pageUtil = new PageUtils(layerList, total, query.getLimit(), query.getPage());
+            return R.ok().put("page", pageUtil);
+        }
     }
 
 
@@ -91,16 +93,21 @@ public class LayerController {
     @RequestMapping("/save")
     @RequiresPermissions("layer:save")
     public R save(@RequestBody LayerEntity layer) {
-        LayerEntity lowLayer = layerService.queryLowLayer(layer.getLayerTag());
-        int layerTag;
-        if (lowLayer != null && lowLayer.getLayerTag() != null){
-            layerTag = (layer.getLayerTag()+lowLayer.getLayerTag())/2;
-        }else {
-            layerTag = layer.getLayerTag()/2;
+        LayerEntity highLayer = layerService.queryObject(layer.getId());
+        if (layerService.queryExist(layer.getLayerName()) > 0) {
+            return R.error(300, "层级名称已存在，请重新输入");
+        } else {
+            LayerEntity lowLayer = layerService.queryLowLayer(highLayer.getLayerTag());
+            int layerTag;
+            if (lowLayer != null && lowLayer.getLayerTag() != null) {
+                layerTag = (highLayer.getLayerTag() + lowLayer.getLayerTag()) / 2;
+            } else {
+                layerTag = highLayer.getLayerTag() / 2;
+            }
+            layer.setLayerTag(layerTag);
+            layerService.save(layer);
+            return R.ok();
         }
-        layer.setLayerTag(layerTag);
-        layerService.save(layer);
-        return R.ok();
     }
 
     /**

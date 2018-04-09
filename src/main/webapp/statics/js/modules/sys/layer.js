@@ -3,6 +3,7 @@ $(function () {
         url: baseURL + 'cem/layer/list',
         datatype: "json",
         colModel: [
+            {name:'id',index:'id',hidden:true},
             {label: '层级标识', name: 'layerTag', index: "layer_tag", width: 45, key: true},
             {label: '层级名称', name: 'layerName', width: 75},
         ],
@@ -55,39 +56,42 @@ var vm = new Vue({
         },
         showList: true,
         title: null,
+        layerTag: [],
     },
     methods: {
         query: function () {
             vm.reload();
         },
         add: function () {
+            $('#newlayer').modal('show');
         },
         update: function () {
-            var userId = getSelectedRow();
+            getSelectedRow(this);
         },
         del: function () {
-            var userIds = getSelectedRows();
-            if (userIds == null) {
-                return;
-            }
-
-            confirm('确定要删除选中的记录？', function () {
-                $.ajax({
-                    type: "POST",
-                    url: baseURL + "cem/layer/delete",
-                    contentType: "application/json",
-                    data: JSON.stringify(userIds),
-                    success: function (r) {
-                        if (r.code == 0) {
-                            alert('操作成功', function () {
-                                vm.reload();
-                            });
-                        } else {
-                            alert(r.msg);
-                        }
-                    }
-                });
-            });
+            delete_this(this)
+            // var userIds = getSelectedRows();
+            // if (userIds == null) {
+            //     return;
+            // }
+            //
+            // confirm('确定要删除选中的记录？', function () {
+            //     $.ajax({
+            //         type: "POST",
+            //         url: baseURL + "cem/layer/delete",
+            //         contentType: "application/json",
+            //         data: JSON.stringify(userIds),
+            //         success: function (r) {
+            //             if (r.code == 0) {
+            //                 alert('操作成功', function () {
+            //                     vm.reload();
+            //                 });
+            //             } else {
+            //                 alert(r.msg);
+            //             }
+            //         }
+            //     });
+            // });
         },
         reload: function () {
             vm.showList = true;
@@ -96,24 +100,214 @@ var vm = new Vue({
                 postData: {'username': vm.q.username},
                 page: page
             }).trigger("reloadGrid");
-        }
+        },
+
+    },
+    mounted:function () {
+        let vm=this
+        $.ajax({
+            type: "POST", /*GET会乱码*/
+            url: "../../cem/layer/list",
+            cache: false,  //禁用缓存
+            dataType: "json",
+            /* contentType:"application/json",  /!*必须要,不可少*!/*/
+            success: function (result) {
+                console.log(result)
+                if(!result || result.layerList.length != 0){
+                    vm.layerTag = result.layerList
+                }
+                console.log( vm.layerTag);
+            }
+        });
     }
 });
+//新建
+function submit() {
+        var spJson = getFormJson($('#form_data'));
+        debugger
+        console.log(spJson);
+        if(spJson.layerName==""){
+            toastr.warning("请输入层级名称!");
+        }else if(spJson.layerTag==""){
+            toastr.warning("请选择层级!");
+        }else{
+            var sp = JSON.stringify(spJson);
+            /*封装成json数组*/
+            console.log(sp);
+            $.ajax({
+                url: "../../cem/layer/save",//探针列表
+                type: "POST",
+                cache: false,  //禁用缓存
+                data:sp,
+                dataType: "json",
+                contentType: "application/json",
+                success: function (result) {
+                    var code = result.code;
+                    var msg = result.msg;
+                    console.log(result);
+                     switch (code) {
+                            case 0:
+                                toastr.success("新建成功!");
+                                $('#newlayer').modal('hide');
+                                break;
 
-var new_layer = new Vue({
-    el: '#newlayer',
-    // 在 `methods` 对象中定义方法
-    methods: {
-        submit: function () {
+                                case 403:
+                                    toastr.error(msg);
+                                    break;
+                                 case 300:
+                                 toastr.warning(msg);
+                                 break;
+                                default:
+                                    toastr.error("未知错误");
+                                    break
+                        };
+                     vm.reload();
+                    }
 
-        },
-        getUpper: function () {
-
-        },
-        getLower: function () {
-
+            });
         }
     }
-});
+//    修改后保存
+function save() {
+    var id = parseInt($("#jqGrid").jqGrid('getGridParam','selrow'))//根据点击行获得点击行的id（id为jsonReader: {id: "id" },）
+    var rowData = $("#jqGrid").jqGrid("getRowData",id);//根据上面的id获得本行的所有数据
+    id=parseInt(rowData.id)
+    var spJson = getFormJson($('#layer_data'));
+    spJson.id=id
+    console.log(spJson);
+    if(spJson.layerName==""){
+        toastr.warning("请输入层级名称!");
+    }else{
+        var sp = JSON.stringify(spJson);
+        /*封装成json数组*/
+        console.log(sp);
+        $.ajax({
+            url: "../../cem/layer/update",
+            type: "POST",
+            cache: false,  //禁用缓存
+            data:sp,
+            dataType: "json",
+            contentType: "application/json",
+            success: function (result) {
+                var code = result.code;
+                var msg = result.msg;
+                console.log(result);
+                switch (code) {
+                    case 0:
+                        toastr.success("修改成功!");
+                        $('#layer').modal('hide');
+                        break;
+                    case 403:
+                        toastr.error(msg);
+                        break;
+                    default:
+                        toastr.error("未知错误");
+                        break
+                };
+                vm.reload();
+            }
+
+        });
+    }
+}
+function getFormJson(form) {      /*将表单对象变为json对象*/
+    var o = {};
+    var a = $(form).serializeArray();
+    debugger
+    $.each(a, function () {
+        if (o[this.name] !== undefined) {
+            if (!o[this.name].push) {
+                o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '');
+        } else {
+            o[this.name] = this.value || '';
+        }
+    });
+    return o;
+}
+//修改
+function getSelectedRow(obj) {
+    var grid = $("#jqGrid");
+    var rowKey = grid.getGridParam("selrow");
+    var selectedIDs = grid.getGridParam("selarrrow");
+    var id = parseInt($("#jqGrid").jqGrid('getGridParam','selrow'))//根据点击行获得点击行的id（id为jsonReader: {id: "id" },）
+    var rowData = $("#jqGrid").jqGrid("getRowData",id);//根据上面的id获得本行的所有数据
+    id=parseInt(rowData.id)
+    if(!rowKey){
+        toastr.warning("请选择一条记录!");
+    } else if(selectedIDs.length > 1){
+        toastr.warning("只能选择一条记录!");
+
+    } else {
+        $('#layer').modal('show');
+        var forms = $('#layer_data .form-control ');
+        $.ajax({
+            url: "../../cem/layer/info/"+id,//探针列表
+            type: "POST",
+            cache: false,  //禁用缓存
+            dataType: "json",
+            contentType: "application/json",
+            success: function (result) {
+                forms[0].value=result.layer.layerName;
+                // forms[1].value=result.layer.layerTag;
+            }
+        });
+
+    }
+    return selectedIDs[0];
+}
+
+
+function delete_this() {
+    debugger
+    var grid = $("#jqGrid");
+    var rowKey = grid.getGridParam("selrow");
+    var selectedIDs = grid.getGridParam("selarrrow");
+    if(!rowKey){
+        toastr.warning("请选择一条记录!");
+    } else if(selectedIDs.length > 1){
+        toastr.warning("只能选择一条记录!");
+
+    }else{
+        $('#myModal_delete').modal('show');
+
+    }
+}
+ function delete_data () {
+     var id = parseInt($("#jqGrid").jqGrid('getGridParam','selrow'))//根据点击行获得点击行的id（id为jsonReader: {id: "id" },）
+     var rowData = $("#jqGrid").jqGrid("getRowData",id);//根据上面的id获得本行的所有数据
+     id=parseInt(rowData.id);
+      delete_ajax(id);
+        /*ajax传输*/
+}
+//删除功能
+function delete_ajax(id) {
+    debugger
+    var userIds = [];
+    userIds[0]=id;
+    if (userIds == null) {
+        return;
+    }
+    /*对象数组字符串*/
+    $.ajax({
+        type: "POST", /*GET会乱码*/
+        url: "../../cem/layer/delete",
+        cache: false,  //禁用缓存
+        dataType: "json",
+        contentType: "application/json", /*必须要,不可少*/
+        data: JSON.stringify(userIds),
+        success: function (r) {
+            if (r.code == 0) {
+                toastr.success('删除成功', function () {
+                    $('#myModal_delete').modal('hide');
+                    vm.reload();
+                });
+            } else {
+                toastr.warning(r.msg);
+            }
+        }
+    });
+}
 
 

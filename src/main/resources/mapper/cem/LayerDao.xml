@@ -24,7 +24,7 @@
                 order by layer_tag desc
             </otherwise>
         </choose>
-        <if test="offset != null and limit != null">
+        <if test="offset != null and limit != null and limit != ''">
             limit #{offset}, #{limit}
         </if>
     </select>
@@ -37,6 +37,11 @@
         select max(layer_tag) AS layer_tag from layer
         where layer_tag &lt; #{layerTag}
 	</select>
+
+    <select id="queryExist" resultType="int">
+        select count(*) from layer
+        where layer_name = #{layerName}
+    </select>
 
     <insert id="save" parameterType="io.cem.modules.cem.entity.LayerEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into layer

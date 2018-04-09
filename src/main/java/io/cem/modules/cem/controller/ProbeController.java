@@ -164,7 +164,6 @@ public class ProbeController {
     @RequiresPermissions("probe:save")
     public R save(@RequestBody ProbeEntity probe) {
         probeService.save(probe);
-
         return R.ok();
     }
 

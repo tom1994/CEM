@@ -20,6 +20,8 @@ public interface LayerService {
 	
 	int queryTotal(Map<String, Object> map);
 
+	int queryExist(String layerName);
+
 	LayerEntity queryLowLayer(Integer layerTag);
 	
 	void save(LayerEntity layer);
