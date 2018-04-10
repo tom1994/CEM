@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.alibaba.fastjson.JSONObject;
+import io.cem.common.annotation.SysLog;
 import io.cem.common.exception.RRException;
 import io.cem.common.utils.JSONUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -74,6 +75,7 @@ public class SchedulePolicyController {
 	/**
 	 * 保存
 	 */
+	@SysLog("新建调度策略")
 	@RequestMapping("/save")
 	@RequiresPermissions("schedulepolicy:save")
 	public R save(@RequestBody SchedulePolicyEntity schedulePolicy){
@@ -85,6 +87,7 @@ public class SchedulePolicyController {
 	/**
 	 * 修改
 	 */
+	@SysLog("修改调度策略")
 	@RequestMapping("/update")
 	@RequiresPermissions("schedulepolicy:update")
 	public R update(@RequestBody SchedulePolicyEntity schedulePolicy){
@@ -96,6 +99,7 @@ public class SchedulePolicyController {
 	/**
 	 * 删除
 	 */
+	@SysLog("删除调度策略")
 	@RequestMapping("/delete")
 	@RequiresPermissions("schedulepolicy:delete")
 	public R delete(@RequestBody Integer[] ids){

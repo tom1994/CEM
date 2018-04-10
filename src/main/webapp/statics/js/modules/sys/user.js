@@ -3,7 +3,7 @@ $(function () {
         url: baseURL + 'sys/user/list',
         datatype: "json",
         colModel: [			
-			{ label: '用户ID', name: 'userId', index: "user_id", width: 45, key: true },
+			{ label: '用户ID', name: 'userId', index: "id", width: 45, key: true },
 			{ label: '用户名', name: 'username', width: 75 },
             { label: '所属部门', name: 'deptName', width: 75 },
 			{ label: '邮箱', name: 'email', width: 90 },
@@ -113,12 +113,13 @@ var vm = new Vue({
             this.getRoleList();
         },
         del: function () {
+            debugger
             var userIds = getSelectedRows();
             if(userIds == null){
                 return ;
             }
 
-            confirm('确定要删除选中的记录？', function(){
+            // confirm('确定要删除选中的记录？', function(){
                 $.ajax({
                     type: "POST",
                     url: baseURL + "sys/user/delete",
@@ -134,7 +135,7 @@ var vm = new Vue({
                         }
                     }
                 });
-            });
+            // });
         },
         saveOrUpdate: function () {
             var url = vm.user.userId == null ? "sys/user/save" : "sys/user/update";

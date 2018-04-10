@@ -1,6 +1,7 @@
 package io.cem.modules.cem.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import io.cem.common.annotation.SysLog;
 import io.cem.common.exception.RRException;
 import io.cem.common.utils.*;
 import io.cem.modules.cem.entity.ProbeEntity;
@@ -170,6 +171,7 @@ public class ProbeController {
     /**
      * 修改
      */
+    @SysLog("修改探针信息")
     @RequestMapping("/update")
     @RequiresPermissions("probe:update")
     public R update(@RequestBody ProbeEntity probe) {
@@ -181,6 +183,7 @@ public class ProbeController {
     /**
      * 删除
      */
+    @SysLog("删除探针")
     @RequestMapping("/delete")
     @RequiresPermissions("probe:delete")
     public R delete(@RequestBody Integer[] ids) {

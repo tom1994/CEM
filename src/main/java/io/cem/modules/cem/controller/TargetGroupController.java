@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.alibaba.fastjson.JSONObject;
+import io.cem.common.annotation.SysLog;
 import io.cem.common.exception.RRException;
 import io.cem.common.utils.JSONUtils;
 import io.cem.modules.cem.entity.TargetEntity;
@@ -105,6 +106,7 @@ public class TargetGroupController {
 	/**
 	 * 保存
 	 */
+	@SysLog("新建目标组")
 	@RequestMapping("/save")
 	@RequiresPermissions("targetgroup:save")
 	public R save(@RequestBody TargetGroupEntity targetGroup){
@@ -116,6 +118,7 @@ public class TargetGroupController {
 	/**
 	 * 修改
 	 */
+	@SysLog("修改目标组")
 	@RequestMapping("/update")
 	@RequiresPermissions("targetgroup:update")
 	public R update(@RequestBody TargetGroupEntity targetGroup){
@@ -127,6 +130,7 @@ public class TargetGroupController {
 	/**
 	 * 删除
 	 */
+	@SysLog("删除目标组")
 	@RequestMapping("/delete")
 	@RequiresPermissions("targetgroup:delete")
 	public R delete(@RequestBody Integer[] ids){

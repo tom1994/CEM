@@ -3,9 +3,9 @@ $(function () {
         url: baseURL + 'sys/role/list',
         datatype: "json",
         colModel: [
-            { label: '角色ID', name: 'roleId', index: "role_id", width: 45, key: true },
-            { label: '角色名称', name: 'roleName', index: "role_name", width: 75 },
-            { label: '所属部门', name: 'deptName', width: 75 },
+            { label: '权限ID', name: 'roleId', index: "role_id", width: 45, key: true },
+            { label: '权限名称', name: 'roleName', index: "role_name", width: 75 },
+            { label: '所属部门', name: 'deptName',index: "dept_name", width: 75 },
             { label: '备注', name: 'remark', width: 100 },
             { label: '创建时间', name: 'createTime', index: "create_time", width: 80}
         ],
@@ -139,7 +139,7 @@ var vm = new Vue({
                 return ;
             }
 
-            confirm('确定要删除选中的记录？', function(){
+            // confirm('确定要删除选中的记录？', function(){
                 $.ajax({
                     type: "POST",
                     url: baseURL + "sys/role/delete",
@@ -155,20 +155,20 @@ var vm = new Vue({
                         }
                     }
                 });
-            });
+            // });
         },
         getRole: function(roleId){
             $.get(baseURL + "sys/role/info/"+roleId, function(r){
                 vm.role = r.role;
 
-                //勾选角色所拥有的菜单
+                //勾选权限所拥有的菜单
                 var menuIds = vm.role.menuIdList;
                 for(var i=0; i<menuIds.length; i++) {
                     var node = menu_ztree.getNodeByParam("menuId", menuIds[i]);
                     menu_ztree.checkNode(node, true, false);
                 }
 
-                //勾选角色所拥有的部门数据权限
+                //勾选权限所拥有的部门数据权限
                 var deptIds = vm.role.deptIdList;
                 for(var i=0; i<deptIds.length; i++) {
                     var node = data_ztree.getNodeByParam("deptId", deptIds[i]);

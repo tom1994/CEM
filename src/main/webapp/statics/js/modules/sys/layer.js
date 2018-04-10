@@ -47,7 +47,7 @@ var setting = {
     }
 };
 var ztree;
-
+var _this;
 var vm = new Vue({
     el: '#rrapp',
     data: {
@@ -70,28 +70,6 @@ var vm = new Vue({
         },
         del: function () {
             delete_this(this)
-            // var userIds = getSelectedRows();
-            // if (userIds == null) {
-            //     return;
-            // }
-            //
-            // confirm('确定要删除选中的记录？', function () {
-            //     $.ajax({
-            //         type: "POST",
-            //         url: baseURL + "cem/layer/delete",
-            //         contentType: "application/json",
-            //         data: JSON.stringify(userIds),
-            //         success: function (r) {
-            //             if (r.code == 0) {
-            //                 alert('操作成功', function () {
-            //                     vm.reload();
-            //                 });
-            //             } else {
-            //                 alert(r.msg);
-            //             }
-            //         }
-            //     });
-            // });
         },
         reload: function () {
             vm.showList = true;
@@ -104,23 +82,26 @@ var vm = new Vue({
 
     },
     mounted:function () {
-        let vm=this
-        $.ajax({
-            type: "POST", /*GET会乱码*/
-            url: "../../cem/layer/list",
-            cache: false,  //禁用缓存
-            dataType: "json",
-            /* contentType:"application/json",  /!*必须要,不可少*!/*/
-            success: function (result) {
-                console.log(result)
-                if(!result || result.layerList.length != 0){
-                    vm.layerTag = result.layerList
-                }
-                console.log( vm.layerTag);
-            }
-        });
+        _this=this
+        bb(_this);
     }
 });
+function bb(vm) {
+    $.ajax({
+        type: "POST", /*GET会乱码*/
+        url: "../../cem/layer/list",
+        cache: false,  //禁用缓存
+        dataType: "json",
+        /* contentType:"application/json",  /!*必须要,不可少*!/*/
+        success: function (result) {
+            console.log(result)
+            if(!result || result.layerList.length != 0){
+                vm.layerTag = result.layerList
+            }
+            console.log( vm.layerTag);
+        }
+    });
+}
 //新建
 function submit() {
         var spJson = getFormJson($('#form_data'));
@@ -149,8 +130,8 @@ function submit() {
                             case 0:
                                 toastr.success("新建成功!");
                                 $('#newlayer').modal('hide');
+                                bb(_this);
                                 break;
-
                                 case 403:
                                     toastr.error(msg);
                                     break;

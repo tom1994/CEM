@@ -74,7 +74,7 @@ public class DataFilterAspect {
 
         //没有本部门数据权限，也能查询本人数据
         if(dataFilter.user()){
-            filterSql.append(" or ").append(tableAlias).append("user_id=").append(user.getUserId());
+            filterSql.append(" or ").append(tableAlias).append("id=").append(user.getUserId());
         }
         filterSql.append(")");
 
