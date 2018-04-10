@@ -56,7 +56,8 @@
     <select id="queryTargetListByGroup" resultType="io.cem.modules.cem.entity.TargetEntity">
 		select id,`value`
 		from target
-		WHERE group_id = #{value};
+		WHERE group_id = #{value}
+        order by convert(target_name USING gbk)
 	</select>
 
     <select id="queryTotal" resultType="int">

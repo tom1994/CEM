@@ -1415,4 +1415,16 @@ public class ScoreEntity {
         });
     }
 
+    @SuppressWarnings("unchecked")
+    public static void sortDescStringMethod(List<ScoreEntity> list){
+        Collections.sort(list, new Comparator(){
+            @Override
+            public int compare(Object o1, Object o2) {
+                ScoreEntity stu1=(ScoreEntity) o1;
+                ScoreEntity stu2=(ScoreEntity) o2;
+                return stu1.getScore().compareTo(stu2.getScore());
+            }
+        });
+    }
+
 }

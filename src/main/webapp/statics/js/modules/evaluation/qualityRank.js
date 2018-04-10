@@ -545,7 +545,6 @@ function AreaOut() {/*导出事件*/
         data: {
             headers: [
                 {title: '<div style="width:10px"></div>'},
-                {title: '<div class="checkbox" style="width:100%; align: center"> <label> <input type="checkbox" id="checkAll"></label> </div>'},
                 {title: '<div style="width:70px">地市</div>'},
                 {title: '<div style="width:70px">区县</div>'},
                 {title: '<div style="width:70px">探针名称</div>'},
@@ -592,13 +591,21 @@ function AreaOut() {/*导出事件*/
             let vm = this;
             // Instantiate the datatable and store the reference to the instance in our dtHandle element.
             vm.dtHandle = $(this.$el).DataTable({
+                columnDefs: [{ "orderable": false, "targets": 0 },
+                    { "orderable": false, "targets": 1 },
+                    { "orderable": false, "targets": 2 },
+                    { "orderable": false, "targets": 3 },
+                    { "orderable": false, "targets": 4 },
+                    { "orderable": false, "targets": 5 },
+                    { "orderable": false, "targets": 7 }
+                ],
                 columns: vm.headers,
                 data: vm.rows,
                 searching: false,
                 paging: true,
                 serverSide: true,
                 info: false,
-                ordering: false, /*禁用排序功能*/
+                // ordering: false, /*禁用排序功能*/
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
@@ -612,10 +619,13 @@ function AreaOut() {/*导出事件*/
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
+                    console.log(data);
                     let param = {};
                     param.limit = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
                     param.start = data.start;//开始的记录序号
                     param.page = (data.start / data.length) + 1;//当前页码
+                    param.order = data.order[0].dir;
+                    console.log(param.order);
                     param.probedata = JSON.stringify(vm.probedata);
                     /*用于查询probe数据*/
                     console.log(param);
@@ -641,8 +651,6 @@ function AreaOut() {/*导出事件*/
                             result.page.list.forEach(function (item) {
                                 let row = [];
                                 row.push(i++);
-                                row.push('<div class="checkbox"> <label> <input type="checkbox" id="checkALl" name="selectFlag"><div style="display: none">' + item.id + '</div></label> </div>');
-                                //row.push('<div class="probe_id" style="display:none">'+item.id+'</div>');
                                 row.push(item.cityName);
                                 row.push(item.countyName);
                                 row.push(item.probeName);
@@ -676,13 +684,14 @@ function AreaOut() {/*导出事件*/
         }
     });
 
+
+
 // 区域排名列表
     var areatable = new Vue({
         el: '#areadata_table',
         data: {
             headers: [
                 {title: '<div style="width:10px"></div>'},
-                {title: '<div class="checkbox" style="width:100%; align: center"> <label> <input type="checkbox" id="checkAll"></label> </div>'},
                 {title: '<div style="width:70px">地市</div>'},
                 {title: '<div style="width:70px">区县</div>'},
                 {title: '<div style="width:90px">业务类型</div>'},
@@ -727,13 +736,20 @@ function AreaOut() {/*导出事件*/
             let vm = this;
             // Instantiate the datatable and store the reference to the instance in our dtHandle element.
             vm.dtHandle = $(this.$el).DataTable({
+                columnDefs: [{ "orderable": false, "targets": 0 },
+                    { "orderable": false, "targets": 1 },
+                    { "orderable": false, "targets": 2 },
+                    { "orderable": false, "targets": 3 },
+                    { "orderable": false, "targets": 4 },
+                    { "orderable": false, "targets": 6 }
+                ],
                 columns: vm.headers,
                 data: vm.rows,
                 searching: false,
                 paging: true,
                 serverSide: true,
                 info: false,
-                ordering: false, /*禁用排序功能*/
+                //ordering: false, /*禁用排序功能*/
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
@@ -751,6 +767,7 @@ function AreaOut() {/*导出事件*/
                     param.limit = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
                     param.start = data.start;//开始的记录序号
                     param.page = (data.start / data.length) + 1;//当前页码
+                    param.order = data.order[0].dir;
                     param.probedata = JSON.stringify(vm.probedata);
                     /*用于查询probe数据*/
                     //console.log(param);
@@ -775,8 +792,6 @@ function AreaOut() {/*导出事件*/
                             result.page.list.forEach(function (item) {
                                 let row = [];
                                 row.push(i++);
-                                row.push('<div class="checkbox"> <label> <input type="checkbox" id="checkALl" name="selectFlag"><div style="display: none">' + item.id + '</div></label> </div>');
-                                //row.push('<div class="probe_id" style="display:none">'+item.id+'</div>');
                                 row.push(item.cityName);
                                 row.push(item.countyName);
                                 row.push(st.get(item.serviceType));
