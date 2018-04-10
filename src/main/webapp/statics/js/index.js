@@ -96,6 +96,7 @@ var vm = new Vue({
 		},
 		getUser: function(){
 			$.getJSON("sys/user/info?_"+$.now(), function(r){
+				console.log(r);
 				vm.user = r.user;
 			});
 		},
@@ -110,6 +111,7 @@ var vm = new Vue({
 				btn: ['修改','取消'],
 				btn1: function (index) {
 					var data = "password="+vm.password+"&newPassword="+vm.newPassword;
+					console.log(data);
 					$.ajax({
 						type: "POST",
 					    url: "sys/user/password",
