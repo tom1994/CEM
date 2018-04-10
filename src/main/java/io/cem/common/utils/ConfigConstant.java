@@ -2,9 +2,6 @@ package io.cem.common.utils;
 
 /**
  * 系统参数相关Key
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2017-03-26 10:33
  */
 public class ConfigConstant {
     /**

@@ -404,6 +404,9 @@ var targetform_data = new Vue({
                                     toastr.success("新增成功!");
                                     $('#myModal_update').modal('hide');
                                     break;
+                                case 300:
+                                    toastr.error(msg);
+                                    break;
                                 case 403:
                                     toastr.error(msg);
                                     break;
@@ -416,6 +419,9 @@ var targetform_data = new Vue({
                                 case 0:
                                     toastr.success("修改成功!");
                                     $('#myModal_update').modal('hide');
+                                    break;
+                                case 300:
+                                    toastr.error(msg);
                                     break;
                                 case 403:
                                     toastr.error(msg);
@@ -478,6 +484,9 @@ var tgform_data = new Vue({
                                     toastr.success("业务信息录入成功!");
                                     $('#myModal_tgupdate').modal('hide');
                                     break;
+                                case 300:
+                                    toastr.error(msg);
+                                    break;
                                 case 403:
                                     toastr.error(msg);
                                     break;
@@ -490,6 +499,9 @@ var tgform_data = new Vue({
                                 case 0:
                                     toastr.success("业务信息更新成功!");
                                     $('#myModal_tgupdate').modal('hide');
+                                    break;
+                                case 300:
+                                    toastr.error(msg);
                                     break;
                                 case 403:
                                     toastr.error(msg);

@@ -6,11 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 
- * 
- * @author ${author}
- * @email ${email}
- * @date 2017-11-13 11:01:11
  */
 public interface TaskService {
 	
@@ -29,6 +24,7 @@ public interface TaskService {
 	void update(TaskEntity task);
 	
 	void delete(Integer id);
+	int queryExist(String taskName);
 	
 	void deleteBatch(Integer[] ids);
 }

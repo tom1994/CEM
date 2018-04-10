@@ -8,9 +8,7 @@ import java.util.Date;
 /**
  * 
  * 
- * @author ${author}
- * @email ${email}
- * @date 2018-01-30 12:10:16
+ * @author Fern
  */
 public class RecordDayDnsEntity implements Serializable {
 	private static final long serialVersionUID = 1L;

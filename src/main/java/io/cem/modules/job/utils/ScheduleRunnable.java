@@ -1,18 +1,14 @@
 package io.cem.modules.job.utils;
 
-import java.lang.reflect.Method;
-
 import io.cem.common.exception.RRException;
 import io.cem.common.utils.SpringContextUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.util.ReflectionUtils;
 
+import java.lang.reflect.Method;
+
 /**
  * 执行定时任务
- * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2016年11月30日 下午12:49:33
  */
 public class ScheduleRunnable implements Runnable {
 	private Object target;

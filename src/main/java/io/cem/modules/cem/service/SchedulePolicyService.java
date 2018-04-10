@@ -6,11 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 
- * 
- * @author ${author}
- * @email ${email}
- * @date 2017-11-05 21:13:27
  */
 public interface SchedulePolicyService {
 	
@@ -21,6 +16,8 @@ public interface SchedulePolicyService {
 	int queryTotal(Map<String, Object> map);
 	
 	void save(SchedulePolicyEntity schedulePolicy);
+
+	int queryExist(String spName);
 	
 	void update(SchedulePolicyEntity schedulePolicy);
 	

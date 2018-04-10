@@ -32,6 +32,11 @@
 			limit #{offset}, #{limit}
 		</if>
 	</select>
+
+	<select id="queryExist" resultType="int">
+		select count(*) from schedule_policy
+		where sp_name = #{spName}
+	</select>
 	
  	<select id="queryTotal" resultType="int">
 		select count(*) from schedule_policy 

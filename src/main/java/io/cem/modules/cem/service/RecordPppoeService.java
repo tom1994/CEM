@@ -7,11 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 
- * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2017-10-12 17:12:46
  */
 public interface RecordPppoeService {
 	

@@ -77,6 +77,11 @@
 		order by id
 	</select>
 
+	<select id="queryExist" resultType="int">
+		select count(*) from task
+		where task_name = #{taskName}
+	</select>
+
 
 	<insert id="save" parameterType="io.cem.modules.cem.entity.TaskEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into task

@@ -13,10 +13,6 @@ import java.util.Map;
 
 /**
  * 角色与部门对应关系
- *
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2017年6月21日 23:42:30
  */
 @Service("sysRoleDeptService")
 public class SysRoleDeptServiceImpl implements SysRoleDeptService {

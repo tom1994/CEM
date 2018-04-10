@@ -6,10 +6,6 @@ import java.io.Serializable;
 
 /**
  * 端口-出口对照表
- * 
- * @author ${author}
- * @email ${email}
- * @date 2018-03-26 19:47:28
  */
 public class ProbeExitEntity implements Serializable {
 	private static final long serialVersionUID = 1L;

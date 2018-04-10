@@ -6,11 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 
- * 
- * @author ${author}
- * @email ${email}
- * @date 2017-11-05 20:39:28
  */
 public interface TargetGroupService {
 	
@@ -27,6 +22,8 @@ public interface TargetGroupService {
 	void save(TargetGroupEntity targetGroup);
 	
 	void update(TargetGroupEntity targetGroup);
+
+	int queryExist(String tgName);
 	
 	void delete(Integer id);
 	

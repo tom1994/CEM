@@ -1,16 +1,10 @@
 package io.cem.modules.cem.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 
 
 
 /**
- * 
- * 
- * @author ${author}
- * @email ${email}
- * @date 2017-11-23 11:22:22
  */
 public class LayerEntity implements Serializable {
 	private static final long serialVersionUID = 1L;

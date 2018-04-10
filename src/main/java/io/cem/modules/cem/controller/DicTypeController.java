@@ -1,30 +1,19 @@
 package io.cem.modules.cem.controller;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import io.cem.modules.cem.entity.DicTypeEntity;
-import io.cem.modules.cem.service.DicTypeService;
 import io.cem.common.utils.PageUtils;
 import io.cem.common.utils.Query;
 import io.cem.common.utils.R;
+import io.cem.modules.cem.entity.DicTypeEntity;
+import io.cem.modules.cem.service.DicTypeService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 
 /**
- * 
- * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2017-10-12 17:12:46
  */
 @RestController
 @RequestMapping("dictype")

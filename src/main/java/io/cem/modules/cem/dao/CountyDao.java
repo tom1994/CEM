@@ -7,10 +7,6 @@ import java.util.List;
 
 /**
  * 行政区域县区信息表
- * 
- * @author ${author}
- * @email ${email}
- * @date 2017-11-05 20:56:26
  */
 public interface CountyDao extends BaseDao<CountyEntity> {
     List<CountyEntity> queryCountyList(Integer id);

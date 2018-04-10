@@ -50,6 +50,11 @@
 		</if>
 	</select>
 
+	<select id="queryExist" resultType="int">
+		select count(*) from target_group
+		where tg_name = #{tgName}
+	</select>
+
 	<select id="queryTGList" resultMap="targetGroupMap">
 		select * from target_group
 		WHERE superservice_type = #{value}

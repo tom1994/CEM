@@ -1,35 +1,23 @@
 package io.cem.modules.cem.controller;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.alibaba.fastjson.JSONObject;
 import io.cem.common.exception.RRException;
 import io.cem.common.utils.JSONUtils;
-import io.cem.modules.cem.entity.TargetEntity;
+import io.cem.common.utils.PageUtils;
+import io.cem.common.utils.R;
+import io.cem.modules.cem.entity.TargetGroupEntity;
+import io.cem.modules.cem.service.TargetGroupService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.cem.modules.cem.entity.TargetGroupEntity;
-import io.cem.modules.cem.service.TargetGroupService;
-import io.cem.common.utils.PageUtils;
-import io.cem.common.utils.Query;
-import io.cem.common.utils.R;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-
-/**
- * 
- * 
- * @author ${author}
- * @email ${email}
- * @date 2017-11-05 20:39:28
- */
 @RestController
 @RequestMapping("targetgroup")
 public class TargetGroupController {
@@ -108,9 +96,12 @@ public class TargetGroupController {
 	@RequestMapping("/save")
 	@RequiresPermissions("targetgroup:save")
 	public R save(@RequestBody TargetGroupEntity targetGroup){
-		targetGroupService.save(targetGroup);
-		
-		return R.ok();
+		if (targetGroupService.queryExist(targetGroup.getTgName()) > 0) {
+			return R.error(300, "测试目标组名称已存在，请重新输入");
+		} else {
+			targetGroupService.save(targetGroup);
+			return R.ok();
+		}
 	}
 	
 	/**
@@ -119,9 +110,12 @@ public class TargetGroupController {
 	@RequestMapping("/update")
 	@RequiresPermissions("targetgroup:update")
 	public R update(@RequestBody TargetGroupEntity targetGroup){
-		targetGroupService.update(targetGroup);
-		
-		return R.ok();
+		if (targetGroupService.queryExist(targetGroup.getTgName()) > 0) {
+			return R.error(300, "测试目标组名称已存在，请重新输入");
+		} else {
+			targetGroupService.update(targetGroup);
+			return R.ok();
+		}
 	}
 	
 	/**

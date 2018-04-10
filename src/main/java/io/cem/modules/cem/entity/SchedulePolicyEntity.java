@@ -6,11 +6,6 @@ import java.util.Date;
 
 
 /**
- * 
- * 
- * @author ${author}
- * @email ${email}
- * @date 2017-11-05 21:13:27
  */
 public class SchedulePolicyEntity implements Serializable {
 	private static final long serialVersionUID = 1L;

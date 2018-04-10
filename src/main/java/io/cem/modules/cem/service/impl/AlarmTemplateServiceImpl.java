@@ -37,6 +37,11 @@ public class AlarmTemplateServiceImpl implements AlarmTemplateService {
 		return alarmTemplateDao.queryAtByService(id);
 	}
 
+	@Override
+	public int queryExist(String atName){
+		return alarmTemplateDao.queryExist(atName);
+	}
+
 
 	@Override
 	public int queryTotal(Map<String, Object> map){

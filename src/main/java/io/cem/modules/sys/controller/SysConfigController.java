@@ -17,10 +17,6 @@ import java.util.Map;
 
 /**
  * 系统配置信息
- * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2016年12月4日 下午6:55:53
  */
 @RestController
 @RequestMapping("/sys/config")

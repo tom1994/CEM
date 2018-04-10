@@ -6,11 +6,6 @@ import java.util.Date;
 
 
 /**
- * 
- * 
- * @author ${author}
- * @email ${email}
- * @date 2017-11-05 20:39:28
  */
 public class TargetEntity implements Serializable {
 	private static final long serialVersionUID = 1L;

@@ -16,5 +16,7 @@ public interface TargetDao extends BaseDao<TargetEntity> {
 
     List<TargetEntity> queryTargetListByGroup(Integer id);
 
+    int queryExist(String targetName);
+
     List<TargetEntity> queryTargetNames(int[] ids);
 }

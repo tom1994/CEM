@@ -9,10 +9,6 @@ import java.util.concurrent.ExecutionException;
 
 /**
  * 端口-出口对照表
- * 
- * @author ${author}
- * @email ${email}
- * @date 2018-03-26 19:47:28
  */
 public interface ProbeExitService {
 	
@@ -29,6 +25,12 @@ public interface ProbeExitService {
 	void save(ProbeExitEntity probeExit);
 	
 	void update(ProbeExitEntity probeExit);
+
+	int queryNameExist(String exit);
+
+	int queryProbeExist(Integer probeId);
+
+	int queryPortExist(String port);
 
 	void operateStatus0(Integer id);
 

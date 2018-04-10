@@ -7,5 +7,5 @@ import io.cem.modules.sys.dao.BaseDao;
  * 报表策略
  */
 public interface ReportPolicyDao extends BaseDao<ReportPolicyEntity> {
-	
+    int queryExist(String reportName);
 }

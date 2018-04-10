@@ -6,11 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 
- * 
- * @author ${author}
- * @email ${email}
- * @date 2017-11-05 20:56:26
  */
 public interface AlarmTemplateService {
 	
@@ -27,6 +22,8 @@ public interface AlarmTemplateService {
 	void save(AlarmTemplateEntity alarmTemplate);
 	
 	void update(AlarmTemplateEntity alarmTemplate);
+
+	int queryExist(String atName);
 	
 	void delete(Integer id);
 	

@@ -19,10 +19,6 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 
 /**
- * 数据过滤，切面处理类
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2017/9/17 15:02
  */
 @Aspect
 @Component

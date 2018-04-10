@@ -60,6 +60,11 @@
         order by convert(target_name USING gbk)
 	</select>
 
+    <select id="queryExist" resultType="int">
+        select count(*) from target
+        where target_name = #{targetName}
+    </select>
+
     <select id="queryTotal" resultType="int">
         select count(*) from target
         WHERE id IS NOT NULL

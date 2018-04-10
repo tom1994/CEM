@@ -1,16 +1,11 @@
 package io.cem.modules.cem.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 
 
 
 /**
  * 行政区域县区信息表
- * 
- * @author ${author}
- * @email ${email}
- * @date 2017-11-05 20:56:26
  */
 public class CountyEntity implements Serializable {
 	private static final long serialVersionUID = 1L;

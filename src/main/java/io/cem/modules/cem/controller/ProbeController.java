@@ -163,8 +163,12 @@ public class ProbeController {
     @RequestMapping("/save")
     @RequiresPermissions("probe:save")
     public R save(@RequestBody ProbeEntity probe) {
-        probeService.save(probe);
-        return R.ok();
+        if (probeService.queryExist(probe.getLayerName()) > 0) {
+            return R.error(300, "探针名称已存在，请重新输入");
+        } else {
+            probeService.save(probe);
+            return R.ok();
+        }
     }
 
     /**
@@ -173,9 +177,12 @@ public class ProbeController {
     @RequestMapping("/update")
     @RequiresPermissions("probe:update")
     public R update(@RequestBody ProbeEntity probe) {
-        probeService.update(probe);
-
-        return R.ok();
+        if (probeService.queryExist(probe.getName()) > 0) {
+            return R.error(300, "探针名称已存在，请重新输入");
+        } else {
+            probeService.update(probe);
+            return R.ok();
+        }
     }
 
     /**

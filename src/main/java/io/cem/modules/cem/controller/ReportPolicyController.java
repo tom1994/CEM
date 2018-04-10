@@ -222,9 +222,12 @@ public class ReportPolicyController {
 	@RequestMapping("/save")
 	@RequiresPermissions("reportpolicy:save")
 	public R save(@RequestBody ReportPolicyEntity reportPolicy){
-		reportPolicyService.save(reportPolicy);
-		
-		return R.ok();
+		if (reportPolicyService.queryExist(reportPolicy.getReportName()) > 0) {
+			return R.error(300, "定时报表名称已存在，请重新输入");
+		} else {
+			reportPolicyService.save(reportPolicy);
+			return R.ok();
+		}
 	}
 	
 	/**
@@ -233,9 +236,12 @@ public class ReportPolicyController {
 	@RequestMapping("/update")
 	@RequiresPermissions("reportpolicy:update")
 	public R update(@RequestBody ReportPolicyEntity reportPolicy){
-		reportPolicyService.update(reportPolicy);
-		
-		return R.ok();
+		if (reportPolicyService.queryExist(reportPolicy.getReportName()) > 0) {
+			return R.error(300, "定时报表名称已存在，请重新输入");
+		} else {
+			reportPolicyService.update(reportPolicy);
+			return R.ok();
+		}
 	}
 	
 	/**

@@ -32,6 +32,8 @@ public interface ProbeService {
 
 	List<ProbeEntity> queryPortList(Integer id);
 
+	int queryExist(String probeName);
+
 	ProbeEntity queryDetail(Integer id);
 
 	int queryTotal(Map<String, Object> map);

@@ -5,10 +5,6 @@ import java.util.Date;
 
 /**
  * 定时执行日志
- * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2016年12月1日 下午10:26:18
  */
 public class ScheduleJobLogEntity implements Serializable {
 	private static final long serialVersionUID = 1L;

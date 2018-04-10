@@ -9,11 +9,6 @@ import java.util.Map;
 import java.util.concurrent.Future;
 
 /**
- * 
- * 
- * @author ${author}
- * @email ${email}
- * @date 2017-12-13 17:02:52
  */
 public interface RecordHourWebDownloadService {
 	
