@@ -168,12 +168,12 @@ var vm = new Vue({
                     menu_ztree.checkNode(node, true, false);
                 }
 
-                //勾选权限所拥有的部门数据权限
+             /*   //勾选权限所拥有的部门数据权限
                 var deptIds = vm.role.deptIdList;
                 for(var i=0; i<deptIds.length; i++) {
                     var node = data_ztree.getNodeByParam("deptId", deptIds[i]);
                     data_ztree.checkNode(node, true, false);
-                }
+                }*/
 
                 vm.getDept();
             });
