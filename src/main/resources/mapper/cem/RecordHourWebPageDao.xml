@@ -428,6 +428,50 @@
 
 	</select>
 
+
+	<select id="queryDayTargetList" resultType="io.cem.modules.cem.entity.RecordHourWebPageEntity">
+		select webp.id,webp.city_id,webp.county_id,webp.probe_id,webp.port,webp.task_id,webp.service_type,webp.target_id,webp.target_ip,webp.record_date,webp.remark,
+		city.city_name AS city_name,
+		county.county_name AS area_name,
+		probe.probe_name AS probe_name,
+		target.target_name AS target_name,
+		time_format(webp.record_time, '%H') AS record_time,
+		AVG(webp.dns_delay) AS dns_delay,
+		AVG(webp.conn_delay) AS conn_delay,
+		AVG(webp.headbyte_delay) AS headbyte_delay,
+		AVG(webp.page_file_delay) AS page_file_delay,
+		AVG(webp.redirect_delay) AS redirect_delay,
+		AVG(webp.above_fold_delay) AS above_fold_delay,
+		AVG(webp.page_element_delay) AS page_element_delay,
+		AVG(webp.download_rate) AS download_rate,
+		SUM(webp.fail) AS fail,
+		SUM(webp.total) AS total
+		FROM record_day_web_page webp
+		LEFT JOIN city
+		ON webp.city_id = city.city_id
+		LEFT JOIN county
+		ON webp.county_id = county.county_id
+		INNER JOIN probe
+		ON webp.probe_id = probe.id
+		LEFT JOIN target
+		ON webp.target_id = target.id
+		WHERE webp.record_date BETWEEN #{ava_start} AND #{ava_terminal}
+		<if test="city_id != null and city_id != ''">
+			AND webp.city_id = #{city_id}
+		</if>
+		<if test="county_id != null and county_id != ''">
+			AND webp.county_id = #{county_id}
+		</if>
+		<if test="target_id != null and target_id != ''">
+			AND webp.target_id = #{target_id}
+		</if>
+		<if test="probe_id != null and probe_id != ''">
+			AND webp.probe_id = #{probe_id}
+		</if>
+		GROUP BY webp.service_type,webp.target_id;
+
+	</select>
+
 	<!--根据统计粒度查询小时表-->
 	<select id="queryIntervalList" resultType="io.cem.modules.cem.entity.RecordHourWebPageEntity">
 		select

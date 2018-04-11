@@ -406,6 +406,51 @@
 
 	</select>
 
+	<select id="queryDayTargetList" resultType="io.cem.modules.cem.entity.RecordHourWebVideoEntity">
+		select webv.id,webv.city_id,webv.county_id,webv.probe_id,webv.port,webv.task_id,webv.service_type,webv.target_id,webv.target_ip,webv.record_date,webv.remark,
+		city.city_name AS city_name,
+		county.county_name AS area_name,
+		probe.probe_name AS probe_name,
+		target.target_name AS target_name,
+		probe.access_layer AS accessLayer,
+		time_format(record_time, '%H') AS record_time,
+		AVG(webv.dns_delay) AS dns_delay,
+		AVG(webv.ws_conn_delay) AS ws_conn_delay,
+		AVG(webv.web_page_delay) AS web_page_delay,
+		AVG(webv.head_frame_delay) AS head_frame_delay,
+		AVG(webv.init_buffer_delay) AS init_buffer_delay,
+		AVG(webv.load_delay) AS load_delay,
+		AVG(webv.total_buffer_delay) AS total_buffer_delay,
+		AVG(webv.download_rate) AS download_rate,
+		AVG(webv.buffer_time) AS buffer_time,
+		SUM(webv.fail) AS fail,
+		SUM(webv.total) AS total
+		FROM record_day_web_video webv
+		LEFT JOIN city
+		ON webv.city_id = city.city_id
+		LEFT JOIN county
+		ON webv.county_id = county.county_id
+		INNER JOIN probe
+		ON webv.probe_id = probe.id
+		LEFT JOIN target
+		ON webv.target_id = target.id
+		WHERE webv.record_date BETWEEN #{ava_start} AND #{ava_terminal}
+		<if test="city_id != null and city_id != ''">
+			AND webv.city_id = #{city_id}
+		</if>
+		<if test="county_id != null and county_id != ''">
+			AND webv.county_id = #{county_id}
+		</if>
+		<if test="target_id != null and target_id != ''">
+			AND webv.target_id = #{target_id}
+		</if>
+		<if test="probe_id != null and probe_id != ''">
+			AND webv.probe_id = #{probe_id}
+		</if>
+		GROUP BY webv.service_type,webv.target_id
+
+	</select>
+
 	<!--根据统计粒度查询小时表-->
 	<select id="queryIntervalList" resultType="io.cem.modules.cem.entity.RecordHourWebVideoEntity">
 		select

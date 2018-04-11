@@ -343,6 +343,44 @@
 		GROUP BY game.city_id,game.county_id,game.service_type
 	</select>
 
+	<select id="queryDayTargetList" resultType="io.cem.modules.cem.entity.RecordHourGameEntity">
+		select game.id,game.city_id,game.county_id,game.probe_id,game.port,game.task_id,game.service_type,game.target_id,game.target_ip,game.record_date,game.remark,
+		city.city_name AS city_name,
+		county.county_name AS area_name,
+		probe.probe_name AS probe_name,
+		target.target_name AS target_name,
+		time_format(game.record_time, '%H') AS record_time,
+		AVG(game.conn_delay) AS conn_delay,
+		AVG(game.packet_delay) AS packet_delay,
+		AVG(game.packet_jitter) AS packet_jitter,
+		AVG(game.loss_rate) AS loss_rate,
+		SUM(game.fail) AS fail,
+		SUM(game.total) AS total
+		FROM record_day_game game
+		LEFT JOIN city
+		ON game.city_id = city.city_id
+		LEFT JOIN county
+		ON game.county_id = county.county_id
+		INNER JOIN probe
+		ON game.probe_id = probe.id
+		LEFT JOIN target
+		ON game.target_id = target.id
+		WHERE game.record_date BETWEEN #{ava_start} AND #{ava_terminal}
+		<if test="city_id != null and city_id != ''">
+			AND game.city_id = #{city_id}
+		</if>
+		<if test="county_id != null and county_id != ''">
+			AND game.county_id = #{county_id}
+		</if>
+		<if test="target_id != null and target_id != ''">
+			AND game.target_id = #{target_id}
+		</if>
+		<if test="probe_id != null and probe_id != ''">
+			AND game.probe_id = #{probe_id}
+		</if>
+		GROUP BY game.service_type,game.target_id
+	</select>
+
     <!--根据统计粒度查询小时表-->
     <select id="queryIntervalList" resultType="io.cem.modules.cem.entity.RecordHourGameEntity">
         select

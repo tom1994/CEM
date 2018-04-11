@@ -893,6 +893,106 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 	}
 
 	@Override
+	public List<ScoreEntity> calculateTarget4 (List<ScoreEntity> webDownload,List<ScoreEntity> ftpDownload,List<ScoreEntity> ftpUpload) {
+		List<ScoreEntity> connectionScore = new ArrayList<>();
+		RecordHourPingServiceImpl pingService = new RecordHourPingServiceImpl();
+		try{
+			PropertiesUtils pros = new PropertiesUtils();
+			Map<ScoreTargetRankEntity,Map<String,ScoreBaseEntity>> connection= new HashMap<>();
+			for (int i = 0; i < webDownload.size(); i++) {
+				ScoreTargetRankEntity targetRank = new ScoreTargetRankEntity();
+				targetRank.setCityId(webDownload.get(i).getCityId());
+				targetRank.setCountyId(webDownload.get(i).getCountyId());
+				targetRank.setProbeId(webDownload.get(i).getProbeId());
+				targetRank.setTargetId(webDownload.get(i).getTargetId());
+				targetRank.setCityName(webDownload.get(i).getCityName());
+				targetRank.setCountyName(webDownload.get(i).getCountyName());
+				targetRank.setProbeName(webDownload.get(i).getProbeName());
+				targetRank.setTargetName(webDownload.get(i).getTargetName());
+				targetRank.setRecordDate(webDownload.get(i).getRecordDate());
+				targetRank.setRecordTime(webDownload.get(i).getRecordTime());
+				targetRank.setAccessLayer(webDownload.get(i).getAccessLayer());
+				targetRank.setPort(webDownload.get(i).getPort());
+				targetRank.setFail(webDownload.get(i).getFail());
+				targetRank.setTotal(webDownload.get(i).getTotal());
+				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
+				scoreBase.setWebDownloadDnsDelay(webDownload.get(i).getWebDownloadDnsDelay());
+				scoreBase.setWebDownloadConnDelay(webDownload.get(i).getWebDownloadConnDelay());
+				scoreBase.setWebDownloadHeadbyteDelay(webDownload.get(i).getWebDownloadHeadbyteDelay());
+				scoreBase.setWebDownloadDownloadRate(webDownload.get(i).getWebDownloadDownloadRate());
+				scoreBase.setScore((webDownload.get(i).getScore()) * (webDownload.get(i).getBase()));
+				scoreBase.setBase(webDownload.get(i).getBase());
+				Map<String,ScoreBaseEntity> webdownload = new HashMap<>();
+				webdownload.put("webDownload",scoreBase);
+				connection.put(targetRank,webdownload);
+			}
+			connection=pingService.putMapTarget(ftpDownload,connection,"ftpDownload");
+			connection=pingService.putMapTarget(ftpUpload,connection,"ftpUpload");
+
+			System.out.println("MAP:"+connection);
+
+			Set<ScoreTargetRankEntity> key = connection.keySet();
+			Iterator<ScoreTargetRankEntity> iterator = key.iterator();
+			int id = 1;
+			while (iterator.hasNext()) {
+				ScoreTargetRankEntity ite = iterator.next();
+				try {
+					ScoreEntity finalScore = new ScoreEntity();
+					finalScore.setId(id);
+					finalScore.setCityId(ite.getCityId());
+					finalScore.setCityName(ite.getCityName());
+					finalScore.setCountyId(ite.getCountyId());
+					finalScore.setCountyName(ite.getCountyName());
+					finalScore.setProbeId(ite.getProbeId());
+					finalScore.setProbeName(ite.getProbeName());
+					finalScore.setServiceType(4);
+					finalScore.setTargetId(ite.getTargetId());
+					finalScore.setTargetName(ite.getTargetName());
+					finalScore.setAccessLayer(ite.getAccessLayer());
+					finalScore.setPort(ite.getPort());
+					finalScore.setRecordTime(ite.getRecordTime());
+					finalScore.setRecordDate(ite.getRecordDate());
+					finalScore.setScore(0.0);
+					finalScore.setBase(0.0);
+					Map<String, ScoreBaseEntity> map1 = connection.get(ite);
+					Set<String> keyType = map1.keySet();
+					Iterator<String> iterator1 = keyType.iterator();
+					int i=1;
+					while(iterator1.hasNext()) {
+						String typ = iterator1.next();
+						if (typ.equals("webDownload")) {
+							finalScore.setWebDownloadDnsDelay(map1.get(typ).getWebDownloadDnsDelay());
+							finalScore.setWebDownloadConnDelay(map1.get(typ).getWebDownloadConnDelay());
+							finalScore.setWebDownloadHeadbyteDelay(map1.get(typ).getWebDownloadHeadbyteDelay());
+							finalScore.setWebDownloadDownloadRate(map1.get(typ).getWebDownloadDownloadRate());
+						}else if(typ.equals("ftpDownload")){
+							finalScore.setFtpDownloadDnsDelay(map1.get(typ).getFtpDownloadDnsDelay());
+							finalScore.setFtpDownloadConnDelay(map1.get(typ).getFtpDownloadConnDelay());
+							finalScore.setFtpDownloadLoginDelay(map1.get(typ).getFtpDownloadLoginDelay());
+							finalScore.setFtpDownloadHeadbyteDelay(map1.get(typ).getFtpDownloadHeadbyteDelay());
+							finalScore.setFtpDownloadDownloadRate(map1.get(typ).getFtpDownloadDownloadRate());
+						}else if(typ.equals("ftpUpload")){
+							finalScore.setFtpUploadDnsDelay(map1.get(typ).getFtpUploadDnsDelay());
+							finalScore.setFtpUploadConnDelay(map1.get(typ).getFtpUploadConnDelay());
+							finalScore.setFtpUploadLoginDelay(map1.get(typ).getFtpUploadLoginDelay());
+							finalScore.setFtpUploadHeadbyteDelay(map1.get(typ).getFtpUploadHeadbyteDelay());
+							finalScore.setFtpUploadUploadRate(map1.get(typ).getFtpUploadUploadRate());
+						}else{}
+						finalScore.setScore(finalScore.getScore() + (map1.get(typ).getScore()) * (map1.get(typ).getBase()));
+						finalScore.setBase(finalScore.getBase()+map1.get(typ).getBase());
+						i++;
+					}
+					finalScore.setScore(finalScore.getScore()/finalScore.getBase());
+					finalScore.setBase(Double.parseDouble(pros.getValue("downloadweight")));
+					connectionScore.add(finalScore);
+				} catch (IOException e) {}
+				id++;
+			}
+		}catch (IOException e){}
+		return connectionScore;
+	}
+
+	@Override
 	public int queryTotal(Map<String, Object> map){
 		return recordHourWebDownloadDao.queryTotal(map);
 	}

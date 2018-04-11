@@ -30,6 +30,8 @@ public interface RecordHourTracertService {
 
 	List<ScoreEntity> calculateArea0(List<ScoreEntity> connection,List<ScoreEntity> quality,List<ScoreEntity> broswer,List<ScoreEntity> download,List<ScoreEntity> video,List<ScoreEntity> game);
 
+	List<ScoreEntity> calculateTarget0(List<ScoreEntity> connection,List<ScoreEntity> quality,List<ScoreEntity> broswer,List<ScoreEntity> download,List<ScoreEntity> video,List<ScoreEntity> game);
+
 	int queryTotal(Map<String, Object> map);
 	
 	void save(RecordHourTracertEntity recordHourTracert);

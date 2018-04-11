@@ -68,6 +68,8 @@ public class RecordHourWebVideoServiceImpl implements RecordHourWebVideoService 
 		return new AsyncResult<> (recordHourWebVideoDao.queryVideoAreaList(map));
 	}
 
+
+
 	@Override
 	@Async
 	public Future<List<RecordHourWebVideoEntity>> queryVideoRankList(Map<String, Object> map) {
@@ -92,6 +94,13 @@ public class RecordHourWebVideoServiceImpl implements RecordHourWebVideoService 
 	public Future<List<RecordHourWebVideoEntity>> queryDayRankList(Map<String, Object> map){
 		return new AsyncResult<> (recordHourWebVideoDao.queryDayRankList(map));
 	}
+
+	@Override
+	@Async
+	public Future<List<RecordHourWebVideoEntity>> queryDayTargetList(Map<String, Object> map){
+		return new AsyncResult<> (recordHourWebVideoDao.queryDayTargetList(map));
+	}
+
 
 
 	@Override

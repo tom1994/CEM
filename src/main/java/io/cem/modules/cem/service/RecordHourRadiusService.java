@@ -32,6 +32,8 @@ public interface RecordHourRadiusService {
 
 	List<ScoreEntity> calculateAreaDayScore(Map<String, Object> map) throws ExecutionException, InterruptedException;
 
+	List<ScoreEntity> calculateTargetDayScore(Map<String, Object> map) throws ExecutionException, InterruptedException;
+
 	List<ScoreEntity> calculateAreaHourScore(Map<String, Object> map) throws ExecutionException, InterruptedException;
 
 	List<ScoreEntity> diagnoseDay(Map<String, Object> map,List<ScoreEntity> scoreList) throws ExecutionException, InterruptedException;
