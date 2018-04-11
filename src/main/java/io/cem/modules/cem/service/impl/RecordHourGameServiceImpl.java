@@ -65,6 +65,8 @@ public class RecordHourGameServiceImpl implements RecordHourGameService {
 		return new AsyncResult<> (recordHourGameDao.queryGameAreaList(map));
 	}
 
+
+
 	@Override
 	@Async
 	public Future<List<RecordHourGameEntity>> queryGameRankList(Map<String, Object> map) {
@@ -82,6 +84,12 @@ public class RecordHourGameServiceImpl implements RecordHourGameService {
 	@Async
 	public Future<List<RecordHourGameEntity>> queryDayAreaList(Map<String, Object> map){
 		return new AsyncResult<> (recordHourGameDao.queryDayAreaList(map));
+	}
+
+	@Override
+	@Async
+	public Future<List<RecordHourGameEntity>> queryDayTargetList(Map<String, Object> map){
+		return new AsyncResult<> (recordHourGameDao.queryDayTargetList(map));
 	}
 
 	@Override

@@ -11,8 +11,7 @@
     <title>质量排名</title>
     #parse("cemHeader.html")  <!--导入CSS和js文件-->
     <link href="${rc.contextPath}/statics/css/formStyle.css" rel="stylesheet">  <!--自定义CSS-->
-    <!--<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">-->
-    <link href="${rc.contextPath}/statics/css/element.css" rel="stylesheet">
+    <link href="${rc.contextPath}/statics/css/showLoading.css" rel="stylesheet">
     <style type="text/css">
         tr:hover{background:#E5E5E5 }
         .search{
@@ -81,6 +80,17 @@
         #information_table_wrapper{
             overflow:auto;
         }
+        .dataTables_wrapper{
+            padding: 0px;
+        }
+        .loading-indicator {
+            height: 130px;
+            width: 130px;
+            background: url( '../../statics/img/loading.gif' );
+            background-repeat: no-repeat;
+            background-position: center center;
+        }
+
     </style>
 
 </head>
@@ -88,10 +98,9 @@
 <div class="htmleaf-container">
     <div class="tab" role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active"><a href="#Section1" aria-controls="home" role="tab"
-                                                      data-toggle="tab">探针排名</a></li>
-            <li role="presentation"><a href="#Section2" aria-controls="profile" role="tab" data-toggle="tab">区域排名</a>
-            </li>
+            <li role="presentation" class="active"><a href="#Section1" aria-controls="home" role="tab" data-toggle="tab">探针排名</a></li>
+            <li role="presentation"><a href="#Section2" aria-controls="profile" role="tab" data-toggle="tab">区域排名</a></li>
+            <li role="presentation"><a href="#Section3" aria-controls="profile" role="tab" data-toggle="tab">门户排名</a></li>
         </ul>
 
         <!-- Tab panes -->
@@ -337,6 +346,130 @@
                     </div>
                 </div>
             </div>
+            <div role="tabpanel" class="tab-pane fade" id="Section3">
+                <div class="wrapper wrapper-content">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-content" style="padding-bottom: 0 !important;">
+                                    <div class="row" id="door_searchbox" style="border: none !important;">
+                                        <form class="col-lg-9 col-md-19 col-sm-9 form-horizontal" id="door_search"
+                                              role="form">
+                                            <div class="form-group row" >
+                                                <div style="display:inline-block;">
+                                                    <span class="searchname" title="地市" style="width:80px; text-align: center">地市</span>
+                                                    <div class="input-group searchspan" id="doorcity" >
+                                                        <div class="jq22">
+                                                            <select id="doorselectcity" class="form-control"   v-on:change="citychange()" style="display: none">
+                                                                <option value="">所有地市</option>
+                                                                <option v-for="item in cities"
+                                                                        v-bind:value="item.message.cityId">{{ item.message.cityName }}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div style="display: inline-block;">
+                                                    <span class="searchname search left" title="区县" style="width: 80px;margin-left: 63px">区县</span>
+                                                    <div class="input-group searchspan" id="doorcountry">
+                                                        <div class="jq22">
+                                                            <select id="doorselectarea" class="form-control"  v-on:change="areachange()" style="display: none">
+                                                                <option value="">所有区县</option>
+                                                                <option v-for="item in areas"
+                                                                        v-bind:value="item.message.countyId">{{item.message.countyName}}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div style="display: inline-block;">
+                                                    <span class="searchname search left" title="业务类型" style="width: 80px;margin-left: 65px;">业务类型</span>
+                                                    <div class="input-group searchspan" id="doorservice" >
+                                                        <div class="jq22">
+                                                            <select id="doorselectservice" class="form-control  input"
+                                                                    v-on:change="servicechange()" style="width: 140px;display: none;">
+                                                                <option value="0">综合业务</option>
+                                                                <option value="1">网络连通性业务</option>
+                                                                <option value="2">网络层质量业务</option>
+                                                                <option value="3">网页浏览业务</option>
+                                                                <option value="4">文件下载业务</option>
+                                                                <option value="5">在线视频业务</option>
+                                                                <option value="6">网络游戏业务</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row" style="margin-bottom: -5px">
+
+                                                <div style="display: inline-block;">
+                                                    <span class="searchname search " title="目标地址" style="width: 80px;">目标地址</span>
+                                                    <div class="input-group searchspan" id="doortarget" style="top: -8px;">
+                                                        <div class="jq22">
+                                                            <select id="doorselect_target" class="form-control  input"
+                                                                    style="width: 140px;display: none;">
+                                                                <option value="">所有目标地址</option>
+                                                                <option v-for="item in target"
+                                                                        v-bind:value="item.message.id">{{ item.message.targetName}}</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="input-group searchspan">
+                                                    <span class="searchname search left" title="日期" style="width: 80px;margin-left: 62px">起始时间</span>
+                                                    <input type="text" id="doorstart_date" class="form-control input clear"
+                                                           name="startDate"
+                                                           style="width: 140px"
+                                                           value="">
+                                                </div>
+                                                <div class="input-group searchspan">
+                                                    <span class="searchname search left" title="日期" style="width: 80px">结束时间</span>
+                                                    <input type="text" id="doorterminal_date" class="form-control input clear"
+                                                           name="terminalDate"
+                                                           style="width: 140px"
+                                                           value="">
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <div class="col-lg-3 col-md-3 col-sm-3 pull-left"
+                                             style="text-align:center;height:50px;position: relative;" id="doorsearchbtn">
+                                            <button type="button" class="btn btn-sm btn-success"
+                                                    style="margin-right: 5px;position: relative;top: 50%;"
+                                                    v-on:click="DoorListsearch"><span
+                                                    class="glyphicon glyphicon-zoom-in"></span>查询
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-success"
+                                                    style="margin-right: 5px;position: relative;top: 50%;"
+                                                    v-on:click="reset"><span
+                                                    class="glyphicon glyphicon-refresh"></span>重置
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="doortest_table">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title fontcolor box" id="doorprobehandle" style="padding-bottom: 0px !important; ">
+                                <button type="button" class="btn btn-sm btn-success" onclick="out()"><span
+                                        class="glyphicon glyphicon-open"></span>导出
+                                </button>
+                                <a id = "door_output" style="display: none" href=""></a>
+                                <p id="door_flip" style="position:relative; left:45%;" class="glyphicon glyphicon-menu-up" onClick="toggle3('doorsearchbox')"></p>
+                            </div>
+                            <div class="ibox-content">
+                                <div class="row " style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                                    <table  class="table table-bordered " id="doordata_table" style="margin-top: 2px!important;" ></table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -373,9 +506,8 @@
 </div>
 
 
-<!-- 详情模态框（Modal） -->
+<!--探针详情模态框（Modal） -->
 <div class="modal fade" id="myModal_update" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-
     <div class="modal-dialog" style="width:995px"> <!--修改bootstrap modal模态框的宽度-->
         <div class="modal-content">
             <div class="modal-header">
@@ -384,9 +516,39 @@
                 </button>
                 <h3 class="modal-title myModalLabel">详细信息</h3>
             </div>
-            <div class="modal-body">
-                <div class="row" >
+            <div class="modal-body" style="height: 110px;">
+                <div class="record-table ibox-content" id="information">
                     <table  class="table table-bordered " id="information_table" style="margin-top: 2px!important;" ></table>
+                </div>
+                <div class="record-table ibox-content" id="connnection">
+                    <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                        <table class="table table-bordered " id="pingdata_table" style="margin-top: 2px!important;"></table>
+                    </div>
+                </div>
+                <div class="record-table ibox-content" id="quality">
+                    <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                        <table class="table table-bordered " id="qualitydata_table" style="margin-top: 2px!important;"></table>
+                    </div>
+                </div>
+                <div class="record-table ibox-content" id="broswer">
+                    <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                        <table class="table table-bordered " id="broswerdata_table" style="margin-top: 2px!important;"></table>
+                    </div>
+                </div>
+                <div class="record-table ibox-content" id="download">
+                    <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                        <table class="table table-bordered " id="downloaddata_table" style="margin-top: 2px!important;"></table>
+                    </div>
+                </div>
+                <div class="record-table ibox-content" id="video">
+                    <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                        <table class="table table-bordered " id="videodata_table" style="margin-top: 2px!important;"></table>
+                    </div>
+                </div>
+                <div class="record-table ibox-content" id="game">
+                    <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                        <table class="table table-bordered " id="gamedata_table" style="margin-top: 2px!important;"></table>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -396,11 +558,62 @@
     </div><!-- /.modal -->
 </div>
 
+<!--区域详情模态框（Modal） -->
+<div class="modal fade" id="area_update" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width:995px"> <!--修改bootstrap modal模态框的宽度-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h3 class="modal-title myModalLabel">详细信息</h3>
+            </div>
+            <div class="modal-body" style="height: 428px;overflow-y: auto">
+                <div class="record-table ibox-content" id="areaInformation">
+                    <table  class="table table-bordered " id="areaInformation_table" style="margin-top: 2px!important;" ></table>
+                </div>
+                <div class="record-table ibox-content" id="areaConnection">
+                    <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                        <table class="table table-bordered " id="areaPingdata_table" style="margin-top: 2px!important;"></table>
+                    </div>
+                </div>
+                <div class="record-table ibox-content" id="areaQuality">
+                    <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                        <table class="table table-bordered " id="areaQualitydata_table" style="margin-top: 2px!important;"></table>
+                    </div>
+                </div>
+                <div class="record-table ibox-content" id="areaBroswer">
+                    <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                        <table class="table table-bordered " id="areaBroswerdata_table" style="margin-top: 2px!important;"></table>
+                    </div>
+                </div>
+                <div class="record-table ibox-content" id="areaDownload">
+                    <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                        <table class="table table-bordered " id="areaDownloaddata_table" style="margin-top: 2px!important;"></table>
+                    </div>
+                </div>
+                <div class="record-table ibox-content" id="areaVideo">
+                    <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                        <table class="table table-bordered " id="areaVideodata_table" style="margin-top: 2px!important;"></table>
+                    </div>
+                </div>
+                <div class="record-table ibox-content" id="areaGame">
+                    <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                        <table class="table table-bordered " id="areaGamedata_table" style="margin-top: 2px!important;"></table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
 
 <script type="text/javascript"
         src="${rc.contextPath}/statics/js/modules/evaluation/qualityRank.js?_${date.systemTime}"></script>
 <!--<script src="https://cdn.bootcss.com/element-ui/2.2.2/index.js"></script>-->
-<script type="text/javascript" src="${rc.contextPath}/statics/js/element-ui.js"></script>
+<script type="text/javascript" src="${rc.contextPath}/statics/js/jquery.showLoading.js"></script>
 
 <script>
     $(function () {
@@ -409,36 +622,44 @@
         $('#probe .jq22').comboSelect();
         $('#target .jq22').comboSelect();
         $('#areaTarget .jq22').comboSelect();
-    })
+//        $('#doorcity .jq22').comboSelect();
+        $('#doorcountry .jq22').comboSelect();
+        $('#doortarget .jq22').comboSelect();
+        $('#areaTarget .jq22').comboSelect();
+        $('#areaCity .jq22').comboSelect();
+    });
+
     $('#start_date').flatpickr({
         enableTime: true,
         dateFormat: "Y-m-d H:i",
         time_24hr: true
     });
-</script>
-
-<script>
     $('#terminal_date').flatpickr({
         enableTime: true,
         dateFormat: "Y-m-d H:i",
         time_24hr: true
     });
-</script>
-
-<script>
     $('#areastart_date').flatpickr({
         enableTime: true,
         dateFormat: "Y-m-d H:i",
         time_24hr: true
     });
-</script>
-
-<script>
     $('#areaterminal_date').flatpickr({
         enableTime: true,
         dateFormat: "Y-m-d H:i",
         time_24hr: true
     });
+    $('#doorstart_date').flatpickr({
+        enableTime: true,
+        dateFormat: "Y-m-d H:i",
+        time_24hr: true
+    });
+    $('#doorterminal_date').flatpickr({
+        enableTime: true,
+        dateFormat: "Y-m-d H:i",
+        time_24hr: true
+    });
+
 </script>
 
 <script type="text/javascript">
@@ -451,6 +672,17 @@
         else
         {
             $("#flip").attr("class","glyphicon glyphicon-menu-up");
+        }
+        $("#"+param).toggle();
+    }
+    function toggle3(param){
+        if ($("#door_flip").attr("class")=="glyphicon glyphicon-menu-up")
+        {
+            $("door_#flip").attr("class","glyphicon glyphicon-menu-down");
+        }
+        else
+        {
+            $("#door_flip").attr("class","glyphicon glyphicon-menu-up");
         }
         $("#"+param).toggle();
     }

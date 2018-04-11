@@ -59,7 +59,7 @@ public class RecordHourPingController {
     private ProbeService probeService;
 
     /**
-     * ZTY用于质量排名界面计算分
+     * 质量排名界面计算分
      */
     /**
      * miao进行性能优化，增加异步处理机制
@@ -101,7 +101,7 @@ public class RecordHourPingController {
 			//total = scoreList.size();
 		}*/
 
-        List<ScoreEntity> scoreList = recordHourRadiusService.calculateHourScore(map);
+        List<ScoreEntity> scoreList = recordHourRadiusService.calculateDayScore(map);
 
         if (map.get("target_id") == null) {
             for (int i = 0; i < scoreList.size(); i++) {

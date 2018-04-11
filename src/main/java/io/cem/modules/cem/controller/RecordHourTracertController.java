@@ -63,7 +63,7 @@ public class RecordHourTracertController {
 	private ProbeService probeService;
 
 	/**
-	 * ZTY用于区域排名
+	 * 区域排名方法
 	 */
 	@RequestMapping("/list")
 	@RequiresPermissions("recordhourtracert:list")
@@ -129,7 +129,74 @@ public class RecordHourTracertController {
 			newList.add(i-start,scoreList.get(i));
 		}
 		//List<RecordHourPingEntity> probeList = recordHourPingService.queryList(map);
-		PageUtils pageUtil = new PageUtils(scoreList, total, limit, page);
+		PageUtils pageUtil = new PageUtils(newList, total, limit, page);
+		return R.ok().put("page", pageUtil);
+	}
+
+	/**
+	 * 门户排名方法
+	 */
+	@RequestMapping("/targetlist")
+	@RequiresPermissions("recordhourtracert:targetlist")
+	public R targetlist(String probedata, Integer page, Integer limit,String order) throws ExecutionException, InterruptedException {
+		//查询列表数据
+		Map<String, Object> map = new HashMap<>();
+		JSONObject probedata_jsonobject = JSONObject.parseObject(probedata);
+		try {
+			map.putAll(JSONUtils.jsonToMap(probedata_jsonobject));
+		} catch (RuntimeException e) {
+			throw new RRException("内部参数错误，请重试！");
+		}
+		List<ScoreEntity> scoreList =recordHourRadiusService.calculateTargetDayScore(map);
+
+
+		if(map.get("probe_id")==null){
+			for(int i=0;i<scoreList.size();i++){
+				scoreList.get(i).setProbeName("");
+			}
+		}
+		if(map.get("county_id")==null){
+			for(int i=0;i<scoreList.size();i++){
+				scoreList.get(i).setCountyName("");
+			}
+		}
+		if(map.get("city_id")==null){
+			for(int i=0;i<scoreList.size();i++){
+				scoreList.get(i).setCityName("");
+			}
+		}
+
+		int total = 0;
+		if(page==null) {              /*没有传入page,则取全部值*/
+			map.put("offset", null);
+			map.put("limit", null);
+			page = 0;
+			limit = 0;
+		}else {
+			map.put("offset", (page - 1) * limit);
+			map.put("limit", limit);
+			total = scoreList.size();
+		}
+
+//		Collections.sort(scoreList,scoreComparator);
+		if (order.equals("asc")) {
+			sortStringMethod(scoreList);
+		}else if(order.equals("desc")){
+			sortDescStringMethod(scoreList);
+		}
+
+		int start = (page-1)*limit;
+		int end;
+		if((page*limit-1)<scoreList.size()){
+			end = page*limit-1;
+		}else{end = scoreList.size()-1;}
+
+		List<ScoreEntity> newList = new ArrayList<>();
+		for(int i=start;i<=end;i++){
+			newList.add(i-start,scoreList.get(i));
+		}
+		//List<RecordHourPingEntity> probeList = recordHourPingService.queryList(map);
+		PageUtils pageUtil = new PageUtils(newList, total, limit, page);
 		return R.ok().put("page", pageUtil);
 	}
 
