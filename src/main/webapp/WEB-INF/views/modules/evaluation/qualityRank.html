@@ -353,7 +353,7 @@
                             <div class="ibox float-e-margins">
                                 <div class="ibox-content" style="padding-bottom: 0 !important;">
                                     <div class="row" id="door_searchbox" style="border: none !important;">
-                                        <form class="col-lg-9 col-md-19 col-sm-9 form-horizontal" id="door_search"
+                                        <form class="col-lg-10 col-md-10 col-sm-10 form-horizontal" id="door_search"
                                               role="form">
                                             <div class="form-group row" >
                                                 <div style="display:inline-block;">
@@ -370,7 +370,7 @@
                                                     </div>
                                                 </div>
                                                 <div style="display: inline-block;">
-                                                    <span class="searchname search left" title="区县" style="width: 80px;margin-left: 63px">区县</span>
+                                                    <span class="searchname search" title="区县" style="width: 80px">区县</span>
                                                     <div class="input-group searchspan" id="doorcountry">
                                                         <div class="jq22">
                                                             <select id="doorselectarea" class="form-control"  v-on:change="areachange()" style="display: none">
@@ -383,7 +383,18 @@
                                                     </div>
                                                 </div>
                                                 <div style="display: inline-block;">
-                                                    <span class="searchname search left" title="业务类型" style="width: 80px;margin-left: 65px;">业务类型</span>
+                                                    <span class="searchname search " title="探针" style="width: 65px;">探针</span>
+                                                        <div class="input-group searchspan" id="probe" >
+                                                        <div class="jq22">
+                                                            <select id="selectprobe" class="form-control"   style="display: none">
+                                                                <option value="">所有探针</option>
+                                                                <option v-for="item in probe" v-bind:value="item.message.id">{{ item.message.name}}</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div style="display: inline-block;">
+                                                    <span class="searchname search " title="业务类型" style="width: 93px;">业务类型</span>
                                                     <div class="input-group searchspan" id="doorservice" >
                                                         <div class="jq22">
                                                             <select id="doorselectservice" class="form-control  input"
@@ -404,7 +415,7 @@
                                             <div class="form-group row" style="margin-bottom: -5px">
 
                                                 <div style="display: inline-block;">
-                                                    <span class="searchname search " title="目标地址" style="width: 80px;">目标地址</span>
+                                                    <span class="searchname search " title="目标地址" style="width: 80px;line-height: 1.5">目标地址</span>
                                                     <div class="input-group searchspan" id="doortarget" style="top: -8px;">
                                                         <div class="jq22">
                                                             <select id="doorselect_target" class="form-control  input"
@@ -417,14 +428,14 @@
                                                     </div>
                                                 </div>
                                                 <div class="input-group searchspan">
-                                                    <span class="searchname search left" title="日期" style="width: 80px;margin-left: 62px">起始时间</span>
+                                                    <span class="searchname search " title="日期" style="width: 80px;">起始时间</span>
                                                     <input type="text" id="doorstart_date" class="form-control input clear"
                                                            name="startDate"
                                                            style="width: 140px"
                                                            value="">
                                                 </div>
                                                 <div class="input-group searchspan">
-                                                    <span class="searchname search left" title="日期" style="width: 80px">结束时间</span>
+                                                    <span class="searchname search " title="日期" style="width: 52px">结束时间</span>
                                                     <input type="text" id="doorterminal_date" class="form-control input clear"
                                                            name="terminalDate"
                                                            style="width: 140px"
@@ -432,7 +443,7 @@
                                                 </div>
                                             </div>
                                         </form>
-                                        <div class="col-lg-3 col-md-3 col-sm-3 pull-left"
+                                        <div class="col-lg-2 col-md-2 col-sm-2 pull-left"
                                              style="text-align:center;height:50px;position: relative;" id="doorsearchbtn">
                                             <button type="button" class="btn btn-sm btn-success"
                                                     style="margin-right: 5px;position: relative;top: 50%;"
@@ -600,6 +611,59 @@
                 <div class="record-table ibox-content" id="areaGame">
                     <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
                         <table class="table table-bordered " id="areaGamedata_table" style="margin-top: 2px!important;"></table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<!--门户详情模态框-->
+
+<div class="modal fade" id="door_update" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width:995px"> <!--修改bootstrap modal模态框的宽度-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h3 class="modal-title myModalLabel">详细信息</h3>
+            </div>
+            <div class="modal-body" style="height: 110px;">
+                <div class="record-table ibox-content" id="doorinformation">
+                    <table  class="table table-bordered " id="doorinformation_table" style="margin-top: 2px!important;" ></table>
+                </div>
+                <div class="record-table ibox-content" id="doorconnnection">
+                    <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                        <table class="table table-bordered " id="doorpingdata_table" style="margin-top: 2px!important;"></table>
+                    </div>
+                </div>
+                <div class="record-table ibox-content" id="doorquality">
+                    <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                        <table class="table table-bordered " id="doorqualitydata_table" style="margin-top: 2px!important;"></table>
+                    </div>
+                </div>
+                <div class="record-table ibox-content" id="doorbroswer">
+                    <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                        <table class="table table-bordered " id="doorbroswerdata_table" style="margin-top: 2px!important;"></table>
+                    </div>
+                </div>
+                <div class="record-table ibox-content" id="doordownload">
+                    <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                        <table class="table table-bordered " id="doordownloaddata_table" style="margin-top: 2px!important;"></table>
+                    </div>
+                </div>
+                <div class="record-table ibox-content" id="doorvideo">
+                    <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                        <table class="table table-bordered " id="doorvideodata_table" style="margin-top: 2px!important;"></table>
+                    </div>
+                </div>
+                <div class="record-table ibox-content" id="doorgame">
+                    <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                        <table class="table table-bordered " id="doorgamedata_table" style="margin-top: 2px!important;"></table>
                     </div>
                 </div>
             </div>

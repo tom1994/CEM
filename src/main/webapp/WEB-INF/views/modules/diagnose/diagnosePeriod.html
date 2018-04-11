@@ -69,6 +69,9 @@
         input[type=text]::-ms-clear{
             display: none;
         }
+        .dataTables_wrapper{
+            padding: 0px;
+        }
     </style>
 </head>
 <body>
@@ -99,7 +102,7 @@
                                         </div>
                                         <div style="display: inline-block;">
                                             <span class="searchname search left" title="区县" style="width: 60px;margin-left: 61px">区县</span>
-                                            <div class="input-group searchspan" id="county">
+                                            <div class="input-group searchspan" id="country">
                                                 <div class="jq22">
                                                     <select id="selectarea" class="form-control"   v-on:change="areachange()" style="display: none">
                                                         <option value="">所有区县</option>
@@ -121,7 +124,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
                                     <div class="form-group row" style="margin-bottom: -5px">
                                         <div style="display:inline-block;">
@@ -181,7 +183,7 @@
                                 <button type="button" class="btn btn-default Btn" v-on:click="sla">网络层质量</button>
                                 <button type="button" class="btn btn-default Btn" v-on:click="web">WEB浏览</button>
                                 <button type="button" class="btn btn-default Btn" v-on:click="download">文件下载</button>
-                                <button type="button" class="btn btn-default Btn" v-on:click="video">网络视频</button>
+                                <button type="button" class="btn btn-default Btn" v-on:click="video">在线视频</button>
                                 <button type="button" class="btn btn-default Btn" v-on:click="game">网络游戏</button>
                             </div>
                         </div>
@@ -204,7 +206,7 @@
                 <h4>数据明细</h4>
             </div>
             <div class="ibox-content">
-                <div class="row pre-scrollable">     <!--表格-->
+                <div class="row pre-scrollable">
                     <div id="table" style="margin-top: 2px !important;">
                         <data-table :scoredata="filteredData"></data-table>
                     </div>
@@ -212,6 +214,55 @@
             </div>
         </div>
     </div>
+</div>
+
+<!--详情模态框（Modal） -->
+<div class="modal fade" id="myModal_update" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width:995px"> <!--修改bootstrap modal模态框的宽度-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h3 class="modal-title myModalLabel">详细信息</h3>
+            </div>
+            <div class="modal-body" style="height: 110px;">
+                <div class="record-table ibox-content" id="connnection">
+                    <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                        <table class="table table-bordered " id="pingdata_table" style="margin-top: 2px!important;"></table>
+                    </div>
+                </div>
+                <div class="record-table ibox-content" id="quality">
+                    <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                        <table class="table table-bordered " id="qualitydata_table" style="margin-top: 2px!important;"></table>
+                    </div>
+                </div>
+                <div class="record-table ibox-content" id="broswer">
+                    <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                        <table class="table table-bordered " id="broswerdata_table" style="margin-top: 2px!important;"></table>
+                    </div>
+                </div>
+                <div class="record-table ibox-content" id="download">
+                    <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                        <table class="table table-bordered " id="downloaddata_table" style="margin-top: 2px!important;"></table>
+                    </div>
+                </div>
+                <div class="record-table ibox-content" id="video">
+                    <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                        <table class="table table-bordered " id="videodata_table" style="margin-top: 2px!important;"></table>
+                    </div>
+                </div>
+                <div class="record-table ibox-content" id="game">
+                    <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                        <table class="table table-bordered " id="gamedata_table" style="margin-top: 2px!important;"></table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
 </div>
 <script type="text/javascript" src="${rc.contextPath}/statics/js/modules/diagnose/diagnosePeriod.js?_${date.systemTime}"></script>
 <script>

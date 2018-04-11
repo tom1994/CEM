@@ -4,13 +4,13 @@ var probeNames = new Array();
 var taskNames = new Array();
 var targetNames = new Array();
 var recordtag = "0";
-var citySelected=0;
-var countrySelected=0;
+var citySelected=0
+var countrySelected=0
 var probeSelected=0;
 var serviceSelected=0;
-var taskSelected=0;
+var taskSelected=0
 var targetSelected=0;
-var intervalSelected=0;
+var intervalSelected=0
 
 //key:service_type value:superservice_type
 var spst = new Map();
@@ -450,7 +450,13 @@ var search_data = new Vue({
             }
         },
         reset: function () {    /*重置*/
-            document.getElementById("resultsearch").reset();
+            document.getElementById("resultsearch").reset();citySelected=0
+            countrySelected=0
+            probeSelected=0;
+            serviceSelected=0;
+            taskSelected=0
+            targetSelected=0;
+            intervalSelected=0
             var data = {
                 startDate: today.Format("yyyy-MM-dd"),
                 terminalDate: (new Date()).Format("yyyy-MM-dd"),
@@ -793,13 +799,13 @@ var pingresulttable = new Vue({
                             row.push(item.taskName);
                             row.push(item.targetName);
                             row.push(item.targetipName);
-                            row.push(item.delay);
-                            row.push(item.delayStd);
-                            row.push(item.delayVar);
-                            row.push(item.jitter);
-                            row.push(item.jitterStd);
-                            row.push(item.jitterVar);
-                            row.push(item.lossRate);
+                            row.push(item.delay.toFixed(2));
+                            row.push(item.delayStd.toFixed(2));
+                            row.push(item.delayVar.toFixed(2));
+                            row.push(item.jitter.toFixed(2));
+                            row.push(item.jitterStd.toFixed(2));
+                            row.push(item.jitterVar.toFixed(2));
+                            row.push(item.lossRate.toFixed(2)*100);
                             row.push(item.recordDate.substr(0, 10));
                             row.push(item.recordTime);
                             rows.push(row);
@@ -936,14 +942,14 @@ var tracertresulttable = new Vue({
                             row.push(item.taskName);
                             row.push(item.targetName);
                             row.push(item.targetipName);
-                            row.push(item.delay);
-                            row.push(item.delayStd);
-                            row.push(item.delayVar);
-                            row.push(item.jitter);
-                            row.push(item.jitterStd);
-                            row.push(item.jitterVar);
-                            row.push(item.lossRate);
-                            row.push(item.hopRecord);
+                            row.push(item.delay.toFixed(2));
+                            row.push(item.delayStd.toFixed(2));
+                            row.push(item.delayVar.toFixed(2));
+                            row.push(item.jitter.toFixed(2));
+                            row.push(item.jitterStd.toFixed(2));
+                            row.push(item.jitterVar.toFixed(2));
+                            row.push(item.lossRate.toFixed(2)*100);
+                            row.push(item.hopRecord.toFixed(2));
                             row.push(item.recordDate.substr(0, 10));
                             row.push(item.recordTime);
                             rows.push(row);
@@ -1086,25 +1092,25 @@ var slaresulttable = new Vue({
                             row.push(i++);
                             row.push(item.probeName);
                             row.push(item.port);
-                            row.push(item.delay);
-                            row.push(item.gDelay);
-                            row.push(item.rDelay);
-                            row.push(item.delayStd);
-                            row.push(item.gDelayStd);
-                            row.push(item.rDelayStd);
-                            row.push(item.delayVar);
-                            row.push(item.gDelayVar);
-                            row.push(item.rDelayVar);
-                            row.push(item.jitter);
-                            row.push(item.gJitter);
-                            row.push(item.rJitter);
-                            row.push(item.jitterStd);
-                            row.push(item.gJitterStd);
-                            row.push(item.rJitterStd);
-                            row.push(item.jitterVar);
-                            row.push(item.gJitterVar);
-                            row.push(item.rJitterVar);
-                            row.push(item.lossRate);
+                            row.push(item.delay.toFixed(2));
+                            row.push(item.gDelay.toFixed(2));
+                            row.push(item.rDelay.toFixed(2));
+                            row.push(item.delayStd.toFixed(2));
+                            row.push(item.gDelayStd.toFixed(2));
+                            row.push(item.rDelayStd.toFixed(2));
+                            row.push(item.delayVar.toFixed(2));
+                            row.push(item.gDelayVar.toFixed(2));
+                            row.push(item.rDelayVar.toFixed(2));
+                            row.push(item.jitter.toFixed(2));
+                            row.push(item.gJitter.toFixed(2));
+                            row.push(item.rJitter.toFixed(2));
+                            row.push(item.jitterStd.toFixed(2));
+                            row.push(item.gJitterStd).toFixed(2);
+                            row.push(item.rJitterStd.toFixed(2));
+                            row.push(item.jitterVar.toFixed(2));
+                            row.push(item.gJitterVar.toFixed(2));
+                            row.push(item.rJitterVar.toFixed(2));
+                            row.push(item.lossRate.toFixed(2)*100);
                             row.push(item.targetName);
                             row.push(item.targetIp);
                             row.push(item.recordDate.substr(0,10));
@@ -1232,8 +1238,8 @@ var dhcpresult_Table = new Vue({
                             row.push(i++);
                             row.push(item.probeName);
                             row.push(item.port);
-                            row.push(item.delay);
-                            row.push(item.successRate);
+                            row.push(item.delay.toFixed(2));
+                            row.push(item.successRate.toFixed(2)*100);
                             row.push(item.targetId);
                             row.push(item.targetIp);
                             row.push(item.recordDate.substr(0,10));
@@ -1362,8 +1368,8 @@ var dnsresult_Table = new Vue({
                             row.push(i++);
                             row.push(item.probeName);
                             row.push(item.port);
-                            row.push(item.delay);
-                            row.push(item.successRate);
+                            row.push(item.delay.toFixed(2));
+                            row.push(item.successRate.toFixed(2)*100);
                             row.push(item.targetId);
                             row.push(item.targetIp);
                             row.push(item.recordDate.substr(0,10));
@@ -1490,8 +1496,8 @@ var radiusresult_Table = new Vue({
                             row.push(i++);
                             row.push(item.probeName);
                             row.push(item.port);
-                            row.push(item.delay);
-                            row.push(item.successRate);
+                            row.push(item.delay.toFixed(2));
+                            row.push(item.successRate.toFixed(2)*100);
                             row.push(item.targetId);
                             row.push(item.targetIp);
                             row.push(item.recordDate.substr(0,10));
@@ -1622,12 +1628,12 @@ var ftpresult_Table = new Vue({
                             row.push(i++);
                             row.push(item.probeName);
                             row.push(item.port);
-                            row.push(item.dnsDelay);
-                            row.push(item.connDelay);
-                            row.push(item.loginDelay);
-                            row.push(item.uploadRate);
-                            row.push(item.downloadRate);
-                            row.push(item.headbyteDelay);
+                            row.push(item.dnsDelay.toFixed(2));
+                            row.push(item.connDelay.toFixed(2));
+                            row.push(item.loginDelay.toFixed(2));
+                            row.push(item.uploadRate.toFixed(2));
+                            row.push(item.downloadRate.toFixed(2));
+                            row.push(item.headbyteDelay.toFixed(2));
                             row.push(item.targetId);
                             row.push(item.targetIp);
                             row.push(item.recordDate.substr(0,10));
@@ -1756,10 +1762,10 @@ var webdownloadresult_Table = new Vue({
                             row.push(i++);
                             row.push(item.probeName);
                             row.push(item.port);
-                            row.push(item.dnsDelay);
-                            row.push(item.connDelay);
-                            row.push(item.downloadRate);
-                            row.push(item.headbyteDelay);
+                            row.push(item.dnsDelay.toFixed(2));
+                            row.push(item.connDelay.toFixed(2));
+                            row.push(item.downloadRate.toFixed(2));
+                            row.push(item.headbyteDelay.toFixed(2));
                             row.push(item.targetId);
                             row.push(item.targetIp);
                             row.push(item.recordDate.substr(0,10));
@@ -2037,18 +2043,18 @@ var webvideoresult_Table = new Vue({
                             row.push(i++);
                             row.push(item.probeName);
                             row.push(item.port);
-                            row.push(item.headFrameDelay);
-                            row.push(item.initBufferDelay);
-                            row.push(item.loadDelay);
-                            row.push(item.totalBufferDelay);
-                            row.push(item.downloadRate);
-                            row.push(item.bufferTime);
-                            row.push(item.dnsDelay);
-                            row.push(item.wsConnDelay);
-                            row.push(item.webPageDelay);
-                            row.push(item.ssConnDelay);
-                            row.push(item.addressDelay);
-                            row.push(item.msConnDelay);
+                            row.push(item.headFrameDelay.toFixed(2));
+                            row.push(item.initBufferDelay.toFixed(2));
+                            row.push(item.loadDelay.toFixed(2));
+                            row.push(item.totalBufferDelay.toFixed(2));
+                            row.push(item.downloadRate.toFixed(2));
+                            row.push(item.bufferTime.toFixed(2));
+                            row.push(item.dnsDelay.toFixed(2));
+                            row.push(item.wsConnDelay.toFixed(2));
+                            row.push(item.webPageDelay.toFixed(2));
+                            row.push(item.ssConnDelay.toFixed(2));
+                            row.push(item.addressDelay.toFixed(2));
+                            row.push(item.msConnDelay.toFixed(2));
                             row.push(item.targetName);
                             row.push(item.targetIp);
                             row.push(item.recordDate.substr(0,10));
@@ -2177,11 +2183,11 @@ var gameresult_Table = new Vue({
                             row.push(i++);
                             row.push(item.probeName);
                             row.push(item.port);
-                            row.push(item.connDelay);
-                            row.push(item.dnsDelay);
-                            row.push(item.packetDelay);
-                            row.push(item.packetJitter);
-                            row.push(item.lossRate);
+                            row.push(item.connDelay.toFixed(2));
+                            row.push(item.dnsDelay.toFixed(2));
+                            row.push(item.packetDelay.toFixed(2));
+                            row.push(item.packetJitter.toFixed(2));
+                            row.push(item.lossRate.toFixed(2)*100);
                             row.push(item.targetName);
                             row.push(item.targetIp);
                             row.push(item.recordDate.substr(0,10));
