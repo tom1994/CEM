@@ -18,6 +18,11 @@
 		select * from alarm_template where id = #{value}
 	</select>
 
+	<select id="queryExist" resultType="int">
+		select count(*) from alarm_template
+		where at_name = #{atName}
+	</select>
+
 	<select id="queryList" resultType="io.cem.modules.cem.entity.AlarmTemplateEntity">
 		select alarm_template.* ,
 		a.data_name        AS service_name

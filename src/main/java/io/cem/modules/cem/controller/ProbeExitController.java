@@ -26,10 +26,6 @@ import java.util.concurrent.ExecutionException;
 
 /**
  * 端口-出口对照表
- * 
- * @author ${author}
- * @email ${email}
- * @date 2018-03-26 19:47:28
  */
 @RestController
 @RequestMapping("probeexit")
@@ -107,9 +103,12 @@ public class ProbeExitController {
 	@RequestMapping("/save")
 	@RequiresPermissions("probeexit:save")
 	public R save(@RequestBody ProbeExitEntity probeExit){
-		probeExitService.save(probeExit);
-		
-		return R.ok();
+		if ((probeExitService.queryNameExist(probeExit.getExit()) > 0)||((probeExitService.queryProbeExist(probeExit.getProbeId()) > 0)&&(probeExitService.queryPortExist(probeExit.getPort()) > 0))) {
+			return R.error(300, "出口名称或出口已存在，请重新输入");
+		} else {
+			probeExitService.save(probeExit);
+			return R.ok();
+		}
 	}
 	
 	/**
@@ -118,9 +117,12 @@ public class ProbeExitController {
 	@RequestMapping("/update/{id}")
 	@RequiresPermissions("probeexit:update")
 	public R update(@RequestBody ProbeExitEntity probeExit){
-		probeExitService.update(probeExit);
-		
-		return R.ok();
+		if (probeExitService.queryNameExist(probeExit.getExit()) > 0) {
+			return R.error(300, "出口名称已存在，请重新输入");
+		} else {
+			probeExitService.update(probeExit);
+			return R.ok();
+		}
 	}
 
 	/**

@@ -6,11 +6,7 @@ import java.util.Date;
 
 
 /**
- * 
- * 
- * @author ${author}
- * @email ${email}
- * @date 2018-01-30 12:10:03
+ *
  */
 public class RecordDayRadiusEntity implements Serializable {
 	private static final long serialVersionUID = 1L;

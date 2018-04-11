@@ -20,6 +20,8 @@ public interface ReportPolicyService {
 	void save(ReportPolicyEntity reportPolicy);
 	
 	void update(ReportPolicyEntity reportPolicy);
+
+	int queryExist(String reportName);
 	
 	void delete(Integer id);
 	

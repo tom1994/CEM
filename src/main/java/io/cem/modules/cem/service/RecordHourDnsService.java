@@ -7,11 +7,7 @@ import java.util.Map;
 import java.util.concurrent.Future;
 
 /**
- * 
- * 
- * @author ${author}
- * @email ${email}
- * @date 2017-12-12 15:11:35
+ *
  */
 public interface RecordHourDnsService {
 	

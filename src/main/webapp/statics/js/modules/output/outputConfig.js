@@ -91,6 +91,9 @@ var spform_data = new Vue({
                                     toastr.success("任务创建成功!");
                                     $('#myModal_sp').modal('hide');    //jQuery选定
                                     break;
+                                case 300:
+                                    toastr.error(msg);
+                                    break;
                                 case 403:
                                     toastr.error(msg);
                                     break;
@@ -103,6 +106,9 @@ var spform_data = new Vue({
                                 case 0:
                                     toastr.success("策略修改成功!");
                                     $('#myModal_sp').modal('hide');
+                                    break;
+                                case 300:
+                                    toastr.error(msg);
                                     break;
                                 case 403:
                                     toastr.error(msg);
@@ -294,6 +300,9 @@ function  Save() {
                     case 0:
                         toastr.success("出口修改成功!");
                         $('#myModal_output').modal('hide');
+                        break;
+                    case 300:
+                        toastr.error(msg);
                         break;
                     case 403:
                         toastr.error(msg);

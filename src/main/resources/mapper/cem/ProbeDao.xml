@@ -151,6 +151,11 @@
     order by convert(target_name USING gbk)
     </select>
 
+    <select id="queryExist" resultType="int">
+        select count(*) from probe
+        where probe_name = #{probeName}
+    </select>
+
     <select id="queryCenterList" resultType="io.cem.modules.cem.entity.ProbeEntity">
         SELECT id,probe.probe_name AS `name`
         FROM probe

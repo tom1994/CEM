@@ -6,11 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 
- * 
- * @author ${author}
- * @email ${email}
- * @date 2018-01-30 12:10:16
+ *
  */
 public interface RecordDayDnsService {
 	

@@ -1,33 +1,25 @@
 package io.cem.modules.cem.controller;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import com.alibaba.fastjson.JSONObject;
-import io.cem.common.exception.RRException;
-import io.cem.common.utils.JSONUtils;;
+import io.cem.common.utils.PageUtils;
+import io.cem.common.utils.R;
+import io.cem.modules.cem.entity.CityEntity;
+import io.cem.modules.cem.service.CityService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.cem.modules.cem.entity.CityEntity;
-import io.cem.modules.cem.service.CityService;
-import io.cem.common.utils.PageUtils;
-import io.cem.common.utils.Query;
-import io.cem.common.utils.R;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+;
 
 
 /**
  * 行政区域地州市信息表
- * 
- * @author ${author}
- * @email ${email}
- * @date 2017-11-05 20:56:26
  */
 @RestController
 @RequestMapping("/cem/city")

@@ -52,6 +52,11 @@
  	<select id="queryTotal" resultType="int">
 		select count(*) from report_policy 
 	</select>
+
+	<select id="queryExist" resultType="int">
+		select count(*) from report_policy
+		where report_name = #{reportName}
+	</select>
 	 
 	<insert id="save" parameterType="io.cem.modules.cem.entity.ReportPolicyEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into report_policy

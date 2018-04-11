@@ -7,14 +7,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 
- * 
- * @author ${author}
- * @email ${email}
- * @date 2017-11-13 11:01:11
  */
 public interface TaskDao extends BaseDao<TaskEntity> {
     List<TaskEntity> queryTaskList(Map<String,Object> map);
-
+    int queryExist(String taskName);
     List<TaskEntity> infoByService(Integer servicetype);
 }

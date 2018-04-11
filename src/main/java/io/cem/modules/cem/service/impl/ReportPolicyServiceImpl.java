@@ -43,7 +43,13 @@ public class ReportPolicyServiceImpl implements ReportPolicyService {
 	public void update(ReportPolicyEntity reportPolicy){
 		reportPolicyDao.update(reportPolicy);
 	}
-	
+
+	@Override
+	public int queryExist(String reportName){
+		return reportPolicyDao.queryExist(reportName);
+	}
+
+
 	@Override
 	public void delete(Integer id){
 		reportPolicyDao.delete(id);

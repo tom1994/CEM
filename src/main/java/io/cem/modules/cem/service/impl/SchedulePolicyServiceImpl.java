@@ -41,7 +41,13 @@ public class SchedulePolicyServiceImpl implements SchedulePolicyService {
 	public void update(SchedulePolicyEntity schedulePolicy){
 		schedulePolicyDao.update(schedulePolicy);
 	}
-	
+
+	@Override
+	public int queryExist(String spName){
+		return schedulePolicyDao.queryExist(spName);
+	}
+
+
 	@Override
 	public void delete(Integer id){
 		schedulePolicyDao.delete(id);

@@ -1,25 +1,22 @@
 package io.cem.modules.cem.controller;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.alibaba.fastjson.JSONObject;
 import io.cem.common.exception.RRException;
 import io.cem.common.utils.JSONUtils;
+import io.cem.common.utils.PageUtils;
+import io.cem.common.utils.R;
+import io.cem.modules.cem.entity.ProbeGroupEntity;
+import io.cem.modules.cem.service.ProbeGroupService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.cem.modules.cem.entity.ProbeGroupEntity;
-import io.cem.modules.cem.service.ProbeGroupService;
-import io.cem.common.utils.PageUtils;
-import io.cem.common.utils.Query;
-import io.cem.common.utils.R;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -109,9 +106,12 @@ public class ProbeGroupController {
 	@RequestMapping("/save")
 	@RequiresPermissions("probegroup:save")
 	public R save(@RequestBody ProbeGroupEntity probeGroup){
-		ProbeGroupService.save(probeGroup);
-		
-		return R.ok();
+		if (ProbeGroupService.queryExist(probeGroup.getName()) > 0) {
+			return R.error(300, "探针组名称已存在，请重新输入");
+		} else {
+			ProbeGroupService.save(probeGroup);
+			return R.ok();
+		}
 	}
 	
 	/**
@@ -120,9 +120,12 @@ public class ProbeGroupController {
 	@RequestMapping("/update")
 	@RequiresPermissions("probegroup:update")
 	public R update(@RequestBody ProbeGroupEntity probeGroup){
-		ProbeGroupService.update(probeGroup);
-		
-		return R.ok();
+		if (ProbeGroupService.queryExist(probeGroup.getName()) > 0) {
+			return R.error(300, "探针组名称已存在，请重新输入");
+		} else {
+			ProbeGroupService.update(probeGroup);
+			return R.ok();
+		}
 	}
 	
 	/**

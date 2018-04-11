@@ -1,36 +1,26 @@
 package io.cem.modules.cem.controller;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.alibaba.fastjson.JSONObject;
 import io.cem.common.annotation.SysLog;
 import io.cem.common.exception.RRException;
 import io.cem.common.utils.JSONUtils;
-import io.cem.modules.cem.entity.ProbeEntity;
-import org.apache.ibatis.annotations.Param;
+import io.cem.common.utils.PageUtils;
+import io.cem.common.utils.R;
+import io.cem.modules.cem.entity.TargetEntity;
+import io.cem.modules.cem.service.TargetService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.cem.modules.cem.entity.TargetEntity;
-import io.cem.modules.cem.service.TargetService;
-import io.cem.common.utils.PageUtils;
-import io.cem.common.utils.Query;
-import io.cem.common.utils.R;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 /**
- * 
- * 
- * @author ${author}
- * @email ${email}
- * @date 2017-11-05 20:39:28
  */
 @RestController
 @RequestMapping("target")
@@ -110,9 +100,12 @@ public class TargetController {
 	@RequestMapping("/save")
 	@RequiresPermissions("target:save")
 	public R save(@RequestBody TargetEntity target){
-		targetService.save(target);
-		
-		return R.ok();
+		if (targetService.queryExist(target.getTargetName()) > 0) {
+			return R.error(300, "测试目标名称已存在，请重新输入");
+		} else {
+			targetService.save(target);
+			return R.ok();
+		}
 	}
 	
 	/**
@@ -122,9 +115,12 @@ public class TargetController {
 	@RequestMapping("/update")
 	@RequiresPermissions("target:update")
 	public R update(@RequestBody TargetEntity target){
-		targetService.update(target);
-		
-		return R.ok();
+		if (targetService.queryExist(target.getTargetName()) > 0) {
+			return R.error(300, "测试目标名称已存在，请重新输入");
+		} else {
+			targetService.update(target);
+			return R.ok();
+		}
 	}
 	
 	/**

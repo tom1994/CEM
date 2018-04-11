@@ -40,6 +40,11 @@ public class ProbeServiceImpl implements ProbeService {
     }
 
     @Override
+    public int queryExist(String probeName){
+        return probeDao.queryExist(probeName);
+    }
+
+    @Override
     public List<ProbeEntity> queryPortList(Integer id) {
         return probeDao.queryPortList(id);
     }

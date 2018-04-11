@@ -995,6 +995,9 @@ var probeform_data = new Vue({
                                     toastr.success("业务信息录入成功!");
                                     $('#myModal_update').modal('hide');
                                     break;
+                                case 300:
+                                    toastr.error(msg);
+                                    break;
                                 case 403:
                                     toastr.error(msg);
                                     break;
@@ -1007,6 +1010,9 @@ var probeform_data = new Vue({
                                 case 0:
                                     toastr.success("业务信息更新成功!");
                                     $('#myModal_update').modal('hide');
+                                    break;
+                                case 300:
+                                    toastr.error(msg);
                                     break;
                                 case 403:
                                     toastr.error(msg);
@@ -1094,6 +1100,9 @@ var groupform_data = new Vue({
                                     toastr.success("录入成功!");
                                     $('#groupModal').modal('hide');
                                     break;
+                                case 300:
+                                    toastr.error(msg);
+                                    break;
                                 case 403:
                                     toastr.error(msg);
                                     break;
@@ -1106,6 +1115,9 @@ var groupform_data = new Vue({
                                 case 0:
                                     toastr.success("修改成功!");
                                     $('#groupModal').modal('hide');
+                                    break;
+                                case 300:
+                                    toastr.error(msg);
                                     break;
                                 case 403:
                                     toastr.error(msg);

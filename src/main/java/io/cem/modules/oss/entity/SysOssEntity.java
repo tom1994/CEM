@@ -7,10 +7,6 @@ import java.util.Date;
 
 /**
  * 文件上传
- * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2017-03-25 12:13:26
  */
 public class SysOssEntity implements Serializable {
 	private static final long serialVersionUID = 1L;

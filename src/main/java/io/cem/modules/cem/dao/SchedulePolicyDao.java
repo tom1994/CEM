@@ -6,5 +6,5 @@ import io.cem.modules.sys.dao.BaseDao;
 /**
  */
 public interface SchedulePolicyDao extends BaseDao<SchedulePolicyEntity> {
-	
+    int queryExist(String spName);
 }

@@ -975,6 +975,9 @@ var taskform_data = new Vue({
                                         toastr.success("修改成功!");
                                         $('#myModal_edit').modal('hide');    //jQuery选定
                                         break;
+                                    case 300:
+                                        toastr.error(msg);
+                                        break;
                                     case 403:
                                         toastr.error(msg);
                                         break;

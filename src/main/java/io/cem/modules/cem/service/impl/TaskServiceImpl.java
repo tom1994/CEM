@@ -49,6 +49,11 @@ public class TaskServiceImpl implements TaskService {
 	public void update(TaskEntity task){
 		taskDao.update(task);
 	}
+
+	@Override
+	public int queryExist(String taskName){
+		return taskDao.queryExist(taskName);
+	}
 	
 	@Override
 	public void delete(Integer id){

@@ -1,20 +1,17 @@
 package io.cem.modules.oss.controller;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
+import com.alibaba.fastjson.JSON;
 import io.cem.common.exception.RRException;
-import io.cem.modules.oss.cloud.CloudStorageConfig;
-import io.cem.modules.oss.cloud.OSSFactory;
-import io.cem.modules.sys.service.SysConfigService;
 import io.cem.common.utils.*;
 import io.cem.common.validator.ValidatorUtils;
 import io.cem.common.validator.group.AliyunGroup;
 import io.cem.common.validator.group.QcloudGroup;
 import io.cem.common.validator.group.QiniuGroup;
+import io.cem.modules.oss.cloud.CloudStorageConfig;
+import io.cem.modules.oss.cloud.OSSFactory;
 import io.cem.modules.oss.entity.SysOssEntity;
 import io.cem.modules.oss.service.SysOssService;
+import io.cem.modules.sys.service.SysConfigService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,15 +20,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.alibaba.fastjson.JSON;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 
 /**
  * 文件上传
- * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2017-03-25 12:13:26
  */
 @RestController
 @RequestMapping("sys/oss")

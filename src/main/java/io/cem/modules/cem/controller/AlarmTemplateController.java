@@ -1,30 +1,22 @@
 package io.cem.modules.cem.controller;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import io.cem.common.utils.PageUtils;
+import io.cem.common.utils.R;
+import io.cem.modules.cem.entity.AlarmTemplateEntity;
+import io.cem.modules.cem.service.AlarmTemplateService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.cem.modules.cem.entity.AlarmTemplateEntity;
-import io.cem.modules.cem.service.AlarmTemplateService;
-import io.cem.common.utils.PageUtils;
-import io.cem.common.utils.Query;
-import io.cem.common.utils.R;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 /**
- * 
- * 
- * @author ${author}
- * @email ${email}
- * @date 2017-11-05 20:56:26
  */
 @RestController
 @RequestMapping("/cem/alarmtemplate")
@@ -82,9 +74,12 @@ public class AlarmTemplateController {
 	@RequestMapping("/save")
 	@RequiresPermissions("alarmtemplate:save")
 	public R save(@RequestBody AlarmTemplateEntity alarmTemplate){
-		alarmTemplateService.save(alarmTemplate);
-		
-		return R.ok();
+		if (alarmTemplateService.queryExist(alarmTemplate.getAtName()) > 0) {
+			return R.error(300, "告警模版名称已存在，请重新输入");
+		} else {
+			alarmTemplateService.save(alarmTemplate);
+			return R.ok();
+		}
 	}
 	
 	/**
@@ -93,9 +88,12 @@ public class AlarmTemplateController {
 	@RequestMapping("/update")
 	@RequiresPermissions("alarmtemplate:update")
 	public R update(@RequestBody AlarmTemplateEntity alarmTemplate){
-		alarmTemplateService.update(alarmTemplate);
-		
-		return R.ok();
+		if (alarmTemplateService.queryExist(alarmTemplate.getAtName()) > 0) {
+			return R.error(300, "告警模版名称已存在，请重新输入");
+		} else {
+			alarmTemplateService.update(alarmTemplate);
+			return R.ok();
+		}
 	}
 	
 	/**

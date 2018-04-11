@@ -1,26 +1,23 @@
 package io.cem.modules.cem.controller;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.alibaba.fastjson.JSONObject;
 import io.cem.common.annotation.SysLog;
 import io.cem.common.exception.RRException;
 import io.cem.common.utils.JSONUtils;
+import io.cem.common.utils.PageUtils;
+import io.cem.common.utils.R;
+import io.cem.modules.cem.entity.SchedulePolicyEntity;
+import io.cem.modules.cem.service.SchedulePolicyService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.cem.modules.cem.entity.SchedulePolicyEntity;
-import io.cem.modules.cem.service.SchedulePolicyService;
-import io.cem.common.utils.PageUtils;
-import io.cem.common.utils.Query;
-import io.cem.common.utils.R;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -79,9 +76,12 @@ public class SchedulePolicyController {
 	@RequestMapping("/save")
 	@RequiresPermissions("schedulepolicy:save")
 	public R save(@RequestBody SchedulePolicyEntity schedulePolicy){
-		schedulePolicyService.save(schedulePolicy);
-		
-		return R.ok();
+		if (schedulePolicyService.queryExist(schedulePolicy.getSpName()) > 0) {
+			return R.error(300, "调度策略名称已存在，请重新输入");
+		} else {
+			schedulePolicyService.save(schedulePolicy);
+			return R.ok();
+		}
 	}
 	
 	/**
@@ -91,9 +91,12 @@ public class SchedulePolicyController {
 	@RequestMapping("/update")
 	@RequiresPermissions("schedulepolicy:update")
 	public R update(@RequestBody SchedulePolicyEntity schedulePolicy){
-		schedulePolicyService.update(schedulePolicy);
-		
-		return R.ok();
+		if (schedulePolicyService.queryExist(schedulePolicy.getSpName()) > 0) {
+			return R.error(300, "调度策略名称已存在，请重新输入");
+		} else {
+			schedulePolicyService.update(schedulePolicy);
+			return R.ok();
+		}
 	}
 	
 	/**

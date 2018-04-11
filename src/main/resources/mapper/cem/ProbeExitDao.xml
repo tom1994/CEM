@@ -45,6 +45,21 @@
 		</if>
 	</select>
 
+	<select id="queryNameExist" resultType="int">
+		select count(*) from probe_exit
+		where exit = #{exit}
+	</select>
+
+	<select id="queryProbeExist" resultType="int">
+		select count(*) from probe_exit
+		where probe_id = #{probeId}
+	</select>
+
+	<select id="queryPortExist" resultType="int">
+		select count(*) from probe_exit
+		where port = #{port}
+	</select>
+
 	<select id="queryscoreList" resultType="io.cem.modules.cem.entity.ProbeExitEntity">
 		select probe_exit.*,
 		probe.probe_name AS probe_name

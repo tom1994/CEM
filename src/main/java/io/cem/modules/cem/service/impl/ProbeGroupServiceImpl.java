@@ -46,7 +46,13 @@ public class ProbeGroupServiceImpl implements ProbeGroupService {
 	public void delete(Integer id){
 		probeGroupDao.delete(id);
 	}
-	
+
+	@Override
+	public int queryExist(String pgName){
+		return probeGroupDao.queryExist(pgName);
+	}
+
+
 	@Override
 	public void deleteBatch(Integer[] ids){
 		probeGroupDao.deleteBatch(ids);

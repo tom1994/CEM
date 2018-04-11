@@ -22,6 +22,8 @@ public interface TargetService {
 	List<TargetEntity> queryTargetListByGroup(Integer id);
 	
 	int queryTotal(Map<String, Object> map);
+
+	int queryExist(String targetName);
 	
 	void save(TargetEntity target);
 	

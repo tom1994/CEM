@@ -7,10 +7,6 @@ import java.util.Map;
 
 /**
  * 行政区域地州市信息表
- * 
- * @author ${author}
- * @email ${email}
- * @date 2017-11-05 20:56:26
  */
 public interface CityService {
 	

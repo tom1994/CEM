@@ -55,6 +55,21 @@ public class ProbeExitServiceImpl implements ProbeExitService {
 	public void operateStatus0(Integer id){probeExitDao.operateStatus0(id);}
 
 	@Override
+	public int queryNameExist(String exit){
+		return probeExitDao.queryNameExist(exit);
+	}
+
+	@Override
+	public int queryProbeExist(Integer probeId){
+		return probeExitDao.queryProbeExist(probeId);
+	}
+
+	@Override
+	public int queryPortExist(String port){
+		return probeExitDao.queryPortExist(port);
+	}
+
+	@Override
 	public void operateStatus1(Integer id){probeExitDao.operateStatus1(id);}
 
 	@Override
