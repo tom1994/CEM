@@ -9,6 +9,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.qiniu.util.Json;
+import io.cem.common.annotation.SysLog;
 import io.cem.common.exception.RRException;
 import io.cem.common.utils.*;
 import io.cem.modules.cem.entity.ProbeEntity;
@@ -120,6 +121,7 @@ public class TaskDispatchController {
     /**
      * 保存
      */
+    @SysLog("下发任务")
     @RequestMapping("/save")
     @RequiresPermissions("taskdispatch:save")
     public R save(@RequestBody TaskDispatchEntity taskDispatch) {
@@ -272,6 +274,7 @@ public class TaskDispatchController {
         return R.ok().put("taskdispatch", dispatch);
     }
 
+    @SysLog("下发任务")
     @RequestMapping("/saveAll")
     @RequiresPermissions("taskdispatch:save")
     public R saveAll(@RequestBody TaskDispatchEntity taskDispatch) {
@@ -356,6 +359,7 @@ public class TaskDispatchController {
         return R.ok();
     }
 
+    @SysLog("取消任务")
     @RequestMapping("/cancel/{id}")
     @RequiresPermissions("taskdispatch:delete")
     public R cancel(@PathVariable("id") Integer id) {

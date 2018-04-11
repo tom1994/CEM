@@ -116,9 +116,12 @@ public class LayerController {
     @RequestMapping("/update")
     @RequiresPermissions("layer:update")
     public R update(@RequestBody LayerEntity layer) {
-        layerService.update(layer);
-
-        return R.ok();
+        if (layerService.queryExist(layer.getLayerName()) > 0) {
+            return R.error(300, "层级名称已存在，请重新输入");
+        } else {
+            layerService.update(layer);
+            return R.ok();
+        }
     }
 
     /**

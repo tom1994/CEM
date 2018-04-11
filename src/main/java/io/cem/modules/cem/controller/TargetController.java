@@ -1,6 +1,7 @@
 package io.cem.modules.cem.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import io.cem.common.annotation.SysLog;
 import io.cem.common.exception.RRException;
 import io.cem.common.utils.JSONUtils;
 import io.cem.common.utils.PageUtils;
@@ -95,6 +96,7 @@ public class TargetController {
 	/**
 	 * 保存
 	 */
+	@SysLog("新建测试目标")
 	@RequestMapping("/save")
 	@RequiresPermissions("target:save")
 	public R save(@RequestBody TargetEntity target){
@@ -109,6 +111,7 @@ public class TargetController {
 	/**
 	 * 修改
 	 */
+	@SysLog("修改测试目标")
 	@RequestMapping("/update")
 	@RequiresPermissions("target:update")
 	public R update(@RequestBody TargetEntity target){
@@ -123,6 +126,7 @@ public class TargetController {
 	/**
 	 * 删除
 	 */
+	@SysLog("删除测试目标")
 	@RequestMapping("/delete")
 	@RequiresPermissions("target:delete")
 	public R delete(@RequestBody Integer[] ids){

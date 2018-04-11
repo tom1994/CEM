@@ -7,6 +7,8 @@ import io.cem.common.exception.RRException;
 import io.cem.common.utils.Constant;
 import io.cem.common.utils.ShiroUtils;
 import io.cem.modules.sys.service.SysDeptService;
+import io.cem.modules.sys.service.SysRoleDeptService;
+import io.cem.modules.sys.service.SysUserRoleService;
 import org.apache.commons.lang.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -16,7 +18,10 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  */
@@ -25,6 +30,10 @@ import java.util.Map;
 public class DataFilterAspect {
     @Autowired
     private SysDeptService sysDeptService;
+    @Autowired
+    private SysUserRoleService sysUserRoleService;
+    @Autowired
+    private SysRoleDeptService sysRoleDeptService;
 
     @Pointcut("@annotation(io.cem.common.annotation.DataFilter)")
     public void dataFilterCut() {
@@ -61,6 +70,15 @@ public class DataFilterAspect {
             tableAlias +=  ".";
         }
 
+        //部门ID列表
+        Set<Long> deptIdList = new HashSet<>();
+
+        //用户角色对应的部门ID列表
+        List<Long> roleIdList = sysUserRoleService.queryRoleIdList(user.getUserId());
+        if(roleIdList.size() > 0){
+            List<Long> userDeptIdList = sysRoleDeptService.queryDeptIdList(roleIdList.toArray(new Long[roleIdList.size()]));
+            deptIdList.addAll(userDeptIdList);
+        }
         //获取子部门ID
         String subDeptIds = sysDeptService.getSubDeptIdList(user.getDeptId());
 
@@ -70,7 +88,7 @@ public class DataFilterAspect {
 
         //没有本部门数据权限，也能查询本人数据
         if(dataFilter.user()){
-            filterSql.append(" or ").append(tableAlias).append("user_id=").append(user.getUserId());
+            filterSql.append(" or ").append(tableAlias).append("id=").append(user.getUserId());
         }
         filterSql.append(")");
 

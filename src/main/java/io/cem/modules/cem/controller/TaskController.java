@@ -1,6 +1,8 @@
 package io.cem.modules.cem.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.sun.javafx.collections.MappingChange;
+import io.cem.common.annotation.SysLog;
 import io.cem.common.exception.RRException;
 import io.cem.common.utils.BypassHttps;
 import io.cem.common.utils.JSONUtils;
@@ -79,6 +81,7 @@ public class TaskController {
     /**
      * 保存
      */
+    @SysLog("新建任务")
     @RequestMapping("/save")
     @RequiresPermissions("task:save")
     public R save(@RequestBody TaskEntity task) {
@@ -104,6 +107,7 @@ public class TaskController {
     /**
      * 删除
      */
+    @SysLog("删除任务")
     @RequestMapping("/delete")
     @RequiresPermissions("task:delete")
     public R delete(@RequestBody Integer[] ids) {

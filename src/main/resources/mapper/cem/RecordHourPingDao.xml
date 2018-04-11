@@ -101,7 +101,6 @@
         SUM(rhp.fail) AS fail,
         SUM(rhp.total) AS total
         FROM record_hour_ping rhp
-        USE INDEX(idx_date_target_probe)
         WHERE rhp.record_date BETWEEN #{ava_start} AND #{ava_terminal}
         <if test="target_id != null and target_id != ''">
             AND rhp.target_id = #{target_id}

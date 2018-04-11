@@ -37,8 +37,8 @@ public class SysRoleDeptServiceImpl implements SysRoleDeptService {
 	}
 
 	@Override
-	public List<Long> queryDeptIdList(Long roleId) {
-		return sysRoleDeptDao.queryDeptIdList(roleId);
+	public List<Long> queryDeptIdList(Long[] roleIds) {
+		return sysRoleDeptDao.queryDeptIdList(roleIds);
 	}
 
 }

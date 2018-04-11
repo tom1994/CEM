@@ -13,6 +13,6 @@ public interface SysRoleDeptService {
 	/**
 	 * 根据角色ID，获取部门ID列表
 	 */
-	List<Long> queryDeptIdList(Long roleId);
+	List<Long> queryDeptIdList(Long[] roleIds) ;
 	
 }
