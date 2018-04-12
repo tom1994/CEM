@@ -113,7 +113,6 @@ var vm = new Vue({
             this.getRoleList();
         },
         del: function () {
-            debugger
             var userIds = getSelectedRows();
             if(userIds == null){
                 return ;

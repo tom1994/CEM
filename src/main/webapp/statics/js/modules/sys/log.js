@@ -52,6 +52,7 @@ var vm = new Vue({
 		},
 		reload: function (event) {
 			var page = $("#jqGrid").jqGrid('getGridParam','page');
+			debugger;
 			$("#jqGrid").jqGrid('setGridParam',{ 
 				postData:{'key': vm.q.key},
                 page:page

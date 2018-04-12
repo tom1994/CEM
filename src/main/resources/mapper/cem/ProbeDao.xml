@@ -148,7 +148,7 @@
     FROM probe
     WHERE probe.status = 1
     AND probe.type != 10
-    order by convert(target_name USING gbk)
+    order by convert(probe_name USING gbk)
     </select>
 
     <select id="queryExist" resultType="int">

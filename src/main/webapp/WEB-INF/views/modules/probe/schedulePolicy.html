@@ -35,10 +35,11 @@
     <div class="col-lg-12 col-md-12 col-sm-12">
         <div class="ibox float-e-margins">
             <div class="ibox-title fontcolor box" id="handle" style="padding-bottom: 0px !important;">
-                <!--<button type="button" class="btn btn-default ui-button" v-on:click="schedulepolicyadd"><span-->
+                #if($shiro.hasPermission("schedulepolicy:save"))
                 <button type="button" class="btn btn-sm btn-success Btn" v-on:click="spadd"><span
                         class="glyphicon glyphicon-plus "></span>新建
                 </button>
+                #end
             </div>
             <div class="ibox-content">
                 <div class="row " style="overflow-x: auto">     <!--表格 verflow-x: scroll超出滚动-->

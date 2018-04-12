@@ -16,6 +16,9 @@
 
     <select id="queryList" resultMap="layerMap">
         select * from layer
+        <if test="layerName != null and layerName.trim() != ''">
+            WHERE `layer_name` like concat('%',#{layerName},'%')
+        </if>
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
                 order by ${sidx} ${order}

@@ -834,7 +834,6 @@ var taskform_data = new Vue({
             console.log(paramnew)
             tasknewJson.parameter = paramnew;
             tasknewJson.isDeleted = "0";
-            tasknewJson.alarmTemplateId = "0";
             tasknewJson.createTime = oDate.Format("yyyy-MM-dd hh:mm:ss");
             tasknewJson.remark = "无";
             var reg = /^(?=^.{3,255}$)[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+$/;

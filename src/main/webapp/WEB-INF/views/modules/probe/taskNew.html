@@ -72,9 +72,11 @@
         <div class="col-lg-12 col-md-12 col-sm-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title fontcolor box" id="handle" >
+                    #if($shiro.hasPermission("task:save"))
                     <button type="button" class="btn btn-sm btn-success " v-on:click="newTask"><span
                             class="glyphicon glyphicon-plus Btn" ></span>新建
                     </button>
+                    #end
                     <!--<button type="button" class="btn btn-sm btn-success " v-on:click="testagentdelBatch"><span-->
                     <!--class="glyphicon glyphicon-remove"></span>批量取消-->
                     <!--</button>-->

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.cem.modules.cem.dao.ScoreCollectTargetDao">
+
+    <resultMap type="io.cem.modules.cem.entity.ScoreCollectTargetEntity" id="scoreCollectTargetMap">
+        <result property="id" column="id"/>
+        <result property="score" column="score"/>
+        <result property="target" column="target"/>
+        <result property="score_date" column="scoreDate"/>
+        <result property="service_type" column="serviceType"/>
+    </resultMap>
+    <select id="queryList" resultType="io.cem.modules.cem.entity.ScoreCollectTargetEntity">
+        select score,target from score_collect_target
+        <where>
+            score_date between #{startTime} and #{endTime}
+        </where>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+            <otherwise>
+                order by id
+            </otherwise>
+        </choose>
+    </select>
+    <insert id="save" parameterType="io.cem.modules.cem.entity.ScoreCollectTargetEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into score_collect_target
+		(
+			`score`,
+			`target`,
+			`score_date`,
+			`service_type`
+		)
+		values
+		(
+			#{score},
+			#{target},
+			#{scoreDate},
+			#{serviceType}
+		)
+	</insert>
+    <delete id="deleteBatch">
+        delete from score_collect where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
