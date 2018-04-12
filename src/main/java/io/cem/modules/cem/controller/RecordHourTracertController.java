@@ -304,6 +304,36 @@ public class RecordHourTracertController {
 		CollectionToFile.collectionToFile(response, scoreList, ScoreEntity.class);
 	}
 
+	@RequestMapping("/doordownload/{probedata}")
+	@RequiresPermissions("recordhourtracert:doordownload")
+	public void downloadDoor(HttpServletResponse response, @PathVariable String probedata) throws ExecutionException, InterruptedException {
+		Map<String, Object> map = new HashMap<>();
+		JSONObject jsonobject = JSONObject.parseObject(probedata);
+		try {
+			map.putAll(JSONUtils.jsonToMap(jsonobject));
+		} catch (RuntimeException e) {
+			throw new RRException("内部参数错误，请重试！");
+		}
+		List<ScoreEntity> scoreList = recordHourRadiusService.calculateTargetDayScore(map);
+		if(map.get("probe_id")==null){
+			for(int i=0;i<scoreList.size();i++){
+				scoreList.get(i).setProbeName("");
+			}
+		}
+		if(map.get("county_id")==null){
+			for(int i=0;i<scoreList.size();i++){
+				scoreList.get(i).setCountyName("");
+			}
+		}
+		if(map.get("city_id")==null){
+			for(int i=0;i<scoreList.size();i++){
+				scoreList.get(i).setCityName("");
+			}
+		}
+		System.out.println(scoreList);
+		CollectionToFile.collectionToFile(response, scoreList, ScoreEntity.class);
+	}
+
 
 	@RequestMapping("/areaDownload/{probedata}")
 	@RequiresPermissions("recordhourtracert:areaDownload")

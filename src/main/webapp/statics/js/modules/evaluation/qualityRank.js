@@ -1,3 +1,4 @@
+
 /**
  * Created by Fern on 2017/11/28.
  */
@@ -232,7 +233,7 @@ var getDoorArea = function (cityid) {
                     setTimeout(function () {
                         var a = $(areas.currentTarget)[0].innerText;
                         countrySelected = $($(areas.currentTarget)[0]).data('value');
-                         
+
                         getProbe(countrySelected);
                         $('#doorcountry .combo-input').val(a);
                         $('#doorcountry .combo-select select').val(a);
@@ -295,7 +296,7 @@ var getService = function (serviceId) {
 
 var getDoorService = function (serviceId) {
     console.log("I'm here!!!!" + serviceId);
-     
+
     targetSelected = 0
     $.ajax({
         url: "../../target/infobat/" + serviceId,
@@ -405,6 +406,40 @@ function out() {/*导出事件*/
     }
 }
 
+
+function doorout() {/*导出事件*/
+    var searchJson = getFormJson($('#door_search'));
+    if ((searchJson.startDate) > (searchJson.terminalDate)) {
+        console.log("时间选择有误，请重新选择！");
+        $('#nonavailable_time').modal('show');
+    } else {
+        var search = new Object();
+        search.city_id = searchJson.city_id;
+        search.couty_id = searchJson.county_id;
+        search.service = searchJson.service_type;
+        search.target_id = searchJson.target;
+        if (searchJson.startDate.length != 0 && searchJson.terminalDate.length != 0) {
+            var ava_start = searchJson.startDate.substr(0, 10);
+            var ava_terminal = searchJson.terminalDate.substr(0, 10);
+            var startTime = searchJson.startDate.substr(11, 15);
+            var terminalTime = searchJson.terminalDate.substr(11, 15);
+            search.ava_start = ava_start;
+            search.ava_terminal = ava_terminal;
+            search.starTime = startTime;
+            search.terminalTime = terminalTime;
+        } else {
+            search.ava_start = today.Format("yyyy-MM-dd");
+            search.ava_terminal = (new Date()).Format("yyyy-MM-dd");
+        }
+        var schedulepolicy = JSON.stringify(search);
+        console.log(schedulepolicy);
+
+        document.getElementById("door_output").href = encodeURI('../../recordhourtracert/doordownload/' + schedulepolicy);
+        document.getElementById("door_output").click();
+    }
+}
+
+
 //区域排名详情
 //TODO：获取区域排名并展示
 function areaupdate_this(obj) {     /*监听修改触发事件*/
@@ -448,7 +483,7 @@ function areaupdate_this(obj) {     /*监听修改触发事件*/
             contentType: "application/json", /*必须要,不可少*/
             success: function (result) {
                 console.log('收到数据',new Date(),result);
-                 
+
                 if(result!=undefined){
                     $('#Section2').hideLoading();
                     var  areaContent=result.scoreList;
@@ -605,7 +640,7 @@ var search_door_service = new Vue({
     // 在 `methods` 对象中定义方法
     methods: {
         DoorListsearch: function () {
-             
+
             var searchJson = getFormJson($('#door_search'));
             if ((searchJson.startDate) > (searchJson.terminalDate)) {
                 console.log("时间选择有误，请重新选择！");
@@ -657,7 +692,7 @@ var search_door_service = new Vue({
 function getFormJson(form) {      /*将表单对象变为json对象*/
     var a = $(form).serializeArray();
     var o = {};
-     
+
     if (form.selector == '#probesearch') {
         if (citySelected != 0) {
             a[2] = {};
@@ -1248,7 +1283,7 @@ $(document).ready(function () {
                         var a = $(city.currentTarget)[0].innerText;
                         clearArea(a);
                         citySelected = $($(city.currentTarget)[0]).data('value');
-                         
+
                         getDoorArea(citySelected);
                         getProbeCity(citySelected);
                         $('div#doorcity .combo-input').val(a);
@@ -1435,7 +1470,7 @@ $(document).ready(function () {
 
 //探针
 var getProbe = function (countyid) {
-     
+
     probeSelected = 0;
     $.ajax({//探针信息
         url: "../../cem/probe/info/" + countyid,
@@ -1475,7 +1510,7 @@ var getProbe = function (countyid) {
 };
 //城市探针
 var getProbeCity = function (cityid) {
-     
+
     probeSelected = 0;
     if (cityid != "" && cityid != null){
         $.ajax({//探针信息
@@ -4605,4 +4640,3 @@ function door_game(obj) {
         }
     })
 }
-
