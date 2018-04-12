@@ -12,6 +12,18 @@ var citySelected=0;
 var countrySelected=0;
 var layers = new Map();
 var layerNames = new Map();
+var list =new Array();
+
+var type;
+
+var st = new Map();//servicetype字典，可通过get方法查对应字符串。
+st.set(0, "综合业务");
+st.set(1, "网络连通性业务");
+st.set(2, "网络层质量业务");
+st.set(3, "网页浏览业务");
+st.set(4, "文件下载业务");
+st.set(5, "在线视频业务");
+st.set(6, "网络游戏业务");
 
 //格式化日期
 Date.prototype.Format = function (fmt) {
@@ -401,6 +413,7 @@ var Reset = new Vue({
                     if (result.page.list.length !== 0) {
                         /*option先回到状态0,注意,不然会出错*/
                         new_data.scoredata = result.page.list;
+                        list=result.page.list;
                         // console.log(new_data.scoredata);
                     } else {
                         toastr.warning('最近4天没有对应数据！');
@@ -602,7 +615,15 @@ function compare(property) {
         return value1 - value2;     // 升序
     }
 }
-
+function cc() {
+       var rows = scoredata.rows;
+       rows.sort(function(a,b){
+           return Date.parse(a.time) - Date.parse(b.time);//时间正序
+       });
+       for(var i =0,l=rows.length;i<l;i++){
+           console.log(rows[i].name + " | " + rows[i].time);
+        }
+}
 Vue.component('data-table', {
     template: '<table class="table table-bordered table-hover table-striped" id="table"></table>',
     props: ['scoredata'],
@@ -612,7 +633,8 @@ Vue.component('data-table', {
                 {title: '所属层级'},
                 {title: '测试目标', class: 'some-special-class'},
                 {title: '得分'},
-                {title: '时间'}
+                {title: '时间'},
+                {title:"操作"}
             ],
             rows: [],
             dtHandle: null
@@ -622,15 +644,11 @@ Vue.component('data-table', {
         scoredata: function (val, oldVal) {
             let vm = this;
             vm.rows = [];
-            // var times = 1;
-            // if (flag == 1) {
-            //     times = 0;
-            // }
-            // options.xAxis.categories = [];
             for (let i = 0; i < options.series.length; i++) {
                 options.series[i].data = [];
             }
             for (let i = 0; i < options.series.length; i++) {
+
                 for (let j = 0; j < val.length; j++) {
                     if (parseInt(layers.get(options.series[i].name)) == parseInt(val[j].accessLayer)) {
                         let date_token = val[j].recordDate.split("-");
@@ -645,20 +663,15 @@ Vue.component('data-table', {
                         options.series[i].data.sort(compare("0"));
                     }
                 }
-                // options.series[0].data[i] = [Date.UTC(year, month, day), val[i].httpAvgQoe];
-                // options.series[1].data[i] = [Date.UTC(year, month, day), val[i].youkuAvgQoe];
-                // options.series[2].data[i] = [Date.UTC(year, month, day), val[i].gameAvgQoe];
-                // options.series[3].data[i] = [Date.UTC(year, month, day), val[i].speedAvgQoe];
-                // options.series[4].data[i] = [Date.UTC(year, month, day), val[i].pingAvgQoe];
             }
             var chart = new Highcharts.Chart('container', options);
-            val.forEach(function (item) {              /*观察user是否变化,更新表格数据*/
+                val.forEach(function (item) {              /*观察user是否变化,更新表格数据*/
                 let row = [];
                 row.push(layerNames.get(item.accessLayer));
                 row.push(item.targetName);
-                row.push("" + item.score);
-                row.push("" + item.recordDate.substr(0, 10) + " " + item.recordTime + ":00")
-                // row.push(item.date);
+                row.push("" + item.score.toFixed(2));
+                row.push("" + item.recordDate.substr(0, 10) + " " + item.recordTime + ":00");
+                row.push('<a class="fontcolor" onclick="update_this(this)" id=' + item.id + ' >详情</a>'); //Todo:完成详情
                 vm.rows.push(row);
             });
             vm.dtHandle.clear();
@@ -887,3 +900,889 @@ $(document).ready(function () {
     }
     probe()
 });
+
+
+function update_this(obj) {
+    obj.type=status;
+    $('#myModal_update').modal('show');
+   if(obj.type=='1'){
+        ping(obj)
+        $('#myModal_update .modal-body').css('height','160px');
+       $('#connnection').removeAttr('style');
+        $('#quality').css('display','none');
+        $('#broswer').css('display','none');
+        $('#download').css('display','none');
+        $('#video').css('display','none');
+        $('#game').css('display','none');
+
+    }else if(obj.type=='2'){
+        quality(obj)
+        $('#myModal_update .modal-body').css('height','160px');
+        $('#quality').removeAttr('style');
+        $('#connnection').css('display','none');
+        $('#broswer').css('display','none');
+        $('#download').css('display','none');
+        $('#video').css('display','none');
+        $('#game').css('display','none');
+    }else if(obj.type=='3'){
+        broswer(obj)
+        $('#myModal_update  .modal-body').css('height','130px');
+        $('#broswer').removeAttr('style');
+        $('#quality').css('display','none');
+        $('#connnection').css('display','none');
+        $('#download').css('display','none');
+        $('#video').css('display','none');
+        $('#game').css('display','none');
+    }else if(obj.type=='4'){
+        download(obj);
+        $('#myModal_update .modal-body').css('height','160px');
+        $('#download').removeAttr('style');
+        $('#connnection').css('display','none');
+        $('#quality').css('display','none');
+        $('#broswer').css('display','none');
+        $('#video').css('display','none');
+        $('#game').css('display','none');
+    }else if(obj.type=='5'){
+        video(obj);
+        $('#myModal_update .modal-body').css('height','160px');
+        $('#video').removeAttr('style');
+        $('#download').css('display','none');
+        $('#quality').css('display','none');
+        $('#connnection').css('display','none');
+        $('#broswer').css('display','none');
+        $('#game').css('display','none');
+    }else  if(obj.type=='6'){
+        game(obj);
+        $('#myModal_update .modal-body').css('height','160px');
+        $('#game').removeAttr('style');
+        $('#video').css('display','none');
+        $('#quality').css('display','none');
+        $('#connnection').css('display','none');
+        $('#broswer').css('display','none');
+        $('#download').css('display','none');
+    }
+}
+
+//网络连通性表格
+function ping(obj) {
+    // $("#pingdata_table  tr").remove();
+    var id=obj.id;
+    var ping_table=new Vue({
+        el:'#pingdata_table',
+        data: {
+            headers: [
+                {title: '<div style="width:10px"></div>'},
+                {title: '<div style="width:110px">探针名称</div>'},
+                {title: '<div style="width:70px">综合分数</div>'},
+                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">时延标准差(ms)</div>'},
+                {title: '<div style="width:100px">时延方差(ms)</div>'},
+                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">抖动标准差(ms)</div>'},
+                {title: '<div style="width:100px">抖动方差(ms)</div>'},
+                {title: '<div style="width:100px">丢包率(%)</div>'},
+                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">时延标准差(ms)</div>'},
+                {title: '<div style="width:100px">时延方差(ms)</div>'},
+                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">抖动标准差(ms)</div>'},
+                {title: '<div style="width:100px">抖动方差(ms)</div>'},
+                {title: '<div style="width:100px">丢包率(%)</div>'},
+                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">时延标准差(ms)</div>'},
+                {title: '<div style="width:100px">时延方差(ms)</div>'},
+                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">抖动标准差(ms)</div>'},
+                {title: '<div style="width:100px">抖动方差(ms)</div>'},
+                {title: '<div style="width:100px">丢包率(%)</div>'},
+                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">时延标准差(ms)</div>'},
+                {title: '<div style="width:100px">时延方差(ms)</div>'},
+                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">抖动标准差(ms)</div>'},
+                {title: '<div style="width:100px">抖动方差(ms)</div>'},
+                {title: '<div style="width:100px">丢包率(%)</div>'},
+                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">时延标准差(ms)</div>'},
+                {title: '<div style="width:100px">时延方差(ms)</div>'},
+                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">抖动标准差(ms)</div>'},
+                {title: '<div style="width:100px">抖动方差(ms)</div>'},
+                {title: '<div style="width:100px">丢包率(%)</div>'},
+            ],
+            rows: [],
+            dtHandle: null,
+        },
+        methods: {
+            reset: function () {
+                let vm = this;
+                vm.probedata = {};
+                /*清空probedata*/
+                vm.dtHandle.clear();
+                console.log("重置");
+                vm.dtHandle.draw();
+                /*重置*/
+            },
+            currReset: function () {
+                let vm = this;
+                vm.dtHandle.clear();
+                console.log("当前页面重绘");
+                vm.dtHandle.draw(false);
+                /*当前页面重绘*/
+            },
+            redraw: function () {
+                let vm = this;
+                vm.dtHandle.clear();
+                console.log("页面重绘");
+                vm.dtHandle.draw();
+                /*重绘*/
+            }
+        },
+        mounted: function(obj) {
+            let vm = this;
+            // Instantiate the datatable and store the reference to the instance in our dtHandle element.
+            vm.dtHandle = $(this.$el).DataTable({
+                columns: vm.headers,
+                data: vm.rows,
+                createdRow: function ( row, data, index ) {
+                    var trs=$("#pingdata_table>thead tr");
+                    if(trs.length>1){
+                        return
+                    }else if (index == 0) { //生成了行之后，开始生成表头>>>
+                        var innerTh = '<tr><th rowspan="1"></th>';
+                        innerTh +='<th colspan="1"></th>';
+                        innerTh +='<th colspan="1"></th>';
+                        var columnsCount = 38;//具体情况
+                        innerTh +='<th colspan="7" style="text-align: center">ping(ICMP)</th>';
+                        innerTh +='<th colspan="7" style="text-align: center">ping(TCP)</th>';
+                        innerTh +='<th colspan="7" style="text-align: center">ping(UDP)</th>';
+                        innerTh +='<th colspan="7" style="text-align: center">Trace Route(ICMP)</th>';
+                        innerTh +='<th colspan="7" style="text-align: center">Trace Route(UDP)</th>';
+                        innerTh += '</tr>';
+                        //table的id为"id_table"
+                        document.getElementById('pingdata_table').insertRow(0);
+                        var $tr = $("#pingdata_table tr").eq(0);
+                        $tr.after(innerTh);
+                    }
+                },
+                searching: false,
+                paging: false,
+                serverSide: true,
+                info: false,
+                ordering: false, /*禁用排序功能*/
+                /*bInfo: false,*/
+                /*bLengthChange: false,*/    /*禁用Show entries*/
+                scroll: false,
+
+                sDom: 'Rfrtlip', /*显示在左下角*/
+                ajax: function (data, callback, settings) {
+                    //封装请求参数
+                    //ajax请求数据
+                    let returnData = {};
+                    // returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
+                    // returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
+                    // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
+                    returnData.data = list;//返回的数据列表
+                    // // 重新整理返回数据以匹配表格
+                    console.log(returnData);
+                    let rows = [];
+                    var i = 1;
+                    list.forEach(function (item) {
+                        if(id==item.id){
+                            let row = [];
+                            row.push(i);
+                            row.push(item.probeName);
+                            row.push(item.score.toFixed(2));
+                            row.push(item.pingIcmpDelay.toFixed(2));
+                            row.push(item.pingIcmpDelayStd.toFixed(2));
+                            row.push(item.pingIcmpDelayVar.toFixed(2));
+                            row.push(item.pingIcmpJitter.toFixed(2));
+                            row.push(item.pingIcmpJitterStd.toFixed(2));
+                            row.push(item.pingIcmpJitterVar.toFixed(2));
+                            row.push(item.pingIcmpLossRate.toFixed(2));
+                            row.push(item.pingTcpDelay.toFixed(2));
+                            row.push(item.pingTcpDelayStd.toFixed(2));
+                            row.push(item.pingTcpDelayVar.toFixed(2));
+                            row.push(item.pingTcpJitter.toFixed(2));
+                            row.push(item.pingTcpJitterStd.toFixed(2));
+                            row.push(item.pingTcpJitterVar.toFixed(2));
+                            row.push(item.pingTcpLossRate.toFixed(2));
+                            row.push(item.pingUdpDelay);
+                            row.push(item.pingUdpDelayStd);
+                            row.push(item.pingUdpDelayVar);
+                            row.push(item.pingUdpJitter);
+                            row.push(item.pingUdpJitterStd);
+                            row.push(item.pingUdpJitterVar);
+                            row.push(item.pingUdpLossRate);
+                            row.push(item.tracertIcmpDelay);
+                            row.push(item.tracertIcmpDelayStd);
+                            row.push(item.tracertIcmpDelayVar);
+                            row.push(item.tracertIcmpJitter);
+                            row.push(item.tracertIcmpJitterStd);
+                            row.push(item.tracertIcmpJitterVar);
+                            row.push(item.tracertIcmpLossRate);
+                            row.push(item.tracertTcpDelay);
+                            row.push(item.tracertTcpDelayStd);
+                            row.push(item.tracertTcpDelayVar);
+                            row.push(item.tracertTcpJitter);
+                            row.push(item.tracertTcpJitterStd);
+                            row.push(item.tracertTcpJitterVar);
+                            row.push(item.tracertTcpLossRate);
+                            rows.push(row);
+                        }
+                    });
+                    returnData.data = rows;
+                    callback(returnData);
+                    //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
+                    //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
+
+                    $("#pingdata_table").colResizable({
+                        liveDrag:true,
+                        gripInnerHtml:"<div class='grip'></div>",
+                        draggingClass:"dragging",
+                        resizeMode:'overflow',
+                    });
+                }
+            });
+        }
+
+    });
+}
+//网络质量表格
+function quality(obj) {
+    var id=obj.id;
+    var quality_table=new Vue({
+        el:'#qualitydata_table',
+        data: {
+            headers: [
+                {title: '<div style="width:10px"></div>'},
+                {title: '<div style="width:110px">探针名称</div>'},
+                {title: '<div style="width:70px">综合分数</div>'},
+                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">往向时延(ms)</div>'},
+                {title: '<div style="width:100px">返向时延(ms)</div>'},
+                {title: '<div style="width:100px">抖动平均值</div>'},
+                {title: '<div style="width:100px">往向抖动</div>'},
+                {title: '<div style="width:100px">返向抖动</div>'},
+                {title: '<div style="width:100px">丢包率</div>'},
+                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">往向时延(ms)</div>'},
+                {title: '<div style="width:100px">返向时延(ms)</div>'},
+                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">往向抖动(ms)</div>'},
+                {title: '<div style="width:100px">返向抖动(ms)</div>'},
+                {title: '<div style="width:100px">丢包率(%)</div>'},
+                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">查询成功率(%)</div>'},
+                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">查询成功率(%)</div>'},
+                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">掉线率(%)</div>'},
+                {title: '<div style="width:100px">查询成功率(%)</div>'},
+                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">认证成功率(%)</div>'},
+
+            ],
+            rows: [],
+            dtHandle: null,
+        },
+        methods: {
+            reset: function () {
+                let vm = this;
+                vm.probedata = {};
+                /*清空probedata*/
+                vm.dtHandle.clear();
+                console.log("重置");
+                vm.dtHandle.draw();
+                /*重置*/
+            },
+            currReset: function () {
+                let vm = this;
+                vm.dtHandle.clear();
+                console.log("当前页面重绘");
+                vm.dtHandle.draw(false);
+                /*当前页面重绘*/
+            },
+            redraw: function () {
+                let vm = this;
+                vm.dtHandle.clear();
+                console.log("页面重绘");
+                vm.dtHandle.draw();
+                /*重绘*/
+            }
+        },
+        mounted: function(obj) {
+            let vm = this;
+            // Instantiate the datatable and store the reference to the instance in our dtHandle element.
+            vm.dtHandle = $(this.$el).DataTable({
+                columns: vm.headers,
+                data: vm.rows,
+                createdRow: function ( row, data, index ) {
+                    var trs=$("#qualitydata_table>thead tr");
+                    if(trs.length>1){
+                        return
+                    }else if (index == 0) {
+                        var innerTh = '<tr><th rowspan="1"></th>';
+                        innerTh +='<th colspan="1"></th>';
+                        innerTh +='<th colspan="1"></th>';
+                        var columnsCount = 25;//具体情况
+                        innerTh +='<th colspan="7" style="text-align: center">Sla(TCP)</th>';
+                        innerTh +='<th colspan="7" style="text-align: center">Sla(UDP)</th>';
+                        innerTh +='<th colspan="2 " style="text-align: center">DNS</th>';
+                        innerTh +='<th colspan="2" style="text-align: center">DHCP</th>';
+                        innerTh +='<th colspan="3" style="text-align: center">ADSL</th>';
+                        innerTh +='<th colspan="2"style="text-align: center">Radius</th>';
+                        innerTh += '</tr>';
+                        //table的id为"id_table"
+                        document.getElementById('qualitydata_table').insertRow(0);
+                        var $tr = $("#qualitydata_table tr").eq(0);
+                        $tr.after(innerTh);
+                    }
+                },
+                searching: false,
+                paging: false,
+                serverSide: true,
+                info: false,
+                ordering: false, /*禁用排序功能*/
+                /*bInfo: false,*/
+                /*bLengthChange: false,*/    /*禁用Show entries*/
+                scroll: false,
+
+                sDom: 'Rfrtlip', /*显示在左下角*/
+                ajax: function (data, callback, settings) {
+                    //封装请求参数
+                    //ajax请求数据
+                    let returnData = {};
+                    // returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
+                    // returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
+                    // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
+                    returnData.data = list;//返回的数据列表
+                    // // 重新整理返回数据以匹配表格
+                    console.log(returnData);
+                    let rows = [];
+                    var i = 1;
+                    list.forEach(function (item) {
+                        if(id==item.id){
+                            let row = [];
+                            row.push(i);
+                            row.push(item.probeName);
+                            row.push(item.score.toFixed(2));
+                            row.push(item.slaTcpDelay);
+                            row.push(item.slaTcpGDelay);
+                            row.push(item.slaTcpRDelay);
+                            row.push(item.slaTcpJitter);
+                            row.push(item.slaTcpGJitter);
+                            row.push(item.slaTcpRJitter);
+                            row.push(item.slaTcpLossRate);
+                            row.push(item.slaUdpDelay);
+                            row.push(item.slaUdpGDelay);
+                            row.push(item.slaUdpRDelay);
+                            row.push(item.slaUdpJitter);
+                            row.push(item.slaUdpGJitter);
+                            row.push(item.slaUdpRJitter);
+                            row.push(item.slaUdpLossRate);
+                            row.push(item.dnsDelay);
+                            row.push(item.dnsSuccessRate);
+                            row.push(item.dhcpDelay);
+                            row.push(item.dhcpSuccessRate);
+                            row.push(item.pppoeDelay);
+                            row.push(item.pppoeDropRate);
+                            row.push(item.pppoeSuccessRate);
+                            row.push(item.radiusDelay);
+                            row.push(item.radiusSuccessRate);
+                            rows.push(row);
+                        }
+
+                    });
+                    returnData.data = rows;
+                    callback(returnData);
+                    //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
+                    //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
+
+                    $("#qualitydata_table").colResizable({
+                        liveDrag:true,
+                        gripInnerHtml:"<div class='grip'></div>",
+                        draggingClass:"dragging",
+                        resizeMode:'overflow',
+                    });
+                }
+            });
+        }
+
+    });
+}
+
+//网页浏览表格
+function broswer(obj) {
+    var id=obj.id;
+    var broswer_table=new Vue({
+        el:'#broswerdata_table',
+        data: {
+            headers: [
+                {title: '<div style="width:10px"></div>'},
+                {title: '<div style="width:110px">探针名称</div>'},
+                {title: '<div style="width:70px">综合分数</div>'},
+                {title: '<div style="width:100px">DNS时延(ms)</div>'},
+                {title: '<div style="width:100px">连接时延(ms)</div>'},
+                {title: '<div style="width:100px">首字节时延(ms)</div>'},
+                {title: '<div style="width:120px">页面文件时延(ms)</div>'},
+                {title: '<div style="width:100px">重定向时延(ms)</div>'},
+                {title: '<div style="width:100px">首屏时延(ms)</div>'},
+                {title: '<div style="width:115px">页面元素时延(ms)</div>'},
+                {title: '<div style="width:100px">下载速率(KB/S)</div>'},
+            ],
+            rows: [],
+            dtHandle: null,
+        },
+        methods: {
+            reset: function () {
+                let vm = this;
+                vm.probedata = {};
+                /*清空probedata*/
+                vm.dtHandle.clear();
+                console.log("重置");
+                vm.dtHandle.draw();
+                /*重置*/
+            },
+            currReset: function () {
+                let vm = this;
+                vm.dtHandle.clear();
+                console.log("当前页面重绘");
+                vm.dtHandle.draw(false);
+                /*当前页面重绘*/
+            },
+            redraw: function () {
+                let vm = this;
+                vm.dtHandle.clear();
+                console.log("页面重绘");
+                vm.dtHandle.draw();
+                /*重绘*/
+            }
+        },
+        mounted: function(obj) {
+            let vm = this;
+            // Instantiate the datatable and store the reference to the instance in our dtHandle element.
+            vm.dtHandle = $(this.$el).DataTable({
+                columns: vm.headers,
+                data: vm.rows,
+                searching: false,
+                paging: false,
+                serverSide: true,
+                info: false,
+                ordering: false, /*禁用排序功能*/
+                /*bInfo: false,*/
+                /*bLengthChange: false,*/    /*禁用Show entries*/
+                scroll: false,
+
+                sDom: 'Rfrtlip', /*显示在左下角*/
+                ajax: function (data, callback, settings) {
+                    //封装请求参数
+                    //ajax请求数据
+                    let returnData = {};
+                    // returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
+                    // returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
+                    // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
+                    returnData.data = list;//返回的数据列表
+                    // // 重新整理返回数据以匹配表格
+                    console.log(returnData);
+                    let rows = [];
+                    var i = 1;
+                    list.forEach(function (item) {
+                        if(id==item.id){
+                            let row = [];
+                            row.push(i);
+                            row.push(item.probeName);
+                            row.push(item.score.toFixed(2));
+                            row.push(item.webpageDnsDelay.toFixed(2));
+                            row.push(item.webpageConnDelay.toFixed(2));
+                            row.push(item.webpageHeadbyteDelay.toFixed(2));
+                            row.push(item.webpagePageFileDelay.toFixed(2));
+                            row.push(item.webpageRedirectDelay.toFixed(2));
+                            row.push(item.webpageAboveFoldDelay.toFixed(2));
+                            row.push(item.webpagePageElementDelay.toFixed(2));
+                            row.push(item.webpageDownloadRate.toFixed(2));
+                            rows.push(row);
+                        }
+
+                    });
+                    returnData.data = rows;
+                    callback(returnData);
+                    //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
+                    //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
+
+                    $("#broswerdata_table").colResizable({
+                        liveDrag:true,
+                        gripInnerHtml:"<div class='grip'></div>",
+                        draggingClass:"dragging",
+                        resizeMode:'overflow',
+                    });
+                }
+            });
+        }
+    });
+}
+//下载
+function download(obj) {
+    var id=obj.id;
+    //网页下载
+    var download_table=new Vue({
+        el:'#downloaddata_table',
+        data: {
+            headers: [
+                {title: '<div style="width:10px"></div>'},
+                {title: '<div style="width:110px">探针名称</div>'},
+                {title: '<div style="width:70px">综合分数</div>'},
+                {title: '<div style="width:100px">DNS时延(ms)</div>'},
+                {title: '<div style="width:100px">连接时延(ms)</div>'},
+                {title: '<div style="width:100px">首字节时延(ms)</div>'},
+                {title: '<div style="width:100px">下载速率(KB/S)</div>'},
+                {title: '<div style="width:100px">DNS时延(ms)</div>'},
+                {title: '<div style="width:100px">连接时延(ms)</div>'},
+                {title: '<div style="width:100px">登录时延(ms)</div>'},
+                {title: '<div style="width:100px">首字节时延(ms)</div>'},
+                {title: '<div style="width:100px">下载速率(KB/S)</div>'},
+                {title: '<div style="width:100px">DNS时延(ms)</div>'},
+                {title: '<div style="width:100px">连接时延(ms)</div>'},
+                {title: '<div style="width:100px">登录时延(ms)</div>'},
+                {title: '<div style="width:100px">首字节时延(ms)</div>'},
+                {title: '<div style="width:100px">下载速率(KB/S)</div>'},
+            ],
+            rows: [],
+            dtHandle: null,
+        },
+        methods: {
+            reset: function () {
+                let vm = this;
+                vm.probedata = {};
+                /*清空probedata*/
+                vm.dtHandle.clear();
+                console.log("重置");
+                vm.dtHandle.draw();
+                /*重置*/
+            },
+            currReset: function () {
+                let vm = this;
+                vm.dtHandle.clear();
+                console.log("当前页面重绘");
+                vm.dtHandle.draw(false);
+                /*当前页面重绘*/
+            },
+            redraw: function () {
+                let vm = this;
+                vm.dtHandle.clear();
+                console.log("页面重绘");
+                vm.dtHandle.draw();
+                /*重绘*/
+            }
+        },
+        mounted: function(obj) {
+            let vm = this;
+            // Instantiate the datatable and store the reference to the instance in our dtHandle element.
+            vm.dtHandle = $(this.$el).DataTable({
+                columns: vm.headers,
+                data: vm.rows,
+                createdRow: function ( row, data, index ) {
+                    //生成了行之后，开始生成表头>>>
+                    var trs=$("#downloaddata_table>thead tr");
+                    if(trs.length>1){
+                        return
+                    }if (index == 0) {
+                        var innerTh = '<tr><th rowspan="1"></th>';
+                        innerTh +='<th colspan="1"></th>';
+                        innerTh +='<th colspan="1"></th>';
+
+                        var columnsCount = 17;//具体情况
+                        innerTh +='<th colspan="4" style="text-align: center">WEB下载</th>';
+                        innerTh +='<th colspan="5" style="text-align: center">FTP下载</th>';
+                        innerTh +='<th colspan="5" style="text-align: center">FTP上传</th>';
+                        innerTh += '</tr>';
+                        //table的id为"id_table"
+                        document.getElementById('downloaddata_table').insertRow(0);
+                        var $tr = $("#downloaddata_table tr").eq(0);
+                        $tr.after(innerTh);
+                    }
+                },
+                searching: false,
+                paging: false,
+                serverSide: true,
+                info: false,
+                ordering: false, /*禁用排序功能*/
+                /*bInfo: false,*/
+                /*bLengthChange: false,*/    /*禁用Show entries*/
+                scroll: false,
+
+                sDom: 'Rfrtlip', /*显示在左下角*/
+                ajax: function (data, callback, settings) {
+                    //封装请求参数
+                    //ajax请求数据
+                    let returnData = {};
+                    // returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
+                    // returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
+                    // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
+                    returnData.data = list;//返回的数据列表
+                    // // 重新整理返回数据以匹配表格
+                    console.log(returnData);
+                    let rows = [];
+                    var i = 1;
+                    list.forEach(function (item) {
+                        if(id==item.id){
+                            let row = [];
+                            row.push(i);
+                            row.push(item.probeName);
+                            row.push(item.score.toFixed(2));
+                            row.push(item.webDownloadDnsDelay.toFixed(2));
+                            row.push(item.webDownloadConnDelay.toFixed(2));
+                            row.push(item.webDownloadHeadbyteDelay.toFixed(2));
+                            row.push(item.webDownloadDownloadRate.toFixed(2));
+                            row.push(item.ftpDownloadDnsDelay);
+                            row.push(item.ftpDownloadConnDelay);
+                            row.push(item.ftpDownloadLoginDelay);
+                            row.push(item.ftpDownloadHeadbyteDelay);
+                            row.push(item.ftpDownloadDownloadRate);
+                            row.push(item.ftpUploadDnsDelay);
+                            row.push(item.ftpUploadConnDelay);
+                            row.push(item.ftpUploadLoginDelay);
+                            row.push(item.ftpUploadHeadbyteDelay);
+                            row.push(item.ftpUploadUploadRate);
+                            rows.push(row);
+                        }
+
+                    });
+                    returnData.data = rows;
+                    callback(returnData);
+                    //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
+                    //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
+
+                    $("#downloaddata_table").colResizable({
+                        liveDrag:true,
+                        gripInnerHtml:"<div class='grip'></div>",
+                        draggingClass:"dragging",
+                        resizeMode:'overflow',
+                    });
+                }
+            });
+        }
+
+    })
+}
+// /在线视频
+function video(obj) {
+    var id=obj.id;
+    var video_table=new Vue({
+        el:'#videodata_table',
+        data: {
+            headers: [
+                {title: '<div style="width:10px"></div>'},
+                {title: '<div style="width:110px">探针名称</div>'},
+                {title: '<div style="width:70px">综合分数</div>'},
+                {title: '<div style="width:100px">DNS时延(ms)</div>'},
+                {title: '<div style="width:100px">连接WEB服务器时延(ms)</div>'},
+                {title: '<div style="width:120px">web页面时延(ms)</div>'},
+                {title: '<div style="width:149px">连接调度服务器时延(ms)</div>'},
+                {title: '<div style="width:135px">获取视频地址时延(ms)</div>'},
+                {title: '<div style="width:147px">连接媒体服务器时延(ms)</div>'},
+                {title: '<div style="width:110px">首帧时延(ms)</div>'},
+                {title: '<div style="width:120px">首次缓冲时延(ms)</div>'},
+                {title: '<div style="width:120px">视频加载时延(ms)</div>'},
+                {title: '<div style="width:120px">总体缓冲时间(ms)</div>'},
+                {title: '<div style="width:105px">下载速率(KB/S)</div>'},
+                {title: '<div style="width:100px">缓冲次数</div>'},
+            ],
+            rows: [],
+            dtHandle: null,
+        },
+        methods: {
+            reset: function () {
+                let vm = this;
+                vm.probedata = {};
+                /*清空probedata*/
+                vm.dtHandle.clear();
+                console.log("重置");
+                vm.dtHandle.draw();
+                /*重置*/
+            },
+            currReset: function () {
+                let vm = this;
+                vm.dtHandle.clear();
+                console.log("当前页面重绘");
+                vm.dtHandle.draw(false);
+                /*当前页面重绘*/
+            },
+            redraw: function () {
+                let vm = this;
+                vm.dtHandle.clear();
+                console.log("页面重绘");
+                vm.dtHandle.draw();
+                /*重绘*/
+            }
+        },
+        mounted: function(obj) {
+            let vm = this;
+            // Instantiate the datatable and store the reference to the instance in our dtHandle element.
+            vm.dtHandle = $(this.$el).DataTable({
+                columns: vm.headers,
+                data: vm.rows,
+                searching: false,
+                paging: false,
+                serverSide: true,
+                info: false,
+                ordering: false, /*禁用排序功能*/
+                /*bInfo: false,*/
+                /*bLengthChange: false,*/    /*禁用Show entries*/
+                scroll: false,
+
+                sDom: 'Rfrtlip', /*显示在左下角*/
+                ajax: function (data, callback, settings) {
+                    //封装请求参数
+                    //ajax请求数据
+                    let returnData = {};
+                    // returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
+                    // returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
+                    // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
+                    returnData.data = list;//返回的数据列表
+                    // // 重新整理返回数据以匹配表格
+                    console.log(returnData);
+                    let rows = [];
+                    var i = 1;
+                    list.forEach(function (item) {
+                        if(id==item.id){
+                            let row = [];
+                            row.push(i);
+                            row.push(item.probeName);
+                            row.push(item.score.toFixed(2));
+                            row.push(item.webVideoDnsDelay.toFixed(2));
+                            row.push(item.webVideoWsConnDelay.toFixed(2));
+                            row.push(item.webVideoWebPageDelay.toFixed(2));
+                            row.push(item.webVideoSsConnDelay);
+                            row.push(item.webVideoAddressDelay);
+                            row.push(item.webVideoMsConnDelay);
+                            row.push(item.webVideoHeadFrameDelay.toFixed(2));
+                            row.push(item.webVideoInitBufferDelay.toFixed(2));
+                            row.push(item.webVideoLoadDelay.toFixed(2));
+                            row.push(item.webVideoTotalBufferDelay.toFixed(2));
+                            row.push(item.webVideoDownloadRate.toFixed(2));
+                            row.push(item.webVideoBufferTime.toFixed(2));
+                            rows.push(row);
+                        }
+
+                    });
+                    returnData.data = rows;
+                    callback(returnData);
+                    //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
+                    //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
+
+                    $("#videodata_table").colResizable({
+                        liveDrag:true,
+                        gripInnerHtml:"<div class='grip'></div>",
+                        draggingClass:"dragging",
+                        resizeMode:'overflow',
+                    });
+                }
+            });
+        }
+
+    })
+}
+//在线游戏
+function game(obj) {
+    var id=obj.id;
+    var download_table=new Vue({
+        el:'#gamedata_table',
+        data: {
+            headers: [
+                {title: '<div style="width:10px"></div>'},
+                {title: '<div style="width:110px">探针名称</div>'},
+                {title: '<div style="width:70px">综合分数</div>'},
+                {title: '<div style="width:100px">DNS时延(ms)</div>'},
+                {title: '<div style="width:100px">连接时延(ms)</div>'},
+                {title: '<div style="width:100px">游戏数据包时延(ms)</div>'},
+                {title: '<div style="width:100px">游戏数据包抖动(ms)</div>'},
+                {title: '<div style="width:100px">游戏数据包丢包率(%)</div>'},
+            ],
+            rows: [],
+            dtHandle: null,
+        },
+        methods: {
+            reset: function () {
+                let vm = this;
+                vm.probedata = {};
+                /*清空probedata*/
+                vm.dtHandle.clear();
+                console.log("重置");
+                vm.dtHandle.draw();
+                /*重置*/
+            },
+            currReset: function () {
+                let vm = this;
+                vm.dtHandle.clear();
+                console.log("当前页面重绘");
+                vm.dtHandle.draw(false);
+                /*当前页面重绘*/
+            },
+            redraw: function () {
+                let vm = this;
+                vm.dtHandle.clear();
+                console.log("页面重绘");
+                vm.dtHandle.draw();
+                /*重绘*/
+            }
+        },
+        mounted: function(obj) {
+            let vm = this;
+            // Instantiate the datatable and store the reference to the instance in our dtHandle element.
+            vm.dtHandle = $(this.$el).DataTable({
+                columns: vm.headers,
+                data: vm.rows,
+                searching: false,
+                paging: false,
+                serverSide: true,
+                info: false,
+                ordering: false, /*禁用排序功能*/
+                /*bInfo: false,*/
+                /*bLengthChange: false,*/    /*禁用Show entries*/
+                scroll: false,
+
+                sDom: 'Rfrtlip', /*显示在左下角*/
+                ajax: function (data, callback, settings) {
+                    //封装请求参数
+                    //ajax请求数据
+                    let returnData = {};
+                    // returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
+                    // returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
+                    // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
+                    returnData.data = list;//返回的数据列表
+                    // // 重新整理返回数据以匹配表格
+                    console.log(returnData);
+                    let rows = [];
+                    var i = 1;
+                    list.forEach(function (item) {
+                        if(id==item.id){
+                            let row = [];
+                            row.push(i);
+                            row.push(item.probeName);
+                            row.push(item.score.toFixed(2));
+                            row.push(item.gameDnsDelay);
+                            row.push(item.gameConnDelay.toFixed(2));
+                            row.push(item.gamePacketDelay.toFixed(2));
+                            row.push(item.gamePacketJitter.toFixed(2));
+                            row.push(item.gameLossRate.toFixed(2));
+                            rows.push(row);
+                        }
+
+                    });
+                    returnData.data = rows;
+                    callback(returnData);
+                    //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
+                    //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
+
+                    $("#gamedata_table").colResizable({
+                        liveDrag:true,
+                        gripInnerHtml:"<div class='grip'></div>",
+                        draggingClass:"dragging",
+                        resizeMode:'overflow',
+                    });
+                }
+            });
+        }
+    })
+}

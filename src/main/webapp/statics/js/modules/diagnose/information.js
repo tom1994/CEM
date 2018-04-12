@@ -220,8 +220,8 @@ function PING() {
                         contentType:"application/json",
                         success: function (result) {
                             console.log(result);
-                            $('.warning').css('display', 'none')
-                            $('.loader').hide();
+                            $('#warning1').css('display', 'none')
+                            $('#loader1').hide();
                             //  console.log(result.page.list)
                             // //封装返回数据
                             let returnData = {};
@@ -237,13 +237,13 @@ function PING() {
                                 row.push(i++);
                                 row.push(item.probeName);
                                 row.push(item.port);
-                                row.push(item.delay);
-                                row.push(item.delayStd);
-                                row.push(item.delayVar);
-                                row.push(item.jitter);
-                                row.push(item.jitterStd);
-                                row.push(item.jitterVar);
-                               row.push((item.lossRate).toFixed(3)*100.00);
+                                row.push(item.delay.toFixed(2));
+                                row.push(item.delayStd.toFixed(2));
+                                row.push(item.delayVar.toFixed(2));
+                                row.push(item.jitter.toFixed(2));
+                                row.push(item.jitterStd.toFixed(2));
+                                row.push(item.jitterVar.toFixed(2));
+                               row.push((item.lossRate).toFixed(2)*100.00);
                                 row.push(item.targetName);
                                 var targetip= numberToIp(item.targetIp);
                                 row.push(targetip);
@@ -371,8 +371,8 @@ function PING() {
                         contentType:"application/json",
                         success: function (result) {
                             console.log(result)
-                            $('.warning').css('display', 'none')
-                            $('.loader').hide();
+                            $('#warning2').css('display', 'none')
+                            $('#loader2').hide();
                             //  console.log(result.page.list)
                             // //封装返回数据
                             let returnData = {};
@@ -388,12 +388,12 @@ function PING() {
                                 row.push(i++);
                                 row.push(item.probeName);
                                 row.push(item.port);
-                                row.push(item.delay);
-                                row.push(item.delayStd);
-                                row.push(item.delayVar);
-                                row.push(item.jitter);
-                                row.push(item.jitterStd);
-                                row.push(item.jitterVar);
+                                row.push(item.delay.toFixed(2));
+                                row.push(item.delayStd.toFixed(2));
+                                row.push(item.delayVar.toFixed(2));
+                                row.push(item.jitter.toFixed(2));
+                                row.push(item.jitterStd.toFixed(2));
+                                row.push(item.jitterVar.toFixed(2));
                                  row.push((item.lossRate).toFixed(3)*100.00);
                                 row.push(item.targetName);
                                 var targetip= numberToIp(item.targetIp);
@@ -521,8 +521,8 @@ function PING() {
                         contentType:"application/json",
                         success: function (result) {
                             console.log(result)
-                            $('.warning').css('display', 'none')
-                            $('.loader').hide();
+                            $('#warning3').css('display', 'none')
+                            $('#loader3').hide();
                             //  console.log(result.page.list)
                             // //封装返回数据
                             let returnData = {};
@@ -538,13 +538,13 @@ function PING() {
                                 row.push(i++);
                                 row.push(item.probeName);
                                 row.push(item.port);
-                                row.push(item.delay);
-                                row.push(item.delayStd);
-                                row.push(item.delayVar);
-                                row.push(item.jitter);
-                                row.push(item.jitterStd);
-                                row.push(item.jitterVar);
-                               row.push((item.lossRate).toFixed(3)*100.00);
+                                row.push(item.delay.toFixed(2));
+                                row.push(item.delayStd.toFixed(2));
+                                row.push(item.delayVar.toFixed(2));
+                                row.push(item.jitter.toFixed(2));
+                                row.push(item.jitterStd.toFixed(2));
+                                row.push(item.jitterVar.toFixed(2));
+                               row.push((item.lossRate).toFixed(2)*100.00);
                                 row.push(item.targetName);
                                 var targetip= numberToIp(item.targetIp);
                                 row.push(targetip);
@@ -671,8 +671,8 @@ function PING() {
                         dataType: "json",
                         contentType:"application/json",
                         success: function (result) {
-                            $('.warning').css('display', 'none')
-                            $('.loader').hide();
+                            $('#warning4').css('display', 'none')
+                            $('#loader4').hide();
                             // 封装返回数据
                             let returnData = {};
                             returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -688,20 +688,19 @@ function PING() {
                                 row.push(i++);
                                 row.push(item.probeName);
                                 row.push(item.port);
-                                row.push(item.delay);
-                                row.push(item.delayStd);
-                                row.push(item.delayVar);
-                                row.push(item.jitter);
-                                row.push(item.jitterStd);
-                                row.push(item.jitterVar);
+                                row.push(item.delay.toFixed(2));
+                                row.push(item.delayStd.toFixed(2));
+                                row.push(item.delayVar.toFixed(2));
+                                row.push(item.jitter.toFixed(2));
+                                row.push(item.jitterStd.toFixed(2));
+                                row.push(item.jitterVar.toFixed(2));
                                row.push((item.lossRate).toFixed(3)*100.00);
-                                row.push('<a class="fontcolor" style="white-space: nowrap" onclick="hopRecord_info()" id='+item.id+'>详情</a>');
+                                row.push('<a class="fontcolor" style="white-space: nowrap" onclick="hopRecord_info(this)" id='+item.id+'>详情</a>');
                                 var a = JSON.parse(item.hopRecord);
                                 var tables = $('table[id=hop_table]');
-                                debugger
                                 for (let i =0;i<a.length;i++){
                                     var j = i+1;
-                                    var trtd = $("<tr><td>"+j+"</td><td>"+a[i].hop_ip +"</td><td>"+a[i].delay+"</td><td>"+a[i].loss_rate+"</td></tr>");
+                                    var trtd = $("<tr><td hidden='hidden'>"+item.id+"</td><td>"+j+"</td><td>"+a[i].hop_ip +"</td><td>"+a[i].delay+"</td><td>"+a[i].loss_rate+"</td></tr>");
                                     trtd.appendTo(tables);
                                 }
                                 $('#hop_table>tbody tr:eq(0)').css("display",'none');
@@ -831,8 +830,8 @@ function PING() {
                         dataType: "json",
                         contentType:"application/json",
                         success: function (result) {
-                            $('.warning').css('display', 'none')
-                            $('.loader').hide();
+                            $('#warning5').css('display', 'none')
+                            $('#loader5').hide();
                             // 封装返回数据
                             let returnData = {};
                             returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -843,31 +842,33 @@ function PING() {
                             let rows = [];
                             var i = param.start + 1;
                             result.page.list.forEach(function (item) {
+
                                 //console.log(item);
                                 let row = [];
                                 row.push(i++);
                                 row.push(item.probeName);
+                                var probeName=[]
                                 row.push(item.port);
-                                row.push(item.delay);
-                                row.push(item.delayStd);
-                                row.push(item.delayVar);
-                                row.push(item.jitter);
-                                row.push(item.jitterStd);
-                                row.push(item.jitterVar);
-                               row.push((item.lossRate).toFixed(3)*100.00);
-                                row.push('<a class="fontcolor" style="white-space: nowrap" onclick="Record()" id='+item.id+'>详情</a>');
-                                var a = JSON.parse(item.hopRecord);
-                                var tables = $('table[id=Record_table]');
-                                debugger
-                                for (let i =0;i<a.length;i++){
-                                    var j = i+1;
-                                    var trtd = $("<tr><td>"+j+"</td><td>"+a[i].hop_ip +"</td><td>"+a[i].delay+"</td><td>"+a[i].loss_rate+"</td></tr>");
-                                    trtd.appendTo(tables);
-                                }
-                                $('#Record_table>tbody tr:eq(0)').css("display",'none');
-                                $('#Record_table_paginate').css('display','none');
-                                $('#Record_table_wrapper').css('height','450px');
-                                $('#Record_table_wrapper').css('overflow-y','auto');
+                                row.push(item.delay.toFixed(2));
+                                row.push(item.delayStd.toFixed(2));
+                                row.push(item.delayVar.toFixed(2));
+                                row.push(item.jitter.toFixed(2));
+                                row.push(item.jitterStd.toFixed(2));
+                                row.push(item.jitterVar.toFixed(2));
+                                row.push((item.lossRate).toFixed(2)*100.00);
+
+                                    var a = JSON.parse(item.hopRecord);
+                                    var tables = $('table[id=Record_table]');
+                                    for (let i =0;i<a.length;i++){
+                                        var j = i+1;
+                                        var trtd = $("<tr><td hidden='hidden'>"+item.id+"</td><td>"+j+"</td><td>"+a[i].hop_ip +"</td><td>"+a[i].delay+"</td><td>"+a[i].loss_rate+"</td></tr>");
+                                        trtd.appendTo(tables);
+                                    }
+                                    $('#Record_table>tbody tr:eq(0)').css("display",'none');
+                                    $('#Record_table_paginate').css('display','none');
+                                    $('#Record_table_wrapper').css('height','450px');
+                                    $('#Record_table_wrapper').css('overflow-y','auto');
+                                row.push('<a class="fontcolor" style="white-space: nowrap" onclick="Record(this)" id='+item.id+'>详情</a>');
                                 row.push(item.targetName);
                                 var targetip= numberToIp(item.targetIp);
                                 row.push(targetip);
@@ -930,7 +931,6 @@ var Routertrance= new Vue({
     },
     method:{
         gethopRecord:function (hopRecord) {
-            debugger
         }
     }
 
@@ -967,21 +967,56 @@ var Router1trance= new Vue({
     },
     method:{
         gethopRecord:function (hopRecord) {
-            debugger
         }
     }
 
 })
-function hopRecord_info() {
+function hopRecord_info(obj) {
+    let id = obj.id;
+    let tr = $("#hop_table >tbody>tr");
+    for(let i = 1;i<tr.length;i++){
+
+        if(tr[i].firstElementChild.innerText!=id){
+            tr[i].hidden = true;
+        }
+    }
+
     $('.col-md-6').css('display','none');
     $('#myModal_hopRecord').modal('show');
 }
-function Record() {
+function Record(obj) {
+
+    let id = obj.id;
+    let tr = $("#Record_table >tbody>tr");
+    for(let i = 1;i<tr.length;i++){
+
+        if(tr[i].firstElementChild.innerText!=id){
+                tr[i].hidden = true;
+        }
+    }
     $('.col-md-6').css('display','none');
     $('#myModal_Record').modal('show');
 
 
 }
+
+$('#myModal_hopRecord').on('hide.bs.modal',
+    function() {
+        let tr = $("#hop_table >tbody>tr");
+        for(let i = 1;i<tr.length;i++){
+                tr[i].hidden = false;
+
+        }
+    })
+$('#myModal_Record').on('hide.bs.modal',
+    function() {
+        let tr = $("#Record_table >tbody>tr");
+        for(let i = 1;i<tr.length;i++){
+            tr[i].hidden = false;
+
+        }
+    })
+
 
 function quality() {
     //SLA_Table
@@ -1088,8 +1123,8 @@ function quality() {
                         dataType: "json",
                         contentType:"application/json",
                         success: function (result) {
-                            $('.warning').css('display', 'none')
-                            $('.loader').hide();
+                            $('#warning6').css('display', 'none')
+                            $('#loader6').hide();
                             // 封装返回数据
                             let returnData = {};
                             returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -1105,25 +1140,25 @@ function quality() {
                                 row.push(i++);
                                 row.push(item.probeName);
                                 row.push(item.port);
-                                row.push(item.delay);
-                                row.push(item.gDelay);
-                                row.push(item.rDelay);
-                                row.push(item.delayStd);
-                                row.push(item.gDelayStd);
-                                row.push(item.rDelayStd);
-                                row.push(item.delayVar);
-                                row.push(item.gDelayVar);
-                                row.push(item.rDelayVar);
-                                row.push(item.jitter);
-                                row.push(item.gJitter);
-                                row.push(item.rJitter);
-                                row.push(item.jitterStd);
-                                row.push(item.gJitterStd);
-                                row.push(item.rJitterStd);
-                                row.push(item.jitterVar);
-                                row.push(item.gJitterVar);
-                                row.push(item.rJitterVar);
-                              row.push((item.lossRate).toFixed(3)*100.00);
+                                row.push(item.delay.toFixed(2));
+                                row.push(item.gDelay.toFixed(2));
+                                row.push(item.rDelay.toFixed(2));
+                                row.push(item.delayStd.toFixed(2));
+                                row.push(item.gDelayStd.toFixed(2));
+                                row.push(item.rDelayStd.toFixed(2));
+                                row.push(item.delayVar.toFixed(2));
+                                row.push(item.gDelayVar.toFixed(2));
+                                row.push(item.rDelayVar.toFixed(2));
+                                row.push(item.jitter.toFixed(2));
+                                row.push(item.gJitter.toFixed(2));
+                                row.push(item.rJitter.toFixed(2));
+                                row.push(item.jitterStd.toFixed(2));
+                                row.push(item.gJitterStd.toFixed(2));
+                                row.push(item.rJitterStd.toFixed(2));
+                                row.push(item.jitterVar.toFixed(2));
+                                row.push(item.gJitterVar.toFixed(2));
+                                row.push(item.rJitterVar.toFixed(2));
+                              row.push((item.lossRate).toFixed(2)*100.00);
                                 row.push(item.targetName);
                                 var targetip= numberToIp(item.targetIp);
                                 row.push(targetip);
@@ -1257,8 +1292,8 @@ function quality() {
                         dataType: "json",
                         contentType:"application/json",
                         success: function (result) {
-                            $('.warning').css('display', 'none')
-                            $('.loader').hide();
+                            $('#warning7').css('display', 'none')
+                            $('#loader7').hide();
                             // 封装返回数据
                             let returnData = {};
                             returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -1274,25 +1309,25 @@ function quality() {
                                 row.push(i++);
                                 row.push(item.probeName);
                                 row.push(item.port);
-                                row.push(item.delay);
-                                row.push(item.gDelay);
-                                row.push(item.rDelay);
-                                row.push(item.delayStd);
-                                row.push(item.gDelayStd);
-                                row.push(item.rDelayStd);
-                                row.push(item.delayVar);
-                                row.push(item.gDelayVar);
-                                row.push(item.rDelayVar);
-                                row.push(item.jitter);
-                                row.push(item.gJitter);
-                                row.push(item.rJitter);
-                                row.push(item.jitterStd);
-                                row.push(item.gJitterStd);
-                                row.push(item.rJitterStd);
-                                row.push(item.jitterVar);
-                                row.push(item.gJitterVar);
-                                row.push(item.rJitterVar);
-                              row.push((item.lossRate).toFixed(3)*100.00);
+                                row.push(item.delay.toFixed(2));
+                                row.push(item.gDelay.toFixed(2));
+                                row.push(item.rDelay.toFixed(2));
+                                row.push(item.delayStd.toFixed(2));
+                                row.push(item.gDelayStd.toFixed(2));
+                                row.push(item.rDelayStd.toFixed(2));
+                                row.push(item.delayVar.toFixed(2));
+                                row.push(item.gDelayVar.toFixed(2));
+                                row.push(item.rDelayVar.toFixed(2));
+                                row.push(item.jitter.toFixed(2));
+                                row.push(item.gJitter.toFixed(2));
+                                row.push(item.rJitter.toFixed(2));
+                                row.push(item.jitterStd.toFixed(2));
+                                row.push(item.gJitterStd.toFixed(2));
+                                row.push(item.rJitterStd.toFixed(2));
+                                row.push(item.jitterVar.toFixed(2));
+                                row.push(item.gJitterVar.toFixed(2));
+                                row.push(item.rJitterVar.toFixed(2));
+                              row.push((item.lossRate).toFixed(2)*100.00);
                                 row.push(item.targetName);
                                 var targetip= numberToIp(item.targetIp);
                                 row.push(targetip);
@@ -1411,8 +1446,8 @@ function quality() {
                         dataType: "json",
                         contentType:"application/json",
                         success: function (result) {
-                            $('.warning').css('display', 'none')
-                            $('.loader').hide();
+                            $('#warning8').css('display', 'none')
+                            $('#loader8').hide();
                             // 封装返回数据
                             let returnData = {};
                             returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -1428,8 +1463,8 @@ function quality() {
                                 row.push(i++);
                                 row.push(item.probeName);
                                 row.push(item.port);
-                                row.push(item.delay);
-                                row.push((item.successRate).toFixed(3)*100.00);
+                                row.push(item.delay.toFixed(2));
+                                row.push((item.successRate).toFixed(2)*100.00);
                                 row.push(item.targetName);
                                 var targetip= numberToIp(item.targetIp);
                                 row.push(targetip);
@@ -1547,8 +1582,8 @@ function quality() {
                         dataType: "json",
                         contentType:"application/json",
                         success: function (result) {
-                            $('.warning').css('display', 'none')
-                            $('.loader').hide();
+                            $('#warning9').css('display', 'none')
+                            $('#loader9').hide();
                             // 封装返回数据
                             let returnData = {};
                             returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -1564,7 +1599,7 @@ function quality() {
                                 row.push(i++);
                                 row.push(item.probeName);
                                 row.push(item.port);
-                                row.push(item.delay);
+                                row.push(item.delay.toFixed(2));
                                 row.push((item.successRate).toFixed(3)*100.00);
                                 row.push(item.targetName);
                                 row.push(item.targetIp);
@@ -1641,7 +1676,6 @@ function quality() {
             }
         },
         mounted: function () {
-
             let vm = this;
             // Instantiate the datatable and store the reference to the instance in our dtHandle element.
             vm.dtHandle = $(this.$el).DataTable({
@@ -1684,8 +1718,8 @@ function quality() {
                         dataType: "json",
                         contentType:"application/json",
                         success: function (result) {
-                            $('.warning').css('display', 'none')
-                            $('.loader').hide();
+                            $('#warning10').css('display', 'none')
+                            $('#loader10').hide();
                             // 封装返回数据
                             let returnData = {};
                             returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -1698,7 +1732,7 @@ function quality() {
                                 row.push(i++);
                                 row.push(item.probeName);
                                 row.push(item.port);
-                                row.push(item.delay);
+                                row.push(item.delay.toFixed(2));
                                 row.push((item.successRate).toFixed(3)*100.00);
                                 row.push(item.targetName);
                                 var targetip= numberToIp(item.targetIp);
@@ -1825,8 +1859,8 @@ function download() {
                         dataType: "json",
                         contentType:"application/json",
                         success: function (result) {
-                            $('.warning').css('display', 'none')
-                            $('.loader').hide();
+                            $('#warning11').css('display', 'none')
+                            $('#loader11').hide();
                             // 封装返回数据
                             let returnData = {};
                             returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -1842,11 +1876,11 @@ function download() {
                                 row.push(i++);
                                 row.push(item.probeName);
                                 row.push(item.port);
-                                row.push(item.dnsDelay);
-                                row.push(item.connDelay);
-                                row.push(item.loginDelay);
-                                row.push(item.headbyteDelay);
-                                row.push(item.uploadRate);
+                                row.push(item.dnsDelay.toFixed(2));
+                                row.push(item.connDelay.toFixed(2));
+                                row.push(item.loginDelay.toFixed(2));
+                                row.push(item.headbyteDelay.toFixed(2));
+                                row.push(item.uploadRate.toFixed(2));
                                 row.push(item.targetName);
                                 var targetip= numberToIp(item.targetIp);
                                 row.push(targetip);
@@ -1969,8 +2003,8 @@ function download() {
                         dataType: "json",
                         contentType:"application/json",
                         success: function (result) {
-                            $('.warning').css('display', 'none')
-                            $('.loader').hide();
+                            $('#warning12').css('display', 'none')
+                            $('#loader12').hide();
                             // 封装返回数据
                             let returnData = {};
                             returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -1986,11 +2020,11 @@ function download() {
                                 row.push(i++);
                                 row.push(item.probeName);
                                 row.push(item.port);
-                                row.push(item.dnsDelay);
-                                row.push(item.connDelay);
-                                row.push(item.loginDelay);
-                                row.push(item.headbyteDelay);
-                                row.push(item.downloadRate);
+                                row.push(item.dnsDelay.toFixed(2));
+                                row.push(item.connDelay.toFixed(2));
+                                row.push(item.loginDelay.toFixed(2));
+                                row.push(item.headbyteDelay.toFixed(2));
+                                row.push(item.downloadRate.toFixed(2));
                                 row.push(item.targetName);
                                 var targetip= numberToIp(item.targetIp);
                                 row.push(targetip);
@@ -2112,8 +2146,8 @@ function download() {
                         dataType: "json",
                         contentType:"application/json",
                         success: function (result) {
-                            $('.warning').css('display', 'none')
-                            $('.loader').hide();
+                            $('#warning13').css('display', 'none')
+                            $('#loader13').hide();
                             // 封装返回数据
                             let returnData = {};
                             returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -2129,10 +2163,10 @@ function download() {
                                 row.push(i++);
                                 row.push(item.probeName);
                                 row.push(item.port);
-                                row.push(item.dnsDelay);
-                                row.push(item.connDelay);
-                                row.push(item.headbyteDelay);
-                                row.push(item.downloadRate);
+                                row.push(item.dnsDelay.toFixed(2));
+                                row.push(item.connDelay.toFixed(2));
+                                row.push(item.headbyteDelay.toFixed(2));
+                                row.push(item.downloadRate.toFixed(2));
                                 row.push(item.targetName);
                                 var targetip= numberToIp(item.targetIp);
                                 row.push(targetip);
@@ -2261,8 +2295,8 @@ function page() {
                         dataType: "json",
                         contentType:"application/json",
                         success: function (result) {
-                            $('.warning').css('display', 'none')
-                            $('.loader').hide();
+                            $('#warning14').css('display', 'none')
+                            $('#loader14').hide();
                             //封装返回数据
                             let returnData = {};
                             returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -2278,14 +2312,14 @@ function page() {
                                 row.push(i++);
                                 row.push(item.probeName);
                                 row.push(item.port);
-                                row.push(item.dnsDelay);
-                                row.push(item.connDelay);
-                                row.push(item.headbyteDelay);
-                                row.push(item.pageFileDelay);
-                                row.push(item.redirectDelay);
-                                row.push(item.aboveFoldDelay);
-                                row.push(item.loadDelay);
-                                row.push(item.downloadRate);
+                                row.push(item.dnsDelay.toFixed(2));
+                                row.push(item.connDelay.toFixed(2));
+                                row.push(item.headbyteDelay.toFixed(2));
+                                row.push(item.pageFileDelay.toFixed(2));
+                                row.push(item.redirectDelay.toFixed(2));
+                                row.push(item.aboveFoldDelay.toFixed(2));
+                                row.push(item.loadDelay.toFixed(2));
+                                row.push(item.downloadRate.toFixed(2));
                                 row.push(item.targetName);
                                var targetip= numberToIp(item.targetIp);
                                 row.push(targetip);
@@ -2414,8 +2448,8 @@ function video() {
                         dataType: "json",
                         contentType:"application/json",
                         success: function (result) {
-                            $('.warning').css('display', 'none')
-                            $('.loader').hide();
+                            $('#warning15').css('display', 'none')
+                            $('#loader15').hide();
                             //封装返回数据
                             let returnData = {};
                             returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -2431,15 +2465,15 @@ function video() {
                                 row.push(i++);
                                 row.push(item.probeName);
                                 row.push(item.port);
-                                row.push(item.dnsDelay);
-                                row.push(item.wsConnDelay);
-                                row.push(item.webPageDelay);
-                                row.push(item.headFrameDelay);
-                                row.push(item.initBufferDelay);
-                                row.push(item.loadDelay);
-                                row.push(item.totalBufferDelay);
-                                row.push(item.bufferTime);
-                                row.push(item.downloadRate);
+                                row.push(item.dnsDelay.toFixed(2));
+                                row.push(item.wsConnDelay.toFixed(2));
+                                row.push(item.webPageDelay.toFixed(2));
+                                row.push(item.headFrameDelay.toFixed(2));
+                                row.push(item.initBufferDelay.toFixed(2));
+                                row.push(item.loadDelay.toFixed(2));
+                                row.push(item.totalBufferDelay.toFixed(2));
+                                row.push(item.bufferTime.toFixed(2));
+                                row.push(item.downloadRate.toFixed(2));
                                 row.push(item.targetName);
                                 var targetip= numberToIp(item.targetIp);
                                     row.push(targetip);
@@ -2562,8 +2596,8 @@ function game() {
                         dataType: "json",
                         contentType:"application/json",
                         success: function (result) {
-                            $('.warning').css('display', 'none')
-                            $('.loader').hide();
+                            $('#warning16').css('display', 'none')
+                            $('#loader16').hide();
                             //封装返回数据
                             let returnData = {};
                             returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -2579,10 +2613,10 @@ function game() {
                                 row.push(i++);
                                 row.push(item.probeName);
                                 row.push(item.port);
-                                row.push(item.connDelay);
-                                row.push(item.packetDelay);
-                                row.push(item.packetJitter);
-                              row.push((item.lossRate).toFixed(3)*100.00);
+                                row.push(item.connDelay.toFixed(2));
+                                row.push(item.packetDelay.toFixed(2));
+                                row.push(item.packetJitter.toFixed(2));
+                              row.push((item.lossRate).toFixed(2)*100.00);
                                 row.push(item.targetName);
                                var targetip= numberToIp(item.targetIp);
                                 row.push(targetip);

@@ -1,3 +1,4 @@
+
 /**
  * Created by Fern on 2017/11/28.
  */
@@ -4639,4 +4640,3 @@ function door_game(obj) {
         }
     })
 }
-
