@@ -12,7 +12,7 @@ var probeNames = new Array();
 var typeNames = new Array();
 var statusNames = new Array();
 var probeContent =new Array();
-// var areaContent=new Array();
+var doorContent=new Array();
 
 
 
@@ -206,27 +206,6 @@ var getArea = function (cityid) {
                     }
                 })
             }, 50);
-            setTimeout(function () {
-                $('#doorcountry .jq22').comboSelect();
-                $('.combo-dropdown').css("z-index", "3");
-                $('#doorcountry .option-item').click(function (areas) {
-                    setTimeout(function () {
-                        var a = $(areas.currentTarget)[0].innerText;
-                        countrySelected = $($(areas.currentTarget)[0]).data('value');
-                        $('#doorcountry .combo-input').val(a);
-                        $('#doorcountry .combo-select select').val(a);
-                    }, 20)
-
-                });
-                $('#doorcountry input[type=text] ').keyup(function (areas) {
-                    if (areas.keyCode == '13') {
-                        var b = $("#doorcountry .option-hover.option-selected").text();
-                        countrySelected = $("#doorcountry .option-hover.option-selected")[0].dataset.value;
-                        $('#doorcountry .combo-input').val(b);
-                        $('#doorcountry .combo-select select').val(b);
-                    }
-                })
-            }, 50);
         }
     });
 }
@@ -247,33 +226,14 @@ var getDoorArea = function (cityid) {
             }
             Doorsearch_data.areas = areaNames;
             setTimeout(function () {
-                $('#country .jq22').comboSelect();
-                $('.combo-dropdown').css("z-index", "3");
-                $('#country .option-item').click(function (areas) {
-                    setTimeout(function () {
-                        var a = $(areas.currentTarget)[0].innerText;
-                        countrySelected = $($(areas.currentTarget)[0]).data('value');
-                        $('#country .combo-input').val(a);
-                        $('#country .combo-select select').val(a);
-                    }, 20)
-
-                });
-                $('#country input[type=text] ').keyup(function (areas) {
-                    if (areas.keyCode == '13') {
-                        var b = $("#country .option-hover.option-selected").text();
-                        countrySelected = $("#country .option-hover.option-selected")[0].dataset.value;
-                        $('#country .combo-input').val(b);
-                        $('#country .combo-select select').val(b);
-                    }
-                })
-            }, 50);
-            setTimeout(function () {
                 $('#doorcountry .jq22').comboSelect();
                 $('.combo-dropdown').css("z-index", "3");
                 $('#doorcountry .option-item').click(function (areas) {
                     setTimeout(function () {
                         var a = $(areas.currentTarget)[0].innerText;
                         countrySelected = $($(areas.currentTarget)[0]).data('value');
+
+                        getProbe(countrySelected);
                         $('#doorcountry .combo-input').val(a);
                         $('#doorcountry .combo-select select').val(a);
                     }, 20)
@@ -283,6 +243,7 @@ var getDoorArea = function (cityid) {
                     if (areas.keyCode == '13') {
                         var b = $("#doorcountry .option-hover.option-selected").text();
                         countrySelected = $("#doorcountry .option-hover.option-selected")[0].dataset.value;
+                        getProbe(countrySelected);
                         $('#doorcountry .combo-input').val(b);
                         $('#doorcountry .combo-select select').val(b);
                     }
@@ -334,7 +295,7 @@ var getService = function (serviceId) {
 
 var getDoorService = function (serviceId) {
     console.log("I'm here!!!!" + serviceId);
-    debugger
+
     targetSelected = 0
     $.ajax({
         url: "../../target/infobat/" + serviceId,
@@ -444,10 +405,43 @@ function out() {/*导出事件*/
     }
 }
 
+
+function doorout() {/*导出事件*/
+    var searchJson = getFormJson($('#door_search'));
+    if ((searchJson.startDate) > (searchJson.terminalDate)) {
+        console.log("时间选择有误，请重新选择！");
+        $('#nonavailable_time').modal('show');
+    } else {
+        var search = new Object();
+        search.city_id = searchJson.city_id;
+        search.couty_id = searchJson.county_id;
+        search.service = searchJson.service_type;
+        search.target_id = searchJson.target;
+        if (searchJson.startDate.length != 0 && searchJson.terminalDate.length != 0) {
+            var ava_start = searchJson.startDate.substr(0, 10);
+            var ava_terminal = searchJson.terminalDate.substr(0, 10);
+            var startTime = searchJson.startDate.substr(11, 15);
+            var terminalTime = searchJson.terminalDate.substr(11, 15);
+            search.ava_start = ava_start;
+            search.ava_terminal = ava_terminal;
+            search.starTime = startTime;
+            search.terminalTime = terminalTime;
+        } else {
+            search.ava_start = today.Format("yyyy-MM-dd");
+            search.ava_terminal = (new Date()).Format("yyyy-MM-dd");
+        }
+        var schedulepolicy = JSON.stringify(search);
+        console.log(schedulepolicy);
+
+        document.getElementById("door_output").href = encodeURI('../../recordhourtracert/doordownload/' + schedulepolicy);
+        document.getElementById("door_output").click();
+    }
+}
+
+
 //区域排名详情
 //TODO：获取区域排名并展示
 function areaupdate_this(obj) {     /*监听修改触发事件*/
-    debugger
     $('#Section2').showLoading();
     countyId = parseInt(obj.id);
     var searchJson = getFormJson($('#areasearch'));
@@ -488,7 +482,7 @@ function areaupdate_this(obj) {     /*监听修改触发事件*/
             contentType: "application/json", /*必须要,不可少*/
             success: function (result) {
                 console.log('收到数据',new Date(),result);
-                debugger
+
                 if(result!=undefined){
                     $('#Section2').hideLoading();
                     var  areaContent=result.scoreList;
@@ -645,7 +639,7 @@ var search_door_service = new Vue({
     // 在 `methods` 对象中定义方法
     methods: {
         DoorListsearch: function () {
-            debugger
+
             var searchJson = getFormJson($('#door_search'));
             if ((searchJson.startDate) > (searchJson.terminalDate)) {
                 console.log("时间选择有误，请重新选择！");
@@ -697,7 +691,7 @@ var search_door_service = new Vue({
 function getFormJson(form) {      /*将表单对象变为json对象*/
     var a = $(form).serializeArray();
     var o = {};
-    debugger
+
     if (form.selector == '#probesearch') {
         if (citySelected != 0) {
             a[2] = {};
@@ -748,14 +742,14 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
             a[3].value = countrySelected;
         }
         if (serviceSelected != -1) {
-            a[2] = {};
-            a[2].name = "service_type";
-            a[2].value = JSON.stringify(serviceSelected);
+            a[4] = {};
+            a[4].name = "service_type";
+            a[4].value = JSON.stringify(serviceSelected);
         }
         if (targetSelected != 0) {
-            a[3] = {};
-            a[3].name = "target";
-            a[3].value = targetSelected;
+            a[5] = {};
+            a[5].name = "target";
+            a[5].value = targetSelected;
         }
     }
 
@@ -1061,7 +1055,7 @@ var areatable = new Vue({
                             row.push(item.targetName);
                             row.push(item.score.toFixed(2));
                             row.push('<a class="fontcolor" onclick="areaupdate_this(this)"  id=' + item.countyId + ' type=' + st.get(item.serviceType) + ' >详情</a>&nbsp;' +
-                                '<a class="fontcolor" onclick="delete_this(this)" id=' + item.id + '>诊断</a>'); //Todo:完成详情与诊断
+                                '<a class="fontcolor" onclick="diagnose(this)" id=' + item.id + '>诊断</a>'); //Todo:完成详情与诊断
                             rows.push(row);
                         });
                         returnData.data = rows;
@@ -1185,7 +1179,6 @@ var doortable = new Vue({
                     dataType: "json",
                     success: function (result) {
                         console.log(result);
-
                         //封装返回数据
                         let returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -1195,6 +1188,7 @@ var doortable = new Vue({
                         // 重新整理返回数据以匹配表格
                         let rows = [];
                         var i = param.start + 1;
+                        doorContent=result.page.list
                         result.page.list.forEach(function (item) {
                             let row = [];
                             row.push(i++);
@@ -1204,8 +1198,8 @@ var doortable = new Vue({
                             row.push(item.probeName);
                             row.push(st.get(item.serviceType));
                             row.push(item.score.toFixed(2));
-                            row.push('<a class="fontcolor" onclick="areaupdate_this(this)"  id=' + item.id + ' type=' + st.get(item.serviceType) + ' >详情</a>&nbsp;' +
-                                '<a class="fontcolor" onclick="delete_this(this)" id=' + item.id + '>诊断</a>'); //Todo:完成详情与诊断
+                            row.push('<a class="fontcolor" onclick="doorupdate_this(this)"  id=' + item.id + ' type=' + st.get(item.serviceType) + ' >详情</a>&nbsp;' +
+                                '<a class="fontcolor" onclick="diagnose(this)" id=' + item.id + '>诊断</a>'); //Todo:完成详情与诊断
                             rows.push(row);
                         });
                         returnData.data = rows;
@@ -1288,7 +1282,9 @@ $(document).ready(function () {
                         var a = $(city.currentTarget)[0].innerText;
                         clearArea(a);
                         citySelected = $($(city.currentTarget)[0]).data('value');
+
                         getDoorArea(citySelected);
+                        getProbeCity(citySelected);
                         $('div#doorcity .combo-input').val(a);
                         $('div#doorcity .combo-select select').val(a);
                     }, 30);
@@ -1300,7 +1296,8 @@ $(document).ready(function () {
                         var c = ($("#doorcity .option-hover.option-selected"));
                         var c = c[0].dataset
                         citySelected = c.value;
-                        getArea(citySelected);
+                        getDoorArea(citySelected);
+                        getProbeCity(citySelected);
                         $('#doorcity .combo-input').val(b);
                         $('#doorcity .combo-select select').val(b);
                     }
@@ -1310,6 +1307,41 @@ $(document).ready(function () {
         }
     });
 
+    probeSelected=0;
+    $.ajax({
+        url: "../../cem/probe/list",//探针列表
+        type: "POST",
+        cache: false,  //禁用缓存
+        dataType: "json",
+        contentType: "application/json",
+        success: function (result) {
+            var probes = [];
+            for (var i = 0; i < result.page.list.length; i++) {
+                probes[i] = {message: result.page.list[i]}
+            }
+            Doorsearch_data.probe = probes;
+            setTimeout(function () {
+                $('#probe .jq22').comboSelect();
+                $('.combo-dropdown').css("z-index","3");
+                $('#probe .option-item').click(function (probe) {
+                    setTimeout(function () {
+                        var a = $(probe.currentTarget)[0].innerText;
+                        probeSelected = $($(probe.currentTarget)[0]).data('value');
+                        $('#probe .combo-input').val(a);
+                        $('#probe .combo-select select').val(a);
+                    }, 30);
+                });
+                $('#probe input[type=text] ').keyup(function (probe) {
+                    if( probe.keyCode=='13'){
+                        var b = $("#probe .option-hover.option-selected").text();
+                        probeSelected=$("#probe .option-hover.option-selected")[0].dataset.value;
+                        $('#probe .combo-input').val(b);
+                        $('#probe .combo-select select').val(b);
+                    }
+                })
+            },50);
+        }
+    });
     function clearArea(a) {
         if (a == "所有地市") {
             $('#country .combo-input').val("所有区县");
@@ -1434,6 +1466,90 @@ $(document).ready(function () {
         }
     });
 })
+
+//探针
+var getProbe = function (countyid) {
+
+    probeSelected = 0;
+    $.ajax({//探针信息
+        url: "../../cem/probe/info/" + countyid,
+        type: "POST",
+        cache: false,  //禁用缓存
+        dataType: "json",
+        contentType: "application/json",
+        success: function (result) {
+            var probes = [];
+            for (var i = 0; i < result.probe.length; i++) {
+                probes[i] = {message: result.probe[i]}
+            }
+            Doorsearch_data.probe = probes;
+            setTimeout(function () {
+                $('#probe .jq22').comboSelect();
+                $('.combo-dropdown').css("z-index","3");
+                $('#probe .option-item').click(function (probe) {
+                    setTimeout(function () {
+                        var a = $(probe.currentTarget)[0].innerText;
+                        probeSelected = $($(probe.currentTarget)[0]).data('value');
+                        $('#probe .combo-input').val(a);
+                        $('#probe .combo-select select').val(a);
+                    }, 30);
+                });
+                $('#probe input[type=text] ').keyup(function (probe) {
+                    if( probe.keyCode=='13'){
+                        var b = $("#probe .option-hover.option-selected").text();
+                        probeSelected=$("#probe .option-hover.option-selected")[0].dataset.value;
+                        $('#probe .combo-input').val(b);
+                        $('#probe .combo-select select').val(b);
+                    }
+
+                })
+            }, 50);
+        }
+    });
+};
+//城市探针
+var getProbeCity = function (cityid) {
+
+    probeSelected = 0;
+    if (cityid != "" && cityid != null){
+        $.ajax({//探针信息
+            url: "../../cem/probe/infoByCity/" + cityid,
+            type: "POST",
+            cache: false,  //禁用缓存
+            dataType: "json",
+            contentType: "application/json",
+            success: function (result) {
+                var probes = [];
+                for (var i = 0; i < result.probe.length; i++) {
+                    probes[i] = {message: result.probe[i]}
+                }
+                Doorsearch_data.probe = probes;
+                setTimeout(function () {
+                    $('#probe .jq22').comboSelect();
+                    $('.combo-dropdown').css("z-index","3");
+                    $('#probe .option-item').click(function (probe) {
+                        setTimeout(function () {
+                            var a = $(probe.currentTarget)[0].innerText;
+                            probeSelected = $($(probe.currentTarget)[0]).data('value');
+                            $('#probe .combo-input').val(a);
+                            $('#probe .combo-select select').val(a);
+                        }, 30);
+                    });
+                    $('#probe input[type=text] ').keyup(function (probe) {
+                        if( probe.keyCode=='13'){
+                            var b = $("#probe .option-hover.option-selected").text();
+                            probeSelected=$("#probe .option-hover.option-selected")[0].dataset.value;
+                            $('#probe .combo-input').val(b);
+                            $('#probe .combo-select select').val(b);
+                        }
+
+                    })
+                }, 50);
+            }
+        });
+    }
+
+};
 
 function diagnose(obj) {
     var id=parseInt(obj.id);
@@ -3496,4 +3612,1031 @@ function area_game(obj,areaContent) {
     })
 }
 
+//门户排名
+function doorupdate_this(obj) {
+    $('#door_update').modal('show');
+    if(obj.type=='综合业务'){
+        door_information(obj);
+        $('#door_update .modal-body').css('height','110px');
+        $('#doorconnnection').css('display','none');
+        $('#doorquality').css('display','none');
+        $('#doorbroswer').css('display','none');
+        $('#doordownload').css('display','none');
+        $('#doorvideo').css('display','none');
+        $('#doorgame').css('display','none');
+    }else if(obj.type=='网络连通性业务'){
+        door_ping(obj)
+        $('#door_update .modal-body').css('height','160px');
+        $('#doorinformation').css('display','none');
+        $('#doorconnnection').removeAttr('style');
+        $('#doorquality').css('display','none');
+        $('#doorbroswer').css('display','none');
+        $('#doordownload').css('display','none');
+        $('#doorvideo').css('display','none');
+        $('#doorgame').css('display','none');
+
+    }else if(obj.type=='网络层质量业务'){
+        door_quality(obj)
+        $('#door_update .modal-body').css('height','160px');
+        $('#doorquality').removeAttr('style');
+        $('#doorinformation').css('display','none');
+        $('#doorconnnection').css('display','none');
+        $('#doorbroswer').css('display','none');
+        $('#doordownload').css('display','none');
+        $('#doorvideo').css('display','none');
+        $('#doorgame').css('display','none');
+    }else if(obj.type=='网页浏览业务'){
+        door_broswer(obj)
+        $('#door_update  .modal-body').css('height','130px');
+        $('#doorbroswer').removeAttr('style');
+        $('#doorquality').css('display','none');
+        $('#doorinformation').css('display','none');
+        $('#doorconnnection').css('display','none');
+        $('#doordownload').css('display','none');
+        $('#doorvideo').css('display','none');
+        $('#doorgame').css('display','none');
+    }else if(obj.type=='文件下载业务'){
+        door_download(obj);
+        $('#door_update .modal-body').css('height','160px');
+        $('#doordownload').removeAttr('style');
+        $('#doorinformation').css('display','none');
+        $('#doorconnnection').css('display','none');
+        $('#doorquality').css('display','none');
+        $('#doorbroswer').css('display','none');
+        $('#doorvideo').css('display','none');
+        $('#doorgame').css('display','none');
+    }else if(obj.type=='在线视频业务'){
+        door_video(obj);
+        $('#door_update .modal-body').css('height','160px');
+        $('#doorvideo').removeAttr('style');
+        $('#doordownload').css('display','none');
+        $('#doorquality').css('display','none');
+        $('#doorinformation').css('display','none');
+        $('#doorconnnection').css('display','none');
+        $('#doorbroswer').css('display','none');
+        $('#doorgame').css('display','none');
+    }else  if(obj.type=='网络游戏业务'){
+        door_game(obj);
+        $('#door_update .modal-body').css('height','160px');
+        $('#doorgame').removeAttr('style');
+        $('#doorvideo').css('display','none');
+        $('#doorquality').css('display','none');
+        $('#doorinformation').css('display','none');
+        $('#doorconnnection').css('display','none');
+        $('#doorbroswer').css('display','none');
+        $('#doordownload').css('display','none');
+
+    }
+
+}
+//综合性表格
+function door_information(obj) {
+    var id=obj.id;
+    var information_table=new Vue({
+        el:'#doorinformation_table',
+        data: {
+            headers: [
+                {title: '<div style="width:10px"></div>'},
+                {title: '<div style="width:110px">探针名称</div>'},
+                {title: '<div style="width:70px">综合分数</div>'},
+                {title: '<div style="width:100px">网络连通性分数</div>'},
+                {title: '<div style="width:100px">网络质量分数</div>'},
+                {title: '<div style="width:100px">网页浏览分数</div>'},
+                {title: '<div style="width:100px">文件下载分数</div>'},
+                {title: '<div style="width:100px">在线视频分数</div>'},
+                {title: '<div style="width:100px">网络游戏分数</div>'},
+
+            ],
+            rows: [],
+            dtHandle: null,
+        },
+        methods: {
+            reset: function () {
+                let vm = this;
+                vm.probedata = {};
+                /*清空probedata*/
+                vm.dtHandle.clear();
+                console.log("重置");
+                vm.dtHandle.draw();
+                /*重置*/
+            },
+            currReset: function () {
+                let vm = this;
+                vm.dtHandle.clear();
+                console.log("当前页面重绘");
+                vm.dtHandle.draw(false);
+                /*当前页面重绘*/
+            },
+            redraw: function () {
+                let vm = this;
+                vm.dtHandle.clear();
+                console.log("页面重绘");
+                vm.dtHandle.draw();
+                /*重绘*/
+            }
+        },
+        mounted: function(obj) {
+            let vm = this;
+            // Instantiate the datatable and store the reference to the instance in our dtHandle element.
+            vm.dtHandle = $(this.$el).DataTable({
+                columns: vm.headers,
+                data: vm.rows,
+                searching: false,
+                paging: false,
+                serverSide: true,
+                info: false,
+                ordering: false, /*禁用排序功能*/
+                /*bInfo: false,*/
+                /*bLengthChange: false,*/    /*禁用Show entries*/
+                scroll: false,
+
+                sDom: 'Rfrtlip', /*显示在左下角*/
+                ajax: function (data, callback, settings) {
+                    //封装请求参数
+
+                    //ajax请求数据
+                    let returnData = {};
+                    // returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
+                    // returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
+                    // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
+                    returnData.data = probeContent;//返回的数据列表
+                    // // 重新整理返回数据以匹配表格
+                    console.log(returnData);
+                    let rows = [];
+                    var i = 1;
+                    doorContent.forEach(function (item) {
+                        if(id==item.id){
+                            let row = [];
+                            row.push(i);
+                            row.push(item.probeName);
+                            row.push(item.score.toFixed(2));
+                            if(item.connectionScore!=undefined){
+                                row.push(item.connectionScore.toFixed(2));
+                            }else{
+                                row.push(item.connectionScore);
+                            }
+                            if(item.qualityScore!=undefined){
+                                row.push(item.qualityScore.toFixed(2));
+                            }else{
+                                row.push(item.qualityScore);
+                            }if(item.broswerScore!=undefined){
+                                row.push(item.broswerScore.toFixed(2));
+                            }else{
+                                row.push(item.broswerScore);
+                            }if(item.downloadScore!=undefined){
+                                row.push(item.downloadScore.toFixed(2));
+                            }else{
+                                row.push(item.downloadScore);
+                            }if(item.videoScore!=undefined){
+                                row.push(item.videoScore.toFixed(2));
+                            }else{
+                                row.push(item.videoScore);
+                            }if(item.gameScore!=undefined){
+                                row.push(item.gameScore.toFixed(2));
+                            }else{
+                                row.push(item.gameScore);
+                            }
+                            rows.push(row);
+                        }
+
+
+                    });
+                    returnData.data = rows;
+                    callback(returnData);
+                    //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
+                    //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
+
+                    $("#information_table").colResizable({
+                        liveDrag:true,
+                        gripInnerHtml:"<div class='grip'></div>",
+                        draggingClass:"dragging",
+                        resizeMode:'overflow',
+                    });
+                }
+            });
+        }
+    })
+}
+//网络连通性表格
+function door_ping(obj) {
+    var id=obj.id;
+    var ping_table=new Vue({
+        el:'#doorpingdata_table',
+        data: {
+            headers: [
+                {title: '<div style="width:10px"></div>'},
+                {title: '<div style="width:110px">探针名称</div>'},
+                {title: '<div style="width:70px">综合分数</div>'},
+                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">时延标准差(ms)</div>'},
+                {title: '<div style="width:100px">时延方差(ms)</div>'},
+                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">抖动标准差(ms)</div>'},
+                {title: '<div style="width:100px">抖动方差(ms)</div>'},
+                {title: '<div style="width:100px">丢包率(%)</div>'},
+                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">时延标准差(ms)</div>'},
+                {title: '<div style="width:100px">时延方差(ms)</div>'},
+                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">抖动标准差(ms)</div>'},
+                {title: '<div style="width:100px">抖动方差(ms)</div>'},
+                {title: '<div style="width:100px">丢包率(%)</div>'},
+                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">时延标准差(ms)</div>'},
+                {title: '<div style="width:100px">时延方差(ms)</div>'},
+                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">抖动标准差(ms)</div>'},
+                {title: '<div style="width:100px">抖动方差(ms)</div>'},
+                {title: '<div style="width:100px">丢包率(%)</div>'},
+                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">时延标准差(ms)</div>'},
+                {title: '<div style="width:100px">时延方差(ms)</div>'},
+                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">抖动标准差(ms)</div>'},
+                {title: '<div style="width:100px">抖动方差(ms)</div>'},
+                {title: '<div style="width:100px">丢包率(%)</div>'},
+                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">时延标准差(ms)</div>'},
+                {title: '<div style="width:100px">时延方差(ms)</div>'},
+                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">抖动标准差(ms)</div>'},
+                {title: '<div style="width:100px">抖动方差(ms)</div>'},
+                {title: '<div style="width:100px">丢包率(%)</div>'},
+            ],
+            rows: [],
+            dtHandle: null,
+        },
+        methods: {
+            reset: function () {
+                let vm = this;
+                vm.probedata = {};
+                /*清空probedata*/
+                vm.dtHandle.clear();
+                console.log("重置");
+                vm.dtHandle.draw();
+                /*重置*/
+            },
+            currReset: function () {
+                let vm = this;
+                vm.dtHandle.clear();
+                console.log("当前页面重绘");
+                vm.dtHandle.draw(false);
+                /*当前页面重绘*/
+            },
+            redraw: function () {
+                let vm = this;
+                vm.dtHandle.clear();
+                console.log("页面重绘");
+                vm.dtHandle.draw();
+                /*重绘*/
+            }
+        },
+        mounted: function(obj) {
+            let vm = this;
+            // Instantiate the datatable and store the reference to the instance in our dtHandle element.
+            vm.dtHandle = $(this.$el).DataTable({
+                columns: vm.headers,
+                data: vm.rows,
+                createdRow: function ( row, data, index ) {
+                    var trs=$("#doorpingdata_table>thead tr");
+                    if(trs.length>1){
+                        return
+                    }else if (index == 0) { //生成了行之后，开始生成表头>>>
+                        var innerTh = '<tr><th rowspan="1"></th>';
+                        innerTh +='<th colspan="1"></th>';
+                        innerTh +='<th colspan="1"></th>';
+                        var columnsCount = 38;//具体情况
+                        innerTh +='<th colspan="7" style="text-align: center">ping(ICMP)</th>';
+                        innerTh +='<th colspan="7" style="text-align: center">ping(TCP)</th>';
+                        innerTh +='<th colspan="7" style="text-align: center">ping(UDP)</th>';
+                        innerTh +='<th colspan="7" style="text-align: center">Trace Route(ICMP)</th>';
+                        innerTh +='<th colspan="7" style="text-align: center">Trace Route(UDP)</th>';
+                        innerTh += '</tr>';
+                        //table的id为"id_table"
+                        document.getElementById('doorpingdata_table').insertRow(0);
+                        var $tr = $("#doorpingdata_table tr").eq(0);
+                        $tr.after(innerTh);
+                    }
+                },
+                searching: false,
+                paging: false,
+                serverSide: true,
+                info: false,
+                ordering: false, /*禁用排序功能*/
+                /*bInfo: false,*/
+                /*bLengthChange: false,*/    /*禁用Show entries*/
+                scroll: false,
+
+                sDom: 'Rfrtlip', /*显示在左下角*/
+                ajax: function (data, callback, settings) {
+                    //封装请求参数
+                    //ajax请求数据
+                    let returnData = {};
+                    // returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
+                    // returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
+                    // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
+                    returnData.data = probeContent;//返回的数据列表
+                    // // 重新整理返回数据以匹配表格
+                    console.log(returnData);
+                    let rows = [];
+                    var i = 1;
+                    doorContent.forEach(function (item) {
+                        if(id==item.id){
+                            let row = [];
+                            row.push(i);
+                            row.push(item.probeName);
+                            row.push(item.score.toFixed(2));
+                            row.push(item.pingIcmpDelay.toFixed(2));
+                            row.push(item.pingIcmpDelayStd.toFixed(2));
+                            row.push(item.pingIcmpDelayVar.toFixed(2));
+                            row.push(item.pingIcmpJitter.toFixed(2));
+                            row.push(item.pingIcmpJitterStd.toFixed(2));
+                            row.push(item.pingIcmpJitterVar.toFixed(2));
+                            row.push(item.pingIcmpLossRate.toFixed(2));
+                            row.push(item.pingTcpDelay.toFixed(2));
+                            row.push(item.pingTcpDelayStd.toFixed(2));
+                            row.push(item.pingTcpDelayVar.toFixed(2));
+                            row.push(item.pingTcpJitter.toFixed(2));
+                            row.push(item.pingTcpJitterStd.toFixed(2));
+                            row.push(item.pingTcpJitterVar.toFixed(2));
+                            row.push(item.pingTcpLossRate.toFixed(2));
+                            row.push(item.pingUdpDelay);
+                            row.push(item.pingUdpDelayStd);
+                            row.push(item.pingUdpDelayVar);
+                            row.push(item.pingUdpJitter);
+                            row.push(item.pingUdpJitterStd);
+                            row.push(item.pingUdpJitterVar);
+                            row.push(item.pingUdpLossRate);
+                            row.push(item.tracertIcmpDelay);
+                            row.push(item.tracertIcmpDelayStd);
+                            row.push(item.tracertIcmpDelayVar);
+                            row.push(item.tracertIcmpJitter);
+                            row.push(item.tracertIcmpJitterStd);
+                            row.push(item.tracertIcmpJitterVar);
+                            row.push(item.tracertIcmpLossRate);
+                            row.push(item.tracertTcpDelay);
+                            row.push(item.tracertTcpDelayStd);
+                            row.push(item.tracertTcpDelayVar);
+                            row.push(item.tracertTcpJitter);
+                            row.push(item.tracertTcpJitterStd);
+                            row.push(item.tracertTcpJitterVar);
+                            row.push(item.tracertTcpLossRate);
+                            rows.push(row);
+                        }
+                    });
+                    returnData.data = rows;
+                    callback(returnData);
+                    //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
+                    //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
+
+                    $("#doorpingdata_table").colResizable({
+                        liveDrag:true,
+                        gripInnerHtml:"<div class='grip'></div>",
+                        draggingClass:"dragging",
+                        resizeMode:'overflow',
+                    });
+                }
+            });
+        }
+
+    });
+}
+//网络质量表格
+function door_quality(obj) {
+    var id=obj.id;
+    var quality_table=new Vue({
+        el:'#doorqualitydata_table',
+        data: {
+            headers: [
+                {title: '<div style="width:10px"></div>'},
+                {title: '<div style="width:110px">探针名称</div>'},
+                {title: '<div style="width:70px">综合分数</div>'},
+                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">往向时延(ms)</div>'},
+                {title: '<div style="width:100px">返向时延(ms)</div>'},
+                {title: '<div style="width:100px">抖动平均值</div>'},
+                {title: '<div style="width:100px">往向抖动</div>'},
+                {title: '<div style="width:100px">返向抖动</div>'},
+                {title: '<div style="width:100px">丢包率</div>'},
+                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">往向时延(ms)</div>'},
+                {title: '<div style="width:100px">返向时延(ms)</div>'},
+                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">往向抖动(ms)</div>'},
+                {title: '<div style="width:100px">返向抖动(ms)</div>'},
+                {title: '<div style="width:100px">丢包率(%)</div>'},
+                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">查询成功率(%)</div>'},
+                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">查询成功率(%)</div>'},
+                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">掉线率(%)</div>'},
+                {title: '<div style="width:100px">查询成功率(%)</div>'},
+                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">认证成功率(%)</div>'},
+
+            ],
+            rows: [],
+            dtHandle: null,
+        },
+        methods: {
+            reset: function () {
+                let vm = this;
+                vm.probedata = {};
+                /*清空probedata*/
+                vm.dtHandle.clear();
+                console.log("重置");
+                vm.dtHandle.draw();
+                /*重置*/
+            },
+            currReset: function () {
+                let vm = this;
+                vm.dtHandle.clear();
+                console.log("当前页面重绘");
+                vm.dtHandle.draw(false);
+                /*当前页面重绘*/
+            },
+            redraw: function () {
+                let vm = this;
+                vm.dtHandle.clear();
+                console.log("页面重绘");
+                vm.dtHandle.draw();
+                /*重绘*/
+            }
+        },
+        mounted: function(obj) {
+            let vm = this;
+            // Instantiate the datatable and store the reference to the instance in our dtHandle element.
+            vm.dtHandle = $(this.$el).DataTable({
+                columns: vm.headers,
+                data: vm.rows,
+                createdRow: function ( row, data, index ) {
+                    var trs=$("#doorqualitydata_table>thead tr");
+                    if(trs.length>1){
+                        return
+                    }else if (index == 0) {
+                        var innerTh = '<tr><th rowspan="1"></th>';
+                        innerTh +='<th colspan="1"></th>';
+                        innerTh +='<th colspan="1"></th>';
+                        var columnsCount = 25;//具体情况
+                        innerTh +='<th colspan="7" style="text-align: center">Sla(TCP)</th>';
+                        innerTh +='<th colspan="7" style="text-align: center">Sla(UDP)</th>';
+                        innerTh +='<th colspan="2 " style="text-align: center">DNS</th>';
+                        innerTh +='<th colspan="2" style="text-align: center">DHCP</th>';
+                        innerTh +='<th colspan="3" style="text-align: center">ADSL</th>';
+                        innerTh +='<th colspan="2"style="text-align: center">Radius</th>';
+                        innerTh += '</tr>';
+                        //table的id为"id_table"
+                        document.getElementById('doorqualitydata_table').insertRow(0);
+                        var $tr = $("#doorqualitydata_table tr").eq(0);
+                        $tr.after(innerTh);
+                    }
+                },
+                searching: false,
+                paging: false,
+                serverSide: true,
+                info: false,
+                ordering: false, /*禁用排序功能*/
+                /*bInfo: false,*/
+                /*bLengthChange: false,*/    /*禁用Show entries*/
+                scroll: false,
+
+                sDom: 'Rfrtlip', /*显示在左下角*/
+                ajax: function (data, callback, settings) {
+                    //封装请求参数
+                    //ajax请求数据
+                    let returnData = {};
+                    // returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
+                    // returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
+                    // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
+                    returnData.data = probeContent;//返回的数据列表
+                    // // 重新整理返回数据以匹配表格
+                    console.log(returnData);
+                    let rows = [];
+                    var i = 1;
+                    doorContent.forEach(function (item) {
+                        if(id==item.id){
+                            let row = [];
+                            row.push(i);
+                            row.push(item.probeName);
+                            row.push(item.score.toFixed(2));
+                            row.push(item.slaTcpDelay);
+                            row.push(item.slaTcpGDelay);
+                            row.push(item.slaTcpRDelay);
+                            row.push(item.slaTcpJitter);
+                            row.push(item.slaTcpGJitter);
+                            row.push(item.slaTcpRJitter);
+                            row.push(item.slaTcpLossRate);
+                            row.push(item.slaUdpDelay);
+                            row.push(item.slaUdpGDelay);
+                            row.push(item.slaUdpRDelay);
+                            row.push(item.slaUdpJitter);
+                            row.push(item.slaUdpGJitter);
+                            row.push(item.slaUdpRJitter);
+                            row.push(item.slaUdpLossRate);
+                            row.push(item.dnsDelay);
+                            row.push(item.dnsSuccessRate);
+                            row.push(item.dhcpDelay);
+                            row.push(item.dhcpSuccessRate);
+                            row.push(item.pppoeDelay);
+                            row.push(item.pppoeDropRate);
+                            row.push(item.pppoeSuccessRate);
+                            row.push(item.radiusDelay);
+                            row.push(item.radiusSuccessRate);
+                            rows.push(row);
+                        }
+
+                    });
+                    returnData.data = rows;
+                    callback(returnData);
+                    //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
+                    //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
+
+                    $("#doorqualitydata_table").colResizable({
+                        liveDrag:true,
+                        gripInnerHtml:"<div class='grip'></div>",
+                        draggingClass:"dragging",
+                        resizeMode:'overflow',
+                    });
+                }
+            });
+        }
+
+    });
+}
+
+//网页浏览表格
+function door_broswer(obj) {
+    var id=obj.id;
+    var broswer_table=new Vue({
+        el:'#doorbroswerdata_table',
+        data: {
+            headers: [
+                {title: '<div style="width:10px"></div>'},
+                {title: '<div style="width:110px">探针名称</div>'},
+                {title: '<div style="width:70px">综合分数</div>'},
+                {title: '<div style="width:100px">DNS时延(ms)</div>'},
+                {title: '<div style="width:100px">连接时延(ms)</div>'},
+                {title: '<div style="width:100px">首字节时延(ms)</div>'},
+                {title: '<div style="width:120px">页面文件时延(ms)</div>'},
+                {title: '<div style="width:100px">重定向时延(ms)</div>'},
+                {title: '<div style="width:100px">首屏时延(ms)</div>'},
+                {title: '<div style="width:115px">页面元素时延(ms)</div>'},
+                {title: '<div style="width:100px">下载速率(KB/S)</div>'},
+            ],
+            rows: [],
+            dtHandle: null,
+        },
+        methods: {
+            reset: function () {
+                let vm = this;
+                vm.probedata = {};
+                /*清空probedata*/
+                vm.dtHandle.clear();
+                console.log("重置");
+                vm.dtHandle.draw();
+                /*重置*/
+            },
+            currReset: function () {
+                let vm = this;
+                vm.dtHandle.clear();
+                console.log("当前页面重绘");
+                vm.dtHandle.draw(false);
+                /*当前页面重绘*/
+            },
+            redraw: function () {
+                let vm = this;
+                vm.dtHandle.clear();
+                console.log("页面重绘");
+                vm.dtHandle.draw();
+                /*重绘*/
+            }
+        },
+        mounted: function(obj) {
+            let vm = this;
+            // Instantiate the datatable and store the reference to the instance in our dtHandle element.
+            vm.dtHandle = $(this.$el).DataTable({
+                columns: vm.headers,
+                data: vm.rows,
+                searching: false,
+                paging: false,
+                serverSide: true,
+                info: false,
+                ordering: false, /*禁用排序功能*/
+                /*bInfo: false,*/
+                /*bLengthChange: false,*/    /*禁用Show entries*/
+                scroll: false,
+
+                sDom: 'Rfrtlip', /*显示在左下角*/
+                ajax: function (data, callback, settings) {
+                    //封装请求参数
+                    //ajax请求数据
+                    let returnData = {};
+                    // returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
+                    // returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
+                    // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
+                    returnData.data = probeContent;//返回的数据列表
+                    // // 重新整理返回数据以匹配表格
+                    console.log(returnData);
+                    let rows = [];
+                    var i = 1;
+                    doorContent.forEach(function (item) {
+                        if(id==item.id){
+                            let row = [];
+                            row.push(i);
+                            row.push(item.probeName);
+                            row.push(item.score.toFixed(2));
+                            row.push(item.webpageDnsDelay.toFixed(2));
+                            row.push(item.webpageConnDelay.toFixed(2));
+                            row.push(item.webpageHeadbyteDelay.toFixed(2));
+                            row.push(item.webpagePageFileDelay.toFixed(2));
+                            row.push(item.webpageRedirectDelay.toFixed(2));
+                            row.push(item.webpageAboveFoldDelay.toFixed(2));
+                            row.push(item.webpagePageElementDelay.toFixed(2));
+                            row.push(item.webpageDownloadRate.toFixed(2));
+                            rows.push(row);
+                        }
+
+                    });
+                    returnData.data = rows;
+                    callback(returnData);
+                    //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
+                    //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
+
+                    $("#doorbroswerdata_table").colResizable({
+                        liveDrag:true,
+                        gripInnerHtml:"<div class='grip'></div>",
+                        draggingClass:"dragging",
+                        resizeMode:'overflow',
+                    });
+                }
+            });
+        }
+    });
+}
+//下载
+function door_download(obj) {
+    var id=obj.id;
+    //网页下载
+    var download_table=new Vue({
+        el:'#doordownloaddata_table',
+        data: {
+            headers: [
+                {title: '<div style="width:10px"></div>'},
+                {title: '<div style="width:110px">探针名称</div>'},
+                {title: '<div style="width:70px">综合分数</div>'},
+                {title: '<div style="width:100px">DNS时延(ms)</div>'},
+                {title: '<div style="width:100px">连接时延(ms)</div>'},
+                {title: '<div style="width:100px">首字节时延(ms)</div>'},
+                {title: '<div style="width:100px">下载速率(KB/S)</div>'},
+                {title: '<div style="width:100px">DNS时延(ms)</div>'},
+                {title: '<div style="width:100px">连接时延(ms)</div>'},
+                {title: '<div style="width:100px">登录时延(ms)</div>'},
+                {title: '<div style="width:100px">首字节时延(ms)</div>'},
+                {title: '<div style="width:100px">下载速率(KB/S)</div>'},
+                {title: '<div style="width:100px">DNS时延(ms)</div>'},
+                {title: '<div style="width:100px">连接时延(ms)</div>'},
+                {title: '<div style="width:100px">登录时延(ms)</div>'},
+                {title: '<div style="width:100px">首字节时延(ms)</div>'},
+                {title: '<div style="width:100px">下载速率(KB/S)</div>'},
+            ],
+            rows: [],
+            dtHandle: null,
+        },
+        methods: {
+            reset: function () {
+                let vm = this;
+                vm.probedata = {};
+                /*清空probedata*/
+                vm.dtHandle.clear();
+                console.log("重置");
+                vm.dtHandle.draw();
+                /*重置*/
+            },
+            currReset: function () {
+                let vm = this;
+                vm.dtHandle.clear();
+                console.log("当前页面重绘");
+                vm.dtHandle.draw(false);
+                /*当前页面重绘*/
+            },
+            redraw: function () {
+                let vm = this;
+                vm.dtHandle.clear();
+                console.log("页面重绘");
+                vm.dtHandle.draw();
+                /*重绘*/
+            }
+        },
+        mounted: function(obj) {
+            let vm = this;
+            // Instantiate the datatable and store the reference to the instance in our dtHandle element.
+            vm.dtHandle = $(this.$el).DataTable({
+                columns: vm.headers,
+                data: vm.rows,
+                createdRow: function ( row, data, index ) {
+                    //生成了行之后，开始生成表头>>>
+                    var trs=$("#downloaddata_table>thead tr");
+                    if(trs.length>1){
+                        return
+                    }if (index == 0) {
+                        var innerTh = '<tr><th rowspan="1"></th>';
+                        innerTh +='<th colspan="1"></th>';
+                        innerTh +='<th colspan="1"></th>';
+
+                        var columnsCount = 17;//具体情况
+                        innerTh +='<th colspan="4" style="text-align: center">WEB下载</th>';
+                        innerTh +='<th colspan="5" style="text-align: center">FTP下载</th>';
+                        innerTh +='<th colspan="5" style="text-align: center">FTP上传</th>';
+                        innerTh += '</tr>';
+                        //table的id为"id_table"
+                        document.getElementById('downloaddata_table').insertRow(0);
+                        var $tr = $("#downloaddata_table tr").eq(0);
+                        $tr.after(innerTh);
+                    }
+                },
+                searching: false,
+                paging: false,
+                serverSide: true,
+                info: false,
+                ordering: false, /*禁用排序功能*/
+                /*bInfo: false,*/
+                /*bLengthChange: false,*/    /*禁用Show entries*/
+                scroll: false,
+
+                sDom: 'Rfrtlip', /*显示在左下角*/
+                ajax: function (data, callback, settings) {
+                    //封装请求参数
+                    //ajax请求数据
+                    let returnData = {};
+                    // returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
+                    // returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
+                    // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
+                    returnData.data = probeContent;//返回的数据列表
+                    // // 重新整理返回数据以匹配表格
+                    console.log(returnData);
+                    let rows = [];
+                    var i = 1;
+                    doorContent.forEach(function (item) {
+                        if(id==item.id){
+                            let row = [];
+                            row.push(i);
+                            row.push(item.probeName);
+                            row.push(item.score.toFixed(2));
+                            row.push(item.webDownloadDnsDelay.toFixed(2));
+                            row.push(item.webDownloadConnDelay.toFixed(2));
+                            row.push(item.webDownloadHeadbyteDelay.toFixed(2));
+                            row.push(item.webDownloadDownloadRate.toFixed(2));
+                            row.push(item.ftpDownloadDnsDelay);
+                            row.push(item.ftpDownloadConnDelay);
+                            row.push(item.ftpDownloadLoginDelay);
+                            row.push(item.ftpDownloadHeadbyteDelay);
+                            row.push(item.ftpDownloadDownloadRate);
+                            row.push(item.ftpUploadDnsDelay);
+                            row.push(item.ftpUploadConnDelay);
+                            row.push(item.ftpUploadLoginDelay);
+                            row.push(item.ftpUploadHeadbyteDelay);
+                            row.push(item.ftpUploadUploadRate);
+                            rows.push(row);
+                        }
+
+                    });
+                    returnData.data = rows;
+                    callback(returnData);
+                    //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
+                    //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
+
+                    $("#doordownloaddata_table").colResizable({
+                        liveDrag:true,
+                        gripInnerHtml:"<div class='grip'></div>",
+                        draggingClass:"dragging",
+                        resizeMode:'overflow',
+                    });
+                }
+            });
+        }
+
+    })
+}
+// /在线视频
+function door_video(obj) {
+    var id=obj.id;
+    var video_table=new Vue({
+        el:'#doorvideodata_table',
+        data: {
+            headers: [
+                {title: '<div style="width:10px"></div>'},
+                {title: '<div style="width:110px">探针名称</div>'},
+                {title: '<div style="width:70px">综合分数</div>'},
+                {title: '<div style="width:100px">DNS时延(ms)</div>'},
+                {title: '<div style="width:100px">连接WEB服务器时延(ms)</div>'},
+                {title: '<div style="width:120px">web页面时延(ms)</div>'},
+                {title: '<div style="width:149px">连接调度服务器时延(ms)</div>'},
+                {title: '<div style="width:135px">获取视频地址时延(ms)</div>'},
+                {title: '<div style="width:147px">连接媒体服务器时延(ms)</div>'},
+                {title: '<div style="width:110px">首帧时延(ms)</div>'},
+                {title: '<div style="width:120px">首次缓冲时延(ms)</div>'},
+                {title: '<div style="width:120px">视频加载时延(ms)</div>'},
+                {title: '<div style="width:120px">总体缓冲时间(ms)</div>'},
+                {title: '<div style="width:105px">下载速率(KB/S)</div>'},
+                {title: '<div style="width:100px">缓冲次数</div>'},
+            ],
+            rows: [],
+            dtHandle: null,
+        },
+        methods: {
+            reset: function () {
+                let vm = this;
+                vm.probedata = {};
+                /*清空probedata*/
+                vm.dtHandle.clear();
+                console.log("重置");
+                vm.dtHandle.draw();
+                /*重置*/
+            },
+            currReset: function () {
+                let vm = this;
+                vm.dtHandle.clear();
+                console.log("当前页面重绘");
+                vm.dtHandle.draw(false);
+                /*当前页面重绘*/
+            },
+            redraw: function () {
+                let vm = this;
+                vm.dtHandle.clear();
+                console.log("页面重绘");
+                vm.dtHandle.draw();
+                /*重绘*/
+            }
+        },
+        mounted: function(obj) {
+            let vm = this;
+            // Instantiate the datatable and store the reference to the instance in our dtHandle element.
+            vm.dtHandle = $(this.$el).DataTable({
+                columns: vm.headers,
+                data: vm.rows,
+                searching: false,
+                paging: false,
+                serverSide: true,
+                info: false,
+                ordering: false, /*禁用排序功能*/
+                /*bInfo: false,*/
+                /*bLengthChange: false,*/    /*禁用Show entries*/
+                scroll: false,
+
+                sDom: 'Rfrtlip', /*显示在左下角*/
+                ajax: function (data, callback, settings) {
+                    //封装请求参数
+                    //ajax请求数据
+                    let returnData = {};
+                    // returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
+                    // returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
+                    // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
+                    returnData.data = probeContent;//返回的数据列表
+                    // // 重新整理返回数据以匹配表格
+                    console.log(returnData);
+                    let rows = [];
+                    var i = 1;
+                    probeContent.forEach(function (item) {
+                        if(id==item.id){
+                            let row = [];
+                            row.push(i);
+                            row.push(item.probeName);
+                            row.push(item.score.toFixed(2));
+                            row.push(item.webVideoDnsDelay.toFixed(2));
+                            row.push(item.webVideoWsConnDelay.toFixed(2));
+                            row.push(item.webVideoWebPageDelay.toFixed(2));
+                            row.push(item.webVideoSsConnDelay);
+                            row.push(item.webVideoAddressDelay);
+                            row.push(item.webVideoMsConnDelay);
+                            row.push(item.webVideoHeadFrameDelay.toFixed(2));
+                            row.push(item.webVideoInitBufferDelay.toFixed(2));
+                            row.push(item.webVideoLoadDelay.toFixed(2));
+                            row.push(item.webVideoTotalBufferDelay.toFixed(2));
+                            row.push(item.webVideoDownloadRate.toFixed(2));
+                            row.push(item.webVideoBufferTime.toFixed(2));
+                            rows.push(row);
+                        }
+
+                    });
+                    returnData.data = rows;
+                    callback(returnData);
+                    //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
+                    //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
+
+                    $("#doorvideodata_table").colResizable({
+                        liveDrag:true,
+                        gripInnerHtml:"<div class='grip'></div>",
+                        draggingClass:"dragging",
+                        resizeMode:'overflow',
+                    });
+                }
+            });
+        }
+
+    })
+}
+//在线游戏
+function door_game(obj) {
+    var id=obj.id;
+    var game_table=new Vue({
+        el:'#doorgamedata_table',
+        data: {
+            headers: [
+                {title: '<div style="width:10px"></div>'},
+                {title: '<div style="width:110px">探针名称</div>'},
+                {title: '<div style="width:70px">综合分数</div>'},
+                {title: '<div style="width:100px">DNS时延(ms)</div>'},
+                {title: '<div style="width:100px">连接时延(ms)</div>'},
+                {title: '<div style="width:100px">游戏数据包时延(ms)</div>'},
+                {title: '<div style="width:100px">游戏数据包抖动(ms)</div>'},
+                {title: '<div style="width:100px">游戏数据包丢包率(%)</div>'},
+            ],
+            rows: [],
+            dtHandle: null,
+        },
+        methods: {
+            reset: function () {
+                let vm = this;
+                vm.probedata = {};
+                /*清空probedata*/
+                vm.dtHandle.clear();
+                console.log("重置");
+                vm.dtHandle.draw();
+                /*重置*/
+            },
+            currReset: function () {
+                let vm = this;
+                vm.dtHandle.clear();
+                console.log("当前页面重绘");
+                vm.dtHandle.draw(false);
+                /*当前页面重绘*/
+            },
+            redraw: function () {
+                let vm = this;
+                vm.dtHandle.clear();
+                console.log("页面重绘");
+                vm.dtHandle.draw();
+                /*重绘*/
+            }
+        },
+        mounted: function(obj) {
+            let vm = this;
+            // Instantiate the datatable and store the reference to the instance in our dtHandle element.
+            vm.dtHandle = $(this.$el).DataTable({
+                columns: vm.headers,
+                data: vm.rows,
+                searching: false,
+                paging: false,
+                serverSide: true,
+                info: false,
+                ordering: false, /*禁用排序功能*/
+                /*bInfo: false,*/
+                /*bLengthChange: false,*/    /*禁用Show entries*/
+                scroll: false,
+
+                sDom: 'Rfrtlip', /*显示在左下角*/
+                ajax: function (data, callback, settings) {
+                    //封装请求参数
+                    //ajax请求数据
+                    let returnData = {};
+                    // returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
+                    // returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
+                    // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
+                    returnData.data = probeContent;//返回的数据列表
+                    // // 重新整理返回数据以匹配表格
+                    console.log(returnData);
+                    let rows = [];
+                    var i = 1;
+                    doorContent.forEach(function (item) {
+                        if(id==item.id){
+                            let row = [];
+                            row.push(i);
+                            row.push(item.probeName);
+                            row.push(item.score.toFixed(2));
+                            row.push(item.gameDnsDelay);
+                            row.push(item.gameConnDelay.toFixed(2));
+                            row.push(item.gamePacketDelay.toFixed(2));
+                            row.push(item.gamePacketJitter.toFixed(2));
+                            row.push(item.gameLossRate.toFixed(2));
+                            rows.push(row);
+                        }
+
+                    });
+                    returnData.data = rows;
+                    callback(returnData);
+                    //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
+                    //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
+
+                    $("#doorgamedata_table").colResizable({
+                        liveDrag:true,
+                        gripInnerHtml:"<div class='grip'></div>",
+                        draggingClass:"dragging",
+                        resizeMode:'overflow',
+                    });
+                }
+            });
+        }
+    })
+}
 
