@@ -191,6 +191,7 @@ var vm = new Vue({
         },
         reload: function () {
             vm.showList = true;
+            console.log(vm.q.username);
             var page = $("#jqGrid").jqGrid('getGridParam','page');
             $("#jqGrid").jqGrid('setGridParam',{
                 postData:{'username': vm.q.username},

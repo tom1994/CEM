@@ -2,15 +2,15 @@ package io.cem.modules.sys.controller;
 
 
 import io.cem.common.annotation.SysLog;
-import io.cem.common.utils.ShiroUtils;
-import io.cem.modules.sys.entity.SysUserEntity;
 import io.cem.common.utils.PageUtils;
 import io.cem.common.utils.Query;
 import io.cem.common.utils.R;
+import io.cem.common.utils.ShiroUtils;
 import io.cem.common.validator.Assert;
 import io.cem.common.validator.ValidatorUtils;
 import io.cem.common.validator.group.AddGroup;
 import io.cem.common.validator.group.UpdateGroup;
+import io.cem.modules.sys.entity.SysUserEntity;
 import io.cem.modules.sys.service.SysUserRoleService;
 import io.cem.modules.sys.service.SysUserService;
 import org.apache.commons.lang.ArrayUtils;
