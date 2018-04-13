@@ -285,18 +285,20 @@
                         <div class="col-lg-12 col-md-12 col-sm-12" id="probe_table">
                             <div class="ibox float-e-margins">
                                 <div class="ibox-title fontcolor box " id="probehandle">
-                                    #if($shiro.hasPermission("cem:probe:delete"))
+                                    #if($shiro.hasPermission("probe:delete"))
                                     <button type="button" class="btn btn-sm btn-success"
                                             onclick="delete_All()">
                                         <span
                                                 class="glyphicon glyphicon-trash Btn"></span>批量删除
                                     </button>
                                     #end
+                                    #if($shiro.hasPermission("probe:output"))
                                     <button type="button" class="btn btn-sm btn-success" onclick="out()"><span
                                             class="glyphicon glyphicon-open"></span>导出
                                     </button>
                                     <a id = "output" style="display: none" href="">
                                     </a>
+                                    #end
                                     <!--   <button type="button" id="flip" class="btn btn-sm btn-success"
                                                style="position:relative; left:35%;" onClick="toggle1('searchbox')"><span
                                                class="glyphicon glyphicon-menu-up"></span>

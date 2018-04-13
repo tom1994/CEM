@@ -38,6 +38,7 @@ public class LayerController {
      */
 
     @RequestMapping("/list")
+    @RequiresPermissions("layer:list")
     public R list(@RequestParam Map<String, Object> params) {
         //查询列表数据
         if (!params.containsKey("limit")) {

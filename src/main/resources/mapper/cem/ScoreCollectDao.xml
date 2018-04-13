@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.cem.modules.cem.dao.ScoreCollectDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.cem.modules.cem.entity.ScoreCollectEntity" id="scoreCollectMap">
+        <result property="id" column="id"/>
+        <result property="score" column="score"/>
+        <result property="viewType" column=" view_type"/>
+        <result property="accessLayer" column=" access_layer"/>
+        <result property="scoreDate" column=" score_date"/>
+        <result property="serviceType" column="service_type"/>
+    </resultMap>
+    <select id="queryList" resultMap="scoreCollectMap">
+        select score from score_collect
+        <where>
+            <if test="viewType != null">
+                view_type #{viewType}
+            </if>
+            <if test="accessLayer != null">
+                access_layer = #{accessLayer}
+            </if>
+            AND
+            service_type=#{serviceType}
+            AND
+            score_date between #{startTime} and #{endTime}
+        </where>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+            <otherwise>
+                order by id desc
+            </otherwise>
+        </choose>
+    </select>
+    <insert id="save" parameterType="io.cem.modules.cem.entity.ScoreCollectEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into score_collect
+		(
+			`score`,
+			`view_type`,
+			`access_layer`,
+			`score_date`,
+			`service_type`
+		)
+		values
+		(
+			#{score},
+			#{viewType},
+			#{accessLayer},
+			#{scoreDate},
+			#{serviceType}
+		)
+	</insert>
+    <delete id="deleteBatch">
+        delete from score_collect where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

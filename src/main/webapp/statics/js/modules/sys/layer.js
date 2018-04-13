@@ -52,7 +52,7 @@ var vm = new Vue({
     el: '#rrapp',
     data: {
         q: {
-            username: null
+            layerName: null
         },
         showList: true,
         title: null,
@@ -75,9 +75,10 @@ var vm = new Vue({
             vm.showList = true;
             var page = $("#jqGrid").jqGrid('getGridParam', 'page');
             $("#jqGrid").jqGrid('setGridParam', {
-                postData: {'username': vm.q.username},
+                postData: {'layerName': vm.q.layerName},
                 page: page
             }).trigger("reloadGrid");
+            console.log(vm.q.layerName);
         },
 
     },

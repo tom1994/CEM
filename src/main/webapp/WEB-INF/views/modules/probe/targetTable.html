@@ -7,68 +7,94 @@
     #parse("cemHeader.html")  <!--导入CSS和js文件-->
     <link href="${rc.contextPath}/statics/css/formStyle.css" rel="stylesheet">  <!--自定义CSS-->
     <style type="text/css">
-        tr:hover{background:#E5E5E5 }
-        .input{
+        tr:hover {
+            background: #E5E5E5
+        }
+
+        .input {
             margin-bottom: -3px;
             height: 28px;
             line-height: 28px;
             /*//text-align: center;*/
             padding-top: 0px;
         }
-        .left{
-            margin-left:52px;
+
+        .left {
+            margin-left: 52px;
         }
-        .box{
+
+        .box {
             padding-bottom: 0px !important;
-            padding: 0px; min-height: 0px;
+            padding: 0px;
+            min-height: 0px;
         }
-        .Btn{
-            margin-bottom:0
+
+        .Btn {
+            margin-bottom: 0
         }
-        .search{
+
+        .search {
             margin-top: 0px;
             text-align: center;
         }
+
         .btn {
             margin-bottom: 0px !important;
         }
-        .form_border{
+
+        .form_border {
             text-align: right !important;
         }
-        .combo-select{
+
+        .combo-select {
             display: inline-block;
             max-width: 138px;
-            left:4px
+            left: 4px
         }
-        .combo-dropdown{
-            max-height: 200px!important;
+
+        .combo-dropdown {
+            max-height: 200px !important;
         }
-        .combo-dropdown li{
+
+        .combo-dropdown li {
             padding: 5px;
         }
-        .option-item{
-            border-bottom:0px
+
+        .option-item {
+            border-bottom: 0px
         }
-        .combo-arrow:before{
-            border-top: 5px solid 	Gray
+
+        .combo-arrow:before {
+            border-top: 5px solid Gray
         }
-        .combo-open .combo-arrow{
+
+        .combo-open .combo-arrow {
             border-color: #0EB690;
         }
-        .combo-focus input{
+
+        .combo-focus input {
             border-color: #0EB690;
         }
-        .combo-focus{
+
+        .combo-focus {
             border-color: #0EB690;
             box-shadow: none
         }
+
         input:focus {
             border-color: #0EB690;
             box-shadow: none;
         }
-        .clear::-ms-clear { display: none;}
-        .clear::-ms-reveal { display: none;}
-        input[type=text]::-ms-clear{
+
+        .clear::-ms-clear {
+            display: none;
+        }
+
+        .clear::-ms-reveal {
+            display: none;
+        }
+
+        input[type=text]::-ms-clear {
             display: none;
         }
     </style>
@@ -92,7 +118,8 @@
                         <div class="col-lg-12 col-md-12 col-sm-12">
                             <div class="ibox float-e-margins">
                                 <div class="ibox-content" style="padding-bottom: 0 !important;">
-                                    <div class="row" id="searchbox" style="border: none !important; margin-bottom: -14px !important;">
+                                    <div class="row" id="searchbox"
+                                         style="border: none !important; margin-bottom: -14px !important;">
                                         <form class="col-lg-10 col-md-10 col-sm-10 form-horizontal" id="targetsearch"
                                               role="form">
                                             <div class=" form-group row" style="margin-bottom: 10px; margin-top: 1px">
@@ -104,7 +131,8 @@
 
                                                 <div class="input-group searchspan">
                                                     <span class="searchname search" style="width: auto;height: 30px">测试目标</span>
-                                                    <input type="text" class="form-control input  clear" name="target_name"
+                                                    <input type="text" class="form-control input  clear"
+                                                           name="target_name"
                                                            style="width: 120px;height: 30px"
                                                            value="" placeholder="名称或网址">
                                                 </div>
@@ -113,14 +141,16 @@
                                                     <input type="text">
                                                 </div>
                                                 <div style="display: inline-block;">
-                                                    <span class="searchname search left" title="测试目标组" style="width: auto;text-align: center; line-height: 1.5;">测试目标组</span>
+                                                    <span class="searchname search left" title="测试目标组"
+                                                          style="width: auto;text-align: center; line-height: 1.5;">测试目标组</span>
                                                     <div class="input-group searchspan" id="group" style="top: -8px;">
                                                         <div class="jq22">
-                                                            <select  class="form-control  input clear" name="group_id"
+                                                            <select class="form-control  input clear" name="group_id"
                                                                     style="width: 140px;display: none;">
                                                                 <option value="">---请选择---</option>
                                                                 <option v-for="item in target_names"
-                                                                        v-bind:value="item.message.id">{{ item.message.tgName }}
+                                                                        v-bind:value="item.message.id">{{
+                                                                    item.message.tgName }}
                                                                 </option>
                                                             </select>
                                                         </div>
@@ -128,11 +158,13 @@
                                                 </div>
 
                                                 <div style="display: inline-block;">
-                                                    <span class="searchname search left" title="业务类型" style="width: auto;text-align: center; line-height: 1.5;">业务类型</span>
+                                                    <span class="searchname search left" title="业务类型"
+                                                          style="width: auto;text-align: center; line-height: 1.5;">业务类型</span>
                                                     <div class="input-group searchspan" id="service" style="top: -8px;">
                                                         <div class="jq22">
-                                                            <select id="area_service" class="form-control  input clear" name="superservice_type"
-                                                                   style="width: 140px;display: none;">
+                                                            <select id="area_service" class="form-control  input clear"
+                                                                    name="superservice_type"
+                                                                    style="width: 140px;display: none;">
                                                                 <option value="0">综合业务</option>
                                                                 <option value="1">网络连通性业务</option>
                                                                 <option value="2">网络层质量业务</option>
@@ -147,7 +179,8 @@
                                             </div>
                                         </form>
 
-                                        <div class="col-lg-2 col-md-2 col-sm-2 " id="search" style="text-align:center;height:50px;position: relative; right: 60px;">
+                                        <div class="col-lg-2 col-md-2 col-sm-2 " id="search"
+                                             style="text-align:center;height:50px;position: relative; right: 60px;">
                                             <button type="button" class="btn btn-sm btn-success"
                                                     style="margin-right: 5px;margin-top: 5px"
                                                     v-on:click="testagentListsearch"><span
@@ -168,20 +201,26 @@
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12" id="targettable">
                             <div class="ibox float-e-margins">
-                                <div class="ibox-title fontcolor box" id="targethandle" style="padding-bottom: 0px !important;">
+                                <div class="ibox-title fontcolor box" id="targethandle"
+                                     style="padding-bottom: 0px !important;">
+                                    #if($shiro.hasPermission("target:save"))
                                     <button type="button" class="btn btn-sm btn-success" v-on:click="targetadd">
                                         <span class="glyphicon glyphicon-plus Btn"></span>新建
                                     </button>
+                                    #end
+                                    #if($shiro.hasPermission("target:delete"))
                                     <button type="button" class="btn btn-sm btn-success" v-on:click="targetdelBatch">
                                         <span class="glyphicon glyphicon-trash"></span>批量删除
                                     </button>
-
-                                    <p id="flip" style="position:relative; left:35%;" class="glyphicon glyphicon-menu-up"
+                                    #end
+                                    <p id="flip" style="position:relative; left:35%;"
+                                       class="glyphicon glyphicon-menu-up"
                                        onClick="toggle1('searchbox')"></p>
                                 </div>
                                 <div class="ibox-content">
                                     <div class="row " style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
-                                        <table class="table table-bordered" id="target_table" style="margin-top: 2px !important;"></table>
+                                        <table class="table table-bordered" id="target_table"
+                                               style="margin-top: 2px !important;"></table>
                                     </div>
                                 </div>
                             </div>
@@ -226,7 +265,8 @@
                                                 <label for="value"
                                                        class="col-lg-3 col-md-3 col-sm-3 input-label form_border">测试目标地址</label>
                                                 <div class="form_border col-lg-4 col-md-4 col-sm-4">
-                                                    <input type="text" class="form-control input clear" id="value" name="value"
+                                                    <input type="text" class="form-control input clear" id="value"
+                                                           name="value"
                                                            style="width: 100%" placeholder="请输入">
                                                 </div>
                                             </div>
@@ -253,9 +293,11 @@
                                                 <label for="groupid"
                                                        class="col-lg-3 col-md-3 col-sm-3 input-label form_border">测试目标组</label>
                                                 <div class="form_border col-lg-4 col-md-4 col-sm-4">
-                                                    <select id="groupid" class="form-control input  clear" name="groupId" style="width: 100%">  <!--VUE列表渲染-->
+                                                    <select id="groupid" class="form-control input  clear"
+                                                            name="groupId" style="width: 100%">  <!--VUE列表渲染-->
                                                         <option value="">---请选择---</option>
-                                                        <option v-for="item in groupNames" v-bind:value="item.message.id">
+                                                        <option v-for="item in groupNames"
+                                                                v-bind:value="item.message.id">
                                                             {{ item.message.tgName }}
                                                         </option>
                                                     </select>
@@ -268,7 +310,7 @@
                                                 <div class="form_border col-lg-4 col-md-4 col-sm-4">
                                                     <input type="text" class="form-control input  clear" id="remark"
                                                            name="remark" style="width: 100%"
-                                                           >
+                                                    >
                                                 </div>
                                             </div>
                                         </form>
@@ -328,11 +370,13 @@
                                             </div>
                                             <div class=" col-lg-5 col-md-5 col-sm-5 searchspan">
                                                 <span class="searchname search" title="测试目标组名" style="width: 90px">测试目标组名</span>
-                                                <input type="text" class="form-control input  clear" name="tg_name" style="width: 110px"
+                                                <input type="text" class="form-control input  clear" name="tg_name"
+                                                       style="width: 110px"
                                                        value="">
                                             </div>
                                         </form>
-                                        <div class="col-lg-2 col-md-2 col-sm-2 " id="groupsearch" style="text-align:center;position: relative; left:168px" >
+                                        <div class="col-lg-2 col-md-2 col-sm-2 " id="groupsearch"
+                                             style="text-align:center;position: relative; left:168px">
                                             <button type="button" class="btn btn-sm btn-success"
                                                     style="margin-right: 5px;margin-top: 5px"
                                                     v-on:click="tg_search"><span
@@ -365,7 +409,9 @@
                                 <div class="ibox-content">
                                     <div class="row " style="overflow:scroll">     <!--表格 overflow-x: scroll超出滚动-->
                                         <div class="col-lg-12 col-md-12 col-sm-12">
-                                        <table class="table table-bordered " style="width:100% !important; margin-top:2px !important;" id="tg_table"></table>
+                                            <table class="table table-bordered "
+                                                   style="width:100% !important; margin-top:2px !important;"
+                                                   id="tg_table"></table>
                                         </div>
                                     </div>
                                 </div>
@@ -405,7 +451,8 @@
                                         <label for="tgName"
                                                class="col-lg-3 col-md-3 col-sm-3 input-label form_border">测试目标组名</label>
                                         <div class="form_border col-lg-4 col-md-4 col-sm-4">
-                                            <input type="text" class="form-control input clear" id="tgName" name="tgName"
+                                            <input type="text" class="form-control input clear" id="tgName"
+                                                   name="tgName"
                                                    style="width: 100%" placeholder="请输入">
                                         </div>
                                     </div>
@@ -414,7 +461,8 @@
                                         <label for="tgsuperservicetype"
                                                class="col-lg-3 col-md-3 col-sm-3 input-label form_border">业务类型</label>
                                         <div class="form_border col-lg-4 col-md-4 col-sm-4">
-                                            <select id="tgsuperservicetype" class="form-control input  clear" name="superserviceType"
+                                            <select id="tgsuperservicetype" class="form-control input  clear"
+                                                    name="superserviceType"
                                                     style="width: 100%">  <!--VUE列表渲染-->
                                                 <option value="">---请选择---</option>
                                                 <option value="0">综合业务</option>
@@ -434,7 +482,7 @@
                                         <div class="form_border col-lg-4 col-md-4 col-sm-4">
                                             <input type="text" class="form-control input clear " id="tgremark"
                                                    name="remark" style="width: 100%"
-                                                  >
+                                            >
                                         </div>
                                     </div>
                                 </form>
@@ -490,6 +538,7 @@
         $('#group .jq22').comboSelect()
 
     })
+
     //参数para1：希望隐藏元素的id值
     function toggle1(param) {
         if ($("#flip").attr("class") == "glyphicon glyphicon-menu-up") {

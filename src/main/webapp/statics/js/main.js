@@ -890,6 +890,7 @@
   })
 // 混合图
     $(function () {
+        var a='im a!'
         $('#container2').highcharts({
             chart: {
                 backgroundColor:'rgba(0,0,0,0)'
@@ -947,93 +948,96 @@
             series: [{
                 type: 'column',
                 name: '网页感知',
-                data:[40,30,70,80,90]
-                // data: (function(){
-                //     var arr=[];
-                //     $.ajax({
-                //         type: "post",
-                //         async: false, //同步执行
-                //         url: "",
-                //         data : {configId:'home_web_mix'},
-                //         dataType: "json", //返回数据形式为json
-                //         success: function (result) {
-                //             if (result) {
-                //                 for(var i=0;i<result.rows.length;i++){
-                //                     arr.push(parseFloat(result.rows[i].http_qoe));
-                //                 }
-                //             }
-                //         }
-                //     })
-                //     //console.info(arr);
-                //     return arr;
-                //
-                // })()
+                //data:[40,30,70,80,90],
+                data: (function(){
+                    var arr=[];
+                    $.ajax({
+                        type: "post",
+                        async: false, //同步执行
+                        url: "../../cem/index/qoeview",
+                        data : {serviceType:'2'},
+                        dataType: "json", //返回数据形式为json
+                        success: function (result) {
+
+                            for(var i=0;i<5;i++){
+                                arr[i] = result.scoreCollects[i].score;
+
+                            }
+                        }
+                    })
+
+                    return arr;
+
+                })()
             }, {
                 type: 'column',
                 name: '视频感知',
-                data:[40,30,70,80,90]
-                // data: (function(){
-                //     var arr=[];
-                //     $.ajax({
-                //         type: "post",
-                //         async: false, //同步执行
-                //         url: "",
-                //         data : {configId:'home_web_mix'},
-                //         dataType: "json", //返回数据形式为json
-                //         success: function (result) {
-                //             if (result) {
-                //                 for(var i=0;i<result.rows.length;i++){
-                //                     arr.push(parseFloat(result.rows[i].youku_qoe));
-                //                 }
-                //             }
-                //         }
-                //     })
-                //     return arr;
-                // })()
+                //data:[40,30,70,80,90],
+                data: (function(){
+                    var arr=[];
+                    $.ajax({
+                        type: "post",
+                        async: false, //同步执行
+                        url: "../../cem/index/qoeview",
+                        data : {serviceType:'4'},
+                        dataType: "json", //返回数据形式为json
+                        success: function (result) {
+                            if (result) {
+                                for(var i=0;i<5;i++){
+                                    arr[i] = result.scoreCollects[i].score;
+
+                                }
+                            }
+                        }
+                    })
+                    return arr;
+                })()
             }, {
                 type: 'column',
                 name: 'ping感知',
-                data:[40,50,60,80,90]
-                // data: (function(){
-                //     var arr=[];
-                //     $.ajax({
-                //         type: "post",
-                //         async: false, //同步执行
-                //         url: "",
-                //         data : {configId:'home_web_mix'},
-                //         dataType: "json", //返回数据形式为json
-                //         success: function (result) {
-                //             if (result) {
-                //                 for(var i=0;i<result.rows.length;i++){
-                //                     arr.push(parseFloat(result.rows[i].ping_qoe));
-                //                 }
-                //             }
-                //         }
-                //     })
-                //     return arr;
-                // })()
+                //data:[41,51,61,81,91]
+                data: (function(){
+                    var arr=[];
+                    $.ajax({
+                        type: "post",
+                        async: false, //同步执行
+                        url: "../../cem/index/qoeview",
+                        data : {serviceType:'0'},
+                        dataType: "json", //返回数据形式为json
+                        success: function (result) {
+                            if (result) {
+                                for(var i=0;i<5;i++){
+                                    arr[i] = result.scoreCollects[i].score;
+
+                                }
+                            }
+                        }
+                    })
+                    return arr;
+                })()
             }, {
                 type: 'column',
                 name: '下载感知',
-                data:[40,60,30,80,90]
-                // data: (function(){
-                //     var arr=[];
-                //     $.ajax({
-                //         type: "post",
-                //         async: false, //同步执行
-                //         url: "",
-                //         data : {configId:'home_web_mix'},
-                //         dataType: "json", //返回数据形式为json
-                //         success: function (result) {
-                //             if (result) {
-                //                 for(var i=0;i<result.rows.length;i++){
-                //                     arr.push(parseFloat(result.rows[i].xunlei_qoe));
-                //                 }
-                //             }
-                //         }
-                //     })
-                //     return arr;
-                // })()
+                //data:[40,60,30,80,90]
+                data: (function(){
+                    var arr=[];
+                    $.ajax({
+                        type: "post",
+                        async: false, //同步执行
+                        url: "../../cem/index/qoeview",
+                        data : {serviceType:'3'},
+                        dataType: "json", //返回数据形式为json
+                        success: function (result) {
+                            if (result) {
+                                for(var i=0;i<5;i++){
+                                    arr[i] = result.scoreCollects[i].score;
+
+                                }
+                            }
+                        }
+                    })
+                    return arr;
+                })()
             }, {
                 type: 'spline',
                 name: '平均感知',
@@ -1101,11 +1105,12 @@
                     polar: [
                         {
                             indicator: [
-                                {text: '网页感知', min: 0, max: 100},
-                                {text: '视频感知', min: 0, max: 100},
                                 {text: '网络链路', min: 0, max: 100},
-                                {text: '游戏感知', min: 0, max: 100},
+                                {text: '网页感知', min: 0, max: 100},
                                 {text: '下载感知', min: 0, max: 100},
+                                {text: '视频感知', min: 0, max: 100},
+                                {text: '游戏感知', min: 0, max: 100},
+
                             ]
                         }
                     ],
@@ -1116,57 +1121,57 @@
                             type: 'radar',
                             itemStyle: {normal: {areaStyle: {type: 'default'}}},
                             data: [
-                                // {
-                                //     value: (function () {
-                                //         var arr = [];
-                                //         $.ajax({
-                                //             type: "post",
-                                //             async: false, //同步执行
-                                //             url: "",
-                                //             data: {configId: 'home_web_radar'},
-                                //             dataType: "json", //返回数据形式为json
-                                //             success: function (result) {
-                                //                 if (result) {
-                                //                     for (var i = 0; i < result.rows.length; i++) {
-                                //                         arr.push(result.rows[i].xianshi);
-                                //                     }
-                                //                 }
-                                //             }
-                                //         })
-                                //         return arr;
-                                //     })(),
-                                //     name: '闲时'
-                                // },
-                                // {
-                                //     value: (function () {
-                                //         var arr = [];
-                                //         $.ajax({
-                                //             type: "post",
-                                //             async: false, //同步执行
-                                //             url: "",
-                                //             data: {configId: 'home_web_radar'},
-                                //             dataType: "json", //返回数据形式为json
-                                //             success: function (result) {
-                                //                 if (result) {
-                                //                     for (var i = 0; i < result.rows.length; i++) {
-                                //                         arr.push(result.rows[i].mangshi);
-                                //                     }
-                                //                 }
-                                //             }
-                                //         })
-                                //         return arr;
-                                //     })(),
-                                //     name: '忙时'
-                                // }
-
                                 {
-                                    value : [97, 42, 88, 94, 90, 86],
-                                    name : '闲时'
+                                    value: (function () {
+                                        var arr = [];
+                                        $.ajax({
+                                            type: "post",
+                                            async: false, //同步执行
+                                            url: "../../cem/index/dayscoresview",
+                                            data: {interval: '1'},
+                                            dataType: "json", //返回数据形式为json
+                                            success: function (result) {
+                                                if (result) {
+                                                    for(var i=0;i<5;i++){
+                                                        arr[i] = result.scoreCollects[i].score;
+                                                    }
+                                                }
+                                            }
+                                        })
+                                        return arr;
+                                    })(),
+                                    name: '闲时'
                                 },
                                 {
-                                    value : [97, 88, 74, 95, 77, 92],
-                                    name : '忙时'
+                                    value: (function () {
+                                        var arr = [];
+                                        $.ajax({
+                                            type: "post",
+                                            async: false, //同步执行
+                                            url: "../../cem/index/dayscoresview",
+                                            data: {interval: '2'},
+                                            dataType: "json", //返回数据形式为json
+                                            success: function (result) {
+                                                if (result) {
+                                                    for(var i=0;i<5;i++){
+                                                        arr[i] = result.scoreCollects[i].score;
+                                                    }
+                                                }
+                                            }
+                                        })
+                                        return arr;
+                                    })(),
+                                    name: '忙时'
                                 }
+
+                                // {
+                                //     value : [97, 42, 88, 94, 90, 86],
+                                //     name : '闲时'
+                                // },
+                                // {
+                                //     value : [97, 88, 74, 95, 77, 92],
+                                //     name : '忙时'
+                                // }
                             ]
 
 
@@ -1251,25 +1256,25 @@
                 },
                 series: [{
                     name: 'QoE',
-                    // data: (function () {
-                    //     var arr = [];
-                    //     $.ajax({
-                    //         type: "post",
-                    //         async: false, //同步执行
-                    //         url: "",
-                    //         data: {configId: 'home_web_top'},
-                    //         dataType: "json", //返回数据形式为json
-                    //         success: function (result) {
-                    //             if (result) {
-                    //                 for (var i = 0; i < result.rows.length; i++) {
-                    //                     arr.push(parseFloat(result.rows[i].qoe));
-                    //                 }
-                    //             }
-                    //         }
-                    //     })
-                    //     return arr;
-                    // })()
-                    data:[65,88,79,84,96,75,86,66,99,76]
+                    data: (function () {
+                        var arr = [];
+                        $.ajax({
+                            type: "post",
+                            async: false, //同步执行
+                            url: "../../cem/index/targerview",
+                            data: {serviceType: '0'},
+                            dataType: "json", //返回数据形式为json
+                            success: function (result) {
+                                if (result) {
+                                    for(var i=0;i<10;i++){
+                                        arr[i] = result.scoreCollects[i].score;
+                                    }
+                                }
+                            }
+                        })
+                        return arr;
+                    })()
+                    //data:[65,88,79,84,96,75,86,66,99,76]
                 }]
 
             });
@@ -1708,7 +1713,7 @@
                    //     })
                    //     return arr;
                    // })(),
-                   categories:['2017-08','2017-09','2017-10','2017-11','2017-12'],
+                   categories:['2017-11','2017-12','2018-01','2018-02','2018-03'],
                    crosshair: true,
                },
                yAxis: {
@@ -1733,27 +1738,26 @@
                    }
                },
                series: [{
-                   name: '济南',
-                   // data: (function () {
-                   //     var arr = [];
-                   //     $.ajax({
-                   //         type: "post",
-                   //         async: false, //同步执行
-                   //         url: "",
-                   //         data: {configId: 'home_web_mix'},
-                   //         dataType: "json", //返回数据形式为json
-                   //         success: function (result) {
-                   //             if (result) {
-                   //                 for (var i = 0; i < result.rows.length; i++) {
-                   //                     if (result.rows[i].month >= CurrentDate)
-                   //                         arr.push(parseFloat(result.rows[i].avg_qoe));
-                   //                 }
-                   //             }
-                   //         }
-                   //     })
-                   //     return arr;
-                   // })()
-                   data:[66,87,22,55,33]
+                   name: '楼道',
+                   data: (function () {
+                       var arr = [];
+                       $.ajax({
+                           type: "post",
+                           async: false, //同步执行
+                           url: "../../cem/index/layerqoeview",
+                           data: {accessLayer: '2000',serviceType:'2'},
+                           dataType: "json", //返回数据形式为json
+                           success: function (result) {
+                               if (result) {
+                                   for(var i=0;i<5;i++){
+                                       arr[i] = result.scoreCollects[i].score;
+                                   }
+                               }
+                           }
+                       })
+                       return arr;
+                   })()
+                   //data:[66,87,22,55,33]
                }]
 
            });
@@ -1762,8 +1766,8 @@
         function second() {
             document.getElementById("loading").style.display = "block";
             var sel = $('#lev').find('option:selected').attr('lev');
-            var arr = ['2017-08','2017-09','2017-10','2017-11','2017-12'];
-            var arr1 = [80,75,50,99,88];
+            var arr = ['2017-11','2017-12','2018-01','2018-02','2018-03'];
+            var arr1 = [1,1,1,2,4];
             // $.ajax({
             //     type: "post",
             //     url: "",
@@ -1868,8 +1872,25 @@
                     }
                 },
                 series: [{
-                    name: '济南',
-                    data: arr1
+                    name: '楼道',
+                    data: (function () {
+                        var arr = [];
+                        $.ajax({
+                            type: "post",
+                            async: false, //同步执行
+                            url: "../../cem/index/layerqoeview",
+                            data: {accessLayer: '2000',serviceType:'2'},
+                            dataType: "json", //返回数据形式为json
+                            success: function (result) {
+                                if (result) {
+                                    for(var i=0;i<5;i++){
+                                        arr[i] = result.scoreCollects[i].score;
+                                    }
+                                }
+                            }
+                        })
+                        return arr;
+                    })()
                 }],
             });
             document.getElementById("loading").style.display = "none";

@@ -4,7 +4,6 @@
     <title>层级维护</title>
     #parse("cemHeader.html")  <!--导入CSS和js文件-->
     #parse("header.html")
-
     <link href="${rc.contextPath}/statics/css/formStyle.css" rel="stylesheet">  <!--自定义CSS-->
     <style type="text/css">
         .btn-success,.btn-success:hover,.btn-success:active,.btn-success:link,.btn-success:visited{
@@ -29,12 +28,20 @@
     <div v-show="showList">
         <div class="grid-btn" id="handle">
             <div class="form-group col-sm-2">
-                <input type="text" class="form-control" v-model="q.username" @keyup.enter="query" placeholder="用户名">
+                <input type="text" class="form-control" v-model="q.layerName" @keyup.enter="query" placeholder="层级名称">
             </div>
             <a class="btn btn-default" @click="query">查询</a>
+            #if($shiro.hasPermission("layer:save"))
             <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+            #end
+
+            #if($shiro.hasPermission("layer:update"))
             <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+            #end
+
+            #if($shiro.hasPermission("layer:delete"))
             <a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+            #end
         </div>
         <table id="jqGrid"></table>
         <div id="jqGridPager"></div>
