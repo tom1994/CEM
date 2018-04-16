@@ -224,7 +224,7 @@
             AND record_date BETWEEN #{startDate} AND #{terminalDate}
         </if>
         <if test="start_time != null and end_time != null">
-            AND record_date BETWEEN #{startDate} AND #{terminalDate}
+            AND record_time BETWEEN #{start_time} AND #{end_time}
         </if>
         <choose>
             <when test="sidx != null and sidx.trim() != ''">

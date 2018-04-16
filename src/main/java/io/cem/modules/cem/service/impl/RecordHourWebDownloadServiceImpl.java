@@ -765,18 +765,21 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 							finalScore.setWebDownloadConnDelay(map1.get(typ).getWebDownloadConnDelay());
 							finalScore.setWebDownloadHeadbyteDelay(map1.get(typ).getWebDownloadHeadbyteDelay());
 							finalScore.setWebDownloadDownloadRate(map1.get(typ).getWebDownloadDownloadRate());
+							finalScore.setWebDownloadScore(map1.get(typ).getScore());
 						}else if(typ.equals("ftpDownload")){
 							finalScore.setFtpDownloadDnsDelay(map1.get(typ).getFtpDownloadDnsDelay());
 							finalScore.setFtpDownloadConnDelay(map1.get(typ).getFtpDownloadConnDelay());
 							finalScore.setFtpDownloadLoginDelay(map1.get(typ).getFtpDownloadLoginDelay());
 							finalScore.setFtpDownloadHeadbyteDelay(map1.get(typ).getFtpDownloadHeadbyteDelay());
 							finalScore.setFtpDownloadDownloadRate(map1.get(typ).getFtpDownloadDownloadRate());
+							finalScore.setFtpDownloadScore(map1.get(typ).getScore());
 						}else if(typ.equals("ftpUpload")){
 							finalScore.setFtpUploadDnsDelay(map1.get(typ).getFtpUploadDnsDelay());
 							finalScore.setFtpUploadConnDelay(map1.get(typ).getFtpUploadConnDelay());
 							finalScore.setFtpUploadLoginDelay(map1.get(typ).getFtpUploadLoginDelay());
 							finalScore.setFtpUploadHeadbyteDelay(map1.get(typ).getFtpUploadHeadbyteDelay());
 							finalScore.setFtpUploadUploadRate(map1.get(typ).getFtpUploadUploadRate());
+							finalScore.setFtpUploadScore(map1.get(typ).getScore());
 						}else{}
 						finalScore.setScore(finalScore.getScore() + (map1.get(typ).getScore()) * (map1.get(typ).getBase()));
 						finalScore.setBase(finalScore.getBase()+map1.get(typ).getBase());

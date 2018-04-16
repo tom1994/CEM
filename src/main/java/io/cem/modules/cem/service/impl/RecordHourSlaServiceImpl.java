@@ -1414,6 +1414,7 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 							finalScore.setSlaTcpGJitter(map1.get(typ).getSlaTcpGJitter());
 							finalScore.setSlaTcpRJitter(map1.get(typ).getSlaTcpRJitter());
 							finalScore.setSlaTcpLossRate(map1.get(typ).getSlaTcpLossRate());
+							finalScore.setTcpSlaScore(map1.get(typ).getScore());
 						}else if(typ.equals("slaUdp")){
 							finalScore.setSlaUdpDelay(map1.get(typ).getSlaUdpDelay());
 							finalScore.setSlaUdpGDelay(map1.get(typ).getSlaUdpGDelay());
@@ -1422,19 +1423,24 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 							finalScore.setSlaUdpGJitter(map1.get(typ).getSlaUdpGJitter());
 							finalScore.setSlaUdpRJitter(map1.get(typ).getSlaUdpRJitter());
 							finalScore.setSlaUdpLossRate(map1.get(typ).getSlaUdpLossRate());
+							finalScore.setUdpSlaScore(map1.get(typ).getScore());
 						}else if(typ.equals("dns")){
 							finalScore.setDnsDelay(map1.get(typ).getDnsDelay());
 							finalScore.setDnsSuccessRate(map1.get(typ).getDnsSuccessRate());
+							finalScore.setDnsScore(map1.get(typ).getScore());
 						}else if(typ.equals("dhcp")){
 							finalScore.setDhcpDelay(map1.get(typ).getDhcpDelay());
 							finalScore.setDhcpSuccessRate(map1.get(typ).getDhcpSuccessRate());
+							finalScore.setDhcpScore(map1.get(typ).getScore());
 						}else if(typ.equals("pppoe")){
 							finalScore.setPppoeDelay(map1.get(typ).getPppoeDelay());
 							finalScore.setPppoeDropRate(map1.get(typ).getPppoeDropRate());
 							finalScore.setPppoeSuccessRate(map1.get(typ).getPppoeSuccessRate());
+							finalScore.setPppoeScore(map1.get(typ).getScore());
 						}else if(typ.equals("radius")){
 							finalScore.setRadiusDelay(map1.get(typ).getRadiusDelay());
 							finalScore.setRadiusSuccessRate(map1.get(typ).getRadiusSuccessRate());
+							finalScore.setRadiusScore(map1.get(typ).getScore());
 						}else{}
 						finalScore.setScore(finalScore.getScore()+map1.get(typ).getScore()*map1.get(typ).getBase());
 						finalScore.setBase(finalScore.getBase()+map1.get(typ).getBase());

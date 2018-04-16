@@ -18,6 +18,10 @@ public interface RecordHourPingService {
 	Map queryTime();
 
 	Map queryDay();
+
+	String queryBeforeDay(String date);
+
+	String queryAfterDay(String date);
 	
 	List<RecordHourPingEntity> queryList(Map<String, Object> map);
 

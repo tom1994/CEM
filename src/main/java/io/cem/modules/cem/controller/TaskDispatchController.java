@@ -1,31 +1,24 @@
 package io.cem.modules.cem.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.qiniu.util.Json;
 import io.cem.common.annotation.SysLog;
 import io.cem.common.exception.RRException;
 import io.cem.common.utils.*;
 import io.cem.modules.cem.entity.ProbeEntity;
 import io.cem.modules.cem.entity.TargetEntity;
+import io.cem.modules.cem.entity.TaskDispatchEntity;
 import io.cem.modules.cem.service.ProbeService;
 import io.cem.modules.cem.service.TargetService;
+import io.cem.modules.cem.service.TaskDispatchService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import io.cem.modules.cem.entity.TaskDispatchEntity;
-import io.cem.modules.cem.service.TaskDispatchService;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -361,7 +354,6 @@ public class TaskDispatchController {
 
     @SysLog("取消任务")
     @RequestMapping("/cancel/{id}")
-    @RequiresPermissions("taskdispatch:delete")
     public R cancel(@PathVariable("id") Integer id) {
         int result = BypassHttps.sendRequestIgnoreSSL("DELETE", "https://114.236.91.16:23456/web/v1/tasks/" + id);
         if (result == 200) {

@@ -2,23 +2,20 @@ package io.cem.modules.cem.service.impl;
 
 
 import io.cem.common.utils.PropertiesUtils;
-import io.cem.common.utils.*;
+import io.cem.modules.cem.dao.RecordHourPingDao;
 import io.cem.modules.cem.dao.RecordPingDao;
 import io.cem.modules.cem.entity.*;
-import io.cem.modules.cem.service.RecordHourTracertService;
+import io.cem.modules.cem.service.RecordHourPingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.math.BigDecimal;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.Future;
-
-import io.cem.modules.cem.dao.RecordHourPingDao;
-import io.cem.modules.cem.service.RecordHourPingService;
 
 
 
@@ -1546,6 +1543,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 							finalScore.setPingIcmpJitterStd(map1.get(typ).getPingIcmpJitterStd());
 							finalScore.setPingIcmpJitterVar(map1.get(typ).getPingIcmpJitterVar());
 							finalScore.setPingIcmpLossRate(map1.get(typ).getPingIcmpLossRate());
+							finalScore.setIcmpPingScore(map1.get(typ).getScore());
 						} else if (typ.equals("pingTcp")) {
 							finalScore.setPingTcpDelay(map1.get(typ).getPingTcpDelay());
 							finalScore.setPingTcpDelayStd(map1.get(typ).getPingTcpDelayStd());
@@ -1554,6 +1552,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 							finalScore.setPingTcpJitterStd(map1.get(typ).getPingTcpJitterStd());
 							finalScore.setPingTcpJitterVar(map1.get(typ).getPingTcpJitterVar());
 							finalScore.setPingTcpLossRate(map1.get(typ).getPingTcpLossRate());
+							finalScore.setTcpPingScore(map1.get(typ).setScore(););
 						} else if (typ.equals("pingUdp")) {
 							finalScore.setPingUdpDelay(map1.get(typ).getPingUdpDelay());
 							finalScore.setPingUdpDelayStd(map1.get(typ).getPingUdpDelayStd());
@@ -1562,6 +1561,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 							finalScore.setPingUdpJitterStd(map1.get(typ).getPingUdpJitterStd());
 							finalScore.setPingUdpJitterVar(map1.get(typ).getPingUdpJitterVar());
 							finalScore.setPingUdpLossRate(map1.get(typ).getPingUdpLossRate());
+							finalScore.setUdpPingScore(map1.get(typ).setScore(););
 						} else if (typ.equals("tracertIcmp")) {
 							finalScore.setTracertIcmpDelay(map1.get(typ).getTracertIcmpDelay());
 							finalScore.setTracertIcmpDelayStd(map1.get(typ).getTracertIcmpDelayStd());
@@ -1570,6 +1570,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 							finalScore.setTracertIcmpJitterStd(map1.get(typ).getTracertIcmpJitterStd());
 							finalScore.setTracertIcmpJitterVar(map1.get(typ).getTracertIcmpJitterVar());
 							finalScore.setTracertIcmpLossRate(map1.get(typ).getTracertIcmpLossRate());
+							finalScore.setIcmpTracertScore(map1.get(typ).getScore());
 						} else if (typ.equals("tracertUdp")) {
 							finalScore.setTracertIcmpDelay(map1.get(typ).getTracertTcpDelay());
 							finalScore.setTracertIcmpDelayStd(map1.get(typ).getTracertTcpDelayStd());
@@ -1578,6 +1579,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 							finalScore.setTracertIcmpJitterStd(map1.get(typ).getTracertTcpJitterStd());
 							finalScore.setTracertIcmpJitterVar(map1.get(typ).getTracertTcpJitterVar());
 							finalScore.setTracertIcmpLossRate(map1.get(typ).getTracertTcpLossRate());
+							finalScore.setUdpTracertScore(map1.get(typ).setScore(););
 						} else {
 						}
 						finalScore.setScore(finalScore.getScore() + (map1.get(typ).getScore()) * (map1.get(typ).getBase()));
@@ -3394,6 +3396,42 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 		map.put("record_date",df.format(new Date()));
 		return map;
 	}
+
+	@Override
+	public String queryBeforeDay(String specifiedDay) {//可以用new Date().toLocalString()传递参数
+		Calendar c = Calendar.getInstance();
+		Date date = null;
+		try {
+			date = new SimpleDateFormat("yy-MM-dd").parse(specifiedDay);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		c.setTime(date);
+		int day = c.get(Calendar.DATE);
+		c.set(Calendar.DATE, day - 1);
+
+		String dayBefore = new SimpleDateFormat("yyyy-MM-dd").format(c.getTime());
+		return dayBefore;
+	}
+
+	@Override
+	public String queryAfterDay(String specifiedDay) {
+		Calendar c = Calendar.getInstance();
+		Date date = null;
+		try {
+			date = new SimpleDateFormat("yy-MM-dd").parse(specifiedDay);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		c.setTime(date);
+		int day = c.get(Calendar.DATE);
+		c.set(Calendar.DATE, day + 1);
+
+		String dayAfter = new SimpleDateFormat("yyyy-MM-dd")
+				.format(c.getTime());
+		return dayAfter;
+	}
+
 
 	@Override
 	public int queryTotal(Map<String, Object> map){

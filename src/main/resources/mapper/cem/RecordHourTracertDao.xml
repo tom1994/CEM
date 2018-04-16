@@ -87,7 +87,10 @@
 		<if test="probe_id != null and probe_id != ''">
 			AND rht.probe_id = #{probe_id}
 		</if>
-		GROUP BY rht.city_id,rht.county_id,rht.service_type,rht.target_id,rht.probe_id,date_format(rht.record_date,'%Y-%m-%d'),time_format(record_time, '%H');
+		<if test="startTime != null and terminalTime != null">
+			AND record_time BETWEEN #{startTime} AND #{terminalTime}
+		</if>
+		GROUP BY rht.city_id,rht.county_id,rht.service_type,rht.probe_id,date_format(rht.record_date,'%Y-%m-%d'),time_format(record_time, '%H');
 	</select>
 
 	<select id="queryDayList" resultType="io.cem.modules.cem.entity.RecordHourTracertEntity">
@@ -128,7 +131,7 @@
 		<if test="probe_id != null and probe_id != ''">
 			AND rht.probe_id = #{probe_id}
 		</if>
-		GROUP BY rht.city_id,rht.county_id,rht.service_type,rht.target_id,rht.probe_id,date_format(rht.record_date,'%Y-%m-%d'),time_format(record_time, '%H');
+		GROUP BY rht.city_id,rht.county_id,rht.service_type,rht.probe_id,date_format(rht.record_date,'%Y-%m-%d'),time_format(record_time, '%H');
 	</select>
 
 	<select id="queryExitList" resultType="io.cem.modules.cem.entity.RecordHourTracertEntity">

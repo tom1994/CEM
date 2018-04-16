@@ -221,7 +221,10 @@
 		<if test="probe_id != null and probe_id != ''">
 			AND record_hour_web_video.probe_id = #{probe_id}
 		</if>
-		GROUP BY record_hour_web_video.city_id,record_hour_web_video.county_id,record_hour_web_video.service_type,record_hour_web_video.probe_id
+		<if test="startTime != null and terminalTime != null">
+			AND record_time BETWEEN #{startTime} AND #{terminalTime}
+		</if>
+		GROUP BY record_hour_web_video.city_id,record_hour_web_video.county_id,record_hour_web_video.probe_id
 
 	</select>
 
@@ -267,7 +270,10 @@
 		<if test="probe_id != null and probe_id != ''">
 			AND record_hour_web_video.probe_id = #{probe_id}
 		</if>
-		GROUP BY record_hour_web_video.city_id,record_hour_web_video.county_id,record_hour_web_video.service_type
+		<if test="startTime != null and terminalTime != null">
+			AND record_time BETWEEN #{startTime} AND #{terminalTime}
+		</if>
+		GROUP BY record_hour_web_video.city_id,record_hour_web_video.county_id
 
 	</select>
 
@@ -357,7 +363,7 @@
 		<if test="probe_id != null and probe_id != ''">
 			AND webv.probe_id = #{probe_id}
 		</if>
-		GROUP BY webv.city_id,webv.county_id,webv.service_type,webv.probe_id
+		GROUP BY webv.city_id,webv.county_id,webv.probe_id
 
 	</select>
 
@@ -402,7 +408,7 @@
 		<if test="probe_id != null and probe_id != ''">
 			AND webv.probe_id = #{probe_id}
 		</if>
-		GROUP BY webv.city_id,webv.county_id,webv.service_type
+		GROUP BY webv.city_id,webv.county_id
 
 	</select>
 
@@ -447,7 +453,7 @@
 		<if test="probe_id != null and probe_id != ''">
 			AND webv.probe_id = #{probe_id}
 		</if>
-		GROUP BY webv.service_type,webv.target_id
+		GROUP BY webv.target_id
 
 	</select>
 

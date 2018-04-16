@@ -88,7 +88,10 @@
 		<if test="probe_id != null and probe_id != ''">
 			AND record_hour_web_download.probe_id = #{probe_id}
 		</if>
-		GROUP BY record_hour_web_download.city_id,record_hour_web_download.county_id,record_hour_web_download.service_type,record_hour_web_download.target_id,record_hour_web_download.probe_id,date_format(record_hour_web_download.record_date,'%Y-%m-%d'),time_format(record_hour_web_download.record_time, '%H')
+		<if test="startTime != null and terminalTime != null">
+			AND record_time BETWEEN #{startTime} AND #{terminalTime}
+		</if>
+		GROUP BY record_hour_web_download.city_id,record_hour_web_download.county_id,record_hour_web_download.probe_id,date_format(record_hour_web_download.record_date,'%Y-%m-%d'),time_format(record_hour_web_download.record_time, '%H')
 
 	</select>
 
@@ -185,7 +188,7 @@
 		<if test="probe_id != null and probe_id != ''">
 			AND webd.probe_id = #{probe_id}
 		</if>
-		GROUP BY webd.city_id,webd.county_id,webd.service_type,webd.target_id,webd.probe_id,date_format(webd.record_date,'%Y-%m-%d'),time_format(webd.record_time, '%H')
+		GROUP BY webd.city_id,webd.county_id,webd.probe_id,date_format(webd.record_date,'%Y-%m-%d'),time_format(webd.record_time, '%H')
 
 	</select>
 

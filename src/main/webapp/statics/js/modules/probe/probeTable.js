@@ -412,6 +412,43 @@ var probegroup_handle = new Vue({
 
     }
 });
+//取消任务
+var cancel_confirm = new Vue({
+    el: '#cancel_confirm',
+    data: {
+        taskDispatchId: 0
+    },
+    methods: {
+        show_deleteModal: function () {
+            $(this.$el).modal('show');
+            /*弹出确认模态框*/
+        },
+        close_modal: function (obj) {
+            $(this.$el).modal('hide');
+        },
+        cancel_delete: function () {
+            $(this.$el).modal('hide');
+        },
+        confirm: function () {
+            $.ajax({
+                type: "POST", /*GET会乱码*/
+                url: "../../cem/taskdispatch/cancel/" + this.taskDispatchId,
+                cache: false,  //禁用缓存
+                dataType: "json",
+                success: function (result) {
+                    if(result.code == 404){
+                        dispatch_table.currReset();
+                        toastr.error(result.msg)
+                    }else {
+                        dispatch_table.currReset();
+                        toastr.success("任务已取消!");
+                        cancel_confirm.close_modal();
+                    }
+                }
+            });
+        }
+    }
+});
 
 /*查看任务*/
 function dispatch_info(obj) {
@@ -429,7 +466,8 @@ var dispatch_table = new Vue({
             {title: '<div style="width:17px"></div>'},
             {title: '<div style="width:117px">任务类型</div>'},
             {title: '<div style="width:117px">任务名称</div>'},
-            {title: '<div style="width:160px">调度策略</div>'}
+            {title: '<div style="width:160px">调度策略</div>'},
+            {title: '<div style="width:160px">操作</div>'}
         ],
         rows: [],
         dtHandle: null,
@@ -523,7 +561,7 @@ var dispatch_table = new Vue({
                             row.push(item.taskName);
                             row.push(item.spName);
                             // row.push('<span title="' + item.targetName + '" style="white-space: nowrap">' + transString(item.targetName,0,25)+ '</span>');
-                            //row.push('<a class="fontcolor" onclick="cancel_task(this)" id=' + item.id + '>取消任务</a>');
+                            row.push('<a class="fontcolor" onclick="cancel_task(this)" id=' + item.id + '>取消任务</a>');
                             rows.push(row);
                         });
                         returnData.data = rows;
@@ -534,7 +572,13 @@ var dispatch_table = new Vue({
         });
     }
 });
-
+//取消任务
+function cancel_task(obj) {
+    var taskDispatchId = parseInt(obj.id);
+    cancel_confirm.taskDispatchId = taskDispatchId;
+    console.log(taskDispatchId);
+    cancel_confirm.show_deleteModal();
+}
 /*探针列表详情功能*/
 function update_this(obj) {     /*监听修改触发事件*/
     var update_data_id = parseInt(obj.id);
@@ -826,7 +870,7 @@ function updategroup_this(obj) {     /*监听修改触发事件*/
 function delete_ajax(idArray) {
     var ids = JSON.stringify(idArray);
     // console.log(typeof idArray)
-debugger
+    debugger
     // var ids = parseInt(idArray)
     /*对象数组字符串*/
     $.ajax({
