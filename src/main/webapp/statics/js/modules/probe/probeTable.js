@@ -1405,7 +1405,7 @@ var probetable = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                        //console.log(result);
+                        console.log(result);
                         //封装返回数据
                         let returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -1509,6 +1509,7 @@ var grouptable = new Vue({
             serverSide: true,
             info: false,
             ordering: false, /*禁用排序功能*/
+            sEmptyTable: "No data available in table",
             oLanguage: {
                 sLengthMenu: "每页 _MENU_ 行数据",
                 oPaginate: {

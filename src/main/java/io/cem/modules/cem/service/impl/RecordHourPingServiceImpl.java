@@ -1552,7 +1552,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 							finalScore.setPingTcpJitterStd(map1.get(typ).getPingTcpJitterStd());
 							finalScore.setPingTcpJitterVar(map1.get(typ).getPingTcpJitterVar());
 							finalScore.setPingTcpLossRate(map1.get(typ).getPingTcpLossRate());
-							finalScore.setTcpPingScore(map1.get(typ).setScore(););
+							finalScore.setTcpPingScore(map1.get(typ).getScore());
 						} else if (typ.equals("pingUdp")) {
 							finalScore.setPingUdpDelay(map1.get(typ).getPingUdpDelay());
 							finalScore.setPingUdpDelayStd(map1.get(typ).getPingUdpDelayStd());
@@ -1561,7 +1561,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 							finalScore.setPingUdpJitterStd(map1.get(typ).getPingUdpJitterStd());
 							finalScore.setPingUdpJitterVar(map1.get(typ).getPingUdpJitterVar());
 							finalScore.setPingUdpLossRate(map1.get(typ).getPingUdpLossRate());
-							finalScore.setUdpPingScore(map1.get(typ).setScore(););
+							finalScore.setUdpPingScore(map1.get(typ).getScore());
 						} else if (typ.equals("tracertIcmp")) {
 							finalScore.setTracertIcmpDelay(map1.get(typ).getTracertIcmpDelay());
 							finalScore.setTracertIcmpDelayStd(map1.get(typ).getTracertIcmpDelayStd());
@@ -1579,7 +1579,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 							finalScore.setTracertIcmpJitterStd(map1.get(typ).getTracertTcpJitterStd());
 							finalScore.setTracertIcmpJitterVar(map1.get(typ).getTracertTcpJitterVar());
 							finalScore.setTracertIcmpLossRate(map1.get(typ).getTracertTcpLossRate());
-							finalScore.setUdpTracertScore(map1.get(typ).setScore(););
+							finalScore.setUdpTracertScore(map1.get(typ).getScore());
 						} else {
 						}
 						finalScore.setScore(finalScore.getScore() + (map1.get(typ).getScore()) * (map1.get(typ).getBase()));

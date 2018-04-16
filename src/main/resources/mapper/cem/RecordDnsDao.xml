@@ -174,7 +174,7 @@
 		rd.service_type AS service_type,
 		rd.target_id AS target_id,
 		rd.target_ip AS target_ip,
-		rd.record_time AS record_time,
+		time_format(rd.record_time,'%H-%30-%00') AS record_time,
 		rd.record_date AS record_date,
 		probe.city_id AS city_id,
 		probe.county_id AS county_id,

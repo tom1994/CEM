@@ -87,7 +87,7 @@
 		<if test="startTime != null and terminalTime != null">
 			AND record_time BETWEEN #{startTime} AND #{terminalTime}
 		</if>
-		GROUP BY record_hour_radius.city_id,record_hour_radius.county_id,record_hour_radius.probe_id,date_format(record_hour_radius.record_date,'%Y-%m-%d'),time_format(record_hour_radius.record_time, '%H')
+		GROUP BY record_hour_radius.city_id,record_hour_radius.county_id,record_hour_radius.probe_id,date_format(record_hour_radius.record_date,'%Y-%m-%d'),record_hour_radius.record_time
 
 	</select>
 
@@ -178,7 +178,7 @@
 		<if test="probe_id != null and probe_id != ''">
 			AND radius.probe_id = #{probe_id}
 		</if>
-		GROUP BY radius.city_id,radius.county_id,radius.probe_id,date_format(radius.record_date,'%Y-%m-%d'),time_format(radius.record_time, '%H')
+		GROUP BY radius.city_id,radius.county_id,radius.probe_id,date_format(radius.record_date,'%Y-%m-%d')
 
 	</select>
 

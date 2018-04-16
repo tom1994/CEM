@@ -89,7 +89,7 @@
 		<if test="probe_id != null and probe_id != ''">
 			AND record_hour_game.probe_id = #{probe_id}
 		</if>
-		GROUP BY record_hour_game.city_id,record_hour_game.county_id,record_hour_game.service_type,record_hour_game.probe_id,date_format(record_hour_game.record_date,'%Y-%m-%d'),time_format(record_hour_game.record_time, '%H')
+		GROUP BY record_hour_game.city_id,record_hour_game.county_id,record_hour_game.service_type,record_hour_game.probe_id,date_format(record_hour_game.record_date,'%Y-%m-%d'),record_hour_game.record_time
 
 	</select>
 
@@ -267,7 +267,7 @@
 		<if test="probe_id != null and probe_id != ''">
 			AND game.probe_id = #{probe_id}
 		</if>
-		GROUP BY game.city_id,game.county_id,game.service_type,game.probe_id,date_format(game.record_date,'%Y-%m-%d'),time_format(game.record_time, '%H')
+		GROUP BY game.city_id,game.county_id,game.service_type,game.probe_id,date_format(game.record_date,'%Y-%m-%d')
     </select>
 
 	<select id="queryDayRankList" resultType="io.cem.modules.cem.entity.RecordHourGameEntity">

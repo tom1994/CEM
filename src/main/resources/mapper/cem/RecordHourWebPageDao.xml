@@ -134,9 +134,7 @@
 			AND record_hour_web_page.probe_id = #{probe_id}
 		</if>
 		GROUP BY
-		record_hour_web_page.city_id,record_hour_web_page.county_id,record_hour_web_page.service_type,record_hour_web_page.probe_id,date_format(record_hour_web_page.record_date,'%Y-%m-%d'),time_format(record_hour_web_page.record_time,
-		'%H')
-		) t
+		record_hour_web_page.city_id,record_hour_web_page.county_id,record_hour_web_page.service_type,record_hour_web_page.probe_id,date_format(record_hour_web_page.record_date,'%Y-%m-%d'),record_hour_web_page.record_time) t
 		LEFT JOIN city
 		ON t.city_id = city.city_id
 		LEFT JOIN county
@@ -344,7 +342,7 @@
 		<if test="probe_id != null and probe_id != ''">
 			AND webp.probe_id = #{probe_id}
 		</if>
-		GROUP BY webp.city_id,webp.county_id,webp.service_type,webp.probe_id,date_format(webp.record_date,'%Y-%m-%d'),time_format(webp.record_time, '%H')
+		GROUP BY webp.city_id,webp.county_id,webp.service_type,webp.probe_id,date_format(webp.record_date,'%Y-%m-%d')
 
 	</select>
 

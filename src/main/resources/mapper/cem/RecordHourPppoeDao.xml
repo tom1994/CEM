@@ -89,7 +89,7 @@
 		<if test="startTime != null and terminalTime != null">
 			AND record_time BETWEEN #{startTime} AND #{terminalTime}
 		</if>
-		GROUP BY record_hour_pppoe.city_id,record_hour_pppoe.county_id,record_hour_pppoe.probe_id,date_format(record_hour_pppoe.record_date,'%Y-%m-%d'),time_format(record_hour_pppoe.record_time, '%H')
+		GROUP BY record_hour_pppoe.city_id,record_hour_pppoe.county_id,record_hour_pppoe.probe_id,date_format(record_hour_pppoe.record_date,'%Y-%m-%d'),record_hour_pppoe.record_time
 
 	</select>
 
@@ -183,7 +183,7 @@
 		<if test="probe_id != null and probe_id != ''">
 			AND pppoe.probe_id = #{probe_id}
 		</if>
-		GROUP BY pppoe.city_id,pppoe.county_id,pppoe.probe_id,date_format(pppoe.record_date,'%Y-%m-%d'),time_format(pppoe.record_time, '%H')
+		GROUP BY pppoe.city_id,pppoe.county_id,pppoe.probe_id,date_format(pppoe.record_date,'%Y-%m-%d')
 
 	</select>
 
