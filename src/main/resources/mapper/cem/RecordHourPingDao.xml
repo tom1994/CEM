@@ -114,8 +114,11 @@
         <if test="county_id != null and county_id != ''">
             AND rhp.county_id = #{county_id}
         </if>
+        <if test="startTime != null and terminalTime != null">
+            AND record_time BETWEEN #{startTime} AND #{terminalTime}
+        </if>
         GROUP BY
-        rhp.city_id,rhp.county_id,rhp.target_id,rhp.probe_id,rhp.service_type,date_format(rhp.record_date,'%Y-%m-%d'),time_format(record_time,'%H')) t
+        rhp.city_id,rhp.county_id,rhp.probe_id,rhp.service_type,date_format(rhp.record_date,'%Y-%m-%d'),rhp.record_time) t
         LEFT JOIN city
         ON t.city_id = city.city_id
         LEFT JOIN county
@@ -202,8 +205,7 @@
             AND rhp.probe_id = #{probe_id}
         </if>
         GROUP BY
-        rhp.city_id,rhp.county_id,rhp.service_type,rhp.target_id,rhp.probe_id,date_format(rhp.record_date,'%Y-%m-%d'),time_format(record_time,
-        '%H');
+        rhp.city_id,rhp.county_id,rhp.service_type,rhp.probe_id,date_format(rhp.record_date,'%Y-%m-%d')
 
     </select>
 

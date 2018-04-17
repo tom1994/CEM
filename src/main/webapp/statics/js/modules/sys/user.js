@@ -1,6 +1,6 @@
 $(function () {
     $("#jqGrid").jqGrid({
-        url: baseURL + 'sys/user/list',
+        url: encodeURI(baseURL + 'sys/user/list'),
         datatype: "json",
         colModel: [			
 			{ label: '用户ID', name: 'userId', index: "id", width: 45, key: true },
@@ -16,6 +16,7 @@ $(function () {
 			{ label: '创建时间', name: 'createTime', index: "create_time", width: 85}
         ],
 		viewrecords: true,
+        mytype:"post",
         height: 385,
         rowNum: 10,
 		rowList : [10,30,50],
@@ -190,6 +191,7 @@ var vm = new Vue({
         },
         reload: function () {
             vm.showList = true;
+            console.log(vm.q.username);
             var page = $("#jqGrid").jqGrid('getGridParam','page');
             $("#jqGrid").jqGrid('setGridParam',{
                 postData:{'username': vm.q.username},

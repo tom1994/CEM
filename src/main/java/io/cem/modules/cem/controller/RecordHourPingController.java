@@ -77,17 +77,26 @@ public class RecordHourPingController {
             throw new RRException("内部参数错误，请重试！");
         }
 //        int service = Integer.parseInt(map.get("service").toString());
-//        String dateStr = map.get("ava_start").toString();
-//        String dateStr2 = map.get("ava_terminal").toString();
-//        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-//        int dateDifferent = 0;
-//        try {
-//            Date date2 = format.parse(dateStr2);
-//            Date date = format.parse(dateStr);
-//            dateDifferent = recordHourPingService.differentDays(date, date2);
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
+        String dateStr = map.get("ava_start").toString();
+        String dateStr2 = map.get("ava_terminal").toString();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        int dateDifferent = 0;
+        try {
+            Date date2 = format.parse(dateStr2);
+            Date date = format.parse(dateStr);
+            dateDifferent = recordHourPingService.differentDays(date, date2);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        List<ScoreEntity> scoreList=new ArrayList<>();
+
+        if(dateDifferent==0){
+            scoreList = recordHourRadiusService.calculateHourScore(map);
+        }else if(dateDifferent==1){
+            scoreList = recordHourRadiusService.calculateDayHourScore(map);
+        }else{
+            scoreList = recordHourRadiusService.calculateDayScore(map);
+        }
 
 		/*int total = 0;
         if(page==null) {              *//*没有传入page,则取全部值*//*
@@ -101,7 +110,7 @@ public class RecordHourPingController {
 			//total = scoreList.size();
 		}*/
 
-        List<ScoreEntity> scoreList = recordHourRadiusService.calculateDayScore(map);
+
 
         if (map.get("target_id") == null) {
             for (int i = 0; i < scoreList.size(); i++) {

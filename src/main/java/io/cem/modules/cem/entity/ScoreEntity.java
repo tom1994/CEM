@@ -401,6 +401,40 @@ public class ScoreEntity {
     private Double gameScore;
 
 
+    //网络连通性业务分数
+    @ExcelIgnore
+    private Double icmpPingScore;
+    @ExcelIgnore
+    private Double tcpPingScore;
+    @ExcelIgnore
+    private Double udpPingScore;
+    @ExcelIgnore
+    private Double icmpTracertScore;
+    @ExcelIgnore
+    private Double udpTracertScore;
+    //网络层质量业务分数
+    @ExcelIgnore
+    private Double tcpSlaScore;
+    @ExcelIgnore
+    private Double udpSlaScore;
+    @ExcelIgnore
+    private Double pppoeScore;
+    @ExcelIgnore
+    private Double dhcpScore;
+    @ExcelIgnore
+    private Double dnsScore;
+    @ExcelIgnore
+    private Double radiusScore;
+    //文件下载业务分数
+    @ExcelIgnore
+    private Double webDownloadScore;
+    @ExcelIgnore
+    private Double ftpDownloadScore;
+    @ExcelIgnore
+    private Double ftpUploadScore;
+
+
+
 
     /**
      * 设置：记录ID
@@ -1395,7 +1429,119 @@ public class ScoreEntity {
         this.gameScore = gameScore;
     }
 
-//    public static Comparator scoreComparator = new Comparator() {
+    public Double getIcmpPingScore() {
+        return icmpPingScore;
+    }
+
+    public void setIcmpPingScore(Double icmpPingScore) {
+        this.icmpPingScore = icmpPingScore;
+    }
+
+    public Double getTcpPingScore() {
+        return tcpPingScore;
+    }
+
+    public void setTcpPingScore(Double tcpPingScore) {
+        this.tcpPingScore = tcpPingScore;
+    }
+
+    public Double getUdpPingScore() {
+        return udpPingScore;
+    }
+
+    public void setUdpPingScore(Double udpPingScore) {
+        this.udpPingScore = udpPingScore;
+    }
+
+    public Double getIcmpTracertScore() {
+        return icmpTracertScore;
+    }
+
+    public void setIcmpTracertScore(Double icmpTracertScore) {
+        this.icmpTracertScore = icmpTracertScore;
+    }
+
+    public Double getUdpTracertScore() {
+        return udpTracertScore;
+    }
+
+    public void setUdpTracertScore(Double udpTracertScore) {
+        this.udpTracertScore = udpTracertScore;
+    }
+
+    public Double getTcpSlaScore() {
+        return tcpSlaScore;
+    }
+
+    public void setTcpSlaScore(Double tcpSlaScore) {
+        this.tcpSlaScore = tcpSlaScore;
+    }
+
+    public Double getUdpSlaScore() {
+        return udpSlaScore;
+    }
+
+    public void setUdpSlaScore(Double udpSlaScore) {
+        this.udpSlaScore = udpSlaScore;
+    }
+
+    public Double getPppoeScore() {
+        return pppoeScore;
+    }
+
+    public void setPppoeScore(Double pppoeScore) {
+        this.pppoeScore = pppoeScore;
+    }
+
+    public Double getDhcpScore() {
+        return dhcpScore;
+    }
+
+    public void setDhcpScore(Double dhcpScore) {
+        this.dhcpScore = dhcpScore;
+    }
+
+    public Double getDnsScore() {
+        return dnsScore;
+    }
+
+    public void setDnsScore(Double dnsScore) {
+        this.dnsScore = dnsScore;
+    }
+
+    public Double getRadiusScore() {
+        return radiusScore;
+    }
+
+    public void setRadiusScore(Double radiusScore) {
+        this.radiusScore = radiusScore;
+    }
+
+    public Double getWebDownloadScore() {
+        return webDownloadScore;
+    }
+
+    public void setWebDownloadScore(Double webDownloadScore) {
+        this.webDownloadScore = webDownloadScore;
+    }
+
+    public Double getFtpDownloadScore() {
+        return ftpDownloadScore;
+    }
+
+    public void setFtpDownloadScore(Double ftpDownloadScore) {
+        this.ftpDownloadScore = ftpDownloadScore;
+    }
+
+    public Double getFtpUploadScore() {
+        return ftpUploadScore;
+    }
+
+    public void setFtpUploadScore(Double ftpUploadScore) {
+        this.ftpUploadScore = ftpUploadScore;
+    }
+
+    //    public static Comparator scoreComparator = new Comparator() {
 //        @Override
 //        public int compare(Object o1, Object o2) {
 //            return ( ((ScoreEntity) o1).getScore() > ((ScoreEntity) o2).getScore() ? -1 :

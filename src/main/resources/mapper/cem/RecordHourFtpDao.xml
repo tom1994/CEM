@@ -92,7 +92,10 @@
 		<if test="probe_id != null and probe_id != ''">
 			AND record_hour_ftp.probe_id = #{probe_id}
 		</if>
-		GROUP BY record_hour_ftp.city_id,record_hour_ftp.county_id,record_hour_ftp.service_type,record_hour_ftp.target_id,record_hour_ftp.probe_id,date_format(record_hour_ftp.record_date,'%Y-%m-%d'),time_format(record_hour_ftp.record_time, '%H')
+		<if test="startTime != null and terminalTime != null">
+			AND record_time BETWEEN #{startTime} AND #{terminalTime}
+		</if>
+		GROUP BY record_hour_ftp.city_id,record_hour_ftp.county_id,record_hour_ftp.service_type,record_hour_ftp.probe_id,date_format(record_hour_ftp.record_date,'%Y-%m-%d'),record_hour_ftp.record_time
 
 	</select>
 
@@ -195,7 +198,7 @@
 		<if test="probe_id != null and probe_id != ''">
 			AND ftp.probe_id = #{probe_id}
 		</if>
-		GROUP BY ftp.city_id,ftp.county_id,ftp.service_type,ftp.target_id,ftp.probe_id,date_format(ftp.record_date,'%Y-%m-%d'),time_format(ftp.record_time, '%H')
+		GROUP BY ftp.city_id,ftp.county_id,ftp.service_type,ftp.probe_id,date_format(ftp.record_date,'%Y-%m-%d')
 
 	</select>
 

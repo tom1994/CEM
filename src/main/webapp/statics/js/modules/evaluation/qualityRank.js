@@ -381,7 +381,7 @@ function out() {/*导出事件*/
     } else {
         var search = new Object();
         search.city_id = searchJson.city_id;
-        search.couty_id = searchJson.county_id;
+        search.county_id = searchJson.country_id;
         search.service = searchJson.service_type;
         search.target_id = searchJson.target;
         if (searchJson.startDate.length != 0 && searchJson.terminalDate.length != 0) {
@@ -414,7 +414,7 @@ function doorout() {/*导出事件*/
     } else {
         var search = new Object();
         search.city_id = searchJson.city_id;
-        search.couty_id = searchJson.county_id;
+        search.county_id = searchJson.country_id;
         search.service = searchJson.service_type;
         search.probeId = searchJson.probe;
         search.target_id = searchJson.target;
@@ -443,7 +443,7 @@ function doorout() {/*导出事件*/
 //区域排名详情
 //TODO：获取区域排名并展示
 function areaupdate_this(obj) {     /*监听修改触发事件*/
-    $('#Section2').showLoading();
+    loading();
     countyId = parseInt(obj.id);
     var searchJson = getFormJson($('#areasearch'));
     if ((searchJson.startDate) > (searchJson.terminalDate)) {
@@ -474,7 +474,7 @@ function areaupdate_this(obj) {     /*监听修改触发事件*/
         }
         var schedulepolicy = JSON.stringify(search);
         console.log(schedulepolicy);
-        console.log('发送数据',new Date())
+
         $.ajax({
             type: "POST", /*GET会乱码*/
             url: "../../recordhourtracert/areadetail/" + schedulepolicy,
@@ -485,7 +485,7 @@ function areaupdate_this(obj) {     /*监听修改触发事件*/
                 console.log('收到数据',new Date(),result);
 
                 if(result!=undefined){
-                    $('#Section2').hideLoading();
+                    removeLoading('test');
                     var  areaContent=result.scoreList;
                     area_this(obj,areaContent)
                 }
@@ -502,7 +502,7 @@ function AreaOut() {/*导出事件*/
     } else {
         var search = new Object();
         search.city_id = searchJson.city_id;
-        search.couty_id = searchJson.county_id;
+        search.county_id = searchJson.country_id;
         search.service = searchJson.service_type;
         search.target_id = searchJson.target_id;
         if (searchJson.startDate.length != 0 && searchJson.terminalDate.length != 0) {
@@ -534,13 +534,14 @@ var search_service = new Vue({
     methods: {
         testagentListsearch: function () {
             var searchJson = getFormJson($('#probesearch'));
+            debugger
             if ((searchJson.startDate) > (searchJson.terminalDate)) {
                 console.log("时间选择有误，请重新选择！");
                 $('#nonavailable_time').modal('show');
             } else {
                 var search = new Object();
                 search.city_id = searchJson.city_id;
-                search.couty_id = searchJson.county_id;
+                search.county_id = searchJson.country_id;
                 search.service = searchJson.service_type;
                 search.target_id = searchJson.target;
                 if (searchJson.startDate.length != 0 && searchJson.terminalDate.length != 0) {
@@ -599,7 +600,7 @@ var search_area_service = new Vue({
             } else {
                 var search = new Object();
                 search.city_id = searchJson.city_id;
-                search.couty_id = searchJson.county_id;
+                search.county_id = searchJson.country_id;
                 search.service = searchJson.service_type;
                 search.target_id = searchJson.target_id;
                 if (searchJson.startDate.length != 0 && searchJson.terminalDate.length != 0) {
@@ -646,7 +647,6 @@ var search_door_service = new Vue({
     // 在 `methods` 对象中定义方法
     methods: {
         DoorListsearch: function () {
-            debugger
             var searchJson = getFormJson($('#door_search'));
             if ((searchJson.startDate) > (searchJson.terminalDate)) {
                 console.log("时间选择有误，请重新选择！");
@@ -654,7 +654,7 @@ var search_door_service = new Vue({
             } else {
                 var search = new Object();
                 search.city_id = searchJson.city_id;
-                search.couty_id = searchJson.county_id;
+                search.county_id = searchJson.country_id;
                 search.service = searchJson.service_type;
                 search.probe_id = searchJson.probe;
                 search.target_id = searchJson.target;
@@ -711,14 +711,14 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
             a[3].value = countrySelected;
         }
         if (serviceSelected != -1) {
-            a[2] = {};
-            a[2].name = "service_type";
-            a[2].value = JSON.stringify(serviceSelected);
+            a[4] = {};
+            a[4].name = "service_type";
+            a[4].value = JSON.stringify(serviceSelected);
         }
         if (targetSelected != 0) {
-            a[3] = {};
-            a[3].name = "target";
-            a[3].value = targetSelected;
+            a[5] = {};
+            a[5].name = "target";
+            a[5].value = targetSelected;
         }
 
     } else if(form.selector == '#areasearch') {
@@ -815,14 +815,14 @@ var probetable = new Vue({
     el: '#probedata_table',
     data: {
         headers: [
-            {title: '<div style="width:10px"></div>'},
-            {title: '<div style="width:70px">地市</div>'},
-            {title: '<div style="width:70px">区县</div>'},
-            {title: '<div style="width:70px">探针名称</div>'},
-            {title: '<div style="width:90px">业务类型</div>'},
-            {title: '<div style="width:60px">目标地址</div>'},
-            {title: '<div style="width:55px">分数</div>'},
-            {title: '<div style="width:80px">操作</div>'}
+            {title: '<div ></div>'},
+            {title: '<div >地市</div>'},
+            {title: '<div >区县</div>'},
+            {title: '<div >探针名称</div>'},
+            {title: '<div >业务类型</div>'},
+            {title: '<div >目标地址</div>'},
+            {title: '<div >分数</div>'},
+            {title: '<div >操作</div>'}
         ],
         rows: [],
         dtHandle: null,
@@ -4653,4 +4653,22 @@ function door_game(obj) {
         }
     })
 }
-
+function loading() {
+    $('#Section2').loading({
+        loadingWidth:240,
+        title:'正在努力的加载中~',
+        name:'test',
+        discription:'这是一个描述...',
+        direction:'row',
+        type:'origin',
+        originBg:'#B0E2FF',
+        originDivWidth:30,
+        originDivHeight:30,
+        originWidth:4,
+        originHeight:4,
+        smallLoading:false,
+        titleColor:'#ADD8E6',
+        loadingBg:'#312923',
+        loadingMaskBg:'rgba(22,22,22,0.2)'
+    });
+}
