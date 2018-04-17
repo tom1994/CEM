@@ -1,4 +1,3 @@
-
 /**
  * Created by Fern on 2017/11/28.
  */
@@ -417,6 +416,7 @@ function doorout() {/*导出事件*/
         search.city_id = searchJson.city_id;
         search.couty_id = searchJson.county_id;
         search.service = searchJson.service_type;
+        search.probeId = searchJson.probe;
         search.target_id = searchJson.target;
         if (searchJson.startDate.length != 0 && searchJson.terminalDate.length != 0) {
             var ava_start = searchJson.startDate.substr(0, 10);
@@ -628,6 +628,12 @@ var search_area_service = new Vue({
                 ava_terminal: (new Date()).Format("yyyy-MM-dd"),
                 service: '0'
             };
+            citySelected = 0;
+            countrySelected = 0;
+            serviceSelected = 0;
+            area_Selected = 0;
+            probeSelected = 0
+            targetSelected = 0;
             areatable.probedata = data;
             areatable.redraw();
         }
@@ -640,7 +646,7 @@ var search_door_service = new Vue({
     // 在 `methods` 对象中定义方法
     methods: {
         DoorListsearch: function () {
-
+            debugger
             var searchJson = getFormJson($('#door_search'));
             if ((searchJson.startDate) > (searchJson.terminalDate)) {
                 console.log("时间选择有误，请重新选择！");
@@ -650,6 +656,7 @@ var search_door_service = new Vue({
                 search.city_id = searchJson.city_id;
                 search.couty_id = searchJson.county_id;
                 search.service = searchJson.service_type;
+                search.probe_id = searchJson.probe;
                 search.target_id = searchJson.target;
                 if (searchJson.startDate.length != 0 && searchJson.terminalDate.length != 0) {
                     var ava_start = searchJson.startDate.substr(0, 10);
@@ -692,7 +699,6 @@ var search_door_service = new Vue({
 function getFormJson(form) {      /*将表单对象变为json对象*/
     var a = $(form).serializeArray();
     var o = {};
-
     if (form.selector == '#probesearch') {
         if (citySelected != 0) {
             a[2] = {};
@@ -742,15 +748,21 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
             a[3].name = "country_id";
             a[3].value = countrySelected;
         }
-        if (serviceSelected != -1) {
+
+        if (probeSelected != 0) {
             a[4] = {};
-            a[4].name = "service_type";
-            a[4].value = JSON.stringify(serviceSelected);
+            a[4].name = "probe";
+            a[4].value =probeSelected;
+        }
+        if (serviceSelected != -1) {
+            a[5] = {};
+            a[5].name = "service_type";
+            a[5].value = JSON.stringify(serviceSelected);
         }
         if (targetSelected != 0) {
-            a[5] = {};
-            a[5].name = "target";
-            a[5].value = targetSelected;
+            a[6] = {};
+            a[6].name = "target";
+            a[6].value = targetSelected;
         }
     }
 
@@ -1179,6 +1191,7 @@ var doortable = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
+                        debugger
                         console.log(result);
                         //封装返回数据
                         let returnData = {};
@@ -4640,3 +4653,4 @@ function door_game(obj) {
         }
     })
 }
+

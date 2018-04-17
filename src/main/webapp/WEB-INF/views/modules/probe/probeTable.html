@@ -448,6 +448,7 @@
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                                     <select class="form-control input clear" name="access_layer"
                                                             id="access_layer">
+                                                        <option value="" selected>--请选择--</option>
                                                         <option v-for="item in accessLayers"
                                                                 v-bind:value="item.message.layerTag">
                                                             {{ item.message.layerName }}
@@ -459,6 +460,7 @@
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                                     <select id="upstream" class="form-control selectdata"
                                                             name="upstream">
+                                                        <option value="">--请选择--</option>
                                                         <option v-for="item in upstreams"
                                                                 v-bind:value="item.message.id">
                                                             {{item.message.name}}
@@ -771,6 +773,32 @@
                                     <!--<button type="button" class="btn btn-success" v-on:click="">-->
                                     <!--确定-->
                                     <!--</button>-->
+                                </div>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal -->
+                    </div>
+                    <!--任务取消模态框-->
+                    <div class="modal fade" id="cancel_confirm" tabindex="-1" role="dialog"
+                         aria-labelledby="myModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog" style="width: 500px">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                        &times;
+                                    </button>
+                                    <h3 class="modal-title">
+                                        确认
+                                    </h3>
+                                </div>
+                                <div class="modal-body" style="font-size: medium">
+                                    <b>取消任务将不能恢复，确定取消吗?</b>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal"
+                                            v-on:click="cancel_delete">取消
+                                    </button>
+                                    <button type="button" class="btn btn-success" v-on:click="confirm">确定</button>
                                 </div>
                             </div><!-- /.modal-content -->
                         </div><!-- /.modal -->

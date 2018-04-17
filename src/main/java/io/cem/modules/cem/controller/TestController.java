@@ -78,10 +78,8 @@ public class TestController {
             indexRankingViewService.saveGameScore(startDate, endDate, 1);
             indexRankingViewService.saveWebPageScore(startDate, endDate, 2);
             indexRankingViewService.saveWebVideoScore(startDate, endDate, 1);
-        }catch (InterruptedException i){
-
-        }catch(ExecutionException e){
-
+        }catch (Exception e){
+            e.printStackTrace();
         }
         return  R.ok().put("msg","test Ranking success ");
 

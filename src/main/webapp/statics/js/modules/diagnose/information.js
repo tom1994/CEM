@@ -700,7 +700,7 @@ function PING() {
                                 var tables = $('table[id=hop_table]');
                                 for (let i =0;i<a.length;i++){
                                     var j = i+1;
-                                    var trtd = $("<tr><td hidden='hidden'>"+item.id+"</td><td>"+j+"</td><td>"+a[i].hop_ip +"</td><td>"+a[i].delay+"</td><td>"+a[i].loss_rate+"</td></tr>");
+                                    var trtd = $("<tr><td hidden='hidden'>"+item.id+"</td><td>"+j+"</td><td>"+a[i].hop_ip +"</td><td>"+a[i].delay+"</td><td>"+a[i].loss_rate*100+"</td></tr>");
                                     trtd.appendTo(tables);
                                 }
                                 $('#hop_table>tbody tr:eq(0)').css("display",'none');
@@ -861,7 +861,7 @@ function PING() {
                                     var tables = $('table[id=Record_table]');
                                     for (let i =0;i<a.length;i++){
                                         var j = i+1;
-                                        var trtd = $("<tr><td hidden='hidden'>"+item.id+"</td><td>"+j+"</td><td>"+a[i].hop_ip +"</td><td>"+a[i].delay+"</td><td>"+a[i].loss_rate+"</td></tr>");
+                                        var trtd = $("<tr><td hidden='hidden'>"+item.id+"</td><td>"+j+"</td><td>"+a[i].hop_ip +"</td><td>"+a[i].delay+"</td><td>"+a[i].loss_rate*100+"</td></tr>");
                                         trtd.appendTo(tables);
                                     }
                                     $('#Record_table>tbody tr:eq(0)').css("display",'none');
@@ -1123,8 +1123,8 @@ function quality() {
                         dataType: "json",
                         contentType:"application/json",
                         success: function (result) {
-                            $('#warning6').css('display', 'none')
-                            $('#loader6').hide();
+                            $('#warning9').css('display', 'none')
+                            $('#loader9').hide();
                             // 封装返回数据
                             let returnData = {};
                             returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -1292,8 +1292,8 @@ function quality() {
                         dataType: "json",
                         contentType:"application/json",
                         success: function (result) {
-                            $('#warning7').css('display', 'none')
-                            $('#loader7').hide();
+                            $('#warning10').css('display', 'none')
+                            $('#loader10').hide();
                             // 封装返回数据
                             let returnData = {};
                             returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -1446,8 +1446,8 @@ function quality() {
                         dataType: "json",
                         contentType:"application/json",
                         success: function (result) {
-                            $('#warning8').css('display', 'none')
-                            $('#loader8').hide();
+                            $('#warning6').css('display', 'none')
+                            $('#loader6').hide();
                             // 封装返回数据
                             let returnData = {};
                             returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -1582,8 +1582,8 @@ function quality() {
                         dataType: "json",
                         contentType:"application/json",
                         success: function (result) {
-                            $('#warning9').css('display', 'none')
-                            $('#loader9').hide();
+                            $('#warning7').css('display', 'none')
+                            $('#loader7').hide();
                             // 封装返回数据
                             let returnData = {};
                             returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -1718,8 +1718,8 @@ function quality() {
                         dataType: "json",
                         contentType:"application/json",
                         success: function (result) {
-                            $('#warning10').css('display', 'none')
-                            $('#loader10').hide();
+                            $('#warning8').css('display', 'none')
+                            $('#loader8').hide();
                             // 封装返回数据
                             let returnData = {};
                             returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回

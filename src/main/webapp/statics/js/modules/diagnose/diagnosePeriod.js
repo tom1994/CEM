@@ -615,15 +615,6 @@ function compare(property) {
         return value1 - value2;     // 升序
     }
 }
-function cc() {
-       var rows = scoredata.rows;
-       rows.sort(function(a,b){
-           return Date.parse(a.time) - Date.parse(b.time);//时间正序
-       });
-       for(var i =0,l=rows.length;i<l;i++){
-           console.log(rows[i].name + " | " + rows[i].time);
-        }
-}
 Vue.component('data-table', {
     template: '<table class="table table-bordered table-hover table-striped" id="table"></table>',
     props: ['scoredata'],
@@ -665,6 +656,8 @@ Vue.component('data-table', {
                 }
             }
             var chart = new Highcharts.Chart('container', options);
+            var  cc=JSON.stringify(val)
+            console.log(cc );
                 val.forEach(function (item) {              /*观察user是否变化,更新表格数据*/
                 let row = [];
                 row.push(layerNames.get(item.accessLayer));
@@ -1093,20 +1086,20 @@ function ping(obj) {
                             row.push(i);
                             row.push(item.probeName);
                             row.push(item.score.toFixed(2));
-                            row.push(item.pingIcmpDelay.toFixed(2));
-                            row.push(item.pingIcmpDelayStd.toFixed(2));
-                            row.push(item.pingIcmpDelayVar.toFixed(2));
-                            row.push(item.pingIcmpJitter.toFixed(2));
-                            row.push(item.pingIcmpJitterStd.toFixed(2));
-                            row.push(item.pingIcmpJitterVar.toFixed(2));
-                            row.push(item.pingIcmpLossRate.toFixed(2));
-                            row.push(item.pingTcpDelay.toFixed(2));
-                            row.push(item.pingTcpDelayStd.toFixed(2));
-                            row.push(item.pingTcpDelayVar.toFixed(2));
-                            row.push(item.pingTcpJitter.toFixed(2));
-                            row.push(item.pingTcpJitterStd.toFixed(2));
-                            row.push(item.pingTcpJitterVar.toFixed(2));
-                            row.push(item.pingTcpLossRate.toFixed(2));
+                            row.push(item.pingIcmpDelay );
+                            row.push(item.pingIcmpDelayStd );
+                            row.push(item.pingIcmpDelayVar );
+                            row.push(item.pingIcmpJitter );
+                            row.push(item.pingIcmpJitterStd );
+                            row.push(item.pingIcmpJitterVar );
+                            row.push(item.pingIcmpLossRate );
+                            row.push(item.pingTcpDelay );
+                            row.push(item.pingTcpDelayStd );
+                            row.push(item.pingTcpDelayVar );
+                            row.push(item.pingTcpJitter );
+                            row.push(item.pingTcpJitterStd );
+                            row.push(item.pingTcpJitterVar );
+                            row.push(item.pingTcpLossRate );
                             row.push(item.pingUdpDelay);
                             row.push(item.pingUdpDelayStd);
                             row.push(item.pingUdpDelayVar);
@@ -1393,14 +1386,14 @@ function broswer(obj) {
                             row.push(i);
                             row.push(item.probeName);
                             row.push(item.score.toFixed(2));
-                            row.push(item.webpageDnsDelay.toFixed(2));
-                            row.push(item.webpageConnDelay.toFixed(2));
-                            row.push(item.webpageHeadbyteDelay.toFixed(2));
-                            row.push(item.webpagePageFileDelay.toFixed(2));
-                            row.push(item.webpageRedirectDelay.toFixed(2));
-                            row.push(item.webpageAboveFoldDelay.toFixed(2));
-                            row.push(item.webpagePageElementDelay.toFixed(2));
-                            row.push(item.webpageDownloadRate.toFixed(2));
+                            row.push(item.webpageDnsDelay );
+                            row.push(item.webpageConnDelay );
+                            row.push(item.webpageHeadbyteDelay );
+                            row.push(item.webpagePageFileDelay );
+                            row.push(item.webpageRedirectDelay );
+                            row.push(item.webpageAboveFoldDelay );
+                            row.push(item.webpagePageElementDelay );
+                            row.push(item.webpageDownloadRate );
                             rows.push(row);
                         }
 
@@ -1530,10 +1523,10 @@ function download(obj) {
                             row.push(i);
                             row.push(item.probeName);
                             row.push(item.score.toFixed(2));
-                            row.push(item.webDownloadDnsDelay.toFixed(2));
-                            row.push(item.webDownloadConnDelay.toFixed(2));
-                            row.push(item.webDownloadHeadbyteDelay.toFixed(2));
-                            row.push(item.webDownloadDownloadRate.toFixed(2));
+                            row.push(item.webDownloadDnsDelay );
+                            row.push(item.webDownloadConnDelay );
+                            row.push(item.webDownloadHeadbyteDelay );
+                            row.push(item.webDownloadDownloadRate );
                             row.push(item.ftpDownloadDnsDelay);
                             row.push(item.ftpDownloadConnDelay);
                             row.push(item.ftpDownloadLoginDelay);
@@ -1650,18 +1643,18 @@ function video(obj) {
                             row.push(i);
                             row.push(item.probeName);
                             row.push(item.score.toFixed(2));
-                            row.push(item.webVideoDnsDelay.toFixed(2));
-                            row.push(item.webVideoWsConnDelay.toFixed(2));
-                            row.push(item.webVideoWebPageDelay.toFixed(2));
+                            row.push(item.webVideoDnsDelay );
+                            row.push(item.webVideoWsConnDelay );
+                            row.push(item.webVideoWebPageDelay );
                             row.push(item.webVideoSsConnDelay);
                             row.push(item.webVideoAddressDelay);
                             row.push(item.webVideoMsConnDelay);
-                            row.push(item.webVideoHeadFrameDelay.toFixed(2));
-                            row.push(item.webVideoInitBufferDelay.toFixed(2));
-                            row.push(item.webVideoLoadDelay.toFixed(2));
-                            row.push(item.webVideoTotalBufferDelay.toFixed(2));
-                            row.push(item.webVideoDownloadRate.toFixed(2));
-                            row.push(item.webVideoBufferTime.toFixed(2));
+                            row.push(item.webVideoHeadFrameDelay );
+                            row.push(item.webVideoInitBufferDelay );
+                            row.push(item.webVideoLoadDelay );
+                            row.push(item.webVideoTotalBufferDelay );
+                            row.push(item.webVideoDownloadRate );
+                            row.push(item.webVideoBufferTime );
                             rows.push(row);
                         }
 
@@ -1762,10 +1755,10 @@ function game(obj) {
                             row.push(item.probeName);
                             row.push(item.score.toFixed(2));
                             row.push(item.gameDnsDelay);
-                            row.push(item.gameConnDelay.toFixed(2));
-                            row.push(item.gamePacketDelay.toFixed(2));
-                            row.push(item.gamePacketJitter.toFixed(2));
-                            row.push(item.gameLossRate.toFixed(2));
+                            row.push(item.gameConnDelay );
+                            row.push(item.gamePacketDelay );
+                            row.push(item.gamePacketJitter );
+                            row.push(item.gameLossRate );
                             rows.push(row);
                         }
 

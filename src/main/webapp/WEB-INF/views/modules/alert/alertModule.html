@@ -103,7 +103,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <form class="form-horizontal" id="taskform_data" role="form">
-                            <div class="form-group row">
+                            <div class="form-group row col-lg-12 col-md-12 col-sm-12">
                                 <label for="id"
                                        class="col-lg-2 col-md-2 col-sm-2"
                                        style="display: none">id:</label>
@@ -115,7 +115,7 @@
                                 <label for="atName"
                                        class="col-lg-2 col-md-2 col-sm-2 form_border"
                                         >模版名称</label>
-                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="col-lg-2 col-md-2 col-sm-2">
                                     <input type="text" class="form-control input clear clear" id="atName"
                                            name="atName"
                                            placeholder="请输入名称">
@@ -123,7 +123,7 @@
                                 <label for="serviceType"
                                        class="col-lg-2 col-md-2 col-sm-2 form_border"
                                         >任务类型</label>
-                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="col-lg-2 col-md-2 col-sm-2">
                                     <select id="serviceType" disabled="disabled" v-on:change="servicechange()"
                                             class="form-control input clear clear" name="serviceType">
                                         <option value="">---请选择---</option>
@@ -157,6 +157,15 @@
                                             <option value="50">网络游戏</option>
                                         </optgroup>
                                     </select>
+                                </div>
+
+                                <label for="remark"
+                                       class="col-lg-2 col-md-2 col-sm-2 form_border"
+                                >备注</label>
+                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                    <input type="text" class="form-control input clear clear" id="remark"
+                                           name="remark"
+                                          >
                                 </div>
                             </div>
                         </form>
@@ -665,7 +674,7 @@
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
-                                        <input type="text" class="form-control input clear" id="adsl_drop_rate"
+                                        <input type="text" class="form-control input clear"
                                                value="100" disabled="disabled" name="adsl_drop_rate"
                                                placeholder="">
                                     </div>
