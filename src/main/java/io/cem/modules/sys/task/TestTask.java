@@ -1,5 +1,7 @@
 package io.cem.modules.sys.task;
 
+import io.cem.common.utils.DateUtils;
+import io.cem.common.utils.PropertiesUtils;
 import io.cem.modules.cem.entity.*;
 import io.cem.modules.cem.service.*;
 import io.cem.modules.sys.entity.SysUserEntity;
@@ -10,11 +12,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.*;
 
 /**
  * 测试定时任务(演示Demo，可删除)
@@ -76,6 +77,16 @@ public class TestTask {
 	private RecordHourGameService recordHourGameService;
 	@Autowired
 	private RecordDayGameService recordDayGameService;
+	@Autowired
+	private IndexHistogramViewService indexHistogramViewService;
+	@Autowired
+	private IndexLineViewService indexLineViewService;
+	@Autowired
+	private IndexMapViewService indexMapViewService;
+	@Autowired
+	private IndexRadaViewService indexRadaViewService;
+	@Autowired
+	private IndexRankingViewService indexRankingViewService;
 	
 	public void test(String params){
 		logger.info("我是带参数的test方法，正在被执行，参数为：" + params);
@@ -317,6 +328,56 @@ public class TestTask {
 		List<RecordDayGameEntity> list = recordDayGameService.queryDay(map);
 		for(int i=0;i<list.size();i++){
 			recordDayGameService.save(list.get(i));
+		}
+	}
+
+	//首页
+	public void index(){
+		try {
+			List<Map<String,Object>> paramList = new LinkedList<Map<String,Object>>();
+			InputStream in =new BufferedInputStream(new FileInputStream(PropertiesUtils.class.getClassLoader().getResource("chart.properties").getPath())) ;
+			Properties prop = new Properties();
+			prop.load(in);
+			List<Date> mouths = DateUtils.getLastMouths(Integer.parseInt(prop.getProperty("queryMouthRange")));
+
+			String startDate = DateUtils.format(DateUtils.setStartEndDay(mouths.get(0),0));
+			String endDate = DateUtils.format(DateUtils.setStartEndDay(mouths.get(mouths.size()-1),1));;
+
+			indexHistogramViewService.saveConnectivityScore(mouths);
+			indexHistogramViewService.saveDownLoadScore(mouths);
+			indexHistogramViewService.saveGameScore(mouths);
+			indexHistogramViewService.saveNetworkLayerScore(mouths);
+			indexHistogramViewService.saveWebPageScore(mouths);
+			indexHistogramViewService.saveWebVideoScore(mouths);
+
+
+			indexLineViewService.saveConnectivityScore(mouths,"2000");
+			indexLineViewService.saveDownLoadScore(mouths,"2000");
+			indexLineViewService.saveGameScore(mouths,"2000");
+			indexLineViewService.saveNetworkLayerScore(mouths,"2000");
+			indexLineViewService.saveWebPageScore(mouths,"2000");
+			indexLineViewService.saveWebVideoScore(mouths,"2000");
+
+
+
+			indexMapViewService.saveScore(startDate,endDate,1);
+
+			indexRadaViewService.saveWebVideoScore(startDate,endDate,1);
+			indexRadaViewService.saveWebPageScore(startDate,endDate,1);
+			indexRadaViewService.saveGameScore(startDate,endDate,1);
+			indexRadaViewService.saveDownLoadScore(startDate,endDate,1);
+			indexRadaViewService.saveConnectivityScore(startDate,endDate,1);
+			indexRadaViewService.saveNetworkLayerScore(startDate,endDate,1);
+
+			indexRankingViewService.saveDownLoadScore(startDate,endDate,1);
+			indexRankingViewService.saveGameScore(startDate,endDate,1);
+			indexRankingViewService.saveWebPageScore(startDate,endDate,1);
+			indexRankingViewService.saveWebVideoScore(startDate,endDate,1);
+			indexRankingViewService.saveConnectivityScore(startDate,endDate,1);
+
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
