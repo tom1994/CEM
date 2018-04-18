@@ -1319,20 +1319,20 @@ var probetable = new Vue({
     el: '#probedata_table',
     data: {
         headers: [
-            {title: '<div style="width:10px"></div>'},
-            {title: '<div class="checkbox"> <label> <input type="checkbox" id="checkAll"></label> </div>'},
-            {title: '<div style="width:70px">名称</div>'},
-            {title: '<div style="width:42px">地市</div>'},
-            {title: '<div style="width:42px">区县</div>'},
-            {title: '<div style="width:90px">位置</div>'},
-            {title: '<div style="width:55px">层级</div>'},
-            {title: '<div style="width:95px">上联探针</div>'},
-            {title: '<div style="width:40px">状态</div>'},
-            {title: '<div style="width:70px">类型</div>'},
-            {title: '<div style="width:130px">注册时间</div>'},
-            {title: '<div style="width:80px">最后心跳时间</div>'},
-            {title: '<div style="width:80px">最后上报时间</div>'},
-            {title: '<div style="width:80px">操作</div>'}
+            {title: '<div ></div>'},
+            {title: '<div class="checkbox"><label> <input type="checkbox" id="checkAll"></label> </div>'},
+            {title: '<div >名称</div>'},
+            {title: '<div >地市</div>'},
+            {title: '<div >区县</div>'},
+            {title: '<div >位置</div>'},
+            {title: '<div >层级</div>'},
+            {title: '<div >上联探针</div>'},
+            {title: '<div >状态</div>'},
+            {title: '<div >类型</div>'},
+            {title: '<div >注册时间</div>'},
+            {title: '<div >最后心跳时间</div>'},
+            {title: '<div >最后上报时间</div>'},
+            {title: '<div >操作</div>'}
         ],
         rows: [],
         dtHandle: null,
@@ -1372,7 +1372,6 @@ var probetable = new Vue({
             data: vm.rows,
             searching: false,
             paging: true,
-            // autowidth: true,
             serverSide: true,
             info: false,
             ordering: false, /*禁用排序功能*/
@@ -1464,10 +1463,10 @@ var grouptable = new Vue({
     el: '#probegroup_table',
     data: {
         headers: [
-            {title: '<div style="width:16px"></div>'},
-            {title: '<div style="width:100px">探针组名</div>'},
-            {title: '<div style="width:100px">备注</div>'},
-            {title: '<div style="width:52px">操作</div>'}
+            {title: '<div></div>'},
+            {title: '<div>探针组名</div>'},
+            {title: '<div>备注</div>'},
+            {title: '<div>操作</div>'}
         ],
         rows: [],
         dtHandle: null,
@@ -1497,6 +1496,12 @@ var grouptable = new Vue({
             console.log("页面重绘");
             vm.dtHandle.draw();
             /*重绘*/
+            $("#probegroup_table").colResizable({
+                liveDrag: true,
+                gripInnerHtml: "<div class='grip'></div>",
+                draggingClass: "dragging",
+                resizeMode: 'overflow',
+            });
         }
     },
     mounted: function () {
@@ -1507,9 +1512,10 @@ var grouptable = new Vue({
             searching: false,
             paging: true,
             serverSide: true,
+            // autowidth:true,
+            bAutoWidth:false,
             info: false,
             ordering: false, /*禁用排序功能*/
-            sEmptyTable: "No data available in table",
             oLanguage: {
                 sLengthMenu: "每页 _MENU_ 行数据",
                 oPaginate: {
@@ -1557,12 +1563,6 @@ var grouptable = new Vue({
                         //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);
-                        $("#Section").on("click", function () {
-                            console.log(1111)
-                            $("#probegroup_table").colResizable({
-                                minWidth: 40,
-                            });
-                        })
 
                     }
                 });
@@ -1570,6 +1570,19 @@ var grouptable = new Vue({
         });
     }
 });
+
+function resize() {
+    setTimeout(function () {
+        $("#probegroup_table").colResizable({
+            liveDrag: true,
+            gripInnerHtml: "<div class='grip'></div>",
+            draggingClass: "dragging",
+            resizeMode: 'overflow',
+        });
+    }, 300);
+}
+
+
 
 $(document).ready(function () {
     $("#myModal_delete").draggable();//为模态对话框添加拖拽

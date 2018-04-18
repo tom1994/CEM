@@ -22,4 +22,5 @@ public interface ProbeDao extends BaseDao<ProbeEntity> {
     List<ProbeEntity> queryCenterList(Integer id);
     void updateUpstream(Integer id);
     int queryExist(String probeName);
+    int queryExist(String probeName, int probeId);
 }

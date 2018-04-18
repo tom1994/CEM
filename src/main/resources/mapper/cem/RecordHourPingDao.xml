@@ -163,7 +163,7 @@
             AND rhp.probe_id = #{probe_id}
         </if>
         GROUP BY
-        rhp.city_id,rhp.county_id,rhp.service_type,rhp.target_id,rhp.probe_id,date_format(rhp.record_date,'%Y-%m-%d'),time_format(record_time,'%H'));
+        rhp.record_date,rhp.probe_id,rhp.city_id,rhp.county_id,rhp.record_time,rhp.service_type)
     </select>
 
     <select id="queryDayList" resultType="io.cem.modules.cem.entity.RecordHourPingEntity">
@@ -242,7 +242,7 @@
         AND rhp.port = #{port}
         AND rhp.probe_id = #{probe_id}
         GROUP BY
-        rhp.port,rhp.probe_id;
+        rhp.port,rhp.probe_id
     </select>
 
     <select id="queryDayExitList" resultType="io.cem.modules.cem.entity.RecordHourPingEntity">
@@ -276,7 +276,7 @@
         AND record_day_ping.port = #{port}
         AND record_day_ping.probe_id = #{probe_id}
         GROUP BY
-        record_day_ping.port,record_day_ping.probe_id;
+        record_day_ping.port,record_day_ping.probe_id
     </select>
 
     <!--根据统计粒度查询小时表-->

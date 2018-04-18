@@ -9,6 +9,12 @@ var layers = new Map();
 var citySelected=0;
 var countrySelected=0;
 var probeSelected=0;
+var ping_list;
+var quality_list;
+var download_list;
+var page_list;
+var game_list;
+var video_list;
 var probedata_handle = new Vue({
     el: '#probehandle',
     data: {},
@@ -95,10 +101,9 @@ var search_service = new Vue({ //Todo:完成查询条件框
                 }
                 let param = {};
                 param.probedata = JSON.stringify(search);
-
                 param.chartdata = JSON.stringify(search);
 
-                xChange(param);
+                sendAjax(param);
 
                 $.ajax({
                     type: "POST",   /*GET会乱码*/
@@ -135,37 +140,6 @@ var search_service = new Vue({ //Todo:完成查询条件框
     }
 });
 
-function out() {/*导出事件*/
-    var searchJson = getFormJson($('#probesearch'));
-    if((searchJson.startDate)>(searchJson.terminalDate)){
-        console.log("时间选择有误，请重新选择！");
-        $('#nonavailable_time').modal('show');
-    }else{
-        var search = new Object();
-        search.city_id = searchJson.city;
-        search.couty_id = searchJson.county;
-        search.probe_id = searchJson.probe;
-        if (searchJson.startDate.length != 0 && searchJson.terminalDate.length != 0 ) {
-            var ava_start = searchJson.startDate.substr(0, 10);
-            var ava_terminal = searchJson.terminalDate.substr(0, 10);
-            var startTime = searchJson.startDate.substr(11, 15);
-            var terminalTime = searchJson.terminalDate.substr(11, 15);
-            search.ava_start = ava_start;
-            search.ava_terminal = ava_terminal;
-            search.starTime = startTime;
-            search.terminalTime = terminalTime;
-        }else{
-            search.ava_start = (new Date()).Format("yyyy-MM-dd");
-            search.ava_terminal = (new Date()).Format("yyyy-MM-dd");
-        }
-        var schedulepolicy = JSON.stringify(search);
-        console.log(schedulepolicy);
-
-        document.getElementById("output").href = encodeURI('../../recordhourtracert/qualityDownload/' + schedulepolicy);
-        document.getElementById("output").click();
-    }
-}
-
 
 function datedifference(sDate1, sDate2) {    //sDate1和sDate2是2006-12-18格式
     var dateSpan,
@@ -178,8 +152,98 @@ function datedifference(sDate1, sDate2) {    //sDate1和sDate2是2006-12-18格�
     iDays = Math.floor(dateSpan / (24 * 3600 * 1000));
     return iDays
 };
+function sendAjax(param) {
+    loading();
+    ping_list=undefined;
+    quality_list=undefined;
+    page_list=undefined;
+    download_list=undefined;
+    video_list=undefined;
+    game_list=undefined;
+    $.ajax({
+        type: "POST",
+        url: "../../recordhourping/connection",
+        cache: false,  //禁用缓存
+        data: param,  //传入组装的参数
+        dataType: "json",
+        success: function (result) {
+            ping_list=result.scoreList
+          if(ping_list!=undefined){
+              removeLoading('test');
+              ping_change(param)
+              ping(ping_list);
+          }
+        }
+    })
+    $.ajax({
+        type: "POST",
+        url: "../../recordhourping/quality",
+        cache: false,  //禁用缓存
+        data: param,  //传入组装的参数
+        dataType: "json",
+        success: function (result) {
+            quality_list=result.scoreList
+            removeLoading('quality');
+            quality_change(param)
+            quality(quality_list)
+        }
+    })
+    $.ajax({
+        type: "POST",
+        url: "../../recordhourping/page",
+        cache: false,  //禁用缓存
+        data: param,  //传入组装的参数
+        dataType: "json",
+        success: function (result) {
+                page_list=result.scoreList
+                removeLoading('page');
+                page_change(param)
+                broswer(page_list)
 
-function xChange(param) {
+        }
+    })
+    $.ajax({
+        type: "POST",
+        url: "../../recordhourping/download",
+        cache: false,  //禁用缓存
+        data: param,  //传入组装的参数
+        dataType: "json",
+        success: function (result) {
+           download_list=result.scoreList
+            removeLoading('download');
+            download_change(param)
+            download(download_list)
+            }
+    })
+    $.ajax({
+        type: "POST",
+        url: "../../recordhourping/video",
+        cache: false,  //禁用缓存
+        data: param,  //传入组装的参数
+        dataType: "json",
+        success: function (result) {
+            video_list=result.scoreList
+            removeLoading('video');
+            video_change(param)
+            video(video_list)
+        }
+    })
+    $.ajax({
+        type: "POST",
+        url: "../../recordhourping/game",
+        cache: false,  //禁用缓存
+        data: param,  //传入组装的参数
+        dataType: "json",
+        success: function (result) {
+            game_list=result.scoreList;
+            removeLoading('game');
+            game_change(param)
+            game(game_list)
+        }
+    })
+
+}
+function ping_change(param) {
     $('#container_connection').highcharts({
         chart: {
             type: 'spline',
@@ -195,30 +259,18 @@ function xChange(param) {
             },
             categories: (function () {
                 var arr = [];
-                $.ajax({
-                    type: "POST",
-                    async: false, //同步执行
-                    url: "../../recordhourping/connection",
-                    cache: false,  //禁用缓存
-                    data: param,  //传入组装的参数
-                    dataType: "json",
-                    success: function (result) {
-
-                        var dateDiff = datedifference(param.ava_start,param.ava_terminal);
-                        if(dateDiff > 5){
-                            for(var i=0;i<result.scoreList.length;i++){
-                                arr.push(result.scoreList[i].recordDate);
-                            }
-                        }else{
-                            for(var i=0;i<result.scoreList.length;i++){
-                                var dateStrs = result.scoreList[i].recordDate.split(" ");
-                                arr.push(dateStrs[0] + " " + result.scoreList[i].recordTime+":00");
-                            }
-                        }
-
-
+                var dateDiff = datedifference(param.chartdata.ava_start,param.chartdata.ava_terminal);
+                if(dateDiff > 5){
+                    for(var i=0;i<ping_list.length;i++){
+                        arr.push(ping_list[i].recordDate);
                     }
-                })
+                }else{
+                    for(var i=0;i<ping_list.length;i++){
+                        var dateStrs =ping_list[i].recordDate.split(" ");
+                        arr.push(dateStrs[0] + " " + ping_list[i].recordTime+":00");
+                    }
+                }
+
 
                 return arr.sort();
 
@@ -256,26 +308,17 @@ function xChange(param) {
             name:"score" ,
             data: (function () {
                 var arr = [];
-                $.ajax({
-                    type: "POST",
-                    async: false, //同步执行
-                    url: "../../recordhourping/connection",
-                    cache: false,  //禁用缓存
-                    data: param,  //传入组装的参数
-                    dataType: "json",
-                    success: function (result) {
-                        console.log(result.scoreList);
-                        for(var i=0;i<result.scoreList.length;i++){
-                            arr.push(parseFloat(result.scoreList[i].score));
-                        }
-                    }
-                })
+                for(var i=0;i<ping_list.length;i++){
+                    arr.push(parseFloat(ping_list[i].score));
+                }
                 return arr.sort();
             })(),
             showInLegend: false,
         }]
 
     });
+}
+function quality_change(param) {
     $('#container_quality').highcharts({
         chart: {
             type: 'spline',
@@ -291,30 +334,17 @@ function xChange(param) {
             },
             categories: (function () {
                 var arr = [];
-                $.ajax({
-                    type: "POST",
-                    async: false, //同步执行
-                    url: "../../recordhourping/quality",
-                    cache: false,  //禁用缓存
-                    data: param,  //传入组装的参数
-                    dataType: "json",
-                    success: function (result) {
-
-                        var dateDiff = datedifference(param.ava_start,param.ava_terminal);
-                        if(dateDiff > 5){
-                            for(var i=0;i<result.scoreList.length;i++){
-                                arr.push(result.scoreList[i].recordDate);
-                            }
-                        }else{
-                            for(var i=0;i<result.scoreList.length;i++){
-                                var dateStrs = result.scoreList[i].recordDate.split(" ");
-                                arr.push(dateStrs[0] + " " + result.scoreList[i].recordTime+":00");
-                            }
-                        }
-
-
+                var dateDiff = datedifference(param.chartdata.ava_start,param.chartdata.ava_terminal);
+                if(dateDiff > 5){
+                    for(var i=0;i<quality_list.length;i++){
+                        arr.push(quality_list[i].recordDate);
                     }
-                })
+                }else{
+                    for(var i=0;i<quality_list.length;i++){
+                        var dateStrs = quality_list[i].recordDate.split(" ");
+                        arr.push(dateStrs[0] + " " + quality_list[i].recordTime+":00");
+                    }
+                }
 
                 return arr.sort();
 
@@ -352,26 +382,17 @@ function xChange(param) {
             name:"score" ,
             data: (function () {
                 var arr = [];
-                $.ajax({
-                    type: "POST",
-                    async: false, //同步执行
-                    url: "../../recordhourping/quality",
-                    cache: false,  //禁用缓存
-                    data: param,  //传入组装的参数
-                    dataType: "json",
-                    success: function (result) {
-                        console.log(result.scoreList);
-                        for(var i=0;i<result.scoreList.length;i++){
-                            arr.push(parseFloat(result.scoreList[i].score));
-                        }
-                    }
-                })
+                for(var i=0;i<quality_list.length;i++){
+                    arr.push(parseFloat(quality_list[i].score));
+                }
                 return arr.sort();
             })(),
             showInLegend: false,
         }]
 
     });
+}
+function download_change(param) {
     $('#container_download').highcharts({
         chart: {
             type: 'spline',
@@ -387,39 +408,29 @@ function xChange(param) {
             },
             categories: (function () {
                 var arr = [];
-                $.ajax({
-                    type: "POST",
-                    async: false, //同步执行
-                    url: "../../recordhourping/download",
-                    cache: false,  //禁用缓存
-                    data: param,  //传入组装的参数
-                    dataType: "json",
-                    success: function (result) {
-
-                        var dateDiff = datedifference(param.ava_start,param.ava_terminal);
-                        if(dateDiff > 5){
-                            for(var i=0;i<result.scoreList.length;i++){
-                                arr.push(result.scoreList[i].recordDate);
-                            }
-                        }else{
-                            for(var i=0;i<result.scoreList.length;i++){
-                                var dateStrs = result.scoreList[i].recordDate.split(" ");
-                                arr.push(dateStrs[0] + " " + result.scoreList[i].recordTime+":00");
-                            }
+                var dateDiff = datedifference(param.chartdata.ava_start,param.chartdata.ava_terminal);
+                if(download_list!=undefined){
+                    if(dateDiff > 5){
+                        for(var i=0;i<download_list.length;i++){
+                            arr.push(download_list[i].recordDate);
                         }
-
-
+                    }else{
+                        for(var i=0;i<download_list.length;i++){
+                            var dateStrs = download_list[i].recordDate.split(" ");
+                            arr.push(dateStrs[0] + " " + download_list[i].recordTime+":00");
+                        }
                     }
-                })
-
-                return arr.sort();
+                    return arr.sort();
+                }else {
+                    return arr
+                }
 
             })(),
             crosshair: true,
         },
         yAxis: {
             max: 100,
-            min: 60,
+            min: 10,
             title: {
                 text: ' '
             }
@@ -444,30 +455,24 @@ function xChange(param) {
         exporting: {
             enabled:false
         },
+
         series: [{
             name:"score" ,
+
             data: (function () {
                 var arr = [];
-                $.ajax({
-                    type: "POST",
-                    async: false, //同步执行
-                    url: "../../recordhourping/download",
-                    cache: false,  //禁用缓存
-                    data: param,  //传入组装的参数
-                    dataType: "json",
-                    success: function (result) {
-                        console.log(result.scoreList);
-                        for(var i=0;i<result.scoreList.length;i++){
-                            arr.push(parseFloat(result.scoreList[i].score));
-                        }
-                    }
-                })
+                for(var i=0;i<download_list.length;i++){
+                    arr.push(parseFloat(download_list[i].score));
+                }
                 return arr.sort();
             })(),
             showInLegend: false,
         }]
 
+
     });
+}
+function page_change(param) {
     $('#container_page').highcharts({
         chart: {
             type: 'spline',
@@ -483,33 +488,22 @@ function xChange(param) {
             },
             categories: (function () {
                 var arr = [];
-                $.ajax({
-                    type: "POST",
-                    async: false, //同步执行
-                    url: "../../recordhourping/page",
-                    cache: false,  //禁用缓存
-                    data: param,  //传入组装的参数
-                    dataType: "json",
-                    success: function (result) {
-
-                        var dateDiff = datedifference(param.ava_start,param.ava_terminal);
-                        if(dateDiff > 5){
-                            for(var i=0;i<result.scoreList.length;i++){
-                                arr.push(result.scoreList[i].recordDate);
-                            }
-                        }else{
-                            for(var i=0;i<result.scoreList.length;i++){
-                                var dateStrs = result.scoreList[i].recordDate.split(" ");
-                                arr.push(dateStrs[0] + " " + result.scoreList[i].recordTime+":00");
-                            }
-                        }
-
-
-                    }
-                })
-
+                var dateDiff = datedifference(param.chartdata.ava_start,param.chartdata.ava_terminal);
+              if(page_list!=undefined){
+                  if(dateDiff > 5){
+                      for(var i=0;i<page_list.length;i++){
+                          arr.push(page_list[i].recordDate);
+                      }
+                  }else{
+                      for(var i=0;i<page_list.length;i++){
+                          var dateStrs = page_list[i].recordDate.split(" ");
+                          arr.push(dateStrs[0] + " " + page_list[i].recordTime+":00");
+                      }
+                  }
+              }else {
+                  arr=[];
+              }
                 return arr.sort();
-
             })(),
             crosshair: true,
         },
@@ -544,26 +538,21 @@ function xChange(param) {
             name:"score" ,
             data: (function () {
                 var arr = [];
-                $.ajax({
-                    type: "POST",
-                    async: false, //同步执行
-                    url: "../../recordhourping/page",
-                    cache: false,  //禁用缓存
-                    data: param,  //传入组装的参数
-                    dataType: "json",
-                    success: function (result) {
-                        console.log(result.scoreList);
-                        for(var i=0;i<result.scoreList.length;i++){
-                            arr.push(parseFloat(result.scoreList[i].score));
-                        }
-                    }
-                })
-                return arr.sort();
+                  if(page_list!=undefined){
+                      for(var i=0;i<page_list.length;i++){
+                          arr.push(parseFloat(page_list[i].score));
+                      }
+                      return arr.sort();
+                  }else {
+                      return arr
+                  }
             })(),
             showInLegend: false,
         }]
 
     });
+}
+function video_change(param) {
     $('#container_video').highcharts({
         chart: {
             type: 'spline',
@@ -579,30 +568,17 @@ function xChange(param) {
             },
             categories: (function () {
                 var arr = [];
-                $.ajax({
-                    type: "POST",
-                    async: false, //同步执行
-                    url: "../../recordhourping/video",
-                    cache: false,  //禁用缓存
-                    data: param,  //传入组装的参数
-                    dataType: "json",
-                    success: function (result) {
 
-                        var dateDiff = datedifference(param.ava_start,param.ava_terminal);
-                        if(dateDiff > 5){
-                            for(var i=0;i<result.scoreList.length;i++){
-                                arr.push(result.scoreList[i].recordDate);
-                            }
-                        }else{
-                            for(var i=0;i<result.scoreList.length;i++){
-                                var dateStrs = result.scoreList[i].recordDate.split(" ");
-                                arr.push(dateStrs[0] + " " + result.scoreList[i].recordTime+":00");
-                            }
-                        }
-
-
+                var dateDiff = datedifference(param.chartdata.ava_start,param.chartdata.ava_terminal);
+                if(dateDiff > 5){
+                    for(var i=0;i<video_list.length;i++){
+                        arr.push(video_list[i].recordDate);
                     }
-                })
+                }else{
+                    for(var i=0;i<video_list.length;i++){
+                        var dateStrs = video_list[i].recordDate.split(" ");arr.push(dateStrs[0] + " " + video_list[i].recordTime+":00");
+                    }
+                }
 
                 return arr.sort();
 
@@ -640,26 +616,17 @@ function xChange(param) {
             name:"score" ,
             data: (function () {
                 var arr = [];
-                $.ajax({
-                    type: "POST",
-                    async: false, //同步执行
-                    url: "../../recordhourping/video",
-                    cache: false,  //禁用缓存
-                    data: param,  //传入组装的参数
-                    dataType: "json",
-                    success: function (result) {
-                        console.log(result.scoreList);
-                        for(var i=0;i<result.scoreList.length;i++){
-                            arr.push(parseFloat(result.scoreList[i].score));
-                        }
-                    }
-                })
+                for(var i=0;i<video_list.length;i++){
+                    arr.push(parseFloat(video_list[i].score));
+                }
                 return arr.sort();
             })(),
             showInLegend: false,
         }]
 
     });
+}
+function game_change(param) {
     $('#container_game').highcharts({
         chart: {
             type: 'spline',
@@ -675,30 +642,17 @@ function xChange(param) {
             },
             categories: (function () {
                 var arr = [];
-                $.ajax({
-                    type: "POST",
-                    async: false, //同步执行
-                    url: "../../recordhourping/game",
-                    cache: false,  //禁用缓存
-                    data: param,  //传入组装的参数
-                    dataType: "json",
-                    success: function (result) {
-
-                        var dateDiff = datedifference(param.ava_start,param.ava_terminal);
-                        if(dateDiff > 5){
-                            for(var i=0;i<result.scoreList.length;i++){
-                                arr.push(result.scoreList[i].recordDate);
-                            }
-                        }else{
-                            for(var i=0;i<result.scoreList.length;i++){
-                                var dateStrs = result.scoreList[i].recordDate.split(" ");
-                                arr.push(dateStrs[0] + " " + result.scoreList[i].recordTime+":00");
-                            }
-                        }
-
-
+                var dateDiff = datedifference(param.chartdata.ava_start,param.chartdata.ava_terminal);
+                if(dateDiff > 5){
+                    for(var i=0;i<game_list.length;i++){
+                        arr.push(game_list[i].recordDate);
                     }
-                })
+                }else{
+                    for(var i=0;i<game_list.length;i++){
+                        var dateStrs = game_list[i].recordDate.split(" ");
+                        arr.push(dateStrs[0] + " " + game_list[i].recordTime+":00");
+                    }
+                }
 
                 return arr.sort();
 
@@ -736,20 +690,9 @@ function xChange(param) {
             name:"score" ,
             data: (function () {
                 var arr = [];
-                $.ajax({
-                    type: "POST",
-                    async: false, //同步执行
-                    url: "../../recordhourping/game",
-                    cache: false,  //禁用缓存
-                    data: param,  //传入组装的参数
-                    dataType: "json",
-                    success: function (result) {
-                        console.log(result.scoreList);
-                        for(var i=0;i<result.scoreList.length;i++){
-                            arr.push(parseFloat(result.scoreList[i].score));
-                        }
-                    }
-                })
+                for(var i=0;i<game_list.length;i++){
+                    arr.push(parseFloat(game_list[i].score));
+                }
                 return arr.sort();
             })(),
             showInLegend: false,
@@ -968,7 +911,9 @@ var getProbe = function (countyid) {
     });
 };
 
-
+$(function () {
+    loading();
+});
 var connection_service = new Vue({
     el: '#v-for-connection',
     data: {
@@ -1015,6 +960,23 @@ var connection_service = new Vue({
 
             }
         });
+        param.chartdata = JSON.stringify(this.probedata);
+        $.ajax({
+            type: "POST",
+            url: "../../recordhourping/connection",
+            cache: false,  //禁用缓存
+            data: param,  //传入组装的参数
+            dataType: "json",
+            success: function (result) {
+                ping_list=result.scoreList
+                if(ping_list!=undefined){
+                    removeLoading('test');
+                    list_ping();
+                    ping(ping_list);
+                }
+
+            }
+        })
     },
 
 });
@@ -1027,9 +989,30 @@ var quality_service = new Vue({
             average: 0,
             min: 0
         },
+        probedata: {ava_start:(new Date()).Format("yyyy-MM-dd"), ava_terminal:(new Date()).Format("yyyy-MM-dd")}
     },
     methods:{
     },
+    mounted:function () {
+        let param={};
+        param.chartdata = JSON.stringify(this.probedata);
+        $.ajax({
+            type: "POST",
+            url: "../../recordhourping/quality",
+            cache: false,  //禁用缓存
+            data: param,  //传入组装的参数
+            dataType: "json",
+            success: function (result) {
+                quality_list=result.scoreList
+                if(quality_list!=undefined){
+                    removeLoading('quality');
+                    list_quality();
+                    quality(quality_list);
+                }
+
+            }
+        })
+    }
 });
 
 var download_service = new Vue({
@@ -1040,9 +1023,27 @@ var download_service = new Vue({
             average: 0,
             min: 0
         },
+        probedata: {ava_start:(new Date()).Format("yyyy-MM-dd"), ava_terminal:(new Date()).Format("yyyy-MM-dd")}
     },
     methods:{
     },
+    mounted:function () {
+        let param={};
+        param.chartdata = JSON.stringify(this.probedata);
+        $.ajax({
+            type: "POST",
+            url: "../../recordhourping/download",
+            cache: false,  //禁用缓存
+            data: param,  //传入组装的参数
+            dataType: "json",
+            success: function (result) {
+                download_list=result.scoreList
+                    removeLoading('download');
+                    list_download();
+                    download(download_list);
+            }
+        })
+    }
 });
 
 var page_service = new Vue({
@@ -1053,9 +1054,30 @@ var page_service = new Vue({
             average: 0,
             min: 0
         },
+        probedata: {ava_start:(new Date()).Format("yyyy-MM-dd"), ava_terminal:(new Date()).Format("yyyy-MM-dd")}
     },
     methods:{
     },
+    mounted:function () {
+        let param={};
+        param.chartdata = JSON.stringify(this.probedata);
+        $.ajax({
+            type: "POST",
+            url: "../../recordhourping/page",
+            cache: false,  //禁用缓存
+            data: param,  //传入组装的参数
+            dataType: "json",
+            success: function (result) {
+                page_list=result.scoreList
+                if(page_list!=undefined){
+                    removeLoading('page');
+                    list_page();
+                    broswer(page_list);
+                }
+
+            }
+        })
+    }
 });
 
 var video_service = new Vue({
@@ -1066,9 +1088,30 @@ var video_service = new Vue({
             average: 0,
             min: 0
         },
+        probedata: {ava_start:(new Date()).Format("yyyy-MM-dd"), ava_terminal:(new Date()).Format("yyyy-MM-dd")}
     },
     methods:{
     },
+    mounted:function () {
+        let param={};
+        param.chartdata = JSON.stringify(this.probedata);
+        $.ajax({
+            type: "POST",
+            url: "../../recordhourping/video",
+            cache: false,  //禁用缓存
+            data: param,  //传入组装的参数
+            dataType: "json",
+            success: function (result) {
+                video_list=result.scoreList
+                if(video_list!=undefined){
+                    removeLoading('video');
+                    list_video();
+                    video(video_list);
+                }
+
+            }
+        })
+    }
 });
 
 var game_service = new Vue({
@@ -1079,648 +1122,1493 @@ var game_service = new Vue({
             average: 0,
             min: 0
         },
+        probedata: {ava_start:(new Date()).Format("yyyy-MM-dd"), ava_terminal:(new Date()).Format("yyyy-MM-dd")}
     },
     methods:{
     },
+    mounted:function () {
+        let param={};
+        param.chartdata = JSON.stringify(this.probedata);
+        $.ajax({
+            type: "POST",
+            url: "../../recordhourping/game",
+            cache: false,  //禁用缓存
+            data: param,  //传入组装的参数
+            dataType: "json",
+            success: function (result) {
+                game_list=result.scoreList
+                if(game_list!=undefined){
+                    removeLoading('video');
+                    list_game();
+                    game(game_list);
+                }
+
+            }
+        })
+    }
 });
 
-function connection_info() {
-    $('#myModal_dispatch').modal('show');
+
+function list_ping () {
+// *网络连通性图表*/
+    var connection_chart = new Vue({
+        el: '#container_connection',
+        data: {
+            chartdata: {
+                ava_start:(new Date()).Format("yyyy-MM-dd"),
+                ava_terminal:(new Date()).Format("yyyy-MM-dd")
+            }
+        },
+        methods:{
+
+        },
+        mounted: function(){         /*动态加载测试任务组数据*/
+            let param = {};
+            chartdata=this.chartdata;
+            param.chartdata = JSON.stringify(this.chartdata);
+            $('#container_connection').highcharts({
+                chart: {
+                    backgroundColor: 'rgba(0,0,0,0)'
+                },
+                title: {
+                    text: ''
+                },
+
+                xAxis: {
+                    labels: {
+                        rotation: 0//调节倾斜角度偏移
+                    },
+                    categories: (function () {
+                        var date=new Date();
+                        point=date.getDate();
+                        if(ping_list != undefined){
+                            var arr = [];
+                            for(var i=0;i<ping_list.length;i++){
+                                var dateStrs = ping_list[i].recordDate.split(" ");
+                                arr.push(dateStrs[0] + " " + ping_list[i].recordTime+":00");
+                            }
+                            return arr.sort();
+                        }
+                    })(),
+                    crosshair: true,
+                },
+                yAxis: {
+                    max: 100,
+                    min: 60,
+                    title: {
+                        text: ' '
+                    },
+                },
+                tooltip: {
+                    xDateFormat: '%Y-%m-%d',
+                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
+                    footerFormat: '</table>',
+                    useHTML: true,
+                },
+                plotOptions: {
+                    series: {
+                        stickyTracking: false,
+                        // pointStart: Date.UTC(2018, 3, 26),
+                        // pointInterval: 24 * 3600 * 1000
+                    },
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    },
+
+                },
+                exporting: {
+                    enabled:false
+                },
+                series: [{
+                    name:"score" ,
+                    data: (function () {
+                        var arr=[];
+                        if(ping_list !=undefined){
+                            for(var i=0;i<ping_list.length;i++){
+                                arr.push(parseFloat(ping_list[i].score));
+                            }
+                        }
+                        return arr.sort();;
+                    })(),
+                    showInLegend: false,
+                }]
+
+            });
+
+        },
+    });
+}
+function list_quality() {
+    /*网络质量性图表*/
+    var quality_chart = new Vue({
+        el: '#container_quality',
+        data: {
+            chartdata: {ava_start:(new Date()).Format("yyyy-MM-dd"), ava_terminal:(new Date()).Format("yyyy-MM-dd")}
+        },
+        methods:{
+
+        },
+        mounted: function(){         /*动态加载测试任务组数据*/
+            let param = {};
+            param.chartdata = JSON.stringify(this.chartdata);
+            $('#container_quality').highcharts({
+                chart: {
+                    type: 'line',
+                    backgroundColor: 'rgba(0,0,0,0)'
+                },
+                title: {
+                    text: ''
+                },
+
+                xAxis: {
+                    labels: {
+                        rotation: 0//调节倾斜角度偏移
+                    },
+                    categories: (function () {
+                        var arr = [];
+                        for(var i=0;i<quality_list.length;i++){
+                            var dateStrs = quality_list[i].recordDate.split(" ");
+                            arr.push(dateStrs[0] + " " + quality_list[i].recordTime+":00");
+                        }
+                        return arr.sort();;
+                    })(),
+                    // categories:['3月','4月','5月',"6月",'7月','8月'],
+                    crosshair: true
+                },
+                yAxis: {
+                    max: 100,
+                    min: 60,
+                    title: {
+                        text: ' '
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
+                    footerFormat: '</table>',
+                    // shared: true,
+                    useHTML: true
+                },
+                plotOptions: {
+                    series: {
+                        stickyTracking: false
+                    },
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    },
+
+                },
+                exporting: {
+                    enabled:false
+                },
+                series: [{
+                    name:"score" ,
+                    data: (function () {
+                        var arr = [];
+                        if(quality_list!=undefined){
+                            for(var i=0;i<quality_list.length;i++){
+                                arr.push(parseFloat(quality_list[i].score));
+                            }
+                        }
+                        return arr.sort();
+                    })(),
+                    showInLegend: false,
+                }]
+
+            });
+
+        },
+
+    });
+}
+/*文件下载图表*/
+function list_download() {
+    var download_chart = new Vue({
+        el: '#container_download',
+        data: {
+            chartdata: {ava_start:(new Date()).Format("yyyy-MM-dd"), ava_terminal:(new Date()).Format("yyyy-MM-dd")}
+        },
+        methods:{
+
+        },
+        mounted: function(){         /*动态加载测试任务组数据*/
+            let param = {};
+            param.chartdata = JSON.stringify(this.chartdata);
+            $('#container_download').highcharts({
+                chart: {
+                    type: 'line',
+                    backgroundColor: 'rgba(0,0,0,0)'
+                },
+                title: {
+                    text: ''
+                },
+
+                xAxis: {
+                    labels: {
+                        rotation: 0//调节倾斜角度偏移
+                    },
+                    categories: (function () {
+                        var arr = [];
+                        for(var i=0;i<download_list.length;i++){
+                            var dateStrs = download_list[i].recordDate.split(" ");
+                            arr.push(dateStrs[0] + " " + download_list[i].recordTime+":00");
+                        }
+                        return arr.sort();;
+                    })(),
+                    crosshair: true
+                },
+                yAxis: {
+                    max: 100,
+                    min: 0,
+                    title: {
+                        text: ' '
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
+                    footerFormat: '</table>',
+                    // shared: true,
+                    useHTML: true
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    },
+                    series: {
+                        stickyTracking: false
+                    }
+                },
+                exporting: {
+                    enabled:false
+                },
+                series: [{
+                    name:"score" ,
+                    data: (function () {
+                        var arr = [];
+                        for(var i=0;i<download_list.length;i++){
+                            arr.push(parseFloat(download_list[i].score));
+                        }
+                        return arr.sort();;
+                    })(),
+                    showInLegend: false,
+
+
+                }]
+
+            });
+
+        },
+
+    });
+}
+function list_page() {
+    /*网页浏览*/
+    var page_chart = new Vue({
+        el: '#container_page',
+        data: {
+            chartdata: {ava_start:(new Date()).Format("yyyy-MM-dd"), ava_terminal:(new Date()).Format("yyyy-MM-dd")}
+        },
+        methods:{
+
+        },
+        mounted: function(){         /*动态加载测试任务组数据*/
+            let param = {};
+            param.chartdata = JSON.stringify(this.chartdata);
+            $('#container_page').highcharts({
+                chart: {
+                    type: 'line',
+                    backgroundColor: 'rgba(0,0,0,0)'
+                },
+                title: {
+                    text: ''
+                },
+
+                xAxis: {
+                    labels: {
+                        rotation: 0//调节倾斜角度偏移
+                    },
+                    categories: (function () {
+                        var arr = [];
+                        for(var i=0;i<page_list.length;i++){
+                            var dateStrs = page_list[i].recordDate.split(" ");
+                            arr.push(dateStrs[0] + " " + page_list[i].recordTime+":00");
+                        }
+                        return arr.sort();;
+                    })(),
+                    crosshair: true
+                },
+                yAxis: {
+                    max: 100,
+                    min: 60,
+                    title: {
+                        text: ' '
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
+                    footerFormat: '</table>',
+                    // shared: true,
+                    useHTML: true
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    },
+                    series: {
+                        stickyTracking: false
+                    }
+                },
+                exporting: {
+                    enabled:false
+                },
+                series: [{
+                    name:"score" ,
+                    data: (function () {
+                        var arr = [];
+                        for(var i=0;i<page_list.length;i++){
+                            arr.push(parseFloat(page_list[i].score));
+                        }
+                        return arr.sort();;
+                    })(),
+                    showInLegend: false,
+
+
+                }]
+
+            });
+
+        },
+
+    });
+}
+/*在线视频图表*/
+function list_video() {
+    var video_chart = new Vue({
+        el: '#container_video',
+        data: {
+            chartdata: {ava_start:(new Date()).Format("yyyy-MM-dd"), ava_terminal:(new Date()).Format("yyyy-MM-dd")}
+        },
+        methods:{
+
+        },
+        mounted: function(){         /*动态加载测试任务组数据*/
+            let param = {};
+            param.chartdata = JSON.stringify(this.chartdata);
+            $('#container_video').highcharts({
+                chart: {
+                    type: 'line',
+                    backgroundColor: 'rgba(0,0,0,0)'
+                },
+                title: {
+                    text: ''
+                },
+
+                xAxis: {
+                    labels: {
+                        rotation: 0//调节倾斜角度偏移
+                    },
+                    categories: (function () {
+                        var arr = [];
+                        for(var i=0;i<video_list.length;i++){
+                            var dateStrs = video_list[i].recordDate.split(" ");
+                            arr.push(dateStrs[0] + " " + video_list[i].recordTime+":00");
+                        }
+                        return arr.sort();;
+                    })(),
+
+                    crosshair: true
+                },
+                yAxis: {
+                    max: 100,
+                    min: 60,
+                    title: {
+                        text: ' '
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
+                    footerFormat: '</table>',
+                    // shared: true,
+                    useHTML: true
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    },
+                    series: {
+                        stickyTracking: false
+                    }
+                },
+                exporting: {
+                    enabled:false
+                },
+                series: [{
+                    name:"score" ,
+                    data: (function () {
+                        var arr = [];
+                        for(var i=0;i<video_list.length;i++){
+                            arr.push(parseFloat(video_list[i].score));
+                        }
+                        return arr.sort();;
+                    })(),
+                    showInLegend: false,
+
+
+                }]
+
+            });
+
+        },
+
+    });
 }
 
-/*网络连通性图表*/
-var connection_chart = new Vue({
-    el: '#container_connection',
-    data: {
-        chartdata: {
-            ava_start:(new Date()).Format("yyyy-MM-dd"),
-            ava_terminal:(new Date()).Format("yyyy-MM-dd")
-        }
-    },
-    methods:{
-
-    },
-    mounted: function(){         /*动态加载测试任务组数据*/
-
-        let param = {};
-        chartdata=this.chartdata;
-        param.chartdata = JSON.stringify(this.chartdata);
-        // var chart = new Highcharts.Chart('container_connection', options)
-        $('#container_connection').highcharts({
-            chart: {
-                backgroundColor: 'rgba(0,0,0,0)'
-            },
-            title: {
-                text: ''
-            },
-
-            xAxis: {
-                labels: {
-                    rotation: 0//调节倾斜角度偏移
-                },
-                categories: (function () {
-                    var date=new Date();
-                    point=date.getDate();
-                    var arr = [];
-                    $.ajax({
-                        type: "POST",
-                        async: false, //同步执行
-                        url: "../../recordhourping/connection",
-                        cache: false,  //禁用缓存
-                        data: param,  //传入组装的参数
-                        dataType: "json",
-                        success: function (result) {
-                            for(var i=0;i<result.scoreList.length;i++){
-                                var dateStrs = result.scoreList[i].recordDate.split(" ");
-                                arr.push(dateStrs[0] + " " + result.scoreList[i].recordTime+":00");
-                            }
-                        }
-                    })
-
-                    return arr.sort();
-
-                })(),
-                crosshair: true,
-            },
-            yAxis: {
-                max: 100,
-                min: 60,
-                title: {
-                    text: ' '
-                },
-            },
-            tooltip: {
-                xDateFormat: '%Y-%m-%d',
-                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
-                footerFormat: '</table>',
-                useHTML: true,
-            },
-            plotOptions: {
-                series: {
-                    stickyTracking: false,
-                    // pointStart: Date.UTC(2018, 3, 26),
-                    // pointInterval: 24 * 3600 * 1000
-                },
-                column: {
-                    pointPadding: 0.2,
-                    borderWidth: 0
-                },
-
-            },
-            exporting: {
-                enabled:false
-            },
-            series: [{
-                name:"score" ,
-                data: (function () {
-                    var arr = [];
-                    $.ajax({
-                        type: "POST",
-                        async: false, //同步执行
-                        url: "../../recordhourping/connection",
-                        cache: false,  //禁用缓存
-                        data: param,  //传入组装的参数
-                        dataType: "json",
-                        success: function (result) {
-                            console.log(result.scoreList);
-                            for(var i=0;i<result.scoreList.length;i++){
-                                arr.push(parseFloat(result.scoreList[i].score));
-                            }
-                        }
-                    })
-                    return arr.sort();;
-                })(),
-                showInLegend: false,
-            }]
-
-        });
-
-    },
-});
-/*网络质量性图表*/
-var quality_chart = new Vue({
-    el: '#container_quality',
-    data: {
-        chartdata: {ava_start:(new Date()).Format("yyyy-MM-dd"), ava_terminal:(new Date()).Format("yyyy-MM-dd")}
-    },
-    methods:{
-
-    },
-    mounted: function(){         /*动态加载测试任务组数据*/
-        let param = {};
-        param.chartdata = JSON.stringify(this.chartdata);
-        $('#container_quality').highcharts({
-            chart: {
-                type: 'line',
-                backgroundColor: 'rgba(0,0,0,0)'
-            },
-            title: {
-                text: ''
-            },
-
-            xAxis: {
-                labels: {
-                    rotation: 0//调节倾斜角度偏移
-                },
-                categories: (function () {
-                    var arr = [];
-                    $.ajax({
-                        type: "POST",
-                        async: false, //同步执行
-                        url: "../../recordhourping/quality",
-                        cache: false,  //禁用缓存
-                        data: param,  //传入组装的参数
-                        dataType: "json",
-                        success: function (result) {
-                            for(var i=0;i<result.scoreList.length;i++){
-                                var dateStrs = result.scoreList[i].recordDate.split(" ");
-                                arr.push(dateStrs[0] + " " + result.scoreList[i].recordTime+":00");
-                            }
-                        }
-                    })
-                    return arr.sort();;
-                })(),
-                // categories:['3月','4月','5月',"6月",'7月','8月'],
-                crosshair: true
-            },
-            yAxis: {
-                max: 100,
-                min: 60,
-                title: {
-                    text: ' '
-                }
-            },
-            tooltip: {
-                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
-                footerFormat: '</table>',
-                // shared: true,
-                useHTML: true
-            },
-            plotOptions: {
-                series: {
-                    stickyTracking: false
-                },
-                column: {
-                    pointPadding: 0.2,
-                    borderWidth: 0
-                },
-
-            },
-            exporting: {
-                enabled:false
-            },
-            series: [{
-                name:"score" ,
-                data: (function () {
-                    var arr = [];
-                    $.ajax({
-                        type: "POST",
-                        async: false, //同步执行
-                        url: "../../recordhourping/quality",
-                        cache: false,  //禁用缓存
-                        data: param,  //传入组装的参数
-                        dataType: "json",
-                        success: function (result) {
-
-                            for(var i=0;i<result.scoreList.length;i++){
-                                arr.push(parseFloat(result.scoreList[i].score));
-                            }
-                        }
-                    })
-                    return arr.sort();;
-                })(),
-                showInLegend: false,
-
-
-            }]
-
-        });
-
-    },
-
-});
-/*文件下载图表*/
-var download_chart = new Vue({
-    el: '#container_download',
-    data: {
-        chartdata: {ava_start:(new Date()).Format("yyyy-MM-dd"), ava_terminal:(new Date()).Format("yyyy-MM-dd")}
-    },
-    methods:{
-
-    },
-    mounted: function(){         /*动态加载测试任务组数据*/
-        let param = {};
-        param.chartdata = JSON.stringify(this.chartdata);
-        $('#container_download').highcharts({
-            chart: {
-                type: 'line',
-                backgroundColor: 'rgba(0,0,0,0)'
-            },
-            title: {
-                text: ''
-            },
-
-            xAxis: {
-                labels: {
-                    rotation: 0//调节倾斜角度偏移
-                },
-                categories: (function () {
-                    var arr = [];
-                    $.ajax({
-                        type: "POST",
-                        async: false, //同步执行
-                        url: "../../recordhourping/download",
-                        cache: false,  //禁用缓存
-                        data: param,  //传入组装的参数
-                        dataType: "json",
-                        success: function (result) {
-                            for(var i=0;i<result.scoreList.length;i++){
-                                var dateStrs = result.scoreList[i].recordDate.split(" ");
-                                arr.push(dateStrs[0] + " " + result.scoreList[i].recordTime+":00");
-                            }
-                        }
-                    })
-                    return arr.sort();;
-                })(),
-                // categories:['3月','4月','5月',"6月",'7月','8月'],
-                crosshair: true
-            },
-            yAxis: {
-                max: 100,
-                min: 0,
-                title: {
-                    text: ' '
-                }
-            },
-            tooltip: {
-                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
-                footerFormat: '</table>',
-                // shared: true,
-                useHTML: true
-            },
-            plotOptions: {
-                column: {
-                    pointPadding: 0.2,
-                    borderWidth: 0
-                },
-                series: {
-                    stickyTracking: false
-                }
-            },
-            exporting: {
-                enabled:false
-            },
-            series: [{
-                name:"score" ,
-                data: (function () {
-                    var arr = [];
-                    $.ajax({
-                        type: "POST",
-                        async: false, //同步执行
-                        url: "../../recordhourping/download",
-                        cache: false,  //禁用缓存
-                        data: param,  //传入组装的参数
-                        dataType: "json",
-                        success: function (result) {
-
-                            for(var i=0;i<result.scoreList.length;i++){
-                                arr.push(parseFloat(result.scoreList[i].score));
-                            }
-                        }
-                    })
-                    return arr.sort();;
-                })(),
-                showInLegend: false,
-
-
-            }]
-
-        });
-
-    },
-
-});
-/*网页浏览*/
-var page_chart = new Vue({
-    el: '#container_page',
-    data: {
-        chartdata: {ava_start:(new Date()).Format("yyyy-MM-dd"), ava_terminal:(new Date()).Format("yyyy-MM-dd")}
-    },
-    methods:{
-
-    },
-    mounted: function(){         /*动态加载测试任务组数据*/
-        let param = {};
-        param.chartdata = JSON.stringify(this.chartdata);
-        $('#container_page').highcharts({
-            chart: {
-                type: 'line',
-                backgroundColor: 'rgba(0,0,0,0)'
-            },
-            title: {
-                text: ''
-            },
-
-            xAxis: {
-                labels: {
-                    rotation: 0//调节倾斜角度偏移
-                },
-                categories: (function () {
-                    var arr = [];
-                    $.ajax({
-                        type: "POST",
-                        async: false, //同步执行
-                        url: "../../recordhourping/page",
-                        cache: false,  //禁用缓存
-                        data: param,  //传入组装的参数
-                        dataType: "json",
-                        success: function (result) {
-                            for(var i=0;i<result.scoreList.length;i++){
-                                var dateStrs = result.scoreList[i].recordDate.split(" ");
-                                arr.push(dateStrs[0] + " " + result.scoreList[i].recordTime+":00");
-                            }
-                        }
-                    })
-                    return arr.sort();;
-                })(),
-                // categories:['3月','4月','5月',"6月",'7月','8月'],
-                crosshair: true
-            },
-            yAxis: {
-                max: 100,
-                min: 60,
-                title: {
-                    text: ' '
-                }
-            },
-            tooltip: {
-                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
-                footerFormat: '</table>',
-                // shared: true,
-                useHTML: true
-            },
-            plotOptions: {
-                column: {
-                    pointPadding: 0.2,
-                    borderWidth: 0
-                },
-                series: {
-                    stickyTracking: false
-                }
-            },
-            exporting: {
-                enabled:false
-            },
-            series: [{
-                name:"score" ,
-                data: (function () {
-                    var arr = [];
-                    $.ajax({
-                        type: "POST",
-                        async: false, //同步执行
-                        url: "../../recordhourping/page",
-                        cache: false,  //禁用缓存
-                        data: param,  //传入组装的参数
-                        dataType: "json",
-                        success: function (result) {
-
-                            for(var i=0;i<result.scoreList.length;i++){
-                                arr.push(parseFloat(result.scoreList[i].score));
-                            }
-
-                        }
-                    })
-                    return arr.sort();;
-                })(),
-                showInLegend: false,
-
-
-            }]
-
-        });
-
-    },
-
-});
-/*在线视频图表*/
-var video_chart = new Vue({
-    el: '#container_video',
-    data: {
-        chartdata: {ava_start:(new Date()).Format("yyyy-MM-dd"), ava_terminal:(new Date()).Format("yyyy-MM-dd")}
-    },
-    methods:{
-
-    },
-    mounted: function(){         /*动态加载测试任务组数据*/
-        let param = {};
-        param.chartdata = JSON.stringify(this.chartdata);
-        $('#container_video').highcharts({
-            chart: {
-                type: 'line',
-                backgroundColor: 'rgba(0,0,0,0)'
-            },
-            title: {
-                text: ''
-            },
-
-            xAxis: {
-                labels: {
-                    rotation: 0//调节倾斜角度偏移
-                },
-                categories: (function () {
-                    var arr = [];
-                    $.ajax({
-                        type: "POST",
-                        async: false, //同步执行
-                        url: "../../recordhourping/video",
-                        cache: false,  //禁用缓存
-                        data: param,  //传入组装的参数
-                        dataType: "json",
-                        success: function (result) {
-                            for(var i=0;i<result.scoreList.length;i++){
-                                var dateStrs = result.scoreList[i].recordDate.split(" ");
-                                arr.push(dateStrs[0] + " " + result.scoreList[i].recordTime+":00");
-                            }
-                        }
-                    })
-                    return arr.sort();;
-                })(),
-                // categories:['3月','4月','5月',"6月",'7月','8月'],
-                crosshair: true
-            },
-            yAxis: {
-                max: 100,
-                min: 60,
-                title: {
-                    text: ' '
-                }
-            },
-            tooltip: {
-                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
-                footerFormat: '</table>',
-                // shared: true,
-                useHTML: true
-            },
-            plotOptions: {
-                column: {
-                    pointPadding: 0.2,
-                    borderWidth: 0
-                },
-                series: {
-                    stickyTracking: false
-                }
-            },
-            exporting: {
-                enabled:false
-            },
-            series: [{
-                name:"score" ,
-                data: (function () {
-                    var arr = [];
-                    $.ajax({
-                        type: "POST",
-                        async: false, //同步执行
-                        url: "../../recordhourping/video",
-                        cache: false,  //禁用缓存
-                        data: param,  //传入组装的参数
-                        dataType: "json",
-                        success: function (result) {
-
-                            for(var i=0;i<result.scoreList.length;i++){
-                                arr.push(parseFloat(result.scoreList[i].score));
-                            }
-                        }
-                    })
-                    return arr.sort();;
-                })(),
-                showInLegend: false,
-
-
-            }]
-
-        });
-
-    },
-
-});
-
 /*在线游戏图表*/
-var game_chart = new Vue({
-    el: '#container_game',
-    data: {
-        chartdata: {ava_start:(new Date()).Format("yyyy-MM-dd"), ava_terminal:(new Date()).Format("yyyy-MM-dd")}
-    },
-    methods:{
+function list_game() {
+    var game_chart = new Vue({
+        el: '#container_game',
+        data: {
+            chartdata: {ava_start:(new Date()).Format("yyyy-MM-dd"), ava_terminal:(new Date()).Format("yyyy-MM-dd")}
+        },
+        methods:{
 
-    },
-    mounted: function(){         /*动态加载测试任务组数据*/
-        let param = {};
-        param.chartdata = JSON.stringify(this.chartdata);
-        $('#container_game').highcharts({
-            chart: {
-                type: 'line',
-                backgroundColor: 'rgba(0,0,0,0)'
-            },
-            title: {
-                text: ''
-            },
-
-            xAxis: {
-                labels: {
-                    rotation: 0//调节倾斜角度偏移
+        },
+        mounted: function(){         /*动态加载测试任务组数据*/
+            let param = {};
+            param.chartdata = JSON.stringify(this.chartdata);
+            $('#container_game').highcharts({
+                chart: {
+                    type: 'line',
+                    backgroundColor: 'rgba(0,0,0,0)'
                 },
-                categories: (function () {
-                    var arr = [];
-                    $.ajax({
-                        type: "POST",
-                        async: false, //同步执行
-                        url: "../../recordhourping/game",
-                        cache: false,  //禁用缓存
-                        data: param,  //传入组装的参数
-                        dataType: "json",
-                        success: function (result) {
-                            for(var i=0;i<result.scoreList.length;i++){
-                                var dateStrs = result.scoreList[i].recordDate.split(" ");
-                                arr.push(dateStrs[0] + " " + result.scoreList[i].recordTime+":00");
-                            }
-                        }
-                    })
-                    return arr.sort();;
-                })(),
-                // categories:['3月','4月','5月',"6月",'7月','8月'],
-                crosshair: true,
-            },
-            yAxis: {
-                max: 100,
-                min: 60,
                 title: {
-                    text: ' '
-                }
-            },
-            tooltip: {
-
-                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
-                footerFormat: '</table>',
-                // shared: true,
-                useHTML: true
-            },
-            plotOptions: {
-                column: {
-                    pointPadding: 0.2,
-                    borderWidth: 0
+                    text: ''
                 },
-                series: {
-                    stickyTracking: false
-                }
-            },
-            exporting: {
-                enabled:false
-            },
-            series: [{
-                name:"score" ,
-                data: (function () {
-                    var arr = [];
-                    $.ajax({
-                        type: "POST",
-                        async: false, //同步执行
-                        url: "../../recordhourping/game",
-                        cache: false,  //禁用缓存
-                        data: param,  //传入组装的参数
-                        dataType: "json",
-                        success: function (result) {
-                            for(var i=0;i<result.scoreList.length;i++){
-                                arr.push(parseFloat(result.scoreList[i].score));
-                            }
+
+                xAxis: {
+                    labels: {
+                        rotation: 0//调节倾斜角度偏移
+                    },
+                    categories: (function () {
+                        var arr = [];
+                        for(var i=0;i<game_list.length;i++){
+                            var dateStrs = game_list[i].recordDate.split(" ");
+                            arr.push(dateStrs[0] + " " + game_list[i].recordTime+":00");
                         }
-                    })
-                    return arr.sort();;
-                })(),
-                showInLegend: false,
+                        return arr.sort();;
+                    })(),
+                    // categories:['3月','4月','5月',"6月",'7月','8月'],
+                    crosshair: true,
+                },
+                yAxis: {
+                    max: 100,
+                    min: 60,
+                    title: {
+                        text: ' '
+                    }
+                },
+                tooltip: {
+
+                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
+                    footerFormat: '</table>',
+                    // shared: true,
+                    useHTML: true
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    },
+                    series: {
+                        stickyTracking: false
+                    }
+                },
+                exporting: {
+                    enabled:false
+                },
+                series: [{
+                    name:"score" ,
+                    data: (function () {
+                        var arr = [];
+                        for(var i=0;i<game_list.length;i++){
+                            arr.push(parseFloat(game_list[i].score));
+                        }
+                        return arr.sort();;
+                    })(),
+                    showInLegend: false,
 
 
-            }]
+                }]
 
-        });
+            });
 
-    },
+        },
 
-});
+    });
+}
 
 
+function connection_info() {
+    $('#myModal_connection').modal('show');
+}
 
+function quality_info() {
+    $('#myModal_quality').modal('show');
+}
 
+function broswer_info() {
+    $('#myModal_broswer').modal('show');
+}
+
+function download_info() {
+    $('#myModal_download').modal('show');
+}
+
+function video_info() {
+    $('#myModal_video').modal('show');
+}
+
+function game_info() {
+    $('#myModal_game').modal('show');
+}
+
+//网络连通性表格
+function ping(obj) {
+    var probeContent=obj
+    var ping_table=new Vue({
+        el:'#pingdata_table',
+        data: {
+            headers: [
+                {title: '<div style="width:10px"></div>'},
+                {title: '<div style="width:110px">探针名称</div>'},
+                {title: '<div style="width:70px">综合分数</div>'},
+                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">时延标准差(ms)</div>'},
+                {title: '<div style="width:100px">时延方差(ms)</div>'},
+                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">抖动标准差(ms)</div>'},
+                {title: '<div style="width:100px">抖动方差(ms)</div>'},
+                {title: '<div style="width:100px">丢包率(%)</div>'},
+                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">时延标准差(ms)</div>'},
+                {title: '<div style="width:100px">时延方差(ms)</div>'},
+                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">抖动标准差(ms)</div>'},
+                {title: '<div style="width:100px">抖动方差(ms)</div>'},
+                {title: '<div style="width:100px">丢包率(%)</div>'},
+                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">时延标准差(ms)</div>'},
+                {title: '<div style="width:100px">时延方差(ms)</div>'},
+                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">抖动标准差(ms)</div>'},
+                {title: '<div style="width:100px">抖动方差(ms)</div>'},
+                {title: '<div style="width:100px">丢包率(%)</div>'},
+                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">时延标准差(ms)</div>'},
+                {title: '<div style="width:100px">时延方差(ms)</div>'},
+                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">抖动标准差(ms)</div>'},
+                {title: '<div style="width:100px">抖动方差(ms)</div>'},
+                {title: '<div style="width:100px">丢包率(%)</div>'},
+                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">时延标准差(ms)</div>'},
+                {title: '<div style="width:100px">时延方差(ms)</div>'},
+                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">抖动标准差(ms)</div>'},
+                {title: '<div style="width:100px">抖动方差(ms)</div>'},
+                {title: '<div style="width:100px">丢包率(%)</div>'},
+            ],
+            rows: [],
+            dtHandle: null,
+        },
+        methods: {
+            reset: function () {
+                let vm = this;
+                vm.probedata = {};
+                /*清空probedata*/
+                vm.dtHandle.clear();
+                console.log("重置");
+                vm.dtHandle.draw();
+                /*重置*/
+            },
+            currReset: function () {
+                let vm = this;
+                vm.dtHandle.clear();
+                console.log("当前页面重绘");
+                vm.dtHandle.draw(false);
+                /*当前页面重绘*/
+            },
+            redraw: function () {
+                let vm = this;
+                vm.dtHandle.clear();
+                console.log("页面重绘");
+                vm.dtHandle.draw();
+                /*重绘*/
+            }
+        },
+        mounted: function(obj) {
+            let vm = this;
+            // Instantiate the datatable and store the reference to the instance in our dtHandle element.
+            vm.dtHandle = $(this.$el).DataTable({
+                columns: vm.headers,
+                data: vm.rows,
+                createdRow: function ( row, data, index ) {
+                    var trs=$("#pingdata_table>thead tr");
+                    if(trs.length>1){
+                        return
+                    }else if (index == 0) { //生成了行之后，开始生成表头>>>
+                        var innerTh = '<tr><th rowspan="1"></th>';
+                        innerTh +='<th colspan="1"></th>';
+                        innerTh +='<th colspan="1"></th>';
+                        var columnsCount = 38;//具体情况
+                        innerTh +='<th colspan="7" style="text-align: center">ping(ICMP)</th>';
+                        innerTh +='<th colspan="7" style="text-align: center">ping(TCP)</th>';
+                        innerTh +='<th colspan="7" style="text-align: center">ping(UDP)</th>';
+                        innerTh +='<th colspan="7" style="text-align: center">Trace Route(ICMP)</th>';
+                        innerTh +='<th colspan="7" style="text-align: center">Trace Route(UDP)</th>';
+                        innerTh += '</tr>';
+                        //table的id为"id_table"
+                        document.getElementById('pingdata_table').insertRow(0);
+                        var $tr = $("#pingdata_table tr").eq(0);
+                        $tr.after(innerTh);
+                    }
+                },
+                searching: false,
+                paging: false,
+                serverSide: true,
+                info: false,
+                ordering: false, /*禁用排序功能*/
+                /*bInfo: false,*/
+                /*bLengthChange: false,*/    /*禁用Show entries*/
+                scroll: false,
+
+                sDom: 'Rfrtlip', /*显示在左下角*/
+                ajax: function (data, callback, settings) {
+                    //封装请求参数
+                    //ajax请求数据
+                    let returnData = {};
+                    // returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
+                    // returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
+                    // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
+                    returnData.data = probeContent;//返回的数据列表
+                    // // 重新整理返回数据以匹配表格
+                    console.log(returnData);
+                    let rows = [];
+                    var i = 1;
+                    probeContent.forEach(function (item) {
+                            let row = [];
+                             row.push(i++);
+                            row.push(item.probeName);
+                            row.push(item.score.toFixed(2));
+                            row.push(item.pingIcmpDelay.toFixed(2));
+                            row.push(item.pingIcmpDelayStd.toFixed(2));
+                            row.push(item.pingIcmpDelayVar.toFixed(2));
+                            row.push(item.pingIcmpJitter.toFixed(2));
+                            row.push(item.pingIcmpJitterStd.toFixed(2));
+                            row.push(item.pingIcmpJitterVar.toFixed(2));
+                            row.push(item.pingIcmpLossRate.toFixed(2));
+                            row.push(item.pingTcpDelay.toFixed(2));
+                            row.push(item.pingTcpDelayStd.toFixed(2));
+                            row.push(item.pingTcpDelayVar.toFixed(2));
+                            row.push(item.pingTcpJitter.toFixed(2));
+                            row.push(item.pingTcpJitterStd.toFixed(2));
+                            row.push(item.pingTcpJitterVar.toFixed(2));
+                            row.push(item.pingTcpLossRate.toFixed(2));
+                            row.push(item.pingUdpDelay);
+                            row.push(item.pingUdpDelayStd);
+                            row.push(item.pingUdpDelayVar);
+                            row.push(item.pingUdpJitter);
+                            row.push(item.pingUdpJitterStd);
+                            row.push(item.pingUdpJitterVar);
+                            row.push(item.pingUdpLossRate);
+                            row.push(item.tracertIcmpDelay);
+                            row.push(item.tracertIcmpDelayStd);
+                            row.push(item.tracertIcmpDelayVar);
+                            row.push(item.tracertIcmpJitter);
+                            row.push(item.tracertIcmpJitterStd);
+                            row.push(item.tracertIcmpJitterVar);
+                            row.push(item.tracertIcmpLossRate);
+                            row.push(item.tracertTcpDelay);
+                            row.push(item.tracertTcpDelayStd);
+                            row.push(item.tracertTcpDelayVar);
+                            row.push(item.tracertTcpJitter);
+                            row.push(item.tracertTcpJitterStd);
+                            row.push(item.tracertTcpJitterVar);
+                            row.push(item.tracertTcpLossRate);
+                            rows.push(row);
+
+                    });
+                    returnData.data = rows;
+                    callback(returnData);
+                    //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
+                    //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
+
+                    $("#pingdata_table").colResizable({
+                        liveDrag:true,
+                        gripInnerHtml:"<div class='grip'></div>",
+                        draggingClass:"dragging",
+                        resizeMode:'overflow',
+                    });
+                }
+            });
+        }
+
+    });
+}
+//网络质量表格
+function quality(obj) {
+    var probeContent=obj
+    var quality_table=new Vue({
+        el:'#qualitydata_table',
+        data: {
+            headers: [
+                {title: '<div style="width:10px"></div>'},
+                {title: '<div style="width:110px">探针名称</div>'},
+                {title: '<div style="width:70px">综合分数</div>'},
+                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">往向时延(ms)</div>'},
+                {title: '<div style="width:100px">返向时延(ms)</div>'},
+                {title: '<div style="width:100px">抖动平均值</div>'},
+                {title: '<div style="width:100px">往向抖动</div>'},
+                {title: '<div style="width:100px">返向抖动</div>'},
+                {title: '<div style="width:100px">丢包率</div>'},
+                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">往向时延(ms)</div>'},
+                {title: '<div style="width:100px">返向时延(ms)</div>'},
+                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">往向抖动(ms)</div>'},
+                {title: '<div style="width:100px">返向抖动(ms)</div>'},
+                {title: '<div style="width:100px">丢包率(%)</div>'},
+                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">查询成功率(%)</div>'},
+                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">查询成功率(%)</div>'},
+                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">掉线率(%)</div>'},
+                {title: '<div style="width:100px">查询成功率(%)</div>'},
+                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">认证成功率(%)</div>'},
+
+            ],
+            rows: [],
+            dtHandle: null,
+        },
+        methods: {
+            reset: function () {
+                let vm = this;
+                vm.probedata = {};
+                /*清空probedata*/
+                vm.dtHandle.clear();
+                console.log("重置");
+                vm.dtHandle.draw();
+                /*重置*/
+            },
+            currReset: function () {
+                let vm = this;
+                vm.dtHandle.clear();
+                console.log("当前页面重绘");
+                vm.dtHandle.draw(false);
+                /*当前页面重绘*/
+            },
+            redraw: function () {
+                let vm = this;
+                vm.dtHandle.clear();
+                console.log("页面重绘");
+                vm.dtHandle.draw();
+                /*重绘*/
+            }
+        },
+        mounted: function(obj) {
+            let vm = this;
+            // Instantiate the datatable and store the reference to the instance in our dtHandle element.
+            vm.dtHandle = $(this.$el).DataTable({
+                columns: vm.headers,
+                data: vm.rows,
+                createdRow: function ( row, data, index ) {
+                    var trs=$("#qualitydata_table>thead tr");
+                    if(trs.length>1){
+                        return
+                    }else if (index == 0) {
+                        var innerTh = '<tr><th rowspan="1"></th>';
+                        innerTh +='<th colspan="1"></th>';
+                        innerTh +='<th colspan="1"></th>';
+                        var columnsCount = 25;//具体情况
+                        innerTh +='<th colspan="7" style="text-align: center">Sla(TCP)</th>';
+                        innerTh +='<th colspan="7" style="text-align: center">Sla(UDP)</th>';
+                        innerTh +='<th colspan="2 " style="text-align: center">DNS</th>';
+                        innerTh +='<th colspan="2" style="text-align: center">DHCP</th>';
+                        innerTh +='<th colspan="3" style="text-align: center">ADSL</th>';
+                        innerTh +='<th colspan="2"style="text-align: center">Radius</th>';
+                        innerTh += '</tr>';
+                        //table的id为"id_table"
+                        document.getElementById('qualitydata_table').insertRow(0);
+                        var $tr = $("#qualitydata_table tr").eq(0);
+                        $tr.after(innerTh);
+                    }
+                },
+                searching: false,
+                paging: false,
+                serverSide: true,
+                info: false,
+                ordering: false, /*禁用排序功能*/
+                /*bInfo: false,*/
+                /*bLengthChange: false,*/    /*禁用Show entries*/
+                scroll: false,
+
+                sDom: 'Rfrtlip', /*显示在左下角*/
+                ajax: function (data, callback, settings) {
+                    //封装请求参数
+                    //ajax请求数据
+                    let returnData = {};
+                    // returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
+                    // returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
+                    // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
+                    returnData.data = probeContent;//返回的数据列表
+                    // // 重新整理返回数据以匹配表格
+                    console.log(returnData);
+                    let rows = [];
+                    var i = 1;
+                    probeContent.forEach(function (item) {
+                            let row = [];
+                             row.push(i++);
+                            row.push(item.probeName);
+                            row.push(item.score.toFixed(2));
+                            row.push(item.slaTcpDelay);
+                            row.push(item.slaTcpGDelay);
+                            row.push(item.slaTcpRDelay);
+                            row.push(item.slaTcpJitter);
+                            row.push(item.slaTcpGJitter);
+                            row.push(item.slaTcpRJitter);
+                            row.push(item.slaTcpLossRate);
+                            row.push(item.slaUdpDelay);
+                            row.push(item.slaUdpGDelay);
+                            row.push(item.slaUdpRDelay);
+                            row.push(item.slaUdpJitter);
+                            row.push(item.slaUdpGJitter);
+                            row.push(item.slaUdpRJitter);
+                            row.push(item.slaUdpLossRate);
+                            row.push(item.dnsDelay);
+                            row.push(item.dnsSuccessRate);
+                            row.push(item.dhcpDelay);
+                            row.push(item.dhcpSuccessRate);
+                            row.push(item.pppoeDelay);
+                            row.push(item.pppoeDropRate);
+                            row.push(item.pppoeSuccessRate);
+                            row.push(item.radiusDelay);
+                            row.push(item.radiusSuccessRate);
+                            rows.push(row);
+                    });
+                    returnData.data = rows;
+                    callback(returnData);
+                    //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
+                    //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
+
+                    $("#qualitydata_table").colResizable({
+                        liveDrag:true,
+                        gripInnerHtml:"<div class='grip'></div>",
+                        draggingClass:"dragging",
+                        resizeMode:'overflow',
+                    });
+                }
+            });
+        }
+
+    });
+}
+
+//网页浏览表格
+function broswer(obj) {
+    var probeContent=obj
+    debugger
+    var broswer_table=new Vue({
+        el:'#broswerdata_table',
+        data: {
+            headers: [
+                {title: '<div style="width:10px"></div>'},
+                {title: '<div style="width:110px">探针名称</div>'},
+                {title: '<div style="width:70px">综合分数</div>'},
+                {title: '<div style="width:100px">DNS时延(ms)</div>'},
+                {title: '<div style="width:100px">连接时延(ms)</div>'},
+                {title: '<div style="width:100px">首字节时延(ms)</div>'},
+                {title: '<div style="width:120px">页面文件时延(ms)</div>'},
+                {title: '<div style="width:100px">重定向时延(ms)</div>'},
+                {title: '<div style="width:100px">首屏时延(ms)</div>'},
+                {title: '<div style="width:115px">页面元素时延(ms)</div>'},
+                {title: '<div style="width:100px">下载速率(KB/S)</div>'},
+            ],
+            rows: [],
+            dtHandle: null,
+        },
+        methods: {
+            reset: function () {
+                let vm = this;
+                vm.probedata = {};
+                /*清空probedata*/
+                vm.dtHandle.clear();
+                console.log("重置");
+                vm.dtHandle.draw();
+                /*重置*/
+            },
+            currReset: function () {
+                let vm = this;
+                vm.dtHandle.clear();
+                console.log("当前页面重绘");
+                vm.dtHandle.draw(false);
+                /*当前页面重绘*/
+            },
+            redraw: function () {
+                let vm = this;
+                vm.dtHandle.clear();
+                console.log("页面重绘");
+                vm.dtHandle.draw();
+                /*重绘*/
+            }
+        },
+        mounted: function(obj) {
+            let vm = this;
+            // Instantiate the datatable and store the reference to the instance in our dtHandle element.
+            vm.dtHandle = $(this.$el).DataTable({
+                columns: vm.headers,
+                data: vm.rows,
+                searching: false,
+                paging: false,
+                serverSide: true,
+                info: false,
+                ordering: false, /*禁用排序功能*/
+                /*bInfo: false,*/
+                /*bLengthChange: false,*/    /*禁用Show entries*/
+                scroll: false,
+
+                sDom: 'Rfrtlip', /*显示在左下角*/
+                ajax: function (data, callback, settings) {
+                    //封装请求参数
+                    //ajax请求数据
+                    let returnData = {};
+                    // returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
+                    // returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
+                    // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
+                    returnData.data = probeContent;//返回的数据列表
+                    // // 重新整理返回数据以匹配表格
+                    console.log(returnData);
+                    if(probeContent==undefined){
+                        return
+                    }
+                    let rows = [];
+                    var i = 1;
+                    probeContent.forEach(function (item) {
+                            let row = [];
+                             row.push(i++);
+                            row.push(item.probeName);
+                            row.push(item.score.toFixed(2));
+                            row.push(item.webpageDnsDelay);
+                            row.push(item.webpageConnDelay);
+                            row.push(item.webpageHeadbyteDelay);
+                            row.push(item.webpagePageFileDelay);
+                            row.push(item.webpageRedirectDelay);
+                            row.push(item.webpageAboveFoldDelay);
+                            row.push(item.webpagePageElementDelay);
+                            row.push(item.webpageDownloadRate);
+                            rows.push(row);
+
+                    });
+                    returnData.data = rows;
+                    callback(returnData);
+                    //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
+                    //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
+
+                    $("#broswerdata_table").colResizable({
+                        liveDrag:true,
+                        gripInnerHtml:"<div class='grip'></div>",
+                        draggingClass:"dragging",
+                        resizeMode:'overflow',
+                    });
+                }
+            });
+        }
+    });
+}
+//下载
+function download(obj) {
+    var probeContent=obj
+    //网页下载
+    var download_table=new Vue({
+        el:'#downloaddata_table',
+        data: {
+            headers: [
+                {title: '<div style="width:10px"></div>'},
+                {title: '<div style="width:110px">探针名称</div>'},
+                {title: '<div style="width:70px">综合分数</div>'},
+                {title: '<div style="width:100px">DNS时延(ms)</div>'},
+                {title: '<div style="width:100px">连接时延(ms)</div>'},
+                {title: '<div style="width:100px">首字节时延(ms)</div>'},
+                {title: '<div style="width:100px">下载速率(KB/S)</div>'},
+                {title: '<div style="width:100px">DNS时延(ms)</div>'},
+                {title: '<div style="width:100px">连接时延(ms)</div>'},
+                {title: '<div style="width:100px">登录时延(ms)</div>'},
+                {title: '<div style="width:100px">首字节时延(ms)</div>'},
+                {title: '<div style="width:100px">下载速率(KB/S)</div>'},
+                {title: '<div style="width:100px">DNS时延(ms)</div>'},
+                {title: '<div style="width:100px">连接时延(ms)</div>'},
+                {title: '<div style="width:100px">登录时延(ms)</div>'},
+                {title: '<div style="width:100px">首字节时延(ms)</div>'},
+                {title: '<div style="width:100px">下载速率(KB/S)</div>'},
+            ],
+            rows: [],
+            dtHandle: null,
+        },
+        methods: {
+            reset: function () {
+                let vm = this;
+                vm.probedata = {};
+                /*清空probedata*/
+                vm.dtHandle.clear();
+                console.log("重置");
+                vm.dtHandle.draw();
+                /*重置*/
+            },
+            currReset: function () {
+                let vm = this;
+                vm.dtHandle.clear();
+                console.log("当前页面重绘");
+                vm.dtHandle.draw(false);
+                /*当前页面重绘*/
+            },
+            redraw: function () {
+                let vm = this;
+                vm.dtHandle.clear();
+                console.log("页面重绘");
+                vm.dtHandle.draw();
+                /*重绘*/
+            }
+        },
+        mounted: function(obj) {
+            let vm = this;
+            // Instantiate the datatable and store the reference to the instance in our dtHandle element.
+            vm.dtHandle = $(this.$el).DataTable({
+                columns: vm.headers,
+                data: vm.rows,
+                createdRow: function ( row, data, index ) {
+                    //生成了行之后，开始生成表头>>>
+                    var trs=$("#downloaddata_table>thead tr");
+                    if(trs.length>1){
+                        return
+                    }if (index == 0) {
+                        var innerTh = '<tr><th rowspan="1"></th>';
+                        innerTh +='<th colspan="1"></th>';
+                        innerTh +='<th colspan="1"></th>';
+
+                        var columnsCount = 17;//具体情况
+                        innerTh +='<th colspan="4" style="text-align: center">WEB下载</th>';
+                        innerTh +='<th colspan="5" style="text-align: center">FTP下载</th>';
+                        innerTh +='<th colspan="5" style="text-align: center">FTP上传</th>';
+                        innerTh += '</tr>';
+                        //table的id为"id_table"
+                        document.getElementById('downloaddata_table').insertRow(0);
+                        var $tr = $("#downloaddata_table tr").eq(0);
+                        $tr.after(innerTh);
+                    }
+                },
+                searching: false,
+                paging: false,
+                serverSide: true,
+                info: false,
+                ordering: false, /*禁用排序功能*/
+                /*bInfo: false,*/
+                /*bLengthChange: false,*/    /*禁用Show entries*/
+                scroll: false,
+
+                sDom: 'Rfrtlip', /*显示在左下角*/
+                ajax: function (data, callback, settings) {
+                    //封装请求参数
+                    //ajax请求数据
+                    let returnData = {};
+                    // returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
+                    // returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
+                    // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
+                    returnData.data = probeContent;//返回的数据列表
+                    // // 重新整理返回数据以匹配表格
+                    console.log(returnData);
+                    if(probeContent==undefined){
+                        return
+                    }
+                    let rows = [];
+                    var i = 1;
+                    probeContent.forEach(function (item) {
+                            let row = [];
+                             row.push(i++);
+                            row.push(item.probeName);
+                            row.push(item.score.toFixed(2));
+                            row.push(item.webDownloadDnsDelay);
+                            row.push(item.webDownloadConnDelay);
+                            row.push(item.webDownloadHeadbyteDelay);
+                            row.push(item.webDownloadDownloadRate);
+                            row.push(item.ftpDownloadDnsDelay);
+                            row.push(item.ftpDownloadConnDelay);
+                            row.push(item.ftpDownloadLoginDelay);
+                            row.push(item.ftpDownloadHeadbyteDelay);
+                            row.push(item.ftpDownloadDownloadRate);
+                            row.push(item.ftpUploadDnsDelay);
+                            row.push(item.ftpUploadConnDelay);
+                            row.push(item.ftpUploadLoginDelay);
+                            row.push(item.ftpUploadHeadbyteDelay);
+                            row.push(item.ftpUploadUploadRate);
+                            rows.push(row);
+
+                    });
+                    returnData.data = rows;
+                    callback(returnData);
+                    //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
+                    //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
+
+                    $("#downloaddata_table").colResizable({
+                        liveDrag:true,
+                        gripInnerHtml:"<div class='grip'></div>",
+                        draggingClass:"dragging",
+                        resizeMode:'overflow',
+                    });
+                }
+            });
+        }
+
+    })
+}
+// /在线视频
+function video(obj) {
+    var probeContent=obj
+    var video_table=new Vue({
+        el:'#videodata_table',
+        data: {
+            headers: [
+                {title: '<div style="width:10px"></div>'},
+                {title: '<div style="width:110px">探针名称</div>'},
+                {title: '<div style="width:70px">综合分数</div>'},
+                {title: '<div style="width:100px">DNS时延(ms)</div>'},
+                {title: '<div style="width:100px">连接WEB服务器时延(ms)</div>'},
+                {title: '<div style="width:120px">web页面时延(ms)</div>'},
+                {title: '<div style="width:149px">连接调度服务器时延(ms)</div>'},
+                {title: '<div style="width:135px">获取视频地址时延(ms)</div>'},
+                {title: '<div style="width:147px">连接媒体服务器时延(ms)</div>'},
+                {title: '<div style="width:110px">首帧时延(ms)</div>'},
+                {title: '<div style="width:120px">首次缓冲时延(ms)</div>'},
+                {title: '<div style="width:120px">视频加载时延(ms)</div>'},
+                {title: '<div style="width:120px">总体缓冲时间(ms)</div>'},
+                {title: '<div style="width:105px">下载速率(KB/S)</div>'},
+                {title: '<div style="width:100px">缓冲次数</div>'},
+            ],
+            rows: [],
+            dtHandle: null,
+        },
+        methods: {
+            reset: function () {
+                let vm = this;
+                vm.probedata = {};
+                /*清空probedata*/
+                vm.dtHandle.clear();
+                console.log("重置");
+                vm.dtHandle.draw();
+                /*重置*/
+            },
+            currReset: function () {
+                let vm = this;
+                vm.dtHandle.clear();
+                console.log("当前页面重绘");
+                vm.dtHandle.draw(false);
+                /*当前页面重绘*/
+            },
+            redraw: function () {
+                let vm = this;
+                vm.dtHandle.clear();
+                console.log("页面重绘");
+                vm.dtHandle.draw();
+                /*重绘*/
+            }
+        },
+        mounted: function() {
+            let vm = this;
+            // Instantiate the datatable and store the reference to the instance in our dtHandle element.
+            vm.dtHandle = $(this.$el).DataTable({
+                columns: vm.headers,
+                data: vm.rows,
+                searching: false,
+                paging: false,
+                serverSide: true,
+                info: false,
+                ordering: false, /*禁用排序功能*/
+                /*bInfo: false,*/
+                /*bLengthChange: false,*/    /*禁用Show entries*/
+                scroll: false,
+
+                sDom: 'Rfrtlip', /*显示在左下角*/
+                ajax: function (data, callback, settings) {
+                    //封装请求参数
+                    //ajax请求数据
+                    let returnData = {};
+                    // returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
+                    // returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
+                    // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
+                    returnData.data = probeContent;//返回的数据列表
+                    // // 重新整理返回数据以匹配表格
+                    console.log(returnData);
+                    let rows = [];
+                    var i = 1;
+                    probeContent.forEach(function (item) {
+                            let row = [];
+                             row.push(i++);
+                            row.push(item.probeName);
+                            row.push(item.score.toFixed(2));
+                            row.push(item.webVideoDnsDelay);
+                            row.push(item.webVideoWsConnDelay.toFixed(2));
+                            row.push(item.webVideoWebPageDelay.toFixed(2));
+                            row.push(item.webVideoSsConnDelay);
+                            row.push(item.webVideoAddressDelay);
+                            row.push(item.webVideoMsConnDelay);
+                            row.push(item.webVideoHeadFrameDelay);
+                            row.push(item.webVideoInitBufferDelay);
+                            row.push(item.webVideoLoadDelay);
+                            row.push(item.webVideoTotalBufferDelay);
+                            row.push(item.webVideoDownloadRate);
+                            row.push(item.webVideoBufferTime);
+                            rows.push(row);
+
+                    });
+                    returnData.data = rows;
+                    callback(returnData);
+                    //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
+                    //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
+
+                    $("#videodata_table").colResizable({
+                        liveDrag:true,
+                        gripInnerHtml:"<div class='grip'></div>",
+                        draggingClass:"dragging",
+                        resizeMode:'overflow',
+                    });
+                }
+            });
+        }
+
+    })
+}
+//在线游戏
+function game(obj) {
+    var probeContent=obj
+    var download_table=new Vue({
+        el:'#gamedata_table',
+        data: {
+            headers: [
+                {title: '<div style="width:10px"></div>'},
+                {title: '<div style="width:110px">探针名称</div>'},
+                {title: '<div style="width:70px">综合分数</div>'},
+                {title: '<div style="width:100px">DNS时延(ms)</div>'},
+                {title: '<div style="width:100px">连接时延(ms)</div>'},
+                {title: '<div style="width:100px">游戏数据包时延(ms)</div>'},
+                {title: '<div style="width:100px">游戏数据包抖动(ms)</div>'},
+                {title: '<div style="width:100px">游戏数据包丢包率(%)</div>'},
+            ],
+            rows: [],
+            dtHandle: null,
+        },
+        methods: {
+            reset: function () {
+                let vm = this;
+                vm.probedata = {};
+                /*清空probedata*/
+                vm.dtHandle.clear();
+                console.log("重置");
+                vm.dtHandle.draw();
+                /*重置*/
+            },
+            currReset: function () {
+                let vm = this;
+                vm.dtHandle.clear();
+                console.log("当前页面重绘");
+                vm.dtHandle.draw(false);
+                /*当前页面重绘*/
+            },
+            redraw: function () {
+                let vm = this;
+                vm.dtHandle.clear();
+                console.log("页面重绘");
+                vm.dtHandle.draw();
+                /*重绘*/
+            }
+        },
+        mounted: function(obj) {
+            let vm = this;
+            // Instantiate the datatable and store the reference to the instance in our dtHandle element.
+            vm.dtHandle = $(this.$el).DataTable({
+                columns: vm.headers,
+                data: vm.rows,
+                searching: false,
+                paging: false,
+                serverSide: true,
+                info: false,
+                ordering: false, /*禁用排序功能*/
+                /*bInfo: false,*/
+                /*bLengthChange: false,*/    /*禁用Show entries*/
+                scroll: false,
+
+                sDom: 'Rfrtlip', /*显示在左下角*/
+                ajax: function (data, callback, settings) {
+                    //封装请求参数
+                    //ajax请求数据
+                    let returnData = {};
+                    // returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
+                    // returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
+                    // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
+                    returnData.data = probeContent;//返回的数据列表
+                    // // 重新整理返回数据以匹配表格
+                    console.log(returnData);
+                    let rows = [];
+                    var i = 1;
+                    probeContent.forEach(function (item) {
+                            let row = [];
+                             row.push(i++);
+                            row.push(item.probeName);
+                            row.push(item.score.toFixed(2));
+                            row.push(item.gameDnsDelay);
+                            row.push(item.gameConnDelay.toFixed(2));
+                            row.push(item.gamePacketDelay.toFixed(2));
+                            row.push(item.gamePacketJitter.toFixed(2));
+                            row.push(item.gameLossRate.toFixed(2));
+                            rows.push(row);
+                    });
+                    returnData.data = rows;
+                    callback(returnData);
+                    //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
+                    //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
+
+                    $("#gamedata_table").colResizable({
+                        liveDrag:true,
+                        gripInnerHtml:"<div class='grip'></div>",
+                        draggingClass:"dragging",
+                        resizeMode:'overflow',
+                    });
+                }
+            });
+        }
+    })
+}
+
+function loading() {
+    $('#container_connection').loading({
+        loadingWidth:240,
+        title:'正在努力的加载中',
+        name:'test',
+        discription:'这是一个描述...',
+        direction:'row',
+        type:'origin',
+        originBg:'#B0E2FF',
+        originDivWidth:30,
+        originDivHeight:30,
+        originWidth:4,
+        originHeight:4,
+        smallLoading:false,
+        titleColor:'#ADD8E6',
+        loadingBg:'#312923',
+        loadingMaskBg:'rgba(22,22,22,0.2)'
+    });
+    $('#container_quality').loading({
+        loadingWidth:240,
+        title:'正在努力的加载中~',
+        name:'quality',
+        discription:'这是一个描述...',
+        direction:'row',
+        type:'origin',
+        originBg:'#B0E2FF',
+        originDivWidth:30,
+        originDivHeight:30,
+        originWidth:4,
+        originHeight:4,
+        smallLoading:false,
+        titleColor:'#ADD8E6',
+        loadingBg:'#312923',
+        loadingMaskBg:'rgba(22,22,22,0.2)'
+    });
+    $('#container_download').loading({
+        loadingWidth:240,
+        title:'正在努力的加载中~',
+        name:'download',
+        discription:'这是一个描述...',
+        direction:'row',
+        type:'origin',
+        originBg:'#B0E2FF',
+        originDivWidth:30,
+        originDivHeight:30,
+        originWidth:4,
+        originHeight:4,
+        smallLoading:false,
+        titleColor:'#ADD8E6',
+        loadingBg:'#312923',
+        loadingMaskBg:'rgba(22,22,22,0.2)'
+    });
+    $('#container_page').loading({
+        loadingWidth:240,
+        title:'正在努力的加载中~',
+        name:'page',
+        discription:'这是一个描述...',
+        direction:'row',
+        type:'origin',
+        originBg:'#B0E2FF',
+        originDivWidth:30,
+        originDivHeight:30,
+        originWidth:4,
+        originHeight:4,
+        smallLoading:false,
+        titleColor:'#ADD8E6',
+        loadingBg:'#312923',
+        loadingMaskBg:'rgba(22,22,22,0.2)'
+    });
+    $('#container_video').loading({
+        loadingWidth:240,
+        title:'正在努力的加载中~',
+        name:'video',
+        discription:'这是一个描述...',
+        direction:'row',
+        type:'origin',
+        originBg:'#B0E2FF',
+        originDivWidth:30,
+        originDivHeight:30,
+        originWidth:4,
+        originHeight:4,
+        smallLoading:false,
+        titleColor:'#ADD8E6',
+        loadingBg:'#312923',
+        loadingMaskBg:'rgba(22,22,22,0.2)'
+    });
+    $('#container_game').loading({
+        loadingWidth:240,
+        title:'正在努力的加载中~',
+        name:'game',
+        discription:'这是一个描述...',
+        direction:'row',
+        type:'origin',
+        originBg:'#B0E2FF',
+        originDivWidth:30,
+        originDivHeight:30,
+        originWidth:4,
+        originHeight:4,
+        smallLoading:false,
+        titleColor:'#ADD8E6',
+        loadingBg:'#312923',
+        loadingMaskBg:'rgba(22,22,22,0.2)'
+    });
+}
 
 function probe() {
     probeSelected=0;

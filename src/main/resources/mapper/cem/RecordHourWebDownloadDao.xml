@@ -88,14 +88,14 @@
 		GROUP BY record_hour_web_download.record_date,record_hour_web_download.probe_id,record_hour_web_download.city_id,record_hour_web_download.county_id,record_hour_web_download.record_time) t
 
 		LEFT JOIN city
-		ON record_hour_web_download.city_id = city.city_id
+		ON t.city_id = city.city_id
 		LEFT JOIN county
-		ON record_hour_web_download.county_id = county.county_id
+		ON t.county_id = county.county_id
 		INNER JOIN probe
-		ON record_hour_web_download.probe_id = probe.id
+		ON t.probe_id = probe.id
 		LEFT JOIN target
-		ON record_hour_web_download.target_id = target.id
-		WHERE record_hour_web_download.record_date BETWEEN #{ava_start} AND #{ava_terminal}
+		ON t.target_id = target.id
+		WHERE t.record_date BETWEEN #{ava_start} AND #{ava_terminal}
 
 	</select>
 

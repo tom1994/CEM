@@ -84,13 +84,13 @@
 		</if>
 		GROUP BY record_hour_radius.record_date,record_hour_radius.probe_id,record_hour_radius.city_id,record_hour_radius.county_id,record_hour_radius.record_time) t
 		INNER JOIN probe
-		ON record_hour_radius.probe_id = probe.id
+		ON t.probe_id = probe.id
 		LEFT JOIN city
-		ON record_hour_radius.city_id = city.city_id
+		ON t.city_id = city.city_id
 		LEFT JOIN county
-		ON record_hour_radius.county_id = county.county_id
+		ON t.county_id = county.county_id
 		LEFT JOIN target
-		ON record_hour_radius.target_id = target.id
+		ON t.target_id = target.id
 
 	</select>
 

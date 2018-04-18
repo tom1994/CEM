@@ -66,7 +66,7 @@
 		SUM(record_hour_dhcp.fail) AS fail,
 		SUM(record_hour_dhcp.total) AS total
 		FROM record_hour_dhcp
-		force index(index_score)
+		force index(idx_score)
 		WHERE record_hour_dhcp.record_date BETWEEN #{ava_start} AND #{ava_terminal}
 		<if test="probe_id != null and probe_id != ''">
 			AND record_hour_dhcp.probe_id = #{probe_id}
@@ -85,13 +85,13 @@
 		</if>
 		GROUP BY record_hour_dhcp.record_date,record_hour_dhcp.probe_id,record_hour_dhcp.city_id,record_hour_dhcp.county_id,record_hour_dhcp.record_time) t
 		INNER JOIN probe
-		ON record_hour_dhcp.probe_id = probe.id
+		ON t.probe_id = probe.id
 		LEFT JOIN city
-		ON record_hour_dhcp.city_id = city.city_id
+		ON t.city_id = city.city_id
 		LEFT JOIN county
-		ON record_hour_dhcp.county_id = county.county_id
+		ON t.county_id = county.county_id
 		LEFT JOIN target
-		ON record_hour_dhcp.target_id = target.id
+		ON t.target_id = target.id
 		<choose>
 			<when test="sidx != null and sidx.trim() != ''">
 				order by ${sidx} ${order}

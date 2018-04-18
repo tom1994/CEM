@@ -79,7 +79,7 @@
 				order by ${sidx} ${order}
 			</when>
 			<otherwise>
-				order by probe.id desc
+				order by id desc
 			</otherwise>
 		</choose>
 		<if test="offset != null and limit != null">

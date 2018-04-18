@@ -103,7 +103,7 @@
 		<if test="startTime != null and terminalTime != null">
 			AND record_time BETWEEN #{startTime} AND #{terminalTime}
 		</if>
-		GROUP BY record_hour_sla.record_date,record_hour_sla.probe_id,record_hour_sla.city_id,record_hour_sla.county_id,record_hour_sla.record_time,record_hour_sla.service_type,) t
+		GROUP BY record_hour_sla.record_date,record_hour_sla.probe_id,record_hour_sla.city_id,record_hour_sla.county_id,record_hour_sla.record_time,record_hour_sla.service_type) t
 		INNER JOIN probe
 		ON t.probe_id = probe.id
 		LEFT JOIN city
@@ -151,7 +151,7 @@
 		AND record_hour_sla.port = #{port}
 		AND record_hour_sla.probe_id = #{probe_id}
 		GROUP BY
-		record_hour_sla.port,record_hour_sla.probe_id;
+		record_hour_sla.port,record_hour_sla.probe_id
 	</select>
 
 	<select id="queryDayExitList" resultType="io.cem.modules.cem.entity.RecordHourSlaEntity">
@@ -183,7 +183,7 @@
 		AND record_day_sla.port = #{port}
 		AND record_day_sla.probe_id = #{probe_id}
 		GROUP BY
-		record_day_sla.port,record_day_sla.probe_id;
+		record_day_sla.port,record_day_sla.probe_id
 	</select>
 
 	<select id="queryDayList" resultType="io.cem.modules.cem.entity.RecordHourSlaEntity">

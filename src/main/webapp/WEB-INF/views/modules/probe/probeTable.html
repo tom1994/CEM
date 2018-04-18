@@ -114,6 +114,13 @@
         .combo-input {
             text-overflow: clip;
         }
+        .dataTable th {
+            white-space: nowrap !important;
+        }
+        .dataTable td {
+            overflow: hidden; !important;
+            white-space: nowrap !important;
+        }
     </style>
 </head>
 <body>
@@ -122,7 +129,7 @@
         <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active"><a href="#Section1" aria-controls="home" role="tab"
                                                       data-toggle="tab">探针管理</a></li>
-            <li role="presentation"><a href="#Section2" aria-controls="profile" role="tab" data-toggle="tab">探针组管理</a>
+            <li role="presentation"><a href="#Section2" aria-controls="profile" role="tab" data-toggle="tab" onclick="resize()">探针组管理</a>
             </li>
         </ul>
 

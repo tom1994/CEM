@@ -179,7 +179,7 @@ public class ProbeController {
     @RequestMapping("/update")
     @RequiresPermissions("probe:update")
     public R update(@RequestBody ProbeEntity probe) {
-        if (probeService.queryExist(probe.getName()) > 0) {
+        if (probeService.queryExist(probe.getName(), probe.getId()) > 0 ) {
             return R.error(300, "探针名称已存在，请重新输入");
         } else {
             probeService.update(probe);

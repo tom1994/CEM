@@ -4653,7 +4653,6 @@ function door_game(obj) {
         }
     })
 }
-
 function loading() {
     $('#Section2').loading({
         loadingWidth:240,

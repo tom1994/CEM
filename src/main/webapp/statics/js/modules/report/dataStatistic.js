@@ -33,28 +33,29 @@ spst.set(50, 6);
 
 /*key:service_type value:用来表示不同datatable的字符串，便于查询id从而改变class*/
 var recordtype = new Map();
-for (let i = 0; i < 3; i++) {
+for (let i = 0; i < 4; i++) {
     recordtype.set(i, "ping")
 }
-for (let i = 3; i < 5; i++) {
+for (let i = 4; i < 6; i++) {
     recordtype.set(i, "tracert")
 }
 for (let i = 10; i < 12; i++) {
     recordtype.set(i, "sla")
 }
-recordtype.set(12,"pppoe");
+recordtype.set(12,"adsl");
 recordtype.set(13,"dhcp");
 recordtype.set(14,"dns");
 recordtype.set(15,"radius");
 recordtype.set(20,"webpage");
 recordtype.set(30,"webdownload");
-recordtype.set(31,"ftp");
-recordtype.set(32,"ftp");
+recordtype.set(31,"ftpdo");
+recordtype.set(32,"ftpup");
 recordtype.set(40,"webvideo");
 recordtype.set(50,"game");
 
 function getFormJson(form) {      /*将表单对象变为json对象*/
     var o = {};
+    debugger
     var a = $(form).serializeArray();
     if(citySelected!=0){
         a[4]={};
@@ -72,16 +73,17 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
         a[6].name="probe_id";
         a[6].value=probeSelected;
     }
-    if(serviceSelected==''){
+    if(serviceSelected==0){
         a[7]={};
         a[7].name="service_type";
         a[7].value=1;
-    }else  if(serviceSelected!='-1'){
+    }
+    if(serviceSelected!=0&&serviceSelected!=-1){
         a[7]={};
         a[7].name="service_type";
         a[7].value=serviceSelected;
     }
-    if(taskSelected!=0){
+    if(taskSelected!=-1){
         a[8]={};
         a[8].name="task_id";
         a[8].value=taskSelected;
@@ -346,7 +348,7 @@ var search_data = new Vue({
             this.probeNames = getProbe($("#selectarea").val());
         },
         resultListsearch: function () {   /*查询监听事件*/
-            debugger
+             
             /*显示相应的data_table*/
             $(".record-table").addClass("service_unselected");
             this.servicetype = parseInt(serviceSelected);
@@ -355,7 +357,7 @@ var search_data = new Vue({
             console.log(recordtag);
             $("#" + recordtag + "_record ").removeClass("service_unselected");
             var data = getFormJson($('#resultsearch .selectdata'));
-
+            debugger
             /*得到查询条件*/
             /*获取表单元素的值*/
             var starttemp = data.start_time;
@@ -624,7 +626,6 @@ var getTarget = function (serviceId) {
                     setTimeout(function () {
                         var a = $(target.currentTarget)[0].innerText.trim();
                         targetSelected = $($(target.currentTarget)[0]).data('value');
-                        debugger
                         $('#target .combo-input').val(a);
                         $('#target .combo-select select').val(a);
                     },20)
@@ -686,6 +687,7 @@ var pingresulttable = new Vue({
             {title: '<div style="width:110px">业务类型</div>'},
             {title: '<div style="width:110px">测试任务名称</div>'},
             {title: '<div style="width:110px">测试目标</div>'},
+            {title: '<div style="width:90px">目标地址</div>'},
             {title: '<div style="width:90px">测试目标IP</div>'},
             {title: '<div style="width:90px">往返时延(ms)</div>'},
             {title: '<div style="width:100px">时延标准差(ms)</div>'},
@@ -799,6 +801,7 @@ var pingresulttable = new Vue({
                             row.push(item.taskName);
                             row.push(item.targetName);
                             row.push(item.targetipName);
+                            row.push(numberToIp(item.targetIp));
                             row.push(item.delay.toFixed(2));
                             row.push(item.delayStd.toFixed(2));
                             row.push(item.delayVar.toFixed(2));
@@ -839,6 +842,7 @@ var tracertresulttable = new Vue({
             {title: '<div style="width:115px">业务类型</div>'},
             {title: '<div style="width:110px">测试任务名称</div>'},
             {title: '<div style="width:145px">测试目标</div>'},
+            {title: '<div style="width:90px">目标地址</div>'},
             {title: '<div style="width:90px">测试目标IP</div>'},
             {title: '<div style="width:90px">单跳往返时延(ms)</div>'},
             {title: '<div style="width:120px">单跳时延标准差(ms)</div>'},
@@ -942,6 +946,7 @@ var tracertresulttable = new Vue({
                             row.push(item.taskName);
                             row.push(item.targetName);
                             row.push(item.targetipName);
+                            row.push(numberToIp(item.targetIp));
                             row.push(item.delay.toFixed(2));
                             row.push(item.delayStd.toFixed(2));
                             row.push(item.delayVar.toFixed(2));
@@ -949,7 +954,7 @@ var tracertresulttable = new Vue({
                             row.push(item.jitterStd.toFixed(2));
                             row.push(item.jitterVar.toFixed(2));
                             row.push(item.lossRate.toFixed(2)*100);
-                            row.push(item.hopRecord.toFixed(2));
+                            row.push(item.hopRecord);
                             row.push(item.recordDate.substr(0, 10));
                             row.push(item.recordTime);
                             rows.push(row);
@@ -1006,7 +1011,7 @@ var slaresulttable = new Vue({
         ],
         rows: [],
         dtHandle: null,
-        /*resultdata: {startDate:'2017-11-24', startTime:'10:00',terminalDate:'2017-11-25',terminalTime:'11:00',probeId:'1',taskId:'2238',targetId:'2'}*/
+        /*resultdata: {startDate:'2017-11-24', startTime:'10:00',terminalDate:'2017-11-25',terminalTime:'11:00',probeId:'1',taskId:'2238',targetName:'2'}*/
         resultdata: {
             service_type: "1", interval: "", probe_id: "", task_id: "", target_id: "",
             startDate: today.Format("yyyy-MM-dd"), terminalDate: (new Date()).Format("yyyy-MM-dd"),
@@ -1112,7 +1117,7 @@ var slaresulttable = new Vue({
                             row.push(item.rJitterVar.toFixed(2));
                             row.push(item.lossRate.toFixed(2)*100);
                             row.push(item.targetName);
-                            row.push(item.targetIp);
+                            row.push(numberToIp(item.targetIp));
                             row.push(item.recordDate.substr(0,10));
                             row.push(item.recordTime);
                             rows.push(row);
@@ -1240,8 +1245,8 @@ var dhcpresult_Table = new Vue({
                             row.push(item.port);
                             row.push(item.delay.toFixed(2));
                             row.push(item.successRate.toFixed(2)*100);
-                            row.push(item.targetId);
-                            row.push(item.targetIp);
+                            row.push(item.targetName);
+                            row.push(numberToIp(item.targetIp));
                             row.push(item.recordDate.substr(0,10));
                             row.push(item.recordTime);
                             rows.push(row);
@@ -1370,8 +1375,8 @@ var dnsresult_Table = new Vue({
                             row.push(item.port);
                             row.push(item.delay.toFixed(2));
                             row.push(item.successRate.toFixed(2)*100);
-                            row.push(item.targetId);
-                            row.push(item.targetIp);
+                            row.push(item.targetName);
+                            row.push(numberToIp(item.targetIp));
                             row.push(item.recordDate.substr(0,10));
                             row.push(item.recordTime);
                             rows.push(row);
@@ -1498,8 +1503,8 @@ var radiusresult_Table = new Vue({
                             row.push(item.port);
                             row.push(item.delay.toFixed(2));
                             row.push(item.successRate.toFixed(2)*100);
-                            row.push(item.targetId);
-                            row.push(item.targetIp);
+                            row.push(item.targetName);
+                            row.push(numberToIp(item.targetIp));
                             row.push(item.recordDate.substr(0,10));
                             row.push(item.recordTime);
                             rows.push(row);
@@ -1523,8 +1528,8 @@ var radiusresult_Table = new Vue({
 });
 
 //FTP_table
-var ftpresult_Table = new Vue({
-    el: '#ftpdata_table',
+var ftpupresult_Table = new Vue({
+    el: '#ftpdataup_table',
     data: {
         headers: [
             {title: '<div style="width:10px"></div>'},
@@ -1534,6 +1539,139 @@ var ftpresult_Table = new Vue({
             {title: '<div style="width:90px">连接时延(ms)</div>'},
             {title: '<div style="width:90px">登录时延(ms)</div>'},
             {title: '<div style="width:100px">上传速率(KB/s)</div>'},
+            {title: '<div style="width:130px">首字节到达时延(ms)</div>'},
+            {title: '<div style="width:60px">测试目标</div>'},
+            {title: '<div style="width:90px">测试目标IP</div>'},
+            {title: '<div style="width:100px">日期</div>'},
+            {title: '<div style="width:60px">时间</div>'},
+        ],
+        rows: [],
+        dtHandle: null,
+        resultdata: {
+            service_type: "31", interval: "", probe_id: "", task_id: "", target_id: "",
+            startDate: today.Format("yyyy-MM-dd"), terminalDate: (new Date()).Format("yyyy-MM-dd"),
+            start_time: "00:00:00", end_time: "24:00:00", queryType: "1"
+        }
+
+    },
+    methods: {
+        reset: function () {
+            let vm = this;
+            vm.probedata = {};
+            /*清空probedata*/
+            vm.dtHandle.clear();
+            console.log("重置");
+            vm.dtHandle.draw();
+            /*重置*/
+        },
+        currReset: function () {
+            let vm = this;
+            vm.dtHandle.clear();
+            console.log("当前页面重绘");
+            vm.dtHandle.draw(false);
+            /*当前页面重绘*/
+        },
+        redraw: function () {
+            let vm = this;
+            vm.dtHandle.clear();
+            console.log("页面重绘");
+            vm.dtHandle.draw();
+            /*重绘*/
+        }
+    },
+    mounted: function () {
+        let vm = this;
+        // Instantiate the datatable and store the reference to the instance in our dtHandle element.
+        vm.dtHandle = $(this.$el).DataTable({
+            columns: vm.headers,
+            data: vm.rows,
+            searching: false,
+            paging: true,
+            serverSide: true,
+            info: false,
+            ordering: false, /*禁用排序功能*/
+            /*bInfo: false,*/
+            /*bLengthChange: false,*/    /*禁用Show entries*/
+            scroll: false,
+            oLanguage: {
+                sLengthMenu: "每页 _MENU_ 行数据",
+                oPaginate: {
+                    sNext: '<i class="fa fa-chevron-right" ></i>', /*图标替换上一页,下一页*/
+                    sPrevious: '<i class="fa fa-chevron-left" ></i>'
+                }
+            },
+            sDom: 'Rfrtlip', /*显示在左下角*/
+            ajax: function (data, callback, settings) {
+                //封装请求参数
+                let param = {};
+                param.limit = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
+                param.start = data.start;//开始的记录序号
+                param.page = (data.start / data.length) + 1;//当前页码
+                param.resultdata = JSON.stringify(vm.resultdata);
+                var timeTag = (vm.resultdata).queryType;
+                $.ajax({
+                    type: "POST", /*GET会乱码*/
+                    url: "../../recordftp/list",
+                    cache: false,  //禁用缓存
+                    data: param,  //传入组装的参数
+                    dataType: "json",
+                    success: function (result) {
+                        console.log(result);
+                        // 封装返回数据
+                        let returnData = {};
+                        returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
+                        returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
+                        returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
+                        returnData.data = result.page.list;//返回的数据列表
+                        // 重新整理返回数据以匹配表格
+                        let rows = [];
+                        var i = param.start + 1;
+                        result.page.list.forEach(function (item) {
+                            //console.log(item);
+                            let row = [];
+                            row.push(i++);
+                            row.push(item.probeName);
+                            row.push(item.port);
+                            row.push(item.dnsDelay.toFixed(2));
+                            row.push(item.connDelay.toFixed(2));
+                            row.push(item.loginDelay.toFixed(2));
+                            row.push(item.uploadRate.toFixed(2));
+                            row.push(item.headbyteDelay.toFixed(2));
+                            row.push(item.targetName);
+                            row.push(numberToIp(item.targetIp));
+                            row.push(item.recordDate.substr(0,10));
+                            row.push(item.recordTime);
+                            rows.push(row);
+                        });
+                        returnData.data = rows;
+                        //console.log(returnData);
+                        //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
+                        //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
+                        callback(returnData);
+                        $("#ftpdata_table").colResizable({
+                            liveDrag: true,
+                            gripInnerHtml: "<div class='grip'></div>",
+                            draggingClass: "dragging",
+                            resizeMode: 'overflow',
+                        });
+                    }
+                });
+            }
+        });
+    }
+});
+
+//FTP_table
+var ftpdoresult_Table = new Vue({
+    el: '#ftpdatado_table',
+    data: {
+        headers: [
+            {title: '<div style="width:10px"></div>'},
+            {title: '<div style="width:70px">探针名</div>'},
+            {title: '<div style="width:60px">探针端口</div>'},
+            {title: '<div style="width:100px">DNS解析时延(ms)</div>'},
+            {title: '<div style="width:90px">连接时延(ms)</div>'},
+            {title: '<div style="width:90px">登录时延(ms)</div>'},
             {title: '<div style="width:100px">下载速率(KB/s)</div>'},
             {title: '<div style="width:130px">首字节到达时延(ms)</div>'},
             {title: '<div style="width:60px">测试目标</div>'},
@@ -1632,10 +1770,9 @@ var ftpresult_Table = new Vue({
                             row.push(item.connDelay.toFixed(2));
                             row.push(item.loginDelay.toFixed(2));
                             row.push(item.uploadRate.toFixed(2));
-                            row.push(item.downloadRate.toFixed(2));
                             row.push(item.headbyteDelay.toFixed(2));
-                            row.push(item.targetId);
-                            row.push(item.targetIp);
+                            row.push(item.targetName);
+                            row.push(numberToIp(item.targetIp));
                             row.push(item.recordDate.substr(0,10));
                             row.push(item.recordTime);
                             rows.push(row);
@@ -1657,7 +1794,6 @@ var ftpresult_Table = new Vue({
         });
     }
 });
-
 //web_download_table
 var webdownloadresult_Table = new Vue({
     el: '#webdownloaddata_table',
@@ -1766,8 +1902,8 @@ var webdownloadresult_Table = new Vue({
                             row.push(item.connDelay.toFixed(2));
                             row.push(item.downloadRate.toFixed(2));
                             row.push(item.headbyteDelay.toFixed(2));
-                            row.push(item.targetId);
-                            row.push(item.targetIp);
+                            row.push(item.targetName);
+                            row.push(numberToIp(item.targetIp));
                             row.push(item.recordDate.substr(0,10));
                             row.push(item.recordTime);
                             rows.push(row);
@@ -1894,6 +2030,7 @@ var webpageresult_Table = new Vue({
                         let rows = [];
                         var i = param.start + 1;
                         result.page.list.forEach(function (item) {
+                             
                             //console.log(item);
                             let row = [];
                             row.push(i++);
@@ -1908,7 +2045,7 @@ var webpageresult_Table = new Vue({
                             row.push(item.pageFileDelay);
                             row.push(item.loadDelay);
                             row.push(item.targetName);
-                            row.push(item.targetIp);
+                            row.push(numberToIp(item.targetIp));
                             row.push(item.recordDate.substr(0,10));
                             row.push(item.recordTime);
                             rows.push(row);
@@ -1948,9 +2085,6 @@ var webvideoresult_Table = new Vue({
             {title: '<div style="width:90px">DNS时延(ms)</div>'},
             {title: '<div style="width:161px">连接WEB服务器时延(ms)</div>'},
             {title: '<div style="width:120px"> WEB页面时延(ms)</div>'},
-            {title: '<div style="width:161px"> 连接调度服务器时延(ms)</div>'},
-            {title: '<div style="width:145px">获取视频地址时延(ms)</div>'},
-            {title: '<div style="width:156px">连接媒体服务器时延(ms)</div>'},
             {title: '<div style="width:60px">测试目标</div>'},
             {title: '<div style="width:90px">测试目标IP</div>'},
             {title: '<div style="width:100px">日期</div>'},
@@ -2052,11 +2186,8 @@ var webvideoresult_Table = new Vue({
                             row.push(item.dnsDelay.toFixed(2));
                             row.push(item.wsConnDelay.toFixed(2));
                             row.push(item.webPageDelay.toFixed(2));
-                            row.push(item.ssConnDelay.toFixed(2));
-                            row.push(item.addressDelay.toFixed(2));
-                            row.push(item.msConnDelay.toFixed(2));
                             row.push(item.targetName);
-                            row.push(item.targetIp);
+                            row.push(numberToIp(item.targetIp));
                             row.push(item.recordDate.substr(0,10));
                             row.push(item.recordTime);
                             rows.push(row);
@@ -2087,11 +2218,10 @@ var gameresult_Table = new Vue({
             {title: '<div style="width:10px"></div>'},
             {title: '<div style="width:70px">探针名</div>'},
             {title: '<div style="width:60px">探针端口</div>'},
-            {title: '<div style="width:115px">连接时延(ms)</div>'},
             {title: '<div style="width:90px">DNS时延(ms)</div>'},
-            {title: '<div style="width:128px"> 游戏数据包时延(ms)</div>'},
-            {title: '<div style="width:128px"> 游戏数据包抖动(ms)</div>'},
-            {title: '<div style="width:140px"> 游戏数据包丢包率(%)</div>'},
+            {title: '<div style="width:128px"> 网络时延(ms)</div>'},
+            {title: '<div style="width:128px"> 网络抖动(ms)</div>'},
+            {title: '<div style="width:140px"> 丢包率(%)</div>'},
             {title: '<div style="width:90px">测试目标</div>'},
             {title: '<div style="width:90px">测试目标IP</div>'},
             {title: '<div style="width:90px">日期</div>'},
@@ -2183,13 +2313,12 @@ var gameresult_Table = new Vue({
                             row.push(i++);
                             row.push(item.probeName);
                             row.push(item.port);
-                            row.push(item.connDelay.toFixed(2));
                             row.push(item.dnsDelay.toFixed(2));
                             row.push(item.packetDelay.toFixed(2));
                             row.push(item.packetJitter.toFixed(2));
                             row.push(item.lossRate.toFixed(2)*100);
                             row.push(item.targetName);
-                            row.push(item.targetIp);
+                            row.push(numberToIp(item.targetIp));
                             row.push(item.recordDate.substr(0,10));
                             row.push(item.recordTime);
                             rows.push(row);
@@ -2356,3 +2485,20 @@ $(document).ready(function () {
     }
     probe()
 });
+
+
+//转换为ip类型
+function numberToIp(number) {
+    var ip = "";
+    if(number <= 0) {
+        return number;
+    }
+    var ip3 = (number << 0 ) >>> 24;
+    var ip2 = (number << 8 ) >>> 24;
+    var ip1 = (number << 16) >>> 24;
+    var ip0 = (number << 24) >>> 24
+
+    ip += ip0 + "." + ip1 + "." + ip2 + "." + ip3;
+
+    return ip;
+}
