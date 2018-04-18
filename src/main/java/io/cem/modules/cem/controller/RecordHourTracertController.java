@@ -90,8 +90,14 @@ public class RecordHourTracertController {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		List<ScoreEntity> scoreList =recordHourRadiusService.calculateAreaHourScore(map);
-
+		List<ScoreEntity> scoreList;
+		if(dateDifferent==0){
+			scoreList = recordHourRadiusService.calculateAreaHourScore(map);
+		}else if(dateDifferent==1){
+			scoreList = recordHourRadiusService.calculateAreaDayHourScore(map);
+		}else{
+			scoreList = recordHourRadiusService.calculateAreaDayScore(map);
+		}
 
 		if(map.get("target_id")==null){
 			for(int i=0;i<scoreList.size();i++){

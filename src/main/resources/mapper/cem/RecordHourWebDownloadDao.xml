@@ -60,39 +60,38 @@
 		probe.probe_name AS probe_name,
 		probe.access_layer,
 		target.target_name AS target_name
-		FROM (select record_hour_web_download.id,record_hour_web_download.city_id,record_hour_web_download.county_id,record_hour_web_download.probe_id,record_hour_web_download.port,record_hour_web_download.task_id,record_hour_web_download.service_type,record_hour_web_download.target_id,record_hour_web_download.target_ip,record_hour_web_download.record_date,record_hour_web_download.remark,
-		time_format(record_hour_web_download.record_time, '%H') AS record_time,
-		AVG(record_hour_web_download.dns_delay) AS dns_delay,
-		AVG(record_hour_web_download.conn_delay) AS conn_delay,
-		AVG(record_hour_web_download.headbyte_delay) AS headbyte_delay,
-		AVG(record_hour_web_download.download_rate) AS download_rate,
-		SUM(record_hour_web_download.fail) AS fail,
-		SUM(record_hour_web_download.total) AS total
+		FROM (select id,city_id,county_id,probe_id,port,task_id,service_type,target_id,target_ip,record_date,remark,
+		time_format(record_time, '%H') AS record_time,
+		AVG(dns_delay) AS dns_delay,
+		AVG(conn_delay) AS conn_delay,
+		AVG(headbyte_delay) AS headbyte_delay,
+		AVG(download_rate) AS download_rate,
+		SUM(fail) AS fail,
+		SUM(total) AS total
 		FROM record_hour_web_download
 		force index(idx_score)
 		<if test="probe_id != null and probe_id != ''">
-			AND record_hour_web_download.probe_id = #{probe_id}
+			AND probe_id = #{probe_id}
 		</if>
 		<if test="city_id != null and city_id != ''">
-			AND record_hour_web_download.city_id = #{city_id}
+			AND city_id = #{city_id}
 		</if>
 		<if test="county_id != null and county_id != ''">
-			AND record_hour_web_download.county_id = #{county_id}
+			AND county_id = #{county_id}
 		</if>
 		<if test="target_id != null and target_id != ''">
-			AND record_hour_web_download.target_id = #{target_id}
+			AND target_id = #{target_id}
 		</if>
 		<if test="startTime != null and terminalTime != null">
 			AND record_time BETWEEN #{startTime} AND #{terminalTime}
 		</if>
-		GROUP BY record_hour_web_download.record_date,record_hour_web_download.probe_id,record_hour_web_download.city_id,record_hour_web_download.county_id,record_hour_web_download.record_time) t
-
+		GROUP BY record_date,probe_id,city_id,county_id,record_time) t
+		INNER JOIN probe
+		ON t.probe_id = probe.id
 		LEFT JOIN city
 		ON t.city_id = city.city_id
 		LEFT JOIN county
 		ON t.county_id = county.county_id
-		INNER JOIN probe
-		ON t.probe_id = probe.id
 		LEFT JOIN target
 		ON t.target_id = target.id
 		WHERE t.record_date BETWEEN #{ava_start} AND #{ava_terminal}

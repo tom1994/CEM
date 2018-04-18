@@ -29,6 +29,8 @@ public interface RecordHourFtpService {
 
 	EvaluationEntity calculateHourQualityScore(Map<String, Object> map) throws ExecutionException, InterruptedException;
 
+	EvaluationEntity calculateDayHourQualityScore(Map<String, Object> map) throws ExecutionException, InterruptedException;
+
 	int queryTotal(Map<String, Object> map);
 	
 	void save(RecordHourFtpEntity recordHourFtp);

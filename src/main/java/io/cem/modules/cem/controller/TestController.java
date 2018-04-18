@@ -1,10 +1,7 @@
 package io.cem.modules.cem.controller;
 
 import io.cem.common.utils.R;
-import io.cem.modules.cem.service.IndexHistogramViewService;
-import io.cem.modules.cem.service.IndexLineViewService;
-import io.cem.modules.cem.service.IndexRadaViewService;
-import io.cem.modules.cem.service.IndexRankingViewService;
+import io.cem.modules.cem.service.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +28,9 @@ public class TestController {
     private IndexRadaViewService indexRadaViewService;
     @Autowired
     private IndexRankingViewService indexRankingViewService;
+
+    @Autowired
+    private IndexTaskService indexTaskService;
 
     @RequestMapping("/savescores")
     @ResponseBody
@@ -74,14 +74,19 @@ public class TestController {
 
         //indexRankingViewService.saveConnectivityScore(startDate,endDate,1);
         try {
-            indexRankingViewService.saveDownLoadScore(startDate, endDate, 2);
-            indexRankingViewService.saveGameScore(startDate, endDate, 1);
-            indexRankingViewService.saveWebPageScore(startDate, endDate, 2);
-            indexRankingViewService.saveWebVideoScore(startDate, endDate, 1);
+            //indexRankingViewService.saveDownLoadScore(startDate, endDate, 2);
+           // indexRankingViewService.saveGameScore(startDate, endDate, 1);
+           // indexRankingViewService.saveWebPageScore(startDate, endDate, 2);
+           // indexRankingViewService.saveWebVideoScore(startDate, endDate, 1);
+
+            indexTaskService.run();
+            log.info("执行完成..");
+
         }catch (Exception e){
             e.printStackTrace();
+            return  R.ok().put("msg","error ");
         }
-        return  R.ok().put("msg","test Ranking success ");
+        return  R.ok().put("msg","test success ");
 
     }
 }

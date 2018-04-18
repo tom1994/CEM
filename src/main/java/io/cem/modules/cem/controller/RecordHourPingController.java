@@ -181,13 +181,14 @@ public class RecordHourPingController {
             e.printStackTrace();
         }
         EvaluationEntity score;
-        if (dateDifferent > 5) {
-            //查询天表
-            score = recordHourFtpService.calculateDayQualityScore(map); }
-        else {
-            //查询小时表
+        if(dateDifferent==0){
             score = recordHourFtpService.calculateHourQualityScore(map);
+        }else if(dateDifferent==1){
+            score = recordHourFtpService.calculateDayHourQualityScore(map);
+        }else{
+            score = recordHourFtpService.calculateDayQualityScore(map);
         }
+
         return R.ok().put("score", score);
 
     }

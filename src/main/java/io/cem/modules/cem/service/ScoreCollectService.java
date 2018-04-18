@@ -13,4 +13,5 @@ public interface ScoreCollectService {
     List<ScoreCollectTargetEntity> getTargerScores(Map<String, Object> map);
     List<ScoreCollectDayEntity> getDayScores(Map<String, Object> map);
     List<ScoreCollectCityEntity> getCityRanking(Map<String, Object> map);
+
 }
