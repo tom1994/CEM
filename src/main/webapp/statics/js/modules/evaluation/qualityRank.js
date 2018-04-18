@@ -534,7 +534,6 @@ var search_service = new Vue({
     methods: {
         testagentListsearch: function () {
             var searchJson = getFormJson($('#probesearch'));
-            debugger
             if ((searchJson.startDate) > (searchJson.terminalDate)) {
                 console.log("时间选择有误，请重新选择！");
                 $('#nonavailable_time').modal('show');
@@ -1076,12 +1075,15 @@ var areatable = new Vue({
                         //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);
-                        $("#areadata_table").colResizable({
-                            liveDrag: true,
-                            gripInnerHtml: "<div class='grip'></div>",
-                            draggingClass: "dragging",
-                            resizeMode: 'overflow',
-                        });
+                        // setTimeout(function () {
+                        //     console.log('hello');
+                        //     $("#areadata_table").colResizable({
+                        //         liveDrag: true,
+                        //         gripInnerHtml: "<div class='grip'></div>",
+                        //         draggingClass: "dragging",
+                        //         resizeMode: 'overflow',
+                        //     });
+                        // }, 300);
                         // $('td').closest('table').find('th').eq(1).attr('style', 'text-align: center;');
                         // $('#probe_table tbody').find('td').eq(1).attr('style', 'text-align: center;');
                         // var trs = $('#probe_table tbody').find('tr');
@@ -1218,12 +1220,14 @@ var doortable = new Vue({
                         });
                         returnData.data = rows;
                         callback(returnData);
-                        $("#doordata_table").colResizable({
-                            liveDrag: true,
-                            gripInnerHtml: "<div class='grip'></div>",
-                            draggingClass: "dragging",
-                            resizeMode: 'overflow',
-                        });
+                        // setTimeout(function () {
+                        //     $("#doordata_table").colResizable({
+                        //         liveDrag: true,
+                        //         gripInnerHtml: "<div class='grip'></div>",
+                        //         draggingClass: "dragging",
+                        //         resizeMode: 'overflow',
+                        //     });
+                        // }, 300);
                         // $('td').closest('table').find('th').eq(1).attr('style', 'text-align: center;');
                         // $('#probe_table tbody').find('td').eq(1).attr('style', 'text-align: center;');
                         // var trs = $('#probe_table tbody').find('tr');
@@ -4652,6 +4656,26 @@ function door_game(obj) {
             });
         }
     })
+}
+function resizeArea() {
+    setTimeout(function () {
+        $("#areadata_table").colResizable({
+            liveDrag: true,
+            gripInnerHtml: "<div class='grip'></div>",
+            draggingClass: "dragging",
+            resizeMode: 'overflow',
+        });
+    }, 300);
+}
+function resizeDoor() {
+    setTimeout(function () {
+        $("#doordata_table").colResizable({
+            liveDrag: true,
+            gripInnerHtml: "<div class='grip'></div>",
+            draggingClass: "dragging",
+            resizeMode: 'overflow',
+        });
+    }, 300);
 }
 function loading() {
     $('#Section2').loading({
