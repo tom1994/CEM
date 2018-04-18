@@ -142,7 +142,7 @@
 		<if test="probe_id != null and probe_id != ''">
 			AND rht.probe_id = #{probe_id}
 		</if>
-		GROUP BY rht.city_id,rht.county_id,rht.service_type,rht.probe_id,date_format(rht.record_date,'%Y-%m-%d');
+		GROUP BY rht.city_id,rht.county_id,rht.service_type,rht.probe_id,date_format(rht.record_date,'%Y-%m-%d')
 	</select>
 
 	<select id="queryExitList" resultType="io.cem.modules.cem.entity.RecordHourTracertEntity">
@@ -175,7 +175,7 @@
 		AND rht.port = #{port}
         AND rht.probe_id = #{probe_id}
         GROUP BY
-        rht.port,rht.probe_id;
+        rht.port,rht.probe_id
     </select>
 
 	<select id="queryDayExitList" resultType="io.cem.modules.cem.entity.RecordHourTracertEntity">
@@ -208,7 +208,7 @@
 		AND record_day_tracert.port = #{port}
 		AND record_day_tracert.probe_id = #{probe_id}
 		GROUP BY
-		record_day_tracert.port,record_day_tracert.probe_id;
+		record_day_tracert.port,record_day_tracert.probe_id
 	</select>
 	
  	<select id="queryTotal" resultType="int">

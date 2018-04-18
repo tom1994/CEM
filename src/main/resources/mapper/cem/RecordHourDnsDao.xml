@@ -83,15 +83,15 @@
 		<if test="startTime != null and terminalTime != null">
 			AND record_time BETWEEN #{startTime} AND #{terminalTime}
 		</if>
-		GROUP BY record_hour_dns.record_date,record_hour_dns.probe_id,record_hour_dns.city_id,record_hour_dns.county_id,record_hour_dns.record_time)t
+		GROUP BY record_hour_dns.record_date,record_hour_dns.probe_id,record_hour_dns.city_id,record_hour_dns.county_id,record_hour_dns.record_time) t
 		INNER JOIN probe
-		ON record_hour_dns.probe_id = probe.id
+		ON t.probe_id = probe.id
 		LEFT JOIN city
-		ON record_hour_dns.city_id = city.city_id
+		ON t.city_id = city.city_id
 		LEFT JOIN county
-		ON record_hour_dns.county_id = county.county_id
+		ON t.county_id = county.county_id
 		LEFT JOIN target
-		ON record_hour_dns.target_id = target.id
+		ON t.target_id = target.id
 		<choose>
 			<when test="sidx != null and sidx.trim() != ''">
 				order by ${sidx} ${order}
