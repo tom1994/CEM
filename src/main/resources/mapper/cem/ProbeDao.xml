@@ -153,7 +153,10 @@
 
     <select id="queryExist" resultType="int">
         select count(*) from probe
-        where probe_name = #{probeName}
+        where probe_name = #{0}
+        <if test="0 != null and 1 != ''">
+            AND probe.id != #{1}
+        </if>
     </select>
 
     <select id="queryCenterList" resultType="io.cem.modules.cem.entity.ProbeEntity">

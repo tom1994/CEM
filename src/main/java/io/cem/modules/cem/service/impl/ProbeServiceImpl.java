@@ -40,8 +40,13 @@ public class ProbeServiceImpl implements ProbeService {
     }
 
     @Override
-    public int queryExist(String probeName){
+    public int queryExist(String probeName) {
         return probeDao.queryExist(probeName);
+    }
+
+    @Override
+    public int queryExist(String probeName, int probeId) {
+        return probeDao.queryExist(probeName, probeId);
     }
 
     @Override

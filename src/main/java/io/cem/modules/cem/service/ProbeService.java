@@ -34,6 +34,8 @@ public interface ProbeService {
 
 	int queryExist(String probeName);
 
+	int queryExist(String probeName, int probeId);
+
 	ProbeEntity queryDetail(Integer id);
 
 	int queryTotal(Map<String, Object> map);
