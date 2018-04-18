@@ -53,7 +53,7 @@ public class IndexController {
 
     @RequestMapping("/layerqoeview")
     @ResponseBody
-    public R getLayerQoEView(String serviceType,String accessLayer){// test http://localhost:8080/cem/index/layerqoeview?serviceType=20&accessLayer=1000
+    public R getLayerQoEView(String serviceType,String accessLayer){// test http://localhost:8080/cem/index/layerqoeview?serviceType=0&accessLayer=2000
         log.info("1111$$$$$$$$$$$$$accessLayer:"+accessLayer);
         Date[] dateParam = getQueryTime();
         Date startTime = dateParam[0];
