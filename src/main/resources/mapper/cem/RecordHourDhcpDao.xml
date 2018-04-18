@@ -50,28 +50,27 @@
 		select count(*) from record_hour_dhcp 
 	</select>
 
+	<!--质量排名dhcp列表-->
 	<select id="queryDhcpList" resultType="io.cem.modules.cem.entity.RecordHourDhcpEntity">
-		select record_hour_dhcp.id,record_hour_dhcp.city_id,record_hour_dhcp.county_id,record_hour_dhcp.probe_id,record_hour_dhcp.port,record_hour_dhcp.task_id,record_hour_dhcp.service_type,record_hour_dhcp.target_id,record_hour_dhcp.target_ip,record_hour_dhcp.record_date,record_hour_dhcp.remark,
+		SELECT t.*,
 		city.city_name AS city_name,
 		county.county_name AS area_name,
 		probe.probe_name AS probe_name,
 		probe.access_layer,
-		target.target_name AS target_name,
+		target.target_name AS target_name
+		FROM
+		(select record_hour_dhcp.id,record_hour_dhcp.city_id,record_hour_dhcp.county_id,record_hour_dhcp.probe_id,record_hour_dhcp.port,record_hour_dhcp.task_id,record_hour_dhcp.service_type,record_hour_dhcp.target_id,record_hour_dhcp.target_ip,record_hour_dhcp.record_date,record_hour_dhcp.remark,
 		time_format(record_time, '%H') AS record_time,
 		AVG(record_hour_dhcp.delay) AS delay,
 		AVG(record_hour_dhcp.success_rate) AS success_rate,
 		SUM(record_hour_dhcp.fail) AS fail,
 		SUM(record_hour_dhcp.total) AS total
 		FROM record_hour_dhcp
-		LEFT JOIN city
-		ON record_hour_dhcp.city_id = city.city_id
-		LEFT JOIN county
-		ON record_hour_dhcp.county_id = county.county_id
-		INNER JOIN probe
-		ON record_hour_dhcp.probe_id = probe.id
-		LEFT JOIN target
-		ON record_hour_dhcp.target_id = target.id
+		force index(index_score)
 		WHERE record_hour_dhcp.record_date BETWEEN #{ava_start} AND #{ava_terminal}
+		<if test="probe_id != null and probe_id != ''">
+			AND record_hour_dhcp.probe_id = #{probe_id}
+		</if>
 		<if test="city_id != null and city_id != ''">
 			AND record_hour_dhcp.city_id = #{city_id}
 		</if>
@@ -81,14 +80,26 @@
 		<if test="target_id != null and target_id != ''">
 			AND record_hour_dhcp.target_id = #{target_id}
 		</if>
-		<if test="probe_id != null and probe_id != ''">
-			AND record_hour_dhcp.probe_id = #{probe_id}
-		</if>
 		<if test="startTime != null and terminalTime != null">
 			AND record_time BETWEEN #{startTime} AND #{terminalTime}
 		</if>
-		GROUP BY record_hour_dhcp.city_id,record_hour_dhcp.county_id,record_hour_dhcp.probe_id,date_format(record_hour_dhcp.record_date,'%Y-%m-%d'),record_hour_dhcp.record_time
-
+		GROUP BY record_hour_dhcp.record_date,record_hour_dhcp.probe_id,record_hour_dhcp.city_id,record_hour_dhcp.county_id,record_hour_dhcp.record_time) t
+		INNER JOIN probe
+		ON record_hour_dhcp.probe_id = probe.id
+		LEFT JOIN city
+		ON record_hour_dhcp.city_id = city.city_id
+		LEFT JOIN county
+		ON record_hour_dhcp.county_id = county.county_id
+		LEFT JOIN target
+		ON record_hour_dhcp.target_id = target.id
+		<choose>
+			<when test="sidx != null and sidx.trim() != ''">
+				order by ${sidx} ${order}
+			</when>
+		</choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
 	</select>
 
 	<select id="queryExitList" resultType="io.cem.modules.cem.entity.RecordHourDhcpEntity">

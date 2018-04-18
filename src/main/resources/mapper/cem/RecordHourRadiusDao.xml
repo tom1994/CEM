@@ -50,28 +50,26 @@
 		select count(*) from record_hour_radius 
 	</select>
 
+	<!--质量排名radius列表-->
 	<select id="queryRadiusList" resultType="io.cem.modules.cem.entity.RecordHourRadiusEntity">
-		select record_hour_radius.id,record_hour_radius.city_id,record_hour_radius.county_id,record_hour_radius.probe_id,record_hour_radius.port,record_hour_radius.task_id,record_hour_radius.service_type,record_hour_radius.target_id,record_hour_radius.target_ip,record_hour_radius.record_date,record_hour_radius.remark,
+		SELECT t.*,
 		city.city_name AS city_name,
 		county.county_name AS area_name,
 		probe.probe_name AS probe_name,
 		probe.access_layer,
-		target.target_name AS target_name,
+		target.target_name AS target_name
+		FROM (select record_hour_radius.id,record_hour_radius.city_id,record_hour_radius.county_id,record_hour_radius.probe_id,record_hour_radius.port,record_hour_radius.task_id,record_hour_radius.service_type,record_hour_radius.target_id,record_hour_radius.target_ip,record_hour_radius.record_date,record_hour_radius.remark,
 		time_format(record_time, '%H') AS record_time,
 		AVG(record_hour_radius.delay) AS delay,
 		AVG(record_hour_radius.success_rate) AS success_rate,
 		SUM(record_hour_radius.fail) AS fail,
 		SUM(record_hour_radius.total) AS total
 		FROM record_hour_radius
-		LEFT JOIN city
-		ON record_hour_radius.city_id = city.city_id
-		LEFT JOIN county
-		ON record_hour_radius.county_id = county.county_id
-		INNER JOIN probe
-		ON record_hour_radius.probe_id = probe.id
-		LEFT JOIN target
-		ON record_hour_radius.target_id = target.id
+		force index(idx_score)
 		WHERE record_hour_radius.record_date BETWEEN #{ava_start} AND #{ava_terminal}
+		<if test="probe_id != null and probe_id != ''">
+			AND record_hour_radius.probe_id = #{probe_id}
+		</if>
 		<if test="city_id != null and city_id != ''">
 			AND record_hour_radius.city_id = #{city_id}
 		</if>
@@ -81,13 +79,18 @@
 		<if test="target_id != null and target_id != ''">
 			AND record_hour_radius.target_id = #{target_id}
 		</if>
-		<if test="probe_id != null and probe_id != ''">
-			AND record_hour_radius.probe_id = #{probe_id}
-		</if>
 		<if test="startTime != null and terminalTime != null">
 			AND record_time BETWEEN #{startTime} AND #{terminalTime}
 		</if>
-		GROUP BY record_hour_radius.city_id,record_hour_radius.county_id,record_hour_radius.probe_id,date_format(record_hour_radius.record_date,'%Y-%m-%d'),record_hour_radius.record_time
+		GROUP BY record_hour_radius.record_date,record_hour_radius.probe_id,record_hour_radius.city_id,record_hour_radius.county_id,record_hour_radius.record_time) t
+		INNER JOIN probe
+		ON record_hour_radius.probe_id = probe.id
+		LEFT JOIN city
+		ON record_hour_radius.city_id = city.city_id
+		LEFT JOIN county
+		ON record_hour_radius.county_id = county.county_id
+		LEFT JOIN target
+		ON record_hour_radius.target_id = target.id
 
 	</select>
 

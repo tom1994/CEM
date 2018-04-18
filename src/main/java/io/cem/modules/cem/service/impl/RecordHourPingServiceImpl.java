@@ -1981,6 +1981,23 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 			scoreBase.setGamePacketDelay(scoreList.get(i).getGamePacketDelay());
 			scoreBase.setGamePacketJitter(scoreList.get(i).getGamePacketJitter());
 			scoreBase.setGameLossRate(scoreList.get(i).getGameLossRate());
+			scoreBase.setIcmpPingScore(scoreList.get(i).getIcmpPingScore());
+			scoreBase.setTcpPingScore(scoreList.get(i).getTcpPingScore());
+			scoreBase.setUdpPingScore(scoreList.get(i).getUdpPingScore());
+			scoreBase.setIcmpTracertScore(scoreList.get(i).getIcmpTracertScore());
+			scoreBase.setUdpTracertScore(scoreList.get(i).getUdpTracertScore());
+			scoreBase.setTcpSlaScore(scoreList.get(i).getTcpSlaScore());
+			scoreBase.setUdpSlaScore(scoreList.get(i).getUdpSlaScore());
+			scoreBase.setPppoeScore(scoreList.get(i).getPppoeScore());
+			scoreBase.setDhcpScore(scoreList.get(i).getDhcpScore());
+			scoreBase.setDnsScore(scoreList.get(i).getDnsScore());
+			scoreBase.setRadiusScore(scoreList.get(i).getRadiusScore());
+			scoreBase.setWebDownloadScore(scoreList.get(i).getWebDownloadScore());
+			scoreBase.setFtpDownloadScore(scoreList.get(i).getFtpDownloadScore());
+			scoreBase.setFtpUploadScore(scoreList.get(i).getFtpUploadScore());
+			scoreBase.setWebPageScore(scoreList.get(i).getWebPageScore());
+			scoreBase.setWebVideoScore(scoreList.get(i).getWebVideoScore());
+			scoreBase.setOnlineGameScore(scoreList.get(i).getOnlineGameScore());
 
 
 			if (!connection.containsKey(dateChart)) {
@@ -2086,6 +2103,41 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 				scoreBase.setGamePacketDelay(scoreBase.getGamePacketDelay());
 				scoreBase.setGamePacketJitter(scoreBase.getGamePacketJitter());
 				scoreBase.setGameLossRate(scoreBase.getGameLossRate());
+				if(scoreBase.getIcmpPingScore()!=null&scoreBaseDul.getIcmpPingScore()!=null){
+					scoreBase.setIcmpPingScore((scoreBase.getIcmpPingScore()+scoreBaseDul.getIcmpPingScore())/2);
+				}else if(scoreBase.getIcmpPingScore()!=null&&scoreBaseDul.getIcmpPingScore()==null){
+					scoreBase.setIcmpPingScore(scoreBase.getIcmpPingScore());
+				} else if(scoreBase.getIcmpPingScore()==null&&scoreBaseDul.getIcmpPingScore()!=null){
+					scoreBase.setIcmpPingScore(scoreBaseDul.getIcmpPingScore());
+				}
+				if(scoreBase.getTcpPingScore()!=null&scoreBaseDul.getTcpPingScore()!=null){
+					scoreBase.setTcpPingScore((scoreBase.getTcpPingScore()+scoreBaseDul.getTcpPingScore())/2);
+				}else if(scoreBase.getTcpPingScore()!=null&&scoreBaseDul.getTcpPingScore()==null){
+					scoreBase.setTcpPingScore(scoreBase.getTcpPingScore());
+				}else if(scoreBase.getIcmpPingScore()==null&&scoreBaseDul.getIcmpPingScore()!=null){
+					scoreBase.setTcpPingScore(scoreBaseDul.getTcpPingScore());
+				}
+				if(scoreBase.getUdpPingScore()!=null&scoreBaseDul.getUdpPingScore()!=null){
+					scoreBase.setUdpPingScore((scoreBase.getUdpPingScore()+scoreBaseDul.getUdpPingScore())/2);
+				}else if(scoreBase.getUdpPingScore()!=null&&scoreBaseDul.getUdpPingScore()==null){
+					scoreBase.setUdpPingScore(scoreBase.getUdpPingScore());
+				}else if(scoreBase.getIcmpPingScore()==null&&scoreBaseDul.getIcmpPingScore()!=null){
+					scoreBase.setUdpPingScore(scoreBaseDul.getUdpPingScore());
+				}
+				scoreBase.setIcmpTracertScore(scoreList.get(i).getIcmpTracertScore());
+				scoreBase.setUdpTracertScore(scoreList.get(i).getUdpTracertScore());
+				scoreBase.setTcpSlaScore(scoreList.get(i).getTcpSlaScore());
+				scoreBase.setUdpSlaScore(scoreList.get(i).getUdpSlaScore());
+				scoreBase.setPppoeScore(scoreList.get(i).getPppoeScore());
+				scoreBase.setDhcpScore(scoreList.get(i).getDhcpScore());
+				scoreBase.setDnsScore(scoreList.get(i).getDnsScore());
+				scoreBase.setRadiusScore(scoreList.get(i).getRadiusScore());
+				scoreBase.setWebDownloadScore(scoreList.get(i).getWebDownloadScore());
+				scoreBase.setFtpDownloadScore(scoreList.get(i).getFtpDownloadScore());
+				scoreBase.setFtpUploadScore(scoreList.get(i).getFtpUploadScore());
+				scoreBase.setWebPageScore(scoreList.get(i).getWebPageScore());
+				scoreBase.setWebVideoScore(scoreList.get(i).getWebVideoScore());
+				scoreBase.setOnlineGameScore(scoreList.get(i).getOnlineGameScore());
 				connection.put(dateChart, scoreBase);
 			}
 		}
@@ -2208,6 +2260,22 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 			finalScore.setGamePacketDelay(connection.get(ite).getGamePacketDelay());
 			finalScore.setGamePacketJitter(connection.get(ite).getGamePacketJitter());
 			finalScore.setGameLossRate(connection.get(ite).getGameLossRate());
+			finalScore.setTcpPingScore(connection.get(ite).getTcpPingScore());
+			finalScore.setUdpPingScore(connection.get(ite).getUdpPingScore());
+			finalScore.setIcmpTracertScore(connection.get(ite).getIcmpTracertScore());
+			finalScore.setUdpTracertScore(connection.get(ite).getUdpTracertScore());
+			finalScore.setTcpSlaScore(connection.get(ite).getTcpSlaScore());
+			finalScore.setUdpSlaScore(connection.get(ite).getUdpSlaScore());
+			finalScore.setPppoeScore(connection.get(ite).getPppoeScore());
+			finalScore.setDhcpScore(connection.get(ite).getDhcpScore());
+			finalScore.setDnsScore(connection.get(ite).getDnsScore());
+			finalScore.setRadiusScore(connection.get(ite).getRadiusScore());
+			finalScore.setWebDownloadScore(connection.get(ite).getWebDownloadScore());
+			finalScore.setFtpDownloadScore(connection.get(ite).getFtpDownloadScore());
+			finalScore.setFtpUploadScore(connection.get(ite).getFtpUploadScore());
+			finalScore.setWebPageScore(connection.get(ite).getWebPageScore());
+			finalScore.setWebVideoScore(connection.get(ite).getWebVideoScore());
+			finalScore.setOnlineGameScore(connection.get(ite).getOnlineGameScore());
 			dateList.add(finalScore);
 			id++;
 		}
@@ -2333,6 +2401,22 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 			scoreBase.setGamePacketDelay(scoreList.get(i).getGamePacketDelay());
 			scoreBase.setGamePacketJitter(scoreList.get(i).getGamePacketJitter());
 			scoreBase.setGameLossRate(scoreList.get(i).getGameLossRate());
+			scoreBase.setTcpPingScore(scoreList.get(i).getTcpPingScore());
+			scoreBase.setUdpPingScore(scoreList.get(i).getUdpPingScore());
+			scoreBase.setIcmpTracertScore(scoreList.get(i).getIcmpTracertScore());
+			scoreBase.setUdpTracertScore(scoreList.get(i).getUdpTracertScore());
+			scoreBase.setTcpSlaScore(scoreList.get(i).getTcpSlaScore());
+			scoreBase.setUdpSlaScore(scoreList.get(i).getUdpSlaScore());
+			scoreBase.setPppoeScore(scoreList.get(i).getPppoeScore());
+			scoreBase.setDhcpScore(scoreList.get(i).getDhcpScore());
+			scoreBase.setDnsScore(scoreList.get(i).getDnsScore());
+			scoreBase.setRadiusScore(scoreList.get(i).getRadiusScore());
+			scoreBase.setWebDownloadScore(scoreList.get(i).getWebDownloadScore());
+			scoreBase.setFtpDownloadScore(scoreList.get(i).getFtpDownloadScore());
+			scoreBase.setFtpUploadScore(scoreList.get(i).getFtpUploadScore());
+			scoreBase.setWebPageScore(scoreList.get(i).getWebPageScore());
+			scoreBase.setWebVideoScore(scoreList.get(i).getWebVideoScore());
+			scoreBase.setOnlineGameScore(scoreList.get(i).getOnlineGameScore());
 
 			if (!connection.containsKey(scoreTarget)) {
 				connection.put(scoreTarget, scoreBase);
@@ -2437,6 +2521,41 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 				scoreBase.setGamePacketDelay(scoreBase.getGamePacketDelay());
 				scoreBase.setGamePacketJitter(scoreBase.getGamePacketJitter());
 				scoreBase.setGameLossRate(scoreBase.getGameLossRate());
+				if(scoreBase.getIcmpPingScore()!=null&scoreBaseDul.getIcmpPingScore()!=null){
+					scoreBase.setIcmpPingScore((scoreBase.getIcmpPingScore()+scoreBaseDul.getIcmpPingScore())/2);
+				}else if(scoreBase.getIcmpPingScore()!=null&&scoreBaseDul.getIcmpPingScore()==null){
+					scoreBase.setIcmpPingScore(scoreBase.getIcmpPingScore());
+				} else if(scoreBase.getIcmpPingScore()==null&&scoreBaseDul.getIcmpPingScore()!=null){
+					scoreBase.setIcmpPingScore(scoreBaseDul.getIcmpPingScore());
+				}
+				if(scoreBase.getTcpPingScore()!=null&scoreBaseDul.getTcpPingScore()!=null){
+					scoreBase.setTcpPingScore((scoreBase.getTcpPingScore()+scoreBaseDul.getTcpPingScore())/2);
+				}else if(scoreBase.getTcpPingScore()!=null&&scoreBaseDul.getTcpPingScore()==null){
+					scoreBase.setTcpPingScore(scoreBase.getTcpPingScore());
+				}else if(scoreBase.getIcmpPingScore()==null&&scoreBaseDul.getIcmpPingScore()!=null){
+					scoreBase.setTcpPingScore(scoreBaseDul.getTcpPingScore());
+				}
+				if(scoreBase.getUdpPingScore()!=null&scoreBaseDul.getUdpPingScore()!=null){
+					scoreBase.setUdpPingScore((scoreBase.getUdpPingScore()+scoreBaseDul.getUdpPingScore())/2);
+				}else if(scoreBase.getUdpPingScore()!=null&&scoreBaseDul.getUdpPingScore()==null){
+					scoreBase.setUdpPingScore(scoreBase.getUdpPingScore());
+				}else if(scoreBase.getIcmpPingScore()==null&&scoreBaseDul.getIcmpPingScore()!=null){
+					scoreBase.setUdpPingScore(scoreBaseDul.getUdpPingScore());
+				}
+				scoreBase.setIcmpTracertScore(scoreList.get(i).getIcmpTracertScore());
+				scoreBase.setUdpTracertScore(scoreList.get(i).getUdpTracertScore());
+				scoreBase.setTcpSlaScore(scoreList.get(i).getTcpSlaScore());
+				scoreBase.setUdpSlaScore(scoreList.get(i).getUdpSlaScore());
+				scoreBase.setPppoeScore(scoreList.get(i).getPppoeScore());
+				scoreBase.setDhcpScore(scoreList.get(i).getDhcpScore());
+				scoreBase.setDnsScore(scoreList.get(i).getDnsScore());
+				scoreBase.setRadiusScore(scoreList.get(i).getRadiusScore());
+				scoreBase.setWebDownloadScore(scoreList.get(i).getWebDownloadScore());
+				scoreBase.setFtpDownloadScore(scoreList.get(i).getFtpDownloadScore());
+				scoreBase.setFtpUploadScore(scoreList.get(i).getFtpUploadScore());
+				scoreBase.setWebPageScore(scoreList.get(i).getWebPageScore());
+				scoreBase.setWebVideoScore(scoreList.get(i).getWebVideoScore());
+				scoreBase.setOnlineGameScore(scoreList.get(i).getOnlineGameScore());
 				connection.put(scoreTarget, scoreBase);
 			}
 		}
@@ -2559,6 +2678,22 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 			finalScore.setGamePacketDelay(connection.get(ite).getGamePacketDelay());
 			finalScore.setGamePacketJitter(connection.get(ite).getGamePacketJitter());
 			finalScore.setGameLossRate(connection.get(ite).getGameLossRate());
+			finalScore.setTcpPingScore(connection.get(ite).getTcpPingScore());
+			finalScore.setUdpPingScore(connection.get(ite).getUdpPingScore());
+			finalScore.setIcmpTracertScore(connection.get(ite).getIcmpTracertScore());
+			finalScore.setUdpTracertScore(connection.get(ite).getUdpTracertScore());
+			finalScore.setTcpSlaScore(connection.get(ite).getTcpSlaScore());
+			finalScore.setUdpSlaScore(connection.get(ite).getUdpSlaScore());
+			finalScore.setPppoeScore(connection.get(ite).getPppoeScore());
+			finalScore.setDhcpScore(connection.get(ite).getDhcpScore());
+			finalScore.setDnsScore(connection.get(ite).getDnsScore());
+			finalScore.setRadiusScore(connection.get(ite).getRadiusScore());
+			finalScore.setWebDownloadScore(connection.get(ite).getWebDownloadScore());
+			finalScore.setFtpDownloadScore(connection.get(ite).getFtpDownloadScore());
+			finalScore.setFtpUploadScore(connection.get(ite).getFtpUploadScore());
+			finalScore.setWebPageScore(connection.get(ite).getWebPageScore());
+			finalScore.setWebVideoScore(connection.get(ite).getWebVideoScore());
+			finalScore.setOnlineGameScore(connection.get(ite).getOnlineGameScore());
 			cityList.add(finalScore);
 			id++;
 		}
@@ -2684,6 +2819,22 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 			scoreBase.setGamePacketDelay(scoreList.get(i).getGamePacketDelay());
 			scoreBase.setGamePacketJitter(scoreList.get(i).getGamePacketJitter());
 			scoreBase.setGameLossRate(scoreList.get(i).getGameLossRate());
+			scoreBase.setTcpPingScore(scoreList.get(i).getTcpPingScore());
+			scoreBase.setUdpPingScore(scoreList.get(i).getUdpPingScore());
+			scoreBase.setIcmpTracertScore(scoreList.get(i).getIcmpTracertScore());
+			scoreBase.setUdpTracertScore(scoreList.get(i).getUdpTracertScore());
+			scoreBase.setTcpSlaScore(scoreList.get(i).getTcpSlaScore());
+			scoreBase.setUdpSlaScore(scoreList.get(i).getUdpSlaScore());
+			scoreBase.setPppoeScore(scoreList.get(i).getPppoeScore());
+			scoreBase.setDhcpScore(scoreList.get(i).getDhcpScore());
+			scoreBase.setDnsScore(scoreList.get(i).getDnsScore());
+			scoreBase.setRadiusScore(scoreList.get(i).getRadiusScore());
+			scoreBase.setWebDownloadScore(scoreList.get(i).getWebDownloadScore());
+			scoreBase.setFtpDownloadScore(scoreList.get(i).getFtpDownloadScore());
+			scoreBase.setFtpUploadScore(scoreList.get(i).getFtpUploadScore());
+			scoreBase.setWebPageScore(scoreList.get(i).getWebPageScore());
+			scoreBase.setWebVideoScore(scoreList.get(i).getWebVideoScore());
+			scoreBase.setOnlineGameScore(scoreList.get(i).getOnlineGameScore());
 
 			if (!connection.containsKey(scoreTarget)) {
 				connection.put(scoreTarget, scoreBase);
@@ -2788,6 +2939,41 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 				scoreBase.setGamePacketDelay(scoreBase.getGamePacketDelay());
 				scoreBase.setGamePacketJitter(scoreBase.getGamePacketJitter());
 				scoreBase.setGameLossRate(scoreBase.getGameLossRate());
+				if(scoreBase.getIcmpPingScore()!=null&scoreBaseDul.getIcmpPingScore()!=null){
+					scoreBase.setIcmpPingScore((scoreBase.getIcmpPingScore()+scoreBaseDul.getIcmpPingScore())/2);
+				}else if(scoreBase.getIcmpPingScore()!=null&&scoreBaseDul.getIcmpPingScore()==null){
+					scoreBase.setIcmpPingScore(scoreBase.getIcmpPingScore());
+				} else if(scoreBase.getIcmpPingScore()==null&&scoreBaseDul.getIcmpPingScore()!=null){
+					scoreBase.setIcmpPingScore(scoreBaseDul.getIcmpPingScore());
+				}
+				if(scoreBase.getTcpPingScore()!=null&scoreBaseDul.getTcpPingScore()!=null){
+					scoreBase.setTcpPingScore((scoreBase.getTcpPingScore()+scoreBaseDul.getTcpPingScore())/2);
+				}else if(scoreBase.getTcpPingScore()!=null&&scoreBaseDul.getTcpPingScore()==null){
+					scoreBase.setTcpPingScore(scoreBase.getTcpPingScore());
+				}else if(scoreBase.getIcmpPingScore()==null&&scoreBaseDul.getIcmpPingScore()!=null){
+					scoreBase.setTcpPingScore(scoreBaseDul.getTcpPingScore());
+				}
+				if(scoreBase.getUdpPingScore()!=null&scoreBaseDul.getUdpPingScore()!=null){
+					scoreBase.setUdpPingScore((scoreBase.getUdpPingScore()+scoreBaseDul.getUdpPingScore())/2);
+				}else if(scoreBase.getUdpPingScore()!=null&&scoreBaseDul.getUdpPingScore()==null){
+					scoreBase.setUdpPingScore(scoreBase.getUdpPingScore());
+				}else if(scoreBase.getIcmpPingScore()==null&&scoreBaseDul.getIcmpPingScore()!=null){
+					scoreBase.setUdpPingScore(scoreBaseDul.getUdpPingScore());
+				}
+				scoreBase.setIcmpTracertScore(scoreList.get(i).getIcmpTracertScore());
+				scoreBase.setUdpTracertScore(scoreList.get(i).getUdpTracertScore());
+				scoreBase.setTcpSlaScore(scoreList.get(i).getTcpSlaScore());
+				scoreBase.setUdpSlaScore(scoreList.get(i).getUdpSlaScore());
+				scoreBase.setPppoeScore(scoreList.get(i).getPppoeScore());
+				scoreBase.setDhcpScore(scoreList.get(i).getDhcpScore());
+				scoreBase.setDnsScore(scoreList.get(i).getDnsScore());
+				scoreBase.setRadiusScore(scoreList.get(i).getRadiusScore());
+				scoreBase.setWebDownloadScore(scoreList.get(i).getWebDownloadScore());
+				scoreBase.setFtpDownloadScore(scoreList.get(i).getFtpDownloadScore());
+				scoreBase.setFtpUploadScore(scoreList.get(i).getFtpUploadScore());
+				scoreBase.setWebPageScore(scoreList.get(i).getWebPageScore());
+				scoreBase.setWebVideoScore(scoreList.get(i).getWebVideoScore());
+				scoreBase.setOnlineGameScore(scoreList.get(i).getOnlineGameScore());
 				connection.put(scoreTarget, scoreBase);
 			}
 		}
@@ -2910,6 +3096,22 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 			finalScore.setGamePacketDelay(connection.get(ite).getGamePacketDelay());
 			finalScore.setGamePacketJitter(connection.get(ite).getGamePacketJitter());
 			finalScore.setGameLossRate(connection.get(ite).getGameLossRate());
+			finalScore.setTcpPingScore(connection.get(ite).getTcpPingScore());
+			finalScore.setUdpPingScore(connection.get(ite).getUdpPingScore());
+			finalScore.setIcmpTracertScore(connection.get(ite).getIcmpTracertScore());
+			finalScore.setUdpTracertScore(connection.get(ite).getUdpTracertScore());
+			finalScore.setTcpSlaScore(connection.get(ite).getTcpSlaScore());
+			finalScore.setUdpSlaScore(connection.get(ite).getUdpSlaScore());
+			finalScore.setPppoeScore(connection.get(ite).getPppoeScore());
+			finalScore.setDhcpScore(connection.get(ite).getDhcpScore());
+			finalScore.setDnsScore(connection.get(ite).getDnsScore());
+			finalScore.setRadiusScore(connection.get(ite).getRadiusScore());
+			finalScore.setWebDownloadScore(connection.get(ite).getWebDownloadScore());
+			finalScore.setFtpDownloadScore(connection.get(ite).getFtpDownloadScore());
+			finalScore.setFtpUploadScore(connection.get(ite).getFtpUploadScore());
+			finalScore.setWebPageScore(connection.get(ite).getWebPageScore());
+			finalScore.setWebVideoScore(connection.get(ite).getWebVideoScore());
+			finalScore.setOnlineGameScore(connection.get(ite).getOnlineGameScore());
 			probeList.add(finalScore);
 			id++;
 		}

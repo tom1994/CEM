@@ -432,6 +432,16 @@ public class ScoreEntity {
     private Double ftpDownloadScore;
     @ExcelIgnore
     private Double ftpUploadScore;
+    //网页浏览业务分数
+    @ExcelIgnore
+    private Double webPageScore;
+    //在线视频分数
+    @ExcelIgnore
+    private Double webVideoScore;
+    //在线游戏分数
+    @ExcelIgnore
+    private Double onlineGameScore;
+
 
 
 
@@ -1539,6 +1549,30 @@ public class ScoreEntity {
 
     public void setFtpUploadScore(Double ftpUploadScore) {
         this.ftpUploadScore = ftpUploadScore;
+    }
+
+    public Double getWebPageScore() {
+        return webPageScore;
+    }
+
+    public void setWebPageScore(Double webPageScore) {
+        this.webPageScore = webPageScore;
+    }
+
+    public Double getWebVideoScore() {
+        return webVideoScore;
+    }
+
+    public void setWebVideoScore(Double webVideoScore) {
+        this.webVideoScore = webVideoScore;
+    }
+
+    public Double getOnlineGameScore() {
+        return onlineGameScore;
+    }
+
+    public void setOnlineGameScore(Double onlineGameScore) {
+        this.onlineGameScore = onlineGameScore;
     }
 
     //    public static Comparator scoreComparator = new Comparator() {
