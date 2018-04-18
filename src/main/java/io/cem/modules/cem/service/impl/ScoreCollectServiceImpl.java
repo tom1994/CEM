@@ -25,6 +25,7 @@ public class ScoreCollectServiceImpl implements ScoreCollectService {
     private ScoreCollectTargetDao scoreCollectTargetDao;
     @Autowired
     private ScoreCollectDayDao scoreCollectDayDao;
+
     @Override
     public List<ScoreCollectEntity> list(Map<String, Object> map){
         return scoreCollectDao.queryList(map);
@@ -41,4 +42,5 @@ public class ScoreCollectServiceImpl implements ScoreCollectService {
     public List<ScoreCollectCityEntity> getCityRanking(Map<String, Object> map){
         return scoreCollectCityDao.queryList(map);
     }
+
 }

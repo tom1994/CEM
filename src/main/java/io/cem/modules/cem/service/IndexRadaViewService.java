@@ -10,4 +10,5 @@ public interface IndexRadaViewService {
     void saveConnectivityScore(String startDate, String endDate, int interval) throws ExecutionException, InterruptedException;
     void saveDownLoadScore(String startDate, String endDate, int interval) throws ExecutionException, InterruptedException;
     void saveGameScore(String startDate, String endDate, int interval) throws ExecutionException, InterruptedException;
+    void saveNetworkLayerScore(String startDate, String endDate,int interval) throws ExecutionException, InterruptedException;
 }

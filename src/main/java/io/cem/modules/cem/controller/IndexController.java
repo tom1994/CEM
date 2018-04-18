@@ -1,6 +1,8 @@
 package io.cem.modules.cem.controller;
 
 import com.alibaba.druid.support.json.JSONUtils;
+import com.sun.org.apache.xerces.internal.xs.StringList;
+import io.cem.common.utils.DateUtils;
 import io.cem.common.utils.R;
 import io.cem.modules.cem.entity.ScoreCollectCityEntity;
 import io.cem.modules.cem.entity.ScoreCollectDayEntity;
@@ -17,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -48,7 +53,7 @@ public class IndexController {
 
     @RequestMapping("/layerqoeview")
     @ResponseBody
-    public R getLayerQoEView(String serviceType,String accessLayer){// test http://localhost:8080/cem/index/layerqoeview?serviceType=20&accessLayer=1000
+    public R getLayerQoEView(String serviceType,String accessLayer){// test http://localhost:8080/cem/index/layerqoeview?serviceType=0&accessLayer=2000
         log.info("1111$$$$$$$$$$$$$accessLayer:"+accessLayer);
         Date[] dateParam = getQueryTime();
         Date startTime = dateParam[0];
@@ -62,9 +67,9 @@ public class IndexController {
         return  R.ok().put("scoreCollects",scoreCollects);
 
     }
-    @RequestMapping("/cityrankingview")
+    @RequestMapping("/citymapview")
     @ResponseBody
-    public R getCityRankingView(){// http://localhost:8080/cem/index/cityrankingview
+    public R getCityMapView(@RequestParam String serviceType){// http://localhost:8080/cem/index/citymapview
         Date[] dateParam = getQueryTime();
         Date startTime = dateParam[0];
         Date endTime = dateParam[1];
@@ -72,7 +77,14 @@ public class IndexController {
         p.put("startTime",startTime);
         p.put("endTime",endTime);
         List<ScoreCollectCityEntity> scoreCollects = scoreCollectService.getCityRanking(p);
-        return  R.ok().put("scoreCollects",scoreCollects);
+        List<Map<String,Object>> json = new ArrayList<Map<String,Object>>();
+        for(ScoreCollectCityEntity sce:scoreCollects){
+            Map<String,Object> rs = new HashMap<String, Object>();
+            rs.put("name",sce.getCityName());
+            rs.put("value",sce.getScore());
+            json.add(rs);
+        }
+        return  R.ok().put("scoreCollects",json);
 
     }
     @RequestMapping("/dayscoresview")
@@ -103,21 +115,52 @@ public class IndexController {
         return  R.ok().put("scoreCollects",scoreCollects);
 
     }
+    @RequestMapping("/queryrange")
+    @ResponseBody
+    public R getQueryRange(@RequestParam String serviceType){ //  http://localhost:8080/cem/index/queryrange?serviceType=20
+        InputStream pf = IndexController.class.getClassLoader().getResourceAsStream("chart.properties");
+        Properties prop = new Properties();
+        try {
+            prop.load(pf);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        List<Date> mouths = DateUtils.getLastMouths(Integer.parseInt(prop.getProperty("queryMouthRange")));
+        List<Map<String,String>> mouthsView = new ArrayList<Map<String,String>>();
+        for(Date d:mouths){
+            Map<String,String> dateMap = new HashMap<String,String>();
+            dateMap.put("mouthDay",DateUtils.format(d,"yyyy-MM"));
+            mouthsView.add(dateMap);
+        }
+        Collections.reverse(mouthsView);
+        return  R.ok().put("mouths",mouthsView);
 
+    }
     private Date[] getQueryTime(){
         Date[] rs = new Date[2];
         try {
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             Date start = dateFormat.parse("2017-12-1");
             Date end = dateFormat.parse("2018-3-31");
-            rs[0] = start;
-            rs[1] = end;
-        } catch (ParseException e) {
+            InputStream pf = IndexController.class.getClassLoader().getResourceAsStream("chart.properties");
+            Properties prop = new Properties();
+            prop.load(pf);
+            //System.out.println(prop.getProperty("queryMouthRange"));
+            List<Date> mouths = DateUtils.getLastMouths(Integer.parseInt(prop.getProperty("queryMouthRange")));
+            rs[1] = DateUtils.setStartEndDay(mouths.get(0),0);
+            rs[0] = DateUtils.setStartEndDay(mouths.get(mouths.size()-1),1);
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
         return  rs;
 
+    }
+    public static void main(String args[]){
+        IndexController ic = new IndexController();
+        Date[] ds = ic.getQueryTime();
+        //System.out.println(ds[0]+","+ds[1]);
+
+        System.out.println(ic.getQueryRange(""));
     }
 
 }

@@ -10,4 +10,5 @@ public interface IndexRankingViewService {
     void saveConnectivityScore(String startDate, String endDate, int target) throws ExecutionException, InterruptedException;
     void saveDownLoadScore(String startDate, String endDate, int target) throws ExecutionException, InterruptedException;
     void saveGameScore(String startDate, String endDate, int target) throws ExecutionException, InterruptedException;
+    void saveNetworkLayerScore(List<Map<String,String>> mouths) throws ExecutionException, InterruptedException;
 }

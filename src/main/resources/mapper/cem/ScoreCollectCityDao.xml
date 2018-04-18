@@ -11,7 +11,7 @@
         <result property="service_type" column="serviceType"/>
     </resultMap>
     <select id="queryList" resultType="io.cem.modules.cem.entity.ScoreCollectCityEntity">
-        select score from score_collect_city
+        select score,city_name from score_collect_city
         <where>
             score_date between #{startTime} and #{endTime}
         </where>

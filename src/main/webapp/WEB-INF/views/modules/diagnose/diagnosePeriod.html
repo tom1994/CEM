@@ -224,7 +224,7 @@
 </div>
 
 <!--详情模态框（Modal） -->
-<div class="modal fade" id="myModal_update" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="myModal_ping" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="width:995px"> <!--修改bootstrap modal模态框的宽度-->
         <div class="modal-content">
             <div class="modal-header">
@@ -234,31 +234,183 @@
                 <h3 class="modal-title myModalLabel">详细信息</h3>
             </div>
             <div class="modal-body" style="height: 110px;">
-                <div class="record-table ibox-content" id="connnection">
+                <div class="record-table ibox-content" id="pingicmp">
                     <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
-                        <table class="table table-bordered " id="pingdata_table" style="margin-top: 2px!important;"></table>
+                        <table class="table table-bordered " id="pingicmp_table" style="margin-top: 2px!important;"></table>
                     </div>
                 </div>
-                <div class="record-table ibox-content" id="quality">
+                <div class="record-table ibox-content" id="pingtudp">
                     <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
-                        <table class="table table-bordered " id="qualitydata_table" style="margin-top: 2px!important;"></table>
+                        <table class="table table-bordered " id="pingtudp_table" style="margin-top: 2px!important;"></table>
                     </div>
                 </div>
+                <div class="record-table ibox-content" id="pingtcp">
+                    <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                        <table class="table table-bordered " id="pingtcp_table" style="margin-top: 2px!important;"></table>
+                    </div>
+                </div>
+                <div class="record-table ibox-content" id="routeicmp">
+                    <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                        <table class="table table-bordered " id="routeicmp_table" style="margin-top: 2px!important;"></table>
+                    </div>
+                </div>
+                <div class="record-table ibox-content" id="routetcp">
+                    <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                        <table class="table table-bordered " id="routetcp_table" style="margin-top: 2px!important;"></table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<!--详情模态框（Modal） -->
+<div class="modal fade" id="myModal_sla" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width:995px"> <!--修改bootstrap modal模态框的宽度-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h3 class="modal-title myModalLabel">详细信息</h3>
+            </div>
+            <div class="modal-body" style="height: 110px;">
+                <div class="record-table ibox-content" id="slatcp">
+                    <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                        <table class="table table-bordered " id="slatcp_table" style="margin-top: 2px!important;"></table>
+                    </div>
+                </div>
+                <div class="record-table ibox-content" id="slaudp">
+                    <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                        <table class="table table-bordered " id="slaudp_table" style="margin-top: 2px!important;"></table>
+                    </div>
+                </div>
+                <div class="record-table ibox-content" id="dns">
+                    <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                        <table class="table table-bordered " id="dns_table" style="margin-top: 2px!important;"></table>
+                    </div>
+                </div>
+                <div class="record-table ibox-content" id="dhcp">
+                    <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                        <table class="table table-bordered " id="dhcp_table" style="margin-top: 2px!important;"></table>
+                    </div>
+                </div>
+                <div class="record-table ibox-content" id="adsl">
+                    <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                        <table class="table table-bordered " id="adsl_table" style="margin-top: 2px!important;"></table>
+                    </div>
+                </div>
+                <div class="record-table ibox-content" id="radius">
+                    <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                        <table class="table table-bordered " id="radius_table" style="margin-top: 2px!important;"></table>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<!--详情模态框（Modal） -->
+<div class="modal fade" id="myModal_web" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width:995px"> <!--修改bootstrap modal模态框的宽度-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h3 class="modal-title myModalLabel">详细信息</h3>
+            </div>
+            <div class="modal-body" style="height: 110px;">
                 <div class="record-table ibox-content" id="broswer">
                     <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
-                        <table class="table table-bordered " id="broswerdata_table" style="margin-top: 2px!important;"></table>
+                        <table class="table table-bordered " id="broswer_table" style="margin-top: 2px!important;"></table>
                     </div>
                 </div>
-                <div class="record-table ibox-content" id="download">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<!--详情模态框（Modal） -->
+<div class="modal fade" id="myModal_download" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width:995px"> <!--修改bootstrap modal模态框的宽度-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h3 class="modal-title myModalLabel">详细信息</h3>
+            </div>
+            <div class="modal-body" style="height: 110px;">
+
+
+                <div class="record-table ibox-content" id="web_download">
                     <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
-                        <table class="table table-bordered " id="downloaddata_table" style="margin-top: 2px!important;"></table>
+                        <table class="table table-bordered " id="web_download_table" style="margin-top: 2px!important;"></table>
                     </div>
                 </div>
+                <div class="record-table ibox-content" id="ftp_download">
+                    <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                        <table class="table table-bordered " id="ftp_download_table" style="margin-top: 2px!important;"></table>
+                    </div>
+                </div>
+                <div class="record-table ibox-content" id="ftp_upload">
+                    <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                        <table class="table table-bordered " id="ftp_upload_table" style="margin-top: 2px!important;"></table>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<div class="modal fade" id="myModal_video" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width:995px"> <!--修改bootstrap modal模态框的宽度-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h3 class="modal-title myModalLabel">详细信息</h3>
+            </div>
+            <div class="modal-body" style="height: 110px;">
+
                 <div class="record-table ibox-content" id="video">
                     <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
                         <table class="table table-bordered " id="videodata_table" style="margin-top: 2px!important;"></table>
                     </div>
                 </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<div class="modal fade" id="myModal_game" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width:995px"> <!--修改bootstrap modal模态框的宽度-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h3 class="modal-title myModalLabel">详细信息</h3>
+            </div>
+            <div class="modal-body" style="height: 110px;">
                 <div class="record-table ibox-content" id="game">
                     <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
                         <table class="table table-bordered " id="gamedata_table" style="margin-top: 2px!important;"></table>

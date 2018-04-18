@@ -64,6 +64,12 @@ public class AlarmRecordController {
 		} catch (RuntimeException e) {
 			throw new RRException("内部参数错误，请重试！");
 		}
+//		try {
+//			if ((map.get("status") == null) || (map.get("status")=="")) {
+//				map.put("status",-1);
+//			}
+//		} catch (Exception ex) {
+//		}
 
 		int total = 0;
 		if(page==null) {              /*没有传入page,则取全部值*/

@@ -1,36 +1,86 @@
 package io.cem.modules.cem.service.impl;
 
-import io.cem.modules.cem.dao.ScoreCollectDao;
-import io.cem.modules.cem.entity.RecordHourWebPageEntity;
-import io.cem.modules.cem.entity.ScoreCollectEntity;
-import io.cem.modules.cem.entity.ScoreEntity;
-import io.cem.modules.cem.service.IndexTaskService;
-import io.cem.modules.cem.service.RecordHourWebPageService;
+import io.cem.common.utils.DateUtils;
+import io.cem.common.utils.PropertiesUtils;
+import io.cem.modules.cem.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.LinkedList;
 
+
+@Service
 public class IndexTaskServiceImpl implements IndexTaskService {
     @Autowired
-    private RecordHourWebPageService recordHourWebPageService;
+    private IndexHistogramViewService indexHistogramViewService;
     @Autowired
-    private ScoreCollectDao scoreCollectDao;
-    public void saveWebPageScore(String [] mouths){
-        List<ScoreCollectEntity> scoreCollects = new LinkedList<ScoreCollectEntity>();
-        Map<String,Object> param = new LinkedHashMap<String,Object>();
-        for(String m : mouths){
-            param.put("",m);
-            List<RecordHourWebPageEntity> wbePages = recordHourWebPageService.queryWebPage(param);
-            List<ScoreEntity> wbePageScores = recordHourWebPageService.calculateService3(wbePages);
-            ScoreCollectEntity sce = new ScoreCollectEntity();
-            sce.setScore(wbePageScores.get(0).getScore());
-            sce.setServiceType(20);
-            scoreCollectDao.save(sce);
-            param.remove("");
+    private IndexLineViewService indexLineViewService;
+    @Autowired
+    private IndexMapViewService indexMapViewService;
+    @Autowired
+    private IndexRadaViewService indexRadaViewService;
+    @Autowired
+    private IndexRankingViewService indexRankingViewService;
+
+    public void run(){
+        try {
+
+            List<Map<String,Object>> paramList = new LinkedList<Map<String,Object>>();
+            InputStream in =new BufferedInputStream(new FileInputStream(PropertiesUtils.class.getClassLoader().getResource("chart.properties").getPath())) ;
+            Properties prop = new Properties();
+            prop.load(in);
+            List<Date> mouths = DateUtils.getLastMouths(Integer.parseInt(prop.getProperty("queryMouthRange")));
+
+            String startDate = DateUtils.format(DateUtils.setStartEndDay(mouths.get(0),0));
+            String endDate = DateUtils.format(DateUtils.setStartEndDay(mouths.get(mouths.size()-1),1));;
+
+            indexHistogramViewService.saveConnectivityScore(mouths);
+            indexHistogramViewService.saveDownLoadScore(mouths);
+            indexHistogramViewService.saveGameScore(mouths);
+            indexHistogramViewService.saveNetworkLayerScore(mouths);
+            indexHistogramViewService.saveWebPageScore(mouths);
+            indexHistogramViewService.saveWebVideoScore(mouths);
+
+
+            indexLineViewService.saveConnectivityScore(mouths,"2000");
+            indexLineViewService.saveDownLoadScore(mouths,"2000");
+            indexLineViewService.saveGameScore(mouths,"2000");
+            indexLineViewService.saveNetworkLayerScore(mouths,"2000");
+            indexLineViewService.saveWebPageScore(mouths,"2000");
+            indexLineViewService.saveWebVideoScore(mouths,"2000");
+
+
+
+            indexMapViewService.saveScore(startDate,endDate,1);
+
+            indexRadaViewService.saveWebVideoScore(startDate,endDate,1);
+            indexRadaViewService.saveWebPageScore(startDate,endDate,1);
+            indexRadaViewService.saveGameScore(startDate,endDate,1);
+            indexRadaViewService.saveDownLoadScore(startDate,endDate,1);
+            indexRadaViewService.saveConnectivityScore(startDate,endDate,1);
+            indexRadaViewService.saveNetworkLayerScore(startDate,endDate,1);
+
+            indexRankingViewService.saveDownLoadScore(startDate,endDate,1);
+            indexRankingViewService.saveGameScore(startDate,endDate,1);
+            indexRankingViewService.saveWebPageScore(startDate,endDate,1);
+            indexRankingViewService.saveWebVideoScore(startDate,endDate,1);
+            indexRankingViewService.saveConnectivityScore(startDate,endDate,1);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+//        Date startDate = DateUtils.setStartEndDay(mouths.get(0),0);
+//        Date endDate = DateUtils.setStartEndDay(mouths.get(mouths.size()-1),1);
+
     }
-    public void saveWebVideoScore(Date startTime, Date endTime){}
-    public void saveWebPingScore(Date startTime,Date endTime){}
-    public void saveDownLoadScore(Date startTime,Date endTime){}
-    public void saveGameScore(Date startTime,Date endTime){}
+
+
 }

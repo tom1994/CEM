@@ -54,48 +54,51 @@
 		select count(*) from record_hour_ftp 
 	</select>
 
+	<!--ftp的质量排名-->
 	<select id="queryFtpList" resultType="io.cem.modules.cem.entity.RecordHourFtpEntity">
-		select record_hour_ftp.id,record_hour_ftp.city_id,record_hour_ftp.county_id,record_hour_ftp.probe_id,record_hour_ftp.port,record_hour_ftp.task_id,record_hour_ftp.service_type,record_hour_ftp.target_id,record_hour_ftp.target_ip,record_hour_ftp.record_date,record_hour_ftp.remark,
+		SELECT t.*,
 		city.city_name AS city_name,
 		county.county_name AS area_name,
 		probe.probe_name AS probe_name,
 		probe.access_layer,
-		target.target_name AS target_name,
-		time_format(record_hour_ftp.record_time, '%H') AS record_time,
-		AVG(record_hour_ftp.dns_delay) AS dns_delay,
-		AVG(record_hour_ftp.conn_delay) AS conn_delay,
-		AVG(record_hour_ftp.login_delay) AS login_delay,
-		AVG(record_hour_ftp.headbyte_delay) AS headbyte_delay,
-		AVG(record_hour_ftp.download_rate) AS download_rate,
-		AVG(record_hour_ftp.upload_rate) AS upload_rate,
-		SUM(record_hour_ftp.fail) AS fail,
-		SUM(record_hour_ftp.total) AS total
+		target.target_name AS target_name
+		FROM (select id,city_id,county_id,probe_id,port,task_id,service_type,target_id,target_ip,record_date,remark,
+        time_format(record_time, '%H') AS record_time,
+		AVG(dns_delay) AS dns_delay,
+		AVG(conn_delay) AS conn_delay,
+		AVG(login_delay) AS login_delay,
+		AVG(headbyte_delay) AS headbyte_delay,
+		AVG(download_rate) AS download_rate,
+		AVG(upload_rate) AS upload_rate,
+		SUM(fail) AS fail,
+		SUM(total) AS total
 		FROM record_hour_ftp
-		LEFT JOIN city
-		ON record_hour_ftp.city_id = city.city_id
-		LEFT JOIN county
-		ON record_hour_ftp.county_id = county.county_id
-		INNER JOIN probe
-		ON record_hour_ftp.probe_id = probe.id
-		LEFT JOIN target
-		ON record_hour_ftp.target_id = target.id
-		WHERE record_hour_ftp.record_date BETWEEN #{ava_start} AND #{ava_terminal}
+		force index(idx_score)
+		WHERE record_date BETWEEN #{ava_start} AND #{ava_terminal}
+		<if test="probe_id != null and probe_id != ''">
+			AND probe_id = #{probe_id}
+		</if>
 		<if test="city_id != null and city_id != ''">
-			AND record_hour_ftp.city_id = #{city_id}
+			AND city_id = #{city_id}
 		</if>
 		<if test="county_id != null and county_id != ''">
-			AND record_hour_ftp.county_id = #{county_id}
+			AND county_id = #{county_id}
 		</if>
 		<if test="target_id != null and target_id != ''">
-			AND record_hour_ftp.target_id = #{target_id}
-		</if>
-		<if test="probe_id != null and probe_id != ''">
-			AND record_hour_ftp.probe_id = #{probe_id}
+			AND target_id = #{target_id}
 		</if>
 		<if test="startTime != null and terminalTime != null">
 			AND record_time BETWEEN #{startTime} AND #{terminalTime}
 		</if>
-		GROUP BY record_hour_ftp.city_id,record_hour_ftp.county_id,record_hour_ftp.service_type,record_hour_ftp.probe_id,date_format(record_hour_ftp.record_date,'%Y-%m-%d'),record_hour_ftp.record_time
+		GROUP BY record_date,probe_id,city_id,county_id,record_time,service_type) t
+		INNER JOIN probe
+		ON t.probe_id = probe.id
+		LEFT JOIN city
+		ON t.city_id = city.city_id
+		LEFT JOIN county
+		ON t.county_id = county.county_id
+		LEFT JOIN target
+		ON t.target_id = target.id
 
 	</select>
 

@@ -2005,10 +2005,34 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 			} else {
 				ScoreBaseEntity scoreBaseDul = connection.get(dateChart);
 				scoreBase.setScore((scoreBaseDul.getScore() + scoreBase.getScore())/2);
-				scoreBase.setBase(scoreBase.getBase());
-				scoreBase.setPingIcmpDelay(scoreBase.getPingIcmpDelay());
-				scoreBase.setPingIcmpDelayStd(scoreBase.getPingIcmpDelayStd());
-				scoreBase.setPingIcmpDelayVar(scoreBase.getPingIcmpDelayVar());
+				scoreBase.setBase(scoreBase.getBase());if(scoreBase.getPingIcmpDelay()!=null&scoreBaseDul.getPingIcmpDelay()!=null){
+					scoreBase.setPingIcmpDelay((scoreBase.getPingIcmpDelay()+scoreBaseDul.getPingIcmpDelay())/2);
+				}else if(scoreBase.getPingIcmpDelay()!=null&&scoreBaseDul.getPingIcmpDelay()==null){
+					scoreBase.setPingIcmpDelay(scoreBase.getPingIcmpDelay());
+				} else if(scoreBase.getPingIcmpDelay()==null&&scoreBaseDul.getPingIcmpDelay()!=null){
+					scoreBase.setPingIcmpDelay(scoreBaseDul.getPingIcmpDelay());
+				}
+				scoreBase.setBase(scoreBase.getBase());if(scoreBase.getPingIcmpDelayStd()!=null&scoreBaseDul.getPingIcmpDelayStd()!=null){
+					scoreBase.setPingIcmpDelayStd((scoreBase.getPingIcmpDelayStd()+scoreBaseDul.getPingIcmpDelayStd())/2);
+				}else if(scoreBase.getPingIcmpDelayStd()!=null&&scoreBaseDul.getPingIcmpDelayStd()==null){
+					scoreBase.setPingIcmpDelayStd(scoreBase.getPingIcmpDelayStd());
+				} else if(scoreBase.getPingIcmpDelayStd()==null&&scoreBaseDul.getPingIcmpDelayStd()!=null){
+					scoreBase.setPingIcmpDelayStd(scoreBaseDul.getPingIcmpDelayStd());
+				}
+				scoreBase.setBase(scoreBase.getBase());if(scoreBase.getPingIcmpDelayVar()!=null&scoreBaseDul.getPingIcmpDelayVar()!=null){
+					scoreBase.setPingIcmpDelayVar((scoreBase.getPingIcmpDelayVar()+scoreBaseDul.getPingIcmpDelayVar())/2);
+				}else if(scoreBase.getPingIcmpDelayVar()!=null&&scoreBaseDul.getPingIcmpDelayVar()==null){
+					scoreBase.setPingIcmpDelayVar(scoreBase.getPingIcmpDelayVar());
+				} else if(scoreBase.getPingIcmpDelayVar()==null&&scoreBaseDul.getPingIcmpDelayVar()!=null){
+					scoreBase.setPingIcmpDelayVar(scoreBaseDul.getPingIcmpDelayVar());
+				}
+				scoreBase.setBase(scoreBase.getBase());if(scoreBase.getPingIcmpJitter()!=null&scoreBaseDul.getPingIcmpJitter()!=null){
+					scoreBase.setPingIcmpJitter((scoreBase.getPingIcmpJitter()+scoreBaseDul.getPingIcmpJitter())/2);
+				}else if(scoreBase.getPingIcmpJitter()!=null&&scoreBaseDul.getPingIcmpJitter()==null){
+					scoreBase.setPingIcmpJitter(scoreBase.getPingIcmpJitter());
+				} else if(scoreBase.getPingIcmpJitter()==null&&scoreBaseDul.getPingIcmpJitter()!=null){
+					scoreBase.setPingIcmpJitter(scoreBaseDul.getPingIcmpJitter());
+				}
 				scoreBase.setPingIcmpJitter(scoreBase.getPingIcmpJitter());
 				scoreBase.setPingIcmpJitterStd(scoreBase.getPingIcmpJitterStd());
 				scoreBase.setPingIcmpJitterVar(scoreBase.getPingIcmpJitterVar());

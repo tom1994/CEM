@@ -13,13 +13,14 @@ public class ScoreCollectCityEntity implements Serializable {
 
     private Double score;
 
-    private Integer cityiId;
+    private Integer cityId;
 
-    private String cityiName;
+    private String cityName;
 
     private Integer serviceType;
 
     private Date scoreDate;
+
 
     public Integer getId() {
         return id;
@@ -33,12 +34,10 @@ public class ScoreCollectCityEntity implements Serializable {
         this.score = score;
     }
 
-    public Integer getCityiId() {
-        return cityiId;
-    }
 
-    public String getCityiName() {
-        return cityiName;
+
+    public String getCityName() {
+        return cityName;
     }
 
     public Integer getServiceType() {
@@ -55,8 +54,8 @@ public class ScoreCollectCityEntity implements Serializable {
         this.id = id;
     }
 
-    public void setCityiName(String cityiName) {
-        this.cityiName = cityiName;
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
     }
 
     public void setServiceType(Integer serviceType) {
@@ -67,7 +66,11 @@ public class ScoreCollectCityEntity implements Serializable {
         this.scoreDate = scoreDate;
     }
 
-    public void setCityiId(Integer cityiId) {
-        this.cityiId = cityiId;
+    public Integer getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(Integer cityId) {
+        this.cityId = cityId;
     }
 }

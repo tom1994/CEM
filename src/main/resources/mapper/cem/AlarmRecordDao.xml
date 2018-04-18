@@ -70,7 +70,7 @@
 		<if test="level != null and level != ''">
 			AND alarm_record.level = #{level}
 		</if>
-		<if test="status != null and status != ''">
+		<if test="status != null and (status == 0 or status ==1)">
 			AND alarm_record.status = #{status}
 		</if>
 
@@ -101,7 +101,7 @@
 		<if test="level != null and level != ''">
 			AND alarm_record.level = #{level}
 		</if>
-		<if test="status != null and status != ''">
+		<if test="status != null and (status == 0 or status ==1)">
 			AND alarm_record.status = #{status}
 		</if>
 	</select>

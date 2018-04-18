@@ -3,10 +3,7 @@ package io.cem.common.utils;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
+import java.util.*;
 
 /**
  * 日期处理
@@ -44,12 +41,41 @@ public class DateUtils {
         }
         return rs;
     }
-    public static void main(String args[]){
-	    String [] m = new String[]{"1","2","3","4","5","6"};
-        HashMap p = new HashMap();
-        for(String i:m){
-            p.put("k"+i,i);
+
+    public static List<Date> getLastMouths(int N){
+        List<Date> mouths = new ArrayList<Date>();
+        Calendar cal  = Calendar.getInstance();
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMM");
+        for(int i=0; i<N; i++) {
+            cal.add(Calendar.MONTH, -1);
+            //String m = formatter.format(cal.getTime());
+            Date d = cal.getTime();
+            mouths.add(d);
         }
-        System.out.println(p);
+        return mouths;
+    }
+    public static Date setStartEndDay(Date d,int type){
+        Calendar cal  = Calendar.getInstance();
+        cal.setTime(d);
+        if(type==0){
+            cal.add(Calendar.MONTH, 1);//向前推一个月，如果不加这行，将得到上个月的最后一天。
+            cal.set(Calendar.DAY_OF_MONTH,0);
+        }else {
+            cal.set(Calendar.DAY_OF_MONTH,1);
+
+        }
+        return cal.getTime();
+
+    }
+    public static void main(String args[]){
+
+        List<Date> ds = getLastMouths(4);
+                    //System.out.println(getLastMouths(4));
+                    for(Date d:ds){
+                        System.out.println(format(setStartEndDay(d,0)));
+                    }
+
+
     }
 }

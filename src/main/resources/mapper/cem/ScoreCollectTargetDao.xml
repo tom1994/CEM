@@ -6,20 +6,23 @@
         <result property="id" column="id"/>
         <result property="score" column="score"/>
         <result property="target" column="target"/>
+        <result property="targetName1" column="target_name"/>
         <result property="score_date" column="scoreDate"/>
         <result property="service_type" column="serviceType"/>
     </resultMap>
-    <select id="queryList" resultType="io.cem.modules.cem.entity.ScoreCollectTargetEntity">
-        select score,target from score_collect_target
+    <select id="queryList" resultMap="scoreCollectTargetMap">
+        SELECT sct.score,t.target_name FROM score_collect_target sct,target t
         <where>
-            score_date between #{startTime} and #{endTime}
+            sct.target=t.id
+            AND service_type=#{serviceType}
+            AND score_date between #{startTime} and #{endTime}
         </where>
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
                 order by ${sidx} ${order}
             </when>
             <otherwise>
-                order by id
+                order by  sct.score desc
             </otherwise>
         </choose>
     </select>

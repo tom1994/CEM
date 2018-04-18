@@ -10,8 +10,17 @@ public class ScoreCollectTargetEntity implements Serializable {
     private Integer id;
     private Double score;
     private int target;
+    private String targetName1;
     private Integer serviceType;
     private Date scoreDate;
+
+    public void setTargetName1(String targetName) {
+        this.targetName1 = targetName;
+    }
+
+    public String getTargetName1() {
+        return targetName1;
+    }
 
     public Integer getId() {
         return id;
