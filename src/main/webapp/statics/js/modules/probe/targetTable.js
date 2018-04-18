@@ -8,14 +8,14 @@ var targetGroupNames = new Array();
 var groupNames = new Array();  //模态框中目标组
 var tgNames = new Array();
 var itemIds = new Array();
-var groupSelected=0;
+var groupSelected = 0;
 var serviceSelected;
 /*创建业务类型字典表*/
 var sst = new Map();
 sst.set(0, "综合业务");
 sst.set(1, "网络连通性业务");
 sst.set(2, "网络层质量业务");
-sst.set(3,  "网页浏览类业务");
+sst.set(3, "网页浏览类业务");
 sst.set(4, "文件下载类业务");
 sst.set(5, "在线视频类业务");
 sst.set(6, "网络游戏类业务");
@@ -23,43 +23,43 @@ sst.set(6, "网络游戏类业务");
 var targetgroupdata_handle = new Vue({
     el: '#tghandle',
     data: {},
-    mounted: function(){         /*动态加载测试任务组数据*/
-        groupSelected=0
+    mounted: function () {         /*动态加载测试任务组数据*/
+        groupSelected = 0
         $.ajax({
-            type: "POST",   /*GET会乱码*/
+            type: "POST", /*GET会乱码*/
             url: "../../targetgroup/searchlist",//Todo:改成测试任务组的list方法
             cache: false,  //禁用缓存
             dataType: "json",
             /* contentType:"application/json",  /!*必须要,不可少*!/*/
             success: function (result) {
                 console.log(result);
-                for(var i=0;i<result.page.list.length;i++){
+                for (var i = 0; i < result.page.list.length; i++) {
                     targetGroupNames[i] = {message: result.page.list[i]}
                 }
                 search_data.target_names = targetGroupNames;
                 targetform_data.groupNames = targetGroupNames;
-               setTimeout(function () {
-                   $('#group .jq22').comboSelect();
-                   $('.combo-dropdown').css("z-index","3");
-                   $('#group .option-item').click(function (group) {
-                       var a = $(group.currentTarget)[0].innerText;
-                       groupSelected = $($(group.currentTarget)[0]).data('value');
-                       setTimeout(function(){
-                           $('#group .combo-input').val(a);
-                       },20);
-                   });
-                   $('#group input[type=text] ').keyup(function (group) {
-                       if( group.keyCode=='13'){
-                           var b = $("#group .option-hover.option-selected").text();
-                           var c=($("#group .option-hover.option-selected"));
-                           var c=c[0].dataset
-                           groupSelected = c.value;
-                           $('#group .combo-input').val(b);
-                           $('#group .combo-select select').val(b);
-                       }
+                setTimeout(function () {
+                    $('#group .jq22').comboSelect();
+                    $('.combo-dropdown').css("z-index", "3");
+                    $('#group .option-item').click(function (group) {
+                        var a = $(group.currentTarget)[0].innerText;
+                        groupSelected = $($(group.currentTarget)[0]).data('value');
+                        setTimeout(function () {
+                            $('#group .combo-input').val(a);
+                        }, 20);
+                    });
+                    $('#group input[type=text] ').keyup(function (group) {
+                        if (group.keyCode == '13') {
+                            var b = $("#group .option-hover.option-selected").text();
+                            var c = ($("#group .option-hover.option-selected"));
+                            var c = c[0].dataset
+                            groupSelected = c.value;
+                            $('#group .combo-input').val(b);
+                            $('#group .combo-select select').val(b);
+                        }
 
-                   });
-               },20)
+                    });
+                }, 20)
 
             }
         });
@@ -85,11 +85,11 @@ var targetgroupdata_handle = new Vue({
 });
 
 var target_search = new Vue({
-    el:'#search',
-    data:{},
-    mounted: function(){         /*动态加载测试目标数据*/
+    el: '#search',
+    data: {},
+    mounted: function () {         /*动态加载测试目标数据*/
         $.ajax({
-            type: "POST",   /*GET会乱码*/
+            type: "POST", /*GET会乱码*/
             url: "../../target/list",
             cache: false,  //禁用缓存
             dataType: "json",
@@ -99,15 +99,15 @@ var target_search = new Vue({
             }
         });
     },
-    methods:{
-        testagentListsearch:function() {   /*查询监听事件*/
-                var data = getFormJson($('#targetsearch'));
-                /*得到查询条件*/
-                /*获取表单元素的值*/
-                console.log(data);
-                target_table.targetdata = data;
-                target_table.redraw();
-                /*根据查询条件重绘*/
+    methods: {
+        testagentListsearch: function () {   /*查询监听事件*/
+            var data = getFormJson($('#targetsearch'));
+            /*得到查询条件*/
+            /*获取表单元素的值*/
+            console.log(data);
+            target_table.targetdata = data;
+            target_table.redraw();
+            /*根据查询条件重绘*/
         },
         reset: function () {    /*重置*/
             document.getElementById("targetsearch").reset();
@@ -117,11 +117,11 @@ var target_search = new Vue({
 })
 
 var tg_search = new Vue({
-    el:'#groupsearch',
-    data:{},
-    methods:{
-        tg_search:function() {   /*查询监听事件*/
-              
+    el: '#groupsearch',
+    data: {},
+    methods: {
+        tg_search: function () {   /*查询监听事件*/
+
             var data = getFormJson2($('#tgsearch'));
             /*得到查询条件*/
             /*获取表单元素的值*/
@@ -139,11 +139,11 @@ var tg_search = new Vue({
 var targetdata_handle = new Vue({
     el: '#targethandle',
     data: {},
-    mounted: function(){
+    mounted: function () {
 
     },
     methods: {
-        targetadd: function(){
+        targetadd: function () {
             status = 0;
             /*状态0,表示录入*/
             var forms = $('#targetform_data .form-control');
@@ -165,7 +165,7 @@ var targetdata_handle = new Vue({
                     idArray[i] = parseInt(tds.eq(2).text());
                     console.log(tds.eq(2).text())
                 }*/
-                $('input[name="selectFlag"]:checked').each(function(){
+                $('input[name="selectFlag"]:checked').each(function () {
                     idArray.push(getId(this));
                 });
                 console.log(idArray);
@@ -177,20 +177,21 @@ var targetdata_handle = new Vue({
 });
 
 function getId(obj) {
-    return(parseInt(obj.id));
+    return (parseInt(obj.id));
     console.log(parseInt(obj.id));
 }
 
 /*测试目标列表编辑功能*/
-function update_this (obj) {
+function update_this(obj) {
     update_data_id = parseInt(obj.id);
     console.log(update_data_id);
-    status = 1;      /*状态1表示修改*/
+    status = 1;
+    /*状态1表示修改*/
     var forms = $('#targetform_data .form-control');
 
     $.ajax({
         type: "POST", /*GET会乱码*/
-        url: "../../target/info/"+update_data_id,
+        url: "../../target/info/" + update_data_id,
         cache: false,  //禁用缓存
         dataType: "json",
         contentType: "application/json", /*必须要,不可少*/
@@ -210,17 +211,18 @@ function update_this (obj) {
 }
 
 //测试目标组详情
-function tgupdate_this (obj) {     /*监听修改触发事件*/
+function tgupdate_this(obj) {     /*监听修改触发事件*/
     tgdata_id = parseInt(obj.id);
     /*获取当前行测试目标组数据id*/
     console.log(tgdata_id);
-    status = 1;      /*状态1表示修改*/
+    status = 1;
+    /*状态1表示修改*/
     /*find被选中的行*/
     var forms = $('#tgform_data .form-control');
 
     $.ajax({
         type: "POST", /*GET会乱码*/
-        url: "../../targetgroup/info/"+tgdata_id,
+        url: "../../targetgroup/info/" + tgdata_id,
         cache: false,  //禁用缓存
         dataType: "json",
         contentType: "application/json", /*必须要,不可少*/
@@ -258,6 +260,7 @@ function delete_ajax() {
         }
     });
 }
+
 function delete_this(obj) {
     delete_data.show_deleteModal();
     delete_data.id = parseInt(obj.id);
@@ -315,6 +318,7 @@ function tgdelete_ajax() {
         }
     });
 }
+
 function tgdelete_this(obj) {
     tgdelete_data.show_deleteModal();
     tgdelete_data.id = parseInt(obj.id);
@@ -355,7 +359,7 @@ var targetform_data = new Vue({
     el: '#myModal_update',
     data: {
         modaltitle: "", /*定义模态框标题*/
-        groupNames:[]
+        groupNames: []
     },
     // 在 `methods` 对象中定义方法
     methods: {
@@ -364,12 +368,12 @@ var targetform_data = new Vue({
             var targetJson = getFormJson2($('#targetform_data'));
             console.log(targetJson);
             var reg1 = /^(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\/])+$/;
-            var reg=/^((https|http|ftp|rtsp|mms)?:\/\/)[^\s]+/;
+            var reg = /^((https|http|ftp|rtsp|mms)?:\/\/)[^\s]+/;
             if (targetJson.targetname == "") {
                 toastr.warning("请输入名称!");
             } else if (targetJson.value == "") {
                 toastr.warning("请输入目标地址!")
-            } else if (! reg.test(targetJson.value) && !reg1.test(targetJson.value)) {
+            } else if (!reg.test(targetJson.value) && !reg1.test(targetJson.value)) {
                 toastr.warning("请输入合法的网址!");
             } else if (targetJson.superservicetype == "") {
                 toastr.warning("请选择业务类型!");
@@ -470,7 +474,7 @@ var tgform_data = new Vue({
                 }
                 $.ajax({
                     type: "POST", /*GET会乱码*/
-                    url: "../../targetgroup/"+mapstr,
+                    url: "../../targetgroup/" + mapstr,
                     data: tg,  //传入组装的参数
                     dataType: "json",
                     contentType: "application/json", /*必须要,不可少*/
@@ -518,29 +522,31 @@ var tgform_data = new Vue({
         }
     }
 });
+
 /*将表单对象变为json对象*/
 function getFormJson(form) {
     var o = {};
     var a = $(form).serializeArray();
     debugger
-    if(groupSelected !=0){
+    if (groupSelected != 0) {
         a[1].value = groupSelected;
     }
-   if(serviceSelected !=-1){
-       a[2].value=serviceSelected
-   }
-        $.each(a, function () {
+    if (serviceSelected != -1) {
+        a[2].value = serviceSelected
+    }
+    $.each(a, function () {
         if (o[this.name] !== undefined) {
             if (!o[this.name].push) {
                 o[this.name] = [o[this.name]];
             }
             o[this.name].push(this.value || '');
         } else {
-            o[this.name] = this.value ;
+            o[this.name] = this.value;
         }
     });
     return o;
 }
+
 function getFormJson2(form) {
     var o = {};
     var a = $(form).serializeArray();
@@ -556,6 +562,7 @@ function getFormJson2(form) {
     });
     return o;
 }
+
 //格式化日期
 Date.prototype.Format = function (fmt) {
     var o = {
@@ -569,16 +576,16 @@ Date.prototype.Format = function (fmt) {
         "S+": this.getMilliseconds()             //毫秒
     };
     for (var k in o) {
-        if (new RegExp("(" + k + ")").test(fmt)){
-            if(k == "y+"){
+        if (new RegExp("(" + k + ")").test(fmt)) {
+            if (k == "y+") {
                 fmt = fmt.replace(RegExp.$1, ("" + o[k]).substr(4 - RegExp.$1.length));
             }
-            else if(k=="S+"){
+            else if (k == "S+") {
                 var lens = RegExp.$1.length;
-                lens = lens==1?3:lens;
-                fmt = fmt.replace(RegExp.$1, ("00" + o[k]).substr(("" + o[k]).length - 1,lens));
+                lens = lens == 1 ? 3 : lens;
+                fmt = fmt.replace(RegExp.$1, ("00" + o[k]).substr(("" + o[k]).length - 1, lens));
             }
-            else{
+            else {
                 fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
             }
         }
@@ -587,24 +594,23 @@ Date.prototype.Format = function (fmt) {
 }
 
 var search_data = new Vue({
-    el:'#targetsearch',
-    data:{
-        target_names:[]
+    el: '#targetsearch',
+    data: {
+        target_names: []
     },
-    methods:{
-    }
+    methods: {}
 });
 
 var searchgroup_data = new Vue({
-    el:'#searchgroup',
-    data:{
-        tg_names:[ ]
+    el: '#searchgroup',
+    data: {
+        tg_names: []
     }
 });
 
 /*选中表格事件*/
 $(document).ready(function () {
-    $(".list td").slice(14).each(function(){    //操作列取消选中状态
+    $(".list td").slice(14).each(function () {    //操作列取消选中状态
         $('#target_table tbody').slice(14).on('click', 'tr', function () {   /*表格某一行选中状态*/
             if ($(this).hasClass('selected')) {
                 $(this).removeClass('selected');
@@ -642,15 +648,15 @@ var target_table = new Vue({
     el: '#target_table',
     data: {
         headers: [
-            {title: '<div style="width:10px"></div>'},
-            {title: '<div class="checkbox" style="width:100%; align: center"> <label> <input type="checkbox" id="checkAll"></label> </div>'},
-            {title: '<div style="width:70px">测试目标名</div>'},
-            {title: '<div style="width:100px">测试目标地址</div>'},
-            {title: '<div style="width:100px">业务类型</div>'},
-            {title: '<div style="width:90px">测试目标组</div>'},
-            {title: '<div style="width:70px">备注</div>'},
-            {title: '<div style="width:65px">创建时间</div>'},
-            {title: '<div style="width:60px">操作</div>'}
+            {title: '<div ></div>'},
+            {title: '<div class="checkbox"> <label> <input type="checkbox" id="checkAll"></label> </div>'},
+            {title: '<div >测试目标名</div>'},
+            {title: '<div>测试目标地址</div>'},
+            {title: '<div>业务类型</div>'},
+            {title: '<div >测试目标组</div>'},
+            {title: '<div >备注</div>'},
+            {title: '<div >创建时间</div>'},
+            {title: '<div >操作</div>'}
         ],
         rows: [],
         dtHandle: null,
@@ -682,7 +688,7 @@ var target_table = new Vue({
             /*重绘*/
         }
     },
-    mounted: function() {
+    mounted: function () {
         let vm = this;
         // Instantiate the datatable and store the reference to the instance in our dtHandle element.
         vm.dtHandle = $(this.$el).DataTable({
@@ -693,9 +699,10 @@ var target_table = new Vue({
             serverSide: true,
             info: false,
             ordering: false, /*禁用排序功能*/
+            // bAutoWidth:false,
             /*bInfo: false,*/
             /*bLengthChange: false,*/    /*禁用Show entries*/
-            scroll: false,
+            scroll: true,
             oLanguage: {
                 sLengthMenu: "每页 _MENU_ 行数据",
                 oPaginate: {
@@ -730,31 +737,32 @@ var target_table = new Vue({
                         returnData.data = result.page.list;//返回的数据列表
                         // 重新整理返回数据以匹配表格
                         let rows = [];
-                        var i = param.start+1;
+                        var i = param.start + 1;
                         result.page.list.forEach(function (item) {
                             let row = [];
                             row.push(i++);
-                            row.push('<div class="checkbox"> <label> <input type="checkbox" id='+item.id+' name="selectFlag" onclick="getId(this)">');
-                            row.push('<a onclick="update_this(this)" id='+item.id+'><span style="color: black;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">'+item.targetName+'</span></a>');
-                            row.push(item.value);
-                            row.push(sst.get(item.superserviceType));
-                            row.push(item.groupName);
-                            row.push(item.remark);
-                            row.push(item.createTime);
-                            row.push('<a class="fontcolor" onclick="update_this(this)" id='+item.id+'>详情</a>&nbsp&nbsp;' +
-                                '<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>');
+                            row.push('<div class="checkbox"> <label> <input type="checkbox" id=' + item.id + ' name="selectFlag" onclick="getId(this)">');
+                            row.push('<a onclick="update_this(this)" id=' + item.id + '><span style="color: black;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">' + item.targetName + '</span></a>');
+                            row.push('<div style="overflow:hidden; white-space:nowrap; word-wrap:break-word;">'+item.value);
+                            row.push('<div style="overflow:hidden; white-space:nowrap; word-wrap:break-word;">'+sst.get(item.superserviceType));
+                            row.push('<div style="overflow:hidden; white-space:nowrap; word-wrap:break-word;">'+item.groupName);
+                            row.push('<div style="overflow:hidden; white-space:nowrap; word-wrap:break-word;">'+item.remark);
+                            row.push('<div style="overflow:hidden; white-space:nowrap; word-wrap:break-word;">'+item.createTime);
+                            row.push('<div style="overflow:hidden; white-space:nowrap; word-wrap:break-word;">'+'<a class="fontcolor" onclick="update_this(this)" id=' + item.id + '>详情</a>&nbsp&nbsp;' +
+                                '<a class="fontcolor" onclick="delete_this(this)" id=' + item.id + '>删除</a>');
                             rows.push(row);
                         });
                         returnData.data = rows;
-                        console.log(returnData);
                         //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);
                         $("#target_table").colResizable({
-                            liveDrag:true,
-                            gripInnerHtml:"<div class='grip'></div>",
-                            draggingClass:"dragging",
-                            resizeMode:'overflow',
+                            liveDrag: true,
+                            gripInnerHtml: "<div class='grip'></div>",
+                            draggingClass: "dragging",
+                            resizeMode: 'overflow',
+                            postbackSafe:'true',
+                            minWidth: 0
                         });
                     }
                 });
@@ -804,7 +812,7 @@ var tg_table = new Vue({
             /*重绘*/
         }
     },
-    mounted: function() {
+    mounted: function () {
         let vm = this;
         // Instantiate the datatable and store the reference to the instance in our dtHandle element.
         vm.dtHandle = $(this.$el).DataTable({
@@ -852,16 +860,16 @@ var tg_table = new Vue({
                         returnData.data = result.page.list;//返回的数据列表
                         // 重新整理返回数据以匹配表格
                         let rows = [];
-                        var i = param.start+1;
+                        var i = param.start + 1;
                         result.page.list.forEach(function (item) {
                             let row = [];
                             row.push(i++);
-                            row.push('<a onclick="tgupdate_this(this)" id='+item.id+'><span style="color: black;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">'+item.tgName+'</span></a>');
+                            row.push('<a onclick="tgupdate_this(this)" id=' + item.id + '><span style="color: black;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">' + item.tgName + '</span></a>');
                             row.push(sst.get(item.superserviceType));
                             row.push(item.remark);
                             row.push(item.createTime);
-                            row.push('<a class="fontcolor" onclick="tgupdate_this(this)" id='+item.id+'>详情</a>&nbsp&nbsp;' +
-                                '<a class="fontcolor" onclick="tgdelete_this(this)" id='+item.id+'>删除</a>');
+                            row.push('<a class="fontcolor" onclick="tgupdate_this(this)" id=' + item.id + '>详情</a>&nbsp&nbsp;' +
+                                '<a class="fontcolor" onclick="tgdelete_this(this)" id=' + item.id + '>删除</a>');
                             rows.push(row);
                         });
                         returnData.data = rows;
@@ -879,18 +887,18 @@ var tg_table = new Vue({
 
 $(document).ready(function () {
     $('#service .jq22').comboSelect();
-    $("#service input[type=text]").attr('placeholder',"---请选择---");
-    $('.combo-dropdown').css("z-index","3");
+    $("#service input[type=text]").attr('placeholder', "---请选择---");
+    $('.combo-dropdown').css("z-index", "3");
     $('#service .option-item').click(function (service) {
         var a = $(service.currentTarget)[0].innerText;
         serviceSelected = $($(service.currentTarget)[0]).data('value');
-        setTimeout(function(){
+        setTimeout(function () {
             $('#service .combo-input').val(a);
-        },20);
+        }, 20);
     });
 
     $('#service input[type=text] ').keyup(function (service) {
-        if( service.keyCode=='13'){
+        if (service.keyCode == '13') {
             var b = $("#service .option-hover.option-selected").text();
             serviceSelected = $("#service .option-hover.option-selected")[0].dataset.value;
             $('#service .combo-input').val(b);

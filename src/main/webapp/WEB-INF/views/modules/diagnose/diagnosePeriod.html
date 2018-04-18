@@ -208,7 +208,14 @@
             <div class="ibox-content">
                 <div class="row pre-scrollable">
                     <div id="table" style="margin-top: 2px !important;">
-                        <data-table :scoredata="filteredData"></data-table>
+                        <data-table :scoredata="filteredData" style="display: none"></data-table>
+                        <table class="table table-bordered " id="ping_table" style="margin-top: 2px!important;"></table>
+                        <table class="table table-bordered " id="sla_table" style="margin-top: 2px!important;"></table>
+                        <table class="table table-bordered " id="web_table" style="margin-top: 2px!important;"></table>
+                        <table class="table table-bordered " id="download_table" style="margin-top: 2px!important;"></table>
+                        <table class="table table-bordered " id="video_table" style="margin-top: 2px!important;"></table>
+                        <table class="table table-bordered " id="game_table" style="margin-top: 2px!important;"></table>
+
                     </div>
                 </div>
             </div>

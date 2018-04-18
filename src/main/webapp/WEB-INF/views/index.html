@@ -264,17 +264,17 @@
             var element = document.createElement("script");
             element.src = "../../statics/assets/layouts/layout/scripts/layout.min.js";
             document.body.appendChild(element);
-            $("a.nav-link").not(".nav-toggle").click(function(){ //当点击标签的时候,使用animate在200毫秒的时间内,滚到顶部
-                $("html,body").animate({scrollTop:"0px"}, 500);
-                $("li.nav-item").each(function () {
-                    $(this).removeClass("active open");
-                });
-                $(this).parent("li.nav-item").addClass("active open");
-                if ($(this).parent("li.nav-item").parent("ul.sub-menu")){
-//                    $(this).parent("li.nav-item").parent("ul.sub-menu").parent("li.nav-item").addClass("active open");
-                    $(this).closest("ul.sub-menu").parent("li.nav-item").addClass("active open");
-                }
-            });
+//            $("a.nav-link").not(".nav-toggle").click(function(){ //当点击标签的时候,使用animate在200毫秒的时间内,滚到顶部
+//                $("html,body").animate({scrollTop:"0px"}, 500);
+//                $("li.nav-item").each(function () {
+//                    $(this).removeClass("active open");
+//                });
+//                $(this).parent("li.nav-item").addClass("active open");
+//                if ($(this).parent("li.nav-item").parent("ul.sub-menu")){
+////                    $(this).parent("li.nav-item").parent("ul.sub-menu").parent("li.nav-item").addClass("active open");
+//                    $(this).closest("ul.sub-menu").parent("li.nav-item").addClass("active open");
+//                }
+//            });
             flag = false;
         }
     }
@@ -378,7 +378,7 @@
 //        $('#page-container').height($('#content_frame').height());
 //        $('#page-sidebar').height($('#content_frame').height());
 //        console.log($(page-sidebar).height());
-          $('#page-sidebar').css('max-height',$(window).height()-60);
+          $('#page-sidebar').css('max-height',$(window).height()+1000);
 
     });
 </script>

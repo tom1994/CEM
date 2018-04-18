@@ -23,10 +23,6 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 	private RecordHourRadiusDao recordHourRadiusDao;
 	@Autowired
 	private RecordRadiusDao recordRadiusDao;
-	@Autowired
-	private RecordHourRadiusService recordHourRadiusService;
-	@Autowired
-	private RecordHourWebPageService recordHourWebPageService;
 	
 	@Override
 	public RecordHourRadiusEntity queryObject(Integer id){
@@ -101,8 +97,8 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 		RecordHourDnsService recordHourDnsService= (RecordHourDnsService) SpringContextUtils.getBean("recordHourDnsService");
 		RecordHourDhcpService recordHourDhcpService= (RecordHourDhcpService) SpringContextUtils.getBean("recordHourDhcpService");
 		RecordHourPppoeService recordHourPppoeService= (RecordHourPppoeService) SpringContextUtils.getBean("recordHourPppoeService");
-//		RecordHourRadiusService recordHourRadiusService= (RecordHourRadiusService) SpringContextUtils.getBean("recordHourRadiusService");
-//		RecordHourWebPageService recordHourWebPageService= (RecordHourWebPageService) SpringContextUtils.getBean("recordHourWebPageService");
+		RecordHourRadiusService recordHourRadiusService= (RecordHourRadiusService) SpringContextUtils.getBean("recordHourRadiusService");
+		RecordHourWebPageService recordHourWebPageService= (RecordHourWebPageService) SpringContextUtils.getBean("recordHourWebPageService");
 		RecordHourWebDownloadService recordHourWebDownloadService= (RecordHourWebDownloadService) SpringContextUtils.getBean("recordHourWebDownloadService");
 		RecordHourFtpService recordHourFtpService= (RecordHourFtpService) SpringContextUtils.getBean("recordHourFtpService");
 		RecordHourWebVideoService recordHourWebVideoService= (RecordHourWebVideoService) SpringContextUtils.getBean("recordHourWebVideoService");
