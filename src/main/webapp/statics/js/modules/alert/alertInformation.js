@@ -86,7 +86,7 @@ var search_service = new Vue({
     methods: {
         testagentListsearch: function () {
             var searchJson = getFormJson($('#probesearch'));
-             
+
             if((searchJson.startDate)>(searchJson.terminalDate)){
                 console.log("时间选择有误，请重新选择！");
                 $('#nonavailable_time').modal('show');
@@ -97,11 +97,7 @@ var search_service = new Vue({
             }
         },
         reset:function () {
-          document.getElementById('probesearch').reset();
-            TypeSelected=0;
-            LevelSelected=0;
-             StatusSeleted=0;
-
+            document.getElementById('probesearch').reset();
             alerttable.reset();
         },
 
@@ -111,7 +107,7 @@ var search_service = new Vue({
 function getFormJson(form) {      /*将表单对象变为json对象*/
     var o = {};
     var a = $(form).serializeArray();
-
+    debugger
     if(TypeSelected!=0){
         a[2]={}
         a[2].name='type'
@@ -122,10 +118,14 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
         a[3].name='level'
         a[3].value=LevelSelected
     }
-    if(StatusSeleted!=0){
+    if(StatusSeleted==0){
         a[4]={}
         a[4].name='status'
-        a[4].value=StatusSeleted
+        a[4].value=0
+    }else{
+        a[4]={}
+        a[4].name='status'
+        a[4].value=1
     }
     $.each(a, function () {
         if (o[this.name] !== undefined) {
@@ -134,7 +134,7 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
             }
             o[this.name].push(this.value || '');
         } else {
-            o[this.name] = this.value || '';
+            o[this.name] = this.value ;
         }
     });
     return o;
@@ -187,7 +187,7 @@ function update_this (obj) {     /*监听修改触发事件*/
         dataType: "json",
         // contentType: "application/json", /*必须要,不可少*/
         success: function (result) {
-           console.log(result);
+            console.log(result);
             forms[0].value = result.alarm.id;
             forms[1].value = st.get(result.alarm.type);
             forms[2].value = le.get(result.alarm.level);
@@ -316,10 +316,37 @@ function delete_All(){
         if(CheckALL[i].checked)
             check_val.push(CheckALL[i].value);
     }
-    if(check_val!=[]){
+    if(check_val==[]){
         toastr.warning("请选择要确定的告警信息!");
     }
     console.log(check_val);
+    operate_ajax(check_val)
+}
+
+function operate_ajax(check_val) {
+    var ids = new Array();
+    console.log(ids);
+    for(var i=0;i<check_val.length;i++){
+        ids[i]=parseInt(check_val[i]);
+    }
+    console.log(ids);
+    /*对象数组字符串*/
+
+    $.ajax({
+        type: "POST", /*GET会乱码*/
+        url: "../../alarmrecord/change/"+ids,
+        cache: false,  //禁用缓存
+        data: ids,  //传入组装的参数
+        dataType: "json",
+        contentType: "application/json", /*必须要,不可少*/
+        success: function (result) {
+
+            toastr.success("业务信息确认成功!");
+
+            alerttable.currReset();
+
+        }
+    });
 }
 
 
@@ -446,6 +473,7 @@ var alerttable = new Vue({
                     dataType: "json",
                     success: function (result) {
                         console.log(result);
+                        debugger
                         //封装返回数据
                         let returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -464,7 +492,7 @@ var alerttable = new Vue({
                             row.push(tus.get(item.status));
                             row.push(item.probeName);
                             row.push(item.recordTime);
-                            row.push('<a class="fontcolor" onclick="operate_this(this)" id='+item.id+'>确认</a>&nbsp;' +
+                            row.push('<a class="fontcolor" onclick="operate_this(this)" id='+item.id+'>确定</a>&nbsp;' +
                                 '<a class="fontcolor" onclick="update_this(this)" id='+item.id+'>详情</a>'); //Todo:完成详情与诊断
                             rows.push(row);
                         });

@@ -81,6 +81,7 @@
     </select>
 
     <!--Miao在3.28对此方法进行了性能优化-->
+    <!--质量ping排名小时表方法-->
     <select id="queryPingList" resultType="io.cem.modules.cem.entity.RecordHourPingEntity">
         SELECT t.*,
         city.city_name AS city_name,
@@ -114,6 +115,9 @@
         </if>
         <if test="target_id != null and target_id != ''">
             AND rhp.target_id = #{target_id}
+        </if>
+        <if test="startTime != null and terminalTime != null">
+            AND record_time BETWEEN #{startTime} AND #{terminalTime}
         </if>
         GROUP BY
         rhp.record_date,rhp.probe_id,rhp.city_id,rhp.county_id,rhp.record_time,rhp.service_type) t

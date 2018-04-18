@@ -49,12 +49,14 @@
 	</select>
 
 	<select id="queryTracertList" resultType="io.cem.modules.cem.entity.RecordHourTracertEntity">
- 		select rht.id,rht.city_id,rht.county_id,rht.probe_id,rht.port,rht.task_id,rht.service_type,rht.target_id,rht.target_ip,rht.record_date,rht.remark,
+ 		SELECT t.*,
 		city.city_name AS city_name,
 		county.county_name AS area_name,
 		probe.probe_name AS probe_name,
 		probe.access_layer,
-		target.target_name AS target_name,
+		target.target_name AS target_name
+		FROM
+		(select rht.id,rht.city_id,rht.county_id,rht.probe_id,rht.port,rht.task_id,rht.service_type,rht.target_id,rht.target_ip,rht.record_date,rht.remark,
 		time_format(record_time, '%H') AS record_time,
 		AVG(rht.delay) AS delay,
 		AVG(rht.delay_std) AS delay_std,
@@ -66,15 +68,11 @@
 		SUM(rht.fail) AS fail,
 		SUM(rht.total) AS total
 		FROM record_hour_tracert rht
-		LEFT JOIN city
-		ON rht.city_id = city.city_id
-		LEFT JOIN county
-		ON rht.county_id = county.county_id
-		INNER JOIN probe
-		ON rht.probe_id = probe.id
-		LEFT JOIN target
-		ON rht.target_id = target.id
+		force index(idx_score)
 		WHERE rht.record_date BETWEEN #{ava_start} AND #{ava_terminal}
+		<if test="probe_id != null and probe_id != ''">
+			AND rht.probe_id = #{probe_id}
+		</if>
 		<if test="city_id != null and city_id != ''">
 			AND rht.city_id = #{city_id}
 		</if>
@@ -84,14 +82,27 @@
 		<if test="target_id != null and target_id != ''">
 			AND rht.target_id = #{target_id}
 		</if>
-		<if test="probe_id != null and probe_id != ''">
-			AND rht.probe_id = #{probe_id}
-		</if>
 		<if test="startTime != null and terminalTime != null">
 			AND record_time BETWEEN #{startTime} AND #{terminalTime}
 		</if>
-		GROUP BY rht.city_id,rht.county_id,rht.service_type,rht.probe_id,date_format(rht.record_date,'%Y-%m-%d'),rht.record_time
-	</select>
+		GROUP BY rht.record_date,rht.probe_id,rht.city_id,rht.county_id,rht.record_time,rht.service_type)t
+		LEFT JOIN city
+		ON t.city_id = city.city_id
+		LEFT JOIN county
+		ON t.county_id = county.county_id
+		INNER JOIN probe
+		ON t.probe_id = probe.id
+		LEFT JOIN target
+		ON t.target_id = target.id
+		<choose>
+			<when test="sidx != null and sidx.trim() != ''">
+				order by ${sidx} ${order}
+			</when>
+		</choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+		</select>
 
 	<select id="queryDayList" resultType="io.cem.modules.cem.entity.RecordHourTracertEntity">
 		select rht.id,rht.city_id,rht.county_id,rht.probe_id,rht.port,rht.task_id,rht.service_type,rht.target_id,rht.target_ip,rht.record_date,rht.remark,
