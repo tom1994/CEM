@@ -865,7 +865,7 @@ var probetable = new Vue({
                 {"orderable": false, "targets": 3},
                 {"orderable": false, "targets": 4},
                 {"orderable": false, "targets": 5},
-                {"orderable": false, "targets": 7}
+                {"orderable": false, "targets": 7},
             ],
             columns: vm.headers,
             data: vm.rows,
@@ -874,11 +874,13 @@ var probetable = new Vue({
             serverSide: true,
             info: false,
             bProcessing: true,
+            order:[[ 6, 'asc' ]],
             // bLoadingRecords: "载入中...",
             // ordering: false, /*禁用排序功能*/
             /*bInfo: false,*/
             /*bLengthChange: false,*/    /*禁用Show entries*/
             scroll: false,
+
             oLanguage: {
                 sLengthMenu: "每页 _MENU_ 行数据",
                 sProcessing: "正在努力加载数据中...",
@@ -962,13 +964,13 @@ var areatable = new Vue({
     el: '#areadata_table',
     data: {
         headers: [
-            {title: '<div style="width:10px"></div>'},
-            {title: '<div style="width:70px">地市</div>'},
-            {title: '<div style="width:70px">区县</div>'},
-            {title: '<div style="width:90px">业务类型</div>'},
-            {title: '<div style="width:60px">目标地址</div>'},
-            {title: '<div style="width:55px">分数</div>'},
-            {title: '<div style="width:80px">操作</div>'}
+            {title: '<div style=""></div>'},
+            {title: '<div style="/*width:70px*/">地市</div>'},
+            {title: '<div style="/*width:70px*/">区县</div>'},
+            {title: '<div style="/*width:90px*/">业务类型</div>'},
+            {title: '<div style="/*width:60px*/">目标地址</div>'},
+            {title: '<div style="/*width:55px*/">分数</div>'},
+            {title: '<div style="/*width:80px*/">操作</div>'}
         ],
         rows: [],
         dtHandle: null,
@@ -1021,6 +1023,8 @@ var areatable = new Vue({
             serverSide: true,
             info: false,
             bProcessing:true,
+            bAutoWidth:false,
+            order:[[ 5, 'asc' ]],
             //ordering: false, /*禁用排序功能*/
             /*bInfo: false,*/
             /*bLengthChange: false,*/    /*禁用Show entries*/
@@ -1087,7 +1091,7 @@ var areatable = new Vue({
                         //         draggingClass: "dragging",
                         //         resizeMode: 'overflow',
                         //     });
-                        // }, 300);
+                        // }, 250);
                         // $('td').closest('table').find('th').eq(1).attr('style', 'text-align: center;');
                         // $('#probe_table tbody').find('td').eq(1).attr('style', 'text-align: center;');
                         // var trs = $('#probe_table tbody').find('tr');
@@ -1104,14 +1108,14 @@ var doortable = new Vue({
     el: '#doordata_table',
     data: {
         headers: [
-            {title: '<div style="width:10px"></div>'},
-            {title: '<div style="width:70px">测试目标</div>'},
-            {title: '<div style="width:70px">地市</div>'},
-            {title: '<div style="width:70px">区县</div>'},
-            {title: '<div style="width:70px">探针名称</div>'},
-            {title: '<div style="width:70px">业务名称</div>'},
-            {title: '<div style="width:70px">分数</div>'},
-            {title: '<div style="width:70px">操作</div>'},
+            {title: '<div></div>'},
+            {title: '<div>测试目标</div>'},
+            {title: '<div>地市</div>'},
+            {title: '<div>区县</div>'},
+            {title: '<div>探针名称</div>'},
+            {title: '<div>业务名称</div>'},
+            {title: '<div>分数</div>'},
+            {title: '<div>操作</div>'},
         ],
         rows: [],
         dtHandle: null,
@@ -1166,10 +1170,12 @@ var doortable = new Vue({
             serverSide: true,
             info: false,
             bProcessing: true,
+            order:[[ 6, 'asc' ]],
             // ordering: false, /*禁用排序功能*/
             /*bInfo: false,*/
             /*bLengthChange: false,*/    /*禁用Show entries*/
             scroll: false,
+            bAutoWidth:false,
             oLanguage: {
                 sLengthMenu: "每页 _MENU_ 行数据",
                 sProcessing: "正在努力加载数据中...",
@@ -1233,7 +1239,7 @@ var doortable = new Vue({
                         //         draggingClass: "dragging",
                         //         resizeMode: 'overflow',
                         //     });
-                        // }, 300);
+                        // }, 250);
                         // $('td').closest('table').find('th').eq(1).attr('style', 'text-align: center;');
                         // $('#probe_table tbody').find('td').eq(1).attr('style', 'text-align: center;');
                         // var trs = $('#probe_table tbody').find('tr');
@@ -4649,6 +4655,7 @@ function door_game(obj) {
                 serverSide: true,
                 info: false,
                 ordering: false, /*禁用排序功能*/
+                // bAutoWidth:false,
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
@@ -4706,7 +4713,7 @@ function resizeArea() {
             draggingClass: "dragging",
             resizeMode: 'overflow',
         });
-    }, 300);
+    }, 250);
 }
 
 function resizeDoor() {
@@ -4717,7 +4724,7 @@ function resizeDoor() {
             draggingClass: "dragging",
             resizeMode: 'overflow',
         });
-    }, 300);
+    }, 250);
 }
 
 function loading() {

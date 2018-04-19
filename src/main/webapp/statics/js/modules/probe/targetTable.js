@@ -776,12 +776,12 @@ var tg_table = new Vue({
     el: '#tg_table',
     data: {
         headers: [
-            {title: '<div style="width:10px"></div>'},
-            {title: '<div style="width:100px;text-align: center">测试目标组名</div>'},
-            {title: '<div style="width:100px;text-align: center">业务类型</div>'},
-            {title: '<div style="width:100px;text-align: center">备注</div>'},
-            {title: '<div style="width:70px;text-align: center">创建时间</div>'},
-            {title: '<div style="width:60px;text-align: center">操作</div>'}
+            {title: '<div></div>'},
+            {title: '<div>测试目标组名</div>'},
+            {title: '<div>业务类型</div>'},
+            {title: '<div>备注</div>'},
+            {title: '<div>创建时间</div>'},
+            {title: '<div>操作</div>'}
         ],
         rows: [],
         dtHandle: null,
@@ -823,6 +823,7 @@ var tg_table = new Vue({
             serverSide: true,
             info: false,
             ordering: false, /*禁用排序功能*/
+            bAutoWidth:false,
             /*bInfo: false,*/
             /*bLengthChange: false,*/    /*禁用Show entries*/
             scroll: false,

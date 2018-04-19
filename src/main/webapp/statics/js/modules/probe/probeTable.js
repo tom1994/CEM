@@ -1579,7 +1579,7 @@ function resize() {
             draggingClass: "dragging",
             resizeMode: 'overflow',
         });
-    }, 300);
+    }, 250);
 }
 
 

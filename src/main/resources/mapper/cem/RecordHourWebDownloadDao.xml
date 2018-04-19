@@ -70,6 +70,7 @@
 		SUM(total) AS total
 		FROM record_hour_web_download
 		force index(idx_score)
+		WHERE record_date BETWEEN #{ava_start} AND #{ava_terminal}
 		<if test="probe_id != null and probe_id != ''">
 			AND probe_id = #{probe_id}
 		</if>
@@ -94,8 +95,6 @@
 		ON t.county_id = county.county_id
 		LEFT JOIN target
 		ON t.target_id = target.id
-		WHERE t.record_date BETWEEN #{ava_start} AND #{ava_terminal}
-
 	</select>
 
 	<select id="queryExitList" resultType="io.cem.modules.cem.entity.RecordHourWebDownloadEntity">
