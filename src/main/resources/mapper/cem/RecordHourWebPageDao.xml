@@ -347,7 +347,7 @@
 		<if test="probe_id != null and probe_id != ''">
 			AND webp.probe_id = #{probe_id}
 		</if>
-		GROUP BY webp.city_id,webp.county_id,webp.service_type,webp.probe_id,date_format(webp.record_date,'%Y-%m-%d')
+		GROUP BY webp.city_id,webp.county_id,webp.service_type,webp.probe_id,webp.record_date,webp.record_time
 
 	</select>
 

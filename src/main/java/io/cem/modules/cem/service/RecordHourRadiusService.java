@@ -43,6 +43,7 @@ public interface RecordHourRadiusService {
 	List<ScoreEntity> diagnoseDay(Map<String, Object> map,List<ScoreEntity> scoreList) throws ExecutionException, InterruptedException;
 
 	List<ScoreEntity> diagnoseHour(Map<String, Object> map,List<ScoreEntity> scoreList) throws ExecutionException, InterruptedException;
+	List<ScoreEntity> diagnoseDayHour(Map<String, Object> map,List<ScoreEntity> scoreList) throws ExecutionException, InterruptedException;
 
 	int queryTotal(Map<String, Object> map);
 	

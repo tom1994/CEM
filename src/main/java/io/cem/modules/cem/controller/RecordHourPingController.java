@@ -181,13 +181,12 @@ public class RecordHourPingController {
             e.printStackTrace();
         }
         EvaluationEntity score;
-        if(dateDifferent==0){
+        if(dateDifferent>5){
             score = recordHourFtpService.calculateHourQualityScore(map);
-        }else if(dateDifferent==1){
-            score = recordHourFtpService.calculateDayHourQualityScore(map);
         }else{
             score = recordHourFtpService.calculateDayQualityScore(map);
         }
+
 
         return R.ok().put("score", score);
 

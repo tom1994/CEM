@@ -91,7 +91,7 @@ public class RecordHourFtpServiceImpl implements RecordHourFtpService {
 	}
 
 	@Override
-	public EvaluationEntity calculateDayQualityScore(Map<String, Object> map) throws ExecutionException, InterruptedException{
+	public EvaluationEntity calculateHourQualityScore(Map<String, Object> map) throws ExecutionException, InterruptedException{
 		EvaluationEntity score = new EvaluationEntity();
 		RecordHourPingService recordHourPingService= (RecordHourPingService) SpringContextUtils.getBean("recordHourPingService");
 		RecordHourTracertService recordHourTracertService= (RecordHourTracertService) SpringContextUtils.getBean("recordHourTracertService");
@@ -142,8 +142,8 @@ public class RecordHourFtpServiceImpl implements RecordHourFtpService {
 		Future<List<RecordHourTracertEntity>> tracertList_future = recordHourTracertService.queryTracertList(map1);
 		Future<List<RecordHourPingEntity>> pingList_future1 = recordHourPingService.queryPingList(map2);
 		Future<List<RecordHourTracertEntity>> tracertList_future1 = recordHourTracertService.queryTracertList(map2);
-		Future<List<RecordHourPingEntity>> pingList_future2 = recordHourPingService.queryDayList(map3);
-		Future<List<RecordHourTracertEntity>> tracertList_future2 = recordHourTracertService.queryDayList(map3);
+		Future<List<RecordHourPingEntity>> pingList_future2 = recordHourPingService.queryPingList(map3);
+		Future<List<RecordHourTracertEntity>> tracertList_future2 = recordHourTracertService.queryTracertList(map3);
 		//网络层质量业务
 		Future<List<RecordHourSlaEntity>> slaList_future = recordHourSlaService.querySlaList(map1);
 		Future<List<RecordHourDnsEntity>> dnsList_future = recordHourDnsService.queryDnsList(map1);
@@ -155,30 +155,30 @@ public class RecordHourFtpServiceImpl implements RecordHourFtpService {
 		Future<List<RecordHourDhcpEntity>> dhcpList_future1 = recordHourDhcpService.queryDhcpList(map2);
 		Future<List<RecordHourPppoeEntity>> pppoeList_future1 = recordHourPppoeService.queryPppoeList(map2);
 		Future<List<RecordHourRadiusEntity>> radiusList_future1 = recordHourRadiusService.queryRadiusList(map2);
-		Future<List<RecordHourSlaEntity>> slaList_future2 = recordHourSlaService.queryDayList(map3);
-		Future<List<RecordHourDnsEntity>> dnsList_future2= recordHourDnsService.queryDayList(map3);
-		Future<List<RecordHourDhcpEntity>> dhcpList_future2 = recordHourDhcpService.queryDayList(map3);
-		Future<List<RecordHourPppoeEntity>> pppoeList_future2 = recordHourPppoeService.queryDayList(map3);
-		Future<List<RecordHourRadiusEntity>> radiusList_future2 = recordHourRadiusService.queryDayList(map3);
+		Future<List<RecordHourSlaEntity>> slaList_future2 = recordHourSlaService.querySlaList(map3);
+		Future<List<RecordHourDnsEntity>> dnsList_future2= recordHourDnsService.queryDnsList(map3);
+		Future<List<RecordHourDhcpEntity>> dhcpList_future2 = recordHourDhcpService.queryDhcpList(map3);
+		Future<List<RecordHourPppoeEntity>> pppoeList_future2 = recordHourPppoeService.queryPppoeList(map3);
+		Future<List<RecordHourRadiusEntity>> radiusList_future2 = recordHourRadiusService.queryRadiusList(map3);
 		//网页浏览类业务
 		Future<List<RecordHourWebPageEntity>> webPageList_future = recordHourWebPageService.queryWebList(map1);
 		Future<List<RecordHourWebPageEntity>> webPageList_future1 = recordHourWebPageService.queryWebList(map2);
-		Future<List<RecordHourWebPageEntity>> webPageList_future2 = recordHourWebPageService.queryDayList(map3);
+		Future<List<RecordHourWebPageEntity>> webPageList_future2 = recordHourWebPageService.queryWebList(map3);
 		//文件下载业务
 		Future<List<RecordHourWebDownloadEntity>> webDownloadList_future = recordHourWebDownloadService.queryWebDownloadList(map1);
 		Future<List<RecordHourFtpEntity>> ftpList_future = recordHourFtpService.queryFtpList(map1);
 		Future<List<RecordHourWebDownloadEntity>> webDownloadList_future1 = recordHourWebDownloadService.queryWebDownloadList(map2);
 		Future<List<RecordHourFtpEntity>> ftpList_future1 = recordHourFtpService.queryFtpList(map2);
-		Future<List<RecordHourWebDownloadEntity>> webDownloadList_future2 = recordHourWebDownloadService.queryDayList(map3);
+		Future<List<RecordHourWebDownloadEntity>> webDownloadList_future2 = recordHourWebDownloadService.queryWebDownloadList(map3);
 		Future<List<RecordHourFtpEntity>> ftpList_future2 = recordHourFtpService.queryDayList(map3);
 		//在线视频业务
 		Future<List<RecordHourWebVideoEntity>> videoList_future = recordHourWebVideoService.queryVideoList(map1);
 		Future<List<RecordHourWebVideoEntity>> videoList_future1 = recordHourWebVideoService.queryVideoList(map2);
-		Future<List<RecordHourWebVideoEntity>> videoList_future2 = recordHourWebVideoService.queryDayList(map3);
+		Future<List<RecordHourWebVideoEntity>> videoList_future2 = recordHourWebVideoService.queryVideoList(map3);
 		//网络游戏业务
 		Future<List<RecordHourGameEntity>> gameList_future = recordHourGameService.queryGameList(map1);
 		Future<List<RecordHourGameEntity>> gameList_future1 = recordHourGameService.queryGameList(map2);
-		Future<List<RecordHourGameEntity>> gameList_future2 = recordHourGameService.queryDayList(map3);
+		Future<List<RecordHourGameEntity>> gameList_future2 = recordHourGameService.queryGameList(map3);
 		List<ScoreEntity> connectionList;
 		List<ScoreEntity> qualityList;
 		List<ScoreEntity> pageList;
@@ -475,7 +475,7 @@ public class RecordHourFtpServiceImpl implements RecordHourFtpService {
 	}
 
 	@Override
-	public EvaluationEntity calculateHourQualityScore(Map<String, Object> map) throws ExecutionException, InterruptedException{
+	public EvaluationEntity calculateDayQualityScore(Map<String, Object> map) throws ExecutionException, InterruptedException{
 		EvaluationEntity score = new EvaluationEntity();
 		RecordHourPingService recordHourPingService= (RecordHourPingService) SpringContextUtils.getBean("recordHourPingService");
 		RecordHourTracertService recordHourTracertService= (RecordHourTracertService) SpringContextUtils.getBean("recordHourTracertService");
@@ -490,23 +490,23 @@ public class RecordHourFtpServiceImpl implements RecordHourFtpService {
 		RecordHourWebVideoService recordHourWebVideoService= (RecordHourWebVideoService) SpringContextUtils.getBean("recordHourWebVideoService");
 		RecordHourGameService recordHourGameService= (RecordHourGameService) SpringContextUtils.getBean("recordHourGameService");
         //网络连通性业务
-		Future<List<RecordHourPingEntity>> pingList_future = recordHourPingService.queryPingList(map);
-		Future<List<RecordHourTracertEntity>> tracertList_future = recordHourTracertService.queryTracertList(map);
+		Future<List<RecordHourPingEntity>> pingList_future = recordHourPingService.queryDayList(map);
+		Future<List<RecordHourTracertEntity>> tracertList_future = recordHourTracertService.queryDayList(map);
 		//网络层质量业务
-		Future<List<RecordHourSlaEntity>> slaList_future = recordHourSlaService.querySlaList(map);
-		Future<List<RecordHourDnsEntity>> dnsList_future = recordHourDnsService.queryDnsList(map);
-		Future<List<RecordHourDhcpEntity>> dhcpList_future = recordHourDhcpService.queryDhcpList(map);
-		Future<List<RecordHourPppoeEntity>> pppoeList_future = recordHourPppoeService.queryPppoeList(map);
-		Future<List<RecordHourRadiusEntity>> radiusList_future = recordHourRadiusService.queryRadiusList(map);
+		Future<List<RecordHourSlaEntity>> slaList_future = recordHourSlaService.queryDayList(map);
+		Future<List<RecordHourDnsEntity>> dnsList_future = recordHourDnsService.queryDayList(map);
+		Future<List<RecordHourDhcpEntity>> dhcpList_future = recordHourDhcpService.queryDayList(map);
+		Future<List<RecordHourPppoeEntity>> pppoeList_future = recordHourPppoeService.queryDayList(map);
+		Future<List<RecordHourRadiusEntity>> radiusList_future = recordHourRadiusService.queryDayList(map);
 		//网页浏览类业务
-		Future<List<RecordHourWebPageEntity>> webPageList_future = recordHourWebPageService.queryWebList(map);
+		Future<List<RecordHourWebPageEntity>> webPageList_future = recordHourWebPageService.queryDayList(map);
 		//文件下载类业务
-		Future<List<RecordHourWebDownloadEntity>> webDownloadList_future = recordHourWebDownloadService.queryWebDownloadList(map);
-		Future<List<RecordHourFtpEntity>> ftpList_future = recordHourFtpService.queryFtpList(map);
+		Future<List<RecordHourWebDownloadEntity>> webDownloadList_future = recordHourWebDownloadService.queryDayList(map);
+		Future<List<RecordHourFtpEntity>> ftpList_future = recordHourFtpService.queryDayList(map);
 		//在线视频业务
-		Future<List<RecordHourWebVideoEntity>> videoList_future = recordHourWebVideoService.queryVideoList(map);
+		Future<List<RecordHourWebVideoEntity>> videoList_future = recordHourWebVideoService.queryDayList(map);
 		//网络游戏业务
-		Future<List<RecordHourGameEntity>> gameList_future = recordHourGameService.queryGameList(map);
+		Future<List<RecordHourGameEntity>> gameList_future = recordHourGameService.queryDayList(map);
 		List<ScoreEntity> gameServiceList;
 		List<ScoreEntity> videoServiceList;
 		List<ScoreEntity> downloadList;

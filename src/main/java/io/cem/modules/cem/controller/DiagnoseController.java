@@ -84,13 +84,12 @@ public class DiagnoseController {
 
             for (int i = 0; i < probeList.size(); i++) {
                 map.put("probe_id", probeList.get(i).getId());
-                if (dateDifferent > 5) {
-                    //查询天表
-                    scoreList=recordHourRadiusService.diagnoseDay(map,scoreList);
-                }
-                else {
-                    //查询小时表
-                    scoreList=recordHourRadiusService.diagnoseHour(map,scoreList);
+                if(dateDifferent==0){
+                    scoreList = recordHourRadiusService.diagnoseHour(map,scoreList);
+                }else if(dateDifferent==1){
+                    scoreList = recordHourRadiusService.diagnoseDayHour(map,scoreList);
+                }else{
+                    scoreList = recordHourRadiusService.diagnoseDay(map,scoreList);
                 }
             }
             if (map.get("city_Id") == null && map.get("county_id") == null && map.get("probe_id") == null) {
@@ -112,6 +111,7 @@ public class DiagnoseController {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
+
             if (dateDifferent > 5) {
                 //查询天表
                 if (service == 1) {
