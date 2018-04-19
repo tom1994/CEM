@@ -700,7 +700,7 @@ function PING() {
                                 var tables = $('table[id=hop_table]');
                                 for (let i =0;i<a.length;i++){
                                     var j = i+1;
-                                    var trtd = $("<tr><td hidden='hidden'>"+item.id+"</td><td>"+j+"</td><td>"+a[i].hop_ip +"</td><td>"+a[i].delay+"</td><td>"+a[i].loss_rate*100+"</td></tr>");
+                                    var trtd = $("<tr><td hidden='hidden'>"+item.id+"</td><td>"+j+"</td><td>"+a[i].hop_ip +"</td><td>"+a[i].delay.toFixed(2)+"</td><td>"+a[i].loss_rate*100+"</td></tr>");
                                     trtd.appendTo(tables);
                                 }
                                 $('#hop_table>tbody tr:eq(0)').css("display",'none');
@@ -861,7 +861,7 @@ function PING() {
                                     var tables = $('table[id=Record_table]');
                                     for (let i =0;i<a.length;i++){
                                         var j = i+1;
-                                        var trtd = $("<tr><td hidden='hidden'>"+item.id+"</td><td>"+j+"</td><td>"+a[i].hop_ip +"</td><td>"+a[i].delay+"</td><td>"+a[i].loss_rate*100+"</td></tr>");
+                                        var trtd = $("<tr><td hidden='hidden'>"+item.id+"</td><td>"+j+"</td><td>"+a[i].hop_ip +"</td><td>"+a[i].delay.toFixed(2)+"</td><td>"+a[i].loss_rate*100+"</td></tr>");
                                         trtd.appendTo(tables);
                                     }
                                     $('#Record_table>tbody tr:eq(0)').css("display",'none');
@@ -1602,7 +1602,7 @@ function quality() {
                                 row.push(item.delay.toFixed(2));
                                 row.push((item.successRate).toFixed(3)*100.00);
                                 row.push(item.targetName);
-                                row.push(item.targetIp);
+                                row.push(numberToIp(item.targetIp));
                                 row.push(item.targetLoc);
                                 if(item.state==0){
                                     row.push("成功");
