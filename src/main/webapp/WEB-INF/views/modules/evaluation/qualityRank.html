@@ -90,7 +90,13 @@
             background-repeat: no-repeat;
             background-position: center center;
         }
-
+        .dataTable th {
+            white-space: nowrap !important;
+        }
+        .dataTable td {
+            overflow: visible; !important;
+            white-space: nowrap !important;
+        }
     </style>
 
 </head>
@@ -99,8 +105,8 @@
     <div class="tab" role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active"><a href="#Section1" aria-controls="home" role="tab" data-toggle="tab">探针排名</a></li>
-            <li role="presentation"><a href="#Section2" aria-controls="profile" role="tab" data-toggle="tab">区域排名</a></li>
-            <li role="presentation"><a href="#Section3" aria-controls="profile" role="tab" data-toggle="tab">门户排名</a></li>
+            <li role="presentation"><a href="#Section2" aria-controls="profile" role="tab" data-toggle="tab" onclick="resizeArea()">区域排名</a></li>
+            <li role="presentation"><a href="#Section3" aria-controls="profile" role="tab" data-toggle="tab" onclick="resizeDoor()">门户排名</a></li>
         </ul>
 
         <!-- Tab panes -->

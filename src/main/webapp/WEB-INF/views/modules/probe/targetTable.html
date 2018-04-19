@@ -97,6 +97,13 @@
         input[type=text]::-ms-clear {
             display: none;
         }
+        .dataTable th {
+            white-space: nowrap !important;
+        }
+        .dataTable td {
+            overflow: visible; !important;
+            white-space: nowrap !important;
+        }
     </style>
 </head>
 <body>
@@ -106,7 +113,7 @@
             <li role="presentation" class="active"><a href="#Section1" aria-controls="home" role="tab"
                                                       data-toggle="tab">
                 测试目标管理</a></li>
-            <li role="presentation"><a href="#Section2" aria-controls="profile" role="tab" data-toggle="tab">
+            <li role="presentation"><a href="#Section2" aria-controls="profile" role="tab" data-toggle="tab" onclick="resize()">
                 测试目标组管理</a></li>
         </ul>
 

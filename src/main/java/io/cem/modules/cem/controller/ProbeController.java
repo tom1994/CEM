@@ -82,7 +82,7 @@ public class ProbeController {
 //    }
     @RequestMapping("/download/{probedata}")
     @RequiresPermissions("probe:download")
-    public void downloadProbe(HttpServletResponse response,@PathVariable String probedata) throws RRException {
+    public void downloadProbe(HttpServletResponse response, @PathVariable String probedata) throws RRException {
         Map<String, Object> map = new HashMap<>();
         JSONObject jsonobject = JSONObject.parseObject(probedata);
         try {
@@ -149,7 +149,6 @@ public class ProbeController {
      * 详细信息
      */
     @RequestMapping("/detail/{id}")
-    @RequiresPermissions("probe:detail")
     public R detail(@PathVariable("id") Integer id) {
 //		ProbeEntity probeList = probeService.queryDetail(id);
         ProbeEntity probeList = probeService.queryObject(id);
@@ -179,12 +178,27 @@ public class ProbeController {
     @RequestMapping("/update")
     @RequiresPermissions("probe:update")
     public R update(@RequestBody ProbeEntity probe) {
-        if (probeService.queryExist(probe.getName(), probe.getId()) > 0 ) {
+        if (probeService.queryExist(probe.getName(), probe.getId()) > 0) {
             return R.error(300, "探针名称已存在，请重新输入");
         } else {
             probeService.update(probe);
             return R.ok();
         }
+    }
+
+    @SysLog("重启探针")
+    @RequestMapping("/reboot")
+    @RequiresPermissions("probe:reboot")
+    public R reboot(@RequestBody Integer[] ids) {
+        int result;
+        for (int id : ids) {
+            result = BypassHttps.sendRequestIgnoreSSL("GET", "https://114.236.91.16:23456/web/v1/probes/" + id + "/restart");
+            if (result == 200 || result == 206) {
+            } else {
+                return R.error(404, "id为"+id+"的探针重启失败，请联系管理员");
+            }
+        }
+        return R.ok("探针重启成功！");
     }
 
     /**
@@ -202,7 +216,7 @@ public class ProbeController {
         int result;
         for (int id : ids) {
             result = BypassHttps.sendRequestIgnoreSSL("DELETE", "https://114.236.91.16:23456/web/v1/probes/" + id + "/unregister/1");
-            if (result == 200 || result == 206) {
+            if (result == 200) {
             } else {
                 return R.error(404, "删除探针失败");
             }

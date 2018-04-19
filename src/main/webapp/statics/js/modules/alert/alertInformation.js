@@ -444,11 +444,13 @@ var alerttable = new Vue({
             serverSide: true,
             info: false,
             ordering: false, /*禁用排序功能*/
+            bProcessing:true,
             /*bInfo: false,*/
             /*bLengthChange: false,*/    /*禁用Show entries*/
             scroll: false,
             oLanguage: {
                 sLengthMenu: "每页 _MENU_ 行数据",
+                sProcessing: "正在努力加载数据中...",
                 oPaginate: {
                     sNext: '<i class="fa fa-chevron-right" ></i>', /*图标替换上一页,下一页*/
                     sPrevious: '<i class="fa fa-chevron-left" ></i>'

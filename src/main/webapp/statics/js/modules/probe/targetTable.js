@@ -650,8 +650,8 @@ var target_table = new Vue({
         headers: [
             {title: '<div ></div>'},
             {title: '<div class="checkbox"> <label> <input type="checkbox" id="checkAll"></label> </div>'},
-            {title: '<div >测试目标名</div>'},
-            {title: '<div>测试目标地址</div>'},
+            {title: '<div>测试目标名</div>'},
+            {title: '<div style="width: 200px">测试目标地址</div>'},
             {title: '<div>业务类型</div>'},
             {title: '<div >测试目标组</div>'},
             {title: '<div >备注</div>'},
@@ -743,7 +743,7 @@ var target_table = new Vue({
                             row.push(i++);
                             row.push('<div class="checkbox"> <label> <input type="checkbox" id=' + item.id + ' name="selectFlag" onclick="getId(this)">');
                             row.push('<a onclick="update_this(this)" id=' + item.id + '><span style="color: black;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">' + item.targetName + '</span></a>');
-                            row.push('<div style="overflow:hidden; white-space:nowrap; word-wrap:break-word;">'+item.value);
+                            row.push('<div style="max-width: 200px;!important;overflow: visible; white-space:nowrap; word-wrap:break-word;"><span title="'+item.value+'">'+item.value+'</span>');
                             row.push('<div style="overflow:hidden; white-space:nowrap; word-wrap:break-word;">'+sst.get(item.superserviceType));
                             row.push('<div style="overflow:hidden; white-space:nowrap; word-wrap:break-word;">'+item.groupName);
                             row.push('<div style="overflow:hidden; white-space:nowrap; word-wrap:break-word;">'+item.remark);
@@ -877,13 +877,31 @@ var tg_table = new Vue({
                         //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);
-                        $("#tg_table").colResizable({});
+                        // setTimeout(function () {
+                        //     $("#tg_table").colResizable({
+                        //         liveDrag: true,
+                        //         gripInnerHtml: "<div class='grip'></div>",
+                        //         draggingClass: "dragging",
+                        //         resizeMode: 'overflow',
+                        //     });
+                        // }, 300);
                     }
                 });
             }
         });
     }
 });
+
+function resize() {
+    setTimeout(function () {
+        $("#tg_table").colResizable({
+            liveDrag: true,
+            gripInnerHtml: "<div class='grip'></div>",
+            draggingClass: "dragging",
+            resizeMode: 'overflow',
+        });
+    }, 300);
+}
 
 $(document).ready(function () {
     $('#service .jq22').comboSelect();
