@@ -115,7 +115,6 @@
                 changeStatus(2);
                 console.log("网络层");
                 loading()
-                // options.title = this.option_sla.title;
                 new_search.search();
                 var chart = new Highcharts.Chart('container', options)
             },
@@ -124,7 +123,6 @@
                 changeStatus(3);
                 console.log("web");
                 loading()
-                // options.title = this.option_web.title;
                 new_search.search();
                 var chart = new Highcharts.Chart('container', options)
             },
@@ -524,6 +522,7 @@
             scoredata: function (val, oldVal) {
                 let vm = this;
                 vm.rows = [];
+                console.log(val);
                 for (let i = 0; i < options.series.length; i++) {
                     options.series[i].data = [];
                 }
@@ -624,6 +623,7 @@
                 headers: [
                     {title: ''},
                     {title: '层级名称'},
+                    {title: '时间'},
                     {title: 'ICMP Ping'},
                     {title: 'UDP Ping'},
                     {title: 'TCP Ping'},
@@ -662,18 +662,24 @@
                         let returnData = {};
                         returnData.data = content;//返回的数据列表
                         updateContent=content
-                        console.log(content);
+                        var temp = cloneObj(content);
+                        debugger;
+                        //TODO
+                        console.log(temp);
+                        var temp2 = temp.sort(compare("recordDate"));
+                        console.log(temp);
                         let rows = [];
                         var i =  1;
                         content.forEach(function (item) {              /*观察user是否变化,更新表格数据*/
                             let row = [];
                             row.push(i++);
                             row.push(layerNames.get(item.accessLayer));
-                            row.push('<a class="fontcolor" onclick="ping_info(this,1,)" id=' + item.id + '  >' + item.icmpPingScore + '</a>&nbsp;');
-                            row.push('<a class="fontcolor" onclick="ping_info(this,2,)" id=' + item.id + ' >' + item.udpPingScore + '</a>&nbsp;');
-                            row.push('<a class="fontcolor" onclick="ping_info(this,3,)" id=' + item.id + ' >' + item.tcpPingScore.toFixed(2) + '</a>&nbsp;');
-                            row.push('<a class="fontcolor" onclick="ping_info(this,4,)" id=' + item.id + ' >' + item.icmpTracertScore + '</a>&nbsp;');
-                            row.push('<a class="fontcolor" onclick="ping_info(this,5,)" id=' + item.id + ' >' + item.udpTracertScore + '</a>&nbsp;');
+                            row.push(item.recordDate.substr(0,10)+"   "+item.recordTime.substr(0,10)+':00');
+                            row.push('<a class="fontcolor" type ='+layerNames.get(item.accessLayer)+' onclick="ping_info(this,1,)" id=' + item.id + '  >' + fixed(item.icmpPingScore) + '</a>&nbsp;');
+                            row.push('<a class="fontcolor" type ='+layerNames.get(item.accessLayer)+'  onclick="ping_info(this,2,)" id=' + item.id + ' >' + fixed(item.udpPingScore) + '</a>&nbsp;');
+                            row.push('<a class="fontcolor" type ='+layerNames.get(item.accessLayer)+'  onclick="ping_info(this,3,)" id=' + item.id + ' >' + fixed(item.tcpPingScore) + '</a>&nbsp;');
+                            row.push('<a class="fontcolor" type ='+layerNames.get(item.accessLayer)+'  onclick="ping_info(this,4,)" id=' + item.id + ' >' + fixed(item.icmpTracertScore)+ '</a>&nbsp;');
+                            row.push('<a class="fontcolor" type ='+layerNames.get(item.accessLayer)+'  onclick="ping_info(this,5,)" id=' + item.id + ' >' + fixed(item.udpTracertScore) + '</a>&nbsp;');
                             rows.push(row);
                         });
                         returnData.data = rows;
@@ -691,6 +697,7 @@
                 headers: [
                     {title: ''},
                     {title: '层级名称'},
+                    {title: '时间'},
                     {title: 'TCP Sla', class: 'some-special-class'},
                     {title: 'UDP Sla'},
                     {title: 'ADSL'},
@@ -726,18 +733,20 @@
                         let param = {};
                         let returnData = {};
                         returnData.data = content;//返回的数据列表
+                        updateContent=content
                         let rows = [];
                         var i =  1;
                         content.forEach(function (item) {              /*观察user是否变化,更新表格数据*/
                             let row = [];
                             row.push(i++);
                             row.push(layerNames.get(item.accessLayer));
-                            row.push('<a class="fontcolor" onclick="sla_info(this,1)" id=' + item.id + '>' + item.tcpSlaScore + '</a>&nbsp;');
-                            row.push('<a class="fontcolor" onclick="sla_info(this,2)" id=' + item.id + '>' + item.udpSlaScore + '</a>&nbsp;');
-                            row.push('<a class="fontcolor" onclick="sla_info(this,3)" id=' + item.id + '>' + item.pppoeScore + '</a>&nbsp;');
-                            row.push('<a class="fontcolor" onclick="sla_info(this,4)" id=' + item.id + '>' + item.dhcpScore + '</a>&nbsp;');
-                            row.push('<a class="fontcolor" onclick="sla_info(this,5)" id=' + item.id + '>' + item.dnsScore.toFixed(2) + '</a>&nbsp;');
-                            row.push('<a class="fontcolor" onclick="sla_info(this,6)" id=' + item.id + '>' + item.radiusScore + '</a>&nbsp;');
+                            row.push(item.recordDate.substr(0,10)+"   "+item.recordTime.substr(0,10)+':00');
+                            row.push('<a class="fontcolor"  type ='+layerNames.get(item.accessLayer)+' onclick="sla_info(this,1)" id=' + item.id + '>' + fixed(item.tcpSlaScore) + '</a>&nbsp;');
+                            row.push('<a class="fontcolor" type ='+layerNames.get(item.accessLayer)+'  onclick="sla_info(this,2)" id=' + item.id + '>' +fixed(item.udpSlaScore) + '</a>&nbsp;');
+                            row.push('<a class="fontcolor" type ='+layerNames.get(item.accessLayer)+'  onclick="sla_info(this,3)" id=' + item.id + '>' + fixed(item.pppoeScore) + '</a>&nbsp;');
+                            row.push('<a class="fontcolor" type ='+layerNames.get(item.accessLayer)+' onclick="sla_info(this,4)" id=' + item.id + '>' +fixed(item.dhcpScore)  + '</a>&nbsp;');
+                            row.push('<a class="fontcolor" type ='+layerNames.get(item.accessLayer)+' onclick="sla_info(this,5)" id=' + item.id + '>' + fixed(item.dnsScore) + '</a>&nbsp;');
+                            row.push('<a class="fontcolor" type ='+layerNames.get(item.accessLayer)+' onclick="sla_info(this,6)" id=' + item.id + '>' + fixed(item.radiusScore) + '</a>&nbsp;');
                             rows.push(row);
                         });
                         returnData.data = rows;
@@ -755,6 +764,7 @@
                 headers: [
                     {title: '<div style="width:10px"></div>'},
                     {title: '层级名称'},
+                    {title:'时间'},
                     {title: 'web浏览',},
                 ],
                 rows: [],
@@ -791,7 +801,8 @@
                             let row = [];
                             row.push(i++);
                             row.push(layerNames.get(item.accessLayer));
-                            row.push('<a class="fontcolor" onclick="web_info(this)" id=' + item.id + '>' + item.score.toFixed(2) + '</a>&nbsp;');
+                            row.push(item.recordDate.substr(0,10)+"   "+item.recordTime.substr(0,10)+':00');
+                            row.push('<a class="fontcolor" type ='+layerNames.get(item.accessLayer)+' onclick="web_info(this)" id=' + item.id + '>' + fixed(item.score)+ '</a>&nbsp;');
                             rows.push(row);
                         });
                         returnData.data = rows;
@@ -809,6 +820,7 @@
                 headers: [
                     {title: ''},
                     {title: '层级名称'},
+                    {title:'时间'},
                     {title: 'web下载', class: 'some-special-class'},
                     {title: 'FTP上传'},
                     {title: 'FTP下载'},
@@ -847,9 +859,10 @@
                             let row = [];
                             row.push(i++);
                             row.push(layerNames.get(item.accessLayer));
-                            row.push('<a class="fontcolor" onclick="download_info(this,1)" id=' + item.id + '>' + item.webDownloadScore + '</a>&nbsp;');
-                            row.push('<a class="fontcolor" onclick="download_info(this,2)" id=' + item.id + '>' + item.ftpUploadScore + '</a>&nbsp;');
-                            row.push('<a class="fontcolor" onclick="download_info(this,3)" id=' + item.id + '>' + item.ftpDownloadScore + '</a>&nbsp;');
+                            row.push(item.recordDate.substr(0,10)+"   "+item.recordTime.substr(0,10)+':00');
+                            row.push('<a class="fontcolor"  type ='+layerNames.get(item.accessLayer)+'  onclick="download_info(this,1)" id=' + item.id + '>' + fixed(item.webDownloadScore) + '</a>&nbsp;');
+                            row.push('<a class="fontcolor" type ='+layerNames.get(item.accessLayer)+'  onclick="download_info(this,2)" id=' + item.id + '>' + fixed(item.ftpUploadScore) + '</a>&nbsp;');
+                            row.push('<a class="fontcolor" type ='+layerNames.get(item.accessLayer)+'  onclick="download_info(this,3)" id=' + item.id + '>' + fixed(item.ftpDownloadScore) + '</a>&nbsp;');
 
                             rows.push(row);
                         });
@@ -868,6 +881,7 @@
                 headers: [
                     {title: ''},
                     {title: '层级名称'},
+                    {title:'时间'},
                     {title: '在线视频'},
                 ],
                 rows: [],
@@ -896,7 +910,6 @@
                     ajax: function (data, callback, settings) {
                         //封装请求参数
                         let param = {};
-
                         let returnData = {};
                         returnData.data = content;//返回的数据列表
                         let rows = [];
@@ -905,7 +918,8 @@
                             let row = [];
                             row.push(i++);
                             row.push(layerNames.get(item.accessLayer));
-                            row.push('<a class="fontcolor" onclick="video_info(this)" id=' + item.id + '>' + item.score.toFixed(2) + '</a>&nbsp;')
+                            row.push(item.recordDate.substr(0,10)+"   "+item.recordTime.substr(0,10)+':00');
+                            row.push('<a class="fontcolor" type ='+layerNames.get(item.accessLayer)+'  onclick="video_info(this)" id=' + item.id + '>' + fixed(item.score) + '</a>&nbsp;')
                             rows.push(row);
                         });
                         returnData.data = rows;
@@ -923,6 +937,7 @@
                 headers: [
                     {title: ''},
                     {title: '层级名称'},
+                    {title:'时间'},
                     {title: '在线游戏'},
                 ],
                 rows: [],
@@ -963,7 +978,8 @@
                             let row = [];
                             row.push(i++);
                             row.push(layerNames.get(item.accessLayer));
-                            row.push('<a class="fontcolor" onclick="game_info(this)" id=' + item.id + '>' + item.score.toFixed(2) + '</a>&nbsp;')
+                            row.push(item.recordDate.substr(0,10)+"   "+item.recordTime.substr(0,10)+':00');
+                            row.push('<a class="fontcolor" type ='+layerNames.get(item.accessLayer)+'  onclick="game_info(this)" id=' + item.id + '>' + fixed(item.score) + '</a>&nbsp;')
                             rows.push(row);
                         });
                         returnData.data = rows;
@@ -992,7 +1008,8 @@
     });
 
     function ping_info(obj,type) {
-        var content=updateContent
+        debugger
+        var content=updateContent;
         if(type==1){
             pingicmp_table(obj,content)
             $('#pingicmp').removeAttr('style');
@@ -1124,7 +1141,9 @@
     //PING ICMP
     function pingicmp_table(obj,content) {
         var id=obj.id;
+        var type=obj.type;
         var val=content
+        debugger
         var pingicmp_table=new Vue({
             el:'#pingicmp_table',
             data: {
@@ -1195,18 +1214,20 @@
                         console.log(returnData);
                         let rows = [];
                         var i = 1;
+                        debugger
                         val.forEach(function (item) {
-                            if(id==item.id){
+                            debugger
+                            if(type==layerNames.get(item.accessLayer) && id==item.id){
                                 let row = [];
-                                row.push(i);
+                                row.push(i++);
                                 row.push(item.probeName);
-                                row.push(item.pingIcmpDelay.toFixed(2));
-                                row.push(item.pingIcmpDelayStd.toFixed(2));
-                                row.push(item.pingIcmpDelayVar.toFixed(2));
-                                row.push(item.pingIcmpJitter.toFixed(2));
-                                row.push(item.pingIcmpJitterStd.toFixed(2));
-                                row.push(item.pingIcmpJitterVar.toFixed(2));
-                                row.push(item.pingIcmpLossRate.toFixed(2)*100);
+                                row.push(fixed(item.pingIcmpDelay));
+                                row.push(fixed(item.pingIcmpDelayStd));
+                                row.push(fixed(item.pingIcmpDelayVar));
+                                row.push(fixed(item.pingIcmpJitter));
+                                row.push(fixed(item.pingIcmpJitterStd));
+                                row.push(fixed(item.pingIcmpJitterVar));
+                                row.push(fixed(item.pingIcmpLossRate)*100);
                                 rows.push(row);
                             }
                         });
@@ -1231,6 +1252,7 @@
     function pingudp_table(obj,content) {
         var id=obj.id;
         var val=content
+        var type=obj.type
         var pingudp_table=new Vue({
             el:'#pingtudp_table',
             data: {
@@ -1303,17 +1325,17 @@
                         let rows = [];
                         var i = 1;
                         val.forEach(function (item) {
-                            if(id==item.id){
+                            if(type==layerNames.get(item.accessLayer) && id==item.id){
                                 let row = [];
                                 row.push(i);
                                 row.push(item.probeName);
-                                row.push(item.pingUdpDelay);
-                                row.push(item.pingUdpDelayStd);
-                                row.push(item.pingUdpDelayVar);
-                                row.push(item.pingUdpJitter);
-                                row.push(item.pingUdpJitterStd);
-                                row.push(item.pingUdpJitterVar);
-                                row.push(item.pingUdpLossRate*100);
+                                row.push(fixed(item.pingUdpDelay));
+                                row.push(fixed(item.pingUdpDelayStd));
+                                row.push(fixed(item.pingUdpDelayVar));
+                                row.push(fixed(item.pingUdpJitter));
+                                row.push(fixed(item.pingUdpJitterStd));
+                                row.push(fixed(item.pingUdpJitterVar));
+                                row.push(fixed(item.pingUdpLossRate)*100);
                                 rows.push(row);
                             }
                         });
@@ -1338,6 +1360,7 @@
     function pingtcp_table(obj,content) {
         var id=obj.id;
         var val=content
+        var type=obj.type
         var pingtcp_table=new Vue({
             el:'#pingtcp_table',
             data: {
@@ -1410,17 +1433,17 @@
                         let rows = [];
                         var i = 1;
                         val.forEach(function (item) {
-                            if(id==item.id){
+                            if(type==layerNames.get(item.accessLayer) && id==item.id){
                                 let row = [];
                                 row.push(i);
                                 row.push(item.probeName);
-                                row.push(item.pingTcpDelay.toFixed(2));
-                                row.push(item.pingTcpDelayStd.toFixed(2));
-                                row.push(item.pingTcpDelayVar.toFixed(2));
-                                row.push(item.pingTcpJitter.toFixed(2));
-                                row.push(item.pingTcpJitterStd.toFixed(2));
-                                row.push(item.pingTcpJitterVar.toFixed(2));
-                                row.push(item.pingTcpLossRate.toFixed(2)*100);
+                                row.push(fixed(item.pingTcpDelay));
+                                row.push(fixed(item.pingTcpDelayStd));
+                                row.push(fixed(item.pingTcpDelayVar));
+                                row.push(fixed(item.pingTcpJitter));
+                                row.push(fixed(item.pingTcpJitterStd));
+                                row.push(fixed(item.pingTcpJitterVar));
+                                row.push(fixed(item.pingTcpLossRate)*100);
 
                                 rows.push(row);
                             }
@@ -1446,6 +1469,7 @@
     function  routeicmp_table(obj,content) {
         var id=obj.id;
         var val=content
+        var type=obj.type
         var routeicmp_table=new Vue({
             el:'#routeicmp_table',
             data: {
@@ -1518,17 +1542,17 @@
                         let rows = [];
                         var i = 1;
                         val.forEach(function (item) {
-                            if(id==item.id){
+                            if(type==layerNames.get(item.accessLayer) && id==item.id){
                                 let row = [];
                                 row.push(i);
                                 row.push(item.probeName);
-                                row.push(item.tracertIcmpDelay);
-                                row.push(item.tracertIcmpDelayStd);
-                                row.push(item.tracertIcmpDelayVar);
-                                row.push(item.tracertIcmpJitter);
-                                row.push(item.tracertIcmpJitterStd);
-                                row.push(item.tracertIcmpJitterVar);
-                                row.push(item.tracertIcmpLossRate*100);
+                                row.push(fixed(item.tracertIcmpDelay));
+                                row.push(fixed(item.tracertIcmpDelayStd));
+                                row.push(fixed(item.tracertIcmpDelayVar));
+                                row.push(fixed(item.tracertIcmpJitter));
+                                row.push(fixed(item.tracertIcmpJitterStd));
+                                row.push(fixed(item.tracertIcmpJitterVar));
+                                row.push(fixed(item.tracertIcmpLossRate)*100);
 
                                 rows.push(row);
                             }
@@ -1554,6 +1578,7 @@
     function routetcp_table(obj,content) {
         var id=obj.id;
         var val=content
+        var type=obj.type
         var routetcp_table=new Vue({
             el:'#routetcp_table',
             data: {
@@ -1625,17 +1650,17 @@
                         let rows = [];
                         var i = 1;
                         val.forEach(function (item) {
-                            if(id==item.id){
+                            if(type==layerNames.get(item.accessLayer) && id==item.id){
                                 let row = [];
                                 row.push(i);
                                 row.push(item.probeName);
-                                row.push(item.tracertTcpDelay);
-                                row.push(item.tracertTcpDelayStd);
-                                row.push(item.tracertTcpDelayVar);
-                                row.push(item.tracertTcpJitter);
-                                row.push(item.tracertTcpJitterStd);
-                                row.push(item.tracertTcpJitterVar);
-                                row.push(item.tracertTcpLossRate*100);
+                                row.push(fixed(item.tracertTcpDelay));
+                                row.push(fixed(item.tracertTcpDelayStd));
+                                row.push(fixed(item.tracertTcpDelayVar));
+                                row.push(fixed(item.tracertTcpJitter));
+                                row.push(fixed(item.tracertTcpJitterStd));
+                                row.push(fixed(item.tracertTcpJitterVar));
+                                row.push(fixed(item.tracertTcpLossRate)*100);
                                 rows.push(row);
                             }
                         });
@@ -1660,7 +1685,8 @@
     //网络质量表格
     function slatcp_table(obj,content) {
         var id=obj.id;
-        var probeContent=content
+        var probeContent=content;
+        var type=obj.type
         var slatcp_table=new Vue({
             el:'#slatcp_table',
             data: {
@@ -1733,17 +1759,17 @@
                         let rows = [];
                         var i = 1;
                         probeContent.forEach(function (item) {
-                            if(id==item.id){
+                            if(type==layerNames.get(item.accessLayer) && id==item.id){
                                 let row = [];
                                 row.push(i);
                                 row.push(item.probeName);
-                                row.push(item.slaTcpDelay);
-                                row.push(item.slaTcpGDelay);
-                                row.push(item.slaTcpRDelay);
-                                row.push(item.slaTcpJitter);
-                                row.push(item.slaTcpGJitter);
-                                row.push(item.slaTcpRJitter);
-                                row.push(item.slaTcpLossRate*100);
+                                row.push(fixed(item.slaTcpDelay));
+                                row.push(fixed(item.slaTcpGDelay));
+                                row.push(fixed(item.slaTcpRDelay));
+                                row.push(fixed(item.slaTcpJitter));
+                                row.push(fixed(item.slaTcpGJitter));
+                                row.push(fixed(item.slaTcpRJitter));
+                                row.push(fixed(item.slaTcpLossRate)*100);
                                 rows.push(row);
                             }
 
@@ -1769,6 +1795,7 @@
     function slaudp_table(obj,content) {
         var id=obj.id;
         var probeContent=content
+        var type=obj.type
         var slaudp_table=new Vue({
             el:'#slaudp_table',
             data: {
@@ -1842,17 +1869,17 @@
                         let rows = [];
                         var i = 1;
                         probeContent.forEach(function (item) {
-                            if(id==item.id){
+                            if(type==layerNames.get(item.accessLayer) && id==item.id){
                                 let row = [];
                                 row.push(i);
                                 row.push(item.probeName);
-                                row.push(item.slaUdpDelay);
-                                row.push(item.slaUdpGDelay);
-                                row.push(item.slaUdpRDelay);
-                                row.push(item.slaUdpJitter);
-                                row.push(item.slaUdpGJitter);
-                                row.push(item.slaUdpRJitter);
-                                row.push(item.slaUdpLossRate*100);
+                                row.push(fixed(item.slaUdpDelay));
+                                row.push(fixed(item.slaUdpGDelay));
+                                row.push(fixed(item.slaUdpRDelay));
+                                row.push(fixed(item.slaUdpJitter));
+                                row.push(fixed(item.slaUdpGJitter));
+                                row.push(fixed(item.slaUdpRJitter));
+                                row.push(fixed(item.slaUdpLossRate)*100);
                                 rows.push(row);
                             }
 
@@ -1878,6 +1905,7 @@
     function dns_table(obj,content) {
         var id=obj.id;
         var probeContent=content
+        var type=obj.type
         var dns_table=new Vue({
             el:'#dns_table',
             data: {
@@ -1945,12 +1973,12 @@
                         let rows = [];
                         var i = 1;
                         probeContent.forEach(function (item) {
-                            if(id==item.id){
+                            if(type==layerNames.get(item.accessLayer) && id==item.id){
                                 let row = [];
                                 row.push(i);
                                 row.push(item.probeName);
-                                row.push(item.dnsDelay);
-                                row.push(item.dnsSuccessRate*100);
+                                row.push(fixed(item.dnsDelay));
+                                row.push(fixed(item.dnsSuccessRate)*100);
 
                                 rows.push(row);
                             }
@@ -1977,6 +2005,7 @@
     function dhcp_table(obj,content) {
         var id=obj.id;
         var probeContent=content
+        var type=obj.type
         var dhcp_table=new Vue({
             el:'#dhcp_table',
             data: {
@@ -2044,12 +2073,12 @@
                         let rows = [];
                         var i = 1;
                         probeContent.forEach(function (item) {
-                            if(id==item.id){
+                            if(type==layerNames.get(item.accessLayer) && id==item.id){
                                 let row = [];
                                 row.push(i);
                                 row.push(item.probeName);
-                                row.push(item.dhcpDelay);
-                                row.push(item.dhcpSuccessRate*100);
+                                row.push(fixed(item.dhcpDelay));
+                                row.push(fixed(item.dhcpSuccessRate)*100);
                                 rows.push(row);
                             }
 
@@ -2075,6 +2104,7 @@
     function adsl_table(obj,content) {
         var id=obj.id;
         var probeContent=content
+        var type=obj.type
         var adsl_table=new Vue({
             el:'#adsl_table',
             data: {
@@ -2142,13 +2172,13 @@
                         let rows = [];
                         var i = 1;
                         probeContent.forEach(function (item) {
-                            if(id==item.id){
+                            if(type==layerNames.get(item.accessLayer) && id==item.id){
                                 let row = [];
                                 row.push(i);
                                 row.push(item.probeName);
-                                row.push(item.pppoeDelay);
-                                row.push(item.pppoeDropRate);
-                                row.push(item.pppoeSuccessRate*100);
+                                row.push(fixed(item.pppoeDelay));
+                                row.push(fixed(item.pppoeDropRate));
+                                row.push(fixed(item.pppoeSuccessRate)*100);
                                 rows.push(row);
                             }
 
@@ -2174,6 +2204,7 @@
     function radius_table(obj,content) {
         var probeContent=content
         var id=obj.id;
+        var type=obj.type
         var radius_table=new Vue({
             el:'#radius_table',
             data: {
@@ -2241,12 +2272,12 @@
                         let rows = [];
                         var i = 1;
                         probeContent.forEach(function (item) {
-                            if(id==item.id){
+                            if(type==layerNames.get(item.accessLayer) && id==item.id){
                                 let row = [];
                                 row.push(i);
                                 row.push(item.probeName);
-                                row.push(item.radiusDelay);
-                                row.push(item.radiusSuccessRate*100);
+                                row.push(fixed(item.radiusDelay));
+                                row.push(fixed(item.radiusSuccessRate)*100);
                                 rows.push(row);
                             }
 
@@ -2273,6 +2304,7 @@
     function broswer_table(obj,content) {
         var id=obj.id;
         var probeContent=content
+        var type=obj.type
         var broswer_table=new Vue({
             el:'#broswer_table',
             data: {
@@ -2345,18 +2377,18 @@
                         let rows = [];
                         var i = 1;
                         probeContent.forEach(function (item) {
-                            if(id==item.id){
+                            if(type==layerNames.get(item.accessLayer) && id==item.id){
                                 let row = [];
                                 row.push(i);
                                 row.push(item.probeName);
-                                row.push(item.webpageDnsDelay.toFixed(2));
-                                row.push(item.webpageConnDelay.toFixed(2));
-                                row.push(item.webpageHeadbyteDelay.toFixed(2));
-                                row.push(item.webpagePageFileDelay.toFixed(2));
-                                row.push(item.webpageRedirectDelay.toFixed(2));
-                                row.push(item.webpageAboveFoldDelay.toFixed(2));
-                                row.push(item.webpagePageElementDelay.toFixed(2));
-                                row.push(item.webpageDownloadRate.toFixed(2));
+                                row.push(fixed(item.webpageDnsDelay));
+                                row.push(fixed(item.webpageConnDelay));
+                                row.push(fixed(item.webpageHeadbyteDelay));
+                                row.push(fixed(item.webpagePageFileDelay));
+                                row.push(fixed(item.webpageRedirectDelay));
+                                row.push(fixed(item.webpageAboveFoldDelay));
+                                row.push(fixed(item.webpagePageElementDelay));
+                                row.push(fixed(item.webpageDownloadRate));
                                 rows.push(row);
                             }
 
@@ -2381,6 +2413,7 @@
     //WEB下载
     function web_download(obj,content) {
         var id=obj.id;
+        var type=obj.type
         var probeContent=content
         //网页下载
         var web_download=new Vue({
@@ -2451,14 +2484,14 @@
                         let rows = [];
                         var i = 1;
                         probeContent.forEach(function (item) {
-                            if(id==item.id){
+                            if(type==layerNames.get(item.accessLayer) && id==item.id){
                                 let row = [];
                                 row.push(i);
                                 row.push(item.probeName);
-                                row.push(item.webDownloadDnsDelay.toFixed(2));
-                                row.push(item.webDownloadConnDelay.toFixed(2));
-                                row.push(item.webDownloadHeadbyteDelay.toFixed(2));
-                                row.push(item.webDownloadDownloadRate.toFixed(2));
+                                row.push(fixed(item.webDownloadDnsDelay));
+                                row.push(fixed(item.webDownloadConnDelay));
+                                row.push(fixed(item.webDownloadHeadbyteDelay));
+                                row.push(fixed(item.webDownloadDownloadRate));
                                 rows.push(row);
                             }
 
@@ -2483,7 +2516,8 @@
     //FTP下载
     function ftp_download(obj,content) {
         var id=obj.id;
-        var probeContent=content
+        var probeContent=content;
+        var type=obj.type;
         var ftp_download=new Vue({
             el:'#ftp_download_table',
             data: {
@@ -2554,15 +2588,15 @@
                         let rows = [];
                         var i = 1;
                         probeContent.forEach(function (item) {
-                            if(id==item.id){
+                            if(type==layerNames.get(item.accessLayer) && id==item.id){
                                 let row = [];
                                 row.push(i);
                                 row.push(item.probeName);
-                                row.push(item.ftpDownloadDnsDelay);
-                                row.push(item.ftpDownloadConnDelay);
-                                row.push(item.ftpDownloadLoginDelay);
-                                row.push(item.ftpDownloadHeadbyteDelay);
-                                row.push(item.ftpDownloadDownloadRate);
+                                row.push(fixed(item.ftpDownloadDnsDelay));
+                                row.push(fixed(item.ftpDownloadConnDelay));
+                                row.push(fixed(item.ftpDownloadLoginDelay));
+                                row.push(fixed(item.ftpDownloadHeadbyteDelay));
+                                row.push(fixed(item.ftpDownloadDownloadRate));
                                 rows.push(row);
                             }
 
@@ -2587,7 +2621,8 @@
     //FTP上传
     function ftp_upload(obj,content) {
         var id=obj.id;
-        var probeContent=content
+        var probeContent=content;
+        var type=obj.type
         var ftp_upload=new Vue({
             el:'#ftp_upload_table',
             data: {
@@ -2657,15 +2692,15 @@
                         let rows = [];
                         var i = 1;
                         probeContent.forEach(function (item) {
-                            if(id==item.id){
+                            if(type==layerNames.get(item.accessLayer) && id==item.id){
                                 let row = [];
                                 row.push(i);
                                 row.push(item.probeName);
-                                row.push(item.ftpUploadDnsDelay);
-                                row.push(item.ftpUploadConnDelay);
-                                row.push(item.ftpUploadLoginDelay);
-                                row.push(item.ftpUploadHeadbyteDelay);
-                                row.push(item.ftpUploadUploadRate);
+                                row.push(fixed(item.ftpUploadDnsDelay));
+                                row.push(fixed(item.ftpUploadConnDelay));
+                                row.push(fixed(item.ftpUploadLoginDelay));
+                                row.push(fixed(item.ftpUploadHeadbyteDelay));
+                                row.push(fixed(item.ftpUploadUploadRate));
                                 rows.push(row);
                             }
 
@@ -2693,7 +2728,8 @@
     // /在线视频
     function video_table(obj,content) {
         var id=obj.id;
-        var probeContent=content
+        var probeContent=content;
+        var type=obj.type
         var video_table=new Vue({
             el:'#videodata_table',
             data: {
@@ -2770,22 +2806,22 @@
                         let rows = [];
                         var i = 1;
                         probeContent.forEach(function (item) {
-                            if(id==item.id){
+                            if(type==layerNames.get(item.accessLayer) && id==item.id){
                                 let row = [];
                                 row.push(i);
                                 row.push(item.probeName);
-                                row.push(item.webVideoDnsDelay.toFixed(2));
-                                row.push(item.webVideoWsConnDelay.toFixed(2));
-                                row.push(item.webVideoWebPageDelay.toFixed(2));
-                                row.push(item.webVideoSsConnDelay);
-                                row.push(item.webVideoAddressDelay);
-                                row.push(item.webVideoMsConnDelay);
-                                row.push(item.webVideoHeadFrameDelay.toFixed(2));
-                                row.push(item.webVideoInitBufferDelay.toFixed(2));
-                                row.push(item.webVideoLoadDelay.toFixed(2));
-                                row.push(item.webVideoTotalBufferDelay.toFixed(2));
-                                row.push(item.webVideoDownloadRate.toFixed(2));
-                                row.push(item.webVideoBufferTime.toFixed(2));
+                                row.push(fixed(item.webVideoDnsDelay));
+                                row.push(fixed(item.webVideoWsConnDelay));
+                                row.push(fixed(item.webVideoWebPageDelay));
+                                row.push(fixed(item.webVideoSsConnDelay));
+                                row.push(fixed(item.webVideoAddressDelay));
+                                row.push(fixed(item.webVideoMsConnDelay));
+                                row.push(fixed(item.webVideoHeadFrameDelay));
+                                row.push(fixed(item.webVideoInitBufferDelay));
+                                row.push(fixed(item.webVideoLoadDelay));
+                                row.push(fixed(item.webVideoTotalBufferDelay));
+                                row.push(fixed(item.webVideoDownloadRate));
+                                row.push(fixed(item.webVideoBufferTime));
                                 rows.push(row);
                             }
 
@@ -2812,6 +2848,7 @@
     //在线游戏
     function game_table(obj,content) {
         var id=obj.id;
+        var type=obj.type;
         var probeContet=content
         var game_table=new Vue({
             el:'#gamedata_table',
@@ -2882,15 +2919,15 @@
                         let rows = [];
                         var i = 1;
                         probeContent.forEach(function (item) {
-                            if(id==item.id){
+                            if(type==layerNames.get(item.accessLayer) && id==item.id){
                                 let row = [];
                                 row.push(i);
                                 row.push(item.probeName);
-                                row.push(item.gameDnsDelay);
-                                row.push(item.gameConnDelay.toFixed(2));
-                                row.push(item.gamePacketDelay.toFixed(2));
-                                row.push(item.gamePacketJitter.toFixed(2));
-                                row.push(item.gameLossRate.toFixed(2)*100);
+                                row.push(fixed(item.gameDnsDelay));
+                                row.push(fixed(item.gameConnDelay));
+                                row.push(fixed(item.gamePacketDelay));
+                                row.push(fixed(item.gamePacketJitter));
+                                row.push(fixed(item.gameLossRate)*100);
                                 rows.push(row);
                             }
 
@@ -3264,3 +3301,28 @@
         });
 
     }
+
+
+    function fixed(value) {
+        if(value==''||value==null){
+            return ''
+        }else{
+            return value.toFixed(2)
+        }
+    }
+
+    var cloneObj = function(obj){
+        var str, newobj = obj.constructor === Array ? [] : {};
+        if(typeof obj !== 'object'){
+            return;
+        } else if(window.JSON){
+            str = JSON.stringify(obj), //系列化对象
+                newobj = JSON.parse(str); //还原
+        } else {
+            for(var i in obj){
+                newobj[i] = typeof obj[i] === 'object' ?
+                    cloneObj(obj[i]) : obj[i];
+            }
+        }
+        return newobj;
+    };

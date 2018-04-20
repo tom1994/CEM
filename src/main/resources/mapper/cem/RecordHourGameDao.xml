@@ -284,7 +284,7 @@
 		<if test="probe_id != null and probe_id != ''">
 			AND game.probe_id = #{probe_id}
 		</if>
-		GROUP BY game.city_id,game.county_id,game.service_type,game.probe_id,date_format(game.record_date,'%Y-%m-%d')
+		GROUP BY game.city_id,game.county_id,game.service_type,game.probe_id,game.record_date,record_time
     </select>
 
 	<select id="queryDayRankList" resultType="io.cem.modules.cem.entity.RecordHourGameEntity">

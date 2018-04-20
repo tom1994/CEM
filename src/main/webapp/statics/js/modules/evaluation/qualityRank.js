@@ -933,7 +933,7 @@ var probetable = new Vue({
                             row.push(item.targetName);
                             row.push(item.score.toFixed(2));
                             row.push('<a class="fontcolor" onclick="update_this(this)" id=' + item.id + ' type=' + st.get(item.serviceType) + ' >详情</a>&nbsp;' +
-                                '<a class="fontcolor"   onclick="diagnose(this)" id=' + item.id + '>诊断</a>'); //Todo:完成详情与诊断
+                                '<a class="fontcolor" href="../modules/probe/diagnose.html" id=' + item.id + '>诊断</a>'); //Todo:完成详情与诊断
                             rows.push(row);
                         });
                         returnData.data = rows;
