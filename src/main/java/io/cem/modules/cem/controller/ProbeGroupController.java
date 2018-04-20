@@ -120,7 +120,7 @@ public class ProbeGroupController {
 	@RequestMapping("/update")
 	@RequiresPermissions("probegroup:update")
 	public R update(@RequestBody ProbeGroupEntity probeGroup){
-		if (ProbeGroupService.queryExist(probeGroup.getName()) > 0) {
+		if (ProbeGroupService.queryUpdate(probeGroup.getName(),probeGroup.getId()) > 0) {
 			return R.error(300, "探针组名称已存在，请重新输入");
 		} else {
 			ProbeGroupService.update(probeGroup);

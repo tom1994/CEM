@@ -115,7 +115,7 @@ public class TargetController {
 	@RequestMapping("/update")
 	@RequiresPermissions("target:update")
 	public R update(@RequestBody TargetEntity target){
-		if (targetService.queryExist(target.getTargetName()) > 0) {
+		if (targetService.queryUpdate(target.getTargetName(),target.getId()) > 0) {
 			return R.error(300, "测试目标名称已存在，请重新输入");
 		} else {
 			targetService.update(target);

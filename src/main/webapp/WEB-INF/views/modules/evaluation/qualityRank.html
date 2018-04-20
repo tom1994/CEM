@@ -11,7 +11,7 @@
     <title>质量排名</title>
     #parse("cemHeader.html")  <!--导入CSS和js文件-->
     <link href="${rc.contextPath}/statics/css/formStyle.css" rel="stylesheet">  <!--自定义CSS-->
-    <link href="${rc.contextPath}/statics/css/showLoading.css" rel="stylesheet">
+    <link href="${rc.contextPath}/statics/css/loading.css" rel="stylesheet">
     <style type="text/css">
         tr:hover{background:#E5E5E5 }
         .search{
@@ -345,7 +345,7 @@
                             </div>
                             <div class="ibox-content">
                                 <div class="row " style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
-                                    <table  class="table table-bordered " id="areadata_table" style="margin-top: 2px!important;" ></table>
+                                    <table  class="table table-bordered " id="areadata_table" style="margin-top: 2px!important;width: 100%;" ></table>
                                 </div>
                             </div>
                         </div>
@@ -399,9 +399,13 @@
                                                         </div>
                                                     </div>
                                                 </div>
+
+                                            </div>
+
+                                            <div class="form-group row" style="margin-bottom: -5px">
                                                 <div style="display: inline-block;">
-                                                    <span class="searchname search " title="业务类型" style="width: 93px;">业务类型</span>
-                                                    <div class="input-group searchspan" id="doorservice" >
+                                                    <span class="searchname search " title="业务类型" style="width:83px;line-height: 1.5">业务类型</span>
+                                                    <div class="input-group searchspan" id="doorservice" style="top: -8px;" >
                                                         <div class="jq22">
                                                             <select id="doorselectservice" class="form-control  input"
                                                                     v-on:change="servicechange()" style="width: 140px;display: none;">
@@ -416,35 +420,19 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
 
-                                            <div class="form-group row" style="margin-bottom: -5px">
-
-                                                <div style="display: inline-block;">
-                                                    <span class="searchname search " title="目标地址" style="width: 80px;line-height: 1.5">目标地址</span>
-                                                    <div class="input-group searchspan" id="doortarget" style="top: -8px;">
-                                                        <div class="jq22">
-                                                            <select id="doorselect_target" class="form-control  input"
-                                                                    style="width: 140px;display: none;">
-                                                                <option value="">所有目标地址</option>
-                                                                <option v-for="item in target"
-                                                                        v-bind:value="item.message.id">{{ item.message.targetName}}</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
                                                 <div class="input-group searchspan">
                                                     <span class="searchname search " title="日期" style="width: 80px;">起始时间</span>
                                                     <input type="text" id="doorstart_date" class="form-control input clear"
                                                            name="startDate"
-                                                           style="width: 140px"
+                                                           style="width: 140px;height: 34px"
                                                            value="">
                                                 </div>
                                                 <div class="input-group searchspan">
                                                     <span class="searchname search " title="日期" style="width: 52px">结束时间</span>
                                                     <input type="text" id="doorterminal_date" class="form-control input clear"
                                                            name="terminalDate"
-                                                           style="width: 140px"
+                                                           style="width: 140px;height: 34px"
                                                            value="">
                                                 </div>
                                             </div>
@@ -683,7 +671,7 @@
 <script type="text/javascript"
         src="${rc.contextPath}/statics/js/modules/evaluation/qualityRank.js?_${date.systemTime}"></script>
 <!--<script src="https://cdn.bootcss.com/element-ui/2.2.2/index.js"></script>-->
-<script type="text/javascript" src="${rc.contextPath}/statics/js/jquery.showLoading.js"></script>
+<script type="text/javascript" src="${rc.contextPath}/statics/js/loading.js"></script>
 
 <script>
     $(function () {

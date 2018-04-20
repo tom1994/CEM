@@ -60,6 +60,11 @@ public class ProbeExitServiceImpl implements ProbeExitService {
 	}
 
 	@Override
+	public int queryUpdate(String exit,int id){
+		return probeExitDao.queryUpdate(exit,id);
+	}
+
+	@Override
 	public int queryProbeExist(Integer probeId){
 		return probeExitDao.queryProbeExist(probeId);
 	}

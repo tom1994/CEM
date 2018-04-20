@@ -60,6 +60,11 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 
 	@Override
 	@Async
+	public Future<List<RecordHourPingEntity>> queryTargetHourList(Map<String, Object> map){ return  new AsyncResult<>
+			(recordHourPingDao.queryTargetHourList(map)); }
+
+	@Override
+	@Async
 	public Future<List<RecordHourPingEntity>> queryDayList(Map<String, Object> map){ return new AsyncResult<> (recordHourPingDao.queryDayList(map)); }
 
 	@Override

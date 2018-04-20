@@ -122,6 +122,58 @@
 		</if>
 	</select>
 
+
+	<select id="queryTargetHourList" resultType="io.cem.modules.cem.entity.RecordHourSlaEntity">
+		SELECT t.*,
+		city.city_name AS city_name,
+		county.county_name AS area_name,
+		probe.probe_name AS probe_name,
+		probe.access_layer,
+		target.target_name AS target_name
+		FROM(select record_hour_sla.id,record_hour_sla.city_id,record_hour_sla.county_id,record_hour_sla.probe_id,record_hour_sla.port,record_hour_sla.task_id,record_hour_sla.service_type,record_hour_sla.target_id,record_hour_sla.target_ip,record_hour_sla.record_date,record_hour_sla.remark,
+		time_format(record_time, '%H') AS record_time,
+		AVG(record_hour_sla.delay) AS delay,
+		AVG(record_hour_sla.g_delay) AS g_delay,
+		AVG(record_hour_sla.r_delay) AS r_delay,
+		AVG(record_hour_sla.jitter) AS jitter,
+		AVG(record_hour_sla.g_jitter) AS g_jitter,
+		AVG(record_hour_sla.r_jitter) AS r_jitter,
+		AVG(record_hour_sla.loss_rate) AS loss_rate,
+		SUM(record_hour_sla.fail) AS fail,
+		SUM(record_hour_sla.total) AS total
+		FROM record_hour_sla
+		WHERE record_hour_sla.record_date BETWEEN #{ava_start} AND #{ava_terminal}
+		<if test="probe_id != null and probe_id != ''">
+			AND record_hour_sla.probe_id = #{probe_id}
+		</if>
+		<if test="city_id != null and city_id != ''">
+			AND record_hour_sla.city_id = #{city_id}
+		</if>
+		<if test="county_id != null and county_id != ''">
+			AND record_hour_sla.county_id = #{county_id}
+		</if>
+		<if test="startTime != null and terminalTime != null">
+			AND record_time BETWEEN #{startTime} AND #{terminalTime}
+		</if>
+		GROUP BY target_id) t
+		INNER JOIN probe
+		ON t.probe_id = probe.id
+		LEFT JOIN city
+		ON t.city_id = city.city_id
+		LEFT JOIN county
+		ON t.county_id = county.county_id
+		LEFT JOIN target
+		ON t.target_id = target.id
+		<choose>
+			<when test="sidx != null and sidx.trim() != ''">
+				order by ${sidx} ${order}
+			</when>
+		</choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
 	<select id="queryExitList" resultType="io.cem.modules.cem.entity.RecordHourSlaEntity">
 		select record_hour_sla.id,record_hour_sla.city_id,record_hour_sla.county_id,record_hour_sla.probe_id,record_hour_sla.port,record_hour_sla.task_id,record_hour_sla.service_type,record_hour_sla.target_id,record_hour_sla.target_ip,record_hour_sla.record_date,record_hour_sla.remark,
 		city.city_name AS city_name,

@@ -52,7 +52,13 @@
 
 	<select id="queryExist" resultType="int">
 		select count(*) from target_group
-		where tg_name = #{tgName}
+		where target_group.tg_name = #{tgName}
+	</select>
+
+	<select id="queryUpdate" resultType="int">
+		select count(*) from target_group
+		where target_group.tg_name = #{0}
+		AND target_group.id != #{1}
 	</select>
 
 	<select id="queryTGList" resultMap="targetGroupMap">

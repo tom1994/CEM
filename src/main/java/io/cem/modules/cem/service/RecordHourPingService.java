@@ -29,6 +29,8 @@ public interface RecordHourPingService {
 
 	Future<List<RecordHourPingEntity>> queryPingList(Map<String, Object> map);
 
+	Future<List<RecordHourPingEntity>> queryTargetHourList(Map<String, Object> map);
+
 	Future<List<RecordHourPingEntity>> queryDayList(Map<String, Object> map);
 
 	Future<List<RecordHourPingEntity>> queryExitList(Map<String, Object> map);

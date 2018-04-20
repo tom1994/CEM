@@ -42,6 +42,12 @@
 		select count(*) from probe_group
 		where pg_name = #{pgName}
 	</select>
+
+	<select id="queryUpdate" resultType="int">
+		select count(*) from probe_group
+		where probe_group.pg_name = #{0}
+		AND probe_group.id !=#{1}
+	</select>
 	 
 	<insert id="save" parameterType="io.cem.modules.cem.entity.ProbeGroupEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into probe_group

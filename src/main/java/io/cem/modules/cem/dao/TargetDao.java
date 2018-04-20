@@ -18,5 +18,7 @@ public interface TargetDao extends BaseDao<TargetEntity> {
 
     int queryExist(String targetName);
 
+    int queryUpdate(String targetName,int id);
+
     List<TargetEntity> queryTargetNames(int[] ids);
 }

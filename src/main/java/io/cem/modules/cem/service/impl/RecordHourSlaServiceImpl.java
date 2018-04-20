@@ -47,6 +47,13 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 		return new AsyncResult<>
 				(recordHourSlaDao.querySlaList(map));
 	}
+
+	@Override
+	@Async
+	public Future<List<RecordHourSlaEntity>> queryTargetHourList(Map<String, Object> map) {
+		return new AsyncResult<>
+				(recordHourSlaDao.queryTargetHourList(map));
+	}
 	@Override
 	@Async
 	public Future<List<RecordHourSlaEntity>> queryExitList(Map<String, Object> map){return new AsyncResult<> (recordHourSlaDao.queryExitList(map));}

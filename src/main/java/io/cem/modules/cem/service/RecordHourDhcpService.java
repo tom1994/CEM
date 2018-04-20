@@ -21,6 +21,8 @@ public interface RecordHourDhcpService {
 
 	Future<List<RecordHourDhcpEntity>> queryDhcpList(Map<String, Object> map);
 
+	Future<List<RecordHourDhcpEntity>> queryTargetHourList(Map<String, Object> map);
+
 	Future<List<RecordHourDhcpEntity>> queryExitList(Map<String, Object> map);
 
 	Future<List<RecordHourDhcpEntity>> queryDayExitList(Map<String, Object> map);

@@ -18,6 +18,8 @@ public interface ProbeGroupService {
 	void save(ProbeGroupEntity probeGroup);
 
 	int queryExist(String pgName);
+
+	int queryUpdate(String pgName,int id);
 	
 	void update(ProbeGroupEntity probeGroup);
 	

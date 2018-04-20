@@ -7,4 +7,5 @@ import io.cem.modules.sys.dao.BaseDao;
  */
 public interface ProbeGroupDao extends BaseDao<ProbeGroupEntity> {
     int queryExist(String pgName);
+    int queryUpdate(String pgName,int id);
 }

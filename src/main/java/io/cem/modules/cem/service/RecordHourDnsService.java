@@ -18,6 +18,7 @@ public interface RecordHourDnsService {
 	List<RecordHourDnsEntity> queryDns(Map<String,Object> map);
 
 	Future<List<RecordHourDnsEntity>> queryDnsList(Map<String, Object> map);
+	Future<List<RecordHourDnsEntity>> queryTargetHourList(Map<String, Object> map);
 
 	Future<List<RecordHourDnsEntity>> queryExitList(Map<String, Object> map);
 

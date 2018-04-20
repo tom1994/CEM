@@ -117,7 +117,7 @@ public class ProbeExitController {
 	@RequestMapping("/update/{id}")
 	@RequiresPermissions("probeexit:update")
 	public R update(@RequestBody ProbeExitEntity probeExit){
-		if (probeExitService.queryNameExist(probeExit.getExit()) > 0) {
+		if (probeExitService.queryUpdate(probeExit.getExit(),probeExit.getId()) > 0) {
 			return R.error(300, "出口名称已存在，请重新输入");
 		} else {
 			probeExitService.update(probeExit);

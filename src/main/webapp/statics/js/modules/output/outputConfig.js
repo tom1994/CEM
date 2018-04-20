@@ -88,7 +88,7 @@ var spform_data = new Vue({
                         if (status == 0) {
                             switch (code) {
                                 case 0:
-                                    toastr.success("任务创建成功!");
+                                    toastr.success("出口创建成功!");
                                     $('#myModal_sp').modal('hide');    //jQuery选定
                                     break;
                                 case 300:

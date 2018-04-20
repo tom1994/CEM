@@ -24,6 +24,8 @@ public interface TargetService {
 	int queryTotal(Map<String, Object> map);
 
 	int queryExist(String targetName);
+
+	int queryUpdate(String targetName,int id);
 	
 	void save(TargetEntity target);
 	

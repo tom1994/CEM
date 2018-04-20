@@ -59,6 +59,13 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 
 	@Override
 	@Async
+	public Future<List<RecordHourWebDownloadEntity>> queryTargetHourList(Map<String, Object> map) {
+		return new AsyncResult<>
+				(recordHourWebDownloadDao.queryTargetHourList(map));
+	}
+
+	@Override
+	@Async
 	public Future<List<RecordHourWebDownloadEntity>> queryDayList(Map<String, Object> map){
 		return new AsyncResult<> (recordHourWebDownloadDao.queryDayList(map));
 	}

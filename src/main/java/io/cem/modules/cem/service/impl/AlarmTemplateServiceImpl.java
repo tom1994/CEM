@@ -44,6 +44,12 @@ public class AlarmTemplateServiceImpl implements AlarmTemplateService {
 
 
 	@Override
+	public int queryUpdate(String atName, int id){
+		return alarmTemplateDao.queryUpdate(atName,id);
+	}
+
+
+	@Override
 	public int queryTotal(Map<String, Object> map){
 		return alarmTemplateDao.queryTotal(map);
 	}

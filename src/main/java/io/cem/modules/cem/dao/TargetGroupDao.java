@@ -10,4 +10,5 @@ import java.util.List;
 public interface TargetGroupDao extends BaseDao<TargetGroupEntity> {
 	List<TargetGroupEntity> queryTGList(Integer id);
 	int queryExist(String tgName);
+	int queryUpdate(String tgName,int id);
 }

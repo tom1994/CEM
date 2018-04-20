@@ -15,6 +15,7 @@ public class ProbeEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	//探针ID
+	@ExcelIgnore
 	private Integer id;
 	//探针序列号
 	@ExportName(exportName = "序列号")

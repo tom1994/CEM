@@ -24,6 +24,8 @@ public interface TargetGroupService {
 	void update(TargetGroupEntity targetGroup);
 
 	int queryExist(String tgName);
+
+	int queryUpdate(String tgName,int id);
 	
 	void delete(Integer id);
 	

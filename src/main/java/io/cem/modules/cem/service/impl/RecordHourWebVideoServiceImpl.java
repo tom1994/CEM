@@ -68,6 +68,12 @@ public class RecordHourWebVideoServiceImpl implements RecordHourWebVideoService 
 		return new AsyncResult<> (recordHourWebVideoDao.queryVideoAreaList(map));
 	}
 
+	@Override
+	@Async
+	public Future<List<RecordHourWebVideoEntity>> queryVideoTargetList(Map<String, Object> map){
+		return new AsyncResult<> (recordHourWebVideoDao.queryVideoTargetList(map));
+	}
+
 
 
 	@Override

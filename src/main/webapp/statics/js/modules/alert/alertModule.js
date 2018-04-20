@@ -74,48 +74,19 @@ var taskform_data = new Vue({
     // 在 `methods` 对象中定义方法
     methods: {
         submit: function () {
-                debugger
-            // $("#serviceType").removeAttr("disabled");
             var tasknewJson = getFormJson($('#taskform_data'));
             var paramnewJson = getFormJson2($('#' + type.get(parseInt(tasknewJson.serviceType)) + '_param'));
             tasknewJson.value = paramnewJson;
+            var serviceType =tasknewJson.serviceType
             console.log(tasknewJson.serviceType);
             tasknewJson.createTime = (new Date()).Format("yyyy-MM-dd hh:mm:ss");
             var tasknew = JSON.stringify(tasknewJson);
             console.log(tasknew);
-            var newJson=tasknewJson.value
+            // var newJson=tasknewJson.value
             if (tasknewJson.atName == "") {
                 toastr.warning("请输入模板名称!");
             } else if (tasknewJson.serviceType == "") {
                 toastr.warning("请选择任务类型!");
-            }else if((newJson.delay[0]=='' && newJson.delay[1]=='')){
-                toastr.warning("时延的一般和严重的指标输入不能为空");
-            }else if((newJson.delay_std[0]=='' && newJson.delay_std[1]=='')){
-                toastr.warning("时延标准差的一般和严重的指标输入不能为空");
-            }else if((newJson.delay_var[0]=='' && newJson.delay_var[1]=='')){
-                toastr.warning("时延方差的一般和严重的指标输入不能为空");
-            }else if((newJson.jitter[0]=='' && newJson.jitter[1]=='')){
-                toastr.warning("抖动的一般和严重的指标输入不能为空");
-            }else if((newJson.jitter_std[0]=='' && newJson.jitter[1]=='')){
-                toastr.warning("抖动标准差的一般和严重的指标输入不能为空");
-            }else if((newJson.jitter_var[0]=='' && newJson.jitter[1]=='')){
-                toastr.warning("抖动方差的一般和严重的指标输入不能为空");
-            }else if((newJson.loss_rate[0]=='' && newJson.loss_rate[1]=='')){
-                toastr.warning("丢包率的一般和严重的指标输入不能为空");
-            } else if( newJson.delay[0]>=newJson.delay[1]){
-                toastr.warning("时延的一般和严重的指标输入有误!严重指标要大于一般指标");
-            }else if(newJson.delay_std[0]>=newJson.delay_std[1]){
-                toastr.warning("时延标准差的一般和严重的指标输入有误!严重指标要大于一般指标");
-            }else if(newJson.delay_var[0]>=newJson.delay_var[1]){
-                toastr.warning("时延方差的一般和严重的指标输入有误!严重指标要大于一般指标");
-            }else if(newJson.jitter[0]>=newJson.jitter[1]){
-                toastr.warning("抖动的一般和严重的指标输入有误!严重指标要大于一般指标");
-            }else if(newJson.jitter_std[0]>=newJson.jitter_std[1]){
-                toastr.warning("抖动标准差的一般和严重的指标输入有误!严重指标要大于一般指标");
-            }else if(newJson.jitter_var[0]>=newJson.jitter_var[1]){
-                toastr.warning("抖动方差的一般和严重的指标输入有误!严重指标要大于一般指标");
-            }else if(newJson.loss_rate[0]<=newJson.loss_rate[1]||(newJson.loss_rate[0]>100 && newJson.loss_rate[1]>100)){
-                toastr.warning("丢包率的一般和严重的指标输入有误!严重指标要小于一般指标并且指标不能大于100");
             } else {
                 var mapstr;
                 if (status == 0) {
@@ -159,7 +130,7 @@ var taskform_data = new Vue({
                                     break;
                                 default:
                                     toastr.error("未知错误");
-                                    $("#serviceType").attr("disabled","disabled");
+                                    // $("#serviceType").attr("disabled","disabled");
                                     break
                             }
                         }
@@ -211,6 +182,7 @@ var taskform_data = new Vue({
 });
 
 function getFormJson(form) {      /*将表单对象变为json对象*/
+    debugger
     var o = {};
     var a = $(form).serializeArray();
     $.each(a, function () {
@@ -337,24 +309,23 @@ function delete_ajax() {
 /*列表编辑功能*/
 function update_this (obj) {     /*监听修改触发事件*/
     $('.modal-body').removeAttr('style')
+    var typeName=obj.type;
     $('#title').hide();
     $("#title2").show();
     update_data_id = parseInt(obj.id);
     /*获取当前行探针数据id*/
-    console.log(update_data_id);
-    if(update_data_id=='54'){
+    if(typeName=='在线视频'){
         $('.modal-body').css('height','450px')
         $('.modal-body').css('overflow-y','auto')
-    }else if(update_data_id=='55'){
+    }else if(typeName=='SLA(UDP)'){
         $('.modal-body').css('height','450px')
         $('.modal-body').css('overflow-y','auto')
-    }else if(update_data_id=='64'){
+    }else if(typeName=='SLA(TCP)'){
         $('.modal-body').css('height','450px')
         $('.modal-body').css('overflow-y','auto')
     }
     status = 1;      /*状态1表示修改*/
     var forms = $('#taskform_data .form-control');
-
     /*去除只读状态*/
     //$('#probeform_data input[type=text]').prop("readonly", false);
     $.ajax({
@@ -364,9 +335,7 @@ function update_this (obj) {     /*监听修改触发事件*/
         dataType: "json",
         // contentType: "application/json", /*必须要,不可少*/
         success: function (result) {
-            debugger
             console.log(result.atList);
-            //console.log("I'm here!!!!"+result.atList[0].serviceType);
             var service=parseInt(result.atList[0].serviceType);
             var param=JSON.parse(result.atList[0].value);
             var formparam = ($('#' + type.get(parseInt(service)) + '_param'))[0];
@@ -452,7 +421,7 @@ function update_this (obj) {     /*监听修改触发事件*/
                 formparam[3].value = param.success_rate[1];
             }else if(service==20){
                 formparam[0].value = param.dns_delay[0];
-                formparam[1].value = param.ns_delay[1];
+                formparam[1].value = param.dns_delay[1];
                 formparam[2].value = param.conn_delay[0];
                 formparam[3].value = param.conn_delay[1];
                 formparam[4].value = param.redirect_delay[0];
@@ -465,15 +434,15 @@ function update_this (obj) {     /*监听修改触发事件*/
                 formparam[11].value = param.loadDelay[1];
                 formparam[12].value = param.above_fold_delay[0];
                 formparam[13].value = param.above_fold_delay[1];
-                formparam[14].value = param.download_speed[0];
-                formparam[15].value = param.download_speed[1];
+                formparam[14].value = param.download_rate[0];
+                formparam[15].value = param.download_rate[1];
             }else if(service==30){
                 formparam[0].value = param.dns_delay[0];
                 formparam[1].value = param.dns_delay[1];
                 formparam[2].value = param.conn_delay[0];
                 formparam[3].value = param.conn_delay[1];
-                formparam[4].value = param.download_speed[0];
-                formparam[5].value = param.download_speed[1];
+                formparam[4].value = param.download_rate[0];
+                formparam[5].value = param.download_rate[1];
                 formparam[6].value = param.headbyte_delay[0];
                 formparam[7].value = param.headbyte_delay[1];
             }
@@ -484,8 +453,8 @@ function update_this (obj) {     /*监听修改触发事件*/
                 formparam[3].value = param.conn_delay[1];
                 formparam[4].value = param.login_delay[0];
                 formparam[5].value = param.login_delay[1];
-                formparam[6].value = param.download_speed[0];
-                formparam[7].value = param.download_speed[1];
+                formparam[6].value = param.download_rate[0];
+                formparam[7].value = param.download_rate[1];
                 formparam[8].value = param.headbyte_delay[0];
                 formparam[9].value = param.headbyte_delay[1];
 
@@ -499,14 +468,14 @@ function update_this (obj) {     /*监听修改触发事件*/
                 formparam[5].value = param.login_delay[1];
                 formparam[6].value = param.headbyte_delay[0];
                 formparam[7].value = param.headbyte_delay[1];
-                formparam[8].value = param.upload_speed[0];
-                formparam[9].value = param.upload_speed[1];
+                formparam[8].value = param.upload_rate[0];
+                formparam[9].value = param.upload_rate[1];
             }
             else if(service==40){
                 formparam[0].value = param.dns_delay[0];
                 formparam[1].value = param.dns_delay[1];
-                formparam[2].value = param.conn_delay[0];
-                formparam[3].value = param.conn_delay[1];
+                formparam[2].value = param.ws_conn_delay[0];
+                formparam[3].value = param.ws_conn_delay[1];
                 formparam[4].value = param.web_page_delay[0];
                 formparam[5].value = param.web_page_delay[1];
                 formparam[6].value = param.head_frame_delay[0];
@@ -517,8 +486,8 @@ function update_this (obj) {     /*监听修改触发事件*/
                 formparam[11].value = param.load_delay[1];
                 formparam[12].value = param.total_buffer_delay[0];
                 formparam[13].value = param.total_buffer_delay[1];
-                formparam[14].value = param.download_speed[0];
-                formparam[15].value = param.download_speed[1];
+                formparam[14].value = param.download_rate[0];
+                formparam[15].value = param.download_rate[1];
                 formparam[16].value = param.buffer_time[0];
                 formparam[17].value = param.buffer_time[1];
             }else if(service==50) {
@@ -528,8 +497,8 @@ function update_this (obj) {     /*监听修改触发事件*/
                 formparam[3].value = param.packet_delay[1];
                 formparam[4].value = param.packet_jitter[0];
                 formparam[5].value = param.packet_jitter[1];
-                formparam[6].value = param.packet_loss_rate[0];
-                formparam[7].value = param.packet_loss_rate[1];
+                formparam[6].value = param.loss_rate[0];
+                formparam[7].value = param.loss_rate[1];
             }
 
         }
@@ -636,7 +605,7 @@ var alert_table = new Vue({
                             row.push(item.serviceName);
                             row.push(item.createTime);
                             row.push(item.remark);
-                            row.push('<a class="fontcolor" onclick="update_this(this)" id=' + item.id + '>详情</a>&nbsp;'+
+                            row.push('<a class="fontcolor" onclick="update_this(this)" id=' + item.id + '  type='+item.serviceName+'>详情</a>&nbsp;'+
                                 '<a class="fontcolor" onclick="delete_this(this)" id=' + item.id + '>删除</a>');
                             rows.push(row);
                         });

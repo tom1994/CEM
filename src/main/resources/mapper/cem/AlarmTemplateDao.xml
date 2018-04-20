@@ -20,7 +20,13 @@
 
 	<select id="queryExist" resultType="int">
 		select count(*) from alarm_template
-		where at_name = #{atName}
+		where alarm_template.at_name = #{atName}
+	</select>
+
+	<select id="queryUpdate" resultType="int">
+		select count(*) from alarm_template
+		where alarm_template.at_name = #{0}
+		AND alarm_template.id != #{1}
 	</select>
 
 	<select id="queryList" resultType="io.cem.modules.cem.entity.AlarmTemplateEntity">

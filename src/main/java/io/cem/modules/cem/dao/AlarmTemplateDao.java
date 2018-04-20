@@ -11,4 +11,5 @@ public interface AlarmTemplateDao extends BaseDao<AlarmTemplateEntity> {
 	List<AlarmTemplateEntity> queryatList(Integer id);
 	List<AlarmTemplateEntity> queryAtByService(Integer id);
 	int queryExist(String atName);
+	int queryUpdate(String atName,int id);
 }

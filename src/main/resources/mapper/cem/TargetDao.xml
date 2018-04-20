@@ -65,6 +65,12 @@
         where target_name = #{targetName}
     </select>
 
+    <select id="queryUpdate" resultType="int">
+        select count(*) from target
+        where target.target_name = #{0}
+        AND target.id != #{1}
+    </select>
+
     <select id="queryTotal" resultType="int">
         select count(*) from target
         WHERE id IS NOT NULL

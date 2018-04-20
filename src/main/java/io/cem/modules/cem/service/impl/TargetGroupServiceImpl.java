@@ -44,6 +44,11 @@ public class TargetGroupServiceImpl implements TargetGroupService {
 	}
 
 	@Override
+	public int queryUpdate(String tgName,int id){
+		return targetGroupDao.queryUpdate(tgName,id);
+	}
+
+	@Override
 	public int queryTotal(Map<String, Object> map){
 		return targetGroupDao.queryTotal(map);
 	}

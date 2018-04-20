@@ -113,7 +113,7 @@ public class TargetGroupController {
 	@RequestMapping("/update")
 	@RequiresPermissions("targetgroup:update")
 	public R update(@RequestBody TargetGroupEntity targetGroup){
-		if (targetGroupService.queryExist(targetGroup.getTgName()) > 0) {
+		if (targetGroupService.queryUpdate(targetGroup.getTgName(),targetGroup.getId()) > 0) {
 			return R.error(300, "测试目标组名称已存在，请重新输入");
 		} else {
 			targetGroupService.update(targetGroup);

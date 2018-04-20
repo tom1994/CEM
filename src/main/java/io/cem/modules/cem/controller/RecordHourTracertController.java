@@ -153,8 +153,27 @@ public class RecordHourTracertController {
 		} catch (RuntimeException e) {
 			throw new RRException("内部参数错误，请重试！");
 		}
-		List<ScoreEntity> scoreList =recordHourRadiusService.calculateTargetDayScore(map);
+		String dateStr = map.get("ava_start").toString();
+		String dateStr2 = map.get("ava_terminal").toString();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		int dateDifferent = 0;
+		try
+		{
+			Date date2 = format.parse(dateStr2);
+			Date date = format.parse(dateStr);
 
+			dateDifferent = recordHourPingService.differentDays(date,date2);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		List<ScoreEntity> scoreList;
+		if(dateDifferent==0){
+			scoreList = recordHourRadiusService.calculateTargetHourScore(map);
+		}else if(dateDifferent==1){
+			scoreList = recordHourRadiusService.calculateTargetDayHourScore(map);
+		}else{
+			scoreList = recordHourRadiusService.calculateTargetDayScore(map);
+		}
 
 		if(map.get("probe_id")==null){
 			for(int i=0;i<scoreList.size();i++){
@@ -238,6 +257,8 @@ public class RecordHourTracertController {
 		for(int i=0;i<probeList.size();i++){
 			map.put("probe_id",probeList.get(i).getId());
 			if(recordHourRadiusService.calculateDayScore(map).size()!=0) {
+				System.out.println(recordHourRadiusService.calculateDayScore(map));
+				List<ScoreEntity> list = recordHourRadiusService.calculateDayScore(map);
 				scoreList.add(recordHourRadiusService.calculateDayScore(map).get(0));
 			}
 		}
