@@ -349,27 +349,27 @@ public class RecordHourWebVideoServiceImpl implements RecordHourWebVideoService 
 				}
 
 				//download_rate 100
-				if ((videoList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("video92"))) <= 0) {
+				if ((videoList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("video92"))) >= 0) {
 					score += 100 * (Double.parseDouble(pros.getValue("video91")));
 				}
 				//download_rate 80-100
-				else if (((videoList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("video92"))) > 0) && ((videoList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("video93"))) <= 0)) {
+				else if (((videoList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("video92"))) < 0) && ((videoList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("video93"))) >= 0)) {
 					score += (80 + ((((videoList.get(i).getDownloadRate().doubleValue()) - (Double.parseDouble(pros.getValue("video93")))) * 20) / ((Double.parseDouble(pros.getValue("video92")) - (Double.parseDouble(pros.getValue("video93"))))))) * (Double.parseDouble(pros.getValue("video91")));
 				}
 				//download_rate 60-80
-				else if (((videoList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("video93"))) > 0) && ((videoList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("video94"))) <= 0)) {
+				else if (((videoList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("video93"))) < 0) && ((videoList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("video94"))) >= 0)) {
 					score += (60 + ((((videoList.get(i).getDownloadRate().doubleValue()) - (Double.parseDouble(pros.getValue("video94")))) * 20) / ((Double.parseDouble(pros.getValue("video93")) - (Double.parseDouble(pros.getValue("video94"))))))) * (Double.parseDouble(pros.getValue("video91")));
 				}
 				//download_rate 40-60
-				else if (((videoList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("video94"))) > 0) && ((videoList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("video95"))) <= 0)) {
+				else if (((videoList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("video94"))) < 0) && ((videoList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("video95"))) >= 0)) {
 					score += (40 + ((((videoList.get(i).getDownloadRate().doubleValue()) - (Double.parseDouble(pros.getValue("video95")))) * 20) / ((Double.parseDouble(pros.getValue("video94")) - (Double.parseDouble(pros.getValue("video95"))))))) * (Double.parseDouble(pros.getValue("video91")));
 				}
 				//download_rate 20-40
-				else if (((videoList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("video95"))) > 0) && ((videoList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("video96"))) <= 0)) {
+				else if (((videoList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("video95"))) < 0) && ((videoList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("video96"))) >= 0)) {
 					score += (20 + ((((videoList.get(i).getDownloadRate().doubleValue()) - (Double.parseDouble(pros.getValue("video96")))) * 20) / ((Double.parseDouble(pros.getValue("video95")) - (Double.parseDouble(pros.getValue("video96"))))))) * (Double.parseDouble(pros.getValue("video91")));
 				}
 				//download_rate 0-20
-				else if (((videoList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("video96"))) > 0) && ((videoList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("video97"))) <= 0)) {
+				else if (((videoList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("video96"))) < 0) && ((videoList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("video97"))) >= 0)) {
 					score += ((((videoList.get(i).getDownloadRate().doubleValue()) - (Double.parseDouble(pros.getValue("video97")))) * 20) / ((Double.parseDouble(pros.getValue("video96")) - (Double.parseDouble(pros.getValue("video97")))))) * (Double.parseDouble(pros.getValue("video91")));
 				}
 				//download_rate 0

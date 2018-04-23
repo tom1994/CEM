@@ -55,7 +55,7 @@
         ON rhp.county_id = county.county_id
         LEFT JOIN probe
         ON rhp.probe_id = probe.id
-        LEFT JOIN target
+        INNER JOIN target
         ON rhp.target_id = target.id
         WHERE rhp.record_date BETWEEN #{ava_start} AND #{ava_terminal}
         <if test="city_id != null and city_id != ''">
@@ -127,7 +127,7 @@
         ON t.city_id = city.city_id
         LEFT JOIN county
         ON t.county_id = county.county_id
-        LEFT JOIN target
+        INNER JOIN target
         ON t.target_id = target.id
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
@@ -181,7 +181,7 @@
         ON t.city_id = city.city_id
         LEFT JOIN county
         ON t.county_id = county.county_id
-        LEFT JOIN target
+        INNER JOIN target
         ON t.target_id = target.id
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
@@ -201,7 +201,7 @@
         FROM record_hour_ping rhp
         INNER JOIN probe
         ON rhp.probe_id = probe.id
-        LEFT JOIN target
+        INNER JOIN target
         ON rhp.target_id = target.id
         WHERE rhp.record_date BETWEEN #{ava_start} AND #{ava_terminal}
         <if test="city_id != null and city_id != ''">
@@ -245,7 +245,7 @@
         ON rhp.county_id = county.county_id
         INNER JOIN probe
         ON rhp.probe_id = probe.id
-        LEFT JOIN target
+        INNER JOIN target
         ON rhp.target_id = target.id
         WHERE rhp.record_date BETWEEN #{ava_start} AND #{ava_terminal}
         <if test="city_id != null and city_id != ''">
@@ -290,7 +290,7 @@
         ON rhp.county_id = county.county_id
         INNER JOIN probe
         ON rhp.probe_id = probe.id
-        LEFT JOIN target
+        INNER JOIN target
         ON rhp.target_id = target.id
         WHERE rhp.record_date BETWEEN #{ava_start} AND #{ava_terminal}
         AND rhp.port = #{port}
@@ -324,7 +324,7 @@
         ON record_day_ping.county_id = county.county_id
         INNER JOIN probe
         ON record_day_ping.probe_id = probe.id
-        LEFT JOIN target
+        INNER JOIN target
         ON record_day_ping.target_id = target.id
         WHERE record_day_ping.record_date BETWEEN #{ava_start} AND #{ava_terminal}
         AND record_day_ping.port = #{port}

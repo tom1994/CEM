@@ -89,7 +89,7 @@
 		ON t.city_id = city.city_id
 		LEFT JOIN county
 		ON t.county_id = county.county_id
-		LEFT JOIN target
+		INNER JOIN target
 		ON t.target_id = target.id
 
 	</select>
@@ -129,7 +129,7 @@
 		ON t.city_id = city.city_id
 		LEFT JOIN county
 		ON t.county_id = county.county_id
-		LEFT JOIN target
+		INNER JOIN target
 		ON t.target_id = target.id
 
 	</select>
@@ -152,7 +152,7 @@
 		ON record_hour_radius.county_id = county.county_id
 		INNER JOIN probe
 		ON record_hour_radius.probe_id = probe.id
-		LEFT JOIN target
+		INNER JOIN target
 		ON record_hour_radius.target_id = target.id
 		WHERE record_hour_radius.record_date BETWEEN #{ava_start} AND #{ava_terminal}
 		AND record_hour_radius.port = #{port}
@@ -179,7 +179,7 @@
 		ON record_day_radius.county_id = county.county_id
 		INNER JOIN probe
 		ON record_day_radius.probe_id = probe.id
-		LEFT JOIN target
+		INNER JOIN target
 		ON record_day_radius.target_id = target.id
 		WHERE record_day_radius.record_date BETWEEN #{ava_start} AND #{ava_terminal}
 		AND record_day_radius.port = #{port}
@@ -206,7 +206,7 @@
 		ON radius.county_id = county.county_id
 		INNER JOIN probe
 		ON radius.probe_id = probe.id
-		LEFT JOIN target
+		INNER JOIN target
 		ON radius.target_id = target.id
 		WHERE radius.record_date BETWEEN #{ava_start} AND #{ava_terminal}
 		<if test="city_id != null and city_id != ''">

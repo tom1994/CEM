@@ -10,6 +10,11 @@
     <title>数据统计</title>
     <style>
         tr:hover{background:#E5E5E5 }
+        html,body{
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+        }
         .search{
             margin-top: 0px;
             text-align: center;
@@ -253,11 +258,10 @@
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title fontcolor box" id="resulthandle" style="padding-bottom: 0px !important;">
-                            <a href="../../recordping/download">
-                                <button type="button" class="btn btn-sm btn-success Btn">
-                                    <span class="glyphicon glyphicon-open"></span>导出
-                                </button>
-                            </a>
+                            <button type="button" class="btn btn-sm btn-success" onclick="out()"><span
+                                    class="glyphicon glyphicon-open"></span>导出
+                            </button>
+                            <a id = "output" style="display: none" href=""></a>
                             <p id="flip" style="position:relative; left:45%;" class="glyphicon glyphicon-menu-up"
                                onClick="toggle1('searchbox')"></p>
                         </div>

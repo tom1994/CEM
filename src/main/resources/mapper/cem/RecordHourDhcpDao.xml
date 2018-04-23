@@ -90,7 +90,7 @@
 		ON t.city_id = city.city_id
 		LEFT JOIN county
 		ON t.county_id = county.county_id
-		LEFT JOIN target
+		INNER JOIN target
 		ON t.target_id = target.id
 		<choose>
 			<when test="sidx != null and sidx.trim() != ''">
@@ -138,7 +138,7 @@
 		ON t.city_id = city.city_id
 		LEFT JOIN county
 		ON t.county_id = county.county_id
-		LEFT JOIN target
+		INNER JOIN target
 		ON t.target_id = target.id
 		<choose>
 			<when test="sidx != null and sidx.trim() != ''">
@@ -168,7 +168,7 @@
 		ON record_hour_dhcp.county_id = county.county_id
 		INNER JOIN probe
 		ON record_hour_dhcp.probe_id = probe.id
-		LEFT JOIN target
+		INNER JOIN target
 		ON record_hour_dhcp.target_id = target.id
 		WHERE record_hour_dhcp.record_date BETWEEN #{ava_start} AND #{ava_terminal}
 		AND record_hour_dhcp.port = #{port}
@@ -195,7 +195,7 @@
 		ON record_day_dhcp.county_id = county.county_id
 		INNER JOIN probe
 		ON record_day_dhcp.probe_id = probe.id
-		LEFT JOIN target
+		INNER JOIN target
 		ON record_day_dhcp.target_id = target.id
 		WHERE record_day_dhcp.record_date BETWEEN #{ava_start} AND #{ava_terminal}
 		AND record_day_dhcp.port = #{port}
@@ -222,7 +222,7 @@
 		ON dhcp.county_id = county.county_id
 		INNER JOIN probe
 		ON dhcp.probe_id = probe.id
-		LEFT JOIN target
+		INNER JOIN target
 		ON dhcp.target_id = target.id
 		WHERE dhcp.record_date BETWEEN #{ava_start} AND #{ava_terminal}
 		<if test="city_id != null and city_id != ''">

@@ -6,10 +6,7 @@ import io.cem.common.utils.CollectionToFile;
 import io.cem.common.utils.JSONUtils;
 import io.cem.common.utils.PageUtils;
 import io.cem.common.utils.R;
-import io.cem.modules.cem.entity.EvaluationEntity;
-import io.cem.modules.cem.entity.ProbeEntity;
-import io.cem.modules.cem.entity.RecordHourTracertEntity;
-import io.cem.modules.cem.entity.ScoreEntity;
+import io.cem.modules.cem.entity.*;
 import io.cem.modules.cem.service.*;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +58,30 @@ public class RecordHourTracertController {
 	private RecordHourGameService recordHourGameService;
 	@Autowired
 	private ProbeService probeService;
+	@Autowired
+	private RecordPingService recordPingService;
+	@Autowired
+	private RecordTracertService recordTracertService;
+	@Autowired
+	private RecordSlaService recordSlaService;
+	@Autowired
+	private RecordPppoeService recordPppoeService;
+	@Autowired
+	private RecordDhcpService recordDhcpService;
+	@Autowired
+	private RecordDnsService recordDnsService;
+	@Autowired
+	private RecordRadiusService recordRadiusService;
+	@Autowired
+	private RecordWebPageService recordWebPageService;
+	@Autowired
+	private RecordWebDownloadService recordWebDownloadService;
+	@Autowired
+	private RecordFtpService recordFtpService;
+	@Autowired
+	private RecordWebVideoService recordWebVideoService;
+	@Autowired
+	private RecordGameService recordGameService;
 
 	/**
 	 * 区域排名方法
@@ -428,9 +449,108 @@ public class RecordHourTracertController {
 			score = recordHourFtpService.calculateHourQualityScore(map);
 		}
 
-		List<EvaluationEntity> scoreList=new ArrayList<>();
+		List<EvaluationEntity> scoreList = new ArrayList<>();
 		scoreList.add(score);
 		System.out.println(score);
 		CollectionToFile.collectionToFile(response, scoreList, EvaluationEntity.class);
+	}
+
+	@RequestMapping("/datadownload/{probedata}")
+	@RequiresPermissions("recordhourtracert:datadownload")
+	public void reportDownload(HttpServletResponse response, @PathVariable String probedata) throws ExecutionException, InterruptedException {
+		Map<String, Object> map = new HashMap<>();
+		JSONObject jsonobject = JSONObject.parseObject(probedata);
+		try {
+			map.putAll(JSONUtils.jsonToMap(jsonobject));
+		} catch (RuntimeException e) {
+			throw new RRException("内部参数错误，请重试！");
+		}
+		int service = Integer.parseInt(map.get("service_type").toString());
+
+		int queryType = Integer.parseInt(map.get("queryType").toString());
+		if (queryType == 1) {
+			if (service == 1 || service == 2 || service == 3) {
+				List<RecordPingEntity> list = recordPingService.queryPingList(map);
+				System.out.println(list);
+				CollectionToFile.collectionToFile(response, list, RecordPingEntity.class);
+			} else if (service == 4 || service == 5) {
+				List<RecordTracertEntity> list = recordTracertService.queryTracertList(map);
+				CollectionToFile.collectionToFile(response, list, RecordTracertEntity.class);
+			} else if (service == 10 || service == 11) {
+				List<RecordSlaEntity> list = recordSlaService.querySlaList(map);
+				CollectionToFile.collectionToFile(response, list, RecordSlaEntity.class);
+			} else if (service == 12) {
+				List<RecordPppoeEntity> list = recordPppoeService.queryPppoeList(map);
+				CollectionToFile.collectionToFile(response, list, RecordPppoeEntity.class);
+			} else if (service == 13) {
+				List<RecordDhcpEntity> list = recordDhcpService.queryDhcpList(map);
+				CollectionToFile.collectionToFile(response, list, RecordDhcpEntity.class);
+			} else if (service == 14) {
+				List<RecordDnsEntity> list = recordDnsService.queryDnsList(map);
+				CollectionToFile.collectionToFile(response, list, RecordDnsEntity.class);
+			} else if (service == 15) {
+				List<RecordRadiusEntity> list = recordRadiusService.queryRadiusList(map);
+				CollectionToFile.collectionToFile(response, list, RecordRadiusEntity.class);
+			} else if (service == 20) {
+				List<RecordWebPageEntity> list = recordWebPageService.queryWebPageList(map);
+				CollectionToFile.collectionToFile(response, list, RecordWebPageEntity.class);
+			} else if (service == 30) {
+				List<RecordWebDownloadEntity> list = recordWebDownloadService.queryWebDownloadList(map);
+				CollectionToFile.collectionToFile(response, list, RecordWebDownloadEntity.class);
+			} else if (service == 31 || service == 32) {
+				List<RecordFtpEntity> list = recordFtpService.queryFtpList(map);
+				CollectionToFile.collectionToFile(response, list, RecordFtpEntity.class);
+			} else if (service == 40) {
+				List<RecordWebVideoEntity> list = recordWebVideoService.queryWebVideoList(map);
+				CollectionToFile.collectionToFile(response, list, RecordWebVideoEntity.class);
+			} else if (service == 50) {
+				List<RecordGameEntity> list = recordGameService.queryGameList(map);
+				CollectionToFile.collectionToFile(response, list, RecordGameEntity.class);
+			} else {
+			}
+
+
+		} else {
+			map.put("interval", map.get("interval"));
+			if (service == 1 || service == 2 || service == 3) {
+				List<RecordHourPingEntity> list = recordPingService.queryIntervalList(map);
+				CollectionToFile.collectionToFile(response, list, RecordHourPingEntity.class);
+			} else if (service == 4 || service == 5) {
+				List<RecordHourTracertEntity> list = recordTracertService.queryIntervalList(map);
+				CollectionToFile.collectionToFile(response, list, RecordHourTracertEntity.class);
+			} else if (service == 10 || service == 11) {
+				List<RecordHourSlaEntity> list = recordSlaService.queryIntervalList(map);
+				CollectionToFile.collectionToFile(response, list, RecordHourSlaEntity.class);
+			} else if (service == 12) {
+				List<RecordHourPppoeEntity> list = recordPppoeService.queryIntervalList(map);
+				CollectionToFile.collectionToFile(response, list, RecordHourPppoeEntity.class);
+			} else if (service == 13) {
+				List<RecordHourDhcpEntity> list = recordDhcpService.queryIntervalList(map);
+				CollectionToFile.collectionToFile(response, list, RecordHourDhcpEntity.class);
+			} else if (service == 14) {
+				List<RecordHourDnsEntity> list = recordDnsService.queryIntervalList(map);
+				CollectionToFile.collectionToFile(response, list, RecordHourDnsEntity.class);
+			} else if (service == 15) {
+				List<RecordHourRadiusEntity> list = recordRadiusService.queryIntervalList(map);
+				CollectionToFile.collectionToFile(response, list, RecordHourRadiusEntity.class);
+			} else if (service == 20) {
+				List<RecordHourWebPageEntity> list = recordWebPageService.queryIntervalList(map);
+				CollectionToFile.collectionToFile(response, list, RecordHourWebPageEntity.class);
+			} else if (service == 30) {
+				List<RecordHourWebDownloadEntity> list = recordWebDownloadService.queryIntervalList(map);
+				CollectionToFile.collectionToFile(response, list, RecordHourWebDownloadEntity.class);
+			} else if (service == 31 || service == 32) {
+				List<RecordHourFtpEntity> list = recordFtpService.queryIntervalList(map);
+				CollectionToFile.collectionToFile(response, list, RecordHourFtpEntity.class);
+			} else if (service == 40) {
+				List<RecordHourWebVideoEntity> list = recordWebVideoService.queryIntervalList(map);
+				CollectionToFile.collectionToFile(response, list, RecordHourWebVideoEntity.class);
+			} else if (service == 50) {
+				List<RecordHourGameEntity> list = recordGameService.queryIntervalList(map);
+				CollectionToFile.collectionToFile(response, list, RecordHourGameEntity.class);
+			} else {
+			}
+
+		}
 	}
 }

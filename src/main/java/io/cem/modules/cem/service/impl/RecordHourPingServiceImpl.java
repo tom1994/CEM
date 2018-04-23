@@ -79,31 +79,31 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 					try {
 						//delay 100
 						if ((pingList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("pingI22"))) <= 0) {
-							score = 100 * (Double.parseDouble(pros.getValue("pingI21")));
+							score+= 100 * (Double.parseDouble(pros.getValue("pingI21")));
 						}
 						//delay 80-100
 						else if (((pingList.get(i).getDelay()).compareTo(Double.parseDouble(PropertiesUtils.getValue("pingI22"))) > 0) && ((pingList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("pingI23"))) <= 0)) {
-							score = (80 + ((((pingList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("pingI23")))) * 20) / ((Double.parseDouble(pros.getValue("pingI22")) - (Double.parseDouble(pros.getValue("pingI23"))))))) * (Double.parseDouble(pros.getValue("pingI21")));
+							score+= (80 + ((((pingList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("pingI23")))) * 20) / ((Double.parseDouble(pros.getValue("pingI22")) - (Double.parseDouble(pros.getValue("pingI23"))))))) * (Double.parseDouble(pros.getValue("pingI21")));
 						}
 						//delay 60-80
 						else if (((pingList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("pingI23"))) > 0) && ((pingList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("pingI24"))) <= 0)) {
-							score = (60 + ((((pingList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("pingI24")))) * 20) / ((Double.parseDouble(pros.getValue("pingI23")) - (Double.parseDouble(pros.getValue("pingI24"))))))) * (Double.parseDouble(pros.getValue("pingI21")));
+							score+= (60 + ((((pingList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("pingI24")))) * 20) / ((Double.parseDouble(pros.getValue("pingI23")) - (Double.parseDouble(pros.getValue("pingI24"))))))) * (Double.parseDouble(pros.getValue("pingI21")));
 						}
 						//delay 40-60
 						else if (((pingList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("pingI24"))) > 0) && ((pingList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("pingI25"))) <= 0)) {
-							score = (40 + ((((pingList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("pingI25")))) * 20) / ((Double.parseDouble(pros.getValue("pingI24")) - (Double.parseDouble(pros.getValue("pingI25"))))))) * (Double.parseDouble(pros.getValue("pingI21")));
+							score+= (40 + ((((pingList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("pingI25")))) * 20) / ((Double.parseDouble(pros.getValue("pingI24")) - (Double.parseDouble(pros.getValue("pingI25"))))))) * (Double.parseDouble(pros.getValue("pingI21")));
 						}
 						//delay 20-40
 						else if (((pingList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("pingI25"))) > 0) && ((pingList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("pingI26"))) <= 0)) {
-							score = (20 + ((((pingList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("pingI26")))) * 20) / ((Double.parseDouble(pros.getValue("pingI25")) - (Double.parseDouble(pros.getValue("pingI26"))))))) * (Double.parseDouble(pros.getValue("pingI21")));
+							score+= (20 + ((((pingList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("pingI26")))) * 20) / ((Double.parseDouble(pros.getValue("pingI25")) - (Double.parseDouble(pros.getValue("pingI26"))))))) * (Double.parseDouble(pros.getValue("pingI21")));
 						}
 						//delay 0-20
 						else if (((pingList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("pingI26"))) > 0) && ((pingList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("pingI27"))) <= 0)) {
-							score = ((((pingList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("pingI27")))) * 20) / ((Double.parseDouble(pros.getValue("pingI26")) - (Double.parseDouble(pros.getValue("pingI27")))))) * (Double.parseDouble(pros.getValue("pingI21")));
+							score+= ((((pingList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("pingI27")))) * 20) / ((Double.parseDouble(pros.getValue("pingI26")) - (Double.parseDouble(pros.getValue("pingI27")))))) * (Double.parseDouble(pros.getValue("pingI21")));
 						}
 						//delay 0
 						else {
-							score = 0;
+							score+= 0;
 						}
 
 
@@ -329,37 +329,37 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
 			for (int i = 0; i < pingList.size(); i++) {
-				double score = 0;
+				double score= 0;
 				//Ping(TCP)
 				if ((pingList.get(i).getServiceType()) == 2) {
 					try {
 						//delay 100
 						if ((pingList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("pingT22"))) <= 0) {
-							score = 100 * (Double.parseDouble(pros.getValue("pingT21")));
+							score+= 100 * (Double.parseDouble(pros.getValue("pingT21")));
 						}
 						//delay 80-100
 						else if (((pingList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("pingT22"))) > 0) && ((pingList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("pingT23"))) <= 0)) {
-							score = (80 + ((((pingList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("pingT23")))) * 20) / ((Double.parseDouble(pros.getValue("pingT22")) - (Double.parseDouble(pros.getValue("pingT23"))))))) * (Double.parseDouble(pros.getValue("pingT21")));
+							score+= (80 + ((((pingList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("pingT23")))) * 20) / ((Double.parseDouble(pros.getValue("pingT22")) - (Double.parseDouble(pros.getValue("pingT23"))))))) * (Double.parseDouble(pros.getValue("pingT21")));
 						}
 						//delay 60-80
 						else if (((pingList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("pingT23"))) > 0) && ((pingList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("pingT24"))) <= 0)) {
-							score = (60 + ((((pingList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("pingT24")))) * 20) / ((Double.parseDouble(pros.getValue("pingT23")) - (Double.parseDouble(pros.getValue("pingT24"))))))) * (Double.parseDouble(pros.getValue("pingT21")));
+							score+= (60 + ((((pingList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("pingT24")))) * 20) / ((Double.parseDouble(pros.getValue("pingT23")) - (Double.parseDouble(pros.getValue("pingT24"))))))) * (Double.parseDouble(pros.getValue("pingT21")));
 						}
 						//delay 40-60
 						else if (((pingList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("pingT24"))) > 0) && ((pingList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("pingT25"))) <= 0)) {
-							score = (40 + ((((pingList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("pingT25")))) * 20) / ((Double.parseDouble(pros.getValue("pingT24")) - (Double.parseDouble(pros.getValue("pingT25"))))))) * (Double.parseDouble(pros.getValue("pingT21")));
+							score+= (40 + ((((pingList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("pingT25")))) * 20) / ((Double.parseDouble(pros.getValue("pingT24")) - (Double.parseDouble(pros.getValue("pingT25"))))))) * (Double.parseDouble(pros.getValue("pingT21")));
 						}
 						//delay 20-40
 						else if (((pingList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("pingT25"))) > 0) && ((pingList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("pingT26"))) <= 0)) {
-							score = (20 + ((((pingList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("pingT26")))) * 20) / ((Double.parseDouble(pros.getValue("pingT25")) - (Double.parseDouble(pros.getValue("pingT26"))))))) * (Double.parseDouble(pros.getValue("pingT21")));
+							score+= (20 + ((((pingList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("pingT26")))) * 20) / ((Double.parseDouble(pros.getValue("pingT25")) - (Double.parseDouble(pros.getValue("pingT26"))))))) * (Double.parseDouble(pros.getValue("pingT21")));
 						}
 						//delay 0-20
 						else if (((pingList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("pingT26"))) > 0) && ((pingList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("pingT27"))) <= 0)) {
-							score = ((((pingList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("pingT27")))) * 20) / ((Double.parseDouble(pros.getValue("pingT26")) - (Double.parseDouble(pros.getValue("pingT27")))))) * (Double.parseDouble(pros.getValue("pingT21")));
+							score+= ((((pingList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("pingT27")))) * 20) / ((Double.parseDouble(pros.getValue("pingT26")) - (Double.parseDouble(pros.getValue("pingT27")))))) * (Double.parseDouble(pros.getValue("pingT21")));
 						}
 						//delay 0
 						else {
-							score = 0;
+							score+= 0;
 						}
 
 						//delay_std 100
@@ -584,37 +584,37 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
 			for (int i = 0; i < pingList.size(); i++) {
-				double score = 0;
+				double score= 0;
 				//Ping(Udp)
 				if ((pingList.get(i).getServiceType()) == 3) {
 					try {
 						//delay 100
 						if ((pingList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("pingU22"))) <= 0) {
-							score = 100 * (Double.parseDouble(pros.getValue("pingU21")));
+							score+= 100 * (Double.parseDouble(pros.getValue("pingU21")));
 						}
 						//delay 80-100
 						else if (((pingList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("pingU22"))) > 0) && ((pingList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("pingU23"))) <= 0)) {
-							score = (80 + ((((pingList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("pingU23")))) * 20) / ((Double.parseDouble(pros.getValue("pingU22")) - (Double.parseDouble(pros.getValue("pingU23"))))))) * (Double.parseDouble(pros.getValue("pingU21")));
+							score+= (80 + ((((pingList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("pingU23")))) * 20) / ((Double.parseDouble(pros.getValue("pingU22")) - (Double.parseDouble(pros.getValue("pingU23"))))))) * (Double.parseDouble(pros.getValue("pingU21")));
 						}
 						//delay 60-80
 						else if (((pingList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("pingU23"))) > 0) && ((pingList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("pingU24"))) <= 0)) {
-							score = (60 + ((((pingList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("pingU24")))) * 20) / ((Double.parseDouble(pros.getValue("pingU23")) - (Double.parseDouble(pros.getValue("pingU24"))))))) * (Double.parseDouble(pros.getValue("pingU21")));
+							score+= (60 + ((((pingList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("pingU24")))) * 20) / ((Double.parseDouble(pros.getValue("pingU23")) - (Double.parseDouble(pros.getValue("pingU24"))))))) * (Double.parseDouble(pros.getValue("pingU21")));
 						}
 						//delay 40-60
 						else if (((pingList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("pingU24"))) > 0) && ((pingList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("pingU25"))) <= 0)) {
-							score = (40 + ((((pingList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("pingU25")))) * 20) / ((Double.parseDouble(pros.getValue("pingU24")) - (Double.parseDouble(pros.getValue("pingU25"))))))) * (Double.parseDouble(pros.getValue("pingU21")));
+							score+= (40 + ((((pingList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("pingU25")))) * 20) / ((Double.parseDouble(pros.getValue("pingU24")) - (Double.parseDouble(pros.getValue("pingU25"))))))) * (Double.parseDouble(pros.getValue("pingU21")));
 						}
 						//delay 20-40
 						else if (((pingList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("pingU25"))) > 0) && ((pingList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("pingU26"))) <= 0)) {
-							score = (20 + ((((pingList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("pingU26")))) * 20) / ((Double.parseDouble(pros.getValue("pingU25")) - (Double.parseDouble(pros.getValue("pingU26"))))))) * (Double.parseDouble(pros.getValue("pingU21")));
+							score+= (20 + ((((pingList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("pingU26")))) * 20) / ((Double.parseDouble(pros.getValue("pingU25")) - (Double.parseDouble(pros.getValue("pingU26"))))))) * (Double.parseDouble(pros.getValue("pingU21")));
 						}
 						//delay 0-20
 						else if (((pingList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("pingU26"))) > 0) && ((pingList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("pingU27"))) <= 0)) {
-							score = ((((pingList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("pingU27")))) * 20) / ((Double.parseDouble(pros.getValue("pingU26")) - (Double.parseDouble(pros.getValue("pingU27")))))) * (Double.parseDouble(pros.getValue("pingU21")));
+							score+= ((((pingList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("pingU27")))) * 20) / ((Double.parseDouble(pros.getValue("pingU26")) - (Double.parseDouble(pros.getValue("pingU27")))))) * (Double.parseDouble(pros.getValue("pingU21")));
 						}
 						//delay 0
 						else {
-							score = 0;
+							score+= 0;
 						}
 
 						//delay_std 100
@@ -843,31 +843,31 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 					try {
 						//delay 100
 						if ((tracertList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("trI12"))) <= 0) {
-							score = 100 * (Double.parseDouble(pros.getValue("trI11")));
+							score+= 100 * (Double.parseDouble(pros.getValue("trI11")));
 						}
 						//delay 80-100
 						else if (((tracertList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("trI12"))) > 0) && ((tracertList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("trI13"))) <= 0)) {
-							score = (80 + ((((tracertList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("trI13")))) * 20) / ((Double.parseDouble(pros.getValue("trI12")) - (Double.parseDouble(pros.getValue("trI13"))))))) * (Double.parseDouble(pros.getValue("trI11")));
+							score+= (80 + ((((tracertList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("trI13")))) * 20) / ((Double.parseDouble(pros.getValue("trI12")) - (Double.parseDouble(pros.getValue("trI13"))))))) * (Double.parseDouble(pros.getValue("trI11")));
 						}
 						//delay 60-80
 						else if (((tracertList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("trI13"))) > 0) && ((tracertList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("trI14"))) <= 0)) {
-							score = (60 + ((((tracertList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("trI14")))) * 20) / ((Double.parseDouble(pros.getValue("trI13")) - (Double.parseDouble(pros.getValue("trI14"))))))) * (Double.parseDouble(pros.getValue("trI11")));
+							score+= (60 + ((((tracertList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("trI14")))) * 20) / ((Double.parseDouble(pros.getValue("trI13")) - (Double.parseDouble(pros.getValue("trI14"))))))) * (Double.parseDouble(pros.getValue("trI11")));
 						}
 						//delay 40-60
 						else if (((tracertList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("trI14"))) > 0) && ((tracertList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("trI15"))) <= 0)) {
-							score = (40 + ((((tracertList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("trI15")))) * 20) / ((Double.parseDouble(pros.getValue("trI14")) - (Double.parseDouble(pros.getValue("trI15"))))))) * (Double.parseDouble(pros.getValue("trI11")));
+							score+= (40 + ((((tracertList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("trI15")))) * 20) / ((Double.parseDouble(pros.getValue("trI14")) - (Double.parseDouble(pros.getValue("trI15"))))))) * (Double.parseDouble(pros.getValue("trI11")));
 						}
 						//delay 20-40
 						else if (((tracertList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("trI15"))) > 0) && ((tracertList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("trI16"))) <= 0)) {
-							score = (20 + ((((tracertList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("trI16")))) * 20) / ((Double.parseDouble(pros.getValue("trI15")) - (Double.parseDouble(pros.getValue("trI16"))))))) * (Double.parseDouble(pros.getValue("trI11")));
+							score+= (20 + ((((tracertList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("trI16")))) * 20) / ((Double.parseDouble(pros.getValue("trI15")) - (Double.parseDouble(pros.getValue("trI16"))))))) * (Double.parseDouble(pros.getValue("trI11")));
 						}
 						//delay 0-20
 						else if (((tracertList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("trI16"))) > 0) && ((tracertList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("trI17"))) <= 0)) {
-							score = ((((tracertList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("trI17")))) * 20) / ((Double.parseDouble(pros.getValue("trI16")) - (Double.parseDouble(pros.getValue("trI17")))))) * (Double.parseDouble(pros.getValue("trI11")));
+							score+= ((((tracertList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("trI17")))) * 20) / ((Double.parseDouble(pros.getValue("trI16")) - (Double.parseDouble(pros.getValue("trI17")))))) * (Double.parseDouble(pros.getValue("trI11")));
 						}
 						//delay 0
 						else {
-							score = 0;
+							score+= 0;
 						}
 
 						//delay_std 100
@@ -1100,27 +1100,27 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						}
 						//delay 80-100
 						else if (((tracertList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("trT12"))) > 0) && ((tracertList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("trT13"))) <= 0)) {
-							score = (80 + ((((tracertList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("trT13")))) * 20) / ((Double.parseDouble(pros.getValue("trT12")) - (Double.parseDouble(pros.getValue("trT13"))))))) * (Double.parseDouble(pros.getValue("trT11")));
+							score+= (80 + ((((tracertList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("trT13")))) * 20) / ((Double.parseDouble(pros.getValue("trT12")) - (Double.parseDouble(pros.getValue("trT13"))))))) * (Double.parseDouble(pros.getValue("trT11")));
 						}
 						//delay 60-80
 						else if (((tracertList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("trT13"))) > 0) && ((tracertList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("trT14"))) <= 0)) {
-							score = (60 + ((((tracertList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("trT14")))) * 20) / ((Double.parseDouble(pros.getValue("trT13")) - (Double.parseDouble(pros.getValue("trT14"))))))) * (Double.parseDouble(pros.getValue("trT11")));
+							score+= (60 + ((((tracertList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("trT14")))) * 20) / ((Double.parseDouble(pros.getValue("trT13")) - (Double.parseDouble(pros.getValue("trT14"))))))) * (Double.parseDouble(pros.getValue("trT11")));
 						}
 						//delay 40-60
 						else if (((tracertList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("trT14"))) > 0) && ((tracertList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("trT15"))) <= 0)) {
-							score = (40 + ((((tracertList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("trT15")))) * 20) / ((Double.parseDouble(pros.getValue("trT14")) - (Double.parseDouble(pros.getValue("trT15"))))))) * (Double.parseDouble(pros.getValue("trT11")));
+							score+= (40 + ((((tracertList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("trT15")))) * 20) / ((Double.parseDouble(pros.getValue("trT14")) - (Double.parseDouble(pros.getValue("trT15"))))))) * (Double.parseDouble(pros.getValue("trT11")));
 						}
 						//delay 20-40
 						else if (((tracertList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("trT15"))) > 0) && ((tracertList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("trT16"))) <= 0)) {
-							score = (20 + ((((tracertList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("trT16")))) * 20) / ((Double.parseDouble(pros.getValue("trT15")) - (Double.parseDouble(pros.getValue("trT16"))))))) * (Double.parseDouble(pros.getValue("trT11")));
+							score+= (20 + ((((tracertList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("trT16")))) * 20) / ((Double.parseDouble(pros.getValue("trT15")) - (Double.parseDouble(pros.getValue("trT16"))))))) * (Double.parseDouble(pros.getValue("trT11")));
 						}
 						//delay 0-20
 						else if (((tracertList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("trT16"))) > 0) && ((tracertList.get(i).getDelay()).compareTo(Double.parseDouble(pros.getValue("trT17"))) <= 0)) {
-							score = ((((tracertList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("trT17")))) * 20) / ((Double.parseDouble(pros.getValue("trT16")) - (Double.parseDouble(pros.getValue("trT17")))))) * (Double.parseDouble(pros.getValue("trT11")));
+							score+= ((((tracertList.get(i).getDelay().doubleValue()) - (Double.parseDouble(pros.getValue("trT17")))) * 20) / ((Double.parseDouble(pros.getValue("trT16")) - (Double.parseDouble(pros.getValue("trT17")))))) * (Double.parseDouble(pros.getValue("trT11")));
 						}
 						//delay 0
 						else {
-							score = 0;
+							score+= 0;
 						}
 
 						//delay_std 100

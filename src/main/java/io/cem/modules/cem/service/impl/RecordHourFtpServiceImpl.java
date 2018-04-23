@@ -528,7 +528,7 @@ public class RecordHourFtpServiceImpl implements RecordHourFtpService {
 				List<ScoreEntity> pingUdp = recordHourPingService.calculatePingUdp(pingList);
 				List<ScoreEntity> tracertIcmp = recordHourPingService.calculateTracertIcmp(tracertList);
 				List<ScoreEntity> tracertUdp = recordHourPingService.calculateTracertUdp(tracertList);
-				connectionList = recordHourPingService.calculateService1(pingIcmp, pingTcp, pingUdp, tracertIcmp, tracertUdp);
+				connectionList = recordHourPingService.calculateDate1(pingIcmp, pingTcp, pingUdp, tracertIcmp, tracertUdp);
 				break;
 			}
 			Thread.sleep(1000);
@@ -578,7 +578,7 @@ public class RecordHourFtpServiceImpl implements RecordHourFtpService {
 				List<ScoreEntity> dhcp = recordHourSlaService.calculateDhcp(dhcpList);
 				List<ScoreEntity> pppoe = recordHourSlaService.calculatePppoe(pppoeList);
 				List<ScoreEntity> radius = recordHourSlaService.calculateRadius(radiusList);
-				qualityList = recordHourSlaService.calculateService2(slaTcp, slaUdp, dns, dhcp, pppoe, radius);
+				qualityList = recordHourSlaService.calculateDate2(slaTcp, slaUdp, dns, dhcp, pppoe, radius);
 				break;
 			}
 			Thread.sleep(1000);
@@ -662,7 +662,7 @@ public class RecordHourFtpServiceImpl implements RecordHourFtpService {
 				List<ScoreEntity> webDownload = recordHourWebDownloadService.calculateWebDownload(webDownloadList);
 				List<ScoreEntity> ftpDownload = recordHourWebDownloadService.calculateFtpDownload(ftpList);
 				List<ScoreEntity> ftpUpload = recordHourWebDownloadService.calculateFtpUpload(ftpList);
-				downloadList = recordHourWebDownloadService.calculateService4(webDownload, ftpDownload, ftpUpload);
+				downloadList = recordHourWebDownloadService.calculateDate4(webDownload, ftpDownload, ftpUpload);
 				break;
 			}
 			Thread.sleep(1000);

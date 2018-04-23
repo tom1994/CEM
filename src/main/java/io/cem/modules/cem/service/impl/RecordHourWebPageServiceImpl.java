@@ -318,27 +318,27 @@ public class RecordHourWebPageServiceImpl implements RecordHourWebPageService {
 				}
 
 				//download_rate 100
-				if ((webPageList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("webP82"))) <= 0) {
+				if ((webPageList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("webP82"))) >= 0) {
 					score += 100 * (Double.parseDouble(pros.getValue("webP81")));
 				}
 				//page_element_delay 80-100
-				else if (((webPageList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("webP82"))) > 0) && ((webPageList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("webP83"))) <= 0)) {
+				else if (((webPageList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("webP82"))) < 0) && ((webPageList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("webP83"))) >= 0)) {
 					score += (80 + ((((webPageList.get(i).getDownloadRate().doubleValue()) - (Double.parseDouble(pros.getValue("webP83")))) * 20) / ((Double.parseDouble(pros.getValue("webP82")) - (Double.parseDouble(pros.getValue("webP83"))))))) * (Double.parseDouble(pros.getValue("webP81")));
 				}
 				//page_element_delay 60-80
-				else if (((webPageList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("webP83"))) > 0) && ((webPageList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("webP84"))) <= 0)) {
+				else if (((webPageList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("webP83"))) < 0) && ((webPageList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("webP84"))) >= 0)) {
 					score += (60 + ((((webPageList.get(i).getDownloadRate().doubleValue()) - (Double.parseDouble(pros.getValue("webP84")))) * 20) / ((Double.parseDouble(pros.getValue("webP83")) - (Double.parseDouble(pros.getValue("webP84"))))))) * (Double.parseDouble(pros.getValue("webP81")));
 				}
 				//page_element_delay 40-60
-				else if (((webPageList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("webP84"))) > 0) && ((webPageList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("webP85"))) <= 0)) {
+				else if (((webPageList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("webP84"))) < 0) && ((webPageList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("webP85"))) >= 0)) {
 					score += (40 + ((((webPageList.get(i).getDownloadRate().doubleValue()) - (Double.parseDouble(pros.getValue("webP85")))) * 20) / ((Double.parseDouble(pros.getValue("webP84")) - (Double.parseDouble(pros.getValue("webP85"))))))) * (Double.parseDouble(pros.getValue("webP81")));
 				}
 				//page_element_delay 20-40
-				else if (((webPageList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("webP85"))) > 0) && ((webPageList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("webP86"))) <= 0)) {
+				else if (((webPageList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("webP85"))) < 0) && ((webPageList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("webP86"))) >= 0)) {
 					score += (20 + ((((webPageList.get(i).getDownloadRate().doubleValue()) - (Double.parseDouble(pros.getValue("webP86")))) * 20) / ((Double.parseDouble(pros.getValue("webP85")) - (Double.parseDouble(pros.getValue("webP86"))))))) * (Double.parseDouble(pros.getValue("webP81")));
 				}
 				//page_element_delay 0-20
-				else if (((webPageList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("webP86"))) > 0) && ((webPageList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("webP87"))) <= 0)) {
+				else if (((webPageList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("webP86"))) < 0) && ((webPageList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("webP87"))) >= 0)) {
 					score += ((((webPageList.get(i).getDownloadRate().doubleValue()) - (Double.parseDouble(pros.getValue("webP87")))) * 20) / ((Double.parseDouble(pros.getValue("webP86")) - (Double.parseDouble(pros.getValue("webP87")))))) * (Double.parseDouble(pros.getValue("webP81")));
 				}
 				//page_element_delay 0

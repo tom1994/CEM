@@ -92,7 +92,7 @@
 		ON t.city_id = city.city_id
 		LEFT JOIN county
 		ON t.county_id = county.county_id
-		LEFT JOIN target
+		INNER JOIN target
 		ON t.target_id = target.id
 	</select>
 
@@ -133,7 +133,7 @@
 		ON t.city_id = city.city_id
 		LEFT JOIN county
 		ON t.county_id = county.county_id
-		LEFT JOIN target
+		INNER JOIN target
 		ON t.target_id = target.id
 	</select>
 
@@ -156,7 +156,7 @@
 		ON record_hour_pppoe.county_id = county.county_id
 		INNER JOIN probe
 		ON record_hour_pppoe.probe_id = probe.id
-		LEFT JOIN target
+		INNER JOIN target
 		ON record_hour_pppoe.target_id = target.id
 		WHERE record_hour_pppoe.record_date BETWEEN #{ava_start} AND #{ava_terminal}
 		AND record_hour_pppoe.port = #{port}
@@ -184,7 +184,7 @@
 		ON record_day_pppoe.county_id = county.county_id
 		INNER JOIN probe
 		ON record_day_pppoe.probe_id = probe.id
-		LEFT JOIN target
+		INNER JOIN target
 		ON record_day_pppoe.target_id = target.id
 		WHERE record_day_pppoe.record_date BETWEEN #{ava_start} AND #{ava_terminal}
 		AND record_day_pppoe.port = #{port}
@@ -212,7 +212,7 @@
 		ON pppoe.county_id = county.county_id
 		INNER JOIN probe
 		ON pppoe.probe_id = probe.id
-		LEFT JOIN target
+		INNER JOIN target
 		ON pppoe.target_id = target.id
 		WHERE pppoe.record_date BETWEEN #{ava_start} AND #{ava_terminal}
 		<if test="city_id != null and city_id != ''">

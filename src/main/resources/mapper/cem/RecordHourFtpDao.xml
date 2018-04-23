@@ -97,7 +97,7 @@
 		ON t.city_id = city.city_id
 		LEFT JOIN county
 		ON t.county_id = county.county_id
-		LEFT JOIN target
+		INNER JOIN target
 		ON t.target_id = target.id
 
 	</select>
@@ -142,7 +142,7 @@
 		ON t.city_id = city.city_id
 		LEFT JOIN county
 		ON t.county_id = county.county_id
-		LEFT JOIN target
+		INNER JOIN target
 		ON t.target_id = target.id
 
 	</select>
@@ -169,7 +169,7 @@
 		ON record_hour_ftp.county_id = county.county_id
 		INNER JOIN probe
 		ON record_hour_ftp.probe_id = probe.id
-		LEFT JOIN target
+		INNER JOIN target
 		ON record_hour_ftp.target_id = target.id
 		WHERE record_hour_ftp.record_date BETWEEN #{ava_start} AND #{ava_terminal}
 		AND record_hour_ftp.port = #{port}
@@ -200,7 +200,7 @@
 		ON record_day_ftp.county_id = county.county_id
 		INNER JOIN probe
 		ON record_day_ftp.probe_id = probe.id
-		LEFT JOIN target
+		INNER JOIN target
 		ON record_day_ftp.target_id = target.id
 		WHERE record_day_ftp.record_date BETWEEN #{ava_start} AND #{ava_terminal}
 		AND record_day_ftp.port = #{port}
@@ -231,7 +231,7 @@
 		ON ftp.county_id = county.county_id
 		INNER JOIN probe
 		ON ftp.probe_id = probe.id
-		LEFT JOIN target
+		INNER JOIN target
 		ON ftp.target_id = target.id
 		WHERE ftp.record_date BETWEEN #{ava_start} AND #{ava_terminal}
 		<if test="city_id != null and city_id != ''">

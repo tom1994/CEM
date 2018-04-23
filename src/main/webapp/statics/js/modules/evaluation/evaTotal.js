@@ -84,7 +84,7 @@ var search_service = new Vue({ //Todo:完成查询条件框
             }else{
                 var search = new Object();
                 search.city_id = searchJson.city;
-                search.couty_id = searchJson.county;
+                search.county_id = searchJson.county;
                 search.probe_id = searchJson.probe;
                 if (searchJson.startDate.length != 0 && searchJson.terminalDate.length != 0 ) {
                     var ava_start = searchJson.startDate.substr(0, 10);
@@ -100,6 +100,7 @@ var search_service = new Vue({ //Todo:完成查询条件框
                     search.ava_terminal = (new Date()).Format("yyyy-MM-dd");
                 }
                 let param = {};
+                console.log(search)
                 param.probedata = JSON.stringify(search);
                 param.chartdata = JSON.stringify(search);
 
@@ -2046,7 +2047,6 @@ function quality(obj) {
 //网页浏览表格
 function broswer(obj) {
     var probeContent=obj
-    debugger
     var broswer_table=new Vue({
         el:'#broswerdata_table',
         data: {
