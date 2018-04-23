@@ -92,7 +92,7 @@
 		ON t.county_id = county.county_id
 		INNER JOIN probe
 		ON t.probe_id = probe.id
-		LEFT JOIN target
+		INNER JOIN target
 		ON t.target_id = target.id
 		<choose>
 			<when test="sidx != null and sidx.trim() != ''">
@@ -145,7 +145,7 @@
 		ON t.county_id = county.county_id
 		INNER JOIN probe
 		ON t.probe_id = probe.id
-		LEFT JOIN target
+		INNER JOIN target
 		ON t.target_id = target.id
 		<choose>
 			<when test="sidx != null and sidx.trim() != ''">
@@ -180,7 +180,7 @@
 		ON rht.county_id = county.county_id
 		INNER JOIN probe
 		ON rht.probe_id = probe.id
-		LEFT JOIN target
+		INNER JOIN target
 		ON rht.target_id = target.id
 		WHERE rht.record_date BETWEEN #{ava_start} AND #{ava_terminal}
 		<if test="city_id != null and city_id != ''">
@@ -222,7 +222,7 @@
 		ON rht.county_id = county.county_id
 		INNER JOIN probe
 		ON rht.probe_id = probe.id
-		LEFT JOIN target
+		INNER JOIN target
 		ON rht.target_id = target.id
 		WHERE rht.record_date BETWEEN #{ava_start} AND #{ava_terminal}
 		AND rht.port = #{port}
@@ -255,7 +255,7 @@
 		ON record_day_tracert.county_id = county.county_id
 		INNER JOIN probe
 		ON record_day_tracert.probe_id = probe.id
-		LEFT JOIN target
+		INNER JOIN target
 		ON record_day_tracert.target_id = target.id
 		WHERE record_day_tracert.record_date BETWEEN #{ava_start} AND #{ava_terminal}
 		AND record_day_tracert.port = #{port}

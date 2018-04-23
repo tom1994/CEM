@@ -601,34 +601,33 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				}
 
 				//success rate 100
-				if ((dnsList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dns22"))) <= 0) {
+				if ((dnsList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dns22"))) >= 0) {
 					score += 100 * (Double.parseDouble(pros.getValue("dns21")));
 				}
 				//delay 80-100
-				else if (((dnsList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dns22"))) > 0) && ((dnsList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dns23"))) <= 0)) {
+				else if (((dnsList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dns22"))) < 0) && ((dnsList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dns23"))) >= 0)) {
 					score += (80 + ((((dnsList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("dns23")))) * 20) / ((Double.parseDouble(pros.getValue("dns22")) - (Double.parseDouble(pros.getValue("dns23"))))))) * (Double.parseDouble(pros.getValue("dns21")));
 				}
 				//delay 60-80
-				else if (((dnsList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dns23"))) > 0) && ((dnsList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dns24"))) <= 0)) {
+				else if (((dnsList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dns23"))) < 0) && ((dnsList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dns24"))) >= 0)) {
 					score += (60 + ((((dnsList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("dns24")))) * 20) / ((Double.parseDouble(pros.getValue("dns23")) - (Double.parseDouble(pros.getValue("dns24"))))))) * (Double.parseDouble(pros.getValue("dns21")));
 				}
 				//delay 40-60
-				else if (((dnsList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dns24"))) > 0) && ((dnsList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dns25"))) <= 0)) {
+				else if (((dnsList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dns24"))) < 0) && ((dnsList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dns25"))) >= 0)) {
 					score += (40 + ((((dnsList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("dns25")))) * 20) / ((Double.parseDouble(pros.getValue("dns24")) - (Double.parseDouble(pros.getValue("dns25"))))))) * (Double.parseDouble(pros.getValue("dns21")));
 				}
 				//delay 20-40
-				else if (((dnsList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dns25"))) > 0) && ((dnsList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dns26"))) <= 0)) {
+				else if (((dnsList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dns25"))) < 0) && ((dnsList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dns26"))) >= 0)) {
 					score += (20 + ((((dnsList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("dns26")))) * 20) / ((Double.parseDouble(pros.getValue("dns25")) - (Double.parseDouble(pros.getValue("dns26"))))))) * (Double.parseDouble(pros.getValue("dns21")));
 				}
 				//delay 0-20
-				else if (((dnsList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dns26"))) > 0) && ((dnsList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dns27"))) <= 0)) {
+				else if (((dnsList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dns26"))) < 0) && ((dnsList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dns27"))) >= 0)) {
 					score += ((((dnsList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("dns27")))) * 20) / ((Double.parseDouble(pros.getValue("dns26")) - (Double.parseDouble(pros.getValue("dns27")))))) * (Double.parseDouble(pros.getValue("dns21")));
 				}
 				//delay 0
 				else {
 					score += 0;
 				}
-				System.out.println("Dns:"+score);
 
 
 				ScoreEntity DNS = new ScoreEntity();
@@ -698,27 +697,27 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				}
 
 				//success rate 100
-				if ((dhcpList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dhcp22"))) <= 0) {
+				if ((dhcpList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dhcp22"))) >= 0) {
 					score += 100 * (Double.parseDouble(pros.getValue("dhcp21")));
 				}
 				//delay 80-100
-				else if (((dhcpList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dhcp22"))) > 0) && ((dhcpList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dhcp23"))) <= 0)) {
+				else if (((dhcpList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dhcp22"))) < 0) && ((dhcpList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dhcp23"))) >= 0)) {
 					score += (80 + ((((dhcpList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("dhcp23")))) * 20) / ((Double.parseDouble(pros.getValue("dhcp22")) - (Double.parseDouble(pros.getValue("dhcp23"))))))) * (Double.parseDouble(pros.getValue("dhcp21")));
 				}
 				//delay 60-80
-				else if (((dhcpList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dhcp23"))) > 0) && ((dhcpList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dhcp24"))) <= 0)) {
+				else if (((dhcpList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dhcp23"))) < 0) && ((dhcpList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dhcp24"))) >= 0)) {
 					score += (60 + ((((dhcpList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("dhcp24")))) * 20) / ((Double.parseDouble(pros.getValue("dhcp23")) - (Double.parseDouble(pros.getValue("dhcp24"))))))) * (Double.parseDouble(pros.getValue("dhcp21")));
 				}
 				//delay 40-60
-				else if (((dhcpList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dhcp24"))) > 0) && ((dhcpList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dhcp25"))) <= 0)) {
+				else if (((dhcpList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dhcp24"))) < 0) && ((dhcpList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dhcp25"))) >= 0)) {
 					score += (40 + ((((dhcpList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("dhcp25")))) * 20) / ((Double.parseDouble(pros.getValue("dhcp24")) - (Double.parseDouble(pros.getValue("dhcp25"))))))) * (Double.parseDouble(pros.getValue("dhcp21")));
 				}
 				//delay 20-40
-				else if (((dhcpList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dhcp25"))) > 0) && ((dhcpList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dhcp26"))) <= 0)) {
+				else if (((dhcpList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dhcp25"))) < 0) && ((dhcpList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dhcp26"))) >= 0)) {
 					score += (20 + ((((dhcpList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("dhcp26")))) * 20) / ((Double.parseDouble(pros.getValue("dhcp25")) - (Double.parseDouble(pros.getValue("dhcp26"))))))) * (Double.parseDouble(pros.getValue("dhcp21")));
 				}
 				//delay 0-20
-				else if (((dhcpList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dhcp26"))) > 0) && ((dhcpList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dhcp27"))) <= 0)) {
+				else if (((dhcpList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dhcp26"))) < 0) && ((dhcpList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("dhcp27")))>= 0)) {
 					score += ((((dhcpList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("dhcp27")))) * 20) / ((Double.parseDouble(pros.getValue("dhcp26")) - (Double.parseDouble(pros.getValue("dhcp27")))))) * (Double.parseDouble(pros.getValue("dhcp21")));
 				}
 				//delay 0
@@ -920,27 +919,27 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				}
 
 				//success rate 100
-				if ((radiusList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("radius22"))) <= 0) {
+				if ((radiusList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("radius22"))) >= 0) {
 					score += 100 * (Double.parseDouble(pros.getValue("radius21")));
 				}
 				//delay 80-100
-				else if (((radiusList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("radius22"))) > 0) && ((radiusList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("radius23"))) <= 0)) {
+				else if (((radiusList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("radius22"))) < 0) && ((radiusList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("radius23"))) >= 0)) {
 					score += (80 + ((((radiusList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("radius23")))) * 20) / ((Double.parseDouble(pros.getValue("radius22")) - (Double.parseDouble(pros.getValue("radius23"))))))) * (Double.parseDouble(pros.getValue("radius21")));
 				}
 				//delay 60-80
-				else if (((radiusList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("radius23"))) > 0) && ((radiusList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("radius24"))) <= 0)) {
+				else if (((radiusList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("radius23"))) < 0) && ((radiusList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("radius24")))  >= 0)) {
 					score += (60 + ((((radiusList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("radius24")))) * 20) / ((Double.parseDouble(pros.getValue("radius23")) - (Double.parseDouble(pros.getValue("radius24"))))))) * (Double.parseDouble(pros.getValue("radius21")));
 				}
 				//delay 40-60
-				else if (((radiusList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("radius24"))) > 0) && ((radiusList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("radius25"))) <= 0)) {
+				else if (((radiusList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("radius24"))) < 0) && ((radiusList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("radius25")))  >= 0)) {
 					score += (40 + ((((radiusList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("radius25")))) * 20) / ((Double.parseDouble(pros.getValue("radius24")) - (Double.parseDouble(pros.getValue("radius25"))))))) * (Double.parseDouble(pros.getValue("radius21")));
 				}
 				//delay 20-40
-				else if (((radiusList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("radius25"))) > 0) && ((radiusList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("radius26"))) <= 0)) {
+				else if (((radiusList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("radius25"))) < 0) && ((radiusList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("radius26")))  >= 0)) {
 					score += (20 + ((((radiusList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("radius26")))) * 20) / ((Double.parseDouble(pros.getValue("radius25")) - (Double.parseDouble(pros.getValue("radius26"))))))) * (Double.parseDouble(pros.getValue("radius21")));
 				}
 				//delay 0-20
-				else if (((radiusList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("radius26"))) > 0) && ((radiusList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("radius27"))) <= 0)) {
+				else if (((radiusList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("radius26"))) < 0) && ((radiusList.get(i).getSuccessRate()).compareTo(Double.parseDouble(pros.getValue("radius27")))  >= 0)) {
 					score += ((((radiusList.get(i).getSuccessRate().doubleValue()) - (Double.parseDouble(pros.getValue("radius27")))) * 20) / ((Double.parseDouble(pros.getValue("radius26")) - (Double.parseDouble(pros.getValue("radius27")))))) * (Double.parseDouble(pros.getValue("radius21")));
 				}
 				//delay 0

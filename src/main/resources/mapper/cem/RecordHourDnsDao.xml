@@ -90,7 +90,7 @@
 		ON t.city_id = city.city_id
 		LEFT JOIN county
 		ON t.county_id = county.county_id
-		LEFT JOIN target
+		INNER JOIN target
 		ON t.target_id = target.id
 		<choose>
 			<when test="sidx != null and sidx.trim() != ''">
@@ -139,7 +139,7 @@
 		ON t.city_id = city.city_id
 		LEFT JOIN county
 		ON t.county_id = county.county_id
-		LEFT JOIN target
+		INNER JOIN target
 		ON t.target_id = target.id
 		<choose>
 			<when test="sidx != null and sidx.trim() != ''">
@@ -169,7 +169,7 @@
 		ON record_hour_dns.county_id = county.county_id
 		INNER JOIN probe
 		ON record_hour_dns.probe_id = probe.id
-		LEFT JOIN target
+		INNER JOIN target
 		ON record_hour_dns.target_id = target.id
 		WHERE record_hour_dns.record_date BETWEEN #{ava_start} AND #{ava_terminal}
 		AND record_hour_dns.port = #{port}
@@ -196,7 +196,7 @@
 		ON record_day_dns.county_id = county.county_id
 		INNER JOIN probe
 		ON record_day_dns.probe_id = probe.id
-		LEFT JOIN target
+		INNER JOIN target
 		ON record_day_dns.target_id = target.id
 		WHERE record_day_dns.record_date BETWEEN #{ava_start} AND #{ava_terminal}
 		AND record_day_dns.port = #{port}
@@ -223,7 +223,7 @@
 		ON dns.county_id = county.county_id
 		INNER JOIN probe
 		ON dns.probe_id = probe.id
-		LEFT JOIN target
+		INNER JOIN target
 		ON dns.target_id = target.id
 		WHERE dns.record_date BETWEEN #{ava_start} AND #{ava_terminal}
 		<if test="city_id != null and city_id != ''">

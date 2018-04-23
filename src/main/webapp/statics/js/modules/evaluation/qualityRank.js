@@ -870,6 +870,7 @@ var probetable = new Vue({
             serverSide: true,
             info: false,
             bProcessing: true,
+            order:[[ 6, 'asc' ]],
             // bLoadingRecords: "载入中...",
             // ordering: false, /*禁用排序功能*/
             /*bInfo: false,*/
@@ -958,7 +959,7 @@ var areatable = new Vue({
     el: '#areadata_table',
     data: {
         headers: [
-            {title: '<div ></div>'},
+            {title:''},
             {title: '<div style="width:180px">地市</div>'},
             {title: '<div style="width:180px">区县</div>'},
             {title: '<div style="width:180px">业务类型</div>'},
@@ -1018,6 +1019,7 @@ var areatable = new Vue({
             info: false,
             bProcessing:true,
             bAutoWidth:true,
+            order:[[ 5, 'asc' ]],
             //ordering: false, /*禁用排序功能*/
             /*bInfo: false,*/
             /*bLengthChange: false,*/    /*禁用Show entries*/
@@ -1163,6 +1165,7 @@ var doortable = new Vue({
             serverSide: true,
             info: false,
             bProcessing: true,
+            order:[[ 6, 'asc' ]],
             // ordering: false, /*禁用排序功能*/
             /*bInfo: false,*/
             /*bLengthChange: false,*/    /*禁用Show entries*/
@@ -1575,10 +1578,14 @@ var getProbeCity = function (cityid) {
 
 function diagnose(obj) {
     var id = parseInt(obj.id);
-    // $('#content_frame').src=
-    // doc = document.getElementById("content_frame").src="Hello.html";
-    location.href = '../diagnose/diagnoseNow.html' + "?probeId=" + id;
-}
+    var url=location.href;
+    console.log(url);
+    // window.location.href='../diagnose/diagnoseNow.html'+ "?probeId=" + id;
+    // window.top.location='../diagnose/diagnoseNow.html'+ "?probeId=" + id; ;
+    parent.location=top.location='http://114.236.91.16:8888/index.html#modules/diagnose/diagnoseNow.html'
+    $('#page-sidebar>ul>li').eq(3).addClass(' active open');
+    $('#page-sidebar>ul>li').eq(1).removeClass(' active open');
+  }
 
 function update_this(obj) {
     $('#myModal_update').modal('show');
@@ -1802,38 +1809,38 @@ function ping(obj) {
                 {title: '<div style="width:10px"></div>'},
                 {title: '<div style="width:110px">探针名称</div>'},
                 {title: '<div style="width:70px">综合分数</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">往返时延(ms)</div>'},
                 {title: '<div style="width:100px">时延标准差(ms)</div>'},
                 {title: '<div style="width:100px">时延方差(ms)</div>'},
-                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">抖动(ms)</div>'},
                 {title: '<div style="width:100px">抖动标准差(ms)</div>'},
                 {title: '<div style="width:100px">抖动方差(ms)</div>'},
                 {title: '<div style="width:100px">丢包率(%)</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">往返时延(ms)</div>'},
                 {title: '<div style="width:100px">时延标准差(ms)</div>'},
                 {title: '<div style="width:100px">时延方差(ms)</div>'},
-                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">抖动(ms)</div>'},
                 {title: '<div style="width:100px">抖动标准差(ms)</div>'},
                 {title: '<div style="width:100px">抖动方差(ms)</div>'},
                 {title: '<div style="width:100px">丢包率(%)</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">往返时延(ms)</div>'},
                 {title: '<div style="width:100px">时延标准差(ms)</div>'},
                 {title: '<div style="width:100px">时延方差(ms)</div>'},
-                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">抖动(ms)</div>'},
                 {title: '<div style="width:100px">抖动标准差(ms)</div>'},
                 {title: '<div style="width:100px">抖动方差(ms)</div>'},
                 {title: '<div style="width:100px">丢包率(%)</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">往返时延(ms)</div>'},
                 {title: '<div style="width:100px">时延标准差(ms)</div>'},
                 {title: '<div style="width:100px">时延方差(ms)</div>'},
-                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">抖动(ms)</div>'},
                 {title: '<div style="width:100px">抖动标准差(ms)</div>'},
                 {title: '<div style="width:100px">抖动方差(ms)</div>'},
                 {title: '<div style="width:100px">丢包率(%)</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">往返时延(ms)</div>'},
                 {title: '<div style="width:100px">时延标准差(ms)</div>'},
                 {title: '<div style="width:100px">时延方差(ms)</div>'},
-                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">抖动</div>'},
                 {title: '<div style="width:100px">抖动标准差(ms)</div>'},
                 {title: '<div style="width:100px">抖动方差(ms)</div>'},
                 {title: '<div style="width:100px">丢包率(%)</div>'},
@@ -1927,35 +1934,35 @@ function ping(obj) {
                             row.push(fixed(item.pingIcmpJitter ));
                             row.push(fixed(item.pingIcmpJitterStd ));
                             row.push(fixed(item.pingIcmpJitterVar ));
-                            row.push(fixed(item.pingIcmpLossRate ));
+                            row.push(fixed(item.pingIcmpLossRate )*100);
                             row.push(fixed(item.pingTcpDelay ));
                             row.push(fixed(item.pingTcpDelayStd ));
                             row.push(fixed(item.pingTcpDelayVar ));
                             row.push(fixed(item.pingTcpJitter ));
                             row.push(fixed(item.pingTcpJitterStd ));
                             row.push(fixed(item.pingTcpJitterVar ));
-                            row.push(fixed(item.pingTcpLossRate ));
+                            row.push(fixed(item.pingTcpLossRate )*100);
                             row.push(fixed(item.pingUdpDelay));
                             row.push(fixed(item.pingUdpDelayStd));
                             row.push(fixed(item.pingUdpDelayVar));
                             row.push(fixed(item.pingUdpJitter));
                             row.push(fixed(item.pingUdpJitterStd));
                             row.push(fixed(item.pingUdpJitterVar));
-                            row.push(fixed(item.pingUdpLossRate));
+                            row.push(fixed(item.pingUdpLossRate)*100);
                             row.push(fixed(item.tracertIcmpDelay));
                             row.push(fixed(item.tracertIcmpDelayStd));
                             row.push(fixed(item.tracertIcmpDelayVar));
                             row.push(fixed(item.tracertIcmpJitter));
                             row.push(fixed(item.tracertIcmpJitterStd));
                             row.push(fixed(item.tracertIcmpJitterVar));
-                            row.push(fixed(item.tracertIcmpLossRate));
+                            row.push(fixed(item.tracertIcmpLossRate)*100);
                             row.push(fixed(item.tracertTcpDelay));
                             row.push(fixed(item.tracertTcpDelayStd));
                             row.push(fixed(item.tracertTcpDelayVar));
                             row.push(fixed(item.tracertTcpJitter));
                             row.push(fixed(item.tracertTcpJitterStd));
                             row.push(fixed(item.tracertTcpJitterVar));
-                            row.push(fixed(item.tracertTcpLossRate));
+                            row.push(fixed(item.tracertTcpLossRate)*100);
                             rows.push(row);
                         }
                     });
@@ -1987,28 +1994,32 @@ function quality(obj) {
                 {title: '<div style="width:10px"></div>'},
                 {title: '<div style="width:110px">探针名称</div>'},
                 {title: '<div style="width:70px">综合分数</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">时延(ms)</div>'},
                 {title: '<div style="width:100px">往向时延(ms)</div>'},
                 {title: '<div style="width:100px">返向时延(ms)</div>'},
-                {title: '<div style="width:100px">抖动平均值</div>'},
+                {title: '<div style="width:100px">抖动</div>'},
                 {title: '<div style="width:100px">往向抖动</div>'},
                 {title: '<div style="width:100px">返向抖动</div>'},
                 {title: '<div style="width:100px">丢包率</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">时延(ms)</div>'},
                 {title: '<div style="width:100px">往向时延(ms)</div>'},
                 {title: '<div style="width:100px">返向时延(ms)</div>'},
-                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">抖动(ms)</div>'},
                 {title: '<div style="width:100px">往向抖动(ms)</div>'},
                 {title: '<div style="width:100px">返向抖动(ms)</div>'},
                 {title: '<div style="width:100px">丢包率(%)</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
-                {title: '<div style="width:100px">查询成功率(%)</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
-                {title: '<div style="width:100px">查询成功率(%)</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+
+                {title: '<div style="width:100px">解析时延(ms)</div>'},
+                {title: '<div style="width:100px">成功率(%)</div>'},
+
+                {title: '<div style="width:100px">分配时延(ms)</div>'},
+                {title: '<div style="width:100px">成功率(%)</div>'},
+
+                {title: '<div style="width:100px">解析时延(ms)</div>'},
                 {title: '<div style="width:100px">掉线率(%)</div>'},
-                {title: '<div style="width:100px">查询成功率(%)</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">成功率(%)</div>'},
+
+                {title: '<div style="width:100px">认证时延(ms)</div>'},
                 {title: '<div style="width:100px">认证成功率(%)</div>'},
 
             ],
@@ -2102,23 +2113,23 @@ function quality(obj) {
                             row.push(fixed(item.slaTcpJitter));
                             row.push(fixed(item.slaTcpGJitter));
                             row.push(fixed(item.slaTcpRJitter));
-                            row.push(fixed(item.slaTcpLossRate));
+                            row.push(fixed(item.slaTcpLossRate)*100);
                             row.push(fixed(item.slaUdpDelay));
                             row.push(fixed(item.slaUdpGDelay));
                             row.push(fixed(item.slaUdpRDelay));
                             row.push(fixed(item.slaUdpJitter));
                             row.push(fixed(item.slaUdpGJitter));
                             row.push(fixed(item.slaUdpRJitter));
-                            row.push(fixed(item.slaUdpLossRate));
+                            row.push(fixed(item.slaUdpLossRate)*100);
                             row.push(fixed(item.dnsDelay));
-                            row.push(fixed(item.dnsSuccessRate));
+                            row.push(fixed(item.dnsSuccessRate)*100);
                             row.push(fixed(item.dhcpDelay));
-                            row.push(fixed(item.dhcpSuccessRate));
+                            row.push(fixed(item.dhcpSuccessRate)*100);
                             row.push(fixed(item.pppoeDelay));
-                            row.push(fixed(item.pppoeDropRate));
-                            row.push(fixed(item.pppoeSuccessRate));
+                            row.push(fixed(item.pppoeDropRate)*100);
+                            row.push(fixed(item.pppoeSuccessRate)*100);
                             row.push(fixed(item.radiusDelay));
-                            row.push(fixed(item.radiusSuccessRate));
+                            row.push(fixed(item.radiusSuccessRate)*100);
                             rows.push(row);
                         }
 
@@ -2157,7 +2168,7 @@ function broswer(obj) {
                 {title: '<div style="width:120px">页面文件时延(ms)</div>'},
                 {title: '<div style="width:100px">重定向时延(ms)</div>'},
                 {title: '<div style="width:100px">首屏时延(ms)</div>'},
-                {title: '<div style="width:115px">页面元素时延(ms)</div>'},
+                {title: '<div style="width:115px">页面加载时延(ms)</div>'},
                 {title: '<div style="width:100px">下载速率(KB/S)</div>'},
             ],
             rows: [],
@@ -2228,7 +2239,7 @@ function broswer(obj) {
                             row.push(fixed(item.webpagePageFileDelay ));
                             row.push(fixed(item.webpageRedirectDelay ));
                             row.push(fixed(item.webpageAboveFoldDelay ));
-                            row.push(fixed(item.webpagePageElementDelay) );
+                            row.push(fixed(item.loadDelay) );
                             row.push(fixed(item.webpageDownloadRate ));
                             rows.push(row);
                         }
@@ -2275,7 +2286,7 @@ function download(obj) {
                 {title: '<div style="width:100px">连接时延(ms)</div>'},
                 {title: '<div style="width:100px">登录时延(ms)</div>'},
                 {title: '<div style="width:100px">首字节时延(ms)</div>'},
-                {title: '<div style="width:100px">下载速率(KB/S)</div>'},
+                {title: '<div style="width:100px">上传速率(KB/S)</div>'},
             ],
             rows: [],
             dtHandle: null,
@@ -2408,12 +2419,9 @@ function video(obj) {
                 {title: '<div style="width:110px">探针名称</div>'},
                 {title: '<div style="width:70px">综合分数</div>'},
                 {title: '<div style="width:100px">DNS时延(ms)</div>'},
-                {title: '<div style="width:149px">连接WEB服务器时延(ms)</div>'},
+                {title: '<div style="width:130px">连接WEB服务器时延(ms)</div>'},
                 {title: '<div style="width:120px">web页面时延(ms)</div>'},
-                {title: '<div style="width:149px">连接调度服务器时延(ms)</div>'},
-                {title: '<div style="width:135px">获取视频地址时延(ms)</div>'},
-                {title: '<div style="width:147px">连接媒体服务器时延(ms)</div>'},
-                {title: '<div style="width:110px">首帧时延(ms)</div>'},
+                {title: '<div style="width:110px">首帧到达时延(ms)</div>'},
                 {title: '<div style="width:120px">首次缓冲时延(ms)</div>'},
                 {title: '<div style="width:120px">视频加载时延(ms)</div>'},
                 {title: '<div style="width:120px">总体缓冲时间(ms)</div>'},
@@ -2485,14 +2493,11 @@ function video(obj) {
                             row.push(fixed(item.webVideoDnsDelay ));
                             row.push(fixed(item.webVideoWsConnDelay));
                             row.push(fixed(item.webVideoWebPageDelay ));
-                            row.push(fixed(item.webVideoSsConnDelay));
-                            row.push(fixed(item.webVideoAddressDelay));
-                            row.push(fixed(item.webVideoMsConnDelay));
                             row.push(fixed(item.webVideoHeadFrameDelay ));
                             row.push(fixed(item.webVideoInitBufferDelay ));
                             row.push(fixed(item.webVideoLoadDelay ));
                             row.push(fixed(item.webVideoTotalBufferDelay ));
-                            row.push(fixed(item.webVideoDownloadRate ));
+                            row.push(fixed(item.webVideoDownloadRate )*100);
                             row.push(fixed(item.webVideoBufferTime ));
                             rows.push(row);
                         }
@@ -2527,10 +2532,9 @@ function game(obj) {
                 {title: '<div style="width:110px">探针名称</div>'},
                 {title: '<div style="width:70px">综合分数</div>'},
                 {title: '<div style="width:100px">DNS时延(ms)</div>'},
-                {title: '<div style="width:100px">连接时延(ms)</div>'},
-                {title: '<div style="width:120px">游戏数据包时延(ms)</div>'},
-                {title: '<div style="width:120px">游戏数据包抖动(ms)</div>'},
-                {title: '<div style="width:120px">游戏数据包丢包率(%)</div>'},
+                {title: '<div style="width:100px">网络时延(ms)</div>'},
+                {title: '<div style="width:100px">网络抖动(ms)</div>'},
+                {title: '<div style="width:100px">丢包率(%)</div>'},
             ],
             rows: [],
             dtHandle: null,
@@ -2595,10 +2599,9 @@ function game(obj) {
                             row.push(item.probeName);
                             row.push(fixed(item.score));
                             row.push(fixed(item.gameDnsDelay));
-                            row.push(fixed(item.gameConnDelay ));
                             row.push(fixed(item.gamePacketDelay) );
                             row.push(fixed(item.gamePacketJitter ));
-                            row.push(fixed(item.gameLossRate ));
+                            row.push(fixed(item.gameLossRate )*100);
                             rows.push(row);
                         }
 
@@ -2835,38 +2838,38 @@ function area_ping(obj, areaContent) {
                 {title: '<div style="width:10px"></div>'},
                 {title: '<div style="width:110px">探针名称</div>'},
                 {title: '<div style="width:70px">综合分数</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">往返时延(ms)</div>'},
                 {title: '<div style="width:100px">时延标准差(ms)</div>'},
                 {title: '<div style="width:100px">时延方差(ms)</div>'},
-                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">抖动(ms)</div>'},
                 {title: '<div style="width:100px">抖动标准差(ms)</div>'},
                 {title: '<div style="width:100px">抖动方差(ms)</div>'},
                 {title: '<div style="width:100px">丢包率(%)</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">往返时延(ms)</div>'},
                 {title: '<div style="width:100px">时延标准差(ms)</div>'},
                 {title: '<div style="width:100px">时延方差(ms)</div>'},
-                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">抖动(ms)</div>'},
                 {title: '<div style="width:100px">抖动标准差(ms)</div>'},
                 {title: '<div style="width:100px">抖动方差(ms)</div>'},
                 {title: '<div style="width:100px">丢包率(%)</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">往返时延(ms)</div>'},
                 {title: '<div style="width:100px">时延标准差(ms)</div>'},
                 {title: '<div style="width:100px">时延方差(ms)</div>'},
-                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">抖动(ms)</div>'},
                 {title: '<div style="width:100px">抖动标准差(ms)</div>'},
                 {title: '<div style="width:100px">抖动方差(ms)</div>'},
                 {title: '<div style="width:100px">丢包率(%)</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">往返时延(ms)</div>'},
                 {title: '<div style="width:100px">时延标准差(ms)</div>'},
                 {title: '<div style="width:100px">时延方差(ms)</div>'},
-                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">抖动(ms)</div>'},
                 {title: '<div style="width:100px">抖动标准差(ms)</div>'},
                 {title: '<div style="width:100px">抖动方差(ms)</div>'},
                 {title: '<div style="width:100px">丢包率(%)</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">往返时延(ms)</div>'},
                 {title: '<div style="width:100px">时延标准差(ms)</div>'},
                 {title: '<div style="width:100px">时延方差(ms)</div>'},
-                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">抖动</div>'},
                 {title: '<div style="width:100px">抖动标准差(ms)</div>'},
                 {title: '<div style="width:100px">抖动方差(ms)</div>'},
                 {title: '<div style="width:100px">丢包率(%)</div>'},
@@ -2960,35 +2963,35 @@ function area_ping(obj, areaContent) {
                             row.push(fixed(item.pingIcmpJitter ));
                             row.push(fixed(item.pingIcmpJitterStd ));
                             row.push(fixed(item.pingIcmpJitterVar ));
-                            row.push(fixed(item.pingIcmpLossRate ));
+                            row.push(fixed(item.pingIcmpLossRate )*100);
                             row.push(fixed(item.pingTcpDelay ));
                             row.push(fixed(item.pingTcpDelayStd ));
                             row.push(fixed(item.pingTcpDelayVar ));
                             row.push(fixed(item.pingTcpJitter ));
                             row.push(fixed(item.pingTcpJitterStd ));
                             row.push(fixed(item.pingTcpJitterVar ));
-                            row.push(fixed(item.pingTcpLossRate ));
+                            row.push(fixed(item.pingTcpLossRate )*100);
                             row.push(fixed(item.pingUdpDelay));
                             row.push(fixed(item.pingUdpDelayStd));
                             row.push(fixed(item.pingUdpDelayVar));
                             row.push(fixed(item.pingUdpJitter));
                             row.push(fixed(item.pingUdpJitterStd));
                             row.push(fixed(item.pingUdpJitterVar));
-                            row.push(fixed(item.pingUdpLossRate));
+                            row.push(fixed(item.pingUdpLossRate)*100);
                             row.push(fixed(item.tracertIcmpDelay));
                             row.push(fixed(item.tracertIcmpDelayStd));
                             row.push(fixed(item.tracertIcmpDelayVar));
                             row.push(fixed(item.tracertIcmpJitter));
                             row.push(fixed(item.tracertIcmpJitterStd));
                             row.push(fixed(item.tracertIcmpJitterVar));
-                            row.push(fixed(item.tracertIcmpLossRate));
+                            row.push(fixed(item.tracertIcmpLossRate)*100);
                             row.push(fixed(item.tracertTcpDelay));
                             row.push(fixed(item.tracertTcpDelayStd));
                             row.push(fixed(item.tracertTcpDelayVar));
                             row.push(fixed(item.tracertTcpJitter));
                             row.push(fixed(item.tracertTcpJitterStd));
                             row.push(fixed(item.tracertTcpJitterVar));
-                            row.push(fixed(item.tracertTcpLossRate));
+                            row.push(fixed(item.tracertTcpLossRate)*100);
                             rows.push(row);
                         }
                     });
@@ -3021,28 +3024,32 @@ function area_quality(obj, areaContent) {
                 {title: '<div style="width:10px"></div>'},
                 {title: '<div style="width:110px">探针名称</div>'},
                 {title: '<div style="width:70px">综合分数</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">时延(ms)</div>'},
                 {title: '<div style="width:100px">往向时延(ms)</div>'},
                 {title: '<div style="width:100px">返向时延(ms)</div>'},
-                {title: '<div style="width:100px">抖动平均值</div>'},
+                {title: '<div style="width:100px">抖动</div>'},
                 {title: '<div style="width:100px">往向抖动</div>'},
                 {title: '<div style="width:100px">返向抖动</div>'},
                 {title: '<div style="width:100px">丢包率</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">时延(ms)</div>'},
                 {title: '<div style="width:100px">往向时延(ms)</div>'},
                 {title: '<div style="width:100px">返向时延(ms)</div>'},
-                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">抖动(ms)</div>'},
                 {title: '<div style="width:100px">往向抖动(ms)</div>'},
                 {title: '<div style="width:100px">返向抖动(ms)</div>'},
                 {title: '<div style="width:100px">丢包率(%)</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
-                {title: '<div style="width:100px">查询成功率(%)</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
-                {title: '<div style="width:100px">查询成功率(%)</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+
+                {title: '<div style="width:100px">解析时延(ms)</div>'},
+                {title: '<div style="width:100px">成功率(%)</div>'},
+
+                {title: '<div style="width:100px">分配时延(ms)</div>'},
+                {title: '<div style="width:100px">成功率(%)</div>'},
+
+                {title: '<div style="width:100px">解析时延(ms)</div>'},
                 {title: '<div style="width:100px">掉线率(%)</div>'},
-                {title: '<div style="width:100px">查询成功率(%)</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">成功率(%)</div>'},
+
+                {title: '<div style="width:100px">认证时延(ms)</div>'},
                 {title: '<div style="width:100px">认证成功率(%)</div>'},
 
             ],
@@ -3136,23 +3143,23 @@ function area_quality(obj, areaContent) {
                             row.push(fixed(item.slaTcpJitter));
                             row.push(fixed(item.slaTcpGJitter));
                             row.push(fixed(item.slaTcpRJitter));
-                            row.push(fixed(item.slaTcpLossRate));
+                            row.push(fixed(item.slaTcpLossRate)*100);
                             row.push(fixed(item.slaUdpDelay));
                             row.push(fixed(item.slaUdpGDelay));
                             row.push(fixed(item.slaUdpRDelay));
                             row.push(fixed(item.slaUdpJitter));
                             row.push(fixed(item.slaUdpGJitter));
                             row.push(fixed(item.slaUdpRJitter));
-                            row.push(fixed(item.slaUdpLossRate));
+                            row.push(fixed(item.slaUdpLossRate)*100);
                             row.push(fixed(item.dnsDelay));
-                            row.push(fixed(item.dnsSuccessRate));
+                            row.push(fixed(item.dnsSuccessRate)*100);
                             row.push(fixed(item.dhcpDelay));
-                            row.push(fixed(item.dhcpSuccessRate));
+                            row.push(fixed(item.dhcpSuccessRate)*100);
                             row.push(fixed(item.pppoeDelay));
-                            row.push(fixed(item.pppoeDropRate));
-                            row.push(fixed(item.pppoeSuccessRate));
+                            row.push(fixed(item.pppoeDropRate)*100);
+                            row.push(fixed(item.pppoeSuccessRate)*100);
                             row.push(fixed(item.radiusDelay));
-                            row.push(fixed(item.radiusSuccessRate));
+                            row.push(fixed(item.radiusSuccessRate)*100);
                             rows.push(row);
                         }
                     });
@@ -3191,7 +3198,7 @@ function area_broswer(obj, areaContent) {
                 {title: '<div style="width:120px">页面文件时延(ms)</div>'},
                 {title: '<div style="width:100px">重定向时延(ms)</div>'},
                 {title: '<div style="width:100px">首屏时延(ms)</div>'},
-                {title: '<div style="width:115px">页面元素时延(ms)</div>'},
+                {title: '<div style="width:115px">页面加载时延(ms)</div>'},
                 {title: '<div style="width:100px">下载速率(KB/S)</div>'},
             ],
             rows: [],
@@ -3262,7 +3269,7 @@ function area_broswer(obj, areaContent) {
                             row.push(fixed(item.webpagePageFileDelay ));
                             row.push(fixed(item.webpageRedirectDelay ));
                             row.push(fixed(item.webpageAboveFoldDelay ));
-                            row.push(fixed(item.webpagePageElementDelay) );
+                            row.push(fixed(item.loadDelay) );
                             row.push(fixed(item.webpageDownloadRate ));
                             rows.push(row);
                         }
@@ -3309,7 +3316,7 @@ function area_download(obj, areaContent) {
                 {title: '<div style="width:100px">连接时延(ms)</div>'},
                 {title: '<div style="width:100px">登录时延(ms)</div>'},
                 {title: '<div style="width:100px">首字节时延(ms)</div>'},
-                {title: '<div style="width:100px">下载速率(KB/S)</div>'},
+                {title: '<div style="width:100px">上传速率(KB/S)</div>'},
             ],
             rows: [],
             dtHandle: null,
@@ -3442,12 +3449,9 @@ function area_video(obj, areaContent) {
                 {title: '<div style="width:110px">探针名称</div>'},
                 {title: '<div style="width:70px">综合分数</div>'},
                 {title: '<div style="width:100px">DNS时延(ms)</div>'},
-                {title: '<div style="width:149px">连接WEB服务器时延(ms)</div>'},
+                {title: '<div style="width:130px">连接WEB服务器时延(ms)</div>'},
                 {title: '<div style="width:120px">web页面时延(ms)</div>'},
-                {title: '<div style="width:149px">连接调度服务器时延(ms)</div>'},
-                {title: '<div style="width:135px">获取视频地址时延(ms)</div>'},
-                {title: '<div style="width:147px">连接媒体服务器时延(ms)</div>'},
-                {title: '<div style="width:110px">首帧时延(ms)</div>'},
+                {title: '<div style="width:110px">首帧到达时延(ms)</div>'},
                 {title: '<div style="width:120px">首次缓冲时延(ms)</div>'},
                 {title: '<div style="width:120px">视频加载时延(ms)</div>'},
                 {title: '<div style="width:120px">总体缓冲时间(ms)</div>'},
@@ -3519,14 +3523,11 @@ function area_video(obj, areaContent) {
                             row.push(fixed(item.webVideoDnsDelay ));
                             row.push(fixed(item.webVideoWsConnDelay));
                             row.push(fixed(item.webVideoWebPageDelay ));
-                            row.push(fixed(item.webVideoSsConnDelay));
-                            row.push(fixed(item.webVideoAddressDelay));
-                            row.push(fixed(item.webVideoMsConnDelay));
                             row.push(fixed(item.webVideoHeadFrameDelay ));
                             row.push(fixed(item.webVideoInitBufferDelay ));
                             row.push(fixed(item.webVideoLoadDelay ));
                             row.push(fixed(item.webVideoTotalBufferDelay ));
-                            row.push(fixed(item.webVideoDownloadRate ));
+                            row.push(fixed(item.webVideoDownloadRate )*100);
                             row.push(fixed(item.webVideoBufferTime ));
                             rows.push(row);
                         }
@@ -3561,10 +3562,9 @@ function area_game(obj, areaContent) {
                 {title: '<div style="width:110px">探针名称</div>'},
                 {title: '<div style="width:70px">综合分数</div>'},
                 {title: '<div style="width:100px">DNS时延(ms)</div>'},
-                {title: '<div style="width:100px">连接时延(ms)</div>'},
-                {title: '<div style="width:120px">游戏数据包时延(ms)</div>'},
-                {title: '<div style="width:120px">游戏数据包抖动(ms)</div>'},
-                {title: '<div style="width:120px">游戏数据包丢包率(%)</div>'},
+                {title: '<div style="width:120px">网络时延(ms)</div>'},
+                {title: '<div style="width:120px">网络抖动(ms)</div>'},
+                {title: '<div style="width:120px">丢包率(%)</div>'},
             ],
             rows: [],
             dtHandle: null,
@@ -3629,10 +3629,9 @@ function area_game(obj, areaContent) {
                             row.push(item.probeName);
                             row.push(fixed(item.score));
                             row.push(fixed(item.gameDnsDelay));
-                            row.push(fixed(item.gameConnDelay ));
                             row.push(fixed(item.gamePacketDelay) );
                             row.push(fixed(item.gamePacketJitter ));
-                            row.push(fixed(item.gameLossRate ));
+                            row.push(fixed(item.gameLossRate )*100);
                             rows.push(row);
                         }
                     });
@@ -3874,38 +3873,38 @@ function door_ping(obj) {
                 {title: '<div style="width:10px"></div>'},
                 {title: '<div style="width:110px">探针名称</div>'},
                 {title: '<div style="width:70px">综合分数</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">往返时延(ms)</div>'},
                 {title: '<div style="width:100px">时延标准差(ms)</div>'},
                 {title: '<div style="width:100px">时延方差(ms)</div>'},
-                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">抖动(ms)</div>'},
                 {title: '<div style="width:100px">抖动标准差(ms)</div>'},
                 {title: '<div style="width:100px">抖动方差(ms)</div>'},
                 {title: '<div style="width:100px">丢包率(%)</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">往返时延(ms)</div>'},
                 {title: '<div style="width:100px">时延标准差(ms)</div>'},
                 {title: '<div style="width:100px">时延方差(ms)</div>'},
-                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">抖动(ms)</div>'},
                 {title: '<div style="width:100px">抖动标准差(ms)</div>'},
                 {title: '<div style="width:100px">抖动方差(ms)</div>'},
                 {title: '<div style="width:100px">丢包率(%)</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">往返时延(ms)</div>'},
                 {title: '<div style="width:100px">时延标准差(ms)</div>'},
                 {title: '<div style="width:100px">时延方差(ms)</div>'},
-                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">抖动(ms)</div>'},
                 {title: '<div style="width:100px">抖动标准差(ms)</div>'},
                 {title: '<div style="width:100px">抖动方差(ms)</div>'},
                 {title: '<div style="width:100px">丢包率(%)</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">往返时延(ms)</div>'},
                 {title: '<div style="width:100px">时延标准差(ms)</div>'},
                 {title: '<div style="width:100px">时延方差(ms)</div>'},
-                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">抖动(ms)</div>'},
                 {title: '<div style="width:100px">抖动标准差(ms)</div>'},
                 {title: '<div style="width:100px">抖动方差(ms)</div>'},
                 {title: '<div style="width:100px">丢包率(%)</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">往返时延(ms)</div>'},
                 {title: '<div style="width:100px">时延标准差(ms)</div>'},
                 {title: '<div style="width:100px">时延方差(ms)</div>'},
-                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">抖动</div>'},
                 {title: '<div style="width:100px">抖动标准差(ms)</div>'},
                 {title: '<div style="width:100px">抖动方差(ms)</div>'},
                 {title: '<div style="width:100px">丢包率(%)</div>'},
@@ -3999,35 +3998,35 @@ function door_ping(obj) {
                             row.push(fixed(item.pingIcmpJitter ));
                             row.push(fixed(item.pingIcmpJitterStd ));
                             row.push(fixed(item.pingIcmpJitterVar ));
-                            row.push(fixed(item.pingIcmpLossRate ));
+                            row.push(fixed(item.pingIcmpLossRate )*100);
                             row.push(fixed(item.pingTcpDelay ));
                             row.push(fixed(item.pingTcpDelayStd ));
                             row.push(fixed(item.pingTcpDelayVar ));
                             row.push(fixed(item.pingTcpJitter ));
                             row.push(fixed(item.pingTcpJitterStd ));
                             row.push(fixed(item.pingTcpJitterVar ));
-                            row.push(fixed(item.pingTcpLossRate ));
+                            row.push(fixed(item.pingTcpLossRate )*100);
                             row.push(fixed(item.pingUdpDelay));
                             row.push(fixed(item.pingUdpDelayStd));
                             row.push(fixed(item.pingUdpDelayVar));
                             row.push(fixed(item.pingUdpJitter));
                             row.push(fixed(item.pingUdpJitterStd));
                             row.push(fixed(item.pingUdpJitterVar));
-                            row.push(fixed(item.pingUdpLossRate));
+                            row.push(fixed(item.pingUdpLossRate)*100);
                             row.push(fixed(item.tracertIcmpDelay));
                             row.push(fixed(item.tracertIcmpDelayStd));
                             row.push(fixed(item.tracertIcmpDelayVar));
                             row.push(fixed(item.tracertIcmpJitter));
                             row.push(fixed(item.tracertIcmpJitterStd));
                             row.push(fixed(item.tracertIcmpJitterVar));
-                            row.push(fixed(item.tracertIcmpLossRate));
+                            row.push(fixed(item.tracertIcmpLossRate)*100);
                             row.push(fixed(item.tracertTcpDelay));
                             row.push(fixed(item.tracertTcpDelayStd));
                             row.push(fixed(item.tracertTcpDelayVar));
                             row.push(fixed(item.tracertTcpJitter));
                             row.push(fixed(item.tracertTcpJitterStd));
                             row.push(fixed(item.tracertTcpJitterVar));
-                            row.push(fixed(item.tracertTcpLossRate));
+                            row.push(fixed(item.tracertTcpLossRate)*100);
                             rows.push(row);
                         }
                     });
@@ -4059,28 +4058,32 @@ function door_quality(obj) {
                 {title: '<div style="width:10px"></div>'},
                 {title: '<div style="width:110px">探针名称</div>'},
                 {title: '<div style="width:70px">综合分数</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">时延(ms)</div>'},
                 {title: '<div style="width:100px">往向时延(ms)</div>'},
                 {title: '<div style="width:100px">返向时延(ms)</div>'},
-                {title: '<div style="width:100px">抖动平均值</div>'},
+                {title: '<div style="width:100px">抖动</div>'},
                 {title: '<div style="width:100px">往向抖动</div>'},
                 {title: '<div style="width:100px">返向抖动</div>'},
                 {title: '<div style="width:100px">丢包率</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">时延(ms)</div>'},
                 {title: '<div style="width:100px">往向时延(ms)</div>'},
                 {title: '<div style="width:100px">返向时延(ms)</div>'},
-                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">抖动(ms)</div>'},
                 {title: '<div style="width:100px">往向抖动(ms)</div>'},
                 {title: '<div style="width:100px">返向抖动(ms)</div>'},
                 {title: '<div style="width:100px">丢包率(%)</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
-                {title: '<div style="width:100px">查询成功率(%)</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
-                {title: '<div style="width:100px">查询成功率(%)</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+
+                {title: '<div style="width:100px">解析时延(ms)</div>'},
+                {title: '<div style="width:100px">成功率(%)</div>'},
+
+                {title: '<div style="width:100px">分配时延(ms)</div>'},
+                {title: '<div style="width:100px">成功率(%)</div>'},
+
+                {title: '<div style="width:100px">解析时延(ms)</div>'},
                 {title: '<div style="width:100px">掉线率(%)</div>'},
-                {title: '<div style="width:100px">查询成功率(%)</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">成功率(%)</div>'},
+
+                {title: '<div style="width:100px">认证时延(ms)</div>'},
                 {title: '<div style="width:100px">认证成功率(%)</div>'},
 
             ],
@@ -4174,23 +4177,22 @@ function door_quality(obj) {
                             row.push(fixed(item.slaTcpJitter));
                             row.push(fixed(item.slaTcpGJitter));
                             row.push(fixed(item.slaTcpRJitter));
-                            row.push(fixed(item.slaTcpLossRate));
+                            row.push(fixed(item.slaTcpLossRate)*100);
                             row.push(fixed(item.slaUdpDelay));
                             row.push(fixed(item.slaUdpGDelay));
                             row.push(fixed(item.slaUdpRDelay));
                             row.push(fixed(item.slaUdpJitter));
                             row.push(fixed(item.slaUdpGJitter));
                             row.push(fixed(item.slaUdpRJitter));
-                            row.push(fixed(item.slaUdpLossRate));
+                            row.push(fixed(item.slaUdpLossRate)*100);
                             row.push(fixed(item.dnsDelay));
-                            row.push(fixed(item.dnsSuccessRate));
                             row.push(fixed(item.dhcpDelay));
-                            row.push(fixed(item.dhcpSuccessRate));
+                            row.push(fixed(item.dhcpSuccessRate)*100);
                             row.push(fixed(item.pppoeDelay));
                             row.push(fixed(item.pppoeDropRate));
-                            row.push(fixed(item.pppoeSuccessRate));
+                            row.push(fixed(item.pppoeSuccessRate)*100);
                             row.push(fixed(item.radiusDelay));
-                            row.push(fixed(item.radiusSuccessRate));
+                            row.push(fixed(item.radiusSuccessRate)*100);
                             rows.push(row);
                         }
 
@@ -4229,7 +4231,7 @@ function door_broswer(obj) {
                 {title: '<div style="width:120px">页面文件时延(ms)</div>'},
                 {title: '<div style="width:100px">重定向时延(ms)</div>'},
                 {title: '<div style="width:100px">首屏时延(ms)</div>'},
-                {title: '<div style="width:115px">页面元素时延(ms)</div>'},
+                {title: '<div style="width:115px">页面加载时延(ms)</div>'},
                 {title: '<div style="width:100px">下载速率(KB/S)</div>'},
             ],
             rows: [],
@@ -4300,7 +4302,7 @@ function door_broswer(obj) {
                             row.push(fixed(item.webpagePageFileDelay ));
                             row.push(fixed(item.webpageRedirectDelay ));
                             row.push(fixed(item.webpageAboveFoldDelay ));
-                            row.push(fixed(item.webpagePageElementDelay) );
+                            row.push(fixed(item.loadDelay) );
                             row.push(fixed(item.webpageDownloadRate ));
                             rows.push(row);
                         }
@@ -4347,7 +4349,7 @@ function door_download(obj) {
                 {title: '<div style="width:100px">连接时延(ms)</div>'},
                 {title: '<div style="width:100px">登录时延(ms)</div>'},
                 {title: '<div style="width:100px">首字节时延(ms)</div>'},
-                {title: '<div style="width:100px">下载速率(KB/S)</div>'},
+                {title: '<div style="width:100px">上传速率(KB/S)</div>'},
             ],
             rows: [],
             dtHandle: null,
@@ -4480,12 +4482,9 @@ function door_video(obj) {
                 {title: '<div style="width:110px">探针名称</div>'},
                 {title: '<div style="width:70px">综合分数</div>'},
                 {title: '<div style="width:100px">DNS时延(ms)</div>'},
-                {title: '<div style="width:149px">连接WEB服务器时延(ms)</div>'},
+                {title: '<div style="width:130px">连接WEB服务器时延(ms)</div>'},
                 {title: '<div style="width:120px">web页面时延(ms)</div>'},
-                {title: '<div style="width:149px">连接调度服务器时延(ms)</div>'},
-                {title: '<div style="width:135px">获取视频地址时延(ms)</div>'},
-                {title: '<div style="width:147px">连接媒体服务器时延(ms)</div>'},
-                {title: '<div style="width:110px">首帧时延(ms)</div>'},
+                {title: '<div style="width:110px">首帧到达时延(ms)</div>'},
                 {title: '<div style="width:120px">首次缓冲时延(ms)</div>'},
                 {title: '<div style="width:120px">视频加载时延(ms)</div>'},
                 {title: '<div style="width:120px">总体缓冲时间(ms)</div>'},
@@ -4557,14 +4556,11 @@ function door_video(obj) {
                             row.push(fixed(item.webVideoDnsDelay ));
                             row.push(fixed(item.webVideoWsConnDelay));
                             row.push(fixed(item.webVideoWebPageDelay ));
-                            row.push(fixed(item.webVideoSsConnDelay));
-                            row.push(fixed(item.webVideoAddressDelay));
-                            row.push(fixed(item.webVideoMsConnDelay));
                             row.push(fixed(item.webVideoHeadFrameDelay ));
                             row.push(fixed(item.webVideoInitBufferDelay ));
                             row.push(fixed(item.webVideoLoadDelay ));
                             row.push(fixed(item.webVideoTotalBufferDelay ));
-                            row.push(fixed(item.webVideoDownloadRate ));
+                            row.push(fixed(item.webVideoDownloadRate )*100);
                             row.push(fixed(item.webVideoBufferTime ));
                             rows.push(row);
                         }
@@ -4599,10 +4595,9 @@ function door_game(obj) {
                 {title: '<div style="width:110px">探针名称</div>'},
                 {title: '<div style="width:70px">综合分数</div>'},
                 {title: '<div style="width:100px">DNS时延(ms)</div>'},
-                {title: '<div style="width:100px">连接时延(ms)</div>'},
-                {title: '<div style="width:120px">游戏数据包时延(ms)</div>'},
-                {title: '<div style="width:120px">游戏数据包抖动(ms)</div>'},
-                {title: '<div style="width:120px">游戏数据包丢包率(%)</div>'},
+                {title: '<div style="width:120px">网络时延(ms)</div>'},
+                {title: '<div style="width:120px">网络抖动(ms)</div>'},
+                {title: '<div style="width:120px">丢包率(%)</div>'},
             ],
             rows: [],
             dtHandle: null,
@@ -4668,10 +4663,9 @@ function door_game(obj) {
                             row.push(item.probeName);
                             row.push(fixed(item.score));
                             row.push(fixed(item.gameDnsDelay));
-                            row.push(fixed(item.gameConnDelay ));
                             row.push(fixed(item.gamePacketDelay) );
                             row.push(fixed(item.gamePacketJitter ));
-                            row.push(fixed(item.gameLossRate ));
+                            row.push(fixed(item.gameLossRate )*100);
                             rows.push(row);
                         }
 
@@ -4734,6 +4728,7 @@ function loading() {
         loadingMaskBg: 'rgba(22,22,22,0.2)'
     });
 }
+
 function fixed(value) {
     if(value==''||value==null){
         return ''

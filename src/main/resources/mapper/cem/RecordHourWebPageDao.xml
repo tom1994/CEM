@@ -81,7 +81,7 @@
 		ON record_hour_web_page.county_id = county.county_id
 		INNER JOIN probe
 		ON record_hour_web_page.probe_id = probe.id
-		LEFT JOIN target
+		INNER JOIN target
 		ON record_hour_web_page.target_id = target.id
 		WHERE record_hour_web_page.record_date BETWEEN #{ava_start} AND #{ava_terminal}
 		<if test="city_id != null and city_id != ''">
@@ -144,7 +144,7 @@
 		ON t.county_id = county.county_id
 		INNER JOIN probe
 		ON t.probe_id = probe.id
-		LEFT JOIN target
+		INNER JOIN target
 		ON t.target_id = target.id
 	</select>
 
@@ -172,7 +172,7 @@
 		ON record_hour_web_page.county_id = county.county_id
 		INNER JOIN probe
 		ON record_hour_web_page.probe_id = probe.id
-		LEFT JOIN target
+		INNER JOIN target
 		ON record_hour_web_page.target_id = target.id
 		WHERE record_hour_web_page.record_date BETWEEN #{ava_start} AND #{ava_terminal}
 		AND record_hour_web_page.port = #{port}
@@ -205,7 +205,7 @@
 		ON record_day_web_page.county_id = county.county_id
 		INNER JOIN probe
 		ON record_day_web_page.probe_id = probe.id
-		LEFT JOIN target
+		INNER JOIN target
 		ON record_day_web_page.target_id = target.id
 		WHERE record_day_web_page.record_date BETWEEN #{ava_start} AND #{ava_terminal}
 		AND record_day_web_page.port = #{port}
@@ -256,7 +256,7 @@
 		ON t.city_id = city.city_id
 		LEFT JOIN county
 		ON t.county_id = county.county_id
-		LEFT JOIN target
+		INNER JOIN target
 		ON t.target_id = target.id
 
 	</select>
@@ -300,7 +300,7 @@
 		ON t.city_id = city.city_id
 		LEFT JOIN county
 		ON t.county_id = county.county_id
-		LEFT JOIN target
+		INNER JOIN target
 		ON t.target_id = target.id
 	</select>
 
@@ -340,7 +340,7 @@
 		ON t.city_id = city.city_id
 		LEFT JOIN county
 		ON t.county_id = county.county_id
-		LEFT JOIN target
+		INNER JOIN target
 		ON t.target_id = target.id
 	</select>
 
@@ -368,7 +368,7 @@
 		ON webp.county_id = county.county_id
 		INNER JOIN probe
 		ON webp.probe_id = probe.id
-		LEFT JOIN target
+		INNER JOIN target
 		ON webp.target_id = target.id
 		WHERE webp.record_date BETWEEN #{ava_start} AND #{ava_terminal}
 		<if test="city_id != null and city_id != ''">
@@ -411,7 +411,7 @@
 		ON webp.county_id = county.county_id
 		INNER JOIN probe
 		ON webp.probe_id = probe.id
-		LEFT JOIN target
+		INNER JOIN target
 		ON webp.target_id = target.id
 		WHERE webp.record_date BETWEEN #{ava_start} AND #{ava_terminal}
 		<if test="city_id != null and city_id != ''">
@@ -454,7 +454,7 @@
 		ON webp.county_id = county.county_id
 		INNER JOIN probe
 		ON webp.probe_id = probe.id
-		LEFT JOIN target
+		INNER JOIN target
 		ON webp.target_id = target.id
 		WHERE webp.record_date BETWEEN #{ava_start} AND #{ava_terminal}
 		<if test="city_id != null and city_id != ''">
@@ -498,7 +498,7 @@
 		ON webp.county_id = county.county_id
 		INNER JOIN probe
 		ON webp.probe_id = probe.id
-		LEFT JOIN target
+		INNER JOIN target
 		ON webp.target_id = target.id
 		WHERE webp.record_date BETWEEN #{ava_start} AND #{ava_terminal}
 		<if test="city_id != null and city_id != ''">

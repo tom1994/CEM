@@ -55,7 +55,6 @@ recordtype.set(50,"game");
 
 function getFormJson(form) {      /*将表单对象变为json对象*/
     var o = {};
-    debugger
     var a = $(form).serializeArray();
     if(citySelected!=0){
         a[4]={};
@@ -357,7 +356,7 @@ var search_data = new Vue({
             console.log(recordtag);
             $("#" + recordtag + "_record ").removeClass("service_unselected");
             var data = getFormJson($('#resultsearch .selectdata'));
-            debugger
+             
             /*得到查询条件*/
             /*获取表单元素的值*/
             var starttemp = data.start_time;
@@ -366,6 +365,7 @@ var search_data = new Vue({
             var td = data.terminalDate;
             if (sd == "" && td == "") {
                 data.startDate =  new Date(new Date() - 1000 * 60 * 60 * 24).Format("yyyy-MM-dd");
+                 
                 data.terminalDate = (new Date()).Format("yyyy-MM-dd");
             }
             if (starttemp == "" && termtemp == "") {
@@ -386,7 +386,7 @@ var search_data = new Vue({
                 data.queryType = "0";//统计数据
             }
             console.log(data);
-
+            debugger
             if (recordtag == "ping") {
                 pingresulttable.resultdata = data;
                 pingresulttable.redraw();
@@ -435,9 +435,14 @@ var search_data = new Vue({
                 webdownloadresult_Table.redraw();
                 /*根据查询条件重绘*/
             }
-            if (recordtag == "ftp") {
-                ftpresult_Table.resultdata = data;
-                ftpresult_Table.redraw();
+            if (recordtag == "ftpup") {
+                ftpupresult_Table.resultdata = data;
+                ftpupresult_Table.redraw();
+                /*根据查询条件重绘*/
+            }
+            if (recordtag == "ftpdo") {
+                ftpdoresult_Table.resultdata = data;
+                ftpdoresult_Table.redraw();
                 /*根据查询条件重绘*/
             }
             if (recordtag == "webvideo") {
@@ -739,6 +744,9 @@ var pingresulttable = new Vue({
             columns: vm.headers,
             data: vm.rows,
             searching: false,
+            scrollY :400,
+            scrollX: true,
+            scrollCollapse: true,
             paging: true,
             serverSide: true,
             info: false,
@@ -897,6 +905,9 @@ var tracertresulttable = new Vue({
             searching: false,
             paging: true,
             serverSide: true,
+            scrollY :400,
+            scrollX: true,
+            scrollCollapse: true,
             info: false,
             ordering: false, /*禁用排序功能*/
             /*bInfo: false,*/
@@ -1053,6 +1064,9 @@ var slaresulttable = new Vue({
             paging: true,
             serverSide: true,
             info: false,
+            scrollY :400,
+            scrollX: true,
+            scrollCollapse: true,
             ordering: false, /*禁用排序功能*/
             /*bInfo: false,*/
             /*bLengthChange: false,*/    /*禁用Show entries*/
@@ -1199,6 +1213,9 @@ var dhcpresult_Table = new Vue({
             paging: true,
             serverSide: true,
             info: false,
+            scrollY :400,
+            scrollX: true,
+            scrollCollapse: true,
             ordering: false, /*禁用排序功能*/
             /*bInfo: false,*/
             /*bLengthChange: false,*/    /*禁用Show entries*/
@@ -1327,6 +1344,9 @@ var dnsresult_Table = new Vue({
             searching: false,
             paging: true,
             serverSide: true,
+            scrollY :400,
+            scrollX: true,
+            scrollCollapse: true,
             info: false,
             ordering: false, /*禁用排序功能*/
             /*bInfo: false,*/
@@ -1457,6 +1477,9 @@ var radiusresult_Table = new Vue({
             data: vm.rows,
             searching: false,
             paging: true,
+            scrollY :400,
+            scrollX: true,
+            scrollCollapse: true,
             serverSide: true,
             info: false,
             ordering: false, /*禁用排序功能*/
@@ -1587,6 +1610,9 @@ var ftpupresult_Table = new Vue({
             data: vm.rows,
             searching: false,
             paging: true,
+            scrollY :400,
+            scrollX: true,
+            scrollCollapse: true,
             serverSide: true,
             info: false,
             ordering: false, /*禁用排序功能*/
@@ -1720,6 +1746,9 @@ var ftpdoresult_Table = new Vue({
             columns: vm.headers,
             data: vm.rows,
             searching: false,
+            scrollY :400,
+            scrollX: true,
+            scrollCollapse: true,
             paging: true,
             serverSide: true,
             info: false,
@@ -1794,6 +1823,7 @@ var ftpdoresult_Table = new Vue({
         });
     }
 });
+
 //web_download_table
 var webdownloadresult_Table = new Vue({
     el: '#webdownloaddata_table',
@@ -1852,6 +1882,9 @@ var webdownloadresult_Table = new Vue({
             columns: vm.headers,
             data: vm.rows,
             searching: false,
+            scrollY :400,
+            scrollX: true,
+            scrollCollapse: true,
             paging: true,
             serverSide: true,
             info: false,
@@ -1990,6 +2023,9 @@ var webpageresult_Table = new Vue({
             searching: false,
             paging: true,
             serverSide: true,
+            scrollY :400,
+            scrollX: true,
+            scrollCollapse: true,
             //bRetrieve: true,
             info: false,
             ordering: false, /*禁用排序功能*/
@@ -2133,6 +2169,9 @@ var webvideoresult_Table = new Vue({
             searching: false,
             paging: true,
             serverSide: true,
+            scrollY :400,
+            scrollX: true,
+            scrollCollapse: true,
             info: false,
             ordering: false, /*禁用排序功能*/
             /*bInfo: false,*/
@@ -2269,6 +2308,9 @@ var gameresult_Table = new Vue({
             searching: false,
             paging: true,
             serverSide: true,
+            scrollY :400,
+            scrollX: true,
+            scrollCollapse: true,
             info: false,
             ordering: false, /*禁用排序功能*/
             /*bInfo: false,*/
@@ -2501,4 +2543,39 @@ function numberToIp(number) {
     ip += ip0 + "." + ip1 + "." + ip2 + "." + ip3;
 
     return ip;
+}
+
+function out() {/*导出事件*/
+    var data = getFormJson($('#resultsearch .selectdata'));
+    /*得到查询条件*/
+    /*获取表单元素的值*/
+    var starttemp = data.start_time;
+    var termtemp = data.end_time;
+    var sd = data.startDate;
+    var td = data.terminalDate;
+    if (sd == "" && td == "") {
+        data.startDate =  new Date(new Date() - 1000 * 60 * 60 * 24).Format("yyyy-MM-dd");
+        data.terminalDate = (new Date()).Format("yyyy-MM-dd");
+    }
+    if (starttemp == "" && termtemp == "") {
+        data.start_time = "00:00:00";
+        data.end_time = "23:59:59";
+    }
+    if (starttemp != "") {
+        data.start_time = starttemp + ":00";
+    }
+    if (termtemp != "") {
+        data.end_time = termtemp + ":00";
+    }
+    console.log(data);
+    if (data.interval == "" || data.interval == undefined) {
+        data.queryType = "1";
+    } else {
+        data.queryType = "0";//统计数据
+    }
+    console.log(data);
+    var schedulepolicy = JSON.stringify(data);
+
+    document.getElementById("output").href = encodeURI('../../recordhourtracert/datadownload/' + schedulepolicy);
+    document.getElementById("output").click();
 }
