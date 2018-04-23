@@ -33,25 +33,35 @@ public interface RecordHourDhcpService {
 
 	List<ScoreEntity> connectionHourChart(Map<String,Object> map) throws ExecutionException, InterruptedException;
 
+	List<ScoreEntity> connectionDayHourChart(Map<String,Object> map) throws ExecutionException, InterruptedException;
+
 	List<ScoreEntity> qualityDayChart(Map<String,Object> map) throws ExecutionException, InterruptedException;
 
 	List<ScoreEntity> qualityHourChart(Map<String,Object> map) throws ExecutionException, InterruptedException;
+
+	List<ScoreEntity> qualityDayHourChart(Map<String,Object> map) throws ExecutionException, InterruptedException;
 
 	List<ScoreEntity> pageDayChart(Map<String,Object> map) throws ExecutionException, InterruptedException;
 
 	List<ScoreEntity> pageHourChart(Map<String,Object> map) throws ExecutionException, InterruptedException;
 
+
 	List<ScoreEntity> downloadDayChart(Map<String,Object> map) throws ExecutionException, InterruptedException;
 
 	List<ScoreEntity> downloadHourChart(Map<String,Object> map) throws ExecutionException, InterruptedException;
+
+	List<ScoreEntity> downloadDayHourChart(Map<String,Object> map) throws ExecutionException, InterruptedException;
 
 	List<ScoreEntity> videoDayChart(Map<String,Object> map) throws ExecutionException, InterruptedException;
 
 	List<ScoreEntity> videoHourChart(Map<String,Object> map) throws ExecutionException, InterruptedException;
 
+
+
 	List<ScoreEntity> gameDayChart(Map<String,Object> map) throws ExecutionException, InterruptedException;
 
 	List<ScoreEntity> gameHourChart(Map<String,Object> map) throws ExecutionException, InterruptedException;
+
 
 	List<ScoreEntity> combination(Map<String,Object> map,List<ScoreEntity> scoreList);
 

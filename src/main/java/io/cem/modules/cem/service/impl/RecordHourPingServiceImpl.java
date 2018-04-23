@@ -2101,12 +2101,51 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 				scoreBase.setWebpageAboveFoldDelay(scoreBase.getWebpageAboveFoldDelay());
 				scoreBase.setWebpagePageElementDelay(scoreBase.getWebpagePageElementDelay());
 				scoreBase.setWebpageDownloadRate(scoreBase.getWebpageDownloadRate());
-				scoreBase.setWebDownloadDnsDelay(scoreBase.getWebDownloadDnsDelay());
-				scoreBase.setWebDownloadConnDelay(scoreBase.getWebDownloadConnDelay());
-				scoreBase.setWebDownloadHeadbyteDelay(scoreBase.getWebDownloadHeadbyteDelay());
-				scoreBase.setWebDownloadDownloadRate(scoreBase.getWebDownloadDownloadRate());
-				scoreBase.setFtpDownloadDnsDelay(scoreBase.getFtpDownloadDnsDelay());
-				scoreBase.setFtpDownloadConnDelay(scoreBase.getFtpDownloadConnDelay());
+				//webDownload
+				if(scoreBase.getWebDownloadDnsDelay()!=null&scoreBaseDul.getWebDownloadDnsDelay()!=null){
+					scoreBase.setWebDownloadDnsDelay((scoreBase.getWebDownloadDnsDelay()+scoreBaseDul.getWebDownloadDnsDelay())/2);
+				}else if(scoreBase.getWebDownloadDnsDelay()!=null&&scoreBaseDul.getWebDownloadDnsDelay()==null){
+					scoreBase.setWebDownloadDnsDelay(scoreBase.getWebDownloadDnsDelay());
+				} else if(scoreBase.getWebDownloadDnsDelay()==null&&scoreBaseDul.getWebDownloadDnsDelay()!=null){
+					scoreBase.setWebDownloadDnsDelay(scoreBaseDul.getWebDownloadDnsDelay());
+				}
+				if(scoreBase.getWebDownloadConnDelay()!=null&scoreBaseDul.getWebDownloadConnDelay()!=null){
+					scoreBase.setWebDownloadConnDelay((scoreBase.getWebDownloadConnDelay()+scoreBaseDul.getWebDownloadConnDelay())/2);
+				}else if(scoreBase.getWebDownloadConnDelay()!=null&&scoreBaseDul.getWebDownloadConnDelay()==null){
+					scoreBase.setWebDownloadConnDelay(scoreBase.getWebDownloadConnDelay());
+				} else if(scoreBase.getWebDownloadConnDelay()==null&&scoreBaseDul.getWebDownloadConnDelay()!=null){
+					scoreBase.setWebDownloadConnDelay(scoreBaseDul.getWebDownloadConnDelay());
+				}
+				if(scoreBase.getWebDownloadHeadbyteDelay()!=null&scoreBaseDul.getWebDownloadHeadbyteDelay()!=null){
+					scoreBase.setWebDownloadHeadbyteDelay((scoreBase.getWebDownloadHeadbyteDelay()+scoreBaseDul.getWebDownloadHeadbyteDelay())/2);
+				}else if(scoreBase.getWebDownloadHeadbyteDelay()!=null&&scoreBaseDul.getWebDownloadHeadbyteDelay()==null){
+					scoreBase.setWebDownloadHeadbyteDelay(scoreBase.getWebDownloadHeadbyteDelay());
+				} else if(scoreBase.getWebDownloadHeadbyteDelay()==null&&scoreBaseDul.getWebDownloadHeadbyteDelay()!=null){
+					scoreBase.setWebDownloadHeadbyteDelay(scoreBaseDul.getWebDownloadHeadbyteDelay());
+				}
+				if(scoreBase.getWebDownloadDownloadRate()!=null&scoreBaseDul.getWebDownloadDownloadRate()!=null){
+					scoreBase.setWebDownloadDownloadRate((scoreBase.getWebDownloadDownloadRate()+scoreBaseDul.getWebDownloadDownloadRate())/2);
+				}else if(scoreBase.getWebDownloadDownloadRate()!=null&&scoreBaseDul.getWebDownloadDownloadRate()==null){
+					scoreBase.setWebDownloadDownloadRate(scoreBase.getWebDownloadDownloadRate());
+				} else if(scoreBase.getWebDownloadDownloadRate()==null&&scoreBaseDul.getWebDownloadDownloadRate()!=null){
+					scoreBase.setWebDownloadDownloadRate(scoreBaseDul.getWebDownloadDownloadRate());
+				}
+				//ftpDownload
+				if(scoreBase.getFtpDownloadDnsDelay()!=null&scoreBaseDul.getFtpDownloadDnsDelay()!=null){
+					scoreBase.setFtpDownloadDnsDelay((scoreBase.getFtpDownloadDnsDelay()+scoreBaseDul.getFtpDownloadDnsDelay())/2);
+				}else if(scoreBase.getFtpDownloadDnsDelay()!=null&&scoreBaseDul.getFtpDownloadDnsDelay()==null){
+					scoreBase.setFtpDownloadDnsDelay(scoreBase.getFtpDownloadDnsDelay());
+				} else if(scoreBase.getFtpDownloadDnsDelay()==null&&scoreBaseDul.getFtpDownloadDnsDelay()!=null){
+					scoreBase.setFtpDownloadDnsDelay(scoreBaseDul.getFtpDownloadDnsDelay());
+				}
+				if(scoreBase.getFtpDownloadConnDelay()!=null&scoreBaseDul.getFtpDownloadConnDelay()!=null){
+					scoreBase.setFtpDownloadConnDelay((scoreBase.getFtpDownloadConnDelay()+scoreBaseDul.getFtpDownloadConnDelay())/2);
+				}else if(scoreBase.getFtpDownloadConnDelay()!=null&&scoreBaseDul.getFtpDownloadConnDelay()==null){
+					scoreBase.setFtpDownloadConnDelay(scoreBase.getFtpDownloadConnDelay());
+				} else if(scoreBase.getFtpDownloadConnDelay()==null&&scoreBaseDul.getFtpDownloadConnDelay()!=null){
+					scoreBase.setFtpDownloadConnDelay(scoreBaseDul.getFtpDownloadConnDelay());
+				}
+
 				scoreBase.setFtpDownloadLoginDelay(scoreBase.getFtpDownloadLoginDelay());
 				scoreBase.setFtpDownloadHeadbyteDelay(scoreBase.getFtpDownloadHeadbyteDelay());
 				scoreBase.setFtpDownloadDownloadRate(scoreBase.getFtpDownloadDownloadRate());
@@ -2143,7 +2182,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 					scoreBase.setTcpPingScore((scoreBase.getTcpPingScore()+scoreBaseDul.getTcpPingScore())/2);
 				}else if(scoreBase.getTcpPingScore()!=null&&scoreBaseDul.getTcpPingScore()==null){
 					scoreBase.setTcpPingScore(scoreBase.getTcpPingScore());
-				}else if(scoreBase.getIcmpPingScore()==null&&scoreBaseDul.getIcmpPingScore()!=null){
+				}else if(scoreBase.getTcpPingScore()==null&&scoreBaseDul.getIcmpPingScore()!=null){
 					scoreBase.setTcpPingScore(scoreBaseDul.getTcpPingScore());
 				}
 				if(scoreBase.getUdpPingScore()!=null&scoreBaseDul.getUdpPingScore()!=null){

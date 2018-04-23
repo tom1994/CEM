@@ -877,6 +877,8 @@ var probetable = new Vue({
             /*bLengthChange: false,*/    /*禁用Show entries*/
             scroll: false,
             oLanguage: {
+                sEmptyTable: "No data available in table",
+                sZeroRecords:"No data available in table",
                 sLengthMenu: "每页 _MENU_ 行数据",
                 sProcessing: "正在努力加载数据中...",
                 // sLoadingRecords: "载入中...",
@@ -1025,6 +1027,8 @@ var areatable = new Vue({
             /*bLengthChange: false,*/    /*禁用Show entries*/
             scroll: false,
             oLanguage: {
+                sEmptyTable: "No data available in table",
+                sZeroRecords:"No data available in table",
                 sLengthMenu: "每页 _MENU_ 行数据",
                 sProcessing: "正在努力加载数据中...",
                 oPaginate: {
@@ -1172,6 +1176,8 @@ var doortable = new Vue({
             scroll: false,
             bAutoWidth:false,
             oLanguage: {
+                sEmptyTable: "No data available in table",
+                sZeroRecords:"No data available in table",
                 sLengthMenu: "每页 _MENU_ 行数据",
                 sProcessing: "正在努力加载数据中...",
                 oPaginate: {
@@ -1200,6 +1206,7 @@ var doortable = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
+                        debugger
                         console.log(result);
                         //封装返回数据
                         let returnData = {};
@@ -1580,12 +1587,10 @@ function diagnose(obj) {
     var id = parseInt(obj.id);
     var url=location.href;
     console.log(url);
-    // window.location.href='../diagnose/diagnoseNow.html'+ "?probeId=" + id;
-    // window.top.location='../diagnose/diagnoseNow.html'+ "?probeId=" + id; ;
-    parent.location=top.location='http://114.236.91.16:8888/index.html#modules/diagnose/diagnoseNow.html'
+    parent.location=top.location='http://114.236.91.16:8888/index.html#modules/diagnose/diagnoseNow.html?a=2'
     $('#page-sidebar>ul>li').eq(3).addClass(' active open');
     $('#page-sidebar>ul>li').eq(1).removeClass(' active open');
-  }
+}
 
 function update_this(obj) {
     $('#myModal_update').modal('show');
@@ -1724,8 +1729,11 @@ function information(obj) {
                 ordering: false, /*禁用排序功能*/
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
+                },
                 scroll: false,
-
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
@@ -1908,7 +1916,10 @@ function ping(obj) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
-
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
+                },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
@@ -2087,7 +2098,10 @@ function quality(obj) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
-
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
+                },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
@@ -2213,7 +2227,10 @@ function broswer(obj) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
-
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
+                },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
@@ -2352,7 +2369,10 @@ function download(obj) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
-
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
+                },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
@@ -2470,7 +2490,10 @@ function video(obj) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
-
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
+                },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
@@ -2578,7 +2601,10 @@ function game(obj) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
-
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
+                },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
@@ -2756,6 +2782,10 @@ function area_information(obj, areaContent) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
+                },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
@@ -2937,7 +2967,10 @@ function area_ping(obj, areaContent) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
-
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
+                },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
@@ -3117,7 +3150,10 @@ function area_quality(obj, areaContent) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
-
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
+                },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
@@ -3243,7 +3279,10 @@ function area_broswer(obj, areaContent) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
-
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
+                },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
@@ -3354,7 +3393,7 @@ function area_download(obj, areaContent) {
                 data: vm.rows,
                 createdRow: function (row, data, index) {
                     //生成了行之后，开始生成表头>>>
-                    var trs = $("#downloaddata_table>thead tr");
+                    var trs = $("#areaDownloaddata_table>thead tr");
                     if (trs.length > 1) {
                         return
                     }
@@ -3382,7 +3421,10 @@ function area_download(obj, areaContent) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
-
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
+                },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
@@ -3500,7 +3542,10 @@ function area_video(obj, areaContent) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
-
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
+                },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
@@ -3608,7 +3653,10 @@ function area_game(obj, areaContent) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
-
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
+                },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
@@ -3790,7 +3838,10 @@ function door_information(obj) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
-
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
+                },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
@@ -3972,7 +4023,10 @@ function door_ping(obj) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
-
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
+                },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
@@ -4151,7 +4205,10 @@ function door_quality(obj) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
-
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
+                },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
@@ -4186,6 +4243,7 @@ function door_quality(obj) {
                             row.push(fixed(item.slaUdpRJitter));
                             row.push(fixed(item.slaUdpLossRate)*100);
                             row.push(fixed(item.dnsDelay));
+                            row.push(fixed(item.dnsSuccessRate)*100);
                             row.push(fixed(item.dhcpDelay));
                             row.push(fixed(item.dhcpSuccessRate)*100);
                             row.push(fixed(item.pppoeDelay));
@@ -4276,7 +4334,10 @@ function door_broswer(obj) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
-
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
+                },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
@@ -4387,7 +4448,7 @@ function door_download(obj) {
                 data: vm.rows,
                 createdRow: function (row, data, index) {
                     //生成了行之后，开始生成表头>>>
-                    var trs = $("#downloaddata_table>thead tr");
+                    var trs = $("#doordownloaddata_table>thead tr");
                     if (trs.length > 1) {
                         return
                     }
@@ -4402,8 +4463,8 @@ function door_download(obj) {
                         innerTh += '<th colspan="5" style="text-align: center">FTP上传</th>';
                         innerTh += '</tr>';
                         //table的id为"id_table"
-                        document.getElementById('downloaddata_table').insertRow(0);
-                        var $tr = $("#downloaddata_table tr").eq(0);
+                        document.getElementById('doordownloaddata_table').insertRow(0);
+                        var $tr = $("#doordownloaddata_table tr").eq(0);
                         $tr.after(innerTh);
                     }
                 },
@@ -4415,7 +4476,10 @@ function door_download(obj) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
-
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
+                },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
@@ -4533,7 +4597,10 @@ function door_video(obj) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
-
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
+                },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
@@ -4642,7 +4709,10 @@ function door_game(obj) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
-
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
+                },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
@@ -4730,9 +4800,12 @@ function loading() {
 }
 
 function fixed(value) {
-    if(value==''||value==null){
+    if(value==null){
         return ''
-    }else{
+    }else if(value==0){
+        return  value
+    }
+    else{
         return value.toFixed(2)
     }
 }

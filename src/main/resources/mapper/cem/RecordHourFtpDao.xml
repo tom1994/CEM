@@ -121,7 +121,6 @@
 		SUM(fail) AS fail,
 		SUM(total) AS total
 		FROM record_hour_ftp
-		force index(idx_score)
 		WHERE record_date BETWEEN #{ava_start} AND #{ava_terminal}
 		<if test="probe_id != null and probe_id != ''">
 			AND probe_id = #{probe_id}

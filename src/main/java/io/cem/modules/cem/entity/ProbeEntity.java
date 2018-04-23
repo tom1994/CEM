@@ -94,7 +94,7 @@ public class ProbeEntity implements Serializable {
 	@ExportName(exportName = "软件版本")
 	private String version;
 	//注册时间
-	@ExportName(exportName = "注册时间")
+	@ExportName(exportName = "注册时间" )
 	private Date registerTime;
 	//并发任务数
 	@ExcelIgnore
