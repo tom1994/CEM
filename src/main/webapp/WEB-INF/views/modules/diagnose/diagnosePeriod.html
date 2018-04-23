@@ -31,6 +31,9 @@
         .Btn{
             margin-bottom:0
         }
+        .color{
+        background:   #e7eaec;
+        }
         .btn {
             margin-bottom: 0px !important;
         }
@@ -142,14 +145,14 @@
                                         </div>
 
                                         <div class="input-group searchspan">
-                                            <span class="searchname  search left " title="日期" style="width: 60px;margin-right: 6px">起始时间</span>
+                                            <span class="searchname  search left " title="起始时间" style="width: 60px;margin-right: 6px">起始时间</span>
                                             <input type="text" id="start_date" class="form-control  input"
                                                    name="startDate"
                                                    style="width: 134px"
                                                    value="">
                                         </div>
                                         <div class="input-group searchspan">
-                                            <span class="searchname search left " title="日期" style="width: 60px">结束时间</span>
+                                            <span class="searchname search left " title="结束时间" style="width: 60px">结束时间</span>
                                             <input type="text" id="terminal_date" class="form-control input clear "
                                                    name="terminalDate"
                                                    style="width: 134px"
@@ -180,7 +183,7 @@
                     <div class="ibox float-e-margins">
                         <div class="ibox-title fontcolor "  style="padding-bottom: 0px !important;">
                             <div class="btn-group" id="charts_button">                   <!--Vue事件监听-->
-                                <button type="button" class="btn btn-default Btn" v-on:click="ping">网络连通性</button>
+                                <button type="button" class="btn btn-default Btn color" v-on:click="ping" id="ping">网络连通性</button>
                                 <button type="button" class="btn btn-default Btn" v-on:click="sla">网络层质量</button>
                                 <button type="button" class="btn btn-default Btn" v-on:click="web">WEB浏览</button>
                                 <button type="button" class="btn btn-default Btn" v-on:click="download">文件下载</button>

@@ -43,6 +43,12 @@ public class RecordHourTracertServiceImpl implements RecordHourTracertService {
 
 	@Override
 	@Async
+	public Future<List<RecordHourTracertEntity>> queryTargetHourList(Map<String, Object> map) {
+		return new AsyncResult<>(recordHourTracertDao.queryTargetHourList(map));
+	}
+
+	@Override
+	@Async
 	public Future<List<RecordHourTracertEntity>> queryExitList(Map<String, Object> map){
 		return new AsyncResult<> (recordHourTracertDao.queryExitList(map));
 	}

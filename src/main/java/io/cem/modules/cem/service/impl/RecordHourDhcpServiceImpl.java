@@ -48,6 +48,13 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 
 	@Override
 	@Async
+	public Future<List<RecordHourDhcpEntity>> queryTargetHourList(Map<String, Object> map) {
+		return new AsyncResult<>
+				(recordHourDhcpDao.queryTargetHourList(map));
+	}
+
+	@Override
+	@Async
 	public Future<List<RecordHourDhcpEntity>> queryExitList(Map<String, Object> map){
 		return new AsyncResult<>
 				( recordHourDhcpDao.queryExitList(map));

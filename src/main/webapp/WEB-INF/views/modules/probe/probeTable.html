@@ -118,8 +118,11 @@
             white-space: nowrap !important;
         }
         .dataTable td {
-            overflow: visible; !important;
+            overflow: hidden; !important;
             white-space: nowrap !important;
+        }
+        .modal{
+            overflow: hidden;
         }
     </style>
 </head>
@@ -327,7 +330,7 @@
                     <div class="modal fade" id="myModal_update" tabindex="-1" role="dialog"
                          aria-labelledby="myModalLabel"
                          aria-hidden="true">
-                        <div class="modal-dialog" style="width: 950px"> <!--修改bootstrap modal模态框的宽度-->
+                        <div class="modal-dialog" style="width: 967px"> <!--修改bootstrap modal模态框的宽度-->
                             <div class="modal-content">
                                 <div class="modal-header" style="">
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
@@ -335,7 +338,7 @@
                                     </button>
                                     <h3 class="modal-title myModalLabel">{{modaltitle}}</h3>
                                 </div>
-                                <div class="modal-body" style="padding: 0px 30px 0px 30px !important;">
+                                <div class="modal-body" style="padding: 0px 30px 0px 30px !important;height: 400px;overflow: auto">
                                     <div class="row">
                                         <form class="form-horizontal" id="probeform_data" role="form">
                                             <div class="form-group row">

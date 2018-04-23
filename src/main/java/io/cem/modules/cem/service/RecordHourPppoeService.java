@@ -18,6 +18,8 @@ public interface RecordHourPppoeService {
 
 	Future<List<RecordHourPppoeEntity>> queryPppoeList(Map<String, Object> map);
 
+	Future<List<RecordHourPppoeEntity>> queryTargetHourList(Map<String, Object> map);
+
 	Future<List<RecordHourPppoeEntity>> queryExitList(Map<String, Object> map);
 
 	Future<List<RecordHourPppoeEntity>> queryDayExitList(Map<String, Object> map);

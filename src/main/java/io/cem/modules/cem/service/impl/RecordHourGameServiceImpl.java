@@ -65,6 +65,12 @@ public class RecordHourGameServiceImpl implements RecordHourGameService {
 		return new AsyncResult<> (recordHourGameDao.queryGameAreaList(map));
 	}
 
+	@Override
+	@Async
+	public Future<List<RecordHourGameEntity>> queryGameTargetList(Map<String, Object> map){
+		return new AsyncResult<> (recordHourGameDao.queryGameTargetList(map));
+	}
+
 
 
 	@Override

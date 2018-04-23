@@ -33,7 +33,7 @@
         }
         .combo-select{
             display: inline-block;
-            max-width: 138px;
+            max-width: 101px;
             left:4px
         }
         .combo-dropdown{
@@ -83,7 +83,7 @@
                                       role="form">
                                     <div class="col-lg-12 col-md-12 col-sm-12 form-group row" style="margin-bottom: -5px!important;">
                                         <div style="display:inline-block;">
-                                            <span class="searchname" title="地市" style="width:40px; text-align: center;">地市</span>
+                                            <span class="searchname" title="地市" style="width:55px; text-align: center;">地市</span>
                                             <div class="input-group searchspan" id="city"  >
                                                 <div class="jq22">
                                                     <select id="selectcity" class="form-control" name="city_id"  v-on:change="citychange()" style="display: none">
@@ -96,7 +96,7 @@
                                             </div>
                                         </div>
                                         <div style="display: inline-block;">
-                                            <span class="searchname search " title="区县" style="width: 40px;">区县</span>
+                                            <span class="searchname search " title="区县" style="width: 55px;">区县</span>
                                             <div class="input-group searchspan" id="country" >
                                                 <div class="jq22">
                                                     <select id="selectarea" class="form-control" name="county_id"  v-on:change="areachange()" style="display: none">
@@ -172,7 +172,7 @@
                                             </div>
                                         </div>
 
-                                    <div class="form-group row">
+                                    <div class="form-group row" style="margin-top: 2px">
                                         <div class="col-lg-10 col-md-10 col-sm-10 " style="margin-bottom: -5px!important;">
 
                                             <div style="display: inline-block;">
@@ -190,32 +190,32 @@
                                                 </div>
                                             </div>
                                             <div class="input-group searchspan">
-                                                <span class="searchname search" title="日期" style="width: 55px">起止日期</span>
+                                                <span class="searchname search" title="起止日期" style="width: 55px">起止日期</span>
                                                 <input type="text" id="start_date" class="form-control selectdata input"
                                                        name="startDate"
                                                        style="width: 90px"
                                                        value="">
-                                                <span class="searchname search" style="width: 5px">-</span>
+                                                <span class="searchname search" style="width: 10px; margin-left: 0px">--</span>
                                                 <input type="text" id="terminal_date" class="form-control selectdata input"
                                                        name="terminalDate"
-                                                       style="width: 83px"
+                                                       style="width: 90px"
                                                        value="">
                                             </div>
 
                                             <div class="input-group searchspan ">
-                                                <span class="searchname search" title="时间" style="width: 55px">统计时段</span>
+                                                <span class="searchname search" title="统计时段" style="width: 55px">统计时段</span>
                                                 <input type="text" id="start_time" class="form-control selectdata input"
                                                        name="start_time"
-                                                       style="width: 50px"
+                                                       style="width: 78px"
                                                        value="">
                                                 <span class="searchname search " style="width: 5px">-</span>
                                                 <input type="text" id="terminal_time" class="form-control selectdata input"
                                                        name="end_time"
-                                                       style="width: 50px"
+                                                       style="width: 78px"
                                                        value="">
                                             </div>
                                             <div style="display: inline-block;">
-                                                <span class="searchname search" style="width: 90px">统计粒度</span>
+                                                <span class="searchname search" style="width: 90px;line-height: 1.5">统计粒度</span>
                                                 <div class="input-group searchspan" id="interval" style="top: -11px; width: 70px" >
                                                     <div class="jq22">
                                                         <select id="interval12" class="form-control" name="interval"  style="display: none">
@@ -306,9 +306,14 @@
                                 <table class="table table-bordered " id="webdownloaddata_table" style="margin-top: 2px!important;"></table>
                             </div>
                         </div>
-                        <div class="record-table ibox-content service_unselected" id="ftp_record">
+                        <div class="record-table ibox-content service_unselected" id="ftpdo_record">
                             <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
-                                <table class="table table-bordered" id="ftpdata_table"></table>
+                                <table class="table table-bordered" id="ftpdatado_table"></table>
+                            </div>
+                        </div>
+                        <div class="record-table ibox-content service_unselected" id="ftpup_record">
+                            <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                                <table class="table table-bordered" id="ftpdataup_table"></table>
                             </div>
                         </div>
                         <div class="record-table ibox-content service_unselected" id="webvideo_record">
@@ -330,7 +335,7 @@
 
 <script type="text/javascript"
         src="${rc.contextPath}/statics/js/modules/report/dataStatistic.js?_${date.systemTime}"></script>
-
+<script src="https://cdn.datatables.net/fixedcolumns/3.2.2/js/dataTables.fixedColumns.min.js"></script>
 <script>
     $('#start_date').flatpickr({
         enableTime: false,
@@ -358,6 +363,7 @@
 <script>
     $(function () {
         $('#service .jq22').comboSelect();
+        $('#service .combo-select ').css('max-width','160px')
         $('#city .jq22').comboSelect()
         $('#country .jq22').comboSelect();
         $('#task .jq22').comboSelect();

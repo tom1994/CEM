@@ -23,7 +23,7 @@ public interface RecordHourWebPageService {
 
 	Future<List<RecordHourWebPageEntity>> queryDayExitList(Map<String, Object> map);
 	Future<List<RecordHourWebPageEntity>> queryWebAreaList(Map<String, Object> map);
-
+	Future<List<RecordHourWebPageEntity>> queryWebTargetList(Map<String, Object> map);
 	Future<List<RecordHourWebPageEntity>> queryWebRankList(Map<String, Object> map);
 
 	Future<List<RecordHourWebPageEntity>> queryDayAreaList(Map<String, Object> map);

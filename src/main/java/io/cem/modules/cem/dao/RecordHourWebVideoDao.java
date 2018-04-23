@@ -14,6 +14,7 @@ public interface RecordHourWebVideoDao extends BaseDao<RecordHourWebVideoEntity>
     List<RecordHourWebVideoEntity> queryDayExitList(Map<String, Object> map);
     List<RecordHourWebVideoEntity> queryVideoAreaList(Map<String, Object> map);
     List<RecordHourWebVideoEntity> queryVideoRankList(Map<String, Object> map);
+    List<RecordHourWebVideoEntity> queryVideoTargetList(Map<String, Object> map);
     List<RecordHourWebVideoEntity> queryDayList(Map<String, Object> map);
     List<RecordHourWebVideoEntity> queryDayRankList(Map<String, Object> map);
     List<RecordHourWebVideoEntity> queryDayAreaList(Map<String, Object> map);

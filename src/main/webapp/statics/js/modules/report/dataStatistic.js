@@ -55,7 +55,6 @@ recordtype.set(50,"game");
 
 function getFormJson(form) {      /*将表单对象变为json对象*/
     var o = {};
-    debugger
     var a = $(form).serializeArray();
     if(citySelected!=0){
         a[4]={};
@@ -357,7 +356,7 @@ var search_data = new Vue({
             console.log(recordtag);
             $("#" + recordtag + "_record ").removeClass("service_unselected");
             var data = getFormJson($('#resultsearch .selectdata'));
-            debugger
+             
             /*得到查询条件*/
             /*获取表单元素的值*/
             var starttemp = data.start_time;
@@ -366,6 +365,7 @@ var search_data = new Vue({
             var td = data.terminalDate;
             if (sd == "" && td == "") {
                 data.startDate =  new Date(new Date() - 1000 * 60 * 60 * 24).Format("yyyy-MM-dd");
+                 
                 data.terminalDate = (new Date()).Format("yyyy-MM-dd");
             }
             if (starttemp == "" && termtemp == "") {
@@ -386,7 +386,7 @@ var search_data = new Vue({
                 data.queryType = "0";//统计数据
             }
             console.log(data);
-
+            debugger
             if (recordtag == "ping") {
                 pingresulttable.resultdata = data;
                 pingresulttable.redraw();
@@ -435,9 +435,14 @@ var search_data = new Vue({
                 webdownloadresult_Table.redraw();
                 /*根据查询条件重绘*/
             }
-            if (recordtag == "ftp") {
-                ftpresult_Table.resultdata = data;
-                ftpresult_Table.redraw();
+            if (recordtag == "ftpup") {
+                ftpupresult_Table.resultdata = data;
+                ftpupresult_Table.redraw();
+                /*根据查询条件重绘*/
+            }
+            if (recordtag == "ftpdo") {
+                ftpdoresult_Table.resultdata = data;
+                ftpdoresult_Table.redraw();
                 /*根据查询条件重绘*/
             }
             if (recordtag == "webvideo") {
@@ -739,6 +744,8 @@ var pingresulttable = new Vue({
             columns: vm.headers,
             data: vm.rows,
             searching: false,
+            // scrollY :'600px',
+            // scrollCollapse: true,
             paging: true,
             serverSide: true,
             info: false,
@@ -1794,6 +1801,7 @@ var ftpdoresult_Table = new Vue({
         });
     }
 });
+
 //web_download_table
 var webdownloadresult_Table = new Vue({
     el: '#webdownloaddata_table',

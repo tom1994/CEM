@@ -13,6 +13,7 @@ public interface ProbeExitDao extends BaseDao<ProbeExitEntity> {
     void operateStatus0(Integer id);
     void operateStatus1(Integer id);
     int queryNameExist(String exit);
+    int queryUpdate(String exit,int id);
     int queryProbeExist(Integer probeId);
     int queryPortExist(String port);
     List<ProbeExitEntity> queryscoreList(Map<String, Object> map);

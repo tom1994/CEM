@@ -28,6 +28,8 @@ public interface ProbeExitService {
 
 	int queryNameExist(String exit);
 
+	int queryUpdate(String exit,int id);
+
 	int queryProbeExist(Integer probeId);
 
 	int queryPortExist(String port);

@@ -104,7 +104,7 @@ public class ProbeExitController {
 	@RequiresPermissions("probeexit:save")
 	public R save(@RequestBody ProbeExitEntity probeExit){
 		if ((probeExitService.queryNameExist(probeExit.getExit()) > 0)||((probeExitService.queryProbeExist(probeExit.getProbeId()) > 0)&&(probeExitService.queryPortExist(probeExit.getPort()) > 0))) {
-			return R.error(300, "出口名称或出口已存在，请重新输入");
+			return R.error(300, "出口名称或对应端口已存在，请重新输入");
 		} else {
 			probeExitService.save(probeExit);
 			return R.ok();
@@ -117,7 +117,7 @@ public class ProbeExitController {
 	@RequestMapping("/update/{id}")
 	@RequiresPermissions("probeexit:update")
 	public R update(@RequestBody ProbeExitEntity probeExit){
-		if (probeExitService.queryNameExist(probeExit.getExit()) > 0) {
+		if (probeExitService.queryUpdate(probeExit.getExit(),probeExit.getId()) > 0) {
 			return R.error(300, "出口名称已存在，请重新输入");
 		} else {
 			probeExitService.update(probeExit);

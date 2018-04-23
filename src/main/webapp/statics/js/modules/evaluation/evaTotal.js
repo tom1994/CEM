@@ -279,7 +279,7 @@ function ping_change(param) {
         },
         yAxis: {
             max: 100,
-            min: 60,
+            min: 0,
             title: {
                 text: ' '
             }
@@ -353,7 +353,7 @@ function quality_change(param) {
         },
         yAxis: {
             max: 100,
-            min: 60,
+            min: 0,
             title: {
                 text: ' '
             }
@@ -430,7 +430,7 @@ function download_change(param) {
         },
         yAxis: {
             max: 100,
-            min: 10,
+            min: 0,
             title: {
                 text: ' '
             }
@@ -509,7 +509,7 @@ function page_change(param) {
         },
         yAxis: {
             max: 100,
-            min: 60,
+            min: 0,
             title: {
                 text: ' '
             }
@@ -587,7 +587,7 @@ function video_change(param) {
         },
         yAxis: {
             max: 100,
-            min: 60,
+            min: 0,
             title: {
                 text: ' '
             }
@@ -661,7 +661,7 @@ function game_change(param) {
         },
         yAxis: {
             max: 100,
-            min: 60,
+            min: 0,
             title: {
                 text: ' '
             }
@@ -924,9 +924,6 @@ var connection_service = new Vue({
         },
         probedata: {ava_start:(new Date()).Format("yyyy-MM-dd"), ava_terminal:(new Date()).Format("yyyy-MM-dd")}
     },
-    methods:{
-
-    },
     mounted: function(){         /*动态加载测试任务组数据*/
         let param = {};
         param.probedata = JSON.stringify(this.probedata);
@@ -936,7 +933,6 @@ var connection_service = new Vue({
             cache: false,  //禁用缓存
             data: param,  //传入组装的参数
             dataType: "json",
-            /* contentType:"application/json",  /!*必须要,不可少*!/*/
             success: function (result) {
                 console.log(result);
                 connection_service.connection.max = parseFloat(result.score.connectionMax).toFixed(3);
@@ -960,7 +956,18 @@ var connection_service = new Vue({
 
             }
         });
-        param.chartdata = JSON.stringify(this.probedata);
+
+    },
+
+});
+var connection=new Vue({
+    el:'#container_connection',
+    data:{
+        probedata: {ava_start:(new Date()).Format("yyyy-MM-dd"), ava_terminal:(new Date()).Format("yyyy-MM-dd")}
+    },
+    mounted:function () {
+        let param={};
+        param.chartdata = JSON.stringify(this.probedata)
         $.ajax({
             type: "POST",
             url: "../../recordhourping/connection",
@@ -977,10 +984,9 @@ var connection_service = new Vue({
 
             }
         })
-    },
+    }
 
-});
-
+})
 var quality_service = new Vue({
     el: '#v-for-quality',
     data: {
@@ -1194,10 +1200,10 @@ function list_ping () {
                 },
                 yAxis: {
                     max: 100,
-                    min: 60,
+                    min: 0,
                     title: {
                         text: ' '
-                    },
+                    }
                 },
                 tooltip: {
                     xDateFormat: '%Y-%m-%d',
@@ -1280,7 +1286,7 @@ function list_quality() {
                 },
                 yAxis: {
                     max: 100,
-                    min: 60,
+                    min: 0,
                     title: {
                         text: ' '
                     }
@@ -1447,7 +1453,7 @@ function list_page() {
                 },
                 yAxis: {
                     max: 100,
-                    min: 60,
+                    min: 0,
                     title: {
                         text: ' '
                     }
@@ -1531,7 +1537,7 @@ function list_video() {
                 },
                 yAxis: {
                     max: 100,
-                    min: 60,
+                    min: 0,
                     title: {
                         text: ' '
                     }
@@ -1616,7 +1622,7 @@ function list_game() {
                 },
                 yAxis: {
                     max: 100,
-                    min: 60,
+                    min: 0,
                     title: {
                         text: ' '
                     }
@@ -1697,6 +1703,7 @@ function ping(obj) {
             headers: [
                 {title: '<div style="width:10px"></div>'},
                 {title: '<div style="width:110px">探针名称</div>'},
+                {title: '<div style="width:130px">时间</div>'},
                 {title: '<div style="width:70px">综合分数</div>'},
                 {title: '<div style="width:100px">时延平均值(ms)</div>'},
                 {title: '<div style="width:100px">时延标准差(ms)</div>'},
@@ -1812,45 +1819,47 @@ function ping(obj) {
                     let rows = [];
                     var i = 1;
                     probeContent.forEach(function (item) {
-                            let row = [];
-                             row.push(i++);
-                            row.push(item.probeName);
-                            row.push(item.score.toFixed(2));
-                            row.push(item.pingIcmpDelay.toFixed(2));
-                            row.push(item.pingIcmpDelayStd.toFixed(2));
-                            row.push(item.pingIcmpDelayVar.toFixed(2));
-                            row.push(item.pingIcmpJitter.toFixed(2));
-                            row.push(item.pingIcmpJitterStd.toFixed(2));
-                            row.push(item.pingIcmpJitterVar.toFixed(2));
-                            row.push(item.pingIcmpLossRate.toFixed(2));
-                            row.push(item.pingTcpDelay.toFixed(2));
-                            row.push(item.pingTcpDelayStd.toFixed(2));
-                            row.push(item.pingTcpDelayVar.toFixed(2));
-                            row.push(item.pingTcpJitter.toFixed(2));
-                            row.push(item.pingTcpJitterStd.toFixed(2));
-                            row.push(item.pingTcpJitterVar.toFixed(2));
-                            row.push(item.pingTcpLossRate.toFixed(2));
-                            row.push(item.pingUdpDelay);
-                            row.push(item.pingUdpDelayStd);
-                            row.push(item.pingUdpDelayVar);
-                            row.push(item.pingUdpJitter);
-                            row.push(item.pingUdpJitterStd);
-                            row.push(item.pingUdpJitterVar);
-                            row.push(item.pingUdpLossRate);
-                            row.push(item.tracertIcmpDelay);
-                            row.push(item.tracertIcmpDelayStd);
-                            row.push(item.tracertIcmpDelayVar);
-                            row.push(item.tracertIcmpJitter);
-                            row.push(item.tracertIcmpJitterStd);
-                            row.push(item.tracertIcmpJitterVar);
-                            row.push(item.tracertIcmpLossRate);
-                            row.push(item.tracertTcpDelay);
-                            row.push(item.tracertTcpDelayStd);
-                            row.push(item.tracertTcpDelayVar);
-                            row.push(item.tracertTcpJitter);
-                            row.push(item.tracertTcpJitterStd);
-                            row.push(item.tracertTcpJitterVar);
-                            row.push(item.tracertTcpLossRate);
+                        let row = [];
+                        row.push(i++);
+                        row.push(item.probeName);
+                        row.push(item.recordDate.substr(0,10)+"   "+item.recordTime.substr(0,10)+':00');
+                        row.push(fixed(item.score));
+                        row.push(fixed(item.pingIcmpDelay));
+                        row.push(fixed(item.pingIcmpDelayStd));
+                        row.push(fixed(item.pingIcmpDelayVar));
+                        row.push(fixed(item.pingIcmpJitter));
+                        row.push(fixed(item.pingIcmpJitterStd));
+                        row.push(fixed(item.pingIcmpJitterVar));
+                        row.push(fixed(item.pingIcmpLossRate));
+                        row.push(fixed(item.pingTcpDelay));
+                        row.push(fixed(item.pingTcpDelayStd));
+                        row.push(fixed(item.pingTcpDelayVar));
+                        row.push(fixed(item.pingTcpJitter));
+                        row.push(fixed(item.pingTcpJitterStd));
+                        row.push(fixed(item.pingTcpJitterVar));
+                        row.push(fixed(item.pingTcpLossRate));
+                        row.push(fixed(item.pingUdpDelay));
+                        row.push(fixed(item.pingUdpDelayStd));
+                        row.push(fixed(item.pingUdpDelayVar));
+                        row.push(fixed(item.pingUdpJitter));
+                        row.push(fixed(item.pingUdpJitterStd));
+                        row.push(fixed(item.pingUdpJitterVar));
+                        row.push(fixed(item.pingUdpLossRate));
+                        row.push(fixed(item.tracertIcmpDelay));
+                        row.push(fixed(item.tracertIcmpDelayStd));
+                        row.push(fixed(item.tracertIcmpDelayVar));
+                        row.push(fixed(item.tracertIcmpJitter));
+                        row.push(fixed(item.tracertIcmpJitterStd));
+                        row.push(fixed(item.tracertIcmpJitterVar));
+                        row.push(fixed(item.tracertIcmpLossRate));
+                        row.push(fixed(item.tracertTcpDelay));
+                        row.push(fixed(item.tracertTcpDelayStd));
+                        row.push(fixed(item.tracertTcpDelayVar));
+                        row.push(fixed(item.tracertTcpJitter));
+                        row.push(fixed(item.tracertTcpJitterStd));
+                        row.push(fixed(item.tracertTcpJitterVar));
+                        row.push(fixed(item.tracertTcpLossRate));
+
                             rows.push(row);
 
                     });
@@ -1880,6 +1889,7 @@ function quality(obj) {
             headers: [
                 {title: '<div style="width:10px"></div>'},
                 {title: '<div style="width:110px">探针名称</div>'},
+                {title: '<div style="width:130px">时间</div>'},
                 {title: '<div style="width:70px">综合分数</div>'},
                 {title: '<div style="width:100px">时延平均值(ms)</div>'},
                 {title: '<div style="width:100px">往向时延(ms)</div>'},
@@ -1988,30 +1998,31 @@ function quality(obj) {
                             let row = [];
                              row.push(i++);
                             row.push(item.probeName);
-                            row.push(item.score.toFixed(2));
-                            row.push(item.slaTcpDelay);
-                            row.push(item.slaTcpGDelay);
-                            row.push(item.slaTcpRDelay);
-                            row.push(item.slaTcpJitter);
-                            row.push(item.slaTcpGJitter);
-                            row.push(item.slaTcpRJitter);
-                            row.push(item.slaTcpLossRate);
-                            row.push(item.slaUdpDelay);
-                            row.push(item.slaUdpGDelay);
-                            row.push(item.slaUdpRDelay);
-                            row.push(item.slaUdpJitter);
-                            row.push(item.slaUdpGJitter);
-                            row.push(item.slaUdpRJitter);
-                            row.push(item.slaUdpLossRate);
-                            row.push(item.dnsDelay);
-                            row.push(item.dnsSuccessRate);
-                            row.push(item.dhcpDelay);
-                            row.push(item.dhcpSuccessRate);
-                            row.push(item.pppoeDelay);
-                            row.push(item.pppoeDropRate);
-                            row.push(item.pppoeSuccessRate);
-                            row.push(item.radiusDelay);
-                            row.push(item.radiusSuccessRate);
+                            row.push(item.recordDate.substr(0,10)+"   "+item.recordTime.substr(0,10)+':00');
+                            row.push(fixed(item.score));
+                            row.push(fixed(item.slaTcpDelay));
+                            row.push(fixed(item.slaTcpGDelay));
+                            row.push(fixed(item.slaTcpRDelay));
+                            row.push(fixed(item.slaTcpJitter));
+                            row.push(fixed(item.slaTcpGJitter));
+                            row.push(fixed(item.slaTcpRJitter));
+                            row.push(fixed(item.slaTcpLossRate));
+                            row.push(fixed(item.slaUdpDelay));
+                            row.push(fixed(item.slaUdpGDelay));
+                            row.push(fixed(item.slaUdpRDelay));
+                            row.push(fixed(item.slaUdpJitter));
+                            row.push(fixed(item.slaUdpGJitter));
+                            row.push(fixed(item.slaUdpRJitter));
+                            row.push(fixed(item.slaUdpLossRate));
+                            row.push(fixed(item.dnsDelay));
+                            row.push(fixed(item.dnsSuccessRate));
+                            row.push(fixed(item.dhcpDelay));
+                            row.push(fixed(item.dhcpSuccessRate));
+                            row.push(fixed(item.pppoeDelay));
+                            row.push(fixed(item.pppoeDropRate));
+                            row.push(fixed(item.pppoeSuccessRate));
+                            row.push(fixed(item.radiusDelay));
+                            row.push(fixed(item.radiusSuccessRate));
                             rows.push(row);
                     });
                     returnData.data = rows;
@@ -2042,6 +2053,7 @@ function broswer(obj) {
             headers: [
                 {title: '<div style="width:10px"></div>'},
                 {title: '<div style="width:110px">探针名称</div>'},
+                {title: '<div style="width:130px">时间</div>'},
                 {title: '<div style="width:70px">综合分数</div>'},
                 {title: '<div style="width:100px">DNS时延(ms)</div>'},
                 {title: '<div style="width:100px">连接时延(ms)</div>'},
@@ -2115,15 +2127,16 @@ function broswer(obj) {
                             let row = [];
                              row.push(i++);
                             row.push(item.probeName);
-                            row.push(item.score.toFixed(2));
-                            row.push(item.webpageDnsDelay);
-                            row.push(item.webpageConnDelay);
-                            row.push(item.webpageHeadbyteDelay);
-                            row.push(item.webpagePageFileDelay);
-                            row.push(item.webpageRedirectDelay);
-                            row.push(item.webpageAboveFoldDelay);
-                            row.push(item.webpagePageElementDelay);
-                            row.push(item.webpageDownloadRate);
+                            row.push(item.recordDate.substr(0,10)+"   "+item.recordTime.substr(0,10)+':00');
+                            row.push(fixed(item.score));
+                            row.push(fixed(item.webpageDnsDelay));
+                            row.push(fixed(item.webpageConnDelay));
+                            row.push(fixed(item.webpageHeadbyteDelay));
+                            row.push(fixed(item.webpagePageFileDelay));
+                            row.push(fixed(item.webpageRedirectDelay));
+                            row.push(fixed(item.webpageAboveFoldDelay));
+                            row.push(fixed(item.webpagePageElementDelay));
+                            row.push(fixed(item.webpageDownloadRate));
                             rows.push(row);
 
                     });
@@ -2153,6 +2166,7 @@ function download(obj) {
             headers: [
                 {title: '<div style="width:10px"></div>'},
                 {title: '<div style="width:110px">探针名称</div>'},
+                {title: '<div style="width:130px">时间</div>'},
                 {title: '<div style="width:70px">综合分数</div>'},
                 {title: '<div style="width:100px">DNS时延(ms)</div>'},
                 {title: '<div style="width:100px">连接时延(ms)</div>'},
@@ -2253,21 +2267,22 @@ function download(obj) {
                             let row = [];
                              row.push(i++);
                             row.push(item.probeName);
-                            row.push(item.score.toFixed(2));
-                            row.push(item.webDownloadDnsDelay);
-                            row.push(item.webDownloadConnDelay);
-                            row.push(item.webDownloadHeadbyteDelay);
-                            row.push(item.webDownloadDownloadRate);
-                            row.push(item.ftpDownloadDnsDelay);
-                            row.push(item.ftpDownloadConnDelay);
-                            row.push(item.ftpDownloadLoginDelay);
-                            row.push(item.ftpDownloadHeadbyteDelay);
-                            row.push(item.ftpDownloadDownloadRate);
-                            row.push(item.ftpUploadDnsDelay);
-                            row.push(item.ftpUploadConnDelay);
-                            row.push(item.ftpUploadLoginDelay);
-                            row.push(item.ftpUploadHeadbyteDelay);
-                            row.push(item.ftpUploadUploadRate);
+                            row.push(item.recordDate.substr(0,10)+"   "+item.recordTime.substr(0,10)+':00');
+                            row.push(fixed(item.score));
+                            row.push(fixed(item.webDownloadDnsDelay));
+                            row.push(fixed(item.webDownloadConnDelay));
+                            row.push(fixed(item.webDownloadHeadbyteDelay));
+                            row.push(fixed(item.webDownloadDownloadRate));
+                            row.push(fixed(item.ftpDownloadDnsDelay));
+                            row.push(fixed(item.ftpDownloadConnDelay));
+                            row.push(fixed(item.ftpDownloadLoginDelay));
+                            row.push(fixed(item.ftpDownloadHeadbyteDelay));
+                            row.push(fixed(item.ftpDownloadDownloadRate));
+                            row.push(fixed(item.ftpUploadDnsDelay));
+                            row.push(fixed(item.ftpUploadConnDelay));
+                            row.push(fixed(item.ftpUploadLoginDelay));
+                            row.push(fixed(item.ftpUploadHeadbyteDelay));
+                            row.push(fixed(item.ftpUploadUploadRate));
                             rows.push(row);
 
                     });
@@ -2297,6 +2312,7 @@ function video(obj) {
             headers: [
                 {title: '<div style="width:10px"></div>'},
                 {title: '<div style="width:110px">探针名称</div>'},
+                {title: '<div style="width:130px">时间</div>'},
                 {title: '<div style="width:70px">综合分数</div>'},
                 {title: '<div style="width:100px">DNS时延(ms)</div>'},
                 {title: '<div style="width:100px">连接WEB服务器时延(ms)</div>'},
@@ -2370,20 +2386,21 @@ function video(obj) {
                     probeContent.forEach(function (item) {
                             let row = [];
                              row.push(i++);
-                            row.push(item.probeName);
-                            row.push(item.score.toFixed(2));
-                            row.push(item.webVideoDnsDelay);
-                            row.push(item.webVideoWsConnDelay.toFixed(2));
-                            row.push(item.webVideoWebPageDelay.toFixed(2));
-                            row.push(item.webVideoSsConnDelay);
-                            row.push(item.webVideoAddressDelay);
-                            row.push(item.webVideoMsConnDelay);
-                            row.push(item.webVideoHeadFrameDelay);
-                            row.push(item.webVideoInitBufferDelay);
-                            row.push(item.webVideoLoadDelay);
-                            row.push(item.webVideoTotalBufferDelay);
-                            row.push(item.webVideoDownloadRate);
-                            row.push(item.webVideoBufferTime);
+                        row.push(item.probeName);
+                        row.push(item.recordDate.substr(0,10)+"   "+item.recordTime.substr(0,10)+':00');
+                        row.push(fixed(item.score));
+                        row.push(fixed(item.webVideoDnsDelay));
+                        row.push(fixed(item.webVideoWsConnDelay));
+                        row.push(fixed(item.webVideoWebPageDelay));
+                        row.push(fixed(item.webVideoSsConnDelay));
+                        row.push(fixed(item.webVideoAddressDelay));
+                        row.push(fixed(item.webVideoMsConnDelay));
+                        row.push(fixed(item.webVideoHeadFrameDelay));
+                        row.push(fixed(item.webVideoInitBufferDelay));
+                        row.push(fixed(item.webVideoLoadDelay));
+                        row.push(fixed(item.webVideoTotalBufferDelay));
+                        row.push(fixed(item.webVideoDownloadRate));
+                        row.push(fixed(item.webVideoBufferTime));
                             rows.push(row);
 
                     });
@@ -2413,6 +2430,7 @@ function game(obj) {
             headers: [
                 {title: '<div style="width:10px"></div>'},
                 {title: '<div style="width:110px">探针名称</div>'},
+                {title: '<div style="width:130px">时间</div>'},
                 {title: '<div style="width:70px">综合分数</div>'},
                 {title: '<div style="width:100px">DNS时延(ms)</div>'},
                 {title: '<div style="width:100px">连接时延(ms)</div>'},
@@ -2479,13 +2497,14 @@ function game(obj) {
                     probeContent.forEach(function (item) {
                             let row = [];
                              row.push(i++);
-                            row.push(item.probeName);
-                            row.push(item.score.toFixed(2));
-                            row.push(item.gameDnsDelay);
-                            row.push(item.gameConnDelay.toFixed(2));
-                            row.push(item.gamePacketDelay.toFixed(2));
-                            row.push(item.gamePacketJitter.toFixed(2));
-                            row.push(item.gameLossRate.toFixed(2));
+                        row.push(item.probeName);
+                        row.push(item.recordDate.substr(0,10)+"   "+item.recordTime.substr(0,10)+':00');
+                        row.push(fixed(item.score));
+                        row.push(fixed(item.gameDnsDelay));
+                        row.push(fixed(item.gameConnDelay));
+                        row.push(fixed(item.gamePacketDelay));
+                        row.push(fixed(item.gamePacketJitter));
+                        row.push(fixed(item.gameLossRate));
                             rows.push(row);
                     });
                     returnData.data = rows;
@@ -2709,3 +2728,12 @@ $(document).ready(function () {
     }
     probe()
 });
+
+
+function fixed(value) {
+    if(value==''||value==null){
+        return ''
+    }else{
+        return value.toFixed(2)
+    }
+}

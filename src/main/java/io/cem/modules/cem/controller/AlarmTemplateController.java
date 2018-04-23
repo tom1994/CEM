@@ -82,15 +82,15 @@ public class AlarmTemplateController {
 			return R.ok();
 		}
 	}
-	
+
 	/**
 	 * 修改
 	 */
 	@RequestMapping("/update")
 	@RequiresPermissions("alarmtemplate:update")
-	public R update(@RequestBody AlarmTemplateEntity alarmTemplate){
-		if (alarmTemplateService.queryExist(alarmTemplate.getAtName()) > 0) {
-			return R.error(300, "告警模版名称已存在，请重新输入");
+	public R update(@RequestBody AlarmTemplateEntity alarmTemplate) {
+		if (alarmTemplateService.queryUpdate(alarmTemplate.getAtName(),alarmTemplate.getId()) > 0) {
+		return R.error(300, "告警模版名称已存在，请重新输入");
 		} else {
 			alarmTemplateService.update(alarmTemplate);
 			return R.ok();

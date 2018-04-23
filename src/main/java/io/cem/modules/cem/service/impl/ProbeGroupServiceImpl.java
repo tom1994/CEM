@@ -52,6 +52,11 @@ public class ProbeGroupServiceImpl implements ProbeGroupService {
 		return probeGroupDao.queryExist(pgName);
 	}
 
+	@Override
+	public int queryUpdate(String pgName,int id){
+		return probeGroupDao.queryUpdate(pgName,id);
+	}
+
 
 	@Override
 	public void deleteBatch(Integer[] ids){

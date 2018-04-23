@@ -314,8 +314,12 @@ public class TaskDispatchController {
                 }
             }
             taskDispatchService.saveAll(taskDispatchEntityList);
-            BypassHttps.sendRequestIgnoreSSL("POST", "https://114.236.91.16:23456/web/v1/tasks/" + taskDispatch.getTaskId());
-            return R.ok();
+            int result = BypassHttps.sendRequestIgnoreSSL("POST", "https://114.236.91.16:23456/web/v1/tasks/" + taskDispatch.getTaskId());
+            if(result == 200){
+                return R.ok();
+            }else{
+                return R.error(404,"任务下发失败");
+            }
         } else if (taskDispatch.getProbeIds() != null && taskDispatch.getProbeGroupIds() == null) {
             int[] probeIdsList = taskDispatch.getProbeIds();
             List<TaskDispatchEntity> taskDispatchEntityList = new ArrayList<>();
@@ -325,8 +329,12 @@ public class TaskDispatchController {
                 taskDispatchEntityList.add(taskDispatchEntity);
             }
             taskDispatchService.saveAll(taskDispatchEntityList);
-            BypassHttps.sendRequestIgnoreSSL("POST", "https://114.236.91.16:23456/web/v1/tasks/" + taskDispatch.getTaskId());
-            return R.ok();
+            int result = BypassHttps.sendRequestIgnoreSSL("POST", "https://114.236.91.16:23456/web/v1/tasks/" + taskDispatch.getTaskId());
+            if(result == 200){
+                return R.ok();
+            }else{
+                return R.error(result,"任务下发失败，错误代码"+result);
+            }
         } else {
             return R.error(111, "探针或探针组格式错误");
         }
@@ -359,7 +367,7 @@ public class TaskDispatchController {
         if (result == 200) {
             return R.ok();
         } else {
-            return R.error(404, "取消任务失败");
+            return R.error(404, "取消任务失败,错误代码"+result);
         }
     }
 }

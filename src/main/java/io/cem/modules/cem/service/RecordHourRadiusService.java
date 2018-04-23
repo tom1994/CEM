@@ -20,6 +20,8 @@ public interface RecordHourRadiusService {
 
 	Future<List<RecordHourRadiusEntity>> queryRadiusList(Map<String, Object> map);
 
+	Future<List<RecordHourRadiusEntity>> queryTargetHourList(Map<String, Object> map);
+
 	Future<List<RecordHourRadiusEntity>> queryExitList(Map<String, Object> map);
 
 	Future<List<RecordHourRadiusEntity>> queryDayExitList(Map<String, Object> map);
@@ -35,6 +37,8 @@ public interface RecordHourRadiusService {
 	List<ScoreEntity> calculateAreaDayScore(Map<String, Object> map) throws ExecutionException, InterruptedException;
 
 	List<ScoreEntity> calculateTargetDayScore(Map<String, Object> map) throws ExecutionException, InterruptedException;
+	List<ScoreEntity> calculateTargetHourScore(Map<String, Object> map) throws ExecutionException, InterruptedException;
+	List<ScoreEntity> calculateTargetDayHourScore(Map<String, Object> map) throws ExecutionException, InterruptedException;
 
 	List<ScoreEntity> calculateAreaHourScore(Map<String, Object> map) throws ExecutionException, InterruptedException;
 

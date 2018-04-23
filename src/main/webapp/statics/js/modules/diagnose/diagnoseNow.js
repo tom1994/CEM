@@ -231,12 +231,14 @@ var target_data = new Vue({
         areachange: function () {
             this.probe = getProbeCounty($("#selectarea").val());
         },
-        getTarget: function () {
-            getTarget();
-        }
+
     }
 });
-
+$('input[type=radio]').click(function () {
+     
+    var id= $(this).val()
+    getTarget(id);
+})
 var getArea = function (cityid) {
     countrySeleted=0
     if (cityid != "" && cityid != null) {
@@ -352,13 +354,11 @@ var getProbeCounty = function (countyid) {
 //     return o;
 // }
 //目标
-var getTarget = function () {
+var getTarget = function (id) {
     targetSelected = 0;
-    var form = $('#superservice').serializeArray();
-    if (form.length > 1) {
         $.ajax({
             //目标列表
-            url: "../../target/infoList/" + 0,
+            url: "../../target/infoList/" +parseInt(id),
             type: "POST",
             cache: false,  //禁用缓存
             dataType: "json",
@@ -391,71 +391,46 @@ var getTarget = function () {
                 }, 50);
             }
         });
-    } else if (form.length == 1) {
-        $.ajax({
-            url: "../../target/infoList/" + form[0].value,
-            type: "POST",
-            cache: false,  //禁用缓存
-            dataType: "json",
-            contentType: "application/json",
-            success: function (result) {
 
-                var targets = [];
-                for (var i = 0; i < result.target.length; i++) {
-                    targets[i] = {message: result.target[i]}
-                }
-                target_data.target = targets;
-                setTimeout(function () {
-                    $('div#target .jq22').comboSelect();
-                    $('div#target .option-item').click(function (target) {
-                        setTimeout(function () {
-                            var a = $(target.currentTarget)[0].innerText;
-                            targetSelected = $($(target.currentTarget)[0]).data('value');
-                            $('div#target .combo-input').val(a);
-                            $('div#target .combo-select select').val(a);
-                        }, 30);
-                    });
-                    $('#target input[type=text] ').keyup(function (target) {
-                        if( target.keyCode=='13'){
-                            var b = $("#target .option-hover.option-selected").text();
-                            probeSelected = $($(target.currentTarget)[0]).data('value');
-                            $('#target .combo-input').val(b);
-                            $('#target .combo-select select').val(b);
-                        }
 
-                    })
-                    }, 50);
-            }
-        });
-    } else {
-        target_data.target = [];
-        setTimeout(function () {
-            $('div#target .jq22').comboSelect();
-            $('div#target .option-item').click(function (target) {
-                setTimeout(function () {
-                    var a = $(target.currentTarget)[0].innerText;
-                    targetSelected = $($(target.currentTarget)[0]).data('value');
-                    $('div#target .combo-input').val(a);
-                    $('div#target .combo-select select').val(a);
-                }, 30);
-            });
-            $('#target input[type=text] ').keyup(function (target) {
-                if( target.keyCode=='13'){
-                    var b = $("#target .option-hover.option-selected").text();
-                    probeSelected = $($(target.currentTarget)[0]).data('value');
-                    $('#target .combo-input').val(b);
-                    $('#target .combo-select select').val(b);
-                }
-
-            })
-            }, 50);
-    }
+    // else {
+    //     target_data.target = [];
+    //     setTimeout(function () {
+    //         $('div#target .jq22').comboSelect();
+    //         $('div#target .option-item').click(function (target) {
+    //             setTimeout(function () {
+    //                 var a = $(target.currentTarget)[0].innerText;
+    //                 targetSelected = $($(target.currentTarget)[0]).data('value');
+    //                 $('div#target .combo-input').val(a);
+    //                 $('div#target .combo-select select').val(a);
+    //             }, 30);
+    //         });
+    //         $('#target input[type=text] ').keyup(function (target) {
+    //             if( target.keyCode=='13'){
+    //                 var b = $("#target .option-hover.option-selected").text();
+    //                 probeSelected = $($(target.currentTarget)[0]).data('value');
+    //                 $('#target .combo-input').val(b);
+    //                 $('#target .combo-select select').val(b);
+    //             }
+    //
+    //         })
+    //         }, 50);
+    // }
 };
 
 
 //诊断
 function diagnose() {
     var param = getFormJson($('#superservice'));
+    var service=param.service
+    switch(service){
+        case 1:param.ping=1;break;
+        case 2:param.sla=2;break;
+        case 3 :param.web=3;break;
+        case 4 :param.download=4;break;
+        case 5:param.video=5;break;
+        case 6 :param.game=6;break;
+    }
     if (probeSelected == 0) {
         toastr.warning('请选择探针！')
     } else if (targetSelected == 0) {
@@ -472,7 +447,8 @@ function diagnose() {
             dataType: "json",
             contentType: "application/json",
             success: function (result) {
-                console.log(result);
+                console.log(result)
+                 ;
                 var dispatch = result.taskdispatch;
                 console.log(JSON.stringify(dispatch));
                 var url = "information.html";

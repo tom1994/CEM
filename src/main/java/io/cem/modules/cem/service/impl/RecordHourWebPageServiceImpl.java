@@ -67,6 +67,12 @@ public class RecordHourWebPageServiceImpl implements RecordHourWebPageService {
 		return new AsyncResult<> (recordHourWebPageDao.queryWebAreaList(map));
 	}
 
+
+	@Override
+	@Async
+	public Future<List<RecordHourWebPageEntity>> queryWebTargetList(Map<String, Object> map){
+		return new AsyncResult<> (recordHourWebPageDao.queryWebTargetList(map));
+	}
 	@Override
 	@Async
 	public Future<List<RecordHourWebPageEntity>> queryWebRankList(Map<String, Object> map) {

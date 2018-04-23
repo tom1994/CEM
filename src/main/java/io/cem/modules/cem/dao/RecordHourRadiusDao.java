@@ -9,6 +9,7 @@ import java.util.Map;
  */
 public interface RecordHourRadiusDao extends BaseDao<RecordHourRadiusEntity> {
     List<RecordHourRadiusEntity> queryRadiusList(Map<String, Object> map);
+    List<RecordHourRadiusEntity> queryTargetHourList(Map<String, Object> map);
     List<RecordHourRadiusEntity> queryExitList(Map<String, Object> map);
     List<RecordHourRadiusEntity> queryDayExitList(Map<String, Object> map);
     List<RecordHourRadiusEntity> queryDayList(Map<String, Object> map);

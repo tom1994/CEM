@@ -24,7 +24,10 @@ public interface AlarmTemplateService {
 	void update(AlarmTemplateEntity alarmTemplate);
 
 	int queryExist(String atName);
-	
+
+	int queryUpdate(String atName,int id);
+
+
 	void delete(Integer id);
 	
 	void deleteBatch(Integer[] ids);

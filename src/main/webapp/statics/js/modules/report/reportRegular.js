@@ -147,9 +147,6 @@ var spform_data = new Vue({
                                     toastr.success("任务创建成功!");
                                     $('#myModal_sp').modal('hide');    //jQuery选定
                                     break;
-                                case 300:
-                                    toastr.error(msg);
-                                    break;
                                 case 403:
                                     toastr.error(msg);
                                     break;
@@ -162,9 +159,6 @@ var spform_data = new Vue({
                                 case 0:
                                     toastr.success("策略修改成功!");
                                     $('#myModal_sp').modal('hide');
-                                    break;
-                                case 300:
-                                    toastr.error(msg);
                                     break;
                                 case 403:
                                     toastr.error(msg);
@@ -241,12 +235,13 @@ function download_this() {
     reportdata[0] = id;
     var spJson = getFormJson($('#download_form'));
     console.log(spJson);
-    if(spJson.Select_date!=null){
-        var number=spJson.Select_date.split("-");
-        var day=number[0]+number[1]+number[2];
-        console.log(day);
-        reportdata[1] = day;
-        reportdata[2] = day;
+    if(spJson.start_day!=''&&spJson.end_day!='' ){
+        var number=spJson.start_day.split("-");
+        var start_day=number[0]+number[1]+number[2];
+        var number1=spJson.end_day.split("-");
+        var end_day=number1[0]+number1[1]+number1[2];
+        reportdata[1] = start_day;
+        reportdata[2] = end_day;
     }else{
         var today = new Date();
         var thisYear=today.getFullYear();
@@ -272,6 +267,7 @@ function download_this() {
     // $('#download+obj.id').attr('href','../../cem/probe/download/'+id);
     document.getElementById(download+id).href = encodeURI('../../reportpolicy/download/'+reportdata);
     document.getElementById(download+id).click();
+    $('#myModal_download').modal('hide');
     // $("#download+obj.id").trigger("click");
 }
 
@@ -422,7 +418,7 @@ var sptable = new Vue({
             {title: '<div style="width:160px">业务类型</div>'},
             {title: '<div style="width:160px">开始时间</div>'},
             {title: '<div style="width:160px">结束时间</div>'},
-            {title: '<div style="width:50px">时间间隔</div>'},
+            {title: '<div style="width:90px" >统计粒度</div>'},
             {title: '<div style="width:160px">创建时间</div>'},
             {title: '<div style="width:160px">备注</div>'},
             {title: '<div style="width:80px">操作</div>'}
@@ -518,7 +514,17 @@ var sptable = new Vue({
                             row.push(st.get(item.serviceType));
                             row.push(transString(item.startTime,11,19));
                             row.push(transString(item.endTime,11,19));
-                            row.push(item.interval);
+                            if(item.interval==undefined){
+                                row.push('原始');
+                            }else if(item.interval==2){
+                                row.push('两小时');
+                            }else if(item.interval==4){
+                                row.push('四小时');
+                            }else if(item.interval==12){
+                                row.push('半天');
+                            }else if(item.interval==24){
+                                row.push('一天');
+                            }
                             row.push(item.createTime);
                             row.push(item.remark);
                             row.push('<a class="fontcolor" onclick="delete_this(this)" id='+item.id+'>删除</a>&nbsp;' +

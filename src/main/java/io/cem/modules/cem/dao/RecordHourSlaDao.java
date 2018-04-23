@@ -11,6 +11,7 @@ import java.util.Map;
  */
 public interface RecordHourSlaDao extends BaseDao<RecordHourSlaEntity> {
     List<RecordHourSlaEntity> querySlaList(Map<String, Object> map);
+    List<RecordHourSlaEntity> queryTargetHourList(Map<String, Object> map);
     List<RecordHourSlaEntity> queryExitList(Map<String, Object> map);
     List<RecordHourSlaEntity> queryDayExitList(Map<String, Object> map);
     List<RecordHourSlaEntity> queryDayList(Map<String, Object> map);

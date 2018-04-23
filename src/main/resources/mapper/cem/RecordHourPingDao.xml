@@ -139,6 +139,60 @@
         </if>
     </select>
 
+
+    <!--门户ping排名小时表方法-->
+    <select id="queryTargetHourList" resultType="io.cem.modules.cem.entity.RecordHourPingEntity">
+        SELECT t.*,
+        city.city_name AS city_name,
+        county.county_name AS area_name,
+        probe.probe_name AS probe_name,
+        probe.access_layer,
+        target.target_name AS target_name
+        FROM
+        (SELECT rhp.id,rhp.city_id,rhp.county_id,rhp.probe_id,rhp.port,rhp.task_id,rhp.service_type,rhp.target_id,rhp.target_ip,rhp.record_date,rhp.remark,
+        time_format(record_time, '%H') AS record_time,
+        AVG(delay) AS delay,
+        AVG(delay_std) AS delay_std,
+        AVG(delay_var) AS delay_var,
+        AVG(jitter) AS jitter,
+        AVG(jitter_std) AS jitter_std,
+        AVG(jitter_var) AS jitter_var,
+        AVG(loss_rate) AS loss_rate,
+        SUM(fail) AS fail,
+        SUM(total) AS total
+        FROM record_hour_ping rhp
+        WHERE rhp.record_date BETWEEN #{ava_start} AND #{ava_terminal}
+        <if test="probe_id != null and probe_id != ''">
+            AND rhp.probe_id = #{probe_id}
+        </if>
+        <if test="city_id != null and city_id != ''">
+            AND rhp.city_id = #{city_id}
+        </if>
+        <if test="county_id != null and county_id != ''">
+            AND rhp.county_id = #{county_id}
+        </if>
+        <if test="startTime != null and terminalTime != null">
+            AND record_time BETWEEN #{startTime} AND #{terminalTime}
+        </if>
+        GROUP BY target_id) t
+        INNER JOIN probe
+        ON t.probe_id = probe.id
+        LEFT JOIN city
+        ON t.city_id = city.city_id
+        LEFT JOIN county
+        ON t.county_id = county.county_id
+        LEFT JOIN target
+        ON t.target_id = target.id
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
     <!--质量排名获取总记录条数(queryPingList的count)-->
     <select id="pingListTotal" resultType="int">
         select count(*) FROM (

@@ -13,6 +13,7 @@ public interface RecordHourWebPageDao extends BaseDao<RecordHourWebPageEntity> {
     List<RecordHourWebPageEntity> queryDayExitList(Map<String, Object> map);
     List<RecordHourWebPageEntity> queryWebAreaList(Map<String, Object> map);
     List<RecordHourWebPageEntity> queryWebRankList(Map<String, Object> map);
+    List<RecordHourWebPageEntity> queryWebTargetList(Map<String, Object> map);
     List<RecordHourWebPageEntity> queryDayList(Map<String, Object> map);
     List<RecordHourWebPageEntity> queryDayRankList(Map<String, Object> map);
     List<RecordHourWebPageEntity> queryDayAreaList(Map<String, Object> map);

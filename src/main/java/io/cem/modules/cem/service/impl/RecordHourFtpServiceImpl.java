@@ -46,6 +46,12 @@ public class RecordHourFtpServiceImpl implements RecordHourFtpService {
 		return new AsyncResult<>
 				(recordHourFtpDao.queryFtpList(map));
 	}
+	@Override
+	@Async
+	public Future<List<RecordHourFtpEntity>> queryTargetHourList(Map<String, Object> map) {
+		return new AsyncResult<>
+				(recordHourFtpDao.queryTargetHourList(map));
+	}
 
 	@Override
 	@Async

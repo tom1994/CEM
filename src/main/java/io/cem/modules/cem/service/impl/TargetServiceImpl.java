@@ -61,6 +61,11 @@ public class TargetServiceImpl implements TargetService {
 	public int queryExist(String targetName){
 		return targetDao.queryExist(targetName);
 	}
+
+	@Override
+	public int queryUpdate(String targetName,int id){
+		return targetDao.queryUpdate(targetName,id);
+	}
 	
 	@Override
 	public void save(TargetEntity target){
