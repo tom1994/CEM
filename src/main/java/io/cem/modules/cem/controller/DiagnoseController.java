@@ -92,13 +92,13 @@ public class DiagnoseController {
                     scoreList = recordHourRadiusService.diagnoseDay(map,scoreList);
                 }
             }
-            if (map.get("city_Id") == null && map.get("county_id") == null && map.get("probe_id") == null) {
+/*            if (map.get("city_Id") == null && map.get("county_id") == null && map.get("probe_id") == null) {
                 scoreList = recordHourPingService.dateChart1(scoreList);
             } else if (map.get("county_id") == null && map.get("probe_id") == null) {
                 scoreList = recordHourPingService.cityChart1(scoreList);
             } else if (map.get("probe_id") == null) {
                 scoreList = recordHourPingService.probeChart1(scoreList);
-            }
+            }*/
         } else {
             String dateStr = map.get("ava_start").toString();
             String dateStr2 = map.get("ava_terminal").toString();

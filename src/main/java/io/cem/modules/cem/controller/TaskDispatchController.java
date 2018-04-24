@@ -314,18 +314,6 @@ public class TaskDispatchController {
                 }
             }
             taskDispatchService.saveAll(taskDispatchEntityList);
-            try {
-                int result = BypassHttps.sendRequestIgnoreSSL("POST", "https://114.236.91.16:23456/web/v1/tasks/" + taskDispatch.getTaskId());
-                if(result == 200){
-                    return R.ok();
-                }else{
-                    taskDispatchService.cancelSave(taskDispatch.getTaskId());
-                    return R.error(404,"任务下发失败，错误代码"+result);
-                }
-            }catch (Exception e){
-                return R.error("未知错误");
-            }
-
         } else if (taskDispatch.getProbeIds() != null && taskDispatch.getProbeGroupIds() == null) {
             int[] probeIdsList = taskDispatch.getProbeIds();
             List<TaskDispatchEntity> taskDispatchEntityList = new ArrayList<>();
@@ -335,19 +323,19 @@ public class TaskDispatchController {
                 taskDispatchEntityList.add(taskDispatchEntity);
             }
             taskDispatchService.saveAll(taskDispatchEntityList);
-            try {
-                int result = BypassHttps.sendRequestIgnoreSSL("POST", "https://114.236.91.16:23456/web/v1/tasks/" + taskDispatch.getTaskId());
-                if(result == 200){
-                    return R.ok();
-                }else{
-                    taskDispatchService.cancelSave(taskDispatch.getTaskId());
-                    return R.error(404,"任务下发失败，错误代码"+result);
-                }
-            }catch (Exception e){
-                return R.error("未知错误");
-            }
         } else {
             return R.error(111, "探针或探针组格式错误");
+        }
+        try {
+            int result = BypassHttps.sendRequestIgnoreSSL("POST", "https://114.236.91.16:23456/web/v1/tasks/" + taskDispatch.getTaskId());
+            if(result == 200){
+                return R.ok();
+            }else{
+                taskDispatchService.cancelSave(taskDispatch.getTaskId());
+                return R.error(404,"任务下发失败，错误代码"+result);
+            }
+        }catch (Exception e){
+            return R.error("未知错误");
         }
     }
 
