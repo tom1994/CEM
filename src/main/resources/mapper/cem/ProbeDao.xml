@@ -212,7 +212,7 @@
         LEFT JOIN county
         ON probe.county_id = county.county_id
         LEFT JOIN probe_group
-        ON probe.group_id = probe_group.pg_name
+        ON probe.group_id = probe_group.id
         LEFT JOIN dic_data a
         ON (probe.type = a.data_id AND a.dic_type_id = 1 )
         LEFT JOIN dic_data b
