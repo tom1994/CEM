@@ -58,7 +58,8 @@ var new_search = new Vue({
             }
         },
         reset: function () {    /*重置*/
-            document.getElementById("probesearch").reset();
+            document.getElementById("outputSearch").reset();
+            serviceSelected=0;
         }
     }
 });
@@ -169,8 +170,13 @@ var probetable = new Vue({
             {title: '<div style="width:70px">探针名称</div>'},
             {title: '<div style="width:70px">端口</div>'},
             {title: '<div style="width:90px">业务类型</div>'},
-            {title: '<div style="width:55px">分数</div>'},
-            {title: '<div style="width:80px">操作</div>'}
+            {title: '<div style="width:70px">综合分数</div>'},
+            {title: '<div style="width:100px">网络连通性分数</div>'},
+            {title: '<div style="width:100px">网络质量分数</div>'},
+            {title: '<div style="width:100px">网页浏览业务</div>'},
+            {title: '<div style="width:100px">文件下载业务</div>'},
+            {title: '<div style="width:100px">在线视频业务</div>'},
+            {title: '<div style="width:100px">在线游戏业务</div>'},
         ],
         rows: [],
         dtHandle: null,
@@ -216,8 +222,12 @@ var probetable = new Vue({
             /*bInfo: false,*/
             /*bLengthChange: false,*/    /*禁用Show entries*/
             scroll: false,
+            bProcessing : true,
             oLanguage: {
+                sEmptyTable: "No data available in table",
+                sZeroRecords:"No data available in table",
                 sLengthMenu: "每页 _MENU_ 行数据",
+                sProcessing: "正在努力加载数据中...",
                 oPaginate: {
                     sNext: '<i class="fa fa-chevron-right" ></i>', /*图标替换上一页,下一页*/
                     sPrevious: '<i class="fa fa-chevron-left" ></i>'
@@ -256,14 +266,17 @@ var probetable = new Vue({
                         result.page.list.forEach(function (item) {
                             let row = [];
                             row.push(i++);
-                            row.push('<div class="checkbox"> <label> <input type="checkbox" id="checkALl" name="selectFlag"><div style="display: none">'+item.id+'</div></label> </div>');
-                            //row.push('<div class="probe_id" style="display:none">'+item.id+'</div>');
                             row.push(item.exit);
                             row.push(item.probeName);
                             row.push(item.port);
                             row.push(st.get(item.serviceType));
-                            row.push(item.score.toFixed(2));
-                            row.push('<a class="fontcolor" onclick="update_this(this)" id='+item.id+' type='+st.get(item.serviceType)+'>详情</a>'); //Todo:完成详情与诊断
+                            row.push(fixed(item.score));
+                            row.push(fixed(item.connectionScore ));
+                            row.push(fixed(item.qualityScore ));
+                            row.push(fixed(item.broswerScore ));
+                            row.push(fixed(item.downloadScore));
+                            row.push(fixed(item.videoScore));
+                            row.push(fixed(item.gameScore ));
                             rows.push(row);
                         });
                         returnData.data = rows;
@@ -277,11 +290,6 @@ var probetable = new Vue({
                             draggingClass:"dragging",
                             resizeMode:'overflow',
                         });
-                        // $('td').closest('table').find('th').eq(1).attr('style', 'text-align: center;');
-                        // $('#probe_table tbody').find('td').eq(1).attr('style', 'text-align: center;');
-                        // var trs = $('#probe_table tbody').find('tr');
-                        // trs.find("td").eq(1).attr('style', 'text-align: center;');
-
                     }
                 });
             }
@@ -290,11 +298,9 @@ var probetable = new Vue({
 });
 
 function update_this(obj) {
-
     $('#myModal_update').modal('show');
     if(obj.type=='综合业务'){
         information(obj);
-
         $('#myModal_update .modal-body').css('height','110px');
         $('#connnection').css('display','none');
         $('#quality').css('display','none');
@@ -443,34 +449,36 @@ function information(obj) {
                     let rows = [];
                     var i = 1;
                     outputContent.forEach(function (item) {
-                        if(id==item.id){
+
+                        if(id==item.port){
+                            debugger
                             let row = [];
                             row.push(i);
                             row.push(item.probeName);
-                            row.push(item.score.toFixed(2));
+                            row.push(item.score );
                             if(item.connectionScore!=undefined){
-                                row.push(item.connectionScore.toFixed(2));
+                                row.push(item.connectionScore.toFixed(2) );
                             }else{
                                 row.push(item.connectionScore);
                             }
                             if(item.qualityScore!=undefined){
-                                row.push(item.qualityScore.toFixed(2));
+                                row.push(item.qualityScore .toFixed(2));
                             }else{
                                 row.push(item.qualityScore);
                             }if(item.broswerScore!=undefined){
-                                row.push(item.broswerScore.toFixed(2));
+                                row.push(item.broswerScore .toFixed(2));
                             }else{
                                 row.push(item.broswerScore);
                             }if(item.downloadScore!=undefined){
-                                row.push(item.downloadScore.toFixed(2));
+                                row.push(item.downloadScore .toFixed(2));
                             }else{
                                 row.push(item.downloadScore);
                             }if(item.videoScore!=undefined){
-                                row.push(item.videoScore.toFixed(2));
+                                row.push(item.videoScore .toFixed(2));
                             }else{
                                 row.push(item.videoScore);
                             }if(item.gameScore!=undefined){
-                                row.push(item.gameScore.toFixed(2));
+                                row.push(item.gameScore .toFixed(2));
                             }else{
                                 row.push(item.gameScore);
                             }
@@ -497,40 +505,42 @@ function information(obj) {
 }
 //网络连通性表格
 function ping(obj) {
-    // $("#pingdata_table  tr").remove();
     var id=obj.id;
     var ping_table=new Vue({
         el:'#pingdata_table',
         data: {
             headers: [
                 {title: '<div style="width:10px"></div>'},
-                {title: '<div style="width:110px">探针名称</div>'},
-                {title: '<div style="width:70px">综合分数</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:70px">出口名称</div>'},
+                {title: '<div style="width:70px">探针名称</div>'},
+                {title: '<div style="width:70px">端口</div>'},
+                {title: '<div style="width:90px">业务类型</div>'},
+                {title: '<div style="width:70px">分数</div>'},
+                {title: '<div style="width:100px">往返时延(ms)</div>'},
                 {title: '<div style="width:100px">时延标准差(ms)</div>'},
                 {title: '<div style="width:100px">时延方差(ms)</div>'},
-                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">抖动(ms)</div>'},
                 {title: '<div style="width:100px">抖动标准差(ms)</div>'},
                 {title: '<div style="width:100px">抖动方差(ms)</div>'},
                 {title: '<div style="width:100px">丢包率(%)</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">往返时延(ms)</div>'},
                 {title: '<div style="width:100px">时延标准差(ms)</div>'},
                 {title: '<div style="width:100px">时延方差(ms)</div>'},
-                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">抖动(ms)</div>'},
                 {title: '<div style="width:100px">抖动标准差(ms)</div>'},
                 {title: '<div style="width:100px">抖动方差(ms)</div>'},
                 {title: '<div style="width:100px">丢包率(%)</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">往返时延(ms)</div>'},
                 {title: '<div style="width:100px">时延标准差(ms)</div>'},
                 {title: '<div style="width:100px">时延方差(ms)</div>'},
-                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">抖动(ms)</div>'},
                 {title: '<div style="width:100px">抖动标准差(ms)</div>'},
                 {title: '<div style="width:100px">抖动方差(ms)</div>'},
                 {title: '<div style="width:100px">丢包率(%)</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">往返时延(ms)</div>'},
                 {title: '<div style="width:100px">时延标准差(ms)</div>'},
                 {title: '<div style="width:100px">时延方差(ms)</div>'},
-                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">抖动(ms)</div>'},
                 {title: '<div style="width:100px">抖动标准差(ms)</div>'},
                 {title: '<div style="width:100px">抖动方差(ms)</div>'},
                 {title: '<div style="width:100px">丢包率(%)</div>'},
@@ -584,7 +594,9 @@ function ping(obj) {
                         var innerTh = '<tr><th rowspan="1"></th>';
                         innerTh +='<th colspan="1"></th>';
                         innerTh +='<th colspan="1"></th>';
-                        var columnsCount = 38;//具体情况
+                        innerTh +='<th colspan="1"></th>';
+                        innerTh +='<th colspan="1"></th>';
+                        innerTh +='<th colspan="1"></th>';
                         innerTh +='<th colspan="7" style="text-align: center">ping(ICMP)</th>';
                         innerTh +='<th colspan="7" style="text-align: center">ping(TCP)</th>';
                         innerTh +='<th colspan="7" style="text-align: center">ping(UDP)</th>';
@@ -620,48 +632,50 @@ function ping(obj) {
                     let rows = [];
                     var i = 1;
                     outputContent.forEach(function (item) {
-                        if(id==item.id){
                             let row = [];
                             row.push(i);
+                            row.push(item.exit);
                             row.push(item.probeName);
-                            row.push(item.score.toFixed(2));
-                            row.push(item.pingIcmpDelay.toFixed(2));
-                            row.push(item.pingIcmpDelayStd.toFixed(2));
-                            row.push(item.pingIcmpDelayVar.toFixed(2));
-                            row.push(item.pingIcmpJitter.toFixed(2));
-                            row.push(item.pingIcmpJitterStd.toFixed(2));
-                            row.push(item.pingIcmpJitterVar.toFixed(2));
-                            row.push(item.pingIcmpLossRate.toFixed(2));
-                            row.push(item.pingTcpDelay.toFixed(2));
-                            row.push(item.pingTcpDelayStd.toFixed(2));
-                            row.push(item.pingTcpDelayVar.toFixed(2));
-                            row.push(item.pingTcpJitter.toFixed(2));
-                            row.push(item.pingTcpJitterStd.toFixed(2));
-                            row.push(item.pingTcpJitterVar.toFixed(2));
-                            row.push(item.pingTcpLossRate.toFixed(2));
-                            row.push(item.pingUdpDelay);
-                            row.push(item.pingUdpDelayStd);
-                            row.push(item.pingUdpDelayVar);
-                            row.push(item.pingUdpJitter);
-                            row.push(item.pingUdpJitterStd);
-                            row.push(item.pingUdpJitterVar);
-                            row.push(item.pingUdpLossRate);
-                            row.push(item.tracertIcmpDelay);
-                            row.push(item.tracertIcmpDelayStd);
-                            row.push(item.tracertIcmpDelayVar);
-                            row.push(item.tracertIcmpJitter);
-                            row.push(item.tracertIcmpJitterStd);
-                            row.push(item.tracertIcmpJitterVar);
-                            row.push(item.tracertIcmpLossRate);
-                            row.push(item.tracertTcpDelay);
-                            row.push(item.tracertTcpDelayStd);
-                            row.push(item.tracertTcpDelayVar);
-                            row.push(item.tracertTcpJitter);
-                            row.push(item.tracertTcpJitterStd);
-                            row.push(item.tracertTcpJitterVar);
-                            row.push(item.tracertTcpLossRate);
+                            row.push(item.port);
+                            row.push(st.get(item.serviceType));
+                            row.push(fixed(item.score ));
+                            row.push(fixed(item.pingIcmpDelay) );
+                            row.push(fixed(item.pingIcmpDelaySRtd ));
+                            row.push(fixed(item.pingIcmpDelayVar ));
+                            row.push(fixed(item.pingIcmpJitter ));
+                            row.push(fixed(item.pingIcmpJitterStd ));
+                            row.push(fixed(item.pingIcmpJitterVar ));
+                            row.push(fixed(item.pingIcmpLossRate ));
+                            row.push(fixed(item.pingTcpDelay ));
+                            row.push(fixed(item.pingTcpDelayStd) );
+                            row.push(fixed(item.pingTcpDelayVar ));
+                            row.push(fixed(item.pingTcpJitter ));
+                            row.push(fixed(item.pingTcpJitterStd ));
+                            row.push(fixed(item.pingTcpJitterVar ));
+                            row.push(fixed(item.pingTcpLossRate ));
+                            row.push(fixed(item.pingUdpDelay));
+                            row.push(fixed(item.pingUdpDelayStd));
+                            row.push(fixed(item.pingUdpDelayVar));
+                            row.push(fixed(item.pingUdpJitter));
+                            row.push(fixed(item.pingUdpJitterStd));
+                            row.push(fixed(item.pingUdpJitterVar));
+                            row.push(fixed(item.pingUdpLossRate));
+                            row.push(fixed(item.tracertIcmpDelay));
+                            row.push(fixed(item.tracertIcmpDelayStd));
+                            row.push(fixed(item.tracertIcmpDelayVar));
+                            row.push(fixed(item.tracertIcmpJitter));
+                            row.push(fixed(item.tracertIcmpJitterStd));
+                            row.push(fixed(item.tracertIcmpJitterVar));
+                            row.push(fixed(item.tracertIcmpLossRate));
+                            row.push(fixed(item.tracertTcpDelay));
+                            row.push(fixed(item.tracertTcpDelayStd));
+                            row.push(fixed(item.tracertTcpDelayVar));
+                            row.push(fixed(item.tracertTcpJitter));
+                            row.push(fixed(item.tracertTcpJitterStd));
+                            row.push(fixed(item.tracertTcpJitterVar));
+                            row.push(fixed(item.tracertTcpLossRate));
                             rows.push(row);
-                        }
+
                     });
                     returnData.data = rows;
                     callback(returnData);
@@ -794,34 +808,34 @@ function quality(obj) {
                     let rows = [];
                     var i = 1;
                     outputContent.forEach(function (item) {
-                        if(id==item.id){
+                        if(id==item.port){
                             let row = [];
                             row.push(i);
                             row.push(item.probeName);
-                            row.push(item.score.toFixed(2));
-                            row.push(item.slaTcpDelay);
-                            row.push(item.slaTcpGDelay);
-                            row.push(item.slaTcpRDelay);
-                            row.push(item.slaTcpJitter);
-                            row.push(item.slaTcpGJitter);
-                            row.push(item.slaTcpRJitter);
-                            row.push(item.slaTcpLossRate);
-                            row.push(item.slaUdpDelay);
-                            row.push(item.slaUdpGDelay);
-                            row.push(item.slaUdpRDelay);
-                            row.push(item.slaUdpJitter);
-                            row.push(item.slaUdpGJitter);
-                            row.push(item.slaUdpRJitter);
-                            row.push(item.slaUdpLossRate);
-                            row.push(item.dnsDelay);
-                            row.push(item.dnsSuccessRate);
-                            row.push(item.dhcpDelay);
-                            row.push(item.dhcpSuccessRate);
-                            row.push(item.pppoeDelay);
-                            row.push(item.pppoeDropRate);
-                            row.push(item.pppoeSuccessRate);
-                            row.push(item.radiusDelay);
-                            row.push(item.radiusSuccessRate);
+                            row.push(fixed(item.score ));
+                            row.push(fixed(item.slaTcpDelay));
+                            row.push(fixed(item.slaTcpGDelay));
+                            row.push(fixed(item.slaTcpRDelay));
+                            row.push(fixed(item.slaTcpJitter));
+                            row.push(fixed(item.slaTcpGJitter));
+                            row.push(fixed(item.slaTcpRJitter));
+                            row.push(fixed(item.slaTcpLossRate));
+                            row.push(fixed(item.slaUdpDelay));
+                            row.push(fixed(item.slaUdpGDelay));
+                            row.push(fixed(item.slaUdpRDelay));
+                            row.push(fixed(item.slaUdpJitter));
+                            row.push(fixed(item.slaUdpGJitter));
+                            row.push(fixed(item.slaUdpRJitter));
+                            row.push(fixed(item.slaUdpLossRate));
+                            row.push(fixed(item.dnsDelay));
+                            row.push(fixed(item.dnsSuccessRate));
+                            row.push(fixed(item.dhcpDelay));
+                            row.push(fixed(item.dhcpSuccessRate));
+                            row.push(fixed(item.pppoeDelay));
+                            row.push(fixed(item.pppoeDropRate));
+                            row.push(fixed(item.pppoeSuccessRate));
+                            row.push(fixed(item.radiusDelay));
+                            row.push(fixed(item.radiusSuccessRate));
                             rows.push(row);
                         }
 
@@ -920,19 +934,19 @@ function broswer(obj) {
                     let rows = [];
                     var i = 1;
                     outputContent.forEach(function (item) {
-                        if(id==item.id){
+                        if(id==item.port){
                             let row = [];
                             row.push(i);
                             row.push(item.probeName);
-                            row.push(item.score.toFixed(2));
-                            row.push(item.webpageDnsDelay.toFixed(2));
-                            row.push(item.webpageConnDelay.toFixed(2));
-                            row.push(item.webpageHeadbyteDelay.toFixed(2));
-                            row.push(item.webpagePageFileDelay.toFixed(2));
-                            row.push(item.webpageRedirectDelay.toFixed(2));
-                            row.push(item.webpageAboveFoldDelay.toFixed(2));
-                            row.push(item.webpagePageElementDelay.toFixed(2));
-                            row.push(item.webpageDownloadRate.toFixed(2));
+                            row.push(item.score );
+                            row.push(fixed(item.webpageDnsDelay) );
+                            row.push(fixed(item.webpageConnDelay ));
+                            row.push(fixed(item.webpageHeadbyteDelay));
+                            row.push(fixed(item.webpagePageFileDelay ));
+                            row.push(fixed(item.webpageRedirectDelay ));
+                            row.push(fixed(item.webpageAboveFoldDelay ));
+                            row.push(fixed(item.webpagePageElementDelay) );
+                            row.push(fixed(item.webpageDownloadRate )*100);
                             rows.push(row);
                         }
 
@@ -1057,25 +1071,25 @@ function download(obj) {
                     let rows = [];
                     var i = 1;
                     outputContent.forEach(function (item) {
-                        if(id==item.id){
+                        if(id==item.port){
                             let row = [];
                             row.push(i);
                             row.push(item.probeName);
-                            row.push(item.score.toFixed(2));
-                            row.push(item.webDownloadDnsDelay.toFixed(2));
-                            row.push(item.webDownloadConnDelay.toFixed(2));
-                            row.push(item.webDownloadHeadbyteDelay.toFixed(2));
-                            row.push(item.webDownloadDownloadRate.toFixed(2));
-                            row.push(item.ftpDownloadDnsDelay);
-                            row.push(item.ftpDownloadConnDelay);
-                            row.push(item.ftpDownloadLoginDelay);
-                            row.push(item.ftpDownloadHeadbyteDelay);
-                            row.push(item.ftpDownloadDownloadRate);
-                            row.push(item.ftpUploadDnsDelay);
-                            row.push(item.ftpUploadConnDelay);
-                            row.push(item.ftpUploadLoginDelay);
-                            row.push(item.ftpUploadHeadbyteDelay);
-                            row.push(item.ftpUploadUploadRate);
+                            row.push(fixed(item.score) );
+                            row.push(fixed(item.webDownloadDnsDelay ));
+                            row.push(fixed(item.webDownloadConnDelay ));
+                            row.push(fixed(item.webDownloadHeadbyteDelay ));
+                            row.push(fixed(item.webDownloadDownloadRate ));
+                            row.push(fixed(item.ftpDownloadDnsDelay));
+                            row.push(fixed(item.ftpDownloadConnDelay));
+                            row.push(fixed(item.ftpDownloadLoginDelay));
+                            row.push(fixed(item.ftpDownloadHeadbyteDelay));
+                            row.push(fixed(item.ftpDownloadDownloadRate));
+                            row.push(fixed(item.ftpUploadDnsDelay));
+                            row.push(fixed(item.ftpUploadConnDelay));
+                            row.push(fixed(item.ftpUploadLoginDelay));
+                            row.push(fixed(item.ftpUploadHeadbyteDelay));
+                            row.push(fixed(item.ftpUploadUploadRate));
                             rows.push(row);
                         }
 
@@ -1177,23 +1191,23 @@ function video(obj) {
                     let rows = [];
                     var i = 1;
                     outputContent.forEach(function (item) {
-                        if(id==item.id){
+                        if(id==item.port){
                             let row = [];
                             row.push(i);
                             row.push(item.probeName);
-                            row.push(item.score.toFixed(2));
-                            row.push(item.webVideoDnsDelay.toFixed(2));
-                            row.push(item.webVideoWsConnDelay.toFixed(2));
-                            row.push(item.webVideoWebPageDelay.toFixed(2));
-                            row.push(item.webVideoSsConnDelay);
-                            row.push(item.webVideoAddressDelay);
-                            row.push(item.webVideoMsConnDelay);
-                            row.push(item.webVideoHeadFrameDelay.toFixed(2));
-                            row.push(item.webVideoInitBufferDelay.toFixed(2));
-                            row.push(item.webVideoLoadDelay.toFixed(2));
-                            row.push(item.webVideoTotalBufferDelay.toFixed(2));
-                            row.push(item.webVideoDownloadRate.toFixed(2));
-                            row.push(item.webVideoBufferTime.toFixed(2));
+                            row.push(fixed(item.score ));
+                            row.push(fixed(item.webVideoDnsDelay ));
+                            row.push(fixed(item.webVideoWsConnDelay ));
+                            row.push(fixed(item.webVideoWebPageDelay ));
+                            row.push(fixed(item.webVideoSsConnDelay));
+                            row.push(fixed(item.webVideoAddressDelay));
+                            row.push(fixed(item.webVideoMsConnDelay));
+                            row.push(fixed(item.webVideoHeadFrameDelay ));
+                            row.push(fixed(item.webVideoInitBufferDelay ));
+                            row.push(fixed(item.webVideoLoadDelay ));
+                            row.push(fixed(item.webVideoTotalBufferDelay ));
+                            row.push(fixed(item.webVideoDownloadRate ));
+                            row.push(fixed(item.webVideoBufferTime ));
                             rows.push(row);
                         }
 
@@ -1288,16 +1302,16 @@ function game(obj) {
                     let rows = [];
                     var i = 1;
                     outputContent.forEach(function (item) {
-                        if(id==item.id){
+                        if(id==item.port){
                             let row = [];
                             row.push(i);
                             row.push(item.probeName);
-                            row.push(item.score.toFixed(2));
-                            row.push(item.gameDnsDelay);
-                            row.push(item.gameConnDelay.toFixed(2));
-                            row.push(item.gamePacketDelay.toFixed(2));
-                            row.push(item.gamePacketJitter.toFixed(2));
-                            row.push(item.gameLossRate.toFixed(2));
+                            row.push(fixed(item.score ));
+                            row.push(fixed(item.gameDnsDelay));
+                            row.push(fixed(item.gameConnDelay ));
+                            row.push(fixed(item.gamePacketDelay ));
+                            row.push(fixed(item.gamePacketJitter ));
+                            row.push(fixed(item.gameLossRate ));
                             rows.push(row);
                         }
 
@@ -1317,4 +1331,14 @@ function game(obj) {
             });
         }
     })
+}
+
+function fixed(value) {
+    if(value==null){
+        return ''
+    }else if(value==0){
+        return value
+    } else{
+        return value.toFixed(2)
+    }
 }

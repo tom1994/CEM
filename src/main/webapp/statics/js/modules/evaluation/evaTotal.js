@@ -100,7 +100,6 @@ var search_service = new Vue({ //Todo:完成查询条件框
                     search.ava_terminal = (new Date()).Format("yyyy-MM-dd");
                 }
                 let param = {};
-                console.log(search)
                 param.probedata = JSON.stringify(search);
                 param.chartdata = JSON.stringify(search);
 
@@ -169,11 +168,11 @@ function sendAjax(param) {
         dataType: "json",
         success: function (result) {
             ping_list=result.scoreList
-          if(ping_list!=undefined){
-              removeLoading('test');
-              ping_change(param)
-              ping(ping_list);
-          }
+            if(ping_list!=undefined){
+                removeLoading('test');
+                ping_change(param)
+                ping(ping_list);
+            }
         }
     })
     $.ajax({
@@ -196,10 +195,10 @@ function sendAjax(param) {
         data: param,  //传入组装的参数
         dataType: "json",
         success: function (result) {
-                page_list=result.scoreList
-                removeLoading('page');
-                page_change(param)
-                broswer(page_list)
+            page_list=result.scoreList
+            removeLoading('page');
+            page_change(param)
+            broswer(page_list)
 
         }
     })
@@ -210,11 +209,11 @@ function sendAjax(param) {
         data: param,  //传入组装的参数
         dataType: "json",
         success: function (result) {
-           download_list=result.scoreList
+            download_list=result.scoreList
             removeLoading('download');
             download_change(param)
             download(download_list)
-            }
+        }
     })
     $.ajax({
         type: "POST",
@@ -268,7 +267,7 @@ function ping_change(param) {
                 }else{
                     for(var i=0;i<ping_list.length;i++){
                         var dateStrs =ping_list[i].recordDate.split(" ");
-                        arr.push(dateStrs[0] + " " + ping_list[i].recordTime+":00");
+                        arr.push(dateStrs[0].slice(5,10) + " " + ping_list[i].recordTime+":00");
                     }
                 }
 
@@ -294,12 +293,21 @@ function ping_change(param) {
             useHTML: true
         },
         plotOptions: {
-            column: {
-                pointPadding: 0.2,
-                borderWidth: 0
+            spline: {
+                marker: {
+                    enabled: false
+                }
             },
             series: {
-                stickyTracking: false
+                stickyTracking: false,
+                events: {
+                    mouseOver: function () {
+                        $('.highcharts-tooltip').show();
+                    },
+                    mouseOut: function () {
+                        $('.highcharts-tooltip').hide();
+                    }
+                }
             }
         },
         exporting: {
@@ -343,7 +351,7 @@ function quality_change(param) {
                 }else{
                     for(var i=0;i<quality_list.length;i++){
                         var dateStrs = quality_list[i].recordDate.split(" ");
-                        arr.push(dateStrs[0] + " " + quality_list[i].recordTime+":00");
+                        arr.push(dateStrs[0].slice(5,10)+ " " + quality_list[i].recordTime+":00");
                     }
                 }
 
@@ -368,12 +376,21 @@ function quality_change(param) {
             useHTML: true
         },
         plotOptions: {
-            column: {
-                pointPadding: 0.2,
-                borderWidth: 0
+            spline: {
+                marker: {
+                    enabled: false
+                }
             },
             series: {
-                stickyTracking: false
+                stickyTracking: false,
+                events: {
+                    mouseOver: function () {
+                        $('.highcharts-tooltip').show();
+                    },
+                    mouseOut: function () {
+                        $('.highcharts-tooltip').hide();
+                    }
+                }
             }
         },
         exporting: {
@@ -418,7 +435,7 @@ function download_change(param) {
                     }else{
                         for(var i=0;i<download_list.length;i++){
                             var dateStrs = download_list[i].recordDate.split(" ");
-                            arr.push(dateStrs[0] + " " + download_list[i].recordTime+":00");
+                            arr.push(dateStrs[0].slice(5,10) + " " + download_list[i].recordTime+":00");
                         }
                     }
                     return arr.sort();
@@ -445,12 +462,21 @@ function download_change(param) {
             useHTML: true
         },
         plotOptions: {
-            column: {
-                pointPadding: 0.2,
-                borderWidth: 0
+            spline: {
+                marker: {
+                    enabled: false
+                }
             },
             series: {
-                stickyTracking: false
+                stickyTracking: false,
+                events: {
+                    mouseOver: function () {
+                        $('.highcharts-tooltip').show();
+                    },
+                    mouseOut: function () {
+                        $('.highcharts-tooltip').hide();
+                    }
+                }
             }
         },
         exporting: {
@@ -490,20 +516,20 @@ function page_change(param) {
             categories: (function () {
                 var arr = [];
                 var dateDiff = datedifference(param.chartdata.ava_start,param.chartdata.ava_terminal);
-              if(page_list!=undefined){
-                  if(dateDiff > 5){
-                      for(var i=0;i<page_list.length;i++){
-                          arr.push(page_list[i].recordDate);
-                      }
-                  }else{
-                      for(var i=0;i<page_list.length;i++){
-                          var dateStrs = page_list[i].recordDate.split(" ");
-                          arr.push(dateStrs[0] + " " + page_list[i].recordTime+":00");
-                      }
-                  }
-              }else {
-                  arr=[];
-              }
+                if(page_list!=undefined){
+                    if(dateDiff > 5){
+                        for(var i=0;i<page_list.length;i++){
+                            arr.push(page_list[i].recordDate);
+                        }
+                    }else{
+                        for(var i=0;i<page_list.length;i++){
+                            var dateStrs = page_list[i].recordDate.split(" ");
+                            arr.push(dateStrs[0].slice(5,10)+ " " + page_list[i].recordTime+":00");
+                        }
+                    }
+                }else {
+                    arr=[];
+                }
                 return arr.sort();
             })(),
             crosshair: true,
@@ -524,12 +550,21 @@ function page_change(param) {
             useHTML: true
         },
         plotOptions: {
-            column: {
-                pointPadding: 0.2,
-                borderWidth: 0
+            spline: {
+                marker: {
+                    enabled: false
+                }
             },
             series: {
-                stickyTracking: false
+                stickyTracking: false,
+                events: {
+                    mouseOver: function () {
+                        $('.highcharts-tooltip').show();
+                    },
+                    mouseOut: function () {
+                        $('.highcharts-tooltip').hide();
+                    }
+                }
             }
         },
         exporting: {
@@ -539,14 +574,14 @@ function page_change(param) {
             name:"score" ,
             data: (function () {
                 var arr = [];
-                  if(page_list!=undefined){
-                      for(var i=0;i<page_list.length;i++){
-                          arr.push(parseFloat(page_list[i].score));
-                      }
-                      return arr.sort();
-                  }else {
-                      return arr
-                  }
+                if(page_list!=undefined){
+                    for(var i=0;i<page_list.length;i++){
+                        arr.push(parseFloat(page_list[i].score));
+                    }
+                    return arr.sort();
+                }else {
+                    return arr
+                }
             })(),
             showInLegend: false,
         }]
@@ -577,7 +612,8 @@ function video_change(param) {
                     }
                 }else{
                     for(var i=0;i<video_list.length;i++){
-                        var dateStrs = video_list[i].recordDate.split(" ");arr.push(dateStrs[0] + " " + video_list[i].recordTime+":00");
+                        var dateStrs = video_list[i].recordDate.split(" ");
+                        arr.push(dateStrs[0].slice(5,10) + " " + video_list[i].recordTime+":00");
                     }
                 }
 
@@ -602,12 +638,21 @@ function video_change(param) {
             useHTML: true
         },
         plotOptions: {
-            column: {
-                pointPadding: 0.2,
-                borderWidth: 0
+            spline: {
+                marker: {
+                    enabled: false
+                }
             },
             series: {
-                stickyTracking: false
+                stickyTracking: false,
+                events: {
+                    mouseOver: function () {
+                        $('.highcharts-tooltip').show();
+                    },
+                    mouseOut: function () {
+                        $('.highcharts-tooltip').hide();
+                    }
+                }
             }
         },
         exporting: {
@@ -651,7 +696,7 @@ function game_change(param) {
                 }else{
                     for(var i=0;i<game_list.length;i++){
                         var dateStrs = game_list[i].recordDate.split(" ");
-                        arr.push(dateStrs[0] + " " + game_list[i].recordTime+":00");
+                        arr.push(dateStrs[0].slice(5,10) + " " + game_list[i].recordTime+":00");
                     }
                 }
 
@@ -676,12 +721,21 @@ function game_change(param) {
             useHTML: true
         },
         plotOptions: {
-            column: {
-                pointPadding: 0.2,
-                borderWidth: 0
+            spline: {
+                marker: {
+                    enabled: false
+                }
             },
             series: {
-                stickyTracking: false
+                stickyTracking: false,
+                events: {
+                    mouseOver: function () {
+                        $('.highcharts-tooltip').show();
+                    },
+                    mouseOut: function () {
+                        $('.highcharts-tooltip').hide();
+                    }
+                }
             }
         },
         exporting: {
@@ -713,7 +767,7 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
     }
     if(citySelected!=0&&countrySelected!=0){
         a[3]={};
-        a[3].name="country";
+        a[3].name="county";
         a[3].value=countrySelected;
     }
     if(probeSelected!=0){
@@ -1045,9 +1099,9 @@ var download_service = new Vue({
             dataType: "json",
             success: function (result) {
                 download_list=result.scoreList
-                    removeLoading('download');
-                    list_download();
-                    download(download_list);
+                removeLoading('download');
+                list_download();
+                download(download_list);
             }
         })
     }
@@ -1175,6 +1229,7 @@ function list_ping () {
             param.chartdata = JSON.stringify(this.chartdata);
             $('#container_connection').highcharts({
                 chart: {
+                    type: 'spline',
                     backgroundColor: 'rgba(0,0,0,0)'
                 },
                 title: {
@@ -1191,8 +1246,9 @@ function list_ping () {
                         if(ping_list != undefined){
                             var arr = [];
                             for(var i=0;i<ping_list.length;i++){
+                                debugger
                                 var dateStrs = ping_list[i].recordDate.split(" ");
-                                arr.push(dateStrs[0] + " " + ping_list[i].recordTime+":00");
+                                arr.push(dateStrs[0].slice(5,10) + " " + ping_list[i].recordTime+":00");
                             }
                             return arr.sort();
                         }
@@ -1215,16 +1271,22 @@ function list_ping () {
                     useHTML: true,
                 },
                 plotOptions: {
+                    spline: {
+                        marker: {
+                            enabled: false
+                        }
+                    },
                     series: {
                         stickyTracking: false,
-                        // pointStart: Date.UTC(2018, 3, 26),
-                        // pointInterval: 24 * 3600 * 1000
-                    },
-                    column: {
-                        pointPadding: 0.2,
-                        borderWidth: 0
-                    },
-
+                        events: {
+                            mouseOver: function () {
+                                $('.highcharts-tooltip').show();
+                            },
+                            mouseOut: function () {
+                                $('.highcharts-tooltip').hide();
+                            }
+                        }
+                    }
                 },
                 exporting: {
                     enabled:false
@@ -1263,7 +1325,7 @@ function list_quality() {
             param.chartdata = JSON.stringify(this.chartdata);
             $('#container_quality').highcharts({
                 chart: {
-                    type: 'line',
+                    type: 'spline',
                     backgroundColor: 'rgba(0,0,0,0)'
                 },
                 title: {
@@ -1278,7 +1340,7 @@ function list_quality() {
                         var arr = [];
                         for(var i=0;i<quality_list.length;i++){
                             var dateStrs = quality_list[i].recordDate.split(" ");
-                            arr.push(dateStrs[0] + " " + quality_list[i].recordTime+":00");
+                            arr.push(dateStrs[0].slice(5,10) + " " + quality_list[i].recordTime+":00");
                         }
                         return arr.sort();;
                     })(),
@@ -1301,14 +1363,22 @@ function list_quality() {
                     useHTML: true
                 },
                 plotOptions: {
+                    spline: {
+                        marker: {
+                            enabled: false
+                        }
+                    },
                     series: {
-                        stickyTracking: false
-                    },
-                    column: {
-                        pointPadding: 0.2,
-                        borderWidth: 0
-                    },
-
+                        stickyTracking: false,
+                        events: {
+                            mouseOver: function () {
+                                $('.highcharts-tooltip').show();
+                            },
+                            mouseOut: function () {
+                                $('.highcharts-tooltip').hide();
+                            }
+                        }
+                    }
                 },
                 exporting: {
                     enabled:false
@@ -1348,7 +1418,7 @@ function list_download() {
             param.chartdata = JSON.stringify(this.chartdata);
             $('#container_download').highcharts({
                 chart: {
-                    type: 'line',
+                    type: 'spline',
                     backgroundColor: 'rgba(0,0,0,0)'
                 },
                 title: {
@@ -1363,7 +1433,7 @@ function list_download() {
                         var arr = [];
                         for(var i=0;i<download_list.length;i++){
                             var dateStrs = download_list[i].recordDate.split(" ");
-                            arr.push(dateStrs[0] + " " + download_list[i].recordTime+":00");
+                            arr.push(dateStrs[0].slice(5,10) + " " + download_list[i].recordTime+":00");
                         }
                         return arr.sort();;
                     })(),
@@ -1385,12 +1455,21 @@ function list_download() {
                     useHTML: true
                 },
                 plotOptions: {
-                    column: {
-                        pointPadding: 0.2,
-                        borderWidth: 0
+                    spline: {
+                        marker: {
+                            enabled: false
+                        }
                     },
                     series: {
-                        stickyTracking: false
+                        stickyTracking: false,
+                        events: {
+                            mouseOver: function () {
+                                $('.highcharts-tooltip').show();
+                            },
+                            mouseOut: function () {
+                                $('.highcharts-tooltip').hide();
+                            }
+                        }
                     }
                 },
                 exporting: {
@@ -1431,7 +1510,7 @@ function list_page() {
             param.chartdata = JSON.stringify(this.chartdata);
             $('#container_page').highcharts({
                 chart: {
-                    type: 'line',
+                    type: 'spline',
                     backgroundColor: 'rgba(0,0,0,0)'
                 },
                 title: {
@@ -1446,7 +1525,7 @@ function list_page() {
                         var arr = [];
                         for(var i=0;i<page_list.length;i++){
                             var dateStrs = page_list[i].recordDate.split(" ");
-                            arr.push(dateStrs[0] + " " + page_list[i].recordTime+":00");
+                            arr.push(dateStrs[0].slice(5,10) + " " + page_list[i].recordTime+":00");
                         }
                         return arr.sort();;
                     })(),
@@ -1468,12 +1547,21 @@ function list_page() {
                     useHTML: true
                 },
                 plotOptions: {
-                    column: {
-                        pointPadding: 0.2,
-                        borderWidth: 0
+                    spline: {
+                        marker: {
+                            enabled: false
+                        }
                     },
                     series: {
-                        stickyTracking: false
+                        stickyTracking: false,
+                        events: {
+                            mouseOver: function () {
+                                $('.highcharts-tooltip').show();
+                            },
+                            mouseOut: function () {
+                                $('.highcharts-tooltip').hide();
+                            }
+                        }
                     }
                 },
                 exporting: {
@@ -1514,7 +1602,7 @@ function list_video() {
             param.chartdata = JSON.stringify(this.chartdata);
             $('#container_video').highcharts({
                 chart: {
-                    type: 'line',
+                    type: 'spline',
                     backgroundColor: 'rgba(0,0,0,0)'
                 },
                 title: {
@@ -1529,7 +1617,7 @@ function list_video() {
                         var arr = [];
                         for(var i=0;i<video_list.length;i++){
                             var dateStrs = video_list[i].recordDate.split(" ");
-                            arr.push(dateStrs[0] + " " + video_list[i].recordTime+":00");
+                            arr.push(dateStrs[0].slice(5,10)+ " " + video_list[i].recordTime+":00");
                         }
                         return arr.sort();;
                     })(),
@@ -1552,12 +1640,21 @@ function list_video() {
                     useHTML: true
                 },
                 plotOptions: {
-                    column: {
-                        pointPadding: 0.2,
-                        borderWidth: 0
+                    spline: {
+                        marker: {
+                            enabled: false
+                        }
                     },
                     series: {
-                        stickyTracking: false
+                        stickyTracking: false,
+                        events: {
+                            mouseOver: function () {
+                                $('.highcharts-tooltip').show();
+                            },
+                            mouseOut: function () {
+                                $('.highcharts-tooltip').hide();
+                            }
+                        }
                     }
                 },
                 exporting: {
@@ -1599,7 +1696,7 @@ function list_game() {
             param.chartdata = JSON.stringify(this.chartdata);
             $('#container_game').highcharts({
                 chart: {
-                    type: 'line',
+                    type: 'spline',
                     backgroundColor: 'rgba(0,0,0,0)'
                 },
                 title: {
@@ -1614,7 +1711,7 @@ function list_game() {
                         var arr = [];
                         for(var i=0;i<game_list.length;i++){
                             var dateStrs = game_list[i].recordDate.split(" ");
-                            arr.push(dateStrs[0] + " " + game_list[i].recordTime+":00");
+                            arr.push(dateStrs[0].slice(5,10) + " " + game_list[i].recordTime+":00");
                         }
                         return arr.sort();;
                     })(),
@@ -1638,12 +1735,21 @@ function list_game() {
                     useHTML: true
                 },
                 plotOptions: {
-                    column: {
-                        pointPadding: 0.2,
-                        borderWidth: 0
+                    spline: {
+                        marker: {
+                            enabled: false
+                        }
                     },
                     series: {
-                        stickyTracking: false
+                        stickyTracking: false,
+                        events: {
+                            mouseOver: function () {
+                                $('.highcharts-tooltip').show();
+                            },
+                            mouseOut: function () {
+                                $('.highcharts-tooltip').hide();
+                            }
+                        }
                     }
                 },
                 exporting: {
@@ -1696,8 +1802,8 @@ function game_info() {
 }
 
 //网络连通性表格
-function ping(obj) {
-    var probeContent=obj
+function ping(val) {
+    var probeContent=val
     var ping_table=new Vue({
         el:'#pingdata_table',
         data: {
@@ -1706,38 +1812,38 @@ function ping(obj) {
                 {title: '<div style="width:110px">探针名称</div>'},
                 {title: '<div style="width:130px">时间</div>'},
                 {title: '<div style="width:70px">综合分数</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">往返时延(ms)</div>'},
                 {title: '<div style="width:100px">时延标准差(ms)</div>'},
                 {title: '<div style="width:100px">时延方差(ms)</div>'},
-                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">抖动(ms)</div>'},
                 {title: '<div style="width:100px">抖动标准差(ms)</div>'},
                 {title: '<div style="width:100px">抖动方差(ms)</div>'},
                 {title: '<div style="width:100px">丢包率(%)</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">往返时延(ms)</div>'},
                 {title: '<div style="width:100px">时延标准差(ms)</div>'},
                 {title: '<div style="width:100px">时延方差(ms)</div>'},
-                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">抖动(ms)</div>'},
                 {title: '<div style="width:100px">抖动标准差(ms)</div>'},
                 {title: '<div style="width:100px">抖动方差(ms)</div>'},
                 {title: '<div style="width:100px">丢包率(%)</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">往返时延(ms)</div>'},
                 {title: '<div style="width:100px">时延标准差(ms)</div>'},
                 {title: '<div style="width:100px">时延方差(ms)</div>'},
-                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">抖动(ms)</div>'},
                 {title: '<div style="width:100px">抖动标准差(ms)</div>'},
                 {title: '<div style="width:100px">抖动方差(ms)</div>'},
                 {title: '<div style="width:100px">丢包率(%)</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">往返时延(ms)</div>'},
                 {title: '<div style="width:100px">时延标准差(ms)</div>'},
                 {title: '<div style="width:100px">时延方差(ms)</div>'},
-                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">抖动(ms)</div>'},
                 {title: '<div style="width:100px">抖动标准差(ms)</div>'},
                 {title: '<div style="width:100px">抖动方差(ms)</div>'},
                 {title: '<div style="width:100px">丢包率(%)</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">往返时延(ms)</div>'},
                 {title: '<div style="width:100px">时延标准差(ms)</div>'},
                 {title: '<div style="width:100px">时延方差(ms)</div>'},
-                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">抖动</div>'},
                 {title: '<div style="width:100px">抖动标准差(ms)</div>'},
                 {title: '<div style="width:100px">抖动方差(ms)</div>'},
                 {title: '<div style="width:100px">丢包率(%)</div>'},
@@ -1784,6 +1890,7 @@ function ping(obj) {
                         var innerTh = '<tr><th rowspan="1"></th>';
                         innerTh +='<th colspan="1"></th>';
                         innerTh +='<th colspan="1"></th>';
+                        innerTh +='<th colspan="1"></th>';
                         var columnsCount = 38;//具体情况
                         innerTh +='<th colspan="7" style="text-align: center">ping(ICMP)</th>';
                         innerTh +='<th colspan="7" style="text-align: center">ping(TCP)</th>';
@@ -1805,7 +1912,10 @@ function ping(obj) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
-
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
+                },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
@@ -1816,10 +1926,22 @@ function ping(obj) {
                     // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
                     returnData.data = probeContent;//返回的数据列表
                     // // 重新整理返回数据以匹配表格
-                    console.log(returnData);
+                    var temp = cloneObj(probeContent);
+                    for (let i = 0; i < temp.length; i++) {
+                        let date_token = val[i].recordDate.split("-");
+                        let year = parseInt(date_token[0]);
+                        let month = parseInt(date_token[1]) - 1;
+                        let day = parseInt(date_token[2]);
+                        let hour = parseInt(val[i].recordTime);
+                        if (isNaN(year) || isNaN(month) || isNaN(day)) {
+                            continue;
+                        }
+                        temp[i].datetime = Date.UTC(year, month, day, hour)
+                    }
+                    var sortTemp = temp.sort(compare("datetime"));
                     let rows = [];
                     var i = 1;
-                    probeContent.forEach(function (item) {
+                    sortTemp.forEach(function (item) {
                         let row = [];
                         row.push(i++);
                         row.push(item.probeName);
@@ -1831,37 +1953,36 @@ function ping(obj) {
                         row.push(fixed(item.pingIcmpJitter));
                         row.push(fixed(item.pingIcmpJitterStd));
                         row.push(fixed(item.pingIcmpJitterVar));
-                        row.push(fixed(item.pingIcmpLossRate));
+                        row.push(fixed(item.pingIcmpLossRate)*100);
                         row.push(fixed(item.pingTcpDelay));
                         row.push(fixed(item.pingTcpDelayStd));
                         row.push(fixed(item.pingTcpDelayVar));
                         row.push(fixed(item.pingTcpJitter));
                         row.push(fixed(item.pingTcpJitterStd));
                         row.push(fixed(item.pingTcpJitterVar));
-                        row.push(fixed(item.pingTcpLossRate));
+                        row.push(fixed(item.pingTcpLossRate)*100);
                         row.push(fixed(item.pingUdpDelay));
                         row.push(fixed(item.pingUdpDelayStd));
                         row.push(fixed(item.pingUdpDelayVar));
                         row.push(fixed(item.pingUdpJitter));
                         row.push(fixed(item.pingUdpJitterStd));
                         row.push(fixed(item.pingUdpJitterVar));
-                        row.push(fixed(item.pingUdpLossRate));
+                        row.push(fixed(item.pingUdpLossRate)*100);
                         row.push(fixed(item.tracertIcmpDelay));
                         row.push(fixed(item.tracertIcmpDelayStd));
                         row.push(fixed(item.tracertIcmpDelayVar));
                         row.push(fixed(item.tracertIcmpJitter));
                         row.push(fixed(item.tracertIcmpJitterStd));
                         row.push(fixed(item.tracertIcmpJitterVar));
-                        row.push(fixed(item.tracertIcmpLossRate));
+                        row.push(fixed(item.tracertIcmpLossRate)*100);
                         row.push(fixed(item.tracertTcpDelay));
                         row.push(fixed(item.tracertTcpDelayStd));
                         row.push(fixed(item.tracertTcpDelayVar));
                         row.push(fixed(item.tracertTcpJitter));
                         row.push(fixed(item.tracertTcpJitterStd));
                         row.push(fixed(item.tracertTcpJitterVar));
-                        row.push(fixed(item.tracertTcpLossRate));
-
-                            rows.push(row);
+                        row.push(fixed(item.tracertTcpLossRate)*100);
+                        rows.push(row);
 
                     });
                     returnData.data = rows;
@@ -1882,8 +2003,8 @@ function ping(obj) {
     });
 }
 //网络质量表格
-function quality(obj) {
-    var probeContent=obj
+function quality(val) {
+    var probeContent=val
     var quality_table=new Vue({
         el:'#qualitydata_table',
         data: {
@@ -1892,28 +2013,32 @@ function quality(obj) {
                 {title: '<div style="width:110px">探针名称</div>'},
                 {title: '<div style="width:130px">时间</div>'},
                 {title: '<div style="width:70px">综合分数</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">时延(ms)</div>'},
                 {title: '<div style="width:100px">往向时延(ms)</div>'},
                 {title: '<div style="width:100px">返向时延(ms)</div>'},
-                {title: '<div style="width:100px">抖动平均值</div>'},
+                {title: '<div style="width:100px">抖动</div>'},
                 {title: '<div style="width:100px">往向抖动</div>'},
                 {title: '<div style="width:100px">返向抖动</div>'},
                 {title: '<div style="width:100px">丢包率</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">时延(ms)</div>'},
                 {title: '<div style="width:100px">往向时延(ms)</div>'},
                 {title: '<div style="width:100px">返向时延(ms)</div>'},
-                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">抖动(ms)</div>'},
                 {title: '<div style="width:100px">往向抖动(ms)</div>'},
                 {title: '<div style="width:100px">返向抖动(ms)</div>'},
                 {title: '<div style="width:100px">丢包率(%)</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
-                {title: '<div style="width:100px">查询成功率(%)</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
-                {title: '<div style="width:100px">查询成功率(%)</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+
+                {title: '<div style="width:100px">解析时延(ms)</div>'},
+                {title: '<div style="width:100px">成功率(%)</div>'},
+
+                {title: '<div style="width:100px">分配时延(ms)</div>'},
+                {title: '<div style="width:100px">成功率(%)</div>'},
+
+                {title: '<div style="width:100px">解析时延(ms)</div>'},
                 {title: '<div style="width:100px">掉线率(%)</div>'},
-                {title: '<div style="width:100px">查询成功率(%)</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">成功率(%)</div>'},
+
+                {title: '<div style="width:100px">认证时延(ms)</div>'},
                 {title: '<div style="width:100px">认证成功率(%)</div>'},
 
             ],
@@ -1959,6 +2084,7 @@ function quality(obj) {
                         var innerTh = '<tr><th rowspan="1"></th>';
                         innerTh +='<th colspan="1"></th>';
                         innerTh +='<th colspan="1"></th>';
+                        innerTh +='<th colspan="1"></th>';
                         var columnsCount = 25;//具体情况
                         innerTh +='<th colspan="7" style="text-align: center">Sla(TCP)</th>';
                         innerTh +='<th colspan="7" style="text-align: center">Sla(UDP)</th>';
@@ -1981,7 +2107,10 @@ function quality(obj) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
-
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
+                },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
@@ -1992,39 +2121,52 @@ function quality(obj) {
                     // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
                     returnData.data = probeContent;//返回的数据列表
                     // // 重新整理返回数据以匹配表格
+                    var temp = cloneObj(probeContent);
+                    for (let i = 0; i < temp.length; i++) {
+                        let date_token = val[i].recordDate.split("-");
+                        let year = parseInt(date_token[0]);
+                        let month = parseInt(date_token[1]) - 1;
+                        let day = parseInt(date_token[2]);
+                        let hour = parseInt(val[i].recordTime);
+                        if (isNaN(year) || isNaN(month) || isNaN(day)) {
+                            continue;
+                        }
+                        temp[i].datetime = Date.UTC(year, month, day, hour)
+                    }
+                    var sortTemp = temp.sort(compare("datetime"));
                     console.log(returnData);
                     let rows = [];
                     var i = 1;
-                    probeContent.forEach(function (item) {
-                            let row = [];
-                             row.push(i++);
-                            row.push(item.probeName);
-                            row.push(item.recordDate.substr(0,10)+"   "+item.recordTime.substr(0,10)+':00');
-                            row.push(fixed(item.score));
-                            row.push(fixed(item.slaTcpDelay));
-                            row.push(fixed(item.slaTcpGDelay));
-                            row.push(fixed(item.slaTcpRDelay));
-                            row.push(fixed(item.slaTcpJitter));
-                            row.push(fixed(item.slaTcpGJitter));
-                            row.push(fixed(item.slaTcpRJitter));
-                            row.push(fixed(item.slaTcpLossRate));
-                            row.push(fixed(item.slaUdpDelay));
-                            row.push(fixed(item.slaUdpGDelay));
-                            row.push(fixed(item.slaUdpRDelay));
-                            row.push(fixed(item.slaUdpJitter));
-                            row.push(fixed(item.slaUdpGJitter));
-                            row.push(fixed(item.slaUdpRJitter));
-                            row.push(fixed(item.slaUdpLossRate));
-                            row.push(fixed(item.dnsDelay));
-                            row.push(fixed(item.dnsSuccessRate));
-                            row.push(fixed(item.dhcpDelay));
-                            row.push(fixed(item.dhcpSuccessRate));
-                            row.push(fixed(item.pppoeDelay));
-                            row.push(fixed(item.pppoeDropRate));
-                            row.push(fixed(item.pppoeSuccessRate));
-                            row.push(fixed(item.radiusDelay));
-                            row.push(fixed(item.radiusSuccessRate));
-                            rows.push(row);
+                    sortTemp.forEach(function (item) {
+                        let row = [];
+                        row.push(i++);
+                        row.push(item.probeName);
+                        row.push(item.recordDate.substr(0,10)+"   "+item.recordTime.substr(0,10)+':00');
+                        row.push(fixed(item.score));
+                        row.push(fixed(item.slaTcpDelay));
+                        row.push(fixed(item.slaTcpGDelay));
+                        row.push(fixed(item.slaTcpRDelay));
+                        row.push(fixed(item.slaTcpJitter));
+                        row.push(fixed(item.slaTcpGJitter));
+                        row.push(fixed(item.slaTcpRJitter));
+                        row.push(fixed(item.slaTcpLossRate)*100);
+                        row.push(fixed(item.slaUdpDelay));
+                        row.push(fixed(item.slaUdpGDelay));
+                        row.push(fixed(item.slaUdpRDelay));
+                        row.push(fixed(item.slaUdpJitter));
+                        row.push(fixed(item.slaUdpGJitter));
+                        row.push(fixed(item.slaUdpRJitter));
+                        row.push(fixed(item.slaUdpLossRate)*100);
+                        row.push(fixed(item.dnsDelay));
+                        row.push(fixed(item.dnsSuccessRate)*100);
+                        row.push(fixed(item.dhcpDelay));
+                        row.push(fixed(item.dhcpSuccessRate));
+                        row.push(fixed(item.pppoeDelay));
+                        row.push(fixed(item.pppoeDropRate));
+                        row.push(fixed(item.pppoeSuccessRate)*100);
+                        row.push(fixed(item.radiusDelay));
+                        row.push(fixed(item.radiusSuccessRate)*100);
+                        rows.push(row);
                     });
                     returnData.data = rows;
                     callback(returnData);
@@ -2045,8 +2187,8 @@ function quality(obj) {
 }
 
 //网页浏览表格
-function broswer(obj) {
-    var probeContent=obj
+function broswer(val) {
+    var probeContent=val
     var broswer_table=new Vue({
         el:'#broswerdata_table',
         data: {
@@ -2061,7 +2203,7 @@ function broswer(obj) {
                 {title: '<div style="width:120px">页面文件时延(ms)</div>'},
                 {title: '<div style="width:100px">重定向时延(ms)</div>'},
                 {title: '<div style="width:100px">首屏时延(ms)</div>'},
-                {title: '<div style="width:115px">页面元素时延(ms)</div>'},
+                {title: '<div style="width:115px">页面加载时延(ms)</div>'},
                 {title: '<div style="width:100px">下载速率(KB/S)</div>'},
             ],
             rows: [],
@@ -2106,7 +2248,10 @@ function broswer(obj) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
-
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
+                },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
@@ -2117,27 +2262,40 @@ function broswer(obj) {
                     // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
                     returnData.data = probeContent;//返回的数据列表
                     // // 重新整理返回数据以匹配表格
-                    console.log(returnData);
+                    var temp = cloneObj(probeContent);
+                    for (let i = 0; i < temp.length; i++) {
+                        let date_token = val[i].recordDate.split("-");
+                        let year = parseInt(date_token[0]);
+                        let month = parseInt(date_token[1]) - 1;
+                        let day = parseInt(date_token[2]);
+                        let hour = parseInt(val[i].recordTime);
+                        if (isNaN(year) || isNaN(month) || isNaN(day)) {
+                            continue;
+                        }
+                        temp[i].datetime = Date.UTC(year, month, day, hour)
+                    }
+                    var sortTemp = temp.sort(compare("datetime"));
+
                     if(probeContent==undefined){
                         return
                     }
                     let rows = [];
                     var i = 1;
-                    probeContent.forEach(function (item) {
-                            let row = [];
-                             row.push(i++);
-                            row.push(item.probeName);
-                            row.push(item.recordDate.substr(0,10)+"   "+item.recordTime.substr(0,10)+':00');
-                            row.push(fixed(item.score));
-                            row.push(fixed(item.webpageDnsDelay));
-                            row.push(fixed(item.webpageConnDelay));
-                            row.push(fixed(item.webpageHeadbyteDelay));
-                            row.push(fixed(item.webpagePageFileDelay));
-                            row.push(fixed(item.webpageRedirectDelay));
-                            row.push(fixed(item.webpageAboveFoldDelay));
-                            row.push(fixed(item.webpagePageElementDelay));
-                            row.push(fixed(item.webpageDownloadRate));
-                            rows.push(row);
+                    sortTemp.forEach(function (item) {
+                        let row = [];
+                        row.push(i++);
+                        row.push(item.probeName);
+                        row.push(item.recordDate.substr(0,10)+"   "+item.recordTime.substr(0,10)+':00');
+                        row.push(fixed(item.score));
+                        row.push(fixed(item.webpageDnsDelay));
+                        row.push(fixed(item.webpageConnDelay));
+                        row.push(fixed(item.webpageHeadbyteDelay));
+                        row.push(fixed(item.webpagePageFileDelay));
+                        row.push(fixed(item.webpageRedirectDelay));
+                        row.push(fixed(item.webpageAboveFoldDelay));
+                        row.push(fixed(item.loadDelay));
+                        row.push(fixed(item.webpageDownloadRate)*100);
+                        rows.push(row);
 
                     });
                     returnData.data = rows;
@@ -2157,8 +2315,8 @@ function broswer(obj) {
     });
 }
 //下载
-function download(obj) {
-    var probeContent=obj
+function download(val) {
+    var probeContent=val
     //网页下载
     var download_table=new Vue({
         el:'#downloaddata_table',
@@ -2181,7 +2339,7 @@ function download(obj) {
                 {title: '<div style="width:100px">连接时延(ms)</div>'},
                 {title: '<div style="width:100px">登录时延(ms)</div>'},
                 {title: '<div style="width:100px">首字节时延(ms)</div>'},
-                {title: '<div style="width:100px">下载速率(KB/S)</div>'},
+                {title: '<div style="width:100px">上传速率(KB/S)</div>'},
             ],
             rows: [],
             dtHandle: null,
@@ -2226,6 +2384,7 @@ function download(obj) {
                         var innerTh = '<tr><th rowspan="1"></th>';
                         innerTh +='<th colspan="1"></th>';
                         innerTh +='<th colspan="1"></th>';
+                        innerTh +='<th colspan="1"></th>';
 
                         var columnsCount = 17;//具体情况
                         innerTh +='<th colspan="4" style="text-align: center">WEB下载</th>';
@@ -2246,7 +2405,10 @@ function download(obj) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
-
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
+                },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
@@ -2257,33 +2419,45 @@ function download(obj) {
                     // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
                     returnData.data = probeContent;//返回的数据列表
                     // // 重新整理返回数据以匹配表格
-                    console.log(returnData);
+                    var temp = cloneObj(probeContent);
+                    for (let i = 0; i < temp.length; i++) {
+                        let date_token = val[i].recordDate.split("-");
+                        let year = parseInt(date_token[0]);
+                        let month = parseInt(date_token[1]) - 1;
+                        let day = parseInt(date_token[2]);
+                        let hour = parseInt(val[i].recordTime);
+                        if (isNaN(year) || isNaN(month) || isNaN(day)) {
+                            continue;
+                        }
+                        temp[i].datetime = Date.UTC(year, month, day, hour)
+                    }
+                    var sortTemp = temp.sort(compare("datetime"));
                     if(probeContent==undefined){
                         return
                     }
                     let rows = [];
                     var i = 1;
-                    probeContent.forEach(function (item) {
-                            let row = [];
-                             row.push(i++);
-                            row.push(item.probeName);
-                            row.push(item.recordDate.substr(0,10)+"   "+item.recordTime.substr(0,10)+':00');
-                            row.push(fixed(item.score));
-                            row.push(fixed(item.webDownloadDnsDelay));
-                            row.push(fixed(item.webDownloadConnDelay));
-                            row.push(fixed(item.webDownloadHeadbyteDelay));
-                            row.push(fixed(item.webDownloadDownloadRate));
-                            row.push(fixed(item.ftpDownloadDnsDelay));
-                            row.push(fixed(item.ftpDownloadConnDelay));
-                            row.push(fixed(item.ftpDownloadLoginDelay));
-                            row.push(fixed(item.ftpDownloadHeadbyteDelay));
-                            row.push(fixed(item.ftpDownloadDownloadRate));
-                            row.push(fixed(item.ftpUploadDnsDelay));
-                            row.push(fixed(item.ftpUploadConnDelay));
-                            row.push(fixed(item.ftpUploadLoginDelay));
-                            row.push(fixed(item.ftpUploadHeadbyteDelay));
-                            row.push(fixed(item.ftpUploadUploadRate));
-                            rows.push(row);
+                    sortTemp.forEach(function (item) {
+                        let row = [];
+                        row.push(i++);
+                        row.push(item.probeName);
+                        row.push(item.recordDate.substr(0,10)+"   "+item.recordTime.substr(0,10)+':00');
+                        row.push(fixed(item.score));
+                        row.push(fixed(item.webDownloadDnsDelay));
+                        row.push(fixed(item.webDownloadConnDelay));
+                        row.push(fixed(item.webDownloadHeadbyteDelay));
+                        row.push(fixed(item.webDownloadDownloadRate));
+                        row.push(fixed(item.ftpDownloadDnsDelay));
+                        row.push(fixed(item.ftpDownloadConnDelay));
+                        row.push(fixed(item.ftpDownloadLoginDelay));
+                        row.push(fixed(item.ftpDownloadHeadbyteDelay));
+                        row.push(fixed(item.ftpDownloadDownloadRate));
+                        row.push(fixed(item.ftpUploadDnsDelay));
+                        row.push(fixed(item.ftpUploadConnDelay));
+                        row.push(fixed(item.ftpUploadLoginDelay));
+                        row.push(fixed(item.ftpUploadHeadbyteDelay));
+                        row.push(fixed(item.ftpUploadUploadRate)*100);
+                        rows.push(row);
 
                     });
                     returnData.data = rows;
@@ -2304,8 +2478,8 @@ function download(obj) {
     })
 }
 // /在线视频
-function video(obj) {
-    var probeContent=obj
+function video(val) {
+    var probeContent=val
     var video_table=new Vue({
         el:'#videodata_table',
         data: {
@@ -2315,12 +2489,9 @@ function video(obj) {
                 {title: '<div style="width:130px">时间</div>'},
                 {title: '<div style="width:70px">综合分数</div>'},
                 {title: '<div style="width:100px">DNS时延(ms)</div>'},
-                {title: '<div style="width:100px">连接WEB服务器时延(ms)</div>'},
+                {title: '<div style="width:130px">连接WEB服务器时延(ms)</div>'},
                 {title: '<div style="width:120px">web页面时延(ms)</div>'},
-                {title: '<div style="width:149px">连接调度服务器时延(ms)</div>'},
-                {title: '<div style="width:135px">获取视频地址时延(ms)</div>'},
-                {title: '<div style="width:147px">连接媒体服务器时延(ms)</div>'},
-                {title: '<div style="width:110px">首帧时延(ms)</div>'},
+                {title: '<div style="width:110px">首帧到达时延(ms)</div>'},
                 {title: '<div style="width:120px">首次缓冲时延(ms)</div>'},
                 {title: '<div style="width:120px">视频加载时延(ms)</div>'},
                 {title: '<div style="width:120px">总体缓冲时间(ms)</div>'},
@@ -2369,7 +2540,10 @@ function video(obj) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
-
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
+                },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
@@ -2380,28 +2554,37 @@ function video(obj) {
                     // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
                     returnData.data = probeContent;//返回的数据列表
                     // // 重新整理返回数据以匹配表格
-                    console.log(returnData);
+                    var temp = cloneObj(probeContent);
+                    for (let i = 0; i < temp.length; i++) {
+                        let date_token = val[i].recordDate.split("-");
+                        let year = parseInt(date_token[0]);
+                        let month = parseInt(date_token[1]) - 1;
+                        let day = parseInt(date_token[2]);
+                        let hour = parseInt(val[i].recordTime);
+                        if (isNaN(year) || isNaN(month) || isNaN(day)) {
+                            continue;
+                        }
+                        temp[i].datetime = Date.UTC(year, month, day, hour)
+                    }
+                    var sortTemp = temp.sort(compare("datetime"));
                     let rows = [];
                     var i = 1;
-                    probeContent.forEach(function (item) {
-                            let row = [];
-                             row.push(i++);
+                    sortTemp.forEach(function (item) {
+                        let row = [];
+                        row.push(i++);
                         row.push(item.probeName);
                         row.push(item.recordDate.substr(0,10)+"   "+item.recordTime.substr(0,10)+':00');
                         row.push(fixed(item.score));
                         row.push(fixed(item.webVideoDnsDelay));
                         row.push(fixed(item.webVideoWsConnDelay));
                         row.push(fixed(item.webVideoWebPageDelay));
-                        row.push(fixed(item.webVideoSsConnDelay));
-                        row.push(fixed(item.webVideoAddressDelay));
-                        row.push(fixed(item.webVideoMsConnDelay));
                         row.push(fixed(item.webVideoHeadFrameDelay));
                         row.push(fixed(item.webVideoInitBufferDelay));
                         row.push(fixed(item.webVideoLoadDelay));
                         row.push(fixed(item.webVideoTotalBufferDelay));
-                        row.push(fixed(item.webVideoDownloadRate));
+                        row.push(fixed(item.webVideoDownloadRate)*100);
                         row.push(fixed(item.webVideoBufferTime));
-                            rows.push(row);
+                        rows.push(row);
 
                     });
                     returnData.data = rows;
@@ -2422,8 +2605,8 @@ function video(obj) {
     })
 }
 //在线游戏
-function game(obj) {
-    var probeContent=obj
+function game(val) {
+    var probeContent=val
     var download_table=new Vue({
         el:'#gamedata_table',
         data: {
@@ -2433,10 +2616,9 @@ function game(obj) {
                 {title: '<div style="width:130px">时间</div>'},
                 {title: '<div style="width:70px">综合分数</div>'},
                 {title: '<div style="width:100px">DNS时延(ms)</div>'},
-                {title: '<div style="width:100px">连接时延(ms)</div>'},
-                {title: '<div style="width:100px">游戏数据包时延(ms)</div>'},
-                {title: '<div style="width:100px">游戏数据包抖动(ms)</div>'},
-                {title: '<div style="width:100px">游戏数据包丢包率(%)</div>'},
+                {title: '<div style="width:100px">网络时延(ms)</div>'},
+                {title: '<div style="width:100px">网络抖动(ms)</div>'},
+                {title: '<div style="width:100px">丢包率(%)</div>'},
             ],
             rows: [],
             dtHandle: null,
@@ -2480,7 +2662,10 @@ function game(obj) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
-
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
+                },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
@@ -2491,21 +2676,32 @@ function game(obj) {
                     // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
                     returnData.data = probeContent;//返回的数据列表
                     // // 重新整理返回数据以匹配表格
-                    console.log(returnData);
+                    var temp = cloneObj(probeContent);
+                    for (let i = 0; i < temp.length; i++) {
+                        let date_token = val[i].recordDate.split("-");
+                        let year = parseInt(date_token[0]);
+                        let month = parseInt(date_token[1]) - 1;
+                        let day = parseInt(date_token[2]);
+                        let hour = parseInt(val[i].recordTime);
+                        if (isNaN(year) || isNaN(month) || isNaN(day)) {
+                            continue;
+                        }
+                        temp[i].datetime = Date.UTC(year, month, day, hour)
+                    }
+                    var sortTemp = temp.sort(compare("datetime"));
                     let rows = [];
                     var i = 1;
-                    probeContent.forEach(function (item) {
-                            let row = [];
-                             row.push(i++);
+                    sortTemp.forEach(function (item) {
+                        let row = [];
+                        row.push(i++);
                         row.push(item.probeName);
                         row.push(item.recordDate.substr(0,10)+"   "+item.recordTime.substr(0,10)+':00');
                         row.push(fixed(item.score));
                         row.push(fixed(item.gameDnsDelay));
-                        row.push(fixed(item.gameConnDelay));
                         row.push(fixed(item.gamePacketDelay));
                         row.push(fixed(item.gamePacketJitter));
-                        row.push(fixed(item.gameLossRate));
-                            rows.push(row);
+                        row.push(fixed(item.gameLossRate)*100);
+                        rows.push(row);
                     });
                     returnData.data = rows;
                     callback(returnData);
@@ -2730,10 +2926,37 @@ $(document).ready(function () {
 });
 
 
+
 function fixed(value) {
     if(value==''||value==null){
         return ''
     }else{
         return value.toFixed(2)
+    }
+}
+
+
+var cloneObj = function (obj) {
+    var str, newobj = obj.constructor === Array ? [] : {};
+    if (typeof obj !== 'object') {
+        return;
+    } else if (window.JSON) {
+        str = JSON.stringify(obj), //系列化对象
+            newobj = JSON.parse(str); //还原
+    } else {
+        for (var i in obj) {
+            newobj[i] = typeof obj[i] === 'object' ?
+                cloneObj(obj[i]) : obj[i];
+        }
+    }
+    return newobj;
+};
+
+
+function compare(property) {
+    return function (obj1, obj2) {
+        let value1 = obj1[property];
+        let value2 = obj2[property];
+        return value1 - value2;     // 升序
     }
 }

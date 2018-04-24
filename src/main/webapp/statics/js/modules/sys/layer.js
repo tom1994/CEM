@@ -4,8 +4,8 @@ $(function () {
         datatype: "json",
         colModel: [
             {name:'id',index:'id',hidden:true},
-            {label: '层级标识', name: 'layerTag', index: "layer_tag", width: 45, key: true},
-            {label: '层级名称', name: 'layerName', width: 75},
+            {label: '层级标识', name: 'layerTag', index: "layer_tag", width: 45, key: true,sortable:false},
+            {label: '层级名称', name: 'layerName', width: 75 ,sortable:false},
         ],
         viewrecords: true,
         height: 385,
@@ -30,6 +30,7 @@ $(function () {
         gridComplete: function () {
             //隐藏grid底部滚动条
             $("#jqGrid").closest(".ui-jqgrid-bdiv").css({"overflow-x": "hidden"});
+            $('#jqGridPager').css('display','none')
         }
     });
 });

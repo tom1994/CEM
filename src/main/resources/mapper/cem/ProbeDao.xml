@@ -204,12 +204,15 @@
         b.data_name AS status_name,
         c.data_name AS iptype_name,
         layer.layer_name AS layer_name,
-        parent.parent_name AS upstream_name
+        parent.parent_name AS upstream_name,
+        probe_group.pg_name AS group_name
         FROM probe
         LEFT JOIN city
         ON probe.city_id = city.city_id
         LEFT JOIN county
         ON probe.county_id = county.county_id
+        LEFT JOIN probe_group
+        ON probe.group_id = probe_group.pg_name
         LEFT JOIN dic_data a
         ON (probe.type = a.data_id AND a.dic_type_id = 1 )
         LEFT JOIN dic_data b

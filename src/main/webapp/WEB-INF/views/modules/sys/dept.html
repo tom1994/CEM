@@ -10,6 +10,23 @@
 <script src="${rc.contextPath}/statics/plugins/treegrid/jquery.treegrid.bootstrap3.js"></script>
 <script src="${rc.contextPath}/statics/plugins/treegrid/jquery.treegrid.extension.js"></script>
 <script src="${rc.contextPath}/statics/plugins/treegrid/tree.table.js"></script>
+	<style type="text/css">
+		.table-bordered > thead > tr > th, .table-bordered > thead > tr > td{
+			background-color: #F5F5F6 !important;
+		}
+		.table-bordered > thead > tr > th:hover , .table-bordered > thead > tr > td{
+			background-color: #F5F5F6 !important;
+		}
+		.treegrid-selected{
+			background:#F5F5F6  !important;
+		}
+		.ui-jqgrid{
+			border-bottom: 0px;
+		}
+		.table-striped > tbody > tr:nth-of-type(odd){
+			background: white !important;
+		}
+	</style>
 </head>
 <body>
 <div id="rrapp" v-cloak>

@@ -575,6 +575,8 @@ var alert_table = new Vue({
             /*scrollY: 432,    /!*表格高度固定*!/*/
             scroll: false,
             oLanguage: {
+                sEmptyTable: "No data available in table",
+                sZeroRecords:"No data available in table",
                 sLengthMenu: "每页 _MENU_ 行数据",
                 oPaginate: {
                     sNext: '<i class="fa fa-chevron-right" ></i>', /*图标替换上一页,下一页*/

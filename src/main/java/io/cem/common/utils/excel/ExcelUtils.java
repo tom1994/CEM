@@ -289,14 +289,23 @@ public class ExcelUtils {
                     exportFieldWidth.add(FIELD_WIDTH);
                     // 添加到需要导出的字段的方法
                     String fieldname = field.getName();
-                    // System.out.println(i+"列宽"+excel.exportName()+" "+excel.exportFieldWidth());
-                    String getMethodName = "get" + fieldname.substring(0, 1)
-                            .toUpperCase() +
-                            fieldname.substring(1);
+if(fieldname.equals("portIp")){
+    String getMethodName = "get" + fieldname.substring(0, 1)
+            .toUpperCase() +
+            fieldname.substring(1)+"String";
 
-                    Method getMethod = entity.getMethod(getMethodName);
+    Method getMethod = entity.getMethod(getMethodName);
 
-                    methodList.add(getMethod);
+    methodList.add(getMethod);
+}else {
+    String getMethodName = "get" + fieldname.substring(0, 1)
+            .toUpperCase() +
+            fieldname.substring(1);
+
+    Method getMethod = entity.getMethod(getMethodName);
+
+    methodList.add(getMethod);
+}
                 }
             }
             int index = 0;

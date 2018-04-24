@@ -98,7 +98,7 @@ public class AlarmRecordController {
 		int service = alarmList.getServiceType();
 		int record = alarmList.getRecordId();
 		if(service==1||service==2||service==3){
-			RecordPingEntity recordPing = recordPingService.queryObject(id);
+			RecordPingEntity recordPing = recordPingService.queryObject(record);
 			alarmList.setPingDelay(recordPing.getDelay());
 			alarmList.setPingDelayStd(recordPing.getDelayStd());
 			alarmList.setPingDelayVar(recordPing.getDelayVar());

@@ -3,11 +3,10 @@ $(function () {
         url: baseURL + 'sys/role/list',
         datatype: "json",
         colModel: [
-            { label: '权限ID', name: 'roleId', index: "role_id", width: 45, key: true },
-            { label: '权限名称', name: 'roleName', index: "role_name", width: 75 },
-            { label: '所属部门', name: 'deptName',index: "dept_name", width: 75 },
-            { label: '备注', name: 'remark', width: 100 },
-            { label: '创建时间', name: 'createTime', index: "create_time", width: 80}
+            { label: '权限名称', name: 'roleName', index: "role_name", width: 75 ,sortable:false},
+            { label: '所属部门', name: 'deptName',index: "dept_name", width: 75 ,sortable:false},
+            { label: '备注', name: 'remark', width: 100 ,sortable:false},
+            { label: '创建时间', name: 'createTime', index: "create_time", width: 80,sortable:false}
         ],
         viewrecords: true,
         height: 385,
@@ -32,6 +31,7 @@ $(function () {
         gridComplete:function(){
             //隐藏grid底部滚动条
             $("#jqGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" });
+            $('#jqGridPager').css('display','none')
         }
     });
 });

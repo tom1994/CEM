@@ -1261,7 +1261,7 @@
                     backgroundColor: 'rgba(0,0,0,0)'
                 },
                 title: {
-                    text: 'TOP10门户排行'
+                    text: 'TOP10网络连通性排行'
                 },
 
                 xAxis: {
@@ -1347,7 +1347,7 @@
                     plotShadow: false
                 },
                 title: {
-                    text: 'TOP10视频排行'
+                    text: 'TOP10网络层质量排行'
                 },
                 tooltip: {
                     headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
@@ -1395,7 +1395,7 @@
                 },
                 series: [{
                     type:'pie',
-                    name: 'TOP10门户排行',
+                    name: 'TOP10网络层质量排行',
                     data: [
                         ['爱奇艺',   45.0],
                         ['优酷',       26.8],
@@ -1418,7 +1418,7 @@
                     backgroundColor: 'rgba(0,0,0,0)'
                 },
                 title: {
-                    text: 'TOP10门户感知排行'
+                    text: 'TOP10网页浏览排行'
                 },
 
                 xAxis: {
@@ -1531,7 +1531,7 @@
                     plotShadow: false
                 },
                 title: {
-                    text: 'TOP10 PING排行'
+                    text: 'TOP10在线视频排行'
                 },
                 tooltip: {
                     headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
@@ -1579,7 +1579,7 @@
                 },
                 series: [{
                     type:'pie',
-                    name: 'TOP10门户排行',
+                    name: 'TOP10在线视频排行',
                     data: [
                         ['爱奇艺',   45.0],
                         ['优酷',       26.8],
@@ -1602,7 +1602,7 @@
                     backgroundColor: 'rgba(0,0,0,0)'
                 },
                 title: {
-                    text: 'TOP10门户游戏排行'
+                    text: 'TOP10网络游戏排行'
                 },
 
                 xAxis: {
@@ -1684,7 +1684,7 @@
                     backgroundColor: 'rgba(0,0,0,0)'
                 },
                 title: {
-                    text: 'TOP10门户游戏排行'
+                    text: 'TOP10文件下载排行'
                 },
 
                 xAxis: {

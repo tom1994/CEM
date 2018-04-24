@@ -107,7 +107,7 @@ var search_service = new Vue({
 function getFormJson(form) {      /*将表单对象变为json对象*/
     var o = {};
     var a = $(form).serializeArray();
-    debugger
+     
     if(TypeSelected!=0){
         a[2]={}
         a[2].name='type'
@@ -160,6 +160,7 @@ function operate_this (obj) {     /*监听修改触发事件*/
 
 /*告警列表详情功能*/
 function update_this (obj) {     /*监听修改触发事件*/
+    debugger
     $('#ping').css('display','none');
     $('#trance').css('display','none');
     $('#sla').css('display','none');
@@ -196,110 +197,123 @@ function update_this (obj) {     /*监听修改触发事件*/
             forms[5].value = result.alarm.targetName;
             forms[6].value = result.alarm.dataName;
             forms[7].value = result.alarm.recordTime;
-            if((result.alarm.dataName=='PING(ICMP Echo)')||(result.alarm.dataName=='PING(TCP Echo)')|| (result.alarm.dataName='PING(UDP Echo)')){
-                $('#ping').css('display','inherit');
-                formparam[0].value = result.alarm.pingDelay;
-                formparam[1].value = result.alarm.pingDelayStd;
-                formparam[2].value = result.alarm.pingDelayVar;
-                formparam[3].value = result.alarm.pingJitter;
-                formparam[4].value = result.alarm.pingJitterStd;
-                formparam[5].value = result.alarm.pingJitterVar;
-                formparam[6].value = result.alarm.pingLossRate;
-            }else if((result.alarm.dataName=="Trace Route(ICMP)")||(result.alarm.dataName="Trace Route(UDP)")){
-                $('#trance').css('display','inherit');
-                formparam[7].value = result.alarm.tracertDelay;
-                formparam[8].value = result.alarm.tracertDelayStd;
-                formparam[9].value = result.alarm.tracertDelayVar;
-                formparam[10].value = result.alarm.tracertJitter;
-                formparam[11].value = result.alarm.tracertJitterStd;
-                formparam[12].value = result.alarm.tracertJitterVar;
-                formparam[13].value = result.alarm.tracertLossRate;
-            }else if((result.alarm.dataName=="SLA(TCP)")||(result.alarm.dataName=="SLA(UDP)")){
-                $('#sla').css('display','inherit');
-                formparam[7].value = result.alarm.slaDelay;
-                formparam[8].value = result.alarm.slaGDelay;
-                formparam[9].value = result.alarm.slaRDelay;
-                formparam[10].value = result.alarm.slaDelayStd;
-                formparam[11].value = result.alarm.slaGDelayStd;
-                formparam[12].value = result.alarm.slaRDelayStd;
-                formparam[13].value = result.alarm.slaDelayVar;
-                formparam[14].value = result.alarm.slaGDelayVar;
-                formparam[15].value = result.alarm.slaRDelayVar;
-                formparam[16].value = result.alarm.slaJitter;
-                formparam[17].value = result.alarm.slaGJitter;
-                formparam[18].value = result.alarm.slaRJitter;
-                formparam[19].value = result.alarm.slaJitterStd;
-                formparam[20].value = result.alarm.slaGJitterStd;
-                formparam[21].value = result.alarm.slaRJitterStd;
-                formparam[22].value = result.alarm.slaJitterVar;
-                formparam[23].value = result.alarm.slaGJitterVar;
-                formparam[24].value = result.alarm.slaRJitterVar;
-                formparam[25].value = result.alarm.slaLossRate;
-                formparam[26].value = result.alarm.slaGLossRate;
-                formparam[27].value = result.alarm.slaRLossRate;
-            }else  if(result.alarm.dataName=="DNS"){
-                $('#dns').css('display','inherit');
-                formparam[28].value = result.alarm.dnsDelay;
-                formparam[29].value = result.alarm.dnsSuccessRate;
-            }else if(result.alarm.dataName=='DHCP'){
-                $('#dhcp').css('display','inherit');
-                formparam[30].value = result.alarm.dhcpDelay;
-                formparam[31].value = result.alarm.dhcpSuccessRate;
-            }else if(result.alarm.dataName=='ADSL'){
-                $('#ppoe').css('display','inherit');
-                formparam[32].value = result.alarm.pppoeDelay;
-                formparam[32].value = result.alarm.pppoeDropRate;
-                formparam[33].value = result.alarm.pppoeSuccessRate;
-            }else  if (result.alarm.dataName=='Radius认证'){
-                $('#radius').css('display','inherit');
-                formparam[34].value = result.alarm.radiusDelay;
-                formparam[35].value = result.alarm.radiusSuccessRate;
-            }else if (result.alarm.dataName=='WEB页面访问'){
-                $('#web_page').css('display','inherit');
-                formparam[36].value = result.alarm.webpageDnsDelay;
-                formparam[37].value = result.alarm.webpageConnDelay;
-                formparam[38].value = result.alarm.webpageHeadbyteDelay;
-                formparam[39].value = result.alarm.webpagePageFileDelay;
-                formparam[40].value = result.alarm.webpageRedirectDelay;
-                formparam[41].value = result.alarm.webpageAboveFoldDelay;
-                formparam[42].value = result.alarm.webpagePageElementDelay;
-                formparam[43].value = result.alarm.webpageDownloadRate;
-            }else if(result.alarm.dataName=='WEB下载'){
-                $('#web_download').css('display','inherit');
-                formparam[44].value = result.alarm.webDownloadDnsDelay;
-                formparam[45].value = result.alarm.webDownloadConnDelay;
-                formparam[46].value = result.alarm.webDownloadHeadbyteDelay;
-                formparam[47].value = result.alarm.webDownloadDownloadRate;
-            }else if((result.alarm.dataName=='FTP下载')||(result.alarm.dataName=='FTP上传')){
-                $('#ftp').css('display','inherit');
-                formparam[48].value = result.alarm.ftpDnsDelay;
-                formparam[49].value = result.alarm.ftpConnDelay;
-                formparam[50].value = result.alarm.ftpLoginDelay;
-                formparam[51].value = result.alarm.ftpHeadbyteDelay;
-                formparam[52].value = result.alarm.ftpDownloadRate;
-                formparam[53].value = result.alarm.ftpUploadRate;
-            }else if(result.alarm.dataName=='在线视频'){
-                $('#video').css('display','inherit');
-                formparam[54].value = result.alarm.webDownloadDnsDelay;
-                formparam[55].value = result.alarm.webDownloadConnDelay;
-                formparam[56].value = result.alarm.webVideoWebPageDelay;
-                formparam[57].value = result.alarm.webVideoSsConnDelay;
-                formparam[58].value = result.alarm.webVideoAddressDelay;
-                formparam[59].value = result.alarm.webVideoMsConnDelay;
-                formparam[60].value = result.alarm.webVideoHeadFrameDelay;
-                formparam[61].value = result.alarm.webVideoInitBufferDelay;
-                formparam[62].value = result.alarm.webVideoLoadDelay;
-                formparam[63].value = result.alarm.webVideoTotalBufferDelay;
-                formparam[64].value = result.alarm.webVideoDownloadRate;
-                formparam[65].value = result.alarm.webVideoBufferTime;
+            if(obj.type=='阈值告警'){
+                if((result.alarm.dataName=='PING(ICMP Echo)')||(result.alarm.dataName=='PING(TCP Echo)')|| (result.alarm.dataName='PING(UDP Echo)')){
+                    $('#ping').css('display','inherit');
+                    formparam[0].value = result.alarm.pingDelay;
+                    formparam[1].value = result.alarm.pingDelayStd;
+                    formparam[2].value = result.alarm.pingDelayVar;
+                    formparam[3].value = result.alarm.pingJitter;
+                    formparam[4].value = result.alarm.pingJitterStd;
+                    formparam[5].value = result.alarm.pingJitterVar;
+                    formparam[6].value = result.alarm.pingLossRate;
+                }
+                else if((result.alarm.dataName=="Trace Route(ICMP)")||(result.alarm.dataName="Trace Route(UDP)")){
+                    $('#trance').css('display','inherit');
+                    formparam[7].value = result.alarm.tracertDelay;
+                    formparam[8].value = result.alarm.tracertDelayStd;
+                    formparam[9].value = result.alarm.tracertDelayVar;
+                    formparam[10].value = result.alarm.tracertJitter;
+                    formparam[11].value = result.alarm.tracertJitterStd;
+                    formparam[12].value = result.alarm.tracertJitterVar;
+                    formparam[13].value = result.alarm.tracertLossRate;
+                }
+                else if((result.alarm.dataName=="SLA(TCP)")||(result.alarm.dataName=="SLA(UDP)")){
+                    $('#sla').css('display','inherit');
+                    formparam[7].value = result.alarm.slaDelay;
+                    formparam[8].value = result.alarm.slaGDelay;
+                    formparam[9].value = result.alarm.slaRDelay;
+                    formparam[10].value = result.alarm.slaDelayStd;
+                    formparam[11].value = result.alarm.slaGDelayStd;
+                    formparam[12].value = result.alarm.slaRDelayStd;
+                    formparam[13].value = result.alarm.slaDelayVar;
+                    formparam[14].value = result.alarm.slaGDelayVar;
+                    formparam[15].value = result.alarm.slaRDelayVar;
+                    formparam[16].value = result.alarm.slaJitter;
+                    formparam[17].value = result.alarm.slaGJitter;
+                    formparam[18].value = result.alarm.slaRJitter;
+                    formparam[19].value = result.alarm.slaJitterStd;
+                    formparam[20].value = result.alarm.slaGJitterStd;
+                    formparam[21].value = result.alarm.slaRJitterStd;
+                    formparam[22].value = result.alarm.slaJitterVar;
+                    formparam[23].value = result.alarm.slaGJitterVar;
+                    formparam[24].value = result.alarm.slaRJitterVar;
+                    formparam[25].value = result.alarm.slaLossRate;
+                    formparam[26].value = result.alarm.slaGLossRate;
+                    formparam[27].value = result.alarm.slaRLossRate;
+                }
+                else  if(result.alarm.dataName=="DNS"){
+                    $('#dns').css('display','inherit');
+                    formparam[28].value = result.alarm.dnsDelay;
+                    formparam[29].value = result.alarm.dnsSuccessRate;
+                }
+                else if(result.alarm.dataName=='DHCP'){
+                    $('#dhcp').css('display','inherit');
+                    formparam[30].value = result.alarm.dhcpDelay;
+                    formparam[31].value = result.alarm.dhcpSuccessRate;
+                }
+                else if(result.alarm.dataName=='ADSL'){
+                    $('#ppoe').css('display','inherit');
+                    formparam[32].value = result.alarm.pppoeDelay;
+                    formparam[32].value = result.alarm.pppoeDropRate;
+                    formparam[33].value = result.alarm.pppoeSuccessRate;
+                }
+                else  if (result.alarm.dataName=='Radius认证'){
+                    $('#radius').css('display','inherit');
+                    formparam[34].value = result.alarm.radiusDelay;
+                    formparam[35].value = result.alarm.radiusSuccessRate;
+                }
+                else if (result.alarm.dataName=='WEB页面访问'){
+                    $('#web_page').css('display','inherit');
+                    formparam[36].value = result.alarm.webpageDnsDelay;
+                    formparam[37].value = result.alarm.webpageConnDelay;
+                    formparam[38].value = result.alarm.webpageHeadbyteDelay;
+                    formparam[39].value = result.alarm.webpagePageFileDelay;
+                    formparam[40].value = result.alarm.webpageRedirectDelay;
+                    formparam[41].value = result.alarm.webpageAboveFoldDelay;
+                    formparam[42].value = result.alarm.webpagePageElementDelay;
+                    formparam[43].value = result.alarm.webpageDownloadRate;
+                }
+                else if(result.alarm.dataName=='WEB下载'){
+                    $('#web_download').css('display','inherit');
+                    formparam[44].value = result.alarm.webDownloadDnsDelay;
+                    formparam[45].value = result.alarm.webDownloadConnDelay;
+                    formparam[46].value = result.alarm.webDownloadHeadbyteDelay;
+                    formparam[47].value = result.alarm.webDownloadDownloadRate;
+                }
+                else if((result.alarm.dataName=='FTP下载')||(result.alarm.dataName=='FTP上传')){
+                    $('#ftp').css('display','inherit');
+                    formparam[48].value = result.alarm.ftpDnsDelay;
+                    formparam[49].value = result.alarm.ftpConnDelay;
+                    formparam[50].value = result.alarm.ftpLoginDelay;
+                    formparam[51].value = result.alarm.ftpHeadbyteDelay;
+                    formparam[52].value = result.alarm.ftpDownloadRate;
+                    formparam[53].value = result.alarm.ftpUploadRate;
+                }
+                else if(result.alarm.dataName=='在线视频'){
+                    $('#video').css('display','inherit');
+                    formparam[54].value = result.alarm.webDownloadDnsDelay;
+                    formparam[55].value = result.alarm.webDownloadConnDelay;
+                    formparam[56].value = result.alarm.webVideoWebPageDelay;
+                    formparam[57].value = result.alarm.webVideoSsConnDelay;
+                    formparam[58].value = result.alarm.webVideoAddressDelay;
+                    formparam[59].value = result.alarm.webVideoMsConnDelay;
+                    formparam[60].value = result.alarm.webVideoHeadFrameDelay;
+                    formparam[61].value = result.alarm.webVideoInitBufferDelay;
+                    formparam[62].value = result.alarm.webVideoLoadDelay;
+                    formparam[63].value = result.alarm.webVideoTotalBufferDelay;
+                    formparam[64].value = result.alarm.webVideoDownloadRate;
+                    formparam[65].value = result.alarm.webVideoBufferTime;
 
-            }else if(result.alarm.dataName=='在线游戏'){
-                $('#game').css('display','inherit');
-                formparam[66].value = result.alarm.gameDnsDelay;
-                formparam[67].value = result.alarm.gameConnDelay;
-                formparam[68].value = result.alarm.gamePacketDelay;
-                formparam[69].value = result.alarm.gamePacketJitter;
-                formparam[70].value = result.alarm.gameLossRate;
+                }
+                else if(result.alarm.dataName=='在线游戏'){
+                    $('#game').css('display','inherit');
+                    formparam[66].value = result.alarm.gameDnsDelay;
+                    formparam[67].value = result.alarm.gameConnDelay;
+                    formparam[68].value = result.alarm.gamePacketDelay;
+                    formparam[69].value = result.alarm.gamePacketJitter;
+                    formparam[70].value = result.alarm.gameLossRate;
+                }
             }
         }
     });
@@ -448,6 +462,8 @@ var alerttable = new Vue({
             /*bLengthChange: false,*/    /*禁用Show entries*/
             scroll: false,
             oLanguage: {
+                sEmptyTable: "No data available in table",
+                sZeroRecords:"No data available in table",
                 sLengthMenu: "每页 _MENU_ 行数据",
                 oPaginate: {
                     sNext: '<i class="fa fa-chevron-right" ></i>', /*图标替换上一页,下一页*/
@@ -473,7 +489,7 @@ var alerttable = new Vue({
                     dataType: "json",
                     success: function (result) {
                         console.log(result);
-                        debugger
+                         
                         //封装返回数据
                         let returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -492,8 +508,8 @@ var alerttable = new Vue({
                             row.push(tus.get(item.status));
                             row.push(item.probeName);
                             row.push(item.recordTime);
-                            row.push('<a class="fontcolor" onclick="operate_this(this)" id='+item.id+'>确认</a>&nbsp;' +
-                                '<a class="fontcolor" onclick="update_this(this)" id='+item.id+'>详情</a>'); //Todo:完成详情与诊断
+                            row.push('<a class="fontcolor" onclick="operate_this(this)"  id='+item.id+'  >确认</a>&nbsp;' +
+                                '<a class="fontcolor" onclick="update_this(this)" id='+item.id+'  type='+st.get(item.type)+'>详情</a>'); //Todo:完成详情与诊断
                             rows.push(row);
                         });
                         returnData.data = rows;

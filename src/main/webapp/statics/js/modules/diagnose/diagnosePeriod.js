@@ -100,6 +100,7 @@ var button_change = new Vue({
 
     methods: {
         ping: function () {
+            $('#ping').removeClass('color');
             status = 1;
             changeStatus(1);
             console.log("连通性");
@@ -111,6 +112,7 @@ var button_change = new Vue({
             /*重新绘图*/
         },
         sla: function () {
+            $('#ping').removeClass('color');
             status = 2;
             changeStatus(2);
             console.log("网络层");
@@ -119,6 +121,7 @@ var button_change = new Vue({
             var chart = new Highcharts.Chart('container', options)
         },
         web: function () {
+            $('#ping').removeClass('color');
             status = 3;
             changeStatus(3);
             console.log("web");
@@ -127,6 +130,7 @@ var button_change = new Vue({
             var chart = new Highcharts.Chart('container', options)
         },
         download: function () {
+            $('#ping').removeClass('color');
             status = 4;
             changeStatus(4);
             loading()
@@ -136,6 +140,7 @@ var button_change = new Vue({
             /*重新绘图*/
         },
         video: function () {
+            $('#ping').removeClass('color');
             status = 5;
             changeStatus(5);
             loading()
@@ -145,6 +150,7 @@ var button_change = new Vue({
             /*重新绘图*/
         },
         game: function () {
+            $('#ping').removeClass('color');
             status = 6;
             changeStatus(6);
             loading()
@@ -366,7 +372,6 @@ var new_search = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                        removeLoading('test');
                         removeLoading('table');
                         console.log(result);
                         if (result.page.list.length !== 0) {
@@ -529,7 +534,6 @@ Vue.component('data-table', {
                 options.series[i].data = [];
             }
             for (let i = 0; i < options.series.length; i++) {
-
                 for (let j = 0; j < val.length; j++) {
                     if (parseInt(layers.get(options.series[i].name)) == parseInt(val[j].accessLayer)) {
                         let date_token = val[j].recordDate.split("-");
@@ -545,6 +549,7 @@ Vue.component('data-table', {
                     }
                 }
             }
+            removeLoading('test');
             var chart = new Highcharts.Chart('container', options);
             val = val
             if (table_status == 1) {
@@ -652,6 +657,11 @@ function ping(val) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
+
+                },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
@@ -682,11 +692,11 @@ function ping(val) {
                         row.push(i++);
                         row.push(layerNames.get(item.accessLayer));
                         row.push(item.recordDate.substr(0, 10) + "   " + item.recordTime.substr(0, 10) + ':00');
-                        row.push('<a class="fontcolor" type =' + layerNames.get(item.accessLayer) + ' onclick="ping_info(this,1,)" id=' + item.id + '  >' + fixed(item.icmpPingScore) + '</a>&nbsp;');
-                        row.push('<a class="fontcolor" type =' + layerNames.get(item.accessLayer) + '  onclick="ping_info(this,2,)" id=' + item.id + ' >' + fixed(item.udpPingScore) + '</a>&nbsp;');
-                        row.push('<a class="fontcolor" type =' + layerNames.get(item.accessLayer) + '  onclick="ping_info(this,3,)" id=' + item.id + ' >' + fixed(item.tcpPingScore) + '</a>&nbsp;');
-                        row.push('<a class="fontcolor" type =' + layerNames.get(item.accessLayer) + '  onclick="ping_info(this,4,)" id=' + item.id + ' >' + fixed(item.icmpTracertScore) + '</a>&nbsp;');
-                        row.push('<a class="fontcolor" type =' + layerNames.get(item.accessLayer) + '  onclick="ping_info(this,5,)" id=' + item.id + ' >' + fixed(item.udpTracertScore) + '</a>&nbsp;');
+                        row.push('<a class="fontcolor"  onclick="ping_info(this,1,)" id=' + item.id + '  type =' + layerNames.get(item.accessLayer) + ' >' + fixed(item.icmpPingScore) + '</a>&nbsp;');
+                        row.push('<a class="fontcolor"   onclick="ping_info(this,2,)" id=' + item.id + ' type =' + layerNames.get(item.accessLayer) + ' >' + fixed(item.udpPingScore) + '</a>&nbsp;');
+                        row.push('<a class="fontcolor"   onclick="ping_info(this,3,)" id=' + item.id + ' type =' + layerNames.get(item.accessLayer) + ' >' + fixed(item.tcpPingScore) + '</a>&nbsp;');
+                        row.push('<a class="fontcolor"   onclick="ping_info(this,4,)" id=' + item.id + ' type =' + layerNames.get(item.accessLayer) + ' >' + fixed(item.icmpTracertScore) + '</a>&nbsp;');
+                        row.push('<a class="fontcolor"   onclick="ping_info(this,5,)" id=' + item.id + ' type =' + layerNames.get(item.accessLayer) + ' >' + fixed(item.udpTracertScore) + '</a>&nbsp;');
                         rows.push(row);
                     });
                     returnData.data = rows;
@@ -733,6 +743,11 @@ function sla(val) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
+
+                },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
@@ -753,6 +768,7 @@ function sla(val) {
                         temp[i].datetime = Date.UTC(year, month, day, hour)
                     }
                     var sortTemp = temp.sort(compare("datetime"));
+                    updateContent = sortTemp;
                     let rows = [];
                     var i = 1;
                     sortTemp.forEach(function (item) {              /*观察user是否变化,更新表格数据*/
@@ -760,12 +776,12 @@ function sla(val) {
                         row.push(i++);
                         row.push(layerNames.get(item.accessLayer));
                         row.push(item.recordDate.substr(0, 10) + "   " + item.recordTime.substr(0, 10) + ':00');
-                        row.push('<a class="fontcolor"  type =' + layerNames.get(item.accessLayer) + ' onclick="sla_info(this,1)" id=' + item.id + '>' + fixed(item.tcpSlaScore) + '</a>&nbsp;');
-                        row.push('<a class="fontcolor" type =' + layerNames.get(item.accessLayer) + '  onclick="sla_info(this,2)" id=' + item.id + '>' + fixed(item.udpSlaScore) + '</a>&nbsp;');
-                        row.push('<a class="fontcolor" type =' + layerNames.get(item.accessLayer) + '  onclick="sla_info(this,3)" id=' + item.id + '>' + fixed(item.pppoeScore) + '</a>&nbsp;');
-                        row.push('<a class="fontcolor" type =' + layerNames.get(item.accessLayer) + ' onclick="sla_info(this,4)" id=' + item.id + '>' + fixed(item.dhcpScore) + '</a>&nbsp;');
-                        row.push('<a class="fontcolor" type =' + layerNames.get(item.accessLayer) + ' onclick="sla_info(this,5)" id=' + item.id + '>' + fixed(item.dnsScore) + '</a>&nbsp;');
-                        row.push('<a class="fontcolor" type =' + layerNames.get(item.accessLayer) + ' onclick="sla_info(this,6)" id=' + item.id + '>' + fixed(item.radiusScore) + '</a>&nbsp;');
+                        row.push('<a class="fontcolor"   onclick="sla_info(this,1)" id=' + item.id + '   type =' + layerNames.get(item.accessLayer) + ' >' + fixed(item.tcpSlaScore) + '</a>&nbsp;');
+                        row.push('<a class="fontcolor"    onclick="sla_info(this,2)" id=' + item.id + '  type =' + layerNames.get(item.accessLayer) + '>' + fixed(item.udpSlaScore) + '</a>&nbsp;');
+                        row.push('<a class="fontcolor"    onclick="sla_info(this,3)" id=' + item.id + '  type =' + layerNames.get(item.accessLayer) + '>' + fixed(item.pppoeScore) + '</a>&nbsp;');
+                        row.push('<a class="fontcolor"   onclick="sla_info(this,4)" id=' + item.id + '  type =' + layerNames.get(item.accessLayer) + '>' + fixed(item.dhcpScore) + '</a>&nbsp;');
+                        row.push('<a class="fontcolor"   onclick="sla_info(this,5)" id=' + item.id + '  type =' + layerNames.get(item.accessLayer) + '>' + fixed(item.dnsScore) + '</a>&nbsp;');
+                        row.push('<a class="fontcolor"   onclick="sla_info(this,6)" id=' + item.id + '  type =' + layerNames.get(item.accessLayer) + '>' + fixed(item.radiusScore) + '</a>&nbsp;');
                         rows.push(row);
                     });
                     returnData.data = rows;
@@ -807,6 +823,11 @@ function web(val) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
+
+                },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
@@ -826,6 +847,7 @@ function web(val) {
                         temp[i].datetime = Date.UTC(year, month, day, hour)
                     }
                     var sortTemp = temp.sort(compare("datetime"));
+                    updateContent = sortTemp;
                     let rows = [];
                     var i = 1;
                     sortTemp.forEach(function (item) {              /*观察user是否变化,更新表格数据*/
@@ -833,7 +855,7 @@ function web(val) {
                         row.push(i++);
                         row.push(layerNames.get(item.accessLayer));
                         row.push(item.recordDate.substr(0, 10) + "   " + item.recordTime.substr(0, 10) + ':00');
-                        row.push('<a class="fontcolor" type =' + layerNames.get(item.accessLayer) + ' onclick="web_info(this)" id=' + item.id + '>' + fixed(item.score) + '</a>&nbsp;');
+                        row.push('<a class="fontcolor"  onclick="web_info(this)"  id=' + item.id + '  type =' + layerNames.get(item.accessLayer) + '>' + fixed(item.score) + '</a>&nbsp;');
                         rows.push(row);
                     });
                     returnData.data = rows;
@@ -877,6 +899,11 @@ function download(val) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
+
+                },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
@@ -896,6 +923,7 @@ function download(val) {
                         temp[i].datetime = Date.UTC(year, month, day, hour)
                     }
                     var sortTemp = temp.sort(compare("datetime"));
+                    updateContent = sortTemp;
                     let rows = [];
                     var i = 1;
                     sortTemp.forEach(function (item) {              /*观察user是否变化,更新表格数据*/
@@ -948,6 +976,11 @@ function video(val) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
+
+                },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
@@ -967,6 +1000,7 @@ function video(val) {
                         temp[i].datetime = Date.UTC(year, month, day, hour)
                     }
                     var sortTemp = temp.sort(compare("datetime"));
+                    updateContent = sortTemp;
                     let rows = [];
                     var i = 1;
                     sortTemp.forEach(function (item) {              /*观察user是否变化,更新表格数据*/
@@ -1016,7 +1050,11 @@ function game(val) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
 
+                },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
@@ -1039,6 +1077,7 @@ function game(val) {
                         temp[i].datetime = Date.UTC(year, month, day, hour)
                     }
                     var sortTemp = temp.sort(compare("datetime"));
+                    updateContent = sortTemp;
                     let rows = [];
                     var i = param.start + 1;
                     sortTemp.forEach(function (item) {              /*观察user是否变化,更新表格数据*/
@@ -1076,7 +1115,6 @@ var new_data = new Vue({
 });
 
 function ping_info(obj, type) {
-    debugger
     var content = updateContent;
     if (type == 1) {
         pingicmp_table(obj, content)
@@ -1175,6 +1213,7 @@ function sla_info(obj, type) {
 function web_info(obj) {
     var content = updateContent
     broswer_table(obj, content)
+    $('#myModal_web').modal('show')
 }
 
 function download_info(obj, type) {
@@ -1195,16 +1234,19 @@ function download_info(obj, type) {
         $('#ftp_download').css('display', 'none');
         $('#web_download').css('display', 'none')
     }
+    $('#myModal_download').modal('show')
 }
 
 function video_info(obj) {
     var content = updateContent
     video_table(obj, content)
+    $('#myModal_video').modal('show')
 }
 
 function game_info(obj) {
     var content = updateContent
     game_table(obj, content)
+    $('#myModal_game').modal('show')
 }
 
 //PING ICMP
@@ -1212,17 +1254,16 @@ function pingicmp_table(obj, content) {
     var id = obj.id;
     var type = obj.type;
     var val = content
-    debugger
     var pingicmp_table = new Vue({
         el: '#pingicmp_table',
         data: {
             headers: [
                 {title: '<div style="width:10px"></div>'},
                 {title: '<div style="width:110px">探针名称</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">时延(ms)</div>'},
                 {title: '<div style="width:100px">时延标准差(ms)</div>'},
                 {title: '<div style="width:100px">时延方差(ms)</div>'},
-                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">抖动(ms)</div>'},
                 {title: '<div style="width:100px">抖动标准差(ms)</div>'},
                 {title: '<div style="width:100px">抖动方差(ms)</div>'},
                 {title: '<div style="width:100px">丢包率(%)</div>'},
@@ -1269,7 +1310,11 @@ function pingicmp_table(obj, content) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
 
+                },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
@@ -1283,9 +1328,9 @@ function pingicmp_table(obj, content) {
                     console.log(returnData);
                     let rows = [];
                     var i = 1;
-                    debugger
+                    
                     val.forEach(function (item) {
-                        debugger
+                        
                         if (type == layerNames.get(item.accessLayer) && id == item.id) {
                             let row = [];
                             row.push(i++);
@@ -1329,10 +1374,10 @@ function pingudp_table(obj, content) {
             headers: [
                 {title: '<div style="width:10px"></div>'},
                 {title: '<div style="width:110px">探针名称</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">时延(ms)</div>'},
                 {title: '<div style="width:100px">时延标准差(ms)</div>'},
                 {title: '<div style="width:100px">时延方差(ms)</div>'},
-                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">抖动(ms)</div>'},
                 {title: '<div style="width:100px">抖动标准差(ms)</div>'},
                 {title: '<div style="width:100px">抖动方差(ms)</div>'},
                 {title: '<div style="width:100px">丢包率(%)</div>'},
@@ -1380,7 +1425,11 @@ function pingudp_table(obj, content) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
 
+                },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
@@ -1438,10 +1487,10 @@ function pingtcp_table(obj, content) {
             headers: [
                 {title: '<div style="width:10px"></div>'},
                 {title: '<div style="width:110px">探针名称</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">时延(ms)</div>'},
                 {title: '<div style="width:100px">时延标准差(ms)</div>'},
                 {title: '<div style="width:100px">时延方差(ms)</div>'},
-                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">抖动(ms)</div>'},
                 {title: '<div style="width:100px">抖动标准差(ms)</div>'},
                 {title: '<div style="width:100px">抖动方差(ms)</div>'},
                 {title: '<div style="width:100px">丢包率(%)</div>'},
@@ -1489,7 +1538,11 @@ function pingtcp_table(obj, content) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
 
+                },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
@@ -1548,10 +1601,10 @@ function routeicmp_table(obj, content) {
             headers: [
                 {title: '<div style="width:10px"></div>'},
                 {title: '<div style="width:110px">探针名称</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">时延(ms)</div>'},
                 {title: '<div style="width:100px">时延标准差(ms)</div>'},
                 {title: '<div style="width:100px">时延方差(ms)</div>'},
-                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">抖动(ms)</div>'},
                 {title: '<div style="width:100px">抖动标准差(ms)</div>'},
                 {title: '<div style="width:100px">抖动方差(ms)</div>'},
                 {title: '<div style="width:100px">丢包率(%)</div>'},
@@ -1599,7 +1652,11 @@ function routeicmp_table(obj, content) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
 
+                },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
@@ -1658,10 +1715,10 @@ function routetcp_table(obj, content) {
             headers: [
                 {title: '<div style="width:10px"></div>'},
                 {title: '<div style="width:110px">探针名称</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">时延(ms)</div>'},
                 {title: '<div style="width:100px">时延标准差(ms)</div>'},
                 {title: '<div style="width:100px">时延方差(ms)</div>'},
-                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">抖动(ms)</div>'},
                 {title: '<div style="width:100px">抖动标准差(ms)</div>'},
                 {title: '<div style="width:100px">抖动方差(ms)</div>'},
                 {title: '<div style="width:100px">丢包率(%)</div>'},
@@ -1708,7 +1765,11 @@ function routetcp_table(obj, content) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
 
+                },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
@@ -1766,13 +1827,13 @@ function slatcp_table(obj, content) {
             headers: [
                 {title: '<div style="width:10px"></div>'},
                 {title: '<div style="width:110px">探针名称</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">时延(ms)</div>'},
                 {title: '<div style="width:100px">往向时延(ms)</div>'},
                 {title: '<div style="width:100px">返向时延(ms)</div>'},
-                {title: '<div style="width:100px">抖动平均值</div>'},
-                {title: '<div style="width:100px">往向抖动</div>'},
-                {title: '<div style="width:100px">返向抖动</div>'},
-                {title: '<div style="width:100px">丢包率</div>'},
+                {title: '<div style="width:100px">抖动(ms)</div>'},
+                {title: '<div style="width:100px">往向抖动(ms)</div>'},
+                {title: '<div style="width:100px">返向抖动(ms)</div>'},
+                {title: '<div style="width:100px">丢包率(%)</div>'},
 
             ],
             rows: [],
@@ -1817,7 +1878,11 @@ function slatcp_table(obj, content) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
 
+                },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
@@ -1876,10 +1941,10 @@ function slaudp_table(obj, content) {
             headers: [
                 {title: '<div style="width:10px"></div>'},
                 {title: '<div style="width:110px">探针名称</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
+                {title: '<div style="width:100px">时延(ms)</div>'},
                 {title: '<div style="width:100px">往向时延(ms)</div>'},
                 {title: '<div style="width:100px">返向时延(ms)</div>'},
-                {title: '<div style="width:100px">抖动平均值(ms)</div>'},
+                {title: '<div style="width:100px">抖动(ms)</div>'},
                 {title: '<div style="width:100px">往向抖动(ms)</div>'},
                 {title: '<div style="width:100px">返向抖动(ms)</div>'},
                 {title: '<div style="width:100px">丢包率(%)</div>'},
@@ -1928,7 +1993,11 @@ function slaudp_table(obj, content) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
 
+                },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
@@ -1977,7 +2046,7 @@ function slaudp_table(obj, content) {
 }
 
 //网络质量表格
-function dns_table(obj, content) {
+function dns_table(obj, content){
     var id = obj.id;
     var probeContent = content
     var type = obj.type
@@ -1987,8 +2056,8 @@ function dns_table(obj, content) {
             headers: [
                 {title: '<div style="width:10px"></div>'},
                 {title: '<div style="width:210px">探针名称</div>'},
-                {title: '<div style="width:200px">时延平均值(ms)</div>'},
-                {title: '<div style="width:200px">查询成功率(%)</div>'},
+                {title: '<div style="width:200px">解析时延(ms)</div>'},
+                {title: '<div style="width:200px">成功率(%)</div>'},
 
             ],
             rows: [],
@@ -2033,7 +2102,11 @@ function dns_table(obj, content) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
 
+                },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
@@ -2088,8 +2161,8 @@ function dhcp_table(obj, content) {
             headers: [
                 {title: '<div style="width:10px"></div>'},
                 {title: '<div style="width:210px">探针名称</div>'},
-                {title: '<div style="width:200px">时延平均值(ms)</div>'},
-                {title: '<div style="width:200px">查询成功率(%)</div>'},
+                {title: '<div style="width:200px">分配时延(ms)</div>'},
+                {title: '<div style="width:200px">成功率(%)</div>'},
 
             ],
             rows: [],
@@ -2134,7 +2207,11 @@ function dhcp_table(obj, content) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
 
+                },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
@@ -2188,7 +2265,7 @@ function adsl_table(obj, content) {
             headers: [
                 {title: '<div style="width:10px"></div>'},
                 {title: '<div style="width:210px">探针名称</div>'},
-                {title: '<div style="width:200px">时延平均值(ms)</div>'},
+                {title: '<div style="width:200px">分配时延(ms)</div>'},
                 {title: '<div style="width:200px">掉线率(%)</div>'},
                 {title: '<div style="width:200px">查询成功率(%)</div>'},
             ],
@@ -2234,7 +2311,11 @@ function adsl_table(obj, content) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
 
+                },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
@@ -2289,8 +2370,8 @@ function radius_table(obj, content) {
             headers: [
                 {title: '<div style="width:10px"></div>'},
                 {title: '<div style="width:110px">探针名称</div>'},
-                {title: '<div style="width:100px">时延平均值(ms)</div>'},
-                {title: '<div style="width:100px">认证成功率(%)</div>'},
+                {title: '<div style="width:100px">认证时延(ms)</div>'},
+                {title: '<div style="width:100px">成功率(%)</div>'},
 
             ],
             rows: [],
@@ -2335,7 +2416,11 @@ function radius_table(obj, content) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
 
+                },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
@@ -2395,7 +2480,7 @@ function broswer_table(obj, content) {
                 {title: '<div style="width:120px">页面文件时延(ms)</div>'},
                 {title: '<div style="width:100px">重定向时延(ms)</div>'},
                 {title: '<div style="width:100px">首屏时延(ms)</div>'},
-                {title: '<div style="width:115px">页面元素时延(ms)</div>'},
+                {title: '<div style="width:115px">页面加载时延(ms)</div>'},
                 {title: '<div style="width:100px">下载速率(KB/S)</div>'},
             ],
             rows: [],
@@ -2440,7 +2525,11 @@ function broswer_table(obj, content) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
 
+                },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
@@ -2465,7 +2554,7 @@ function broswer_table(obj, content) {
                             row.push(fixed(item.webpagePageFileDelay));
                             row.push(fixed(item.webpageRedirectDelay));
                             row.push(fixed(item.webpageAboveFoldDelay));
-                            row.push(fixed(item.webpagePageElementDelay));
+                            row.push(fixed(item.loadDelay));
                             row.push(fixed(item.webpageDownloadRate));
                             rows.push(row);
                         }
@@ -2499,11 +2588,11 @@ function web_download(obj, content) {
         data: {
             headers: [
                 {title: '<div style="width:10px"></div>'},
-                {title: '<div style="width:110px">探针名称</div>'},
-                {title: '<div style="width:100px">DNS时延(ms)</div>'},
-                {title: '<div style="width:100px">连接时延(ms)</div>'},
-                {title: '<div style="width:100px">首字节时延(ms)</div>'},
-                {title: '<div style="width:100px">下载速率(KB/S)</div>'},
+                {title: '<div style="width:160px">探针名称</div>'},
+                {title: '<div style="width:160px">DNS时延(ms)</div>'},
+                {title: '<div style="width:160px">连接时延(ms)</div>'},
+                {title: '<div style="width:160px">首字节时延(ms)</div>'},
+                {title: '<div style="width:160px">下载速率(KB/S)</div>'},
             ],
             rows: [],
             dtHandle: null,
@@ -2547,7 +2636,11 @@ function web_download(obj, content) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
 
+                },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
@@ -2602,12 +2695,12 @@ function ftp_download(obj, content) {
         data: {
             headers: [
                 {title: '<div style="width:10px"></div>'},
-                {title: '<div style="width:110px">探针名称</div>'},
-                {title: '<div style="width:100px">DNS时延(ms)</div>'},
-                {title: '<div style="width:100px">连接时延(ms)</div>'},
-                {title: '<div style="width:100px">登录时延(ms)</div>'},
-                {title: '<div style="width:100px">首字节时延(ms)</div>'},
-                {title: '<div style="width:100px">下载速率(KB/S)</div>'},
+                {title: '<div style="width:130px">探针名称</div>'},
+                {title: '<div style="width:140px">DNS时延(ms)</div>'},
+                {title: '<div style="width:140px">连接时延(ms)</div>'},
+                {title: '<div style="width:140px">登录时延(ms)</div>'},
+                {title: '<div style="width:140px">首字节时延(ms)</div>'},
+                {title: '<div style="width:140px">下载速率(KB/S)</div>'},
 
             ],
             rows: [],
@@ -2652,7 +2745,11 @@ function ftp_download(obj, content) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
 
+                },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
@@ -2708,12 +2805,12 @@ function ftp_upload(obj, content) {
         data: {
             headers: [
                 {title: '<div style="width:10px"></div>'},
-                {title: '<div style="width:110px">探针名称</div>'},
-                {title: '<div style="width:100px">DNS时延(ms)</div>'},
-                {title: '<div style="width:100px">连接时延(ms)</div>'},
-                {title: '<div style="width:100px">登录时延(ms)</div>'},
-                {title: '<div style="width:100px">首字节时延(ms)</div>'},
-                {title: '<div style="width:100px">上传速率(KB/S)</div>'},
+                {title: '<div style="width:130px">探针名称</div>'},
+                {title: '<div style="width:140px">DNS时延(ms)</div>'},
+                {title: '<div style="width:140px">连接时延(ms)</div>'},
+                {title: '<div style="width:140px">登录时延(ms)</div>'},
+                {title: '<div style="width:140px">首字节时延(ms)</div>'},
+                {title: '<div style="width:140px">上传速率(KB/S)</div>'},
             ],
             rows: [],
             dtHandle: null,
@@ -2757,7 +2854,11 @@ function ftp_upload(obj, content) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
 
+                },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
@@ -2816,12 +2917,9 @@ function video_table(obj, content) {
                 {title: '<div style="width:10px"></div>'},
                 {title: '<div style="width:110px">探针名称</div>'},
                 {title: '<div style="width:100px">DNS时延(ms)</div>'},
-                {title: '<div style="width:100px">连接WEB服务器时延(ms)</div>'},
+                {title: '<div style="width:140px">连接WEB服务器时延(ms)</div>'},
                 {title: '<div style="width:120px">web页面时延(ms)</div>'},
-                {title: '<div style="width:149px">连接调度服务器时延(ms)</div>'},
-                {title: '<div style="width:135px">获取视频地址时延(ms)</div>'},
-                {title: '<div style="width:147px">连接媒体服务器时延(ms)</div>'},
-                {title: '<div style="width:110px">首帧时延(ms)</div>'},
+                {title: '<div style="width:110px">首帧到达时延(ms)</div>'},
                 {title: '<div style="width:120px">首次缓冲时延(ms)</div>'},
                 {title: '<div style="width:120px">视频加载时延(ms)</div>'},
                 {title: '<div style="width:120px">总体缓冲时间(ms)</div>'},
@@ -2870,7 +2968,11 @@ function video_table(obj, content) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
 
+                },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
@@ -2892,9 +2994,6 @@ function video_table(obj, content) {
                             row.push(fixed(item.webVideoDnsDelay));
                             row.push(fixed(item.webVideoWsConnDelay));
                             row.push(fixed(item.webVideoWebPageDelay));
-                            row.push(fixed(item.webVideoSsConnDelay));
-                            row.push(fixed(item.webVideoAddressDelay));
-                            row.push(fixed(item.webVideoMsConnDelay));
                             row.push(fixed(item.webVideoHeadFrameDelay));
                             row.push(fixed(item.webVideoInitBufferDelay));
                             row.push(fixed(item.webVideoLoadDelay));
@@ -2928,18 +3027,17 @@ function video_table(obj, content) {
 function game_table(obj, content) {
     var id = obj.id;
     var type = obj.type;
-    var probeContet = content
+    var probeContent = content;
     var game_table = new Vue({
         el: '#gamedata_table',
         data: {
             headers: [
                 {title: '<div style="width:10px"></div>'},
-                {title: '<div style="width:110px">探针名称</div>'},
-                {title: '<div style="width:100px">DNS时延(ms)</div>'},
-                {title: '<div style="width:100px">连接时延(ms)</div>'},
-                {title: '<div style="width:100px">游戏数据包时延(ms)</div>'},
-                {title: '<div style="width:100px">游戏数据包抖动(ms)</div>'},
-                {title: '<div style="width:100px">游戏数据包丢包率(%)</div>'},
+                {title: '<div style="width:170px">探针名称</div>'},
+                {title: '<div style="width:170px">DNS时延(ms)</div>'},
+                {title: '<div style="width:170px">网络时延(ms)</div>'},
+                {title: '<div style="width:170px">网络抖动(ms)</div>'},
+                {title: '<div style="width:160px">丢包率(%)</div>'},
             ],
             rows: [],
             dtHandle: null,
@@ -2983,7 +3081,11 @@ function game_table(obj, content) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
 
+                },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
@@ -3000,18 +3102,19 @@ function game_table(obj, content) {
                     probeContent.forEach(function (item) {
                         if (type == layerNames.get(item.accessLayer) && id == item.id) {
                             let row = [];
+                            console.log();
                             row.push(i);
                             row.push(item.probeName);
                             row.push(fixed(item.gameDnsDelay));
-                            row.push(fixed(item.gameConnDelay));
                             row.push(fixed(item.gamePacketDelay));
                             row.push(fixed(item.gamePacketJitter));
-                            row.push(fixed(item.gameLossRate) * 100);
+                            row.push(fixed(item.gameLossRate)*100);
                             rows.push(row);
                         }
 
                     });
                     returnData.data = rows;
+                    console.log(returnData);
                     callback(returnData);
                     //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                     //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
@@ -3344,10 +3447,10 @@ $(document).ready(function () {
 // });
 
 function loading() {
-    $('#container').loading({
+    $('body').loading({
         loadingWidth: 240,
         title: '正在努力的加载中',
-        name: 'test',
+        name: 'table',
         discription: '这是一个描述...',
         direction: 'row',
         type: 'origin',
@@ -3361,7 +3464,6 @@ function loading() {
         loadingBg: '#312923',
         loadingMaskBg: 'rgba(22,22,22,0.2)'
     });
-
     $('#table').loading({
         loadingWidth: 240,
         title: '正在努力的加载中',
@@ -3384,7 +3486,8 @@ function loading() {
 
 
 function fixed(value) {
-    if (value == '' || value == null) {
+    
+    if ( value == null) {
         return ''
     } else {
         return value.toFixed(2)

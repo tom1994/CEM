@@ -7,7 +7,6 @@ import java.lang.annotation.Target;
 
 /**
  * 不被导出到Excel的注解
- * Created by tomxie on 2017/4/21 19:39.
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)

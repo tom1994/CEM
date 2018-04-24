@@ -1,11 +1,14 @@
 package io.cem.modules.cem.entity;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import io.cem.common.utils.DateUtils;
 import io.cem.common.utils.excel.annotation.ExcelIgnore;
 import io.cem.common.utils.excel.annotation.ExportName;
 
 import java.io.Serializable;
-import java.util.Date;
-
+import java.util.*;
 
 
 /**
@@ -381,8 +384,8 @@ public class ProbeEntity implements Serializable {
 	/**
 	 * 获取：注册时间
 	 */
-	public Date getRegisterTime() {
-		return registerTime;
+	public String getRegisterTime() {
+		return DateUtils.format(registerTime,"yyyy-MM-dd HH:mm:ss");
 	}
 	/**
 	 * 设置：并发任务数
@@ -417,8 +420,8 @@ public class ProbeEntity implements Serializable {
 	/**
 	 * 获取：上次心跳时间
 	 */
-	public Date getLastHbTime() {
-		return lastHbTime;
+	public String getLastHbTime() {
+		return DateUtils.format(lastHbTime,"yyyy-MM-dd HH:mm:ss");
 	}
 	/**
 	 * 设置：任务间隔
@@ -453,8 +456,8 @@ public class ProbeEntity implements Serializable {
 	/**
 	 * 获取：上次上报时间
 	 */
-	public Date getLastReportTime() {
-		return lastReportTime;
+	public String getLastReportTime() {
+		return DateUtils.format(lastReportTime,"yyyy-MM-dd HH:mm:ss");
 	}
 	/**
 	 * 设置：更新间隔
@@ -477,8 +480,8 @@ public class ProbeEntity implements Serializable {
 	/**
 	 * 获取：上次更新时间
 	 */
-	public Date getLastUpdateTime() {
-		return lastUpdateTime;
+	public String getLastUpdateTime() {
+		return DateUtils.format(lastUpdateTime,"yyyy-MM-dd HH:mm:ss");
 	}
 	/**
 	 * 设置：备注
@@ -501,8 +504,8 @@ public class ProbeEntity implements Serializable {
 	/**
 	 * 获取：创建时间
 	 */
-	public Date getCreateTime() {
-		return createTime;
+	public String getCreateTime() {
+		return DateUtils.format(createTime,"yyyy-MM-dd HH:mm:ss");
 	}
 
 
@@ -545,4 +548,31 @@ public class ProbeEntity implements Serializable {
 	public void setUpstreamName(String upstreamName) {
 		this.upstreamName = upstreamName;
 	}
+
+	public String getPortIpString(){
+		JSONArray jsonArray = JSON.parseArray(portIp);
+		StringBuilder newPortIp = new StringBuilder();
+		Map map = new HashMap();
+		map.put(1,"静态ip");
+		map.put(2,"DHCP动态分配");
+		map.put(3,"PPPoE拨号");
+		for (int i = 0; i <jsonArray.size(); i++) {
+			newPortIp.append("[").append("端口:").append(jsonArray.getJSONObject(i).get("port")).append(",");
+			newPortIp.append("IP:").append(jsonArray.getJSONObject(i).get("ip")).append(",");
+			newPortIp.append("类型:").append(map.get(jsonArray.getJSONObject(i).get("ip_type"))).append("]").append(" ");
+		}
+		return newPortIp.toString();
+	}
+
+/*	public String getLastReportTimeDate() {
+		return DateUtils.format(lastReportTime);
+	}
+
+	public String getLastHbTimeDate() {
+		return DateUtils.format(lastHbTime);
+	}
+
+	public String getCreateTimeDate() {
+		return DateUtils.format(createTime);
+	}*/
 }
