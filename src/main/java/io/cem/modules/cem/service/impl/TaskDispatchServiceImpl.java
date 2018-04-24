@@ -88,6 +88,9 @@ public class TaskDispatchServiceImpl implements TaskDispatchService {
     }
 
     @Override
+    public void cancelSave(Integer taskId){taskDispatchDao.cancelSave(taskId);}
+
+    @Override
     public void save(TaskDispatchEntity taskDispatch) {
         taskDispatchDao.save(taskDispatch);
     }
@@ -156,28 +159,4 @@ public class TaskDispatchServiceImpl implements TaskDispatchService {
         return dispatchList;
     }
 
-//	public class TestClass {
-//
-//		@Test
-//		public void testHttpCall() throws IOException {
-//			// given
-//			HttpPost request = new HttpPost("https://114.236.91.16:23456/web/v1/tasks/2290");
-//			request.add("Authorization", "Bearer 6b7544ae-63d3-4db6-9cc8-1dc95a991d50");
-//
-//
-//			// when
-//			HttpResponse response = HttpClientBuilder.create().build().execute(request);
-//
-//			// then
-//			HttpEntity entity = response.getEntity();
-//			String jsonString = EntityUtils.toString(entity);
-//
-//			// and if the response is
-//			// {
-//			//     "status": "OK"
-//			// }
-//			// Then we can assert it with
-//			assertThat(jsonString, hasJsonPath("$.status", is("OK")));
-//		}
-//	}
 }

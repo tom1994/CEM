@@ -15,6 +15,8 @@ public interface TaskDispatchDao extends BaseDao<TaskDispatchEntity> {
 
     int queryTestStatus(Integer id);
 
+    void cancelSave(Integer taskId);
+
     void saveAll(List<TaskDispatchEntity> taskDispatchEntityList);
 
     void cancelTask(Integer id);

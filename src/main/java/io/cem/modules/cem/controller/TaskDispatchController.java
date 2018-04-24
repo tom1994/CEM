@@ -318,6 +318,7 @@ public class TaskDispatchController {
             if(result == 200){
                 return R.ok();
             }else{
+                taskDispatchService.cancelSave(taskDispatch.getTaskId());
                 return R.error(404,"任务下发失败");
             }
         } else if (taskDispatch.getProbeIds() != null && taskDispatch.getProbeGroupIds() == null) {

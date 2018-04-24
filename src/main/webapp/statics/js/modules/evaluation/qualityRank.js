@@ -1590,7 +1590,7 @@ function diagnose(obj) {
     parent.location=top.location='http://114.236.91.16:8888/index.html#modules/diagnose/diagnoseNow.html?a=2'
     $('#page-sidebar>ul>li').eq(3).addClass(' active open');
     $('#page-sidebar>ul>li').eq(1).removeClass(' active open');
-  }
+}
 
 function update_this(obj) {
     $('#myModal_update').modal('show');

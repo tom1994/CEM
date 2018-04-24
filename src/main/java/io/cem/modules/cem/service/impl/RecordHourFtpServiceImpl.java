@@ -167,9 +167,7 @@ public class RecordHourFtpServiceImpl implements RecordHourFtpService {
 		Future<List<RecordHourPppoeEntity>> pppoeList_future2 = recordHourPppoeService.queryPppoeList(map3);
 		Future<List<RecordHourRadiusEntity>> radiusList_future2 = recordHourRadiusService.queryRadiusList(map3);
 		//网页浏览类业务
-		Future<List<RecordHourWebPageEntity>> webPageList_future = recordHourWebPageService.queryWebList(map1);
-		Future<List<RecordHourWebPageEntity>> webPageList_future1 = recordHourWebPageService.queryWebList(map2);
-		Future<List<RecordHourWebPageEntity>> webPageList_future2 = recordHourWebPageService.queryWebList(map3);
+		Future<List<RecordHourWebPageEntity>> webPageList_future = recordHourWebPageService.queryWebList(map);
 		//文件下载业务
 		Future<List<RecordHourWebDownloadEntity>> webDownloadList_future = recordHourWebDownloadService.queryWebDownloadList(map1);
 		Future<List<RecordHourFtpEntity>> ftpList_future = recordHourFtpService.queryFtpList(map1);
@@ -178,13 +176,9 @@ public class RecordHourFtpServiceImpl implements RecordHourFtpService {
 		Future<List<RecordHourWebDownloadEntity>> webDownloadList_future2 = recordHourWebDownloadService.queryWebDownloadList(map3);
 		Future<List<RecordHourFtpEntity>> ftpList_future2 = recordHourFtpService.queryDayList(map3);
 		//在线视频业务
-		Future<List<RecordHourWebVideoEntity>> videoList_future = recordHourWebVideoService.queryVideoList(map1);
-		Future<List<RecordHourWebVideoEntity>> videoList_future1 = recordHourWebVideoService.queryVideoList(map2);
-		Future<List<RecordHourWebVideoEntity>> videoList_future2 = recordHourWebVideoService.queryVideoList(map3);
+		Future<List<RecordHourWebVideoEntity>> videoList_future = recordHourWebVideoService.queryVideoList(map);
 		//网络游戏业务
-		Future<List<RecordHourGameEntity>> gameList_future = recordHourGameService.queryGameList(map1);
-		Future<List<RecordHourGameEntity>> gameList_future1 = recordHourGameService.queryGameList(map2);
-		Future<List<RecordHourGameEntity>> gameList_future2 = recordHourGameService.queryGameList(map3);
+		Future<List<RecordHourGameEntity>> gameList_future = recordHourGameService.queryGameList(map);
 		List<ScoreEntity> connectionList;
 		List<ScoreEntity> qualityList;
 		List<ScoreEntity> pageList;
@@ -205,7 +199,7 @@ public class RecordHourFtpServiceImpl implements RecordHourFtpService {
 				List<ScoreEntity> pingUdp = recordHourPingService.calculatePingUdp(pingList);
 				List<ScoreEntity> tracertIcmp = recordHourPingService.calculateTracertIcmp(tracertList);
 				List<ScoreEntity> tracertUdp = recordHourPingService.calculateTracertUdp(tracertList);
-				connectionList = recordHourPingService.calculateService1(pingIcmp, pingTcp, pingUdp, tracertIcmp, tracertUdp);
+				connectionList = recordHourPingService.calculateDate1(pingIcmp, pingTcp, pingUdp, tracertIcmp, tracertUdp);
 				break;
 			}
 			Thread.sleep(1000);
@@ -267,7 +261,7 @@ public class RecordHourFtpServiceImpl implements RecordHourFtpService {
 				List<ScoreEntity> dhcp = recordHourSlaService.calculateDhcp(dhcpList);
 				List<ScoreEntity> pppoe = recordHourSlaService.calculatePppoe(pppoeList);
 				List<ScoreEntity> radius = recordHourSlaService.calculateRadius(radiusList);
-				qualityList = recordHourSlaService.calculateService2(slaTcp, slaUdp, dns, dhcp, pppoe, radius);
+				qualityList = recordHourSlaService.calculateDate2(slaTcp, slaUdp, dns, dhcp, pppoe, radius);
 				break;
 			}
 			Thread.sleep(1000);
@@ -305,10 +299,8 @@ public class RecordHourFtpServiceImpl implements RecordHourFtpService {
 		}
 
 		while (true) {
-			if (webPageList_future.isDone()&&webPageList_future1.isDone()&&webPageList_future2.isDone()) {
+			if (webPageList_future.isDone()) {
 				List<RecordHourWebPageEntity> webPageList = webPageList_future.get();
-				webPageList.addAll(webPageList_future1.get());
-				webPageList.addAll(webPageList_future2.get());
 				pageList = recordHourWebPageService.calculateService3(webPageList);
 				break;
 			}
@@ -357,7 +349,7 @@ public class RecordHourFtpServiceImpl implements RecordHourFtpService {
 				List<ScoreEntity> webDownload = recordHourWebDownloadService.calculateWebDownload(webDownloadList);
 				List<ScoreEntity> ftpDownload = recordHourWebDownloadService.calculateFtpDownload(ftpList);
 				List<ScoreEntity> ftpUpload = recordHourWebDownloadService.calculateFtpUpload(ftpList);
-				downloadList = recordHourWebDownloadService.calculateService4(webDownload, ftpDownload, ftpUpload);
+				downloadList = recordHourWebDownloadService.calculateDate4(webDownload, ftpDownload, ftpUpload);
 				break;
 			}
 			Thread.sleep(1000);
@@ -395,10 +387,8 @@ public class RecordHourFtpServiceImpl implements RecordHourFtpService {
 		}
 
 		while (true) {
-			if (videoList_future.isDone()&&videoList_future1.isDone()&&videoList_future2.isDone()) {
+			if (videoList_future.isDone()) {
 				List<RecordHourWebVideoEntity> videoList = videoList_future.get();
-				videoList.addAll(videoList_future1.get());
-				videoList.addAll(videoList_future2.get());
 				videoServiceList = recordHourWebVideoService.calculateService5(videoList);
 				break;
 			}
@@ -437,10 +427,8 @@ public class RecordHourFtpServiceImpl implements RecordHourFtpService {
 		}
 
 		while (true) {
-			if (gameList_future.isDone()&&gameList_future1.isDone()&&gameList_future2.isDone()) {
+			if (gameList_future.isDone()) {
 				List<RecordHourGameEntity> gameList = gameList_future.get();
-				gameList.addAll(gameList_future1.get());
-				gameList.addAll(gameList_future2.get());
 				gameServiceList = recordHourGameService.calculateService6(gameList);
 				break;
 			}
@@ -867,7 +855,7 @@ public class RecordHourFtpServiceImpl implements RecordHourFtpService {
 				List<ScoreEntity> pingUdp = recordHourPingService.calculatePingUdp(pingList);
 				List<ScoreEntity> tracertIcmp = recordHourPingService.calculateTracertIcmp(tracertList);
 				List<ScoreEntity> tracertUdp = recordHourPingService.calculateTracertUdp(tracertList);
-				connectionList = recordHourPingService.calculateService1(pingIcmp, pingTcp, pingUdp, tracertIcmp, tracertUdp);
+				connectionList = recordHourPingService.calculateDate1(pingIcmp, pingTcp, pingUdp, tracertIcmp, tracertUdp);
 				break;
 			}
 			Thread.sleep(1000);
@@ -905,7 +893,8 @@ public class RecordHourFtpServiceImpl implements RecordHourFtpService {
 		}
 
 		while (true) {
-			if (slaList_future.isDone() && dnsList_future.isDone() && dhcpList_future.isDone() && dnsList_future.isDone() && pppoeList_future.isDone() && radiusList_future.isDone()&&slaList_future1.isDone() && dnsList_future1.isDone() && dhcpList_future1.isDone() && dnsList_future1.isDone() && pppoeList_future1.isDone() && radiusList_future1.isDone()) {
+			if (slaList_future.isDone() && dnsList_future.isDone() && dhcpList_future.isDone() && dnsList_future.isDone() && pppoeList_future.isDone() && radiusList_future.isDone()&&
+					slaList_future1.isDone() && dnsList_future1.isDone() && dhcpList_future1.isDone() && dnsList_future1.isDone() && pppoeList_future1.isDone() && radiusList_future1.isDone()) {
 				List<RecordHourSlaEntity> slaList = slaList_future.get();
 				slaList.addAll(slaList_future1.get());
 				List<RecordHourDnsEntity> dnsList = dnsList_future.get();
@@ -922,7 +911,7 @@ public class RecordHourFtpServiceImpl implements RecordHourFtpService {
 				List<ScoreEntity> dhcp = recordHourSlaService.calculateDhcp(dhcpList);
 				List<ScoreEntity> pppoe = recordHourSlaService.calculatePppoe(pppoeList);
 				List<ScoreEntity> radius = recordHourSlaService.calculateRadius(radiusList);
-				qualityList = recordHourSlaService.calculateService2(slaTcp, slaUdp, dns, dhcp, pppoe, radius);
+				qualityList = recordHourSlaService.calculateDate2(slaTcp, slaUdp, dns, dhcp, pppoe, radius);
 				break;
 			}
 			Thread.sleep(1000);
@@ -1009,7 +998,7 @@ public class RecordHourFtpServiceImpl implements RecordHourFtpService {
 				List<ScoreEntity> webDownload = recordHourWebDownloadService.calculateWebDownload(webDownloadList);
 				List<ScoreEntity> ftpDownload = recordHourWebDownloadService.calculateFtpDownload(ftpList);
 				List<ScoreEntity> ftpUpload = recordHourWebDownloadService.calculateFtpUpload(ftpList);
-				downloadList = recordHourWebDownloadService.calculateService4(webDownload, ftpDownload, ftpUpload);
+				downloadList= recordHourWebDownloadService.calculateDate4(webDownload, ftpDownload, ftpUpload);
 				break;
 			}
 			Thread.sleep(1000);

@@ -171,6 +171,13 @@
 		 WHERE id = #{value}
 	 </update>
 
+	<update id="cancelSave">
+		update task_dispatch
+		SET status = 2
+		WHERE task_id = #{value}
+		AND status = 0
+	</update>
+
 	<update id="update" parameterType="io.cem.modules.cem.entity.TaskDispatchEntity">
 		update task_dispatch 
 		<set>

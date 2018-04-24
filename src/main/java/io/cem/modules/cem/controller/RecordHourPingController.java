@@ -182,9 +182,11 @@ public class RecordHourPingController {
         }
         EvaluationEntity score;
         if(dateDifferent>5){
-            score = recordHourFtpService.calculateHourQualityScore(map);
-        }else{
             score = recordHourFtpService.calculateDayQualityScore(map);
+        }else if(dateDifferent<=5 && dateDifferent>=3){
+            score = recordHourFtpService.calculateHourQualityScore(map);
+        } else{
+            score = recordHourFtpService.calculateDayHourQualityScore(map);
         }
 
 
@@ -218,12 +220,13 @@ public class RecordHourPingController {
             e.printStackTrace();
         }
         List<ScoreEntity> scoreList;
-        if (dateDifferent > 5) {
-            //查询天表
+
+        if(dateDifferent>5){
             scoreList = recordHourDhcpService.connectionDayChart(map);
-        } else {
-            //查询小时表
+        }else if(dateDifferent<=5 && dateDifferent>=3){
             scoreList = recordHourDhcpService.connectionHourChart(map);
+        } else{
+            scoreList = recordHourDhcpService.connectionDayHourChart(map);
         }
         return R.ok().put("scoreList", scoreList);
     }
@@ -257,13 +260,15 @@ public class RecordHourPingController {
         }
 
         List<ScoreEntity> scoreList;
-        if (dateDifferent > 5) {
-            //查询天表
+
+        if(dateDifferent>5){
             scoreList = recordHourDhcpService.qualityDayChart(map);
-        } else {
-            //查询小时表
+        }else if(dateDifferent<=5 && dateDifferent>=3){
             scoreList = recordHourDhcpService.qualityHourChart(map);
+        } else{
+            scoreList = recordHourDhcpService.qualityDayHourChart(map);
         }
+
         return R.ok().put("scoreList", scoreList);
     }
 
@@ -335,12 +340,12 @@ public class RecordHourPingController {
         }
 
         List<ScoreEntity> scoreList;
-        if (dateDifferent > 5) {
-            //查询天表
+        if(dateDifferent>5){
             scoreList = recordHourDhcpService.downloadDayChart(map);
-        } else {
-            //查询小时表
+        }else if(dateDifferent<=5 && dateDifferent>=3){
             scoreList = recordHourDhcpService.downloadHourChart(map);
+        } else{
+            scoreList = recordHourDhcpService.downloadDayHourChart(map);
         }
         return R.ok().put("scoreList", scoreList);
     }
