@@ -405,13 +405,19 @@ public class RecordHourTracertController {
 			e.printStackTrace();
 		}
 		List<ScoreEntity> scoreList;
-		if (dateDifferent > 5) {
-			//查询天表
-			scoreList = recordHourRadiusService.calculateAreaDayScore(map); }
-		else {
-			//查询小时表
+		if(dateDifferent==0){
 			scoreList = recordHourRadiusService.calculateAreaHourScore(map);
+		}else if(dateDifferent==1){
+			scoreList = recordHourRadiusService.calculateAreaDayHourScore(map);
+		}else{
+			scoreList = recordHourRadiusService.calculateAreaDayScore(map);
 		}
+
+		if(map.get("target_id")==null){
+			for(int i=0;i<scoreList.size();i++){
+				scoreList.get(i).setTargetName("");
+			}
+		}else{}
 		System.out.println(scoreList);
 		CollectionToFile.collectionToFile(response, scoreList, ScoreEntity.class);
 	}
@@ -441,12 +447,12 @@ public class RecordHourTracertController {
 			e.printStackTrace();
 		}
 		EvaluationEntity score;
-		if (dateDifferent > 5) {
-			//查询天表
+		if(dateDifferent>5){
 			score = recordHourFtpService.calculateDayQualityScore(map);
-		} else {
-			//查询小时表
+		}else if(dateDifferent<=5 && dateDifferent>=3){
 			score = recordHourFtpService.calculateHourQualityScore(map);
+		} else{
+			score = recordHourFtpService.calculateDayHourQualityScore(map);
 		}
 
 		List<EvaluationEntity> scoreList = new ArrayList<>();
