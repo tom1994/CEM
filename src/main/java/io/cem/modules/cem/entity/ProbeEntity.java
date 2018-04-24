@@ -630,7 +630,7 @@ public class ProbeEntity implements Serializable {
         this.upstreamName = upstreamName;
     }
 
-    public String getPortIpString() {
+    public String PortIpString() {
         if (portIp != null && !portIp.equals("")) {
             Map map = new HashMap();
             map.put(1, "静态ip");

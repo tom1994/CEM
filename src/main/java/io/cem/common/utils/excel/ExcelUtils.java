@@ -290,7 +290,7 @@ public class ExcelUtils {
                     // 添加到需要导出的字段的方法
                     String fieldname = field.getName();
 if(fieldname.equals("portIp")){
-    String getMethodName = "get" + fieldname.substring(0, 1)
+    String getMethodName = fieldname.substring(0, 1)
             .toUpperCase() +
             fieldname.substring(1)+"String";
 

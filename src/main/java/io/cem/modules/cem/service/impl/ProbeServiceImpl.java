@@ -29,7 +29,7 @@ public class ProbeServiceImpl implements ProbeService {
 
     @Override
     public List<ProbeEntity> queryProbeList(Map<String, Object> map) {
-
+        List<ProbeEntity> probeEntityList = probeDao.queryProbeList(map);
         return probeDao.queryProbeList(map);
     }
 
