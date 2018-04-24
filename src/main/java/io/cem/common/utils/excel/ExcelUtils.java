@@ -280,32 +280,32 @@ public class ExcelUtils {
                     // 添加到标题
                     // field name和export name之间的转换
                     ExportName export = field.getAnnotation(ExportName.class);
-                    if (export == null){
+                    if (export == null) {
                         exportFieldTitle.add(field.getName());
-                    }else {
+                    } else {
                         exportFieldTitle.add(export.exportName());
                     }
                     // 添加标题的列宽
                     exportFieldWidth.add(FIELD_WIDTH);
                     // 添加到需要导出的字段的方法
                     String fieldname = field.getName();
-if(fieldname.equals("portIp")){
-    String getMethodName = fieldname.substring(0, 1)
-            .toUpperCase() +
-            fieldname.substring(1)+"String";
+                    if (fieldname.equals("portIp")) {
+                        String getMethodName = fieldname.substring(0, 1)
+                                .toUpperCase() +
+                                fieldname.substring(1) + "String";
 
-    Method getMethod = entity.getMethod(getMethodName);
+                        Method getMethod = entity.getMethod(getMethodName);
 
-    methodList.add(getMethod);
-}else {
-    String getMethodName = "get" + fieldname.substring(0, 1)
-            .toUpperCase() +
-            fieldname.substring(1);
+                        methodList.add(getMethod);
+                    } else {
+                        String getMethodName = "get" + fieldname.substring(0, 1)
+                                .toUpperCase() +
+                                fieldname.substring(1);
 
-    Method getMethod = entity.getMethod(getMethodName);
+                        Method getMethod = entity.getMethod(getMethodName);
 
-    methodList.add(getMethod);
-}
+                        methodList.add(getMethod);
+                    }
                 }
             }
             int index = 0;
@@ -369,7 +369,7 @@ if(fieldname.equals("portIp")){
         titleStyle.setBorderTop(BorderStyle.MEDIUM);     //左边框
         titleStyle.setBorderBottom(BorderStyle.MEDIUM);    //右边框
         titleStyle.setBorderTop(BorderStyle.DOUBLE);    //顶边框
-        titleStyle.setFillForegroundColor(new XSSFColor(new Color(	70,130,180)));    //填充的背景颜色
+        titleStyle.setFillForegroundColor(new XSSFColor(new Color(70, 130, 180)));    //填充的背景颜色
         titleStyle.setAlignment(HorizontalAlignment.CENTER);
 
         titleStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);    //填充图案
@@ -390,7 +390,7 @@ if(fieldname.equals("portIp")){
         style.setBorderRight(BorderStyle.THIN);    //右边框
         style.setBorderBottom(BorderStyle.THIN);
         style.setBorderTop(BorderStyle.THIN);
-        style.setFillForegroundColor(new XSSFColor(new Color(	176,224,230)));    //填充的背景颜色
+        style.setFillForegroundColor(new XSSFColor(new Color(176, 224, 230)));    //填充的背景颜色
         style.setFillPattern(FillPatternType.SOLID_FOREGROUND);    //填充图案
         return style;
     }
