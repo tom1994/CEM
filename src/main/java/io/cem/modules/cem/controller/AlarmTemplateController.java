@@ -1,5 +1,6 @@
 package io.cem.modules.cem.controller;
 
+import io.cem.common.annotation.SysLog;
 import io.cem.common.utils.PageUtils;
 import io.cem.common.utils.R;
 import io.cem.modules.cem.entity.AlarmTemplateEntity;
@@ -81,7 +82,7 @@ public class AlarmTemplateController {
 			return R.ok();
 		}
 	}
-	
+
 	/**
 	 * 修改
 	 */
@@ -99,6 +100,7 @@ public class AlarmTemplateController {
 	/**
 	 * 删除
 	 */
+	@SysLog("删除告警模板")
 	@RequestMapping("/delete")
 	@RequiresPermissions("alarmtemplate:delete")
 	public R delete(@RequestBody Integer[] ids){

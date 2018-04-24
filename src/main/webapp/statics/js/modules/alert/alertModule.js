@@ -74,6 +74,8 @@ var taskform_data = new Vue({
     // 在 `methods` 对象中定义方法
     methods: {
         submit: function () {
+            $("#serviceType").removeAttr("disabled","disabled");
+            debugger
             var tasknewJson = getFormJson($('#taskform_data'));
             var paramnewJson = getFormJson2($('#' + type.get(parseInt(tasknewJson.serviceType)) + '_param'));
             tasknewJson.value = paramnewJson;
@@ -102,6 +104,7 @@ var taskform_data = new Vue({
                     dataType: "json",
                     contentType: "application/json", /*必须要,不可少*/
                     success: function (result) {
+                        debugger
                         let code = result.code;
                         let msg = result.msg;
 
@@ -114,6 +117,9 @@ var taskform_data = new Vue({
                                 case 403:
                                     toastr.error(msg);
                                     break;
+                                case 300:
+                                    toastr.error(msg);
+                                    break;
                                 default:
                                     toastr.error("未知错误");
                                     break
@@ -123,14 +129,17 @@ var taskform_data = new Vue({
                                 case 0:
                                     toastr.success("修改成功!");
                                     $('#myModal_edit').modal('hide');
-                                    //$("#serviceType").attr("disabled","disabled");
+                                    $("#serviceType").attr("disabled","disabled");
+                                    break;
+                                case 300:
+                                    toastr.error(msg);
                                     break;
                                 case 403:
                                     toastr.error(msg);
                                     break;
                                 default:
                                     toastr.error("未知错误");
-                                    // $("#serviceType").attr("disabled","disabled");
+                                    $("#serviceType").attr("disabled","disabled");
                                     break
                             }
                         }

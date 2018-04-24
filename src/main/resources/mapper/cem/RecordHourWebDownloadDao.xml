@@ -95,8 +95,6 @@
 		ON t.county_id = county.county_id
 		INNER JOIN target
 		ON t.target_id = target.id
-
-
 	</select>
 
 	<!--menhu排名webdownload列表-->
@@ -138,7 +136,6 @@
 		ON t.county_id = county.county_id
 		INNER JOIN target
 		ON t.target_id = target.id
-
 	</select>
 
 	<select id="queryExitList" resultType="io.cem.modules.cem.entity.RecordHourWebDownloadEntity">

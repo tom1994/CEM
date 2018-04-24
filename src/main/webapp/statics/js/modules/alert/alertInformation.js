@@ -11,8 +11,8 @@ var le = new Map();//level字典，可通过get方法查对应字符串。
 le.set(1, "严重");
 le.set(2, "一般");
 var tus = new Map();//tus字典，可通过get方法查对应字符串。
-tus.set(0, "未处理");
-tus.set(1, "已处理");
+tus.set(0, "未确认");
+tus.set(1, "已确认");
 
 var TypeSelected=0;
 var LevelSelected=0;
@@ -444,13 +444,11 @@ var alerttable = new Vue({
             serverSide: true,
             info: false,
             ordering: false, /*禁用排序功能*/
-            bProcessing:true,
             /*bInfo: false,*/
             /*bLengthChange: false,*/    /*禁用Show entries*/
             scroll: false,
             oLanguage: {
                 sLengthMenu: "每页 _MENU_ 行数据",
-                sProcessing: "正在努力加载数据中...",
                 oPaginate: {
                     sNext: '<i class="fa fa-chevron-right" ></i>', /*图标替换上一页,下一页*/
                     sPrevious: '<i class="fa fa-chevron-left" ></i>'
@@ -494,7 +492,7 @@ var alerttable = new Vue({
                             row.push(tus.get(item.status));
                             row.push(item.probeName);
                             row.push(item.recordTime);
-                            row.push('<a class="fontcolor" onclick="operate_this(this)" id='+item.id+'>确定</a>&nbsp;' +
+                            row.push('<a class="fontcolor" onclick="operate_this(this)" id='+item.id+'>确认</a>&nbsp;' +
                                 '<a class="fontcolor" onclick="update_this(this)" id='+item.id+'>详情</a>'); //Todo:完成详情与诊断
                             rows.push(row);
                         });

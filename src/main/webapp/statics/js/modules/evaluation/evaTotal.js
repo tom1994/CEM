@@ -84,7 +84,7 @@ var search_service = new Vue({ //Todo:完成查询条件框
             }else{
                 var search = new Object();
                 search.city_id = searchJson.city;
-                search.couty_id = searchJson.county;
+                search.county_id = searchJson.county;
                 search.probe_id = searchJson.probe;
                 if (searchJson.startDate.length != 0 && searchJson.terminalDate.length != 0 ) {
                     var ava_start = searchJson.startDate.substr(0, 10);
@@ -168,11 +168,11 @@ function sendAjax(param) {
         dataType: "json",
         success: function (result) {
             ping_list=result.scoreList
-          if(ping_list!=undefined){
-              removeLoading('test');
-              ping_change(param)
-              ping(ping_list);
-          }
+            if(ping_list!=undefined){
+                removeLoading('test');
+                ping_change(param)
+                ping(ping_list);
+            }
         }
     })
     $.ajax({
@@ -195,10 +195,10 @@ function sendAjax(param) {
         data: param,  //传入组装的参数
         dataType: "json",
         success: function (result) {
-                page_list=result.scoreList
-                removeLoading('page');
-                page_change(param)
-                broswer(page_list)
+            page_list=result.scoreList
+            removeLoading('page');
+            page_change(param)
+            broswer(page_list)
 
         }
     })
@@ -209,11 +209,11 @@ function sendAjax(param) {
         data: param,  //传入组装的参数
         dataType: "json",
         success: function (result) {
-           download_list=result.scoreList
+            download_list=result.scoreList
             removeLoading('download');
             download_change(param)
             download(download_list)
-            }
+        }
     })
     $.ajax({
         type: "POST",
@@ -516,20 +516,20 @@ function page_change(param) {
             categories: (function () {
                 var arr = [];
                 var dateDiff = datedifference(param.chartdata.ava_start,param.chartdata.ava_terminal);
-              if(page_list!=undefined){
-                  if(dateDiff > 5){
-                      for(var i=0;i<page_list.length;i++){
-                          arr.push(page_list[i].recordDate);
-                      }
-                  }else{
-                      for(var i=0;i<page_list.length;i++){
-                          var dateStrs = page_list[i].recordDate.split(" ");
-                          arr.push(dateStrs[0].slice(5,10)+ " " + page_list[i].recordTime+":00");
-                      }
-                  }
-              }else {
-                  arr=[];
-              }
+                if(page_list!=undefined){
+                    if(dateDiff > 5){
+                        for(var i=0;i<page_list.length;i++){
+                            arr.push(page_list[i].recordDate);
+                        }
+                    }else{
+                        for(var i=0;i<page_list.length;i++){
+                            var dateStrs = page_list[i].recordDate.split(" ");
+                            arr.push(dateStrs[0].slice(5,10)+ " " + page_list[i].recordTime+":00");
+                        }
+                    }
+                }else {
+                    arr=[];
+                }
                 return arr.sort();
             })(),
             crosshair: true,
@@ -574,14 +574,14 @@ function page_change(param) {
             name:"score" ,
             data: (function () {
                 var arr = [];
-                  if(page_list!=undefined){
-                      for(var i=0;i<page_list.length;i++){
-                          arr.push(parseFloat(page_list[i].score));
-                      }
-                      return arr.sort();
-                  }else {
-                      return arr
-                  }
+                if(page_list!=undefined){
+                    for(var i=0;i<page_list.length;i++){
+                        arr.push(parseFloat(page_list[i].score));
+                    }
+                    return arr.sort();
+                }else {
+                    return arr
+                }
             })(),
             showInLegend: false,
         }]
@@ -1099,9 +1099,9 @@ var download_service = new Vue({
             dataType: "json",
             success: function (result) {
                 download_list=result.scoreList
-                    removeLoading('download');
-                    list_download();
-                    download(download_list);
+                removeLoading('download');
+                list_download();
+                download(download_list);
             }
         })
     }
@@ -1982,7 +1982,7 @@ function ping(val) {
                         row.push(fixed(item.tracertTcpJitterStd));
                         row.push(fixed(item.tracertTcpJitterVar));
                         row.push(fixed(item.tracertTcpLossRate)*100);
-                            rows.push(row);
+                        rows.push(row);
 
                     });
                     returnData.data = rows;
@@ -2037,7 +2037,7 @@ function quality(val) {
                 {title: '<div style="width:100px">解析时延(ms)</div>'},
                 {title: '<div style="width:100px">掉线率(%)</div>'},
                 {title: '<div style="width:100px">成功率(%)</div>'},
-                
+
                 {title: '<div style="width:100px">认证时延(ms)</div>'},
                 {title: '<div style="width:100px">认证成功率(%)</div>'},
 
@@ -2138,35 +2138,35 @@ function quality(val) {
                     let rows = [];
                     var i = 1;
                     sortTemp.forEach(function (item) {
-                            let row = [];
-                             row.push(i++);
-                            row.push(item.probeName);
-                            row.push(item.recordDate.substr(0,10)+"   "+item.recordTime.substr(0,10)+':00');
-                            row.push(fixed(item.score));
-                            row.push(fixed(item.slaTcpDelay));
-                            row.push(fixed(item.slaTcpGDelay));
-                            row.push(fixed(item.slaTcpRDelay));
-                            row.push(fixed(item.slaTcpJitter));
-                            row.push(fixed(item.slaTcpGJitter));
-                            row.push(fixed(item.slaTcpRJitter));
-                            row.push(fixed(item.slaTcpLossRate)*100);
-                            row.push(fixed(item.slaUdpDelay));
-                            row.push(fixed(item.slaUdpGDelay));
-                            row.push(fixed(item.slaUdpRDelay));
-                            row.push(fixed(item.slaUdpJitter));
-                            row.push(fixed(item.slaUdpGJitter));
-                            row.push(fixed(item.slaUdpRJitter));
-                            row.push(fixed(item.slaUdpLossRate)*100);
-                            row.push(fixed(item.dnsDelay));
-                            row.push(fixed(item.dnsSuccessRate)*100);
-                            row.push(fixed(item.dhcpDelay));
-                            row.push(fixed(item.dhcpSuccessRate));
-                            row.push(fixed(item.pppoeDelay));
-                            row.push(fixed(item.pppoeDropRate));
-                            row.push(fixed(item.pppoeSuccessRate)*100);
-                            row.push(fixed(item.radiusDelay));
-                            row.push(fixed(item.radiusSuccessRate)*100);
-                            rows.push(row);
+                        let row = [];
+                        row.push(i++);
+                        row.push(item.probeName);
+                        row.push(item.recordDate.substr(0,10)+"   "+item.recordTime.substr(0,10)+':00');
+                        row.push(fixed(item.score));
+                        row.push(fixed(item.slaTcpDelay));
+                        row.push(fixed(item.slaTcpGDelay));
+                        row.push(fixed(item.slaTcpRDelay));
+                        row.push(fixed(item.slaTcpJitter));
+                        row.push(fixed(item.slaTcpGJitter));
+                        row.push(fixed(item.slaTcpRJitter));
+                        row.push(fixed(item.slaTcpLossRate)*100);
+                        row.push(fixed(item.slaUdpDelay));
+                        row.push(fixed(item.slaUdpGDelay));
+                        row.push(fixed(item.slaUdpRDelay));
+                        row.push(fixed(item.slaUdpJitter));
+                        row.push(fixed(item.slaUdpGJitter));
+                        row.push(fixed(item.slaUdpRJitter));
+                        row.push(fixed(item.slaUdpLossRate)*100);
+                        row.push(fixed(item.dnsDelay));
+                        row.push(fixed(item.dnsSuccessRate)*100);
+                        row.push(fixed(item.dhcpDelay));
+                        row.push(fixed(item.dhcpSuccessRate));
+                        row.push(fixed(item.pppoeDelay));
+                        row.push(fixed(item.pppoeDropRate));
+                        row.push(fixed(item.pppoeSuccessRate)*100);
+                        row.push(fixed(item.radiusDelay));
+                        row.push(fixed(item.radiusSuccessRate)*100);
+                        rows.push(row);
                     });
                     returnData.data = rows;
                     callback(returnData);
@@ -2282,20 +2282,20 @@ function broswer(val) {
                     let rows = [];
                     var i = 1;
                     sortTemp.forEach(function (item) {
-                            let row = [];
-                             row.push(i++);
-                            row.push(item.probeName);
-                            row.push(item.recordDate.substr(0,10)+"   "+item.recordTime.substr(0,10)+':00');
-                            row.push(fixed(item.score));
-                            row.push(fixed(item.webpageDnsDelay));
-                            row.push(fixed(item.webpageConnDelay));
-                            row.push(fixed(item.webpageHeadbyteDelay));
-                            row.push(fixed(item.webpagePageFileDelay));
-                            row.push(fixed(item.webpageRedirectDelay));
-                            row.push(fixed(item.webpageAboveFoldDelay));
-                            row.push(fixed(item.loadDelay));
-                            row.push(fixed(item.webpageDownloadRate)*100);
-                            rows.push(row);
+                        let row = [];
+                        row.push(i++);
+                        row.push(item.probeName);
+                        row.push(item.recordDate.substr(0,10)+"   "+item.recordTime.substr(0,10)+':00');
+                        row.push(fixed(item.score));
+                        row.push(fixed(item.webpageDnsDelay));
+                        row.push(fixed(item.webpageConnDelay));
+                        row.push(fixed(item.webpageHeadbyteDelay));
+                        row.push(fixed(item.webpagePageFileDelay));
+                        row.push(fixed(item.webpageRedirectDelay));
+                        row.push(fixed(item.webpageAboveFoldDelay));
+                        row.push(fixed(item.loadDelay));
+                        row.push(fixed(item.webpageDownloadRate)*100);
+                        rows.push(row);
 
                     });
                     returnData.data = rows;
@@ -2438,26 +2438,26 @@ function download(val) {
                     let rows = [];
                     var i = 1;
                     sortTemp.forEach(function (item) {
-                            let row = [];
-                             row.push(i++);
-                            row.push(item.probeName);
-                            row.push(item.recordDate.substr(0,10)+"   "+item.recordTime.substr(0,10)+':00');
-                            row.push(fixed(item.score));
-                            row.push(fixed(item.webDownloadDnsDelay));
-                            row.push(fixed(item.webDownloadConnDelay));
-                            row.push(fixed(item.webDownloadHeadbyteDelay));
-                            row.push(fixed(item.webDownloadDownloadRate));
-                            row.push(fixed(item.ftpDownloadDnsDelay));
-                            row.push(fixed(item.ftpDownloadConnDelay));
-                            row.push(fixed(item.ftpDownloadLoginDelay));
-                            row.push(fixed(item.ftpDownloadHeadbyteDelay));
-                            row.push(fixed(item.ftpDownloadDownloadRate));
-                            row.push(fixed(item.ftpUploadDnsDelay));
-                            row.push(fixed(item.ftpUploadConnDelay));
-                            row.push(fixed(item.ftpUploadLoginDelay));
-                            row.push(fixed(item.ftpUploadHeadbyteDelay));
-                            row.push(fixed(item.ftpUploadUploadRate)*100);
-                            rows.push(row);
+                        let row = [];
+                        row.push(i++);
+                        row.push(item.probeName);
+                        row.push(item.recordDate.substr(0,10)+"   "+item.recordTime.substr(0,10)+':00');
+                        row.push(fixed(item.score));
+                        row.push(fixed(item.webDownloadDnsDelay));
+                        row.push(fixed(item.webDownloadConnDelay));
+                        row.push(fixed(item.webDownloadHeadbyteDelay));
+                        row.push(fixed(item.webDownloadDownloadRate));
+                        row.push(fixed(item.ftpDownloadDnsDelay));
+                        row.push(fixed(item.ftpDownloadConnDelay));
+                        row.push(fixed(item.ftpDownloadLoginDelay));
+                        row.push(fixed(item.ftpDownloadHeadbyteDelay));
+                        row.push(fixed(item.ftpDownloadDownloadRate));
+                        row.push(fixed(item.ftpUploadDnsDelay));
+                        row.push(fixed(item.ftpUploadConnDelay));
+                        row.push(fixed(item.ftpUploadLoginDelay));
+                        row.push(fixed(item.ftpUploadHeadbyteDelay));
+                        row.push(fixed(item.ftpUploadUploadRate)*100);
+                        rows.push(row);
 
                     });
                     returnData.data = rows;
@@ -2570,8 +2570,8 @@ function video(val) {
                     let rows = [];
                     var i = 1;
                     sortTemp.forEach(function (item) {
-                            let row = [];
-                             row.push(i++);
+                        let row = [];
+                        row.push(i++);
                         row.push(item.probeName);
                         row.push(item.recordDate.substr(0,10)+"   "+item.recordTime.substr(0,10)+':00');
                         row.push(fixed(item.score));
@@ -2584,7 +2584,7 @@ function video(val) {
                         row.push(fixed(item.webVideoTotalBufferDelay));
                         row.push(fixed(item.webVideoDownloadRate)*100);
                         row.push(fixed(item.webVideoBufferTime));
-                          rows.push(row);
+                        rows.push(row);
 
                     });
                     returnData.data = rows;
@@ -2692,8 +2692,8 @@ function game(val) {
                     let rows = [];
                     var i = 1;
                     sortTemp.forEach(function (item) {
-                            let row = [];
-                             row.push(i++);
+                        let row = [];
+                        row.push(i++);
                         row.push(item.probeName);
                         row.push(item.recordDate.substr(0,10)+"   "+item.recordTime.substr(0,10)+':00');
                         row.push(fixed(item.score));
@@ -2701,7 +2701,7 @@ function game(val) {
                         row.push(fixed(item.gamePacketDelay));
                         row.push(fixed(item.gamePacketJitter));
                         row.push(fixed(item.gameLossRate)*100);
-                            rows.push(row);
+                        rows.push(row);
                     });
                     returnData.data = rows;
                     callback(returnData);
@@ -2924,6 +2924,7 @@ $(document).ready(function () {
     }
     probe()
 });
+
 
 
 function fixed(value) {

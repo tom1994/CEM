@@ -481,7 +481,6 @@
                               data : {serviceType:'2'},
                               dataType: "json", //返回数据形式为json
                               success: function (result) {
-                                debugger
                                   arr = result.scoreCollects;
                                   var i = 0;
                               }
@@ -985,7 +984,7 @@
             },
             series: [{
                 type: 'column',
-                name: '网页感知',
+                name: '网页浏览',
                 //data:[40,30,70,80,90],
                 data: (function(){
                     var arr=[];
@@ -1009,7 +1008,7 @@
                 })()
             }, {
                 type: 'column',
-                name: '视频感知',
+                name: '在线视频',
                 //data:[40,30,70,80,90],
                 data: (function(){
                     var arr=[];
@@ -1032,7 +1031,7 @@
                 })()
             }, {
                 type: 'column',
-                name: '网络链路感知',
+                name: '网络连通性',
                 //data:[41,51,61,81,91]
                 data: (function(){
                     var arr=[];
@@ -1055,7 +1054,7 @@
                 })()
             }, {
                 type: 'column',
-                name: '下载感知',
+                name: '文件下载',
                 //data:[40,60,30,80,90]
                 data: (function(){
                     var arr=[];
@@ -1078,7 +1077,7 @@
                 })()
             }, {
                 type: 'column',
-                name: '游戏感知',
+                name: '网络游戏',
                 //data:[40,60,30,80,90]
                 data: (function(){
                     var arr=[];
@@ -1101,7 +1100,7 @@
                 })()
             } , {
                 type: 'column',
-                name: '网络质量感知',
+                name: '网络层质量',
                 //data:[40,60,30,80,90]
                 data: (function(){
                     var arr=[];
@@ -1162,12 +1161,12 @@
                     polar: [
                         {
                             indicator: [
-                                {text: '网络链路', min: 0, max: 100},
-                                {text: '网络质量', min: 0, max: 100},
-                                {text: '网页感知', min: 0, max: 100},
-                                {text: '下载感知', min: 0, max: 100},
-                                {text: '视频感知', min: 0, max: 100},
-                                {text: '游戏感知', min: 0, max: 100},
+                                {text: '网络连通性', min: 0, max: 100},
+                                {text: '网络层质量', min: 0, max: 100},
+                                {text: '网页浏览', min: 0, max: 100},
+                                {text: '文件下载', min: 0, max: 100},
+                                {text: '在线视频', min: 0, max: 100},
+                                {text: '网络游戏', min: 0, max: 100},
 
                             ]
                         }
@@ -1262,7 +1261,7 @@
                     backgroundColor: 'rgba(0,0,0,0)'
                 },
                 title: {
-                    text: 'TOP10门户感知排行'
+                    text: 'TOP10门户排行'
                 },
 
                 xAxis: {
@@ -1279,7 +1278,6 @@
                             dataType: "json", //返回数据形式为json
                             success: function (result) {
                                 if (result) {
-                                    //debugger
                                     for(var i=0;i<10;i++){
                                         arr.push(result.scoreCollects[i].targetName1);
                                     }
@@ -1349,7 +1347,7 @@
                     plotShadow: false
                 },
                 title: {
-                    text: 'TOP10视频感知排行'
+                    text: 'TOP10视频排行'
                 },
                 tooltip: {
                     headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
@@ -1397,7 +1395,7 @@
                 },
                 series: [{
                     type:'pie',
-                    name: 'TOP10门户感知排行',
+                    name: 'TOP10门户排行',
                     data: [
                         ['爱奇艺',   45.0],
                         ['优酷',       26.8],
@@ -1420,7 +1418,7 @@
                     backgroundColor: 'rgba(0,0,0,0)'
                 },
                 title: {
-                    text: 'TOP10门户下载感知排行'
+                    text: 'TOP10门户感知排行'
                 },
 
                 xAxis: {
@@ -1533,7 +1531,7 @@
                     plotShadow: false
                 },
                 title: {
-                    text: 'TOP10 PING感知排行'
+                    text: 'TOP10 PING排行'
                 },
                 tooltip: {
                     headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
@@ -1581,7 +1579,7 @@
                 },
                 series: [{
                     type:'pie',
-                    name: 'TOP10门户感知排行',
+                    name: 'TOP10门户排行',
                     data: [
                         ['爱奇艺',   45.0],
                         ['优酷',       26.8],
@@ -1604,7 +1602,7 @@
                     backgroundColor: 'rgba(0,0,0,0)'
                 },
                 title: {
-                    text: 'TOP10门户游戏感知排行'
+                    text: 'TOP10门户游戏排行'
                 },
 
                 xAxis: {
@@ -1686,7 +1684,7 @@
                     backgroundColor: 'rgba(0,0,0,0)'
                 },
                 title: {
-                    text: 'TOP10门户游戏感知排行'
+                    text: 'TOP10门户游戏排行'
                 },
 
                 xAxis: {

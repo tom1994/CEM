@@ -124,7 +124,7 @@
                                        class="col-lg-2 col-md-2 col-sm-2 form_border"
                                         >任务类型</label>
                                 <div class="col-lg-2 col-md-2 col-sm-2">
-                                    <select id="serviceType" disabled="disabled" v-on:change="servicechange()"
+                                    <select id="serviceType" disabled="disabled"  v-on:change="servicechange()"
                                             class="form-control input clear clear" name="serviceType">
                                         <option value="">---请选择---</option>
                                         <optgroup label="网络连通性测试">
@@ -758,12 +758,12 @@
                                     >DNS时延(ms)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="web_page_dns_delay"
-                                               value="10" disabled="disabled" name="delay"
+                                               value="10" disabled="disabled" name="dns_delay"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="10" disabled="disabled" name="delay"
+                                               value="10" disabled="disabled" name="dns_delay"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -865,12 +865,12 @@
                                             >下载速率(kb/s)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="web_page_download_speed"
-                                               value="100" disabled="disabled" name="download_speed"
+                                               value="100" disabled="disabled" name="download_rate"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="100" disabled="disabled" name="download_speed"
+                                               value="100" disabled="disabled" name="download_rate"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -919,12 +919,12 @@
                                     >下载速率(kb/s)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="web_download_download_speed"
-                                               value="10" disabled="disabled" name="download_speed"
+                                               value="10" disabled="disabled" name="download_rate"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="10" disabled="disabled" name="download_speed"
+                                               value="10" disabled="disabled" name="download_rate"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -1003,12 +1003,12 @@
                                             >下载速率(kb/s)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="ftp_download_speed"
-                                               value="100" disabled="disabled" name="download_speed"
+                                               value="100" disabled="disabled" name="download_rate"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="100" disabled="disabled" name="download_speed"
+                                               value="100" disabled="disabled" name="download_rate"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -1101,12 +1101,12 @@
                                     >上传速率(kb/s)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="ftp_upload_speed"
-                                               value="100" disabled="disabled" name="upload_speed"
+                                               value="100" disabled="disabled" name="upload_rate"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="100" disabled="disabled" name="upload_speed"
+                                               value="100" disabled="disabled" name="upload_rate"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -1139,12 +1139,12 @@
                                             >连接WEB服务器时延(ms)</label>
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <input type="text" class="form-control input clear" id="video_ws_conn_delay"
-                                               value="100" disabled="disabled" name="conn_delay"
+                                               value="100" disabled="disabled" name="ws_conn_delay"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <input type="text" class="form-control input clear"
-                                               value="100" disabled="disabled" name="conn_delay"
+                                               value="100" disabled="disabled" name="ws_conn_delay"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -1230,12 +1230,12 @@
                                     >下载速度(kb/s)</label>
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <input type="text" class="form-control input clear" id="video_download_speed"
-                                               value="10" disabled="disabled" name="download_speed"
+                                               value="10" disabled="disabled" name="download_rate"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <input type="text" class="form-control input clear"
-                                               value="10" disabled="disabled" name="download_speed"
+                                               value="10" disabled="disabled" name="download_rate"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -1245,11 +1245,6 @@
                                             >缓冲次数</label>
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <input type="text" class="form-control input clear" id="video_buffer_time"
-                                               value="100" disabled="disabled" name="buffer_time"
-                                               placeholder="">
-                                    </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-4">
-                                        <input type="text" class="form-control input clear"
                                                value="100" disabled="disabled" name="buffer_time"
                                                placeholder="">
                                     </div>
@@ -1320,12 +1315,12 @@
                                             >丢包率(%)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="game_packet_loss_rate"
-                                               value="10" disabled="disabled" name="packet_loss_rate"
+                                               value="10" disabled="disabled" name="loss_rate"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="10" disabled="disabled" name="packet_loss_rate"
+                                               value="10" disabled="disabled" name="loss_rate"
                                                placeholder="">
                                     </div>
 

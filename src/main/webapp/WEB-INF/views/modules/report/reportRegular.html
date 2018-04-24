@@ -119,23 +119,35 @@
                                 <select id="servicetype" class="form-control input  clear" name="service_type"
                                         style="width: 100%">  <!--VUE列表渲染-->
                                     <option value="">---请选择---</option>
-                                    <option value="01">PING (ICMP Echo)</option>
-                                    <option value="02">PING (TCP Echo)</option>
-                                    <option value="03">PING (UDP Echo)</option>
-                                    <option value="04">Trace Route (ICMP)</option>
-                                    <option value="05">Trace Route (UDP)</option>
-                                    <option value="10">SLA (TCP)</option>
-                                    <option value="11">SLA (UDP)</option>
-                                    <option value="12">ADSL接入</option>
-                                    <option value="13">DHCP</option>
-                                    <option value="14">DNS</option>
-                                    <option value="15">Radius认证</option>
-                                    <option value="20">WEB页面访问</option>
-                                    <option value="30">WEB下载</option>
-                                    <option value="31">FTP下载</option>
-                                    <option value="32">FTP上传</option>
-                                    <option value="40">在线视频</option>
-                                    <option value="50">网络游戏</option>
+                                    <optgroup label="网络连通性测试">
+                                        <option value="1">PING(ICMP ECHO)</option>
+                                        <option value="2">PING(TCP ECHO)</option>
+                                        <option value="3">PING(UDP ECHO)</option>
+                                        <option value="4">Trace Route(ICMP)</option>
+                                        <option value="5">Trace Route(UDP)</option>
+                                    </optgroup>
+                                    <optgroup label="网络层质量测试">
+                                        <option value="10">SLA(TCP)</option>
+                                        <option value="11">SLA(UDP)</option>
+                                        <option value="12">ADSL接入</option>
+                                        <option value="13">DHCP</option>
+                                        <option value="14">DNS</option>
+                                        <option value="15">Radius认证</option>
+                                    </optgroup>
+                                    <optgroup label="网页浏览类测试">
+                                        <option value="20">WEB页面访问</option>
+                                    </optgroup>
+                                    <optgroup label="文件下载类测试">
+                                        <option value="30">WEB下载</option>
+                                        <option value="31">FTP下载</option>
+                                        <option value="32">FTP上传</option>
+                                    </optgroup>
+                                    <optgroup label="在线视频类测试">
+                                        <option value="40">在线视频</option>
+                                    </optgroup>
+                                    <optgroup label="在线游戏类测试">
+                                        <option value="50">网络游戏</option>
+                                    </optgroup>
                                 </select>
                             </div>
 
@@ -244,10 +256,14 @@
                     <div class="form-group row">
                         <label for="Day" class="col-lg-2 col-md-2 col-sm-2 control-label form_border">
                             <input type="radio" id="Day" name="download_table" checked>日表</label>
-                        <input type="text" id="SelectDate" class="form-control selectdata input"
-                               name="Select_date"
+                        <input type="text" id="start_day" class="form-control selectdata input"
+                               name="start_day"
                                style="width: 96px;display: inline-block"
-                               value="2018-3-22">
+                               >
+                        <input type="text" id="end_day" class="form-control selectdata input"
+                               name="end_day"
+                               style="width: 96px;display: inline-block"
+                        >
                     </div>
                 </form>
             </div>
@@ -264,7 +280,11 @@
 
 </body>
 <script>
-    $('#SelectDate').flatpickr({
+    $('#start_day').flatpickr({
+        enableTime: false,
+        dateFormat: "Y-m-d"
+    });
+    $('#end_day').flatpickr({
         enableTime: false,
         dateFormat: "Y-m-d"
     });
@@ -274,8 +294,8 @@
         $('#SelectDate').val("");
     })
     $('#Day').click(function () {
-        $('#SelectDate').val("2018-3-29");
         $('#selectMonth').attr('disabled','disabled');
+        $('#SelectDate').removeAttr('disabled','disabled');
     })
 </script>
 <script>

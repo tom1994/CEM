@@ -116,6 +116,7 @@ function view_this(obj) {     /*监听详情触发事件*/
                 alarmtemplates[i] = {message: result.page.list[i]}
             }
             taskform_data.atemplates = alarmtemplates;
+
             get_viewModal(update_data_id);
         }
     });
@@ -131,6 +132,7 @@ function get_viewModal(update_data_id) {
         dataType: "json",
         contentType: "application/json", /*必须要,不可少*/
         success: function (result) {
+            debugger
             var param = JSON.parse(result.task.parameter);
             servicetypeid = result.task.serviceType;
             var paramforms = $('#' + stid.get(servicetypeid) + '_param' + ' .form-control');
@@ -177,7 +179,7 @@ function get_viewModal(update_data_id) {
                 paramforms[2].value = param.is_renew;
             }
             if (stid.get(servicetypeid) == "dns") {
-                debugger
+                 
                 paramforms[0].value = param.times;
                 paramforms[1].value = param.interval;
                 paramforms[2].value = param.count;
@@ -187,7 +189,7 @@ function get_viewModal(update_data_id) {
             }
             if (stid.get(servicetypeid) == "pppoe") {
                 paramforms[0].value = param.username;
-                paramforms[1].value = param.password;
+                paramforms[1].value = '*********';
                 paramforms[2].value = param.times;
                 paramforms[3].value = param.interval;
                 paramforms[4].value = param.online_time;
@@ -197,7 +199,7 @@ function get_viewModal(update_data_id) {
                 paramforms[1].value = param.nas_port;
                 paramforms[2].value = param.secret;
                 paramforms[3].value = param.username;
-                paramforms[4].value = param.password;
+                paramforms[4].value = '*********';
                 paramforms[5].value = param.times;
                 paramforms[6].value = param.interval;
             }
@@ -217,7 +219,7 @@ function get_viewModal(update_data_id) {
                     $('#is_anonymous').val('0')
                 }
                 paramforms[6].value = param.username;
-                paramforms[7].value = param.password;
+                paramforms[7].value = '*********';;
             }
             if (stid.get(servicetypeid) == "ftp_download") {
                 paramforms[0].value = param.port;
@@ -231,7 +233,7 @@ function get_viewModal(update_data_id) {
                 }
 
                 paramforms[5].value = param.username;
-                paramforms[6].value = param.password;
+                paramforms[6].value = '*********';;
             }
             if (stid.get(servicetypeid) == "web_download") {
                 paramforms[0].value = param.lasting_time;
@@ -251,12 +253,12 @@ function get_viewModal(update_data_id) {
                 paramforms[6].value = param.address;
                 paramforms[7].value = param.port;
                 paramforms[8].value = param.username;
-                paramforms[9].value = param.password;
+                paramforms[9].value = '*********';;
             }
             if (stid.get(servicetypeid) == "online_video") {
                 paramforms[0].value = param.video_quality;
                 paramforms[1].value = param.lasting_time;
-                paramforms[2].value = param.first_buffer_time;
+                // paramforms[2].value = param.first_buffer_time;
             }
             if (stid.get(servicetypeid) == "game") {
                 paramforms[0].value = param.count;
@@ -269,13 +271,15 @@ function get_viewModal(update_data_id) {
             $('#viewfooter').removeAttr('style', 'display:none');
             // $("#taskform_data input[type=text]").removeAttr("readonly");
             $("#taskform_data select").attr('disabled', 'disabled');
-            $("#taskform_data input[type=text]").attr('disabled', 'disabled');
+            $("#taskform_data select").attr('unselectable', 'on');
+            $("#taskform_data input[type=text]").attr('readonly', 'readonly');
             $("#taskform_data input[type=text]").attr('unselectable', 'on');
-           $('#domains').attr('disabled', 'disabled');
+           $('#domains').attr('readonly', 'readonly');
             $('#domains').attr('unselectable', 'on');
-            $(".service input[type=text]").attr('disabled', 'disabled');
+            $(".service input[type=text]").attr('readonly', 'readonly');
             $(".service input[type=text]").attr('unselectable', 'on');
             $(".service select").attr('disabled', 'disabled');
+            $(".service select").attr('unselectable', 'on');
             $('#myModal_edit').modal('show');
         }
     });
@@ -292,7 +296,7 @@ function delete_ajax() {
         dataType: "json",
         contentType: "application/json", /*必须要,不可少*/
         success: function (result) {
-            debugger
+             
             toastr.success("任务删除成功!");
             task_table.currReset();
             idArray = [];
@@ -303,7 +307,6 @@ function delete_ajax() {
 }
 
 function delete_this(obj) {
-    debugger
     delete_data.show_deleteModal();
     delete_data.id = parseInt(obj.id);
     /*获取当前行探针数据id*/
@@ -384,8 +387,8 @@ function selectOnchang(obj) {
     queryPort($('#first').val())
 }
 var queryPort = function (probeid) {
-    debugger;
     var id=parseInt(probeid);
+    $("#second").find("option").not(":first").remove();
     $.ajax({
         type: "POST", /*GET会乱码*/
         url: "../../cem/probe/detail/"+id,
@@ -393,8 +396,7 @@ var queryPort = function (probeid) {
         dataType: "json",
         // contentType: "application/json", /*必须要,不可少*/
         success: function (result) {
-            var port = [];
-                port=JSON.parse(result.probe.portIp);
+            var port=JSON.parse(result.probe.portIp);
                 for(var i=0;i<port.length;i++){
                     $('#second').append("<option value=" + port[i].port + ">" + port[i].port+ "</option>");
                 }
@@ -402,6 +404,11 @@ var queryPort = function (probeid) {
             }
         })
 }
+// $('#task_dispatch').on('hide.bs.modal',
+//     function() {
+//        $('#first').empty();
+//         $('#second').empty();
+//     })
 function task_assign(obj) {
     $("#selectprobe").find("option").remove();
     $("#selectprobegroup").find("option").remove();
@@ -416,6 +423,7 @@ function task_assign(obj) {
     // console.log($('#taskId').val());
     var servicetype = parseInt(obj.name);
     var sp_service = spst.get(servicetype);
+    $("#first").find("option").not(":first").remove();
     $.ajax({
         type: "POST", /*GET会乱码*/
         url: "../../cem/probe/listCenter/"+parseInt(obj.id),
@@ -426,9 +434,17 @@ function task_assign(obj) {
             var probes = [];
             for (var i = 0; i < result.probe.length; i++) {
                 probes[i] = {message: result.probe[i]};
-                console.log(1111)
                 $('#first').append("<option value=" + probes[i].message.id + ">" + probes[i].message.name + "</option>");
             }
+            // var probes = [];
+            // for(var i = 0; i < result.probe.length;i++){
+            //     probes[i] = {message:result.probe[i]};
+            // }
+            // console.log(probes)
+            // for(var i = 0;i < probes.length;i++){
+            //     $('#first').append("<option value=" + probes[i].message.id + ">" + probes[i].message.name + "</option>");
+            // }
+
         },
     })
     $.ajax({
@@ -518,11 +534,13 @@ function task_assign(obj) {
             });
             $('#task_dispatch').modal('show');
             $('.box1').removeClass(' col-md-5');
-             $('.box1').addClass(' col-md-4');
+            $('.box1').addClass(' col-md-4');
             $('.box2').removeClass(' col-md-5');
             $('.box2').addClass(' col-md-4');
-            $('.btn-box').removeClass(' col-md-2');
-            $('.btn-box').addClass(' col-md-3');
+            $(' .col-md-4').css(' padding-right','0px');
+            $(' .col-md-4').css(' padding-left','0px');
+            // $('.btn-box').removeClass(' col-md-2');
+            // $('.btn-box').addClass(' col-md-3');
             $('.clear1 ').css('display','none');
             $('.clear2 ').css('display','none');
             $('.clear3 ').css('display','none');
@@ -533,10 +551,10 @@ function task_assign(obj) {
 
 //a=1 选择探针 a=0 选择探针组 b=1 测试目标 b=0 测试目标组 a=2选择核心探针 c=0 选择
 function submit_dispatch() {
+    loading()
     var a = parseInt($('input[name=chooseprobe]:checked', '#dispatch_probe').val());
     var b = parseInt($('input[name=choosetarget]:checked', '#dispatch_target').val());
     console.log(a, b);
-        debugger
     var probeList = getFormJson2($('#dispatch_probe'));
     var targetList = getFormJson2($('#dispatch_target'));
     console.log(probeList);
@@ -586,6 +604,7 @@ function submit_dispatch() {
                 dataType: "json",
                 contentType: "application/json", /*必须要,不可少*/
                 success: function (result) {
+                    removeLoading('test');
                     toastr.success("任务下发成功!");
                     $('#task_dispatch').modal('hide');
                     task_table.currReset();
@@ -653,6 +672,7 @@ function submit_dispatch() {
                 dataType: "json",
                 contentType: "application/json", /*必须要,不可少*/
                 success: function (result) {
+                    removeLoading('test');
                     toastr.success("任务下发成功!");
                     $('#task_dispatch').modal('hide');
                     task_table.currReset();
@@ -676,7 +696,6 @@ function submit_dispatch() {
         var taskDispatch = {};
         // taskDispatch.probePort = "port1";
         taskDispatch.status = 0;
-
         if (b == 1) {
             if (typeof targetList.targetId == "number") {
                 taskDispatch.targetIds = [];
@@ -724,8 +743,8 @@ function submit_dispatch() {
                 dataType: "json",
                 contentType: "application/json", /*必须要,不可少*/
                 success: function (result) {
-                    debugger
                     console.log(result);
+                    removeLoading('test');
                     toastr.success("任务下发成功!");
                     $('#task_dispatch').modal('hide');
                     task_table.currReset();
@@ -753,6 +772,26 @@ function submit_dispatch() {
     }
 }
 
+
+function loading() {
+    $('body').loading({
+        loadingWidth: 240,
+        title: '正在努力的加载中~',
+        name: 'test',
+        discription: '这是一个描述...',
+        direction: 'row',
+        type: 'origin',
+        originBg: '#B0E2FF',
+        originDivWidth: 30,
+        originDivHeight: 30,
+        originWidth: 4,
+        originHeight: 4,
+        smallLoading: false,
+        titleColor: '#ADD8E6',
+        loadingBg: '#312923',
+        loadingMaskBg: 'rgba(22,22,22,0.2)'
+    });
+}
 function cancel_dispatch() {
 
 }
@@ -834,6 +873,7 @@ var taskform_data = new Vue({
             console.log(paramnew)
             tasknewJson.parameter = paramnew;
             tasknewJson.isDeleted = "0";
+            // tasknewJson.alarmTemplateId = "0";
             tasknewJson.createTime = oDate.Format("yyyy-MM-dd hh:mm:ss");
             tasknewJson.remark = "无";
             var reg = /^(?=^.{3,255}$)[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+$/;
@@ -975,7 +1015,7 @@ var taskform_data = new Vue({
                                         $('#myModal_edit').modal('hide');    //jQuery选定
                                         break;
                                     case 300:
-                                        toastr.error(msg);
+                                        toastr.warning(result.msg);
                                         break;
                                     case 403:
                                         toastr.error(msg);
@@ -993,13 +1033,17 @@ var taskform_data = new Vue({
                                     case 403:
                                         toastr.error(msg);
                                         break;
+                                    case 300:
+                                        toastr.warning(result.msg);
+                                        break;
                                     default:
-                                        toastr.error("未知错误");
+                                        toastr.error(result.msg);
                                         break
                                 }
                             }
                         }
                     });
+                    task_table.currReset();
                 }
             }
 
@@ -1048,6 +1092,7 @@ var getalarmtemplates = function (servicetypeid) {
         dataType: "json",
         success: function (result) {
             console.log(result);
+            debugger
             taskform_data.atemplates = [];
             for (var i = 0; i < result.atList.length; i++) {
                 taskform_data.atemplates.push({message: result.atList[i]});
@@ -1059,6 +1104,7 @@ var getalarmtemplates = function (servicetypeid) {
 
 function getFormJson(form) {
     /*将表单对象变为json对象*/
+    debugger
     var o = {};
     var a = $(form).serializeArray();
     $.each(a, function () {
@@ -1231,6 +1277,7 @@ var task_table = new Vue({
                     dataType: "json",
                     success: function (result) {
                         //封装返回数据
+                        console.log(result)
                         var returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
                         returnData.recordsTotal = result.page.totalCount;//返回数据全部记录

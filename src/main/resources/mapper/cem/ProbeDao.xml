@@ -163,6 +163,7 @@
         SELECT id,probe.probe_name AS `name`
         FROM probe
         WHERE probe.status = 1
+        AND probe.type = 10
         order by convert(probe_name USING gbk)
     </select>
 
