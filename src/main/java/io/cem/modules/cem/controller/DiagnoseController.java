@@ -64,89 +64,48 @@ public class DiagnoseController {
         } catch (RuntimeException e) {
             throw new RRException("内部参数错误，请重试！");
         }
+
+        String dateStr = map.get("ava_start").toString();
+        String dateStr2 = map.get("ava_terminal").toString();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        int dateDifferent = 0;
+        try {
+            Date date2 = format.parse(dateStr2);
+            Date date = format.parse(dateStr);
+            dateDifferent = recordHourPingService.differentDays(date, date2);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         List<ScoreEntity> scoreList = new ArrayList<>();
-        int service = Integer.parseInt(map.get("service").toString());
+        List<ProbeEntity> probeList = new ArrayList<>();
         if (map.get("probe_id") != null && !map.get("probe_id").equals("")) {
             int probeId = Integer.parseInt(map.get("probe_id").toString());
-            List<ProbeEntity> probeList = probeService.queryProbeByLayer(probeId);
+            probeList = probeService.queryProbeByLayer(probeId);
+        } else if(map.get("county_id") != null && !map.get("county_id").equals("")) {
+            int countyId = Integer.parseInt(map.get("probe_id").toString());
+            probeList = probeService.queryProbe(countyId);
 
-            String dateStr = map.get("ava_start").toString();
-            String dateStr2 = map.get("ava_terminal").toString();
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            int dateDifferent = 0;
-            try {
-                Date date2 = format.parse(dateStr2);
-                Date date = format.parse(dateStr);
-                dateDifferent = recordHourPingService.differentDays(date, date2);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+        }else if(map.get("city_id") != null && !map.get("city_id").equals("")){
+            int cityId = Integer.parseInt(map.get("city_id").toString());
+            probeList = probeService.queryProbeByCity(cityId);
+        } else{
+            probeList = probeService.queryProbeList(map);
+        }
 
-            for (int i = 0; i < probeList.size(); i++) {
-                map.put("probe_id", probeList.get(i).getId());
-                if(dateDifferent==0){
-                    scoreList = recordHourRadiusService.diagnoseHour(map,scoreList);
-                }else if(dateDifferent==1){
-                    scoreList = recordHourRadiusService.diagnoseDayHour(map,scoreList);
-                }else{
-                    scoreList = recordHourRadiusService.diagnoseDay(map,scoreList);
-                }
-            }
-/*            if (map.get("city_Id") == null && map.get("county_id") == null && map.get("probe_id") == null) {
-                scoreList = recordHourPingService.dateChart1(scoreList);
-            } else if (map.get("county_id") == null && map.get("probe_id") == null) {
-                scoreList = recordHourPingService.cityChart1(scoreList);
-            } else if (map.get("probe_id") == null) {
-                scoreList = recordHourPingService.probeChart1(scoreList);
-            }*/
-        } else {
-            String dateStr = map.get("ava_start").toString();
-            String dateStr2 = map.get("ava_terminal").toString();
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            int dateDifferent = 0;
-            try {
-                Date date2 = format.parse(dateStr2);
-                Date date = format.parse(dateStr);
-                dateDifferent = recordHourPingService.differentDays(date, date2);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-
+        for (int i = 0; i < probeList.size(); i++) {
+            map.put("probe_id", probeList.get(i).getId());
             if (dateDifferent > 5) {
-                //查询天表
-                if (service == 1) {
-                    scoreList = recordHourDhcpService.connectionDayChart(map);
-                } else if (service == 2) {
-                    scoreList = recordHourDhcpService.qualityDayChart(map);
-                } else if (service == 3) {
-                    scoreList = recordHourDhcpService.pageDayChart(map);
-                } else if (service == 4) {
-                    scoreList = recordHourDhcpService.downloadDayChart(map);
-                } else if (service == 5) {
-                    scoreList = recordHourDhcpService.videoDayChart(map);
-                } else if (service == 6) {
-                    scoreList = recordHourDhcpService.gameDayChart(map);
-                } else {
-                }
-            }
-            //查询小时表
-            else {
-                if (service == 1) {
-                    scoreList = recordHourDhcpService.connectionHourChart(map);
-                } else if (service == 2) {
-                    scoreList = recordHourDhcpService.qualityHourChart(map);
-                } else if (service == 3) {
-                    scoreList = recordHourDhcpService.pageHourChart(map);
-                } else if (service == 4) {
-                    scoreList = recordHourDhcpService.downloadHourChart(map);
-                } else if (service == 5) {
-                    scoreList = recordHourDhcpService.videoHourChart(map);
-                } else if (service == 6) {
-                    scoreList = recordHourDhcpService.gameHourChart(map);
-                } else {
-                }
+                scoreList.addAll(recordHourRadiusService.diagnoseDay(map, scoreList));
+            } else if (dateDifferent>=3) {
+                scoreList.addAll( recordHourRadiusService.diagnoseDayHour(map, scoreList));
+            } else {
+                scoreList.addAll(recordHourRadiusService.diagnoseHour(map, scoreList));
             }
         }
+
+    //    recordHourDhcpService.combination(map,scoreList);
+
         if (map.get("target_id") == null) {
             for (int i = 0; i < scoreList.size(); i++) {
                 scoreList.get(i).setTargetName("");
