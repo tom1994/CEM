@@ -37,10 +37,12 @@ public class ScoreEntity {
     @ExcelIgnore
     private Integer targetId;
     //记录日期
-    @ExportName(exportName = "记录日记")
+   // @ExportName(exportName = "记录日期")
+    @ExcelIgnore
     private Date recordDate;
     //记录时间
-    @ExportName(exportName = "记录时间")
+   // @ExportName(exportName = "记录时间")
+    @ExcelIgnore
     private String recordTime;
     //分数
     @ExportName(exportName = "分数")
