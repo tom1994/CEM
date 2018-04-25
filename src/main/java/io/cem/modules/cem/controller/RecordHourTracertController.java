@@ -277,10 +277,9 @@ public class RecordHourTracertController {
 		List<ScoreEntity> scoreList=new ArrayList<>();
 		for(int i=0;i<probeList.size();i++){
 			map.put("probe_id",probeList.get(i).getId());
-			if(recordHourRadiusService.calculateDayScore(map).size()!=0) {
-				System.out.println(recordHourRadiusService.calculateDayScore(map));
-				List<ScoreEntity> list = recordHourRadiusService.calculateDayScore(map);
-				scoreList.add(recordHourRadiusService.calculateDayScore(map).get(0));
+			List<ScoreEntity> list = recordHourRadiusService.calculateDayScore(map);
+			if(list.size()!=0) {
+				scoreList.add(list.get(0));
 			}
 		}
 		return R.ok().put("scoreList", scoreList);
