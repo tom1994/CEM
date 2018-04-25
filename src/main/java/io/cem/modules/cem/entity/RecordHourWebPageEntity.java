@@ -88,6 +88,9 @@ public class RecordHourWebPageEntity implements Serializable {
 	//页面元素时延
 	@ExportName(exportName = "页面元素时延")
 	private Double pageElementDelay;
+	//页面加载时延
+	@ExportName(exportName = "页面加载时延")
+	private Double loadDelay;
 	//下载速率
 	@ExportName(exportName = "下载速率")
 	private Double downloadRate;
@@ -98,8 +101,7 @@ public class RecordHourWebPageEntity implements Serializable {
 	private Integer fail;
 @ExcelIgnore
 	private Integer total;
-@ExcelIgnore
-	private Double loadDelay;
+
 @ExcelIgnore
 	private Integer accessLayer;
 

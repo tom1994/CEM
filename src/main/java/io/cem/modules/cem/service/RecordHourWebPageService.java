@@ -35,7 +35,9 @@ public interface RecordHourWebPageService {
 	Future<List<RecordHourWebPageEntity>> queryDayList(Map<String, Object> map);
 
 	List<ScoreEntity> calculateService3(List<RecordHourWebPageEntity> webPageList);
-	
+
+	List<ScoreEntity> calculateLayer3(List<ScoreEntity> webPageList);
+
 	int queryTotal(Map<String, Object> map);
 	
 	void save(RecordHourWebPageEntity recordHourWebPage);

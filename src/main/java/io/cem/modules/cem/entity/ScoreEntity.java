@@ -275,6 +275,9 @@ public class ScoreEntity {
     //页面元素时延
     @ExcelIgnore
     private Double webpagePageElementDelay;
+    //页面加载时延
+    @ExcelIgnore
+    private Double webpageLoadDelay;
     //下载速率
     @ExcelIgnore
     private Double webpageDownloadRate;
@@ -1575,6 +1578,13 @@ public class ScoreEntity {
         this.onlineGameScore = onlineGameScore;
     }
 
+    public Double getWebpageLoadDelay() {
+        return webpageLoadDelay;
+    }
+
+    public void setWebpageLoadDelay(Double webpageLoadDelay) {
+        this.webpageLoadDelay = webpageLoadDelay;
+    }
     //    public static Comparator scoreComparator = new Comparator() {
 //        @Override
 //        public int compare(Object o1, Object o2) {

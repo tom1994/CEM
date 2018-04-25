@@ -161,6 +161,7 @@ public class ScoreBaseEntity {
     private Double webpageAboveFoldDelay;
     //页面元素时延
     private Double webpagePageElementDelay;
+    private Double webpageLoadDelay;
     //下载速率
     private Double webpageDownloadRate;
 
@@ -1266,5 +1267,13 @@ public class ScoreBaseEntity {
 
     public void setOnlineGameScore(Double onlineGameScore) {
         this.onlineGameScore = onlineGameScore;
+    }
+
+    public Double getWebpageLoadDelay() {
+        return webpageLoadDelay;
+    }
+
+    public void setWebpageLoadDelay(Double webpageLoadDelay) {
+        this.webpageLoadDelay = webpageLoadDelay;
     }
 }

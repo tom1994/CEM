@@ -31,6 +31,7 @@
 		<result property="targetName" column="target_name"/>
 		<result property="fail" column="fail"/>
 		<result property="total" column="total"/>
+		<result property="accessLayer" column="access_layer"/>
     </resultMap>
 
 	<select id="queryObject" resultType="io.cem.modules.cem.entity.RecordHourWebPageEntity">
@@ -105,7 +106,7 @@
 		city.city_name AS city_name,
 		county.county_name AS area_name,
 		probe.probe_name AS probe_name,
-		probe.access_layer,
+		probe.access_layer AS access_layer,
 		target.target_name AS target_name
 		FROM (SELECT id,city_id,county_id,probe_id,port,task_id,service_type,target_id,target_ip,record_date,remark,
 		time_format(record_time, '%H') AS record_time,
@@ -331,6 +332,9 @@
 		</if>
 		<if test="county_id != null and county_id != ''">
 			AND county_id = #{county_id}
+		</if>
+		<if test="county_id != null and county_id != ''">
+			AND probe_id = #{probe_id}
 		</if>
 
 		GROUP BY target_id) t
@@ -622,7 +626,8 @@
 			`page_file_delay`, 
 			`redirect_delay`, 
 			`above_fold_delay`, 
-			`page_element_delay`, 
+			`page_element_delay`,
+			`load_delay`,
 			`download_rate`, 
 			`remark`
 		)
@@ -644,7 +649,8 @@
 			#{pageFileDelay}, 
 			#{redirectDelay}, 
 			#{aboveFoldDelay}, 
-			#{pageElementDelay}, 
+			#{pageElementDelay},
+			#{loadDelay},
 			#{downloadRate}, 
 			#{remark}
 		)

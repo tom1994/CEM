@@ -41,6 +41,7 @@ public interface RecordHourWebDownloadService {
 	List<ScoreEntity> calculateTarget4 (List<ScoreEntity> webDownload,List<ScoreEntity> ftpDownload,List<ScoreEntity> ftpUpload);
 
 	List<ScoreEntity> calculateDate4 (List<ScoreEntity> webDownload,List<ScoreEntity> ftpDownload,List<ScoreEntity> ftpUpload);
+	List<ScoreEntity> calculateLayer4 (List<ScoreEntity> webDownload,List<ScoreEntity> ftpDownload,List<ScoreEntity> ftpUpload);
 
 	int queryTotal(Map<String, Object> map);
 	

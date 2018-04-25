@@ -235,6 +235,7 @@ public class RecordHourTracertServiceImpl implements RecordHourTracertService {
 					lastScore.setWebpageRedirectDelay(map1.get(typ).getWebpageRedirectDelay());
 					lastScore.setWebpageAboveFoldDelay(map1.get(typ).getWebpageAboveFoldDelay());
 					lastScore.setWebpagePageElementDelay(map1.get(typ).getWebpagePageElementDelay());
+					lastScore.setWebpageLoadDelay(map1.get(typ).getWebpageLoadDelay());
 					lastScore.setWebpageDownloadRate(map1.get(typ).getWebpageDownloadRate());
 					lastScore.setBroswerScore(map1.get(typ).getBroswerScore());
 				}else if(typ.equals("download")){
@@ -339,6 +340,7 @@ public class RecordHourTracertServiceImpl implements RecordHourTracertService {
 				scoreBase.setWebpageRedirectDelay(list.get(i).getWebpageRedirectDelay());
 				scoreBase.setWebpageAboveFoldDelay(list.get(i).getWebpageAboveFoldDelay());
 				scoreBase.setWebpagePageElementDelay(list.get(i).getWebpagePageElementDelay());
+				scoreBase.setWebpageLoadDelay(list.get(i).getWebpageLoadDelay());
 				scoreBase.setWebpageDownloadRate(list.get(i).getWebpageDownloadRate());
 				scoreBase.setBroswerScore(list.get(i).getScore());
 			}else if(type.equals("download")){
@@ -568,6 +570,7 @@ public class RecordHourTracertServiceImpl implements RecordHourTracertService {
 					lastScore.setWebpageRedirectDelay(map1.get(typ).getWebpageRedirectDelay());
 					lastScore.setWebpageAboveFoldDelay(map1.get(typ).getWebpageAboveFoldDelay());
 					lastScore.setWebpagePageElementDelay(map1.get(typ).getWebpagePageElementDelay());
+					lastScore.setWebpageLoadDelay(map1.get(typ).getWebpageLoadDelay());
 					lastScore.setWebpageDownloadRate(map1.get(typ).getWebpageDownloadRate());
 					lastScore.setBroswerScore(map1.get(typ).getBroswerScore());
 				}else if(typ.equals("download")){
@@ -672,6 +675,7 @@ public class RecordHourTracertServiceImpl implements RecordHourTracertService {
 				scoreBase.setWebpageRedirectDelay(list.get(i).getWebpageRedirectDelay());
 				scoreBase.setWebpageAboveFoldDelay(list.get(i).getWebpageAboveFoldDelay());
 				scoreBase.setWebpagePageElementDelay(list.get(i).getWebpagePageElementDelay());
+				scoreBase.setWebpageLoadDelay(list.get(i).getWebpageLoadDelay());
 				scoreBase.setWebpageDownloadRate(list.get(i).getWebpageDownloadRate());
 				scoreBase.setBroswerScore(list.get(i).getScore());
 			}else if(type.equals("download")){
@@ -902,6 +906,7 @@ public class RecordHourTracertServiceImpl implements RecordHourTracertService {
 					lastScore.setWebpageRedirectDelay(map1.get(typ).getWebpageRedirectDelay());
 					lastScore.setWebpageAboveFoldDelay(map1.get(typ).getWebpageAboveFoldDelay());
 					lastScore.setWebpagePageElementDelay(map1.get(typ).getWebpagePageElementDelay());
+					lastScore.setWebpageLoadDelay(map1.get(typ).getWebpageLoadDelay());
 					lastScore.setWebpageDownloadRate(map1.get(typ).getWebpageDownloadRate());
 					lastScore.setBroswerScore(map1.get(typ).getBroswerScore());
 				}else if(typ.equals("download")){
@@ -1006,6 +1011,7 @@ public class RecordHourTracertServiceImpl implements RecordHourTracertService {
 				scoreBase.setWebpageRedirectDelay(list.get(i).getWebpageRedirectDelay());
 				scoreBase.setWebpageAboveFoldDelay(list.get(i).getWebpageAboveFoldDelay());
 				scoreBase.setWebpagePageElementDelay(list.get(i).getWebpagePageElementDelay());
+				scoreBase.setWebpageLoadDelay(list.get(i).getWebpageLoadDelay());
 				scoreBase.setWebpageDownloadRate(list.get(i).getWebpageDownloadRate());
 				scoreBase.setBroswerScore(list.get(i).getScore());
 			}else if(type.equals("download")){

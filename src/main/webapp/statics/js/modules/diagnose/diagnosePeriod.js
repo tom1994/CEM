@@ -342,6 +342,9 @@ var new_search = new Vue({
     el: '#search',
     methods: {
         search: function () {
+            for (let i = 0; i < options.series.length; i++) {
+                options.series[i].data = [];
+            }
             var searchJson = getFormJson($('#probesearch'));
             if ((searchJson.startDate) > (searchJson.terminalDate)) {
                 console.log("时间选择有误，请重新选择！");
@@ -431,7 +434,7 @@ var Reset = new Vue({
                         list = result.page.list;
                         // console.log(new_data.scoredata);
                     } else {
-                        toastr.warning('最近4天没有对应数据！');
+                        toastr.warning('最近1天没有对应数据！');
                     }
                 }
             });
@@ -515,6 +518,7 @@ Vue.component('data-table', {
         return {
             headers: [
                 {title: '层级名称'},
+                {title: '探针名'},
                 {title: 'ICMP Ping', class: 'some-special-class'},
                 {title: 'UDP Ping'},
                 {title: 'TCP Ping'},
@@ -536,6 +540,7 @@ Vue.component('data-table', {
             for (let i = 0; i < options.series.length; i++) {
                 for (let j = 0; j < val.length; j++) {
                     if (parseInt(layers.get(options.series[i].name)) == parseInt(val[j].accessLayer)) {
+
                         let date_token = val[j].recordDate.split("-");
                         let year = parseInt(date_token[0]);
                         let month = parseInt(date_token[1]) - 1;
@@ -548,6 +553,12 @@ Vue.component('data-table', {
                         options.series[i].data.sort(compare("0"));
                     }
                 }
+                // var tmp=[[Date.UTC(2017, 4, 24, 22),1],[Date.UTC(2017, 4, 24, 22),2],[Date.UTC(2017, 5, 24, 22),3],[Date.UTC(2017, 5, 24, 22),4],[Date.UTC(2017, 6, 24, 22),1],[Date.UTC(2017, 7, 24, 22),1]];
+                if (options.series[i].data.length > 0) {
+                    options.series[i].data = combine(options.series[i].data);
+                }
+                // var tmp = options.series[i].data;
+
             }
             removeLoading('test');
             var chart = new Highcharts.Chart('container', options);
@@ -630,6 +641,7 @@ function ping(val) {
             headers: [
                 {title: ''},
                 {title: '层级名称'},
+                {title: '探针名'},
                 {title: '时间'},
                 {title: 'ICMP Ping'},
                 {title: 'UDP Ping'},
@@ -651,16 +663,15 @@ function ping(val) {
                 data: vm.rows,
                 searching: false,
                 paging: false,
-                serverSide: true,
+                // serverSide: true,
                 info: false,
-                ordering: false, /*禁用排序功能*/
+                // ordering: false, /*禁用排序功能*/
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
                 oLanguage: {
                     sEmptyTable: "No data available in table",
-                    sZeroRecords:"No data available in table",
-
+                    sZeroRecords: "No data available in table",
                 },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
@@ -691,6 +702,7 @@ function ping(val) {
                         let row = [];
                         row.push(i++);
                         row.push(layerNames.get(item.accessLayer));
+                        row.push(item.probeName);
                         row.push(item.recordDate.substr(0, 10) + "   " + item.recordTime.substr(0, 10) + ':00');
                         row.push('<a class="fontcolor"  onclick="ping_info(this,1,)" id=' + item.id + '  type =' + layerNames.get(item.accessLayer) + ' >' + fixed(item.icmpPingScore) + '</a>&nbsp;');
                         row.push('<a class="fontcolor"   onclick="ping_info(this,2,)" id=' + item.id + ' type =' + layerNames.get(item.accessLayer) + ' >' + fixed(item.udpPingScore) + '</a>&nbsp;');
@@ -745,7 +757,7 @@ function sla(val) {
                 scroll: false,
                 oLanguage: {
                     sEmptyTable: "No data available in table",
-                    sZeroRecords:"No data available in table",
+                    sZeroRecords: "No data available in table",
 
                 },
                 sDom: 'Rfrtlip', /*显示在左下角*/
@@ -825,7 +837,7 @@ function web(val) {
                 scroll: false,
                 oLanguage: {
                     sEmptyTable: "No data available in table",
-                    sZeroRecords:"No data available in table",
+                    sZeroRecords: "No data available in table",
 
                 },
                 sDom: 'Rfrtlip', /*显示在左下角*/
@@ -901,7 +913,7 @@ function download(val) {
                 scroll: false,
                 oLanguage: {
                     sEmptyTable: "No data available in table",
-                    sZeroRecords:"No data available in table",
+                    sZeroRecords: "No data available in table",
 
                 },
                 sDom: 'Rfrtlip', /*显示在左下角*/
@@ -978,7 +990,7 @@ function video(val) {
                 scroll: false,
                 oLanguage: {
                     sEmptyTable: "No data available in table",
-                    sZeroRecords:"No data available in table",
+                    sZeroRecords: "No data available in table",
 
                 },
                 sDom: 'Rfrtlip', /*显示在左下角*/
@@ -1052,7 +1064,7 @@ function game(val) {
                 scroll: false,
                 oLanguage: {
                     sEmptyTable: "No data available in table",
-                    sZeroRecords:"No data available in table",
+                    sZeroRecords: "No data available in table",
 
                 },
                 sDom: 'Rfrtlip', /*显示在左下角*/
@@ -1312,7 +1324,7 @@ function pingicmp_table(obj, content) {
                 scroll: false,
                 oLanguage: {
                     sEmptyTable: "No data available in table",
-                    sZeroRecords:"No data available in table",
+                    sZeroRecords: "No data available in table",
 
                 },
                 sDom: 'Rfrtlip', /*显示在左下角*/
@@ -1328,9 +1340,9 @@ function pingicmp_table(obj, content) {
                     console.log(returnData);
                     let rows = [];
                     var i = 1;
-                    
+
                     val.forEach(function (item) {
-                        
+
                         if (type == layerNames.get(item.accessLayer) && id == item.id) {
                             let row = [];
                             row.push(i++);
@@ -1427,7 +1439,7 @@ function pingudp_table(obj, content) {
                 scroll: false,
                 oLanguage: {
                     sEmptyTable: "No data available in table",
-                    sZeroRecords:"No data available in table",
+                    sZeroRecords: "No data available in table",
 
                 },
                 sDom: 'Rfrtlip', /*显示在左下角*/
@@ -1540,7 +1552,7 @@ function pingtcp_table(obj, content) {
                 scroll: false,
                 oLanguage: {
                     sEmptyTable: "No data available in table",
-                    sZeroRecords:"No data available in table",
+                    sZeroRecords: "No data available in table",
 
                 },
                 sDom: 'Rfrtlip', /*显示在左下角*/
@@ -1654,7 +1666,7 @@ function routeicmp_table(obj, content) {
                 scroll: false,
                 oLanguage: {
                     sEmptyTable: "No data available in table",
-                    sZeroRecords:"No data available in table",
+                    sZeroRecords: "No data available in table",
 
                 },
                 sDom: 'Rfrtlip', /*显示在左下角*/
@@ -1767,7 +1779,7 @@ function routetcp_table(obj, content) {
                 scroll: false,
                 oLanguage: {
                     sEmptyTable: "No data available in table",
-                    sZeroRecords:"No data available in table",
+                    sZeroRecords: "No data available in table",
 
                 },
                 sDom: 'Rfrtlip', /*显示在左下角*/
@@ -1880,7 +1892,7 @@ function slatcp_table(obj, content) {
                 scroll: false,
                 oLanguage: {
                     sEmptyTable: "No data available in table",
-                    sZeroRecords:"No data available in table",
+                    sZeroRecords: "No data available in table",
 
                 },
                 sDom: 'Rfrtlip', /*显示在左下角*/
@@ -1995,7 +2007,7 @@ function slaudp_table(obj, content) {
                 scroll: false,
                 oLanguage: {
                     sEmptyTable: "No data available in table",
-                    sZeroRecords:"No data available in table",
+                    sZeroRecords: "No data available in table",
 
                 },
                 sDom: 'Rfrtlip', /*显示在左下角*/
@@ -2046,7 +2058,7 @@ function slaudp_table(obj, content) {
 }
 
 //网络质量表格
-function dns_table(obj, content){
+function dns_table(obj, content) {
     var id = obj.id;
     var probeContent = content
     var type = obj.type
@@ -2104,7 +2116,7 @@ function dns_table(obj, content){
                 scroll: false,
                 oLanguage: {
                     sEmptyTable: "No data available in table",
-                    sZeroRecords:"No data available in table",
+                    sZeroRecords: "No data available in table",
 
                 },
                 sDom: 'Rfrtlip', /*显示在左下角*/
@@ -2209,7 +2221,7 @@ function dhcp_table(obj, content) {
                 scroll: false,
                 oLanguage: {
                     sEmptyTable: "No data available in table",
-                    sZeroRecords:"No data available in table",
+                    sZeroRecords: "No data available in table",
 
                 },
                 sDom: 'Rfrtlip', /*显示在左下角*/
@@ -2313,7 +2325,7 @@ function adsl_table(obj, content) {
                 scroll: false,
                 oLanguage: {
                     sEmptyTable: "No data available in table",
-                    sZeroRecords:"No data available in table",
+                    sZeroRecords: "No data available in table",
 
                 },
                 sDom: 'Rfrtlip', /*显示在左下角*/
@@ -2418,7 +2430,7 @@ function radius_table(obj, content) {
                 scroll: false,
                 oLanguage: {
                     sEmptyTable: "No data available in table",
-                    sZeroRecords:"No data available in table",
+                    sZeroRecords: "No data available in table",
 
                 },
                 sDom: 'Rfrtlip', /*显示在左下角*/
@@ -2527,7 +2539,7 @@ function broswer_table(obj, content) {
                 scroll: false,
                 oLanguage: {
                     sEmptyTable: "No data available in table",
-                    sZeroRecords:"No data available in table",
+                    sZeroRecords: "No data available in table",
 
                 },
                 sDom: 'Rfrtlip', /*显示在左下角*/
@@ -2638,7 +2650,7 @@ function web_download(obj, content) {
                 scroll: false,
                 oLanguage: {
                     sEmptyTable: "No data available in table",
-                    sZeroRecords:"No data available in table",
+                    sZeroRecords: "No data available in table",
 
                 },
                 sDom: 'Rfrtlip', /*显示在左下角*/
@@ -2747,7 +2759,7 @@ function ftp_download(obj, content) {
                 scroll: false,
                 oLanguage: {
                     sEmptyTable: "No data available in table",
-                    sZeroRecords:"No data available in table",
+                    sZeroRecords: "No data available in table",
 
                 },
                 sDom: 'Rfrtlip', /*显示在左下角*/
@@ -2856,7 +2868,7 @@ function ftp_upload(obj, content) {
                 scroll: false,
                 oLanguage: {
                     sEmptyTable: "No data available in table",
-                    sZeroRecords:"No data available in table",
+                    sZeroRecords: "No data available in table",
 
                 },
                 sDom: 'Rfrtlip', /*显示在左下角*/
@@ -2970,7 +2982,7 @@ function video_table(obj, content) {
                 scroll: false,
                 oLanguage: {
                     sEmptyTable: "No data available in table",
-                    sZeroRecords:"No data available in table",
+                    sZeroRecords: "No data available in table",
 
                 },
                 sDom: 'Rfrtlip', /*显示在左下角*/
@@ -3083,7 +3095,7 @@ function game_table(obj, content) {
                 scroll: false,
                 oLanguage: {
                     sEmptyTable: "No data available in table",
-                    sZeroRecords:"No data available in table",
+                    sZeroRecords: "No data available in table",
 
                 },
                 sDom: 'Rfrtlip', /*显示在左下角*/
@@ -3108,7 +3120,7 @@ function game_table(obj, content) {
                             row.push(fixed(item.gameDnsDelay));
                             row.push(fixed(item.gamePacketDelay));
                             row.push(fixed(item.gamePacketJitter));
-                            row.push(fixed(item.gameLossRate)*100);
+                            row.push(fixed(item.gameLossRate) * 100);
                             rows.push(row);
                         }
 
@@ -3486,8 +3498,8 @@ function loading() {
 
 
 function fixed(value) {
-    
-    if ( value == null) {
+
+    if (value == null) {
         return ''
     } else {
         return value.toFixed(2)
@@ -3509,3 +3521,33 @@ var cloneObj = function (obj) {
     }
     return newobj;
 };
+
+function combine(tmp) {
+        var sum = tmp[0][1];
+        var newTmp = [];
+        var b = 1;
+        var c = 0;
+        for (let i = 0; i < tmp.length - 1; i++) {
+            if (tmp[i + 1] != undefined) {
+                if (tmp[i][0] == tmp[i + 1][0]) {
+                    sum = sum + tmp[i + 1][1];
+                    b++
+                } else {
+                    let a = [];
+                    a[0] = tmp[i][0];
+                    a[1] = sum / b;
+                    newTmp.push(a);
+                    sum = tmp[i + 1][1];
+                    b = 1;
+                }
+            } else {
+                c = i;
+                break;
+            }
+        }
+        let a = [];
+        a[0] = tmp[c][0];
+        a[1] = sum / b;
+        newTmp.push(a);
+        return newTmp;
+}
