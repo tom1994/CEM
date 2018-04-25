@@ -518,6 +518,7 @@ Vue.component('data-table', {
         return {
             headers: [
                 {title: '层级名称'},
+                {title: '探针名'},
                 {title: 'ICMP Ping', class: 'some-special-class'},
                 {title: 'UDP Ping'},
                 {title: 'TCP Ping'},
@@ -553,33 +554,11 @@ Vue.component('data-table', {
                     }
                 }
                 // var tmp=[[Date.UTC(2017, 4, 24, 22),1],[Date.UTC(2017, 4, 24, 22),2],[Date.UTC(2017, 5, 24, 22),3],[Date.UTC(2017, 5, 24, 22),4],[Date.UTC(2017, 6, 24, 22),1],[Date.UTC(2017, 7, 24, 22),1]];
-                var tmp = options.series[i].data;
-                var sum = tmp[0][1];
-                var newTmp = [];
-                var b = 1;
-                console.log(tmp);
-                for (let i = 0; i < tmp.length - 1; i++) {
-                    console.log(tmp[i][0]);
-                    console.log(i);
-                    console.log(tmp[i + 1][0]);
-                    if (tmp[i][0] == tmp[i + 1][0]) {
-                        sum = sum + tmp[i + 1][1];
-                        b++
-                    } else {
-                        let a = [];
-                        a[0] = tmp[i][0];
-                        a[1] = sum / b;
-                        newTmp.push(a);
-                        sum = tmp[i + 1][1];
-                        b = 1;
-                    }
+                if (options.series[i].data.length > 0) {
+                    options.series[i].data = combine(options.series[i].data);
                 }
-                let a = [];
-                a[0] = tmp[tmp.length - 1][0];
-                a[1] = sum / b;
-                newTmp.push(a);
-                console.log(newTmp);
-                options.series[i].data = newTmp;
+                // var tmp = options.series[i].data;
+
             }
             removeLoading('test');
             var chart = new Highcharts.Chart('container', options);
@@ -662,6 +641,7 @@ function ping(val) {
             headers: [
                 {title: ''},
                 {title: '层级名称'},
+                {title: '探针名'},
                 {title: '时间'},
                 {title: 'ICMP Ping'},
                 {title: 'UDP Ping'},
@@ -692,7 +672,6 @@ function ping(val) {
                 oLanguage: {
                     sEmptyTable: "No data available in table",
                     sZeroRecords: "No data available in table",
-
                 },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
@@ -723,6 +702,7 @@ function ping(val) {
                         let row = [];
                         row.push(i++);
                         row.push(layerNames.get(item.accessLayer));
+                        row.push(item.probeName);
                         row.push(item.recordDate.substr(0, 10) + "   " + item.recordTime.substr(0, 10) + ':00');
                         row.push('<a class="fontcolor"  onclick="ping_info(this,1,)" id=' + item.id + '  type =' + layerNames.get(item.accessLayer) + ' >' + fixed(item.icmpPingScore) + '</a>&nbsp;');
                         row.push('<a class="fontcolor"   onclick="ping_info(this,2,)" id=' + item.id + ' type =' + layerNames.get(item.accessLayer) + ' >' + fixed(item.udpPingScore) + '</a>&nbsp;');
@@ -3541,3 +3521,33 @@ var cloneObj = function (obj) {
     }
     return newobj;
 };
+
+function combine(tmp) {
+        var sum = tmp[0][1];
+        var newTmp = [];
+        var b = 1;
+        var c = 0;
+        for (let i = 0; i < tmp.length - 1; i++) {
+            if (tmp[i + 1] != undefined) {
+                if (tmp[i][0] == tmp[i + 1][0]) {
+                    sum = sum + tmp[i + 1][1];
+                    b++
+                } else {
+                    let a = [];
+                    a[0] = tmp[i][0];
+                    a[1] = sum / b;
+                    newTmp.push(a);
+                    sum = tmp[i + 1][1];
+                    b = 1;
+                }
+            } else {
+                c = i;
+                break;
+            }
+        }
+        let a = [];
+        a[0] = tmp[c][0];
+        a[1] = sum / b;
+        newTmp.push(a);
+        return newTmp;
+}
