@@ -552,8 +552,8 @@ Vue.component('data-table', {
                         options.series[i].data.sort(compare("0"));
                     }
                 }
-                tmp=[[Date.UTC(2017, 4, 24, 22),1],[Date.UTC(2017, 4, 24, 22),2],[Date.UTC(2017, 5, 24, 22),3],[Date.UTC(2017, 5, 24, 22),4],[Date.UTC(2017, 6, 24, 22),1],[Date.UTC(2017, 7, 24, 22),1]];
-                // var tmp = options.series[i].data;
+                // var tmp=[[Date.UTC(2017, 4, 24, 22),1],[Date.UTC(2017, 4, 24, 22),2],[Date.UTC(2017, 5, 24, 22),3],[Date.UTC(2017, 5, 24, 22),4],[Date.UTC(2017, 6, 24, 22),1],[Date.UTC(2017, 7, 24, 22),1]];
+                var tmp = options.series[i].data;
                 var sum = tmp[0][1];
                 var newTmp = [];
                 var b = 1;
@@ -575,31 +575,11 @@ Vue.component('data-table', {
                     }
                 }
                 let a = [];
-                a[0] = tmp[tmp.length-1][0];
+                a[0] = tmp[tmp.length - 1][0];
                 a[1] = sum / b;
                 newTmp.push(a);
                 console.log(newTmp);
-                // var temp = options.series[i].data;
-                // obj.forEach(function(item, index) {
-                //     var skey = item[0];
-                //     // if(typeof temp[skey] == "undefined") {
-                //     //     temp[skey] = item;
-                //     // } else {
-                //     //     for(var k in item.result) {
-                //     //         temp[skey]["result"][k] += item["result"][k];
-                //     //     }
-                //         temp[skey]
-                //         //temp[skey]["result"]["温度"] += item["result"]["温度"];
-                //         //temp[skey]["result"]["湿度"] += item["result"]["湿度"];
-                //     // }
-                // });
-                // var result = [];
-                // for(var i in temp) {
-                //     result.push(temp[i]);
-                // }
-                // console.log(result);
-
-                // let temp[] = options.series[i]
+                options.series[i].data = newTmp;
             }
             removeLoading('test');
             var chart = new Highcharts.Chart('container', options);

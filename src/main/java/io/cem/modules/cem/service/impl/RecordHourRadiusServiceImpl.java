@@ -2479,7 +2479,7 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 	}
 
 	@Override
-	public List<ScoreEntity> diagnoseDay(Map<String, Object> map,List<ScoreEntity> scoreList) throws ExecutionException, InterruptedException{
+	public List<ScoreEntity> diagnoseDayHour(Map<String, Object> map,List<ScoreEntity> scoreList) throws ExecutionException, InterruptedException{
 		int service = Integer.parseInt(map.get("service").toString());
 		RecordHourPingService recordHourPingService= (RecordHourPingService) SpringContextUtils.getBean("recordHourPingService");
 		RecordHourTracertService recordHourTracertService= (RecordHourTracertService) SpringContextUtils.getBean("recordHourTracertService");
@@ -2530,8 +2530,8 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 			Future<List<RecordHourTracertEntity>> tracertList_future = recordHourTracertService.queryTracertList(map1);
 			Future<List<RecordHourPingEntity>> pingList_future1 = recordHourPingService.queryPingList(map2);
 			Future<List<RecordHourTracertEntity>> tracertList_future1 = recordHourTracertService.queryTracertList(map2);
-			Future<List<RecordHourPingEntity>> pingList_future2 = recordHourPingService.queryDayList(map3);
-			Future<List<RecordHourTracertEntity>> tracertList_future2 = recordHourTracertService.queryDayList(map3);
+			Future<List<RecordHourPingEntity>> pingList_future2 = recordHourPingService.queryPingList(map3);
+			Future<List<RecordHourTracertEntity>> tracertList_future2 = recordHourTracertService.queryTracertList(map3);
 			while (true) {
 				if (pingList_future.isDone() && tracertList_future.isDone()&&pingList_future1.isDone() && tracertList_future1.isDone()&&pingList_future2.isDone() && tracertList_future2.isDone()) {
 					List<RecordHourPingEntity> pingList = pingList_future.get();
@@ -2562,11 +2562,11 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 			Future<List<RecordHourDhcpEntity>> dhcpList_future1 = recordHourDhcpService.queryDhcpList(map2);
 			Future<List<RecordHourPppoeEntity>> pppoeList_future1 = recordHourPppoeService.queryPppoeList(map2);
 			Future<List<RecordHourRadiusEntity>> radiusList_future1 = recordHourRadiusService.queryRadiusList(map2);
-			Future<List<RecordHourSlaEntity>> slaList_future2 = recordHourSlaService.queryDayList(map3);
-			Future<List<RecordHourDnsEntity>> dnsList_future2 = recordHourDnsService.queryDayList(map3);
-			Future<List<RecordHourDhcpEntity>> dhcpList_future2 = recordHourDhcpService.queryDayList(map3);
-			Future<List<RecordHourPppoeEntity>> pppoeList_future2 = recordHourPppoeService.queryDayList(map3);
-			Future<List<RecordHourRadiusEntity>> radiusList_future2 = recordHourRadiusService.queryDayList(map3);
+			Future<List<RecordHourSlaEntity>> slaList_future2 = recordHourSlaService.querySlaList(map3);
+			Future<List<RecordHourDnsEntity>> dnsList_future2 = recordHourDnsService.queryDnsList(map3);
+			Future<List<RecordHourDhcpEntity>> dhcpList_future2 = recordHourDhcpService.queryDhcpList(map3);
+			Future<List<RecordHourPppoeEntity>> pppoeList_future2 = recordHourPppoeService.queryPppoeList(map3);
+			Future<List<RecordHourRadiusEntity>> radiusList_future2 = recordHourRadiusService.queryRadiusList(map3);
 
 			while (true) {
 				if (slaList_future.isDone() && dnsList_future.isDone() && dhcpList_future.isDone() && dnsList_future.isDone() && pppoeList_future.isDone() && radiusList_future.isDone()&&
@@ -2601,7 +2601,7 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 		} else if (service == 3) {
 			Future<List<RecordHourWebPageEntity>> webPageList_future = recordHourWebPageService.queryWebList(map1);
 			Future<List<RecordHourWebPageEntity>> webPageList_future1 = recordHourWebPageService.queryWebList(map2);
-			Future<List<RecordHourWebPageEntity>> webPageList_future2 = recordHourWebPageService.queryDayList(map3);
+			Future<List<RecordHourWebPageEntity>> webPageList_future2 = recordHourWebPageService.queryWebList(map3);
 			while (true) {
 				if (webPageList_future.isDone()&&webPageList_future1.isDone()&&webPageList_future2.isDone()) {
 					List<RecordHourWebPageEntity> webPageList = webPageList_future.get();
@@ -2617,8 +2617,8 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 			Future<List<RecordHourFtpEntity>> ftpList_future = recordHourFtpService.queryFtpList(map1);
 			Future<List<RecordHourWebDownloadEntity>> webDownloadList_future1 = recordHourWebDownloadService.queryWebDownloadList(map2);
 			Future<List<RecordHourFtpEntity>> ftpList_future1 = recordHourFtpService.queryFtpList(map2);
-			Future<List<RecordHourWebDownloadEntity>> webDownloadList_future2 = recordHourWebDownloadService.queryDayList(map3);
-			Future<List<RecordHourFtpEntity>> ftpList_future2 = recordHourFtpService.queryDayList(map3);
+			Future<List<RecordHourWebDownloadEntity>> webDownloadList_future2 = recordHourWebDownloadService.queryWebDownloadList(map3);
+			Future<List<RecordHourFtpEntity>> ftpList_future2 = recordHourFtpService.queryFtpList(map3);
 
 			while (true) {
 				if (webDownloadList_future.isDone() && ftpList_future.isDone()&&webDownloadList_future1.isDone() && ftpList_future1.isDone()&&webDownloadList_future2.isDone() && ftpList_future2.isDone()) {
@@ -2639,7 +2639,7 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 		}  else if (service == 5) {
 			Future<List<RecordHourWebVideoEntity>> videoList_future = recordHourWebVideoService.queryVideoList(map1);
 			Future<List<RecordHourWebVideoEntity>> videoList_future1 = recordHourWebVideoService.queryVideoList(map2);
-			Future<List<RecordHourWebVideoEntity>> videoList_future2 = recordHourWebVideoService.queryDayList(map3);
+			Future<List<RecordHourWebVideoEntity>> videoList_future2 = recordHourWebVideoService.queryVideoList(map3);
 			while (true) {
 				if (videoList_future.isDone()&&videoList_future1.isDone()&&videoList_future2.isDone()) {
 					List<RecordHourWebVideoEntity> videoList = videoList_future.get();
@@ -2653,7 +2653,7 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 		} else if (service == 6) {
 			Future<List<RecordHourGameEntity>> gameList_future = recordHourGameService.queryGameList(map1);
 			Future<List<RecordHourGameEntity>> gameList_future1 = recordHourGameService.queryGameList(map2);
-			Future<List<RecordHourGameEntity>> gameList_future2 = recordHourGameService.queryDayList(map3);
+			Future<List<RecordHourGameEntity>> gameList_future2 = recordHourGameService.queryGameList(map3);
 			while (true) {
 				if (gameList_future.isDone()&&gameList_future1.isDone()&&gameList_future2.isDone()) {
 					List<RecordHourGameEntity> gameList = gameList_future.get();
@@ -2670,7 +2670,7 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 	}
 
 	@Override
-	public List<ScoreEntity> diagnoseHour(Map<String, Object> map,List<ScoreEntity> scoreList) throws ExecutionException, InterruptedException{
+	public List<ScoreEntity> diagnoseDay(Map<String, Object> map,List<ScoreEntity> scoreList) throws ExecutionException, InterruptedException{
 		int service = Integer.parseInt(map.get("service").toString());
 		RecordHourPingService recordHourPingService= (RecordHourPingService) SpringContextUtils.getBean("recordHourPingService");
 		RecordHourTracertService recordHourTracertService= (RecordHourTracertService) SpringContextUtils.getBean("recordHourTracertService");
@@ -2685,8 +2685,8 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 		RecordHourWebVideoService recordHourWebVideoService= (RecordHourWebVideoService) SpringContextUtils.getBean("recordHourWebVideoService");
 		RecordHourGameService recordHourGameService= (RecordHourGameService) SpringContextUtils.getBean("recordHourGameService");
 		if (service == 1) {
-			Future<List<RecordHourPingEntity>> pingList_future = recordHourPingService.queryPingList(map);
-			Future<List<RecordHourTracertEntity>> tracertList_future = recordHourTracertService.queryTracertList(map);
+			Future<List<RecordHourPingEntity>> pingList_future = recordHourPingService.queryDayList(map);
+			Future<List<RecordHourTracertEntity>> tracertList_future = recordHourTracertService.queryDayList(map);
 			while (true) {
 				if (pingList_future.isDone() && tracertList_future.isDone()) {
 					List<RecordHourPingEntity> pingList = pingList_future.get();
@@ -2702,11 +2702,11 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 				Thread.sleep(1000);
 			}
 		} else if (service == 2) {
-			Future<List<RecordHourSlaEntity>> slaList_future = recordHourSlaService.querySlaList(map);
-			Future<List<RecordHourDnsEntity>> dnsList_future = recordHourDnsService.queryDnsList(map);
-			Future<List<RecordHourDhcpEntity>> dhcpList_future = recordHourDhcpService.queryDhcpList(map);
-			Future<List<RecordHourPppoeEntity>> pppoeList_future = recordHourPppoeService.queryPppoeList(map);
-			Future<List<RecordHourRadiusEntity>> radiusList_future = recordHourRadiusService.queryRadiusList(map);
+			Future<List<RecordHourSlaEntity>> slaList_future = recordHourSlaService.queryDayList(map);
+			Future<List<RecordHourDnsEntity>> dnsList_future = recordHourDnsService.queryDayList(map);
+			Future<List<RecordHourDhcpEntity>> dhcpList_future = recordHourDhcpService.queryDayList(map);
+			Future<List<RecordHourPppoeEntity>> pppoeList_future = recordHourPppoeService.queryDayList(map);
+			Future<List<RecordHourRadiusEntity>> radiusList_future = recordHourRadiusService.queryDayList(map);
 
 			while (true) {
 				if (slaList_future.isDone() && dnsList_future.isDone() && dhcpList_future.isDone() && dnsList_future.isDone() && pppoeList_future.isDone() && radiusList_future.isDone()) {
@@ -2727,8 +2727,8 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 				Thread.sleep(1000);
 			}
 		} else if (service == 4) {
-			Future<List<RecordHourWebDownloadEntity>> webDownloadList_future = recordHourWebDownloadService.queryWebDownloadList(map);
-			Future<List<RecordHourFtpEntity>> ftpList_future = recordHourFtpService.queryFtpList(map);
+			Future<List<RecordHourWebDownloadEntity>> webDownloadList_future = recordHourWebDownloadService.queryDayList(map);
+			Future<List<RecordHourFtpEntity>> ftpList_future = recordHourFtpService.queryDayList(map);
 
 			while (true) {
 				if (webDownloadList_future.isDone() && ftpList_future.isDone()) {
@@ -2743,7 +2743,7 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 				Thread.sleep(1000);
 			}
 		} else if (service == 3) {
-			Future<List<RecordHourWebPageEntity>> webPageList_future = recordHourWebPageService.queryWebList(map);
+			Future<List<RecordHourWebPageEntity>> webPageList_future = recordHourWebPageService.queryDayList(map);
 			while (true) {
 				if (webPageList_future.isDone()) {
 					List<RecordHourWebPageEntity> webPageList = webPageList_future.get();
@@ -2753,7 +2753,7 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 				Thread.sleep(1000);
 			}
 		} else if (service == 5) {
-			Future<List<RecordHourWebVideoEntity>> videoList_future = recordHourWebVideoService.queryVideoList(map);
+			Future<List<RecordHourWebVideoEntity>> videoList_future = recordHourWebVideoService.queryDayList(map);
 			while (true) {
 				if (videoList_future.isDone()) {
 					List<RecordHourWebVideoEntity> videoList = videoList_future.get();
@@ -2763,7 +2763,7 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 				Thread.sleep(1000);
 			}
 		} else if (service == 6) {
-			Future<List<RecordHourGameEntity>> gameList_future = recordHourGameService.queryGameList(map);
+			Future<List<RecordHourGameEntity>> gameList_future = recordHourGameService.queryDayList(map);
 			while (true) {
 				if (gameList_future.isDone()) {
 					List<RecordHourGameEntity> gameList = gameList_future.get();
@@ -2778,7 +2778,7 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 	}
 
 	@Override
-	public List<ScoreEntity> diagnoseDayHour(Map<String, Object> map,List<ScoreEntity> scoreList) throws ExecutionException, InterruptedException{
+	public List<ScoreEntity> diagnoseHour(Map<String, Object> map,List<ScoreEntity> scoreList) throws ExecutionException, InterruptedException{
 		//datedifferent=1天的情况
 		//组装2个map对于数据进行筛选
 		Map<String, Object> map1 = new HashMap<>();

@@ -183,7 +183,7 @@ public class RecordHourPingController {
         EvaluationEntity score;
         if(dateDifferent>5){
             score = recordHourFtpService.calculateDayQualityScore(map);
-        }else if(dateDifferent<=5 && dateDifferent>=3){
+        }else if(dateDifferent>=3){
             score = recordHourFtpService.calculateHourQualityScore(map);
         } else{
             score = recordHourFtpService.calculateDayHourQualityScore(map);
