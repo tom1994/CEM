@@ -82,19 +82,34 @@ public class DiagnoseController {
         if (map.get("probe_id") != null && !map.get("probe_id").equals("")) {
             int probeId = Integer.parseInt(map.get("probe_id").toString());
             probeList = probeService.queryProbeByLayer(probeId);
+            for (int i = 0; i < probeList.size(); i++) {
+                map.put("probe_id", probeList.get(i).getId());
+                if (dateDifferent > 5) {
+                    scoreList.addAll(recordHourRadiusService.diagnoseDay(map, scoreList));
+                } else if (dateDifferent>=3) {
+                    scoreList.addAll( recordHourRadiusService.diagnoseDayHour(map, scoreList));
+                } else {
+                    scoreList.addAll(recordHourRadiusService.diagnoseHour(map, scoreList));
+                }
+            }
         } else if(map.get("county_id") != null && !map.get("county_id").equals("")) {
-            int countyId = Integer.parseInt(map.get("probe_id").toString());
-            probeList = probeService.queryProbe(countyId);
+            if (dateDifferent > 5) {
+                scoreList.addAll(recordHourRadiusService.diagnoseDay(map, scoreList));
+            } else if (dateDifferent>=3) {
+                scoreList.addAll( recordHourRadiusService.diagnoseDayHour(map, scoreList));
+            } else {
+                scoreList.addAll(recordHourRadiusService.diagnoseHour(map, scoreList));
+            }
 
         }else if(map.get("city_id") != null && !map.get("city_id").equals("")){
-            int cityId = Integer.parseInt(map.get("city_id").toString());
-            probeList = probeService.queryProbeByCity(cityId);
+            if (dateDifferent > 5) {
+                scoreList.addAll(recordHourRadiusService.diagnoseDay(map, scoreList));
+            } else if (dateDifferent>=3) {
+                scoreList.addAll( recordHourRadiusService.diagnoseDayHour(map, scoreList));
+            } else {
+                scoreList.addAll(recordHourRadiusService.diagnoseHour(map, scoreList));
+            }
         } else{
-            probeList = probeService.queryProbeList(map);
-        }
-
-        for (int i = 0; i < probeList.size(); i++) {
-            map.put("probe_id", probeList.get(i).getId());
             if (dateDifferent > 5) {
                 scoreList.addAll(recordHourRadiusService.diagnoseDay(map, scoreList));
             } else if (dateDifferent>=3) {
@@ -103,6 +118,8 @@ public class DiagnoseController {
                 scoreList.addAll(recordHourRadiusService.diagnoseHour(map, scoreList));
             }
         }
+
+
 
     //    recordHourDhcpService.combination(map,scoreList);
 

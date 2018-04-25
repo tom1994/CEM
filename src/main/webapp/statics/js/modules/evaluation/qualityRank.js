@@ -21,7 +21,6 @@ var serviceSelected = 0;
 var area_Selected = 0;
 var probeSelected = 0;
 var targetSelected = 0;
-
 var today = new Date();
 today.setDate(today.getDate() - 1); //显示近一天内的数据
 
@@ -710,7 +709,7 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
         if (serviceSelected != -1) {
             a[4] = {};
             a[4].name = "service_type";
-            a[4].value = JSON.stringify(serviceSelected);
+            a[4].value = serviceSelected;
         }
         if (targetSelected != 0) {
             a[5] = {};
@@ -724,7 +723,7 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
             a[2].name = "city_id";
             a[2].value = citySelected;
         }
-        if (area_Selected != 0) {
+        if (area_Selected != -1) {
             a[3] = {};
             a[3].name = "service_type";
             a[3].value = area_Selected;
@@ -754,7 +753,7 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
         if (serviceSelected != -1) {
             a[5] = {};
             a[5].name = "service_type";
-            a[5].value = JSON.stringify(serviceSelected);
+            a[5].value = serviceSelected;
         }
 
     }
@@ -766,7 +765,7 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
             }
             o[this.name].push(this.value || '');
         } else {
-            o[this.name] = this.value || '';
+            o[this.name] = this.value ;
         }
     });
     return o;
@@ -1206,7 +1205,6 @@ var doortable = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                        debugger
                         console.log(result);
                         //封装返回数据
                         let returnData = {};
@@ -1590,7 +1588,7 @@ function diagnose(obj) {
     parent.location=top.location='http://114.236.91.16:8888/index.html#modules/diagnose/diagnoseNow.html?a=2'
     $('#page-sidebar>ul>li').eq(3).addClass(' active open');
     $('#page-sidebar>ul>li').eq(1).removeClass(' active open');
-}
+  }
 
 function update_this(obj) {
     $('#myModal_update').modal('show');
