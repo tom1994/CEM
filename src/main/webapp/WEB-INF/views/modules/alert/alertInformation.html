@@ -112,8 +112,8 @@
                                         <div class="jq22">
                                             <select id="selectstatus" class="form-control"  style="display: none">
                                                 <option value="">所有状态</option>
-                                                <option value="0">未处理</option>
-                                                <option value="1">已处理</option>
+                                                <option value="0">未确认</option>
+                                                <option value="1">已确认</option>
                                             </select>
                                         </div>
                                     </div>
@@ -123,14 +123,14 @@
 
                             <div class="form-group row" style="margin-bottom: -5px!important;">
                                 <div class="input-group searchspan">
-                                    <span class="searchname search" title="日期" style="width: 80px">起始时间</span>
+                                    <span class="searchname search" title="起始时间" style="width: 80px">起始时间</span>
                                     <input type="text" id="start_date" class="form-control  input"
                                            name="startDate"
                                            style="width: 110px"
                                            value="">
                                 </div>
                                 <div class="input-group searchspan">
-                                    <span class="searchname  search left" title="日期" style="width: 80px">结束时间</span>
+                                    <span class="searchname  search left" title="结束时间" style="width: 80px">结束时间</span>
                                     <input type="text" id="terminal_date" class="form-control  input"
                                            name="terminalDate"
                                            style="width: 110px"
@@ -144,7 +144,7 @@
                              style="text-align:center;height:50px;position: relative;" id="search">
                             <button type="button" class="btn btn-sm btn-success"
                                     style="margin-right: 5px;position: relative;top: 50%;"
-                                        v-on:click="testagentListsearch"><span
+                                    v-on:click="testagentListsearch"><span
                                     class="glyphicon glyphicon-zoom-in"></span>查询
                             </button>
                             <button type="button" class="btn btn-sm btn-success"
@@ -753,15 +753,15 @@
                             <div class="form-group row">
                                 <label for="web_page_page_element_delay"
                                        class="col-lg-3 col-md-3 col-sm-3 form_border"
-                                >页面元素时延(ms)</label>
+                                >页面加载时延(ms)</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <input type="text" class="form-control input" id="web_page_page_element_delay"
-                                          disabled="disabled" name="wp_page_element_delay"
+                                          disabled="disabled" name="wp_load_delay"
                                            placeholder="">
                                 </div>
                                 <label for="web_page_download_speed"
                                        class="col-lg-3 col-md-3 col-sm-3 form_border"
-                                >下载速率(kb/s)</label>
+                                >下载速率(KB/s)</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <input type="text" class="form-control input" id="web_page_download_speed"
                                           disabled="disabled" name="wp_download_speed"
@@ -876,7 +876,7 @@
                                 </div>
                                 <label for="video_ws_conn_delay"
                                        class="col-lg-3 col-md-3 col-sm-3 form_border"
-                                >连接WEB服务器时延(ms)</label>
+                                 style="padding-right: 0px; ">连接WEB服务器时延(ms)</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <input type="text" class="form-control input" id="video_ws_conn_delay"
                                             disabled="disabled" name="ws_conn_delay"
@@ -894,7 +894,7 @@
                                 </div>
                                 <label for="video_ss_conn_delay"
                                        class="col-lg-3 col-md-3 col-sm-3 form_border"
-                                >连接调度服务器时延(ms)</label>
+                                       style="padding-right: 0px; ">连接调度服务器时延(ms)</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <input type="text" class="form-control input" id="video_ss_conn_delay"
                                           disabled="disabled" name="ss_conn_delay"
@@ -904,7 +904,7 @@
                             <div class="form-group row">
                                 <label for="video_address_delay"
                                        class="col-lg-3 col-md-3 col-sm-3 form_border"
-                                >获取视频地址时延(ms)</label>
+                                       style="padding-right: 0px; " >获取视频地址时延(ms)</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <input type="text" class="form-control input" id="video_address_delay"
                                           disabled="disabled" name="address_delay"
@@ -912,7 +912,7 @@
                                 </div>
                                 <label for="video_ms_conn_delay"
                                        class="col-lg-3 col-md-3 col-sm-3 form_border"
-                                >连接媒体服务器时延(ms)</label>
+                                       style="padding-right: 0px; "  >连接媒体服务器时延(ms)</label>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <input type="text" class="form-control input" id="video_ms_conn_delay"
                                            disabled="disabled" name="ms_conn_delay"

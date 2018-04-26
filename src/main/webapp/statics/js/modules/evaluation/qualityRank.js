@@ -586,7 +586,6 @@ var search_area_service = new Vue({
     // 在 `methods` 对象中定义方法
     methods: {
         testagentListsearch: function () {
-            debugger
             var searchJson = getFormJson($('#areasearch'));
             if ((searchJson.startDate) > (searchJson.terminalDate)) {
                 console.log("时间选择有误，请重新选择！");
@@ -693,7 +692,6 @@ var search_door_service = new Vue({
 function getFormJson(form) {      /*将表单对象变为json对象*/
     var a = $(form).serializeArray();
     var o = {};
-    debugger
     if (form.selector == '#probesearch') {
         if (citySelected != 0) {
             a[2] = {};
@@ -1110,7 +1108,7 @@ var doortable = new Vue({
             {title: '<div>地市</div>'},
             {title: '<div>区县</div>'},
             {title: '<div>探针名称</div>'},
-            {title: '<div>业务名称</div>'},
+            {title: '<div>业务类型</div>'},
             {title: '<div>分数</div>'},
             {title: '<div>操作</div>'},
         ],
@@ -1204,7 +1202,6 @@ var doortable = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                        debugger
                         console.log(result);
                         //封装返回数据
                         let returnData = {};
@@ -2386,7 +2383,7 @@ function download(obj) {
                             let row = [];
                             row.push(i++);
                             row.push(item.probeName);
-                            row.push(item.score);
+                            row.push(fixed(item.score));
                             row.push(fixed(item.webDownloadDnsDelay ));
                             row.push(fixed(item.webDownloadConnDelay ));
                             row.push(fixed(item.webDownloadHeadbyteDelay ));
@@ -2434,7 +2431,7 @@ function video(obj) {
                 {title: '<div style="width:110px">探针名称</div>'},
                 {title: '<div style="width:70px">综合分数</div>'},
                 {title: '<div style="width:100px">DNS时延(ms)</div>'},
-                {title: '<div style="width:130px">连接WEB服务器时延(ms)</div>'},
+                {title: '<div style="width:150px">连接WEB服务器时延(ms)</div>'},
                 {title: '<div style="width:120px">web页面时延(ms)</div>'},
                 {title: '<div style="width:110px">首帧到达时延(ms)</div>'},
                 {title: '<div style="width:120px">首次缓冲时延(ms)</div>'},
@@ -3438,7 +3435,7 @@ function area_download(obj, areaContent) {
                             let row = [];
                             row.push(i++);
                             row.push(item.probeName);
-                            row.push(item.score);
+                            row.push(item.score.toFixed(2));
                             row.push(fixed(item.webDownloadDnsDelay ));
                             row.push(fixed(item.webDownloadConnDelay ));
                             row.push(fixed(item.webDownloadHeadbyteDelay ));
@@ -3486,7 +3483,7 @@ function area_video(obj, areaContent) {
                 {title: '<div style="width:110px">探针名称</div>'},
                 {title: '<div style="width:70px">综合分数</div>'},
                 {title: '<div style="width:100px">DNS时延(ms)</div>'},
-                {title: '<div style="width:130px">连接WEB服务器时延(ms)</div>'},
+                {title: '<div style="width:150px">连接WEB服务器时延(ms)</div>'},
                 {title: '<div style="width:120px">web页面时延(ms)</div>'},
                 {title: '<div style="width:110px">首帧到达时延(ms)</div>'},
                 {title: '<div style="width:120px">首次缓冲时延(ms)</div>'},
@@ -4030,7 +4027,7 @@ function door_ping(obj) {
                     // returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
                     // returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
                     // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
-                    returnData.data = probeContent;//返回的数据列表
+                    returnData.data = doorContent;//返回的数据列表
                     // // 重新整理返回数据以匹配表格
                     console.log(returnData);
                     let rows = [];
@@ -4212,7 +4209,7 @@ function door_quality(obj) {
                     // returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
                     // returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
                     // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
-                    returnData.data = probeContent;//返回的数据列表
+                    returnData.data = doorContent;//返回的数据列表
                     // // 重新整理返回数据以匹配表格
                     console.log(returnData);
                     let rows = [];
@@ -4341,7 +4338,7 @@ function door_broswer(obj) {
                     // returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
                     // returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
                     // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
-                    returnData.data = probeContent;//返回的数据列表
+                    returnData.data = doorContent;//返回的数据列表
                     // // 重新整理返回数据以匹配表格
                     console.log(returnData);
                     let rows = [];
@@ -4483,7 +4480,7 @@ function door_download(obj) {
                     // returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
                     // returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
                     // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
-                    returnData.data = probeContent;//返回的数据列表
+                    returnData.data = doorContent;//返回的数据列表
                     // // 重新整理返回数据以匹配表格
                     console.log(returnData);
                     let rows = [];
@@ -4493,7 +4490,7 @@ function door_download(obj) {
                             let row = [];
                             row.push(i++);
                             row.push(item.probeName);
-                            row.push(item.score);
+                            row.push(item.score.toFixed);
                             row.push(fixed(item.webDownloadDnsDelay ));
                             row.push(fixed(item.webDownloadConnDelay ));
                             row.push(fixed(item.webDownloadHeadbyteDelay ));
@@ -4541,7 +4538,7 @@ function door_video(obj) {
                 {title: '<div style="width:110px">探针名称</div>'},
                 {title: '<div style="width:70px">综合分数</div>'},
                 {title: '<div style="width:100px">DNS时延(ms)</div>'},
-                {title: '<div style="width:130px">连接WEB服务器时延(ms)</div>'},
+                {title: '<div style="width:150px">连接WEB服务器时延(ms)</div>'},
                 {title: '<div style="width:120px">web页面时延(ms)</div>'},
                 {title: '<div style="width:110px">首帧到达时延(ms)</div>'},
                 {title: '<div style="width:120px">首次缓冲时延(ms)</div>'},
@@ -4604,12 +4601,12 @@ function door_video(obj) {
                     // returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
                     // returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
                     // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
-                    returnData.data = probeContent;//返回的数据列表
+                    returnData.data = doorContent;//返回的数据列表
                     // // 重新整理返回数据以匹配表格
                     console.log(returnData);
                     let rows = [];
                     var i = 1;
-                    probeContent.forEach(function (item) {
+                    doorContent.forEach(function (item) {
                         if (id == item.id) {
                             let row = [];
                             row.push(i++);
@@ -4716,7 +4713,7 @@ function door_game(obj) {
                     // returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
                     // returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
                     // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
-                    returnData.data = probeContent;//返回的数据列表
+                    returnData.data = doorContent;//返回的数据列表
                     // // 重新整理返回数据以匹配表格
                     console.log(returnData);
                     let rows = [];
@@ -4807,6 +4804,6 @@ function fixedRate(value) {
     if(value==null){
         return ''
     } else{
-        return value.toFixed(2)*100
+        return (value*100).toFixed(2)
     }
 }

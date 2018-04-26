@@ -77,6 +77,7 @@ var search_service = new Vue({ //Todo:完成查询条件框
     // 在 `methods` 对象中定义方法
     methods: {
         testagentListsearch: function () {
+            debugger
             var searchJson = getFormJson($('#probesearch'));
             if((searchJson.startDate)>(searchJson.terminalDate)){
                 console.log("时间选择有误，请重新选择！");
@@ -93,8 +94,8 @@ var search_service = new Vue({ //Todo:完成查询条件框
                     var terminalTime = searchJson.terminalDate.substr(11, 15);
                     search.ava_start = ava_start;
                     search.ava_terminal = ava_terminal;
-                    search.starTime = startTime+":00";
-                    search.terminalTime = terminalTime+":00";
+                    search.starTime = startTime;
+                    search.terminalTime = terminalTime;
                 }else{
                     search.ava_start = (new Date()).Format("yyyy-MM-dd");
                     search.ava_terminal = (new Date()).Format("yyyy-MM-dd");
@@ -102,9 +103,7 @@ var search_service = new Vue({ //Todo:完成查询条件框
                 let param = {};
                 param.probedata = JSON.stringify(search);
                 param.chartdata = JSON.stringify(search);
-
                 sendAjax(param);
-
                 $.ajax({
                     type: "POST",   /*GET会乱码*/
                     url: "../../recordhourping/qualityList",//Todo:改成测试任务组的list方法
@@ -168,6 +167,7 @@ function sendAjax(param) {
         dataType: "json",
         success: function (result) {
             ping_list=result.scoreList
+            debugger
             if(ping_list!=undefined){
                 removeLoading('test');
                 ping_change(param)
@@ -270,8 +270,6 @@ function ping_change(param) {
                         arr.push(dateStrs[0].slice(5,10) + " " + ping_list[i].recordTime+":00");
                     }
                 }
-
-
                 return arr.sort();
 
             })(),
@@ -285,6 +283,7 @@ function ping_change(param) {
             }
         },
         tooltip: {
+            crosshairs: true,
             headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
             pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
             '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
@@ -368,6 +367,7 @@ function quality_change(param) {
             }
         },
         tooltip: {
+            crosshairs: true,
             headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
             pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
             '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
@@ -454,6 +454,7 @@ function download_change(param) {
             }
         },
         tooltip: {
+            crosshairs: true,
             headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
             pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
             '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
@@ -542,6 +543,7 @@ function page_change(param) {
             }
         },
         tooltip: {
+            crosshairs: true,
             headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
             pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
             '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
@@ -630,6 +632,7 @@ function video_change(param) {
             }
         },
         tooltip: {
+            crosshairs: true,
             headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
             pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
             '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
@@ -713,6 +716,7 @@ function game_change(param) {
             }
         },
         tooltip: {
+            crosshairs: true,
             headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
             pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
             '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
@@ -1018,9 +1022,18 @@ var connection_service = new Vue({
 var connection=new Vue({
     el:'#container_connection',
     data:{
-        probedata: {ava_start:(new Date()).Format("yyyy-MM-dd"), ava_terminal:(new Date()).Format("yyyy-MM-dd")}
+        probedata: {ava_start:(new Date()).Format("yyyy-MM-dd"), ava_terminal:(new Date()).Format("yyyy-MM-dd")},
+        ping_list: [],
+        search: '',
+        },
+    computed: {
+        filteredData: function () {                 /*此处可以对传入数据进行处理*/
+            let self = this;
+            return self.ping_list;
+        },
     },
     mounted:function () {
+        let vm=this;
         let param={};
         param.chartdata = JSON.stringify(this.probedata)
         $.ajax({
@@ -1030,18 +1043,15 @@ var connection=new Vue({
             data: param,  //传入组装的参数
             dataType: "json",
             success: function (result) {
-                ping_list=result.scoreList
-                if(ping_list!=undefined){
+                    ping_list=result.scoreList;
+                    list_ping()
                     removeLoading('test');
-                    list_ping();
                     ping(ping_list);
-                }
-
             }
         })
-    }
-
+    },
 })
+
 var quality_service = new Vue({
     el: '#v-for-quality',
     data: {
@@ -1209,6 +1219,9 @@ var game_service = new Vue({
     }
 });
 
+// $(document).ready(function () {
+//     var chart = new Highcharts.Chart('container_connection', options)
+// });
 
 function list_ping () {
 // *网络连通性图表*/
@@ -1246,7 +1259,6 @@ function list_ping () {
                         if(ping_list != undefined){
                             var arr = [];
                             for(var i=0;i<ping_list.length;i++){
-                                debugger
                                 var dateStrs = ping_list[i].recordDate.split(" ");
                                 arr.push(dateStrs[0].slice(5,10) + " " + ping_list[i].recordTime+":00");
                             }
@@ -1263,6 +1275,7 @@ function list_ping () {
                     }
                 },
                 tooltip: {
+                    crosshairs: true,
                     xDateFormat: '%Y-%m-%d',
                     headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
                     pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
@@ -1355,6 +1368,7 @@ function list_quality() {
                     }
                 },
                 tooltip: {
+                    crosshairs: true,
                     headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
                     pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
                     '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
@@ -1941,6 +1955,7 @@ function ping(val) {
                     var sortTemp = temp.sort(compare("datetime"));
                     let rows = [];
                     var i = 1;
+
                     sortTemp.forEach(function (item) {
                         let row = [];
                         row.push(i++);
@@ -1953,35 +1968,35 @@ function ping(val) {
                         row.push(fixed(item.pingIcmpJitter));
                         row.push(fixed(item.pingIcmpJitterStd));
                         row.push(fixed(item.pingIcmpJitterVar));
-                        row.push(fixed(item.pingIcmpLossRate)*100);
+                        row.push(fixedRate(item.pingIcmpLossRate));
                         row.push(fixed(item.pingTcpDelay));
                         row.push(fixed(item.pingTcpDelayStd));
                         row.push(fixed(item.pingTcpDelayVar));
                         row.push(fixed(item.pingTcpJitter));
                         row.push(fixed(item.pingTcpJitterStd));
                         row.push(fixed(item.pingTcpJitterVar));
-                        row.push(fixed(item.pingTcpLossRate)*100);
+                        row.push(fixedRate(item.pingTcpLossRate));
                         row.push(fixed(item.pingUdpDelay));
                         row.push(fixed(item.pingUdpDelayStd));
                         row.push(fixed(item.pingUdpDelayVar));
                         row.push(fixed(item.pingUdpJitter));
                         row.push(fixed(item.pingUdpJitterStd));
                         row.push(fixed(item.pingUdpJitterVar));
-                        row.push(fixed(item.pingUdpLossRate)*100);
+                        row.push(fixedRate(item.pingUdpLossRate));
                         row.push(fixed(item.tracertIcmpDelay));
                         row.push(fixed(item.tracertIcmpDelayStd));
                         row.push(fixed(item.tracertIcmpDelayVar));
                         row.push(fixed(item.tracertIcmpJitter));
                         row.push(fixed(item.tracertIcmpJitterStd));
                         row.push(fixed(item.tracertIcmpJitterVar));
-                        row.push(fixed(item.tracertIcmpLossRate)*100);
+                        row.push(fixedRate(item.tracertIcmpLossRate));
                         row.push(fixed(item.tracertTcpDelay));
                         row.push(fixed(item.tracertTcpDelayStd));
                         row.push(fixed(item.tracertTcpDelayVar));
                         row.push(fixed(item.tracertTcpJitter));
                         row.push(fixed(item.tracertTcpJitterStd));
                         row.push(fixed(item.tracertTcpJitterVar));
-                        row.push(fixed(item.tracertTcpLossRate)*100);
+                        row.push(fixedRate(item.tracertTcpLossRate));
                         rows.push(row);
 
                     });
@@ -2107,6 +2122,7 @@ function quality(val) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
+               
                 oLanguage: {
                     sEmptyTable: "No data available in table",
                     sZeroRecords:"No data available in table",
@@ -2149,23 +2165,23 @@ function quality(val) {
                         row.push(fixed(item.slaTcpJitter));
                         row.push(fixed(item.slaTcpGJitter));
                         row.push(fixed(item.slaTcpRJitter));
-                        row.push(fixed(item.slaTcpLossRate)*100);
+                        row.push(fixedRate(item.slaTcpLossRate));
                         row.push(fixed(item.slaUdpDelay));
                         row.push(fixed(item.slaUdpGDelay));
                         row.push(fixed(item.slaUdpRDelay));
                         row.push(fixed(item.slaUdpJitter));
                         row.push(fixed(item.slaUdpGJitter));
                         row.push(fixed(item.slaUdpRJitter));
-                        row.push(fixed(item.slaUdpLossRate)*100);
+                        row.push(fixedRate(item.slaUdpLossRate));
                         row.push(fixed(item.dnsDelay));
-                        row.push(fixed(item.dnsSuccessRate)*100);
+                        row.push(fixedRate(item.dnsSuccessRate));
                         row.push(fixed(item.dhcpDelay));
                         row.push(fixed(item.dhcpSuccessRate));
                         row.push(fixed(item.pppoeDelay));
-                        row.push(fixed(item.pppoeDropRate));
-                        row.push(fixed(item.pppoeSuccessRate)*100);
+                        row.push(fixedRate(item.pppoeDropRate));
+                        row.push(fixedRate(item.pppoeSuccessRate));
                         row.push(fixed(item.radiusDelay));
-                        row.push(fixed(item.radiusSuccessRate)*100);
+                        row.push(fixedRate(item.radiusSuccessRate));
                         rows.push(row);
                     });
                     returnData.data = rows;
@@ -2244,6 +2260,7 @@ function broswer(val) {
                 paging: false,
                 serverSide: true,
                 info: false,
+                
                 ordering: false, /*禁用排序功能*/
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
@@ -2294,7 +2311,7 @@ function broswer(val) {
                         row.push(fixed(item.webpageRedirectDelay));
                         row.push(fixed(item.webpageAboveFoldDelay));
                         row.push(fixed(item.loadDelay));
-                        row.push(fixed(item.webpageDownloadRate)*100);
+                        row.push(fixed(item.webpageDownloadRate));
                         rows.push(row);
 
                     });
@@ -2401,6 +2418,7 @@ function download(val) {
                 paging: false,
                 serverSide: true,
                 info: false,
+                
                 ordering: false, /*禁用排序功能*/
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
@@ -2456,7 +2474,7 @@ function download(val) {
                         row.push(fixed(item.ftpUploadConnDelay));
                         row.push(fixed(item.ftpUploadLoginDelay));
                         row.push(fixed(item.ftpUploadHeadbyteDelay));
-                        row.push(fixed(item.ftpUploadUploadRate)*100);
+                        row.push(fixed(item.ftpUploadUploadRate));
                         rows.push(row);
 
                     });
@@ -2536,6 +2554,7 @@ function video(val) {
                 paging: false,
                 serverSide: true,
                 info: false,
+                
                 ordering: false, /*禁用排序功能*/
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
@@ -2582,7 +2601,7 @@ function video(val) {
                         row.push(fixed(item.webVideoInitBufferDelay));
                         row.push(fixed(item.webVideoLoadDelay));
                         row.push(fixed(item.webVideoTotalBufferDelay));
-                        row.push(fixed(item.webVideoDownloadRate)*100);
+                        row.push(fixedRate(item.webVideoDownloadRate));
                         row.push(fixed(item.webVideoBufferTime));
                         rows.push(row);
 
@@ -2934,7 +2953,13 @@ function fixed(value) {
         return value.toFixed(2)
     }
 }
-
+function fixedRate(value) {
+    if(value==null){
+        return ''
+    } else{
+        return (value*100).toFixed(2)
+    }
+}
 
 var cloneObj = function (obj) {
     var str, newobj = obj.constructor === Array ? [] : {};
@@ -2960,3 +2985,36 @@ function compare(property) {
         return value1 - value2;     // 升序
     }
 }
+
+function out() {/*导出事件*/
+    var searchJson = getFormJson($('#probesearch'));
+    debugger
+    if((searchJson.startDate)>(searchJson.terminalDate)){
+        console.log("时间选择有误，请重新选择！");
+        $('#nonavailable_time').modal('show');
+    }else{
+        var search = new Object();
+        search.city_id = searchJson.city;
+        search.county_id = searchJson.county;
+        search.probe_id = searchJson.probe;
+        if (searchJson.startDate.length != 0 && searchJson.terminalDate.length != 0 ) {
+            var ava_start = searchJson.startDate.substr(0, 10);
+            var ava_terminal = searchJson.terminalDate.substr(0, 10);
+            var startTime = searchJson.startDate.substr(11, 15);
+            var terminalTime = searchJson.terminalDate.substr(11, 15);
+            search.ava_start = ava_start;
+            search.ava_terminal = ava_terminal;
+            search.starTime = startTime;
+            search.terminalTime = terminalTime;
+        }else{
+            search.ava_start = (new Date()).Format("yyyy-MM-dd");
+            search.ava_terminal = (new Date()).Format("yyyy-MM-dd");
+        }
+        var schedulepolicy = JSON.stringify(search);
+        console.log(schedulepolicy);
+
+        document.getElementById("output").href = encodeURI('../../recordhourtracert/qualityDownload/' + schedulepolicy);
+        document.getElementById("output").click();
+    }
+}
+

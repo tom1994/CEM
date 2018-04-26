@@ -2457,7 +2457,7 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 				Thread.sleep(1000);
 			}
 		} else if (service == 3) {
-			Future<List<RecordHourWebPageEntity>> webPageList_future = recordHourWebPageService.queryWebRankList(map1);
+			Future<List<RecordHourWebPageEntity>> webPageList_future = recordHourWebPageService.queryWebRankList(map);
 			while (true) {
 				if (webPageList_future.isDone()) {
 					List<RecordHourWebPageEntity> webPageList = webPageList_future.get();
