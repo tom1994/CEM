@@ -10,7 +10,7 @@
     <title>质量评分</title>
     #parse("cemHeader.html")  <!--导入CSS和js文件-->
     <link href="${rc.contextPath}/statics/css/formStyle.css" rel="stylesheet">
-    <script src="https://cdn.bootcss.com/vue/2.5.13/vue.js"></script>
+    <!--<script src="https://cdn.bootcss.com/vue/2.5.13/vue.js"></script>-->
     <link href="${rc.contextPath}/statics/css/loading.css" rel="stylesheet">
     <style>
         .left-up{
@@ -73,9 +73,8 @@
         [v-cloak]{
             display:none
         }
-
-        .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control{
-             background-color: white;
+        .ibox-content{
+            padding-bottom: 0px;
         }
     </style>
 </head>
@@ -86,7 +85,7 @@
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-content" style="padding-bottom: 0 !important;">
-                        <div class="row" id="searchbox" style="border: none !important; margin-top: 3px">
+                        <div class="row" id="searchbox" style="border: none !important;">
                             <form class="col-lg-11 col-md-11 col-sm-11 form-horizontal" id="probesearch"
                                   role="form">
                                 <div class="form-group row" style="margin-bottom: -14px" >
@@ -128,15 +127,15 @@
                                         </div>
                                     </div>
                                     <div class="input-group searchspan " style="position: relative;top: -5px;">
-                                        <span class="searchname" title="日期" style="width: 40px">起始</span>
+                                        <span class="searchname" title="起始" style="width: 40px">起始</span>
                                         <input type="text" id="start_date" class="form-control" name="startDate"
-                                               style="width: 140px;height: 34px;"
+                                               style="width: 140px;height: 36px;"
                                                value="">
                                     </div>
                                     <div class="input-group searchspan" style="position: relative;top: -5px;">
-                                        <span class="searchname" title="日期" style="width: 40px">结束</span>
-                                        <input type="text" id="terminal_date" class="form-control"  name="terminalDate"
-                                               style="width: 140px;height: 34px;"
+                                        <span class="searchname" title="结束" style="width: 40px">结束</span>
+                                        <input type="text" id="terminal_date" class="form-control" name="terminalDate"
+                                               style="width: 140px;height: 36px;"
                                                value="">
                                     </div>
                                 </div>
@@ -157,10 +156,10 @@
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="ibox float-e-margins ">
                     <div class="ibox-title fontcolor box" id="probehandle" style="padding-bottom: 0px !important;">
-                        <button type="button" class="btn btn-sm btn-success" onclick="out()"><span
-                                class="glyphicon glyphicon-open"></span>导出
-                        </button>
-                        <a id = "output" style="display: none" href=""></a>
+                        <!--<button type="button" class="btn btn-sm btn-success" onclick="out()"><span-->
+                                <!--class="glyphicon glyphicon-open"></span>导出-->
+                        <!--</button>-->
+                        <!--<a id = "output" style="display: none" href=""></a>-->
                     </div>
                 </div>
             </div>
@@ -197,8 +196,8 @@
 
                                                 <div class="right">
                                                     <div class="col-lg-12 col-md-12 col-sm-12" style="padding: 0px">
-                                                        <div id="container_connection" style="height: 150px; margin: 0 10px 0 0 ">
-
+                                                        <div id="container_connection" style="height: 150px; margin: 0 10px 0 0 " >
+                                                            <!--<data-table :ping_list="filteredData" style="display: none"></data-table>-->
                                                         </div>
                                                     </div>
                                                 </div>
@@ -421,9 +420,10 @@
                     </button>
                     <h3 class="modal-title myModalLabel">详细信息</h3>
                 </div>
-                <div class="modal-body" style="height:400px;overflow: auto">
+                <div class="modal-body" style="height:400px;">
                     <div class="record-table ibox-content" id="connnection">
-                        <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                        <data-table :ping_list="filteredData" style="display: none"></data-table>
+                        <div class="row" style="height: 350px; overflow: auto">     <!--表格 verflow-x: scroll超出滚动-->
                             <table class="table table-bordered " id="pingdata_table" style="margin-top: 2px!important;"></table>
                         </div>
                     </div>
@@ -446,9 +446,9 @@
                     </button>
                     <h3 class="modal-title myModalLabel">详细信息</h3>
                 </div>
-                <div class="modal-body" style="height:400px;overflow: auto">
+                <div class="modal-body" style="height:400px;">
                     <div class="record-table ibox-content" id="quality">
-                        <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                        <div class="row" style="height: 350px; overflow: auto">       <!--表格 verflow-x: scroll超出滚动-->
                             <table class="table table-bordered " id="qualitydata_table" style="margin-top: 2px!important;"></table>
                         </div>
                     </div>
@@ -470,10 +470,10 @@
                     </button>
                     <h3 class="modal-title myModalLabel">详细信息</h3>
                 </div>
-                <div class="modal-body" style="height:400px;overflow: auto"  >
+                <div class="modal-body" style="height:400px;"  >
 
                     <div class="record-table ibox-content" id="broswer">
-                        <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                        <div class="row" style="height: 350px; overflow: auto">       <!--表格 verflow-x: scroll超出滚动-->
                             <table class="table table-bordered " id="broswerdata_table" style="margin-top: 2px!important;"></table>
                         </div>
                     </div>
@@ -496,9 +496,9 @@
                     </button>
                     <h3 class="modal-title myModalLabel">详细信息</h3>
                 </div>
-                <div class="modal-body"  style="height:400px;overflow: auto" >
+                <div class="modal-body"  style="height:400px;" >
                     <div class="record-table ibox-content" id="download">
-                        <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                        <div class="row" style="height: 350px; overflow: auto">    <!--表格 verflow-x: scroll超出滚动-->
                             <table class="table table-bordered " id="downloaddata_table" style="margin-top: 2px!important;"></table>
                         </div>
                     </div>
@@ -521,9 +521,9 @@
                     </button>
                     <h3 class="modal-title myModalLabel">详细信息</h3>
                 </div>
-                <div class="modal-body" style="height:400px;overflow: auto" >
+                <div class="modal-body" style="height:400px;" >
                     <div class="record-table ibox-content" id="video">
-                        <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                        <div class="row" style="height: 350px; overflow: auto">      <!--表格 verflow-x: scroll超出滚动-->
                             <table class="table table-bordered " id="videodata_table" style="margin-top: 2px!important;"></table>
                         </div>
                     </div>
@@ -545,9 +545,9 @@
                     </button>
                     <h3 class="modal-title myModalLabel">详细信息</h3>
                 </div>
-                <div class="modal-body"  style="height:400px;overflow: auto" >
+                <div class="modal-body"  style="height:400px" >
                     <div class="record-table ibox-content" id="game">
-                        <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                        <div class="row" style="height: 350px; overflow: auto">   !--表格 verflow-x: scroll超出滚动-->
                             <table class="table table-bordered " id="gamedata_table" style="margin-top: 2px!important;"></table>
                         </div>
                     </div>
@@ -575,15 +575,14 @@
         })
         var date=new Date();
         var month = date.getMonth() + 1;
-        var strDate = date.getDate();
+        var strDate = date.getDate()-1;
         var years=date.getFullYear();
       var newdate=years+'-'+month+'-'+strDate;
+      console.log(typeof newdate)
     $('#start_date').flatpickr({
         enableTime: true,
         dateFormat: "Y-m-d H:i",
         defaultDate:newdate,
-        defaultHour:'00',
-        defaultMinute:'00',
         time_24hr: true
     });
 
@@ -593,12 +592,12 @@
         var month = date.getMonth() + 1;
         var strDate = date.getDate();
         var years=date.getFullYear();
-        var end_date=years+'-'+month+'-'+strDate;
+        var endday=years+'-'+month+'-'+strDate;
         $('#terminal_date').flatpickr({
             enableTime: true,
             dateFormat: "Y-m-d H:i",
-            defaultDate:end_date,
-            defaultHour:'23',
+            defaultDate:endday,
+            defaultHour:'00',
             defaultMinute:'00',
             time_24hr: true
         });

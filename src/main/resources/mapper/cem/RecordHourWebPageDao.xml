@@ -23,6 +23,7 @@
         <result property="redirectDelay" column="redirect_delay"/>
         <result property="aboveFoldDelay" column="above_fold_delay"/>
         <result property="pageElementDelay" column="page_element_delay"/>
+		<result property="loadDelay" column="load_delay"/>
         <result property="downloadRate" column="download_rate"/>
         <result property="remark" column="remark"/>
 		<result property="cityName" column="city_name"/>
@@ -117,6 +118,7 @@
 		AVG(redirect_delay) AS redirect_delay,
 		AVG(above_fold_delay) AS above_fold_delay,
 		AVG(page_element_delay) AS page_element_delay,
+		AVG(load_delay) AS load_delay,
 		AVG(download_rate) AS download_rate,
 		SUM(fail) AS fail,
 		SUM(total) AS total
@@ -163,6 +165,7 @@
 		AVG(record_hour_web_page.redirect_delay) AS redirect_delay,
 		AVG(record_hour_web_page.above_fold_delay) AS above_fold_delay,
 		AVG(record_hour_web_page.page_element_delay) AS page_element_delay,
+		AVG(record_hour_web_page.load_delay) AS load_delay,
 		AVG(record_hour_web_page.download_rate) AS download_rate,
 		SUM(record_hour_web_page.fail) AS fail,
 		SUM(record_hour_web_page.total) AS total
@@ -196,6 +199,7 @@
 		AVG(record_day_web_page.redirect_delay) AS redirect_delay,
 		AVG(record_day_web_page.above_fold_delay) AS above_fold_delay,
 		AVG(record_day_web_page.page_element_delay) AS page_element_delay,
+		AVG(record_day_web_page.load_delay) AS load_delay,
 		AVG(record_day_web_page.download_rate) AS download_rate,
 		SUM(record_day_web_page.fail) AS fail,
 		SUM(record_day_web_page.total) AS total
@@ -231,6 +235,7 @@
 		AVG(redirect_delay) AS redirect_delay,
 		AVG(above_fold_delay) AS above_fold_delay,
 		AVG(page_element_delay) AS page_element_delay,
+		AVG(load_delay) AS load_delay,
 		AVG(download_rate) AS download_rate,
 		SUM(fail) AS fail,
 		SUM(total) AS total
@@ -278,6 +283,7 @@
 		AVG(redirect_delay) AS redirect_delay,
 		AVG(above_fold_delay) AS above_fold_delay,
 		AVG(page_element_delay) AS page_element_delay,
+		AVG(load_delay) AS load_delay,
 		AVG(download_rate) AS download_rate,
 		SUM(fail) AS fail,
 		SUM(total) AS total
@@ -322,6 +328,7 @@
 		AVG(redirect_delay) AS redirect_delay,
 		AVG(above_fold_delay) AS above_fold_delay,
 		AVG(page_element_delay) AS page_element_delay,
+		AVG(load_delay) AS load_delay,
 		AVG(download_rate) AS download_rate,
 		SUM(fail) AS fail,
 		SUM(total) AS total
@@ -362,6 +369,7 @@
 		AVG(webp.redirect_delay) AS redirect_delay,
 		AVG(webp.above_fold_delay) AS above_fold_delay,
 		AVG(webp.page_element_delay) AS page_element_delay,
+		AVG(webp.load_delay) AS load_delay,
 		AVG(webp.download_rate) AS download_rate,
 		SUM(webp.fail) AS fail,
 		SUM(webp.total) AS total
@@ -405,6 +413,7 @@
 		AVG(webp.redirect_delay) AS redirect_delay,
 		AVG(webp.above_fold_delay) AS above_fold_delay,
 		AVG(webp.page_element_delay) AS page_element_delay,
+		AVG(webp.load_delay) AS load_delay,
 		AVG(webp.download_rate) AS download_rate,
 		SUM(webp.fail) AS fail,
 		SUM(webp.total) AS total
@@ -448,6 +457,7 @@
 		AVG(webp.redirect_delay) AS redirect_delay,
 		AVG(webp.above_fold_delay) AS above_fold_delay,
 		AVG(webp.page_element_delay) AS page_element_delay,
+		AVG(webp.load_delay) AS load_delay,
 		AVG(webp.download_rate) AS download_rate,
 		SUM(webp.fail) AS fail,
 		SUM(webp.total) AS total
@@ -492,6 +502,7 @@
 		AVG(webp.redirect_delay) AS redirect_delay,
 		AVG(webp.above_fold_delay) AS above_fold_delay,
 		AVG(webp.page_element_delay) AS page_element_delay,
+		AVG(webp.load_delay) AS load_delay,
 		AVG(webp.download_rate) AS download_rate,
 		SUM(webp.fail) AS fail,
 		SUM(webp.total) AS total
@@ -539,6 +550,7 @@
 		round(AVG(rhp.redirect_delay),2) AS redirect_delay,
 		round(AVG(rhp.above_fold_delay),2) AS above_fold_delay,
 		round(AVG(rhp.page_element_delay),2) AS page_element_delay,
+		round(AVG(rhp.load_delay),2) AS load_delay,
 		round(AVG(rhp.download_rate),2) AS download_rate,
 		d.data_name AS servicetype_name
 		FROM record_hour_web_page rhp

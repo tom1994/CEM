@@ -471,7 +471,6 @@ function areaupdate_this(obj) {     /*监听修改触发事件*/
         }
         var schedulepolicy = JSON.stringify(search);
         console.log(schedulepolicy);
-
         $.ajax({
             type: "POST", /*GET会乱码*/
             url: "../../recordhourtracert/areadetail/" + schedulepolicy,
@@ -480,12 +479,10 @@ function areaupdate_this(obj) {     /*监听修改触发事件*/
             contentType: "application/json", /*必须要,不可少*/
             success: function (result) {
                 console.log('收到数据', new Date(), result);
-
-                if (result != undefined) {
                     removeLoading('test');
                     var areaContent = result.scoreList;
                     area_this(obj, areaContent)
-                }
+
             }
         });
     }
@@ -589,6 +586,7 @@ var search_area_service = new Vue({
     // 在 `methods` 对象中定义方法
     methods: {
         testagentListsearch: function () {
+             
             var searchJson = getFormJson($('#areasearch'));
             if ((searchJson.startDate) > (searchJson.terminalDate)) {
                 console.log("时间选择有误，请重新选择！");
@@ -598,7 +596,7 @@ var search_area_service = new Vue({
                 search.city_id = searchJson.city_id;
                 search.county_id = searchJson.country_id;
                 search.service = searchJson.service_type;
-                search.target_id = searchJson.target_id;
+                search.target_id = searchJson.target;
                 if (searchJson.startDate.length != 0 && searchJson.terminalDate.length != 0) {
                     var ava_start = searchJson.startDate.substr(0, 10);
                     var ava_terminal = searchJson.terminalDate.substr(0, 10);
@@ -695,6 +693,7 @@ var search_door_service = new Vue({
 function getFormJson(form) {      /*将表单对象变为json对象*/
     var a = $(form).serializeArray();
     var o = {};
+
     if (form.selector == '#probesearch') {
         if (citySelected != 0) {
             a[2] = {};
@@ -1111,7 +1110,7 @@ var doortable = new Vue({
             {title: '<div>地市</div>'},
             {title: '<div>区县</div>'},
             {title: '<div>探针名称</div>'},
-            {title: '<div>业务名称</div>'},
+            {title: '<div>业务类型</div>'},
             {title: '<div>分数</div>'},
             {title: '<div>操作</div>'},
         ],
@@ -1205,6 +1204,7 @@ var doortable = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
+                         
                         console.log(result);
                         //封装返回数据
                         let returnData = {};
@@ -1582,13 +1582,10 @@ var getProbeCity = function (cityid) {
 };
 
 function diagnose(obj) {
-    var id = parseInt(obj.id);
-    var url=location.href;
-    console.log(url);
-    parent.location=top.location='http://114.236.91.16:8888/index.html#modules/diagnose/diagnoseNow.html?a=2'
-    $('#page-sidebar>ul>li').eq(3).addClass(' active open');
-    $('#page-sidebar>ul>li').eq(1).removeClass(' active open');
-  }
+    console.log(obj)
+    location.href = "/diagnoseshow/setting?probeId="+obj.id+"&serviceType="+obj.serviceType+"&targetId="+obj.targetId+"&targetName="+obj.targetName;
+}
+
 
 function update_this(obj) {
     $('#myModal_update').modal('show');
@@ -1749,7 +1746,7 @@ function information(obj) {
                     probeContent.forEach(function (item) {
                         if (id == item.id) {
                             let row = [];
-                            row.push(i);
+                            row.push(i++);
                             row.push(item.probeName);
                             row.push(item.score.toFixed(2));
                             if (item.connectionScore != undefined) {
@@ -1934,7 +1931,7 @@ function ping(obj) {
                     probeContent.forEach(function (item) {
                         if (id == item.id) {
                             let row = [];
-                            row.push(i);
+                            row.push(i++);
                             row.push(item.probeName);
                             row.push(fixed(item.score));
                             row.push(fixed(item.pingIcmpDelay ));
@@ -1943,35 +1940,35 @@ function ping(obj) {
                             row.push(fixed(item.pingIcmpJitter ));
                             row.push(fixed(item.pingIcmpJitterStd ));
                             row.push(fixed(item.pingIcmpJitterVar ));
-                            row.push(fixed(item.pingIcmpLossRate )*100);
+                            row.push(fixedRate(item.pingIcmpLossRate ));
                             row.push(fixed(item.pingTcpDelay ));
                             row.push(fixed(item.pingTcpDelayStd ));
                             row.push(fixed(item.pingTcpDelayVar ));
                             row.push(fixed(item.pingTcpJitter ));
                             row.push(fixed(item.pingTcpJitterStd ));
                             row.push(fixed(item.pingTcpJitterVar ));
-                            row.push(fixed(item.pingTcpLossRate )*100);
+                            row.push(fixedRate(item.pingTcpLossRate ));
                             row.push(fixed(item.pingUdpDelay));
                             row.push(fixed(item.pingUdpDelayStd));
                             row.push(fixed(item.pingUdpDelayVar));
                             row.push(fixed(item.pingUdpJitter));
                             row.push(fixed(item.pingUdpJitterStd));
                             row.push(fixed(item.pingUdpJitterVar));
-                            row.push(fixed(item.pingUdpLossRate)*100);
+                            row.push(fixedRate(item.pingUdpLossRate));
                             row.push(fixed(item.tracertIcmpDelay));
                             row.push(fixed(item.tracertIcmpDelayStd));
                             row.push(fixed(item.tracertIcmpDelayVar));
                             row.push(fixed(item.tracertIcmpJitter));
                             row.push(fixed(item.tracertIcmpJitterStd));
                             row.push(fixed(item.tracertIcmpJitterVar));
-                            row.push(fixed(item.tracertIcmpLossRate)*100);
+                            row.push(fixedRate(item.tracertIcmpLossRate));
                             row.push(fixed(item.tracertTcpDelay));
                             row.push(fixed(item.tracertTcpDelayStd));
                             row.push(fixed(item.tracertTcpDelayVar));
                             row.push(fixed(item.tracertTcpJitter));
                             row.push(fixed(item.tracertTcpJitterStd));
                             row.push(fixed(item.tracertTcpJitterVar));
-                            row.push(fixed(item.tracertTcpLossRate)*100);
+                            row.push(fixedRate(item.tracertTcpLossRate));
                             rows.push(row);
                         }
                     });
@@ -2116,7 +2113,7 @@ function quality(obj) {
                     probeContent.forEach(function (item) {
                         if (id == item.id) {
                             let row = [];
-                            row.push(i);
+                            row.push(i++);
                             row.push(item.probeName);
                             row.push(fixed(item.score));
                             row.push(fixed(item.slaTcpDelay));
@@ -2125,23 +2122,23 @@ function quality(obj) {
                             row.push(fixed(item.slaTcpJitter));
                             row.push(fixed(item.slaTcpGJitter));
                             row.push(fixed(item.slaTcpRJitter));
-                            row.push(fixed(item.slaTcpLossRate)*100);
+                            row.push(fixedRate(item.slaTcpLossRate));
                             row.push(fixed(item.slaUdpDelay));
                             row.push(fixed(item.slaUdpGDelay));
                             row.push(fixed(item.slaUdpRDelay));
                             row.push(fixed(item.slaUdpJitter));
                             row.push(fixed(item.slaUdpGJitter));
                             row.push(fixed(item.slaUdpRJitter));
-                            row.push(fixed(item.slaUdpLossRate)*100);
+                            row.push(fixedRate(item.slaUdpLossRate));
                             row.push(fixed(item.dnsDelay));
-                            row.push(fixed(item.dnsSuccessRate)*100);
+                            row.push(fixedRate(item.dnsSuccessRate));
                             row.push(fixed(item.dhcpDelay));
-                            row.push(fixed(item.dhcpSuccessRate)*100);
+                            row.push(fixedRate(item.dhcpSuccessRate));
                             row.push(fixed(item.pppoeDelay));
-                            row.push(fixed(item.pppoeDropRate)*100);
-                            row.push(fixed(item.pppoeSuccessRate)*100);
+                            row.push(fixedRate(item.pppoeDropRate));
+                            row.push(fixedRate(item.pppoeSuccessRate));
                             row.push(fixed(item.radiusDelay));
-                            row.push(fixed(item.radiusSuccessRate)*100);
+                            row.push(fixedRate(item.radiusSuccessRate));
                             rows.push(row);
                         }
 
@@ -2245,7 +2242,7 @@ function broswer(obj) {
                     probeContent.forEach(function (item) {
                         if (id == item.id) {
                             let row = [];
-                            row.push(i);
+                            row.push(i++);
                             row.push(item.probeName);
                             row.push(fixed(item.score));
                             row.push(fixed(item.webpageDnsDelay ));
@@ -2387,9 +2384,9 @@ function download(obj) {
                     probeContent.forEach(function (item) {
                         if (id == item.id) {
                             let row = [];
-                            row.push(i);
+                            row.push(i++);
                             row.push(item.probeName);
-                            row.push(item.score);
+                            row.push(fixed(item.score));
                             row.push(fixed(item.webDownloadDnsDelay ));
                             row.push(fixed(item.webDownloadConnDelay ));
                             row.push(fixed(item.webDownloadHeadbyteDelay ));
@@ -2437,7 +2434,7 @@ function video(obj) {
                 {title: '<div style="width:110px">探针名称</div>'},
                 {title: '<div style="width:70px">综合分数</div>'},
                 {title: '<div style="width:100px">DNS时延(ms)</div>'},
-                {title: '<div style="width:130px">连接WEB服务器时延(ms)</div>'},
+                {title: '<div style="width:150px">连接WEB服务器时延(ms)</div>'},
                 {title: '<div style="width:120px">web页面时延(ms)</div>'},
                 {title: '<div style="width:110px">首帧到达时延(ms)</div>'},
                 {title: '<div style="width:120px">首次缓冲时延(ms)</div>'},
@@ -2508,7 +2505,7 @@ function video(obj) {
                     probeContent.forEach(function (item) {
                         if (id == item.id) {
                             let row = [];
-                            row.push(i);
+                            row.push(i++);
                             row.push(item.probeName);
                             row.push(fixed(item.score));
                             row.push(fixed(item.webVideoDnsDelay ));
@@ -2518,7 +2515,7 @@ function video(obj) {
                             row.push(fixed(item.webVideoInitBufferDelay ));
                             row.push(fixed(item.webVideoLoadDelay ));
                             row.push(fixed(item.webVideoTotalBufferDelay ));
-                            row.push(fixed(item.webVideoDownloadRate )*100);
+                            row.push(fixed(item.webVideoDownloadRate ) );
                             row.push(fixed(item.webVideoBufferTime ));
                             rows.push(row);
                         }
@@ -2619,13 +2616,13 @@ function game(obj) {
                     probeContent.forEach(function (item) {
                         if (id == item.id) {
                             let row = [];
-                            row.push(i);
+                            row.push(i++);
                             row.push(item.probeName);
                             row.push(fixed(item.score));
                             row.push(fixed(item.gameDnsDelay));
                             row.push(fixed(item.gamePacketDelay) );
                             row.push(fixed(item.gamePacketJitter ));
-                            row.push(fixed(item.gameLossRate )*100);
+                            row.push(fixedRate(item.gameLossRate ));
                             rows.push(row);
                         }
 
@@ -2985,7 +2982,7 @@ function area_ping(obj, areaContent) {
                     content.forEach(function (item) {
                         if (id == item.countyId) {
                             let row = [];
-                            row.push(i);
+                            row.push(i++);
                             row.push(item.probeName);
                             row.push(fixed(item.score));
                             row.push(fixed(item.pingIcmpDelay ));
@@ -2994,35 +2991,35 @@ function area_ping(obj, areaContent) {
                             row.push(fixed(item.pingIcmpJitter ));
                             row.push(fixed(item.pingIcmpJitterStd ));
                             row.push(fixed(item.pingIcmpJitterVar ));
-                            row.push(fixed(item.pingIcmpLossRate )*100);
+                            row.push(fixedRate(item.pingIcmpLossRate ));
                             row.push(fixed(item.pingTcpDelay ));
                             row.push(fixed(item.pingTcpDelayStd ));
                             row.push(fixed(item.pingTcpDelayVar ));
                             row.push(fixed(item.pingTcpJitter ));
                             row.push(fixed(item.pingTcpJitterStd ));
                             row.push(fixed(item.pingTcpJitterVar ));
-                            row.push(fixed(item.pingTcpLossRate )*100);
+                            row.push(fixedRate(item.pingTcpLossRate ) );
                             row.push(fixed(item.pingUdpDelay));
                             row.push(fixed(item.pingUdpDelayStd));
                             row.push(fixed(item.pingUdpDelayVar));
                             row.push(fixed(item.pingUdpJitter));
                             row.push(fixed(item.pingUdpJitterStd));
                             row.push(fixed(item.pingUdpJitterVar));
-                            row.push(fixed(item.pingUdpLossRate)*100);
+                            row.push(fixedRate(item.pingUdpLossRate) );
                             row.push(fixed(item.tracertIcmpDelay));
                             row.push(fixed(item.tracertIcmpDelayStd));
                             row.push(fixed(item.tracertIcmpDelayVar));
                             row.push(fixed(item.tracertIcmpJitter));
                             row.push(fixed(item.tracertIcmpJitterStd));
                             row.push(fixed(item.tracertIcmpJitterVar));
-                            row.push(fixed(item.tracertIcmpLossRate)*100);
+                            row.push(fixedRate(item.tracertIcmpLossRate) );
                             row.push(fixed(item.tracertTcpDelay));
                             row.push(fixed(item.tracertTcpDelayStd));
                             row.push(fixed(item.tracertTcpDelayVar));
                             row.push(fixed(item.tracertTcpJitter));
                             row.push(fixed(item.tracertTcpJitterStd));
                             row.push(fixed(item.tracertTcpJitterVar));
-                            row.push(fixed(item.tracertTcpLossRate)*100);
+                            row.push(fixedRate(item.tracertTcpLossRate) );
                             rows.push(row);
                         }
                     });
@@ -3168,7 +3165,7 @@ function area_quality(obj, areaContent) {
                     content.forEach(function (item) {
                         if (id == item.countyId) {
                             let row = [];
-                            row.push(i);
+                            row.push(i++);
                             row.push(item.probeName);
                             row.push(fixed(item.score));
                             row.push(fixed(item.slaTcpDelay));
@@ -3177,23 +3174,23 @@ function area_quality(obj, areaContent) {
                             row.push(fixed(item.slaTcpJitter));
                             row.push(fixed(item.slaTcpGJitter));
                             row.push(fixed(item.slaTcpRJitter));
-                            row.push(fixed(item.slaTcpLossRate)*100);
+                            row.push(fixedRate(item.slaTcpLossRate) );
                             row.push(fixed(item.slaUdpDelay));
                             row.push(fixed(item.slaUdpGDelay));
                             row.push(fixed(item.slaUdpRDelay));
                             row.push(fixed(item.slaUdpJitter));
                             row.push(fixed(item.slaUdpGJitter));
                             row.push(fixed(item.slaUdpRJitter));
-                            row.push(fixed(item.slaUdpLossRate)*100);
+                            row.push(fixedRate(item.slaUdpLossRate) );
                             row.push(fixed(item.dnsDelay));
-                            row.push(fixed(item.dnsSuccessRate)*100);
+                            row.push(fixedRate(item.dnsSuccessRate) );
                             row.push(fixed(item.dhcpDelay));
-                            row.push(fixed(item.dhcpSuccessRate)*100);
+                            row.push(fixedRate(item.dhcpSuccessRate) );
                             row.push(fixed(item.pppoeDelay));
-                            row.push(fixed(item.pppoeDropRate)*100);
-                            row.push(fixed(item.pppoeSuccessRate)*100);
+                            row.push(fixedRate(item.pppoeDropRate) );
+                            row.push(fixedRate(item.pppoeSuccessRate) );
                             row.push(fixed(item.radiusDelay));
-                            row.push(fixed(item.radiusSuccessRate)*100);
+                            row.push(fixedRate(item.radiusSuccessRate) );
                             rows.push(row);
                         }
                     });
@@ -3297,7 +3294,7 @@ function area_broswer(obj, areaContent) {
                     content.forEach(function (item) {
                         if (id == item.countyId) {
                             let row = [];
-                            row.push(i);
+                            row.push(i++);
                             row.push(item.probeName);
                             row.push(fixed(item.score));
                             row.push(fixed(item.webpageDnsDelay ));
@@ -3439,9 +3436,9 @@ function area_download(obj, areaContent) {
                     content.forEach(function (item) {
                         if (id == item.countyId) {
                             let row = [];
-                            row.push(i);
+                            row.push(i++);
                             row.push(item.probeName);
-                            row.push(item.score);
+                            row.push(item.score.toFixed(2));
                             row.push(fixed(item.webDownloadDnsDelay ));
                             row.push(fixed(item.webDownloadConnDelay ));
                             row.push(fixed(item.webDownloadHeadbyteDelay ));
@@ -3489,7 +3486,7 @@ function area_video(obj, areaContent) {
                 {title: '<div style="width:110px">探针名称</div>'},
                 {title: '<div style="width:70px">综合分数</div>'},
                 {title: '<div style="width:100px">DNS时延(ms)</div>'},
-                {title: '<div style="width:130px">连接WEB服务器时延(ms)</div>'},
+                {title: '<div style="width:150px">连接WEB服务器时延(ms)</div>'},
                 {title: '<div style="width:120px">web页面时延(ms)</div>'},
                 {title: '<div style="width:110px">首帧到达时延(ms)</div>'},
                 {title: '<div style="width:120px">首次缓冲时延(ms)</div>'},
@@ -3560,7 +3557,7 @@ function area_video(obj, areaContent) {
                     content.forEach(function (item) {
                         if (id == item.countyId) {
                             let row = [];
-                            row.push(i);
+                            row.push(i++);
                             row.push(item.probeName);
                             row.push(fixed(item.score));
                             row.push(fixed(item.webVideoDnsDelay ));
@@ -3570,7 +3567,7 @@ function area_video(obj, areaContent) {
                             row.push(fixed(item.webVideoInitBufferDelay ));
                             row.push(fixed(item.webVideoLoadDelay ));
                             row.push(fixed(item.webVideoTotalBufferDelay ));
-                            row.push(fixed(item.webVideoDownloadRate )*100);
+                            row.push(fixed(item.webVideoDownloadRate ) );
                             row.push(fixed(item.webVideoBufferTime ));
                             rows.push(row);
                         }
@@ -3671,13 +3668,13 @@ function area_game(obj, areaContent) {
                     content.forEach(function (item) {
                         if (id == item.countyId) {
                             let row = [];
-                            row.push(i);
+                            row.push(i++);
                             row.push(item.probeName);
                             row.push(fixed(item.score));
                             row.push(fixed(item.gameDnsDelay));
                             row.push(fixed(item.gamePacketDelay) );
                             row.push(fixed(item.gamePacketJitter ));
-                            row.push(fixed(item.gameLossRate )*100);
+                            row.push(fixedRate(item.gameLossRate ) );
                             rows.push(row);
                         }
                     });
@@ -3857,7 +3854,7 @@ function door_information(obj) {
                     doorContent.forEach(function (item) {
                         if (id == item.id) {
                             let row = [];
-                            row.push(i);
+                            row.push(i++);
                             row.push(item.probeName);
                             row.push(item.score.toFixed(2));
                             if (item.connectionScore != undefined) {
@@ -4033,7 +4030,7 @@ function door_ping(obj) {
                     // returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
                     // returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
                     // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
-                    returnData.data = probeContent;//返回的数据列表
+                    returnData.data = doorContent;//返回的数据列表
                     // // 重新整理返回数据以匹配表格
                     console.log(returnData);
                     let rows = [];
@@ -4041,7 +4038,7 @@ function door_ping(obj) {
                     doorContent.forEach(function (item) {
                         if (id == item.id) {
                             let row = [];
-                            row.push(i);
+                            row.push(i++);
                             row.push(item.probeName);
                             row.push(fixed(item.score));
                             row.push(fixed(item.pingIcmpDelay ));
@@ -4050,35 +4047,35 @@ function door_ping(obj) {
                             row.push(fixed(item.pingIcmpJitter ));
                             row.push(fixed(item.pingIcmpJitterStd ));
                             row.push(fixed(item.pingIcmpJitterVar ));
-                            row.push(fixed(item.pingIcmpLossRate )*100);
+                            row.push(fixedRate(item.pingIcmpLossRate ) );
                             row.push(fixed(item.pingTcpDelay ));
                             row.push(fixed(item.pingTcpDelayStd ));
                             row.push(fixed(item.pingTcpDelayVar ));
                             row.push(fixed(item.pingTcpJitter ));
                             row.push(fixed(item.pingTcpJitterStd ));
                             row.push(fixed(item.pingTcpJitterVar ));
-                            row.push(fixed(item.pingTcpLossRate )*100);
+                            row.push(fixedRate(item.pingTcpLossRate ) );
                             row.push(fixed(item.pingUdpDelay));
                             row.push(fixed(item.pingUdpDelayStd));
                             row.push(fixed(item.pingUdpDelayVar));
                             row.push(fixed(item.pingUdpJitter));
                             row.push(fixed(item.pingUdpJitterStd));
                             row.push(fixed(item.pingUdpJitterVar));
-                            row.push(fixed(item.pingUdpLossRate)*100);
+                            row.push(fixedRate(item.pingUdpLossRate) );
                             row.push(fixed(item.tracertIcmpDelay));
                             row.push(fixed(item.tracertIcmpDelayStd));
                             row.push(fixed(item.tracertIcmpDelayVar));
                             row.push(fixed(item.tracertIcmpJitter));
                             row.push(fixed(item.tracertIcmpJitterStd));
                             row.push(fixed(item.tracertIcmpJitterVar));
-                            row.push(fixed(item.tracertIcmpLossRate)*100);
+                            row.push(fixedRate(item.tracertIcmpLossRate) );
                             row.push(fixed(item.tracertTcpDelay));
                             row.push(fixed(item.tracertTcpDelayStd));
                             row.push(fixed(item.tracertTcpDelayVar));
                             row.push(fixed(item.tracertTcpJitter));
                             row.push(fixed(item.tracertTcpJitterStd));
                             row.push(fixed(item.tracertTcpJitterVar));
-                            row.push(fixed(item.tracertTcpLossRate)*100);
+                            row.push(fixedRate(item.tracertTcpLossRate) );
                             rows.push(row);
                         }
                     });
@@ -4215,7 +4212,7 @@ function door_quality(obj) {
                     // returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
                     // returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
                     // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
-                    returnData.data = probeContent;//返回的数据列表
+                    returnData.data = doorContent;//返回的数据列表
                     // // 重新整理返回数据以匹配表格
                     console.log(returnData);
                     let rows = [];
@@ -4223,7 +4220,7 @@ function door_quality(obj) {
                     doorContent.forEach(function (item) {
                         if (id == item.id) {
                             let row = [];
-                            row.push(i);
+                            row.push(i++);
                             row.push(item.probeName);
                             row.push(fixed(item.score));
                             row.push(fixed(item.slaTcpDelay));
@@ -4232,23 +4229,23 @@ function door_quality(obj) {
                             row.push(fixed(item.slaTcpJitter));
                             row.push(fixed(item.slaTcpGJitter));
                             row.push(fixed(item.slaTcpRJitter));
-                            row.push(fixed(item.slaTcpLossRate)*100);
+                            row.push(fixedRate(item.slaTcpLossRate) );
                             row.push(fixed(item.slaUdpDelay));
                             row.push(fixed(item.slaUdpGDelay));
                             row.push(fixed(item.slaUdpRDelay));
                             row.push(fixed(item.slaUdpJitter));
                             row.push(fixed(item.slaUdpGJitter));
                             row.push(fixed(item.slaUdpRJitter));
-                            row.push(fixed(item.slaUdpLossRate)*100);
+                            row.push(fixedRate(item.slaUdpLossRate) );
                             row.push(fixed(item.dnsDelay));
-                            row.push(fixed(item.dnsSuccessRate)*100);
+                            row.push(fixedRate(item.dnsSuccessRate) );
                             row.push(fixed(item.dhcpDelay));
-                            row.push(fixed(item.dhcpSuccessRate)*100);
+                            row.push(fixedRate(item.dhcpSuccessRate) );
                             row.push(fixed(item.pppoeDelay));
-                            row.push(fixed(item.pppoeDropRate));
-                            row.push(fixed(item.pppoeSuccessRate)*100);
+                            row.push(fixedRate(item.pppoeDropRate));
+                            row.push(fixedRate(item.pppoeSuccessRate) );
                             row.push(fixed(item.radiusDelay));
-                            row.push(fixed(item.radiusSuccessRate)*100);
+                            row.push(fixedRate(item.radiusSuccessRate) );
                             rows.push(row);
                         }
 
@@ -4344,7 +4341,7 @@ function door_broswer(obj) {
                     // returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
                     // returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
                     // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
-                    returnData.data = probeContent;//返回的数据列表
+                    returnData.data = doorContent;//返回的数据列表
                     // // 重新整理返回数据以匹配表格
                     console.log(returnData);
                     let rows = [];
@@ -4352,7 +4349,7 @@ function door_broswer(obj) {
                     doorContent.forEach(function (item) {
                         if (id == item.id) {
                             let row = [];
-                            row.push(i);
+                            row.push(i++);
                             row.push(item.probeName);
                             row.push(fixed(item.score));
                             row.push(fixed(item.webpageDnsDelay ));
@@ -4486,7 +4483,7 @@ function door_download(obj) {
                     // returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
                     // returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
                     // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
-                    returnData.data = probeContent;//返回的数据列表
+                    returnData.data = doorContent;//返回的数据列表
                     // // 重新整理返回数据以匹配表格
                     console.log(returnData);
                     let rows = [];
@@ -4494,9 +4491,9 @@ function door_download(obj) {
                     doorContent.forEach(function (item) {
                         if (id == item.id) {
                             let row = [];
-                            row.push(i);
+                            row.push(i++);
                             row.push(item.probeName);
-                            row.push(item.score);
+                            row.push(item.score.toFixed);
                             row.push(fixed(item.webDownloadDnsDelay ));
                             row.push(fixed(item.webDownloadConnDelay ));
                             row.push(fixed(item.webDownloadHeadbyteDelay ));
@@ -4544,7 +4541,7 @@ function door_video(obj) {
                 {title: '<div style="width:110px">探针名称</div>'},
                 {title: '<div style="width:70px">综合分数</div>'},
                 {title: '<div style="width:100px">DNS时延(ms)</div>'},
-                {title: '<div style="width:130px">连接WEB服务器时延(ms)</div>'},
+                {title: '<div style="width:150px">连接WEB服务器时延(ms)</div>'},
                 {title: '<div style="width:120px">web页面时延(ms)</div>'},
                 {title: '<div style="width:110px">首帧到达时延(ms)</div>'},
                 {title: '<div style="width:120px">首次缓冲时延(ms)</div>'},
@@ -4607,15 +4604,15 @@ function door_video(obj) {
                     // returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
                     // returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
                     // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
-                    returnData.data = probeContent;//返回的数据列表
+                    returnData.data = doorContent;//返回的数据列表
                     // // 重新整理返回数据以匹配表格
                     console.log(returnData);
                     let rows = [];
                     var i = 1;
-                    probeContent.forEach(function (item) {
+                    doorContent.forEach(function (item) {
                         if (id == item.id) {
                             let row = [];
-                            row.push(i);
+                            row.push(i++);
                             row.push(item.probeName);
                             row.push(fixed(item.score));
                             row.push(fixed(item.webVideoDnsDelay ));
@@ -4625,7 +4622,7 @@ function door_video(obj) {
                             row.push(fixed(item.webVideoInitBufferDelay ));
                             row.push(fixed(item.webVideoLoadDelay ));
                             row.push(fixed(item.webVideoTotalBufferDelay ));
-                            row.push(fixed(item.webVideoDownloadRate )*100);
+                            row.push(fixed(item.webVideoDownloadRate ) );
                             row.push(fixed(item.webVideoBufferTime ));
                             rows.push(row);
                         }
@@ -4719,7 +4716,7 @@ function door_game(obj) {
                     // returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
                     // returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
                     // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
-                    returnData.data = probeContent;//返回的数据列表
+                    returnData.data = doorContent;//返回的数据列表
                     // // 重新整理返回数据以匹配表格
                     console.log(returnData);
                     let rows = [];
@@ -4727,13 +4724,13 @@ function door_game(obj) {
                     doorContent.forEach(function (item) {
                         if (id == item.id) {
                             let row = [];
-                            row.push(i);
+                            row.push(i++);
                             row.push(item.probeName);
                             row.push(fixed(item.score));
                             row.push(fixed(item.gameDnsDelay));
                             row.push(fixed(item.gamePacketDelay) );
                             row.push(fixed(item.gamePacketJitter ));
-                            row.push(fixed(item.gameLossRate )*100);
+                            row.push(fixedRate(item.gameLossRate ) );
                             rows.push(row);
                         }
 
@@ -4802,8 +4799,15 @@ function fixed(value) {
         return ''
     }else if(value==0){
         return  value
-    }
-    else{
+    } else{
         return value.toFixed(2)
+    }
+}
+function fixedRate(value) {
+    debugger
+    if(value==null){
+        return ''
+    } else{
+        return (value*100).toFixed(2)
     }
 }
