@@ -665,7 +665,7 @@ function ping(val) {
                 paging: false,
                 serverSide: true,
                 info: false,
-                ordering: false, /*禁用排序功能*/
+                // ordering: false, /*禁用排序功能*/
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,

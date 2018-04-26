@@ -154,7 +154,7 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 		map1.put("ava_start",map.get("ava_start"));
 		map1.put("ava_terminal",map.get("ava_start"));
 		map1.put("startTime",map.get("starTime"));
-		map1.put("terminalTime","00:00:00");
+		map1.put("terminalTime","23:00:00");
 		map2.put("ava_start",map.get("ava_terminal"));
 		map2.put("ava_terminal",map.get("ava_terminal"));
 		map2.put("startTime","00:00:00");
@@ -216,7 +216,7 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 		map1.put("ava_start",map.get("ava_start"));
 		map1.put("ava_terminal",map.get("ava_start"));
 		map1.put("startTime",map.get("starTime"));
-		map1.put("terminalTime","00:00:00");
+		map1.put("terminalTime","23:00:00");
 		map2.put("ava_start",map.get("ava_terminal"));
 		map2.put("ava_terminal",map.get("ava_terminal"));
 		map2.put("startTime","00:00:00");
@@ -314,7 +314,7 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 		map1.put("ava_start",map.get("ava_start"));
 		map1.put("ava_terminal",map.get("ava_start"));
 		map1.put("startTime",map.get("starTime"));
-		map1.put("terminalTime","00:00:00");
+		map1.put("terminalTime","23:00:00");
 		map2.put("ava_start",map.get("ava_terminal"));
 		map2.put("ava_terminal",map.get("ava_terminal"));
 		map2.put("startTime","00:00:00");
@@ -400,7 +400,7 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 		map1.put("ava_start",map.get("ava_start"));
 		map1.put("ava_terminal",map.get("ava_start"));
 		map1.put("startTime",map.get("starTime"));
-		map1.put("terminalTime","00:00:00");
+		map1.put("terminalTime","23:00:00");
 		map2.put("ava_start",map.get("ava_terminal"));
 		map2.put("ava_terminal",map.get("ava_terminal"));
 		map2.put("startTime","00:00:00");
@@ -536,7 +536,7 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 		map1.put("ava_start",map.get("ava_start"));
 		map1.put("ava_terminal",map.get("ava_start"));
 		map1.put("startTime",map.get("starTime"));
-		map1.put("terminalTime","00:00:00");
+		map1.put("terminalTime","23:00:00");
 		map2.put("ava_start",map.get("ava_terminal"));
 		map2.put("ava_terminal",map.get("ava_terminal"));
 		map2.put("startTime","00:00:00");
@@ -597,7 +597,7 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 		map1.put("ava_start",map.get("ava_start"));
 		map1.put("ava_terminal",map.get("ava_start"));
 		map1.put("startTime",map.get("starTime"));
-		map1.put("terminalTime","00:00:00");
+		map1.put("terminalTime","23:00:00");
 		map2.put("ava_start",map.get("ava_terminal"));
 		map2.put("ava_terminal",map.get("ava_terminal"));
 		map2.put("startTime","00:00:00");

@@ -271,17 +271,37 @@ public class RecordHourTracertController {
 		} catch (RuntimeException e) {
 			throw new RRException("内部参数错误，请重试！");
 		}
-		int countyId = Integer.parseInt(map.get("county_id").toString());
-		List<ProbeEntity> probeList = probeService.queryProbe(countyId);
-		System.out.println(probeList);
-		List<ScoreEntity> scoreList=new ArrayList<>();
-		for(int i=0;i<probeList.size();i++){
-			map.put("probe_id",probeList.get(i).getId());
-			List<ScoreEntity> list = recordHourRadiusService.calculateDayScore(map);
-			if(list.size()!=0) {
-				scoreList.add(list.get(0));
-			}
+		String dateStr = map.get("ava_start").toString();
+		String dateStr2 = map.get("ava_terminal").toString();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		int dateDifferent = 0;
+		try {
+			Date date2 = format.parse(dateStr2);
+			Date date = format.parse(dateStr);
+			dateDifferent = recordHourPingService.differentDays(date, date2);
+		} catch (ParseException e) {
+			e.printStackTrace();
 		}
+		List<ScoreEntity> scoreList=new ArrayList<>();
+
+		if(dateDifferent==0){
+			scoreList = recordHourRadiusService.calculateHourScore(map);
+		}else if(dateDifferent==1){
+			scoreList = recordHourRadiusService.calculateDayHourScore(map);
+		}else{
+			scoreList = recordHourRadiusService.calculateDayScore(map);
+		}
+//		int countyId = Integer.parseInt(map.get("county_id").toString());
+//		List<ProbeEntity> probeList = probeService.queryProbe(countyId);
+//		System.out.println(probeList);
+//		List<ScoreEntity> scoreList=new ArrayList<>();
+//		for(int i=0;i<probeList.size();i++){
+//			map.put("probe_id",probeList.get(i).getId());
+//			List<ScoreEntity> list = recordHourRadiusService.calculateDayScore(map);
+//			if(list.size()!=0) {
+//				scoreList.add(list.get(0));
+//			}
+//		}
 		return R.ok().put("scoreList", scoreList);
 	}
 

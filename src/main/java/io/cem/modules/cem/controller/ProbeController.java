@@ -59,6 +59,9 @@ public class ProbeController {
         return R.ok().put("page", pageUtil);
     }
 
+    /**
+     * 查看在线探针
+     */
     @RequestMapping("/listOnline/{id}")
     @RequiresPermissions("probe:list")
     public R listOnline(@PathVariable("id") Integer taskId) {
@@ -66,6 +69,9 @@ public class ProbeController {
         return R.ok().put("probe", probeList);
     }
 
+    /**
+     * 查看核心探针
+     */
     @RequestMapping("/listCenter/{id}")
     @RequiresPermissions("probe:list")
     public R listCenter(@PathVariable("id") Integer taskId) {
@@ -73,13 +79,7 @@ public class ProbeController {
         return R.ok().put("probe", probeList);
     }
 
-    //    @RequestMapping("/download")
-//    @RequiresPermissions("probe:download")
-//    public void downloadProbe(HttpServletResponse response) throws RRException {
-//        Map<String, Object> map = new HashMap<String, Object>();
-//        List<ProbeEntity> list = probeService.queryList(map);
-//        CollectionToFile.collectionToFile(response, list, ProbeEntity.class);
-//    }
+
     @RequestMapping("/download/{probedata}")
     @RequiresPermissions("probe:download")
     public void downloadProbe(HttpServletResponse response, @PathVariable String probedata) throws RRException {
@@ -93,7 +93,6 @@ public class ProbeController {
         List<ProbeEntity> probeList = probeService.queryProbeList(map);
         CollectionToFile.collectionToFile(response, probeList, ProbeEntity.class);
     }
-
 
     /**
      * 按区县信息搜索探针信息

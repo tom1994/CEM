@@ -302,6 +302,13 @@
                                                 class="glyphicon glyphicon-trash Btn"></span>批量删除
                                     </button>
                                     #end
+                                    #if($shiro.hasPermission("probe:update"))
+                                    <button type="button" class="btn btn-sm btn-success"
+                                            onclick="update_port()">
+                                        <span
+                                                class="glyphicon glyphicon-trash Btn"></span>重启探针
+                                    </button>
+                                    #end
                                     #if($shiro.hasPermission("probe:output"))
                                     <button type="button" class="btn btn-sm btn-success" onclick="out()"><span
                                             class="glyphicon glyphicon-open"></span>导出

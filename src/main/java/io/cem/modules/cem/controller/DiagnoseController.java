@@ -94,28 +94,28 @@ public class DiagnoseController {
             }
         } else if(map.get("county_id") != null && !map.get("county_id").equals("")) {
             if (dateDifferent > 5) {
-                scoreList = recordHourRadiusService.diagnoseDay(map, scoreList);
+                scoreList=recordHourRadiusService.diagnoseDay(map, scoreList);
             } else if (dateDifferent>=3) {
-                scoreList = recordHourRadiusService.diagnoseDayHour(map, scoreList);
+                scoreList= recordHourRadiusService.diagnoseDayHour(map, scoreList);
             } else {
-                scoreList = recordHourRadiusService.diagnoseHour(map, scoreList);
+                scoreList=recordHourRadiusService.diagnoseHour(map, scoreList);
             }
 
         }else if(map.get("city_id") != null && !map.get("city_id").equals("")){
             if (dateDifferent > 5) {
-                scoreList = recordHourRadiusService.diagnoseDay(map, scoreList);
+                scoreList=recordHourRadiusService.diagnoseDay(map, scoreList);
             } else if (dateDifferent>=3) {
-                scoreList = recordHourRadiusService.diagnoseDayHour(map, scoreList);
+                scoreList= recordHourRadiusService.diagnoseDayHour(map, scoreList);
             } else {
-                scoreList = recordHourRadiusService.diagnoseHour(map, scoreList);
+                scoreList=recordHourRadiusService.diagnoseHour(map, scoreList);
             }
         } else{
             if (dateDifferent > 5) {
-                scoreList = (recordHourRadiusService.diagnoseDay(map, scoreList));
+                scoreList=recordHourRadiusService.diagnoseDay(map, scoreList);
             } else if (dateDifferent>=3) {
-                scoreList = ( recordHourRadiusService.diagnoseDayHour(map, scoreList));
+                scoreList= recordHourRadiusService.diagnoseDayHour(map, scoreList);
             } else {
-                scoreList = (recordHourRadiusService.diagnoseHour(map, scoreList));
+                scoreList=recordHourRadiusService.diagnoseHour(map, scoreList);
             }
         }
 

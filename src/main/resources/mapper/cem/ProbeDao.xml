@@ -203,6 +203,7 @@
         a.data_name AS type_name,
         b.data_name AS status_name,
         c.data_name AS iptype_name,
+        d.data_name AS isp_name,
         layer.layer_name AS layer_name,
         parent.parent_name AS upstream_name,
         probe_group.pg_name AS group_name
@@ -219,6 +220,8 @@
         ON (probe.status = b.data_id AND b.dic_type_id = 3)
         LEFT JOIN dic_data c
         ON (probe.ip_type = c.data_id AND c.dic_type_id = 2)
+        LEFT JOIN dic_data d
+        ON (probe.isp = d.data_id AND d.dic_type_id = 4)
         LEFT JOIN layer
         ON probe.access_layer = layer.layer_tag
         LEFT JOIN(SELECT probe.probe_name AS parent_name,probe.id AS parent_id FROM probe
