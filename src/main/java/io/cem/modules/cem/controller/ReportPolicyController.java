@@ -93,31 +93,32 @@ public class ReportPolicyController {
 		return R.ok().put("page", pageUtil);
 	}
 
-	@RequestMapping("/download/{reportdata}")
+	@RequestMapping("/download/{probedata}")
 	@RequiresPermissions("reportpolicy:download")
-	public void downloadProbe(HttpServletResponse response, @PathVariable("reportdata") Integer[] reportdata) throws RRException {
+	public void downloadProbe(HttpServletResponse response, @PathVariable String probedata) throws RRException {
 		Map<String, Object> map = new HashMap<String, Object>();
-		System.out.println(reportdata[0]);
-		System.out.println(reportdata[1]);
-		System.out.println(reportdata[2]);
-		ReportPolicyEntity detail = reportPolicyService.queryObject(reportdata[0]);
+		JSONObject jsonobject = JSONObject.parseObject(probedata);
+		try {
+			map.putAll(JSONUtils.jsonToMap(jsonobject));
+		} catch (RuntimeException e) {
+			throw new RRException("内部参数错误，请重试！");
+		}
+		ReportPolicyEntity detail = reportPolicyService.queryObject(Integer.parseInt(map.get("id").toString()));
 		int service = detail.getServiceType();
 		int queryType = detail.getQueryType();
-		String startDate = "";
-		String terminalDate = "";
-		try {
-			startDate=reportPolicyService.strToDateFormat(reportdata[1].toString());
-			terminalDate=reportPolicyService.strToDateFormat(reportdata[2].toString());
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
+//		String startDate = "";
+//		String terminalDate = "";
+//		try {
+//			startDate=reportPolicyService.strToDateFormat(reportdata[1].toString());
+//			terminalDate=reportPolicyService.strToDateFormat(reportdata[2].toString());
+//		}catch (Exception e) {
+//			e.printStackTrace();
+//		}
 
 		map.put("probe_id",detail.getProbeId());
 		map.put("service_type",detail.getServiceType());
 		map.put("start_time",detail.getStartTime());
 		map.put("end_time",detail.getEndTime());
-		map.put("startDate",startDate);
-		map.put("terminalDate",terminalDate);
 
 		if (queryType== 1) {
 			if(service == 1||service==2||service==3){
