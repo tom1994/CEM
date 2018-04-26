@@ -408,15 +408,15 @@ public class RecordHourWebPageServiceImpl implements RecordHourWebPageService {
 				scoreLayer.setFail(webPageList.get(i).getFail());
 				scoreLayer.setTotal(webPageList.get(i).getTotal());
 				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
-//				scoreBase.setWebpageDnsDelay(webPageList.get(i).getDnsDelay());
-//				scoreBase.setWebpageConnDelay(webPageList.get(i).getWebpageConnDelay());
-//				scoreBase.setWebpageHeadbyteDelay(webPageList.get(i).getWebpageHeadbyteDelay());
-//				scoreBase.setWebpagePageFileDelay(webPageList.get(i).getWebpagePageFileDelay());
-//				scoreBase.setWebpageRedirectDelay(webPageList.get(i).getWebpageRedirectDelay());
-//				scoreBase.setWebpageAboveFoldDelay(webPageList.get(i).getWebpageAboveFoldDelay());
-//				scoreBase.setWebpagePageElementDelay(webPageList.get(i).getWebpagePageElementDelay());
-//				scoreBase.setWebpageLoadDelay(webPageList.get(i).getWebpageLoadDelay());
-//				scoreBase.setWebpageDownloadRate(webPageList.get(i).getWebpageDownloadRate());
+				scoreBase.setWebpageDnsDelay(webPageList.get(i).getWebpageDnsDelay());
+				scoreBase.setWebpageConnDelay(webPageList.get(i).getWebpageConnDelay());
+				scoreBase.setWebpageHeadbyteDelay(webPageList.get(i).getWebpageHeadbyteDelay());
+				scoreBase.setWebpagePageFileDelay(webPageList.get(i).getWebpagePageFileDelay());
+				scoreBase.setWebpageRedirectDelay(webPageList.get(i).getWebpageRedirectDelay());
+				scoreBase.setWebpageAboveFoldDelay(webPageList.get(i).getWebpageAboveFoldDelay());
+				scoreBase.setWebpagePageElementDelay(webPageList.get(i).getWebpagePageElementDelay());
+				scoreBase.setWebpageLoadDelay(webPageList.get(i).getWebpageLoadDelay());
+				scoreBase.setWebpageDownloadRate(webPageList.get(i).getWebpageDownloadRate());
 				scoreBase.setScore(webPageList.get(i).getScore());
 				scoreBase.setBase(webPageList.get(i).getBase());
 				if (!connection.containsKey(scoreLayer)) {
@@ -425,15 +425,15 @@ public class RecordHourWebPageServiceImpl implements RecordHourWebPageService {
 
 				} else {
 					ScoreBaseEntity scoreBaseDul = connection.get(scoreLayer);
-//					scoreBase.setWebpageDnsDelay(scoreBase.getDnsDelay());
-//					scoreBase.setWebpageConnDelay(scoreBase.getWebpageConnDelay());
-//					scoreBase.setWebpageHeadbyteDelay(scoreBase.getWebpageHeadbyteDelay());
-//					scoreBase.setWebpagePageFileDelay(scoreBase.getWebpagePageFileDelay());
-//					scoreBase.setWebpageRedirectDelay(scoreBase.getWebpageRedirectDelay());
-//					scoreBase.setWebpageAboveFoldDelay(scoreBase.getWebpageAboveFoldDelay());
-//					scoreBase.setWebpagePageElementDelay(scoreBase.getWebpagePageElementDelay());
-//					scoreBase.setWebpageLoadDelay(scoreBase.getWebpageLoadDelay());
-//					scoreBase.setWebpageDownloadRate(scoreBase.getWebpageDownloadRate());
+					scoreBase.setWebpageDnsDelay(scoreBase.getWebpageDnsDelay());
+					scoreBase.setWebpageConnDelay(scoreBase.getWebpageConnDelay());
+					scoreBase.setWebpageHeadbyteDelay(scoreBase.getWebpageHeadbyteDelay());
+					scoreBase.setWebpagePageFileDelay(scoreBase.getWebpagePageFileDelay());
+					scoreBase.setWebpageRedirectDelay(scoreBase.getWebpageRedirectDelay());
+					scoreBase.setWebpageAboveFoldDelay(scoreBase.getWebpageAboveFoldDelay());
+					scoreBase.setWebpagePageElementDelay(scoreBase.getWebpagePageElementDelay());
+					scoreBase.setWebpageLoadDelay(scoreBase.getWebpageLoadDelay());
+					scoreBase.setWebpageDownloadRate(scoreBase.getWebpageDownloadRate());
 					scoreBase.setScore((scoreBase.getScore()+scoreBaseDul.getScore())/2);
 					scoreBase.setBase(scoreBase.getBase());
 
@@ -464,6 +464,15 @@ public class RecordHourWebPageServiceImpl implements RecordHourWebPageService {
 					finalScore.setPort(ite.getPort());
 					finalScore.setRecordTime(ite.getRecordTime());
 					finalScore.setRecordDate(ite.getRecordDate());
+					finalScore.setWebpageDnsDelay(connection.get(ite).getWebpageDnsDelay());
+					finalScore.setWebpageConnDelay(connection.get(ite).getWebpageConnDelay());
+					finalScore.setWebpageHeadbyteDelay(connection.get(ite).getWebpageHeadbyteDelay());
+					finalScore.setWebpagePageFileDelay(connection.get(ite).getWebpagePageFileDelay());
+					finalScore.setWebpageRedirectDelay(connection.get(ite).getWebpageRedirectDelay());
+					finalScore.setWebpageAboveFoldDelay(connection.get(ite).getWebpageAboveFoldDelay());
+					finalScore.setWebpagePageElementDelay(connection.get(ite).getWebpagePageElementDelay());
+					finalScore.setWebpageLoadDelay(connection.get(ite).getWebpageLoadDelay());
+					finalScore.setWebpageDownloadRate(connection.get(ite).getWebpageDownloadRate());
 					finalScore.setScore(connection.get(ite).getScore());
 					finalScore.setBase(connection.get(ite).getBase());
 					finalScore.setBase(Double.parseDouble(pros.getValue("browseweight")));
