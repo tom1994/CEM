@@ -232,40 +232,37 @@ function getProbeCity(cityid) {
 //download
 function download_this() {
     var id = $("#SaveId").val();
-    reportdata[0] = id;
+    var search = new Object();
+    search.id = id;
     var spJson = getFormJson($('#download_form'));
-    console.log(spJson);
     if(spJson.start_day!=''&&spJson.end_day!='' ){
-        var number=spJson.start_day.split("-");
-        var start_day=number[0]+number[1]+number[2];
-        var number1=spJson.end_day.split("-");
-        var end_day=number1[0]+number1[1]+number1[2];
-        reportdata[1] = start_day;
-        reportdata[2] = end_day;
+        search.startDate = spJson.start_day;
+        search.terminalDate = spJson.end_day;
     }else{
         var today = new Date();
         var thisYear=today.getFullYear();
         var lastYear=today.getFullYear()-1;
         var month=today.getMonth()+1;
         if(spJson.selectMonth>=month){
-            var start_day=lastYear+spJson.selectMonth+"01";
+            var start_day=lastYear+"-"+spJson.selectMonth+"-"+"01";
             var temp=new Date(lastYear,spJson.selectMonth,0);
             var last_day_in_month = temp.getDate()
-            var end_day= lastYear+spJson.selectMonth+last_day_in_month;
-            reportdata[1] = start_day;
-            reportdata[2] = end_day;
+            var end_day= lastYear+"-"+spJson.selectMonth+"-"+last_day_in_month;
+            search.startDate = start_day;
+            search.terminalDate = end_day;
 
         }else{
-            var start_day=thisYear+spJson.selectMonth+"01";
+            var start_day=thisYear+"-"+spJson.selectMonth+"-"+"01";
             var temp=new Date(thisYear,spJson.selectMonth,0);
             var last_day_in_month = temp.getDate()
-            var end_day= thisYear+spJson.selectMonth+last_day_in_month;
-            reportdata[1] = start_day;
-            reportdata[2] = end_day;
+            var end_day= thisYear+"-"+spJson.selectMonth+"-"+last_day_in_month;
+            search.startDate =  start_day;
+            search.terminalDate =  end_day;
         }
     }
-    // $('#download+obj.id').attr('href','../../cem/probe/download/'+id);
-    document.getElementById(download+id).href = encodeURI('../../reportpolicy/download/'+reportdata);
+    var probedata = JSON.stringify(search);
+    console.log("eeeeee"+probedata);
+    document.getElementById(download+id).href = encodeURI('../../reportpolicy/download/'+probedata);
     document.getElementById(download+id).click();
     $('#myModal_download').modal('hide');
     // $("#download+obj.id").trigger("click");

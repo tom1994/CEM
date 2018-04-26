@@ -228,7 +228,7 @@
 		AND rht.port = #{port}
         AND rht.probe_id = #{probe_id}
         GROUP BY
-        rht.port,rht.probe_id
+        rht.port,rht.probe_id,rht.service_type
     </select>
 
 	<select id="queryDayExitList" resultType="io.cem.modules.cem.entity.RecordHourTracertEntity">
@@ -261,7 +261,7 @@
 		AND record_day_tracert.port = #{port}
 		AND record_day_tracert.probe_id = #{probe_id}
 		GROUP BY
-		record_day_tracert.port,record_day_tracert.probe_id
+		record_day_tracert.port,record_day_tracert.probe_id,record_day_tracert.service_type
 	</select>
 	
  	<select id="queryTotal" resultType="int">
