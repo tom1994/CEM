@@ -867,13 +867,14 @@ var probetable = new Vue({
             paging: true,
             serverSide: true,
             info: false,
-            bProcessing: true,
+
             order:[[ 6, 'asc' ]],
             // bLoadingRecords: "载入中...",
             // ordering: false, /*禁用排序功能*/
             /*bInfo: false,*/
             /*bLengthChange: false,*/    /*禁用Show entries*/
             scroll: false,
+            bProcessing: true,
             oLanguage: {
                 sEmptyTable: "No data available in table",
                 sZeroRecords:"No data available in table",
@@ -928,7 +929,7 @@ var probetable = new Vue({
                             row.push(item.targetName);
                             row.push(item.score.toFixed(2));
                             row.push('<a class="fontcolor" onclick="update_this(this)" id=' + item.id + ' type=' + st.get(item.serviceType) + ' >详情</a>&nbsp;' +
-                                '<a class="fontcolor"   onclick="diagnose(this)" id=' + item.id + '>诊断</a>'); //Todo:完成详情与诊断
+                                '<a class="fontcolor"   onclick="diagnose(this)" id=' + item.id + ' type='+item.serviceType+' target='+item.targetId+'  name='+item.targetName+'>诊断</a>'); //Todo:完成详情与诊断
                             rows.push(row);
                         });
                         returnData.data = rows;
@@ -1583,7 +1584,7 @@ var getProbeCity = function (cityid) {
 
 function diagnose(obj) {
     console.log(obj)
-    location.href = "/diagnoseshow/setting?probeId="+obj.id+"&serviceType="+obj.serviceType+"&targetId="+obj.targetId+"&targetName="+obj.targetName;
+    location.href = "/diagnoseshow/setting?probeId="+obj.id+"&serviceType="+obj.type+"&targetId="+obj.target+"&targetName="+obj.name;
 }
 
 
@@ -2251,7 +2252,7 @@ function broswer(obj) {
                             row.push(fixed(item.webpagePageFileDelay ));
                             row.push(fixed(item.webpageRedirectDelay ));
                             row.push(fixed(item.webpageAboveFoldDelay ));
-                            row.push(fixed(item.loadDelay) );
+                            row.push(fixed(item.webpageLoadDelay) );
                             row.push(fixed(item.webpageDownloadRate ));
                             rows.push(row);
                         }
@@ -2771,9 +2772,9 @@ function area_information(obj, areaContent) {
                 data: vm.rows,
                 searching: false,
                 paging: false,
-                serverSide: true,
+                // serverSide: true,
                 info: false,
-                ordering: false, /*禁用排序功能*/
+                // ordering: false, /*禁用排序功能*/
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
@@ -2956,9 +2957,9 @@ function area_ping(obj, areaContent) {
                 },
                 searching: false,
                 paging: false,
-                serverSide: true,
+                // serverSide: true,
                 info: false,
-                ordering: false, /*禁用排序功能*/
+                // ordering: false, /*禁用排序功能*/
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
@@ -3139,9 +3140,9 @@ function area_quality(obj, areaContent) {
                 },
                 searching: false,
                 paging: false,
-                serverSide: true,
+                // serverSide: true,
                 info: false,
-                ordering: false, /*禁用排序功能*/
+                // ordering: false, /*禁用排序功能*/
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
@@ -3268,9 +3269,9 @@ function area_broswer(obj, areaContent) {
                 data: vm.rows,
                 searching: false,
                 paging: false,
-                serverSide: true,
+                // serverSide: true,
                 info: false,
-                ordering: false, /*禁用排序功能*/
+                // ordering: false, /*禁用排序功能*/
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
@@ -3303,7 +3304,7 @@ function area_broswer(obj, areaContent) {
                             row.push(fixed(item.webpagePageFileDelay ));
                             row.push(fixed(item.webpageRedirectDelay ));
                             row.push(fixed(item.webpageAboveFoldDelay ));
-                            row.push(fixed(item.loadDelay) );
+                            row.push(fixed(item.webpageLoadDelay) );
                             row.push(fixed(item.webpageDownloadRate ));
                             rows.push(row);
                         }
@@ -3410,9 +3411,9 @@ function area_download(obj, areaContent) {
                 },
                 searching: false,
                 paging: false,
-                serverSide: true,
+                // serverSide: true,
                 info: false,
-                ordering: false, /*禁用排序功能*/
+                // ordering: false, /*禁用排序功能*/
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
@@ -3531,9 +3532,9 @@ function area_video(obj, areaContent) {
                 data: vm.rows,
                 searching: false,
                 paging: false,
-                serverSide: true,
+                // serverSide: true,
                 info: false,
-                ordering: false, /*禁用排序功能*/
+                // ordering: false, /*禁用排序功能*/
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
@@ -3642,9 +3643,9 @@ function area_game(obj, areaContent) {
                 data: vm.rows,
                 searching: false,
                 paging: false,
-                serverSide: true,
+                // serverSide: true,
                 info: false,
-                ordering: false, /*禁用排序功能*/
+                // ordering: false, /*禁用排序功能*/
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
@@ -3666,6 +3667,7 @@ function area_game(obj, areaContent) {
                     let rows = [];
                     var i = 1;
                     content.forEach(function (item) {
+                        debugger
                         if (id == item.countyId) {
                             let row = [];
                             row.push(i++);
@@ -4358,7 +4360,7 @@ function door_broswer(obj) {
                             row.push(fixed(item.webpagePageFileDelay ));
                             row.push(fixed(item.webpageRedirectDelay ));
                             row.push(fixed(item.webpageAboveFoldDelay ));
-                            row.push(fixed(item.loadDelay) );
+                            row.push(fixed(item.webpageLoadDelay) );
                             row.push(fixed(item.webpageDownloadRate ));
                             rows.push(row);
                         }
