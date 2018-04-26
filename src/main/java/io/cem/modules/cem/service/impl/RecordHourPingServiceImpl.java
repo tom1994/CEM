@@ -1445,13 +1445,13 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 							finalScore.setTracertIcmpJitterVar(map1.get(typ).getTracertIcmpJitterVar());
 							finalScore.setTracertIcmpLossRate(map1.get(typ).getTracertIcmpLossRate());
 						} else if (typ.equals("tracertUdp")) {
-							finalScore.setTracertIcmpDelay(map1.get(typ).getTracertTcpDelay());
-							finalScore.setTracertIcmpDelayStd(map1.get(typ).getTracertTcpDelayStd());
-							finalScore.setTracertIcmpDelayVar(map1.get(typ).getTracertTcpDelayVar());
-							finalScore.setTracertIcmpJitter(map1.get(typ).getTracertTcpJitter());
-							finalScore.setTracertIcmpJitterStd(map1.get(typ).getTracertTcpJitterStd());
-							finalScore.setTracertIcmpJitterVar(map1.get(typ).getTracertTcpJitterVar());
-							finalScore.setTracertIcmpLossRate(map1.get(typ).getTracertTcpLossRate());
+							finalScore.setTracertTcpDelay(map1.get(typ).getTracertTcpDelay());
+							finalScore.setTracertTcpDelayStd(map1.get(typ).getTracertTcpDelayStd());
+							finalScore.setTracertTcpDelayVar(map1.get(typ).getTracertTcpDelayVar());
+							finalScore.setTracertTcpJitter(map1.get(typ).getTracertTcpJitter());
+							finalScore.setTracertTcpJitterStd(map1.get(typ).getTracertTcpJitterStd());
+							finalScore.setTracertTcpJitterVar(map1.get(typ).getTracertTcpJitterVar());
+							finalScore.setTracertTcpLossRate(map1.get(typ).getTracertTcpLossRate());
 						} else {
 						}
 						finalScore.setScore(finalScore.getScore() + (map1.get(typ).getScore()) * (map1.get(typ).getBase()));
@@ -1577,13 +1577,13 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 							finalScore.setTracertIcmpLossRate(map1.get(typ).getTracertIcmpLossRate());
 							finalScore.setIcmpTracertScore(map1.get(typ).getScore());
 						} else if (typ.equals("tracertUdp")) {
-							finalScore.setTracertIcmpDelay(map1.get(typ).getTracertTcpDelay());
-							finalScore.setTracertIcmpDelayStd(map1.get(typ).getTracertTcpDelayStd());
-							finalScore.setTracertIcmpDelayVar(map1.get(typ).getTracertTcpDelayVar());
-							finalScore.setTracertIcmpJitter(map1.get(typ).getTracertTcpJitter());
-							finalScore.setTracertIcmpJitterStd(map1.get(typ).getTracertTcpJitterStd());
-							finalScore.setTracertIcmpJitterVar(map1.get(typ).getTracertTcpJitterVar());
-							finalScore.setTracertIcmpLossRate(map1.get(typ).getTracertTcpLossRate());
+							finalScore.setTracertTcpDelay(map1.get(typ).getTracertTcpDelay());
+							finalScore.setTracertTcpDelayStd(map1.get(typ).getTracertTcpDelayStd());
+							finalScore.setTracertTcpDelayVar(map1.get(typ).getTracertTcpDelayVar());
+							finalScore.setTracertTcpJitter(map1.get(typ).getTracertTcpJitter());
+							finalScore.setTracertTcpJitterStd(map1.get(typ).getTracertTcpJitterStd());
+							finalScore.setTracertTcpJitterVar(map1.get(typ).getTracertTcpJitterVar());
+							finalScore.setTracertTcpLossRate(map1.get(typ).getTracertTcpLossRate());
 							finalScore.setUdpTracertScore(map1.get(typ).getScore());
 						} else {
 						}
@@ -1710,13 +1710,13 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 							finalScore.setTracertIcmpLossRate(map1.get(typ).getTracertIcmpLossRate());
 							finalScore.setIcmpTracertScore(map1.get(typ).getScore());
 						} else if (typ.equals("tracertUdp")) {
-							finalScore.setTracertIcmpDelay(map1.get(typ).getTracertTcpDelay());
-							finalScore.setTracertIcmpDelayStd(map1.get(typ).getTracertTcpDelayStd());
-							finalScore.setTracertIcmpDelayVar(map1.get(typ).getTracertTcpDelayVar());
-							finalScore.setTracertIcmpJitter(map1.get(typ).getTracertTcpJitter());
-							finalScore.setTracertIcmpJitterStd(map1.get(typ).getTracertTcpJitterStd());
-							finalScore.setTracertIcmpJitterVar(map1.get(typ).getTracertTcpJitterVar());
-							finalScore.setTracertIcmpLossRate(map1.get(typ).getTracertTcpLossRate());
+							finalScore.setTracertTcpDelay(map1.get(typ).getTracertTcpDelay());
+							finalScore.setTracertTcpDelayStd(map1.get(typ).getTracertTcpDelayStd());
+							finalScore.setTracertTcpDelayVar(map1.get(typ).getTracertTcpDelayVar());
+							finalScore.setTracertTcpJitter(map1.get(typ).getTracertTcpJitter());
+							finalScore.setTracertTcpJitterStd(map1.get(typ).getTracertTcpJitterStd());
+							finalScore.setTracertTcpJitterVar(map1.get(typ).getTracertTcpJitterVar());
+							finalScore.setTracertTcpLossRate(map1.get(typ).getTracertTcpLossRate());
 							finalScore.setUdpTracertScore(map1.get(typ).getScore());
 						} else {
 						}
@@ -1844,13 +1844,13 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 							finalScore.setTracertIcmpJitterVar(map1.get(typ).getTracertIcmpJitterVar());
 							finalScore.setTracertIcmpLossRate(map1.get(typ).getTracertIcmpLossRate());
 						} else if (typ.equals("tracertUdp")) {
-							finalScore.setTracertIcmpDelay(map1.get(typ).getTracertTcpDelay());
-							finalScore.setTracertIcmpDelayStd(map1.get(typ).getTracertTcpDelayStd());
-							finalScore.setTracertIcmpDelayVar(map1.get(typ).getTracertTcpDelayVar());
-							finalScore.setTracertIcmpJitter(map1.get(typ).getTracertTcpJitter());
-							finalScore.setTracertIcmpJitterStd(map1.get(typ).getTracertTcpJitterStd());
-							finalScore.setTracertIcmpJitterVar(map1.get(typ).getTracertTcpJitterVar());
-							finalScore.setTracertIcmpLossRate(map1.get(typ).getTracertTcpLossRate());
+							finalScore.setTracertTcpDelay(map1.get(typ).getTracertTcpDelay());
+							finalScore.setTracertTcpDelayStd(map1.get(typ).getTracertTcpDelayStd());
+							finalScore.setTracertTcpDelayVar(map1.get(typ).getTracertTcpDelayVar());
+							finalScore.setTracertTcpJitter(map1.get(typ).getTracertTcpJitter());
+							finalScore.setTracertTcpJitterStd(map1.get(typ).getTracertTcpJitterStd());
+							finalScore.setTracertTcpJitterVar(map1.get(typ).getTracertTcpJitterVar());
+							finalScore.setTracertTcpLossRate(map1.get(typ).getTracertTcpLossRate());
 						} else {
 						}
 						finalScore.setScore(finalScore.getScore() + (map1.get(typ).getScore()) * (map1.get(typ).getBase()));
@@ -3364,14 +3364,14 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 				scoreBase.setTracertIcmpJitterStd(list.get(i).getTracertIcmpJitterStd());
 				scoreBase.setTracertIcmpJitterVar(list.get(i).getTracertIcmpJitterVar());
 				scoreBase.setTracertIcmpLossRate(list.get(i).getTracertIcmpLossRate());
-			}else if(type.equals("tracertTcp")){
-				scoreBase.setTracertTcpDelay(list.get(i).getTracertIcmpDelay());
-				scoreBase.setTracertTcpDelayStd(list.get(i).getTracertIcmpDelayStd());
-				scoreBase.setTracertTcpDelayVar(list.get(i).getTracertIcmpDelayVar());
-				scoreBase.setTracertTcpJitter(list.get(i).getTracertIcmpJitter());
-				scoreBase.setTracertTcpJitterStd(list.get(i).getTracertIcmpJitterStd());
-				scoreBase.setTracertTcpJitterVar(list.get(i).getTracertIcmpJitterVar());
-				scoreBase.setTracertTcpLossRate(list.get(i).getTracertIcmpLossRate());
+			}else if(type.equals("tracertUdp")){
+				scoreBase.setTracertTcpDelay(list.get(i).getTracertTcpDelay());
+				scoreBase.setTracertTcpDelayStd(list.get(i).getTracertTcpDelayStd());
+				scoreBase.setTracertTcpDelayVar(list.get(i).getTracertTcpDelayVar());
+				scoreBase.setTracertTcpJitter(list.get(i).getTracertTcpJitter());
+				scoreBase.setTracertTcpJitterStd(list.get(i).getTracertTcpJitterStd());
+				scoreBase.setTracertTcpJitterVar(list.get(i).getTracertTcpJitterVar());
+				scoreBase.setTracertTcpLossRate(list.get(i).getTracertTcpLossRate());
 			}else if(type.equals("slaUdp")){
 				scoreBase.setSlaUdpDelay(list.get(i).getSlaUdpDelay());
 				scoreBase.setSlaUdpGDelay(list.get(i).getSlaUdpGDelay());
@@ -3468,7 +3468,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 				scoreBase.setTracertIcmpJitterStd(list.get(i).getTracertIcmpJitterStd());
 				scoreBase.setTracertIcmpJitterVar(list.get(i).getTracertIcmpJitterVar());
 				scoreBase.setTracertIcmpLossRate(list.get(i).getTracertIcmpLossRate());
-			}else if(type.equals("tracertTcp")){
+			}else if(type.equals("tracertUdp")){
 				scoreBase.setTracertTcpDelay(list.get(i).getTracertIcmpDelay());
 				scoreBase.setTracertTcpDelayStd(list.get(i).getTracertIcmpDelayStd());
 				scoreBase.setTracertTcpDelayVar(list.get(i).getTracertIcmpDelayVar());
@@ -3572,14 +3572,14 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 				scoreBase.setTracertIcmpJitterStd(list.get(i).getTracertIcmpJitterStd());
 				scoreBase.setTracertIcmpJitterVar(list.get(i).getTracertIcmpJitterVar());
 				scoreBase.setTracertIcmpLossRate(list.get(i).getTracertIcmpLossRate());
-			}else if(type.equals("tracertTcp")){
-				scoreBase.setTracertTcpDelay(list.get(i).getTracertIcmpDelay());
-				scoreBase.setTracertTcpDelayStd(list.get(i).getTracertIcmpDelayStd());
-				scoreBase.setTracertTcpDelayVar(list.get(i).getTracertIcmpDelayVar());
-				scoreBase.setTracertTcpJitter(list.get(i).getTracertIcmpJitter());
-				scoreBase.setTracertTcpJitterStd(list.get(i).getTracertIcmpJitterStd());
-				scoreBase.setTracertTcpJitterVar(list.get(i).getTracertIcmpJitterVar());
-				scoreBase.setTracertTcpLossRate(list.get(i).getTracertIcmpLossRate());
+			}else if(type.equals("tracertUdp")){
+				scoreBase.setTracertTcpDelay(list.get(i).getTracertTcpDelay());
+				scoreBase.setTracertTcpDelayStd(list.get(i).getTracertTcpDelayStd());
+				scoreBase.setTracertTcpDelayVar(list.get(i).getTracertTcpDelayVar());
+				scoreBase.setTracertTcpJitter(list.get(i).getTracertTcpJitter());
+				scoreBase.setTracertTcpJitterStd(list.get(i).getTracertTcpJitterStd());
+				scoreBase.setTracertTcpJitterVar(list.get(i).getTracertTcpJitterVar());
+				scoreBase.setTracertTcpLossRate(list.get(i).getTracertTcpLossRate());
 			}else if(type.equals("slaUdp")){
 				scoreBase.setSlaUdpDelay(list.get(i).getSlaUdpDelay());
 				scoreBase.setSlaUdpGDelay(list.get(i).getSlaUdpGDelay());
@@ -3676,14 +3676,14 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 				scoreBase.setTracertIcmpJitterStd(list.get(i).getTracertIcmpJitterStd());
 				scoreBase.setTracertIcmpJitterVar(list.get(i).getTracertIcmpJitterVar());
 				scoreBase.setTracertIcmpLossRate(list.get(i).getTracertIcmpLossRate());
-			}else if(type.equals("tracertTcp")){
-				scoreBase.setTracertTcpDelay(list.get(i).getTracertIcmpDelay());
-				scoreBase.setTracertTcpDelayStd(list.get(i).getTracertIcmpDelayStd());
-				scoreBase.setTracertTcpDelayVar(list.get(i).getTracertIcmpDelayVar());
-				scoreBase.setTracertTcpJitter(list.get(i).getTracertIcmpJitter());
-				scoreBase.setTracertTcpJitterStd(list.get(i).getTracertIcmpJitterStd());
-				scoreBase.setTracertTcpJitterVar(list.get(i).getTracertIcmpJitterVar());
-				scoreBase.setTracertTcpLossRate(list.get(i).getTracertIcmpLossRate());
+			}else if(type.equals("tracertUdp")){
+				scoreBase.setTracertTcpDelay(list.get(i).getTracertTcpDelay());
+				scoreBase.setTracertTcpDelayStd(list.get(i).getTracertTcpDelayStd());
+				scoreBase.setTracertTcpDelayVar(list.get(i).getTracertTcpDelayVar());
+				scoreBase.setTracertTcpJitter(list.get(i).getTracertTcpJitter());
+				scoreBase.setTracertTcpJitterStd(list.get(i).getTracertTcpJitterStd());
+				scoreBase.setTracertTcpJitterVar(list.get(i).getTracertTcpJitterVar());
+				scoreBase.setTracertTcpLossRate(list.get(i).getTracertTcpLossRate());
 			}else if(type.equals("slaUdp")){
 				scoreBase.setSlaUdpDelay(list.get(i).getSlaUdpDelay());
 				scoreBase.setSlaUdpGDelay(list.get(i).getSlaUdpGDelay());
@@ -3780,14 +3780,14 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 				scoreBase.setTracertIcmpJitterStd(list.get(i).getTracertIcmpJitterStd());
 				scoreBase.setTracertIcmpJitterVar(list.get(i).getTracertIcmpJitterVar());
 				scoreBase.setTracertIcmpLossRate(list.get(i).getTracertIcmpLossRate());
-			}else if(type.equals("tracertTcp")){
-				scoreBase.setTracertTcpDelay(list.get(i).getTracertIcmpDelay());
-				scoreBase.setTracertTcpDelayStd(list.get(i).getTracertIcmpDelayStd());
-				scoreBase.setTracertTcpDelayVar(list.get(i).getTracertIcmpDelayVar());
-				scoreBase.setTracertTcpJitter(list.get(i).getTracertIcmpJitter());
-				scoreBase.setTracertTcpJitterStd(list.get(i).getTracertIcmpJitterStd());
-				scoreBase.setTracertTcpJitterVar(list.get(i).getTracertIcmpJitterVar());
-				scoreBase.setTracertTcpLossRate(list.get(i).getTracertIcmpLossRate());
+			}else if(type.equals("tracertUdp")){
+				scoreBase.setTracertTcpDelay(list.get(i).getTracertTcpDelay());
+				scoreBase.setTracertTcpDelayStd(list.get(i).getTracertTcpDelayStd());
+				scoreBase.setTracertTcpDelayVar(list.get(i).getTracertTcpDelayVar());
+				scoreBase.setTracertTcpJitter(list.get(i).getTracertTcpJitter());
+				scoreBase.setTracertTcpJitterStd(list.get(i).getTracertTcpJitterStd());
+				scoreBase.setTracertTcpJitterVar(list.get(i).getTracertTcpJitterVar());
+				scoreBase.setTracertTcpLossRate(list.get(i).getTracertTcpLossRate());
 			}else if(type.equals("slaUdp")){
 				scoreBase.setSlaUdpDelay(list.get(i).getSlaUdpDelay());
 				scoreBase.setSlaUdpGDelay(list.get(i).getSlaUdpGDelay());

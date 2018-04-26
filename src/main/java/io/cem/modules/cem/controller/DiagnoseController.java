@@ -88,7 +88,7 @@ public class DiagnoseController {
                 List<ScoreEntity> list= new ArrayList<>();
                 if (dateDifferent > 5) {
                     list=recordHourRadiusService.diagnoseDay(map);
-                } else if (dateDifferent>=3) {
+                } else if (dateDifferent>=1) {
                     list=recordHourRadiusService.diagnoseDayHour(map);
                 } else {
                     list=recordHourRadiusService.diagnoseHour(map);
@@ -100,7 +100,7 @@ public class DiagnoseController {
         } else if(map.get("county_id") != null && !map.get("county_id").equals("")) {
             if (dateDifferent > 5) {
                 scoreList=recordHourRadiusService.diagnoseDay(map);
-            } else if (dateDifferent>=3) {
+            } else if (dateDifferent>=1) {
                 scoreList= recordHourRadiusService.diagnoseDayHour(map);
             } else {
                 scoreList=recordHourRadiusService.diagnoseHour(map);
@@ -109,7 +109,7 @@ public class DiagnoseController {
         }else if(map.get("city_id") != null && !map.get("city_id").equals("")){
             if (dateDifferent > 5) {
                 scoreList=recordHourRadiusService.diagnoseDay(map);
-            } else if (dateDifferent>=3) {
+            } else if (dateDifferent>=1) {
                 scoreList= recordHourRadiusService.diagnoseDayHour(map);
             } else {
                 scoreList=recordHourRadiusService.diagnoseHour(map);
@@ -117,7 +117,7 @@ public class DiagnoseController {
         } else{
             if (dateDifferent > 5) {
                 scoreList=recordHourRadiusService.diagnoseDay(map);
-            } else if (dateDifferent>=3) {
+            } else if (dateDifferent>=1) {
                 scoreList= recordHourRadiusService.diagnoseDayHour(map);
             } else {
                 scoreList=recordHourRadiusService.diagnoseHour(map);

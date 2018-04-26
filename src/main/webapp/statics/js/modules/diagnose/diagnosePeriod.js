@@ -358,15 +358,17 @@ var new_search = new Vue({
                 search.target_id = searchJson.target_id;
                 search.ava_start = searchJson.startDate.substr(0, 10);
                 search.ava_terminal = searchJson.terminalDate.substr(0, 10);
-                search.starTime = searchJson.startDate.substr(11, 15);
-                search.terminalTime = searchJson.startDate.substr(11, 15);
+                search.startTime = searchJson.startDate.substr(11, 15);
+                search.terminalTime = searchJson.terminalDate.substr(11, 15);
                 if (search.ava_start.length != 0 && search.ava_terminal.length != 0) {
                 } else {
                     search.ava_start = new Date(new Date() - 1000 * 60 * 60 * 24).Format("yyyy-MM-dd");
                     search.ava_terminal = (new Date()).Format("yyyy-MM-dd");
                 }
+                debugger
                 let param = {};
                 param.probedata = JSON.stringify(search);
+                loading()
                 $.ajax({
                     /*后台取得数据,赋值给观察者*/
                     type: "POST",
@@ -375,6 +377,7 @@ var new_search = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
+                        removeLoading('test');
                         removeLoading('table');
                         console.log(result);
                         if (result.page.list.length !== 0) {
@@ -554,9 +557,9 @@ Vue.component('data-table', {
                     }
                 }
                 // var tmp=[[Date.UTC(2017, 4, 24, 22),1],[Date.UTC(2017, 4, 24, 22),2],[Date.UTC(2017, 5, 24, 22),3],[Date.UTC(2017, 5, 24, 22),4],[Date.UTC(2017, 6, 24, 22),1],[Date.UTC(2017, 7, 24, 22),1]];
-                if (options.series[i].data.length > 0) {
-                    options.series[i].data = combine(options.series[i].data);
-                }
+                // if (options.series[i].data.length > 0) {
+                //     options.series[i].data = combine(options.series[i].data);
+                // }
                 // var tmp = options.series[i].data;
 
             }
@@ -727,6 +730,7 @@ function sla(val) {
             headers: [
                 {title: ''},
                 {title: '层级名称'},
+                {title: '探针名'},
                 {title: '时间'},
                 {title: 'TCP Sla', class: 'some-special-class'},
                 {title: 'UDP Sla'},
@@ -749,9 +753,9 @@ function sla(val) {
                 data: vm.rows,
                 searching: false,
                 paging: false,
-                serverSide: true,
+                // serverSide: true,
                 info: false,
-                ordering: false, /*禁用排序功能*/
+                // ordering: false, /*禁用排序功能*/
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
@@ -787,6 +791,7 @@ function sla(val) {
                         let row = [];
                         row.push(i++);
                         row.push(layerNames.get(item.accessLayer));
+                        row.push(item.probeName);
                         row.push(item.recordDate.substr(0, 10) + "   " + item.recordTime.substr(0, 10) + ':00');
                         row.push('<a class="fontcolor"   onclick="sla_info(this,1)" id=' + item.id + '   type =' + layerNames.get(item.accessLayer) + ' >' + fixed(item.tcpSlaScore) + '</a>&nbsp;');
                         row.push('<a class="fontcolor"    onclick="sla_info(this,2)" id=' + item.id + '  type =' + layerNames.get(item.accessLayer) + '>' + fixed(item.udpSlaScore) + '</a>&nbsp;');
@@ -812,6 +817,7 @@ function web(val) {
             headers: [
                 {title: '<div style="width:10px"></div>'},
                 {title: '层级名称'},
+                {title: '探针名'},
                 {title: '时间'},
                 {title: 'web浏览',},
             ],
@@ -829,9 +835,9 @@ function web(val) {
                 data: vm.rows,
                 searching: false,
                 paging: false,
-                serverSide: true,
+                // serverSide: true,
                 info: false,
-                ordering: false, /*禁用排序功能*/
+                // ordering: false, /*禁用排序功能*/
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
@@ -866,6 +872,7 @@ function web(val) {
                         let row = [];
                         row.push(i++);
                         row.push(layerNames.get(item.accessLayer));
+                        row.push(item.probeName)
                         row.push(item.recordDate.substr(0, 10) + "   " + item.recordTime.substr(0, 10) + ':00');
                         row.push('<a class="fontcolor"  onclick="web_info(this)"  id=' + item.id + '  type =' + layerNames.get(item.accessLayer) + '>' + fixed(item.score) + '</a>&nbsp;');
                         rows.push(row);
@@ -886,6 +893,7 @@ function download(val) {
             headers: [
                 {title: ''},
                 {title: '层级名称'},
+                {title: '探针名'},
                 {title: '时间'},
                 {title: 'web下载', class: 'some-special-class'},
                 {title: 'FTP上传'},
@@ -905,9 +913,9 @@ function download(val) {
                 data: vm.rows,
                 searching: false,
                 paging: false,
-                serverSide: true,
+                // serverSide: true,
                 info: false,
-                ordering: false, /*禁用排序功能*/
+                // ordering: false, /*禁用排序功能*/
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
@@ -942,11 +950,11 @@ function download(val) {
                         let row = [];
                         row.push(i++);
                         row.push(layerNames.get(item.accessLayer));
+                        row.push(item.probeName)
                         row.push(item.recordDate.substr(0, 10) + "   " + item.recordTime.substr(0, 10) + ':00');
                         row.push('<a class="fontcolor"  type =' + layerNames.get(item.accessLayer) + '  onclick="download_info(this,1)" id=' + item.id + '>' + fixed(item.webDownloadScore) + '</a>&nbsp;');
                         row.push('<a class="fontcolor" type =' + layerNames.get(item.accessLayer) + '  onclick="download_info(this,2)" id=' + item.id + '>' + fixed(item.ftpUploadScore) + '</a>&nbsp;');
                         row.push('<a class="fontcolor" type =' + layerNames.get(item.accessLayer) + '  onclick="download_info(this,3)" id=' + item.id + '>' + fixed(item.ftpDownloadScore) + '</a>&nbsp;');
-
                         rows.push(row);
                     });
                     returnData.data = rows;
@@ -965,6 +973,7 @@ function video(val) {
             headers: [
                 {title: ''},
                 {title: '层级名称'},
+                {title: '探针名'},
                 {title: '时间'},
                 {title: '在线视频'},
             ],
@@ -982,9 +991,9 @@ function video(val) {
                 data: vm.rows,
                 searching: false,
                 paging: false,
-                serverSide: true,
+                // serverSide: true,
                 info: false,
-                ordering: false, /*禁用排序功能*/
+                // ordering: false, /*禁用排序功能*/
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
@@ -1019,6 +1028,7 @@ function video(val) {
                         let row = [];
                         row.push(i++);
                         row.push(layerNames.get(item.accessLayer));
+                        row.push(item.probeName)
                         row.push(item.recordDate.substr(0, 10) + "   " + item.recordTime.substr(0, 10) + ':00');
                         row.push('<a class="fontcolor" type =' + layerNames.get(item.accessLayer) + '  onclick="video_info(this)" id=' + item.id + '>' + fixed(item.score) + '</a>&nbsp;')
                         rows.push(row);
@@ -1039,6 +1049,7 @@ function game(val) {
             headers: [
                 {title: ''},
                 {title: '层级名称'},
+                {title: '探针名'},
                 {title: '时间'},
                 {title: '在线游戏'},
             ],
@@ -1056,9 +1067,9 @@ function game(val) {
                 data: vm.rows,
                 searching: false,
                 paging: false,
-                serverSide: true,
+                // serverSide: true,
                 info: false,
-                ordering: false, /*禁用排序功能*/
+                // ordering: false, /*禁用排序功能*/
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
@@ -1096,6 +1107,7 @@ function game(val) {
                         let row = [];
                         row.push(i++);
                         row.push(layerNames.get(item.accessLayer));
+                        row.push(item.probeName)
                         row.push(item.recordDate.substr(0, 10) + "   " + item.recordTime.substr(0, 10) + ':00');
                         row.push('<a class="fontcolor" type =' + layerNames.get(item.accessLayer) + '  onclick="game_info(this)" id=' + item.id + '>' + fixed(item.score) + '</a>&nbsp;')
                         rows.push(row);
@@ -1353,7 +1365,7 @@ function pingicmp_table(obj, content) {
                             row.push(fixed(item.pingIcmpJitter));
                             row.push(fixed(item.pingIcmpJitterStd));
                             row.push(fixed(item.pingIcmpJitterVar));
-                            row.push(fixed(item.pingIcmpLossRate) * 100);
+                            row.push(fixedRate(item.pingIcmpLossRate) );
                             rows.push(row);
                         }
                     });
@@ -1466,7 +1478,7 @@ function pingudp_table(obj, content) {
                             row.push(fixed(item.pingUdpJitter));
                             row.push(fixed(item.pingUdpJitterStd));
                             row.push(fixed(item.pingUdpJitterVar));
-                            row.push(fixed(item.pingUdpLossRate) * 100);
+                            row.push(fixedRate(item.pingUdpLossRate) );
                             rows.push(row);
                         }
                     });
@@ -1579,7 +1591,7 @@ function pingtcp_table(obj, content) {
                             row.push(fixed(item.pingTcpJitter));
                             row.push(fixed(item.pingTcpJitterStd));
                             row.push(fixed(item.pingTcpJitterVar));
-                            row.push(fixed(item.pingTcpLossRate) * 100);
+                            row.push(fixedRate(item.pingTcpLossRate) );
 
                             rows.push(row);
                         }
@@ -1693,7 +1705,7 @@ function routeicmp_table(obj, content) {
                             row.push(fixed(item.tracertIcmpJitter));
                             row.push(fixed(item.tracertIcmpJitterStd));
                             row.push(fixed(item.tracertIcmpJitterVar));
-                            row.push(fixed(item.tracertIcmpLossRate) * 100);
+                            row.push(fixedRate(item.tracertIcmpLossRate) );
 
                             rows.push(row);
                         }
@@ -1806,7 +1818,7 @@ function routetcp_table(obj, content) {
                             row.push(fixed(item.tracertTcpJitter));
                             row.push(fixed(item.tracertTcpJitterStd));
                             row.push(fixed(item.tracertTcpJitterVar));
-                            row.push(fixed(item.tracertTcpLossRate) * 100);
+                            row.push(fixedRate(item.tracertTcpLossRate) );
                             rows.push(row);
                         }
                     });
@@ -1919,7 +1931,7 @@ function slatcp_table(obj, content) {
                             row.push(fixed(item.slaTcpJitter));
                             row.push(fixed(item.slaTcpGJitter));
                             row.push(fixed(item.slaTcpRJitter));
-                            row.push(fixed(item.slaTcpLossRate) * 100);
+                            row.push(fixedRate(item.slaTcpLossRate));
                             rows.push(row);
                         }
 
@@ -2034,7 +2046,7 @@ function slaudp_table(obj, content) {
                             row.push(fixed(item.slaUdpJitter));
                             row.push(fixed(item.slaUdpGJitter));
                             row.push(fixed(item.slaUdpRJitter));
-                            row.push(fixed(item.slaUdpLossRate) * 100);
+                            row.push(fixedRate(item.slaUdpLossRate) );
                             rows.push(row);
                         }
 
@@ -2138,7 +2150,7 @@ function dns_table(obj, content) {
                             row.push(i);
                             row.push(item.probeName);
                             row.push(fixed(item.dnsDelay));
-                            row.push(fixed(item.dnsSuccessRate) * 100);
+                            row.push(fixedRate(item.dnsSuccessRate) );
 
                             rows.push(row);
                         }
@@ -2243,7 +2255,7 @@ function dhcp_table(obj, content) {
                             row.push(i);
                             row.push(item.probeName);
                             row.push(fixed(item.dhcpDelay));
-                            row.push(fixed(item.dhcpSuccessRate) * 100);
+                            row.push(fixedRate(item.dhcpSuccessRate) );
                             rows.push(row);
                         }
 
@@ -2348,7 +2360,7 @@ function adsl_table(obj, content) {
                             row.push(item.probeName);
                             row.push(fixed(item.pppoeDelay));
                             row.push(fixed(item.pppoeDropRate));
-                            row.push(fixed(item.pppoeSuccessRate) * 100);
+                            row.push(fixedRate(item.pppoeSuccessRate));
                             rows.push(row);
                         }
 
@@ -2452,7 +2464,7 @@ function radius_table(obj, content) {
                             row.push(i);
                             row.push(item.probeName);
                             row.push(fixed(item.radiusDelay));
-                            row.push(fixed(item.radiusSuccessRate) * 100);
+                            row.push(fixedRate(item.radiusSuccessRate) );
                             rows.push(row);
                         }
 
@@ -3120,7 +3132,7 @@ function game_table(obj, content) {
                             row.push(fixed(item.gameDnsDelay));
                             row.push(fixed(item.gamePacketDelay));
                             row.push(fixed(item.gamePacketJitter));
-                            row.push(fixed(item.gameLossRate) * 100);
+                            row.push(fixedRate(item.gameLossRate) );
                             rows.push(row);
                         }
 
@@ -3142,15 +3154,27 @@ function game_table(obj, content) {
         }
     })
 }
-
+var date=new Date();
+var month = date.getMonth() + 1;
+var strDate = date.getDate();
+var years=date.getFullYear();
+var newdate=years+'-'+month+'-'+strDate;
 $('#start_date').flatpickr({
     enableTime: true,
     dateFormat: "Y-m-d H:i",
+    defaultDate:newdate,
     time_24hr: true
 });
+var date=new Date();
+var month = date.getMonth() + 1;
+var strDate = date.getDate();
+var years=date.getFullYear();
+var hours=date.getHours();
+var endday=years+'-'+month+'-'+strDate+' '+hours;
 $('#terminal_date').flatpickr({
     enableTime: true,
     dateFormat: "Y-m-d H:i",
+    defaultDate:endday,
     time_24hr: true
 });
 
@@ -3462,7 +3486,7 @@ function loading() {
     $('body').loading({
         loadingWidth: 240,
         title: '正在努力的加载中',
-        name: 'table',
+        name: 'test',
         discription: '这是一个描述...',
         direction: 'row',
         type: 'origin',
@@ -3505,8 +3529,16 @@ function fixed(value) {
         return value.toFixed(2)
     }
 }
+function fixedRate(value) {
 
-var cloneObj = function (obj) {
+    if (value == null) {
+        return ''
+    } else {
+        return (value*100).toFixed(2)
+    }
+}
+
+ function cloneObj(obj) {
     var str, newobj = obj.constructor === Array ? [] : {};
     if (typeof obj !== 'object') {
         return;

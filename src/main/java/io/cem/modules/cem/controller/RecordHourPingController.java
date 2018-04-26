@@ -223,7 +223,7 @@ public class RecordHourPingController {
 
         if(dateDifferent>5){
             scoreList = recordHourDhcpService.connectionDayChart(map);
-        }else if(dateDifferent<=5 && dateDifferent>=3){
+        }else if(dateDifferent<=5 && dateDifferent>=2){
             scoreList = recordHourDhcpService.connectionHourChart(map);
         } else{
             scoreList = recordHourDhcpService.connectionDayHourChart(map);
@@ -263,7 +263,7 @@ public class RecordHourPingController {
 
         if(dateDifferent>5){
             scoreList = recordHourDhcpService.qualityDayChart(map);
-        }else if(dateDifferent<=5 && dateDifferent>=3){
+        }else if(dateDifferent<=5 && dateDifferent>=2){
             scoreList = recordHourDhcpService.qualityHourChart(map);
         } else{
             scoreList = recordHourDhcpService.qualityDayHourChart(map);
@@ -342,7 +342,7 @@ public class RecordHourPingController {
         List<ScoreEntity> scoreList;
         if(dateDifferent>5){
             scoreList = recordHourDhcpService.downloadDayChart(map);
-        }else if(dateDifferent<=5 && dateDifferent>=3){
+        }else if(dateDifferent<=5 && dateDifferent>=2){
             scoreList = recordHourDhcpService.downloadHourChart(map);
         } else{
             scoreList = recordHourDhcpService.downloadDayHourChart(map);
