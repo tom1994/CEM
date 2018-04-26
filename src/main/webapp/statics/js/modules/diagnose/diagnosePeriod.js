@@ -367,6 +367,7 @@ var new_search = new Vue({
                 }
                 let param = {};
                 param.probedata = JSON.stringify(search);
+                loading()
                 $.ajax({
                     /*后台取得数据,赋值给观察者*/
                     type: "POST",
@@ -375,6 +376,7 @@ var new_search = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
+                        removeLoading('test');
                         removeLoading('table');
                         console.log(result);
                         if (result.page.list.length !== 0) {
@@ -554,9 +556,9 @@ Vue.component('data-table', {
                     }
                 }
                 // var tmp=[[Date.UTC(2017, 4, 24, 22),1],[Date.UTC(2017, 4, 24, 22),2],[Date.UTC(2017, 5, 24, 22),3],[Date.UTC(2017, 5, 24, 22),4],[Date.UTC(2017, 6, 24, 22),1],[Date.UTC(2017, 7, 24, 22),1]];
-                if (options.series[i].data.length > 0) {
-                    options.series[i].data = combine(options.series[i].data);
-                }
+                // if (options.series[i].data.length > 0) {
+                //     options.series[i].data = combine(options.series[i].data);
+                // }
                 // var tmp = options.series[i].data;
 
             }
@@ -663,7 +665,7 @@ function ping(val) {
                 data: vm.rows,
                 searching: false,
                 paging: false,
-                serverSide: true,
+                // serverSide: true,
                 info: false,
                 // ordering: false, /*禁用排序功能*/
                 /*bInfo: false,*/
@@ -1353,7 +1355,7 @@ function pingicmp_table(obj, content) {
                             row.push(fixed(item.pingIcmpJitter));
                             row.push(fixed(item.pingIcmpJitterStd));
                             row.push(fixed(item.pingIcmpJitterVar));
-                            row.push(fixed(item.pingIcmpLossRate) * 100);
+                            row.push(fixedRate(item.pingIcmpLossRate) );
                             rows.push(row);
                         }
                     });
@@ -1466,7 +1468,7 @@ function pingudp_table(obj, content) {
                             row.push(fixed(item.pingUdpJitter));
                             row.push(fixed(item.pingUdpJitterStd));
                             row.push(fixed(item.pingUdpJitterVar));
-                            row.push(fixed(item.pingUdpLossRate) * 100);
+                            row.push(fixedRate(item.pingUdpLossRate) );
                             rows.push(row);
                         }
                     });
@@ -1579,7 +1581,7 @@ function pingtcp_table(obj, content) {
                             row.push(fixed(item.pingTcpJitter));
                             row.push(fixed(item.pingTcpJitterStd));
                             row.push(fixed(item.pingTcpJitterVar));
-                            row.push(fixed(item.pingTcpLossRate) * 100);
+                            row.push(fixedRate(item.pingTcpLossRate) );
 
                             rows.push(row);
                         }
@@ -1693,7 +1695,7 @@ function routeicmp_table(obj, content) {
                             row.push(fixed(item.tracertIcmpJitter));
                             row.push(fixed(item.tracertIcmpJitterStd));
                             row.push(fixed(item.tracertIcmpJitterVar));
-                            row.push(fixed(item.tracertIcmpLossRate) * 100);
+                            row.push(fixedRate(item.tracertIcmpLossRate) );
 
                             rows.push(row);
                         }
@@ -1806,7 +1808,7 @@ function routetcp_table(obj, content) {
                             row.push(fixed(item.tracertTcpJitter));
                             row.push(fixed(item.tracertTcpJitterStd));
                             row.push(fixed(item.tracertTcpJitterVar));
-                            row.push(fixed(item.tracertTcpLossRate) * 100);
+                            row.push(fixedRate(item.tracertTcpLossRate) );
                             rows.push(row);
                         }
                     });
@@ -1919,7 +1921,7 @@ function slatcp_table(obj, content) {
                             row.push(fixed(item.slaTcpJitter));
                             row.push(fixed(item.slaTcpGJitter));
                             row.push(fixed(item.slaTcpRJitter));
-                            row.push(fixed(item.slaTcpLossRate) * 100);
+                            row.push(fixedRate(item.slaTcpLossRate));
                             rows.push(row);
                         }
 
@@ -2034,7 +2036,7 @@ function slaudp_table(obj, content) {
                             row.push(fixed(item.slaUdpJitter));
                             row.push(fixed(item.slaUdpGJitter));
                             row.push(fixed(item.slaUdpRJitter));
-                            row.push(fixed(item.slaUdpLossRate) * 100);
+                            row.push(fixedRate(item.slaUdpLossRate) );
                             rows.push(row);
                         }
 
@@ -2138,7 +2140,7 @@ function dns_table(obj, content) {
                             row.push(i);
                             row.push(item.probeName);
                             row.push(fixed(item.dnsDelay));
-                            row.push(fixed(item.dnsSuccessRate) * 100);
+                            row.push(fixedRate(item.dnsSuccessRate) );
 
                             rows.push(row);
                         }
@@ -2243,7 +2245,7 @@ function dhcp_table(obj, content) {
                             row.push(i);
                             row.push(item.probeName);
                             row.push(fixed(item.dhcpDelay));
-                            row.push(fixed(item.dhcpSuccessRate) * 100);
+                            row.push(fixedRate(item.dhcpSuccessRate) );
                             rows.push(row);
                         }
 
@@ -2348,7 +2350,7 @@ function adsl_table(obj, content) {
                             row.push(item.probeName);
                             row.push(fixed(item.pppoeDelay));
                             row.push(fixed(item.pppoeDropRate));
-                            row.push(fixed(item.pppoeSuccessRate) * 100);
+                            row.push(fixedRate(item.pppoeSuccessRate));
                             rows.push(row);
                         }
 
@@ -2452,7 +2454,7 @@ function radius_table(obj, content) {
                             row.push(i);
                             row.push(item.probeName);
                             row.push(fixed(item.radiusDelay));
-                            row.push(fixed(item.radiusSuccessRate) * 100);
+                            row.push(fixedRate(item.radiusSuccessRate) );
                             rows.push(row);
                         }
 
@@ -3120,7 +3122,7 @@ function game_table(obj, content) {
                             row.push(fixed(item.gameDnsDelay));
                             row.push(fixed(item.gamePacketDelay));
                             row.push(fixed(item.gamePacketJitter));
-                            row.push(fixed(item.gameLossRate) * 100);
+                            row.push(fixedRate(item.gameLossRate) );
                             rows.push(row);
                         }
 
@@ -3462,7 +3464,7 @@ function loading() {
     $('body').loading({
         loadingWidth: 240,
         title: '正在努力的加载中',
-        name: 'table',
+        name: 'test',
         discription: '这是一个描述...',
         direction: 'row',
         type: 'origin',
@@ -3503,6 +3505,14 @@ function fixed(value) {
         return ''
     } else {
         return value.toFixed(2)
+    }
+}
+function fixedRate(value) {
+
+    if (value == null) {
+        return ''
+    } else {
+        return (value*100).toFixed(2)
     }
 }
 

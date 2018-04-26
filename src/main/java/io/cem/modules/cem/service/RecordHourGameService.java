@@ -31,6 +31,8 @@ public interface RecordHourGameService {
 	Future<List<RecordHourGameEntity>> queryDayList(Map<String, Object> map);
 
 	List<ScoreEntity> calculateService6(List<RecordHourGameEntity> gameList);
+
+	List<ScoreEntity> calculateLayer6(List<ScoreEntity> gameList);
 	
 	int queryTotal(Map<String, Object> map);
 	

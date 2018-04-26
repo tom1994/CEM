@@ -134,7 +134,7 @@
 		<if test="startTime != null and terminalTime != null">
 			AND record_time BETWEEN #{startTime} AND #{terminalTime}
 		</if>
-		GROUP BY target_id) t
+		GROUP BY service_type,target_id) t
 		INNER JOIN probe
 		ON t.probe_id = probe.id
 		LEFT JOIN city

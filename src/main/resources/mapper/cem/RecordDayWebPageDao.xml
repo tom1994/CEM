@@ -68,7 +68,8 @@
 			`headbyte_delay`, 
 			`page_file_delay`, 
 			`redirect_delay`, 
-			`above_fold_delay`, 
+			`above_fold_delay`,
+			`load_delay`,
 			`page_element_delay`, 
 			`download_rate`, 
 			`remark`
@@ -90,7 +91,8 @@
 			#{headbyteDelay}, 
 			#{pageFileDelay}, 
 			#{redirectDelay}, 
-			#{aboveFoldDelay}, 
+			#{aboveFoldDelay},
+			#{loadDelay},
 			#{pageElementDelay}, 
 			#{downloadRate}, 
 			#{remark}

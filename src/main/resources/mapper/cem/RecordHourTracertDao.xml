@@ -138,7 +138,7 @@
 		<if test="startTime != null and terminalTime != null">
 			AND record_time BETWEEN #{startTime} AND #{terminalTime}
 		</if>
-		GROUP BY target_id)t
+		GROUP BY service_type,target_id)t
 		LEFT JOIN city
 		ON t.city_id = city.city_id
 		LEFT JOIN county
@@ -393,7 +393,7 @@
 			#{jitter}, 
 			#{jitterStd}, 
 			#{jitterVar}, 
-			#{lossRate}, 
+			#{lossRate},
 			#{remark}
 		)
 	</insert>

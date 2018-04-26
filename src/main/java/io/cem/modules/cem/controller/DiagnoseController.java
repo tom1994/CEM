@@ -82,40 +82,45 @@ public class DiagnoseController {
         if (map.get("probe_id") != null && !map.get("probe_id").equals("")) {
             int probeId = Integer.parseInt(map.get("probe_id").toString());
             probeList = probeService.queryProbeByLayer(probeId);
+            int start=0;
             for (int i = 0; i < probeList.size(); i++) {
                 map.put("probe_id", probeList.get(i).getId());
+                List<ScoreEntity> list= new ArrayList<>();
                 if (dateDifferent > 5) {
-                    scoreList.addAll(recordHourRadiusService.diagnoseDay(map, scoreList));
+                    list=recordHourRadiusService.diagnoseDay(map);
                 } else if (dateDifferent>=3) {
-                    scoreList.addAll( recordHourRadiusService.diagnoseDayHour(map, scoreList));
+                    list=recordHourRadiusService.diagnoseDayHour(map);
                 } else {
-                    scoreList.addAll(recordHourRadiusService.diagnoseHour(map, scoreList));
+                    list=recordHourRadiusService.diagnoseHour(map);
                 }
+                scoreList.addAll(start,list);
+                start=list.size();
+                System.out.println(scoreList);
             }
         } else if(map.get("county_id") != null && !map.get("county_id").equals("")) {
             if (dateDifferent > 5) {
-                scoreList=recordHourRadiusService.diagnoseDay(map, scoreList);
+                scoreList=recordHourRadiusService.diagnoseDay(map);
             } else if (dateDifferent>=3) {
-                scoreList= recordHourRadiusService.diagnoseDayHour(map, scoreList);
+                scoreList= recordHourRadiusService.diagnoseDayHour(map);
             } else {
-                scoreList=recordHourRadiusService.diagnoseHour(map, scoreList);
+                scoreList=recordHourRadiusService.diagnoseHour(map);
             }
 
         }else if(map.get("city_id") != null && !map.get("city_id").equals("")){
             if (dateDifferent > 5) {
-                scoreList=recordHourRadiusService.diagnoseDay(map, scoreList);
+                scoreList=recordHourRadiusService.diagnoseDay(map);
             } else if (dateDifferent>=3) {
-                scoreList= recordHourRadiusService.diagnoseDayHour(map, scoreList);
+                scoreList= recordHourRadiusService.diagnoseDayHour(map);
             } else {
-                scoreList=recordHourRadiusService.diagnoseHour(map, scoreList);
+                scoreList=recordHourRadiusService.diagnoseHour(map);
             }
         } else{
             if (dateDifferent > 5) {
-                scoreList=recordHourRadiusService.diagnoseDay(map, scoreList);
+                scoreList=recordHourRadiusService.diagnoseDay(map);
             } else if (dateDifferent>=3) {
-                scoreList= recordHourRadiusService.diagnoseDayHour(map, scoreList);
+                scoreList= recordHourRadiusService.diagnoseDayHour(map);
             } else {
-                scoreList=recordHourRadiusService.diagnoseHour(map, scoreList);
+                scoreList=recordHourRadiusService.diagnoseHour(map);
             }
         }
 
@@ -126,6 +131,11 @@ public class DiagnoseController {
         if (map.get("target_id") == null) {
             for (int i = 0; i < scoreList.size(); i++) {
                 scoreList.get(i).setTargetName("");
+            }
+        }
+        if (map.get("probe_id") == null) {
+            for (int i = 0; i < scoreList.size(); i++) {
+                scoreList.get(i).setProbeName("");
             }
         }
         int total = 0;

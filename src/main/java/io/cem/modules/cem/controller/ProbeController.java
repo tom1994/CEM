@@ -190,12 +190,15 @@ public class ProbeController {
     @RequiresPermissions("probe:reboot")
     public R reboot(@RequestBody Integer[] ids) {
         int result;
+        try{
         for (int id : ids) {
             result = BypassHttps.sendRequestIgnoreSSL("GET", "https://114.236.91.16:23456/web/v1/probes/" + id + "/restart");
             if (result == 200 || result == 206) {
             } else {
                 return R.error(404, "id为"+id+"的探针重启失败，请联系管理员");
             }
+        }}catch (Exception e){
+            return R.error(500, "探针重启失败，未知错误");
         }
         return R.ok("探针重启成功！");
     }

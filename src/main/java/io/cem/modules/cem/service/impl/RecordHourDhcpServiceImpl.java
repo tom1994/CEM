@@ -151,6 +151,11 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 			map2.put("target_id",map.get("target_id"));
 			map3.put("target_id",map.get("target_id"));
 		}
+		if(map.get("probe_id")!=null){
+			map1.put("probe_id",map.get("probe_id"));
+			map2.put("probe_id",map.get("probe_id"));
+			map3.put("probe_id",map.get("probe_id"));
+		}
 		map1.put("ava_start",map.get("ava_start"));
 		map1.put("ava_terminal",map.get("ava_start"));
 		map1.put("startTime",map.get("starTime"));
@@ -212,6 +217,10 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 		if(map.get("target_id")!=null){
 			map1.put("target_id",map.get("target_id"));
 			map2.put("target_id",map.get("target_id"));
+		}
+		if(map.get("probe_id")!=null){
+			map1.put("probe_id",map.get("probe_id"));
+			map2.put("probe_id",map.get("probe_id"));
 		}
 		map1.put("ava_start",map.get("ava_start"));
 		map1.put("ava_terminal",map.get("ava_start"));
@@ -311,6 +320,11 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 			map2.put("target_id",map.get("target_id"));
 			map3.put("target_id",map.get("target_id"));
 		}
+		if(map.get("probe_id")!=null){
+			map1.put("probe_id",map.get("probe_id"));
+			map2.put("probe_id",map.get("probe_id"));
+			map3.put("probe_id",map.get("probe_id"));
+		}
 		map1.put("ava_start",map.get("ava_start"));
 		map1.put("ava_terminal",map.get("ava_start"));
 		map1.put("startTime",map.get("starTime"));
@@ -397,6 +411,10 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 			map1.put("target_id",map.get("target_id"));
 			map2.put("target_id",map.get("target_id"));
 		}
+		if(map.get("probe_id")!=null){
+			map1.put("probe_id",map.get("probe_id"));
+			map2.put("probe_id",map.get("probe_id"));
+		}
 		map1.put("ava_start",map.get("ava_start"));
 		map1.put("ava_terminal",map.get("ava_start"));
 		map1.put("startTime",map.get("starTime"));
@@ -469,6 +487,15 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 		List<ScoreEntity> scoreList;
 		RecordHourDhcpService recordHourDhcpService= (RecordHourDhcpService) SpringContextUtils.getBean("recordHourDhcpService");
 		RecordHourWebPageService recordHourWebPageService= (RecordHourWebPageService) SpringContextUtils.getBean("recordHourWebPageService");
+		RecordHourPingService recordHourPingService =(RecordHourPingService) SpringContextUtils.getBean("recordHourPingService");
+		if (map.get("terminalTime") != null && map.get("startTime") != null) {
+			if (map.get("terminalTime").toString().equals("00:00:00")) {
+				map.put("ava_terminal", recordHourPingService.queryBeforeDay(map.get("ava_terminal").toString()));
+			}
+			if (map.get("startTime").toString().equals("23:00:00")) {
+				map.put("ava_start", recordHourPingService.queryAfterDay(map.get("ava_terminal").toString()));
+			}
+		}
 		Future<List<RecordHourWebPageEntity>> webPageList_future = recordHourWebPageService.queryWebList(map);
 		while (true) {
 			if (webPageList_future.isDone()) {
@@ -533,6 +560,11 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 			map2.put("target_id",map.get("target_id"));
 			map3.put("target_id",map.get("target_id"));
 		}
+		if(map.get("probe_id")!=null){
+			map1.put("probe_id",map.get("probe_id"));
+			map2.put("probe_id",map.get("probe_id"));
+			map3.put("probe_id",map.get("probe_id"));
+		}
 		map1.put("ava_start",map.get("ava_start"));
 		map1.put("ava_terminal",map.get("ava_start"));
 		map1.put("startTime",map.get("starTime"));
@@ -594,6 +626,10 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 			map1.put("target_id",map.get("target_id"));
 			map2.put("target_id",map.get("target_id"));
 		}
+		if(map.get("probe_id")!=null){
+			map1.put("probe_id",map.get("probe_id"));
+			map2.put("probe_id",map.get("probe_id"));
+		}
 		map1.put("ava_start",map.get("ava_start"));
 		map1.put("ava_terminal",map.get("ava_start"));
 		map1.put("startTime",map.get("starTime"));
@@ -651,6 +687,15 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 		List<ScoreEntity> scoreList;
 		RecordHourDhcpService recordHourDhcpService= (RecordHourDhcpService) SpringContextUtils.getBean("recordHourDhcpService");
 		RecordHourWebVideoService recordHourWebVideoService= (RecordHourWebVideoService) SpringContextUtils.getBean("recordHourWebVideoService");
+		RecordHourPingService recordHourPingService =(RecordHourPingService) SpringContextUtils.getBean("recordHourPingService");
+		if (map.get("terminalTime") != null && map.get("startTime") != null) {
+			if (map.get("terminalTime").toString().equals("00:00:00")) {
+				map.put("ava_terminal", recordHourPingService.queryBeforeDay(map.get("ava_terminal").toString()));
+			}
+			if (map.get("startTime").toString().equals("23:00:00")) {
+				map.put("ava_start", recordHourPingService.queryAfterDay(map.get("ava_terminal").toString()));
+			}
+		}
 		Future<List<RecordHourWebVideoEntity>> videoList_future = recordHourWebVideoService.queryVideoList(map);
 		while (true) {
 			if (videoList_future.isDone()) {
@@ -688,6 +733,15 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 		List<ScoreEntity> scoreList;
 		RecordHourDhcpService recordHourDhcpService= (RecordHourDhcpService) SpringContextUtils.getBean("recordHourDhcpService");
 		RecordHourGameService recordHourGameService= (RecordHourGameService) SpringContextUtils.getBean("recordHourGameService");
+		RecordHourPingService recordHourPingService =(RecordHourPingService) SpringContextUtils.getBean("recordHourPingService");
+		if (map.get("terminalTime") != null && map.get("startTime") != null) {
+			if (map.get("terminalTime").toString().equals("00:00:00")) {
+				map.put("ava_terminal", recordHourPingService.queryBeforeDay(map.get("ava_terminal").toString()));
+			}
+			if (map.get("startTime").toString().equals("23:00:00")) {
+				map.put("ava_start", recordHourPingService.queryAfterDay(map.get("ava_terminal").toString()));
+			}
+		}
 		Future<List<RecordHourGameEntity>> gameList_future = recordHourGameService.queryGameList(map);
 		while (true) {
 			if (gameList_future.isDone()) {

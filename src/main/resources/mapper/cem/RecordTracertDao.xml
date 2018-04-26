@@ -33,7 +33,6 @@
         <result property="jitterStd" column="jitter_std"/>
         <result property="jitterVar" column="jitter_var"/>
         <result property="lossRate" column="loss_rate"/>
-		<result property="hopRecord" column="hop_record"/>
         <result property="remark" column="remark"/>
     </resultMap>
 
@@ -56,7 +55,6 @@
 		<result property="jitterStd" column="jitter_std"/>
 		<result property="jitterVar" column="jitter_var"/>
 		<result property="lossRate" column="loss_rate"/>
-		<result property="hopRecord" column="hop_record"/>
 		<result property="remark" column="remark"/>
 		<result property="fail" column="fail"/>
 		<result property="total" column="total"/>
@@ -81,7 +79,6 @@
 		<result property="jitterStd" column="jitter_std"/>
 		<result property="jitterVar" column="jitter_var"/>
 		<result property="lossRate" column="loss_rate"/>
-		<result property="hopRecord" column="hop_record"/>
 		<result property="remark" column="remark"/>
 		<result property="fail" column="fail"/>
 		<result property="total" column="total"/>

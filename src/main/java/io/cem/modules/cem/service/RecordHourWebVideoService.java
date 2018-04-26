@@ -37,6 +37,8 @@ public interface RecordHourWebVideoService {
 	Future<List<RecordHourWebVideoEntity>> queryDayList(Map<String, Object> map);
 
 	List<ScoreEntity> calculateService5 (List<RecordHourWebVideoEntity> videoList);
+
+	List<ScoreEntity> calculateLayer5(List<ScoreEntity> videoList);
 	
 	int queryTotal(Map<String, Object> map);
 	

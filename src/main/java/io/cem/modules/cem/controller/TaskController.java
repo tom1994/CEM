@@ -111,20 +111,24 @@ public class TaskController {
     @RequestMapping("/delete")
     @RequiresPermissions("task:delete")
     public R delete(@RequestBody Integer[] ids) {
-        int result = 0;
         Map<String, Object> map = new HashMap<>();
         map.put("taskid", ids[0]);
         List<TaskDispatchEntity> taskDispatchEntity = taskDispatchService.queryDispatchList(map);
+        int result = 0;
         if (taskDispatchEntity != null && taskDispatchEntity.size() != 0) {
+            try {
             for (int i = 0; i < taskDispatchEntity.size(); i++) {
                 result = BypassHttps.sendRequestIgnoreSSL("DELETE", "https://114.236.91.16:23456/web/v1/tasks/" + taskDispatchEntity.get(i).getId());
             }
+            }catch (Exception e){
+                return R.error(404, "该任务有误，暂时无法删除");
+            }
             if (result != 0 & result != 500) {
                 taskService.deleteBatch(ids);
-                return R.ok();
             } else {
                 return R.error(404, "该任务有误，暂时无法删除");
             }
+            return R.ok();
         } else {
             taskService.deleteBatch(ids);
             return R.ok();

@@ -93,8 +93,8 @@ var search_service = new Vue({ //Todo:完成查询条件框
                     var terminalTime = searchJson.terminalDate.substr(11, 15);
                     search.ava_start = ava_start;
                     search.ava_terminal = ava_terminal;
-                    search.starTime = startTime;
-                    search.terminalTime = terminalTime;
+                    search.starTime = startTime+":00";
+                    search.terminalTime = terminalTime+":00";
                 }else{
                     search.ava_start = (new Date()).Format("yyyy-MM-dd");
                     search.ava_terminal = (new Date()).Format("yyyy-MM-dd");

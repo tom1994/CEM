@@ -37,12 +37,12 @@ public class ScoreEntity {
     @ExcelIgnore
     private Integer targetId;
     //记录日期
+   // @ExportName(exportName = "记录日期")
     @ExcelIgnore
-//    @ExportName(exportName = "记录日期")
     private Date recordDate;
     //记录时间
+   // @ExportName(exportName = "记录时间")
     @ExcelIgnore
-//    @ExportName(exportName = "记录时间")
     private String recordTime;
     //分数
     @ExportName(exportName = "分数")
@@ -277,6 +277,9 @@ public class ScoreEntity {
     //页面元素时延
     @ExcelIgnore
     private Double webpagePageElementDelay;
+    //页面加载时延
+    @ExcelIgnore
+    private Double webpageLoadDelay;
     //下载速率
     @ExcelIgnore
     private Double webpageDownloadRate;
@@ -1577,6 +1580,13 @@ public class ScoreEntity {
         this.onlineGameScore = onlineGameScore;
     }
 
+    public Double getWebpageLoadDelay() {
+        return webpageLoadDelay;
+    }
+
+    public void setWebpageLoadDelay(Double webpageLoadDelay) {
+        this.webpageLoadDelay = webpageLoadDelay;
+    }
     //    public static Comparator scoreComparator = new Comparator() {
 //        @Override
 //        public int compare(Object o1, Object o2) {

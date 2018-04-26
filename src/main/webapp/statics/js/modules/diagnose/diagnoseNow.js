@@ -28,7 +28,7 @@ function probe() {
                 $('#probe input[type=text] ').keyup(function (probe) {
                     if( probe.keyCode=='13'){
                         var b = $("#probe .option-hover.option-selected").text();
-                        probeSelected = $($(probe.currentTarget)[0]).data('value');
+                        probeSelected=($("#probe .option-hover.option-selected"))[0].dataset.value;
                         $('#probe .combo-input').val(b);
                         $('#probe .combo-select select').val(b);
                     }
@@ -67,7 +67,7 @@ var getProbeCity = function (cityid) {
                     $('#probe input[type=text] ').keyup(function (probe) {
                         if( probe.keyCode=='13'){
                             var b = $("#probe .option-hover.option-selected").text();
-                            probeSelected = $($(probe.currentTarget)[0]).data('value');
+                            probeSelected=($("#probe .option-hover.option-selected"))[0].dataset.value;
                             $('#probe .combo-input').val(b);
                             $('#probe .combo-select select').val(b);
                         }
@@ -114,9 +114,7 @@ $(document).ready(function () {
                     if( city.keyCode=='13'){
                         var b = $("#city .option-hover.option-selected").text();
                         clearArea(b);
-                        var c=($("#city .option-hover.option-selected"));
-                        var c=c[0].dataset
-                        citySelected = c.value;
+                        citySelected=($("#city .option-hover.option-selected"))[0].dataset.value;
                         getArea(citySelected);
                         getProbeCity(citySelected);
                         $('#city .combo-input').val(b);
@@ -152,7 +150,7 @@ $(document).ready(function () {
                 $('#target input[type=text] ').keyup(function (probe) {
                     if( probe.keyCode=='13'){
                         var b = $("#target .option-hover.option-selected").text();
-                        probeSelected = $($(probe.currentTarget)[0]).data('value');
+                        targetSelected=($("#target .option-hover.option-selected"))[0].dataset.value;
                         $('#target .combo-input').val(b);
                         $('#target .combo-select select').val(b);
                     }
@@ -192,7 +190,7 @@ $.ajax({
             $('#probe input[type=text] ').keyup(function (probe) {
                 if( probe.keyCode=='13'){
                     var b = $("#probe .option-hover.option-selected").text();
-                    probeSelected = $($(probe.currentTarget)[0]).data('value');
+                    probeSelected=($("#probe .option-hover.option-selected"))[0].dataset.value;
                     $('#probe .combo-input').val(b);
                     $('#probe .combo-select select').val(b);
                 }
@@ -270,7 +268,7 @@ var getArea = function (cityid) {
                     $('#country input[type=text] ').keyup(function (country) {
                         if( country.keyCode=='13'){
                             var b = $("#country .option-hover.option-selected").text();
-                            countrySelected = $($(country.currentTarget)[0]).data('value');
+                            countrySelected=($("#country .option-hover.option-selected"))[0].dataset.value;
                             $('#country .combo-input').val(b);
                             $('#country .combo-select select').val(b);
                             getProbeCounty(countrySelected);
@@ -327,7 +325,7 @@ var getProbeCounty = function (countyid) {
                 $('#probe input[type=text] ').keyup(function (probe) {
                     if( probe.keyCode=='13'){
                         var b = $("#probe .option-hover.option-selected").text();
-                        probeSelected = $($(probe.currentTarget)[0]).data('value');
+                        probeSelected=($("#probe .option-hover.option-selected"))[0].dataset.value;
                         $('#probe .combo-input').val(b);
                         $('#probe .combo-select select').val(b);
                     }
@@ -382,7 +380,7 @@ var getTarget = function (id) {
                     $('#target input[type=text] ').keyup(function (target) {
                         if( target.keyCode=='13'){
                             var b = $("#target .option-hover.option-selected").text();
-                            probeSelected = $($(target.currentTarget)[0]).data('value');
+                            targetSelected=($("#target .option-hover.option-selected"))[0].dataset.value;
                             $('#target .combo-input').val(b);
                             $('#target .combo-select select').val(b);
                         }
@@ -448,7 +446,6 @@ function diagnose() {
             contentType: "application/json",
             success: function (result) {
                 console.log(result)
-                 ;
                 var dispatch = result.taskdispatch;
                 console.log(JSON.stringify(dispatch));
                 var url = "information.html";

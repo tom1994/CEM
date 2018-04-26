@@ -527,7 +527,6 @@ var tgform_data = new Vue({
 function getFormJson(form) {
     var o = {};
     var a = $(form).serializeArray();
-    debugger
     if (groupSelected != 0) {
         a[1].value = groupSelected;
     }
@@ -776,12 +775,12 @@ var tg_table = new Vue({
     el: '#tg_table',
     data: {
         headers: [
-            {title: '<div></div>'},
-            {title: '<div>测试目标组名</div>'},
-            {title: '<div>业务类型</div>'},
-            {title: '<div>备注</div>'},
-            {title: '<div>创建时间</div>'},
-            {title: '<div>操作</div>'}
+            {title: '<div style="width:10px"></div>'},
+            {title: '<div style="width: 200px">测试目标组名</div>'},
+            {title: '<div style="width: 200px">业务类型</div>'},
+            {title: '<div style="width: 200px">备注</div>'},
+            {title: '<div style="width: 200px">创建时间</div>'},
+            {title: '<div style="width: 200px">操作</div>'}
         ],
         rows: [],
         dtHandle: null,

@@ -347,7 +347,6 @@ var search_data = new Vue({
             this.probeNames = getProbe($("#selectarea").val());
         },
         resultListsearch: function () {   /*查询监听事件*/
-             
             /*显示相应的data_table*/
             $(".record-table").addClass("service_unselected");
             this.servicetype = parseInt(serviceSelected);
@@ -386,7 +385,6 @@ var search_data = new Vue({
                 data.queryType = "0";//统计数据
             }
             console.log(data);
-            debugger
             if (recordtag == "ping") {
                 pingresulttable.resultdata = data;
                 pingresulttable.redraw();
@@ -852,14 +850,14 @@ var tracertresulttable = new Vue({
             {title: '<div style="width:145px">测试目标</div>'},
             {title: '<div style="width:90px">目标地址</div>'},
             {title: '<div style="width:90px">测试目标IP</div>'},
-            {title: '<div style="width:90px">单跳往返时延(ms)</div>'},
+            {title: '<div style="width:110px">单跳往返时延(ms)</div>'},
             {title: '<div style="width:120px">单跳时延标准差(ms)</div>'},
-            {title: '<div style="width:100px">单跳时延方差(ms)</div>'},
+            {title: '<div style="width:120px">单跳时延方差(ms)</div>'},
             {title: '<div style="width:75px">单跳抖动(ms)</div>'},
-            {title: '<div style="width:100px">单跳抖动标准差(ms)</div>'},
-            {title: '<div style="width:90px">单跳抖动方差(ms)</div>'},
-            {title: '<div style="width:60px">单跳丢包率(%)</div>'},
-            {title: '<div style="width:130px">单跳测试结果</div>'},
+            {title: '<div style="width:110px">单跳抖动标准差(ms)</div>'},
+            {title: '<div style="width:110px">单跳抖动方差(ms)</div>'},
+            {title: '<div style="width:90px">单跳丢包率(%)</div>'},
+            {title: '<div style="width:130px">逐跳记录</div>'},
             {title: '<div style="width:130px">记录日期</div>'},
             {title: '<div style="width:130px">记录时间</div>'},
         ],
@@ -908,6 +906,7 @@ var tracertresulttable = new Vue({
             scrollY :400,
             scrollX: true,
             scrollCollapse: true,
+
             info: false,
             ordering: false, /*禁用排序功能*/
             /*bInfo: false,*/
@@ -950,6 +949,7 @@ var tracertresulttable = new Vue({
                         var i = param.start + 1;
                         result.page.list.forEach(function (item) {
                             let row = [];
+                             
                             row.push(i++);
                             row.push(item.probeName);
                             row.push(item.port);
@@ -964,8 +964,36 @@ var tracertresulttable = new Vue({
                             row.push(item.jitter.toFixed(2));
                             row.push(item.jitterStd.toFixed(2));
                             row.push(item.jitterVar.toFixed(2));
-                            row.push(item.lossRate.toFixed(2)*100);
-                            row.push(item.hopRecord);
+                            row.push((item.lossRate*100).toFixed(2));
+                           if(item.servicetypeName=='Trace Route(ICMP)'){
+                               var a = JSON.parse(item.hopRecord);
+                               var tables = $('table[id=hop_table]');
+                               for (let i =0;i<a.length;i++){
+                                   var j = i+1;
+                                   var trtd = $("<tr><td hidden='hidden'>"+item.id+"</td><td>"+j+"</td><td>"+a[i].hop_ip +"</td><td>"+a[i].delay.toFixed(2)+"</td><td>"+a[i].loss_rate*100+"</td></tr>");
+                                   trtd.appendTo(tables);
+                               }
+                               $('#hop_table>tbody tr:eq(0)').css("display",'none');
+                               $('#hop_table_paginate').css('display','none');
+                               $('#hop_table_wrapper').css('height','450px');
+                               $('#hop_table_wrapper').css('overflow-y','auto');
+                               row.push('<a class="fontcolor" style="white-space: nowrap" onclick="hopRecord_info(this)" id='+item.id+'  >详情</a>');
+
+                           }else {
+                               var a = JSON.parse(item.hopRecord);
+                               var tables = $('table[id=Record_table]');
+                               for (let i =0;i<a.length;i++){
+                                   var j = i+1;
+                                   var trtd = $("<tr><td hidden='hidden'>"+item.id+"</td><td>"+j+"</td><td>"+a[i].hop_ip +"</td><td>"+a[i].delay.toFixed(2)+"</td><td>"+a[i].loss_rate*100+"</td></tr>");
+                                   trtd.appendTo(tables);
+                               }
+                               $('#Record_table>tbody tr:eq(0)').css("display",'none');
+                               $('#Record_table_paginate').css('display','none');
+                               $('#Record_table_wrapper').css('height','450px');
+                               $('#Record_table_wrapper').css('overflow-y','auto');
+                               row.push('<a class="fontcolor" style="white-space: nowrap" onclick="Record(this)" id='+item.id+'>详情</a>');
+                           }
+                            // row.push(item.hopRecord);
                             row.push(item.recordDate.substr(0, 10));
                             row.push(item.recordTime);
                             rows.push(row);
@@ -987,6 +1015,129 @@ var tracertresulttable = new Vue({
         });
     }
 });
+var Routertrance= new Vue({
+    el:"#hop_table",
+    data: {
+        headers:[
+            {title: '<div style="width:50px">跳数</div>'},
+            {title: '<div style="width:90px">目的地址</div>'},
+            {title: '<div style="width:80px">时延(ms)</div>'},
+            {title: '<div style="width:75px">丢包率(%)</div>'},
+        ],
+        rows: [],
+        dtHandle: null,
+        probedata: {}
+
+    },
+    mounted:function (hopRecord) {
+        var vm=this;
+        vm.dtHandle = $(this.$el).DataTable({
+            columns: vm.headers,
+            data: '',
+            searching: false,
+            paging: true,
+            // serverSide: true,
+            info: false,
+            ordering: false, /*禁用排序功能*/
+            /*bInfo: false,*/
+            /*bLengthChange: false,*/    /*禁用Show entries*/
+            scroll: false,
+        });
+
+    },
+    method:{
+        gethopRecord:function (hopRecord) {
+        }
+    }
+
+});
+var Router1trance= new Vue({
+    el:"#Record_table",
+    data: {
+        headers:[
+            {title: '<div style="width:50px">跳数</div>'},
+            {title: '<div style="width:90px">目的地址</div>'},
+            {title: '<div style="width:80px">时延(ms)</div>'},
+            {title: '<div style="width:75px">丢包率(%)</div>'},
+        ],
+        rows: [],
+        dtHandle: null,
+        probedata: {}
+
+    },
+    mounted:function (hopRecord) {
+        var vm=this;
+        vm.dtHandle = $(this.$el).DataTable({
+            columns: vm.headers,
+            data: '',
+            searching: false,
+            paging: true,
+            // serverSide: true,
+            info: false,
+            ordering: false, /*禁用排序功能*/
+            /*bInfo: false,*/
+            /*bLengthChange: false,*/    /*禁用Show entries*/
+            scroll: false,
+        });
+
+    },
+    method:{
+        gethopRecord:function (hopRecord) {
+        }
+    }
+
+})
+function Record(obj) {
+
+    let id = obj.id;
+    let tr = $("#Record_table >tbody>tr");
+    for(let i = 1;i<tr.length;i++){
+
+        if(tr[i].firstElementChild.innerText!=id){
+            tr[i].hidden = true;
+        }
+    }
+    $('.col-md-6').css('display','none');
+    $('#myModal_Record').modal('show');
+
+
+}
+function hopRecord_info(obj) {
+     
+    let id = obj.id;
+    let tr = $("#hop_table >tbody>tr");
+    for(let i = 1;i<tr.length;i++){
+        if(tr[i].firstElementChild.innerText!=id){
+            tr[i].hidden = true;
+        }else {
+          var trs={}
+           trs.value=tr[i];
+            console.log(trs)
+
+        }
+    }
+
+    $('.col-md-6').css('display','none');
+    $('#myModal_hopRecord').modal('show');
+}
+
+
+$('#myModal_hopRecord').on('hide.bs.modal',
+    function() {
+        let tr = $("#hop_table >tbody>tr");
+        for(let i = 1;i<tr.length;i++){
+            tr[i].hidden = false;
+        }
+    })
+$('#myModal_Record').on('hide.bs.modal',
+    function() {
+        let tr = $("#Record_table >tbody>tr");
+        for(let i = 1;i<tr.length;i++){
+            tr[i].hidden = false;
+
+        }
+    })
+
 
 //sla表
 var slaresulttable = new Vue({
@@ -2545,7 +2696,29 @@ function numberToIp(number) {
     return ip;
 }
 
+function loading() {
+    $('body').loading({
+        loadingWidth:240,
+        title:'正在努力的导出中',
+        name:'test',
+        discription:'这是一个描述...',
+        direction:'row',
+        type:'origin',
+        originBg:'#B0E2FF',
+        originDivWidth:30,
+        originDivHeight:30,
+        originWidth:4,
+        originHeight:4,
+        smallLoading:false,
+        titleColor:'#ADD8E6',
+        loadingBg:'#312923',
+        loadingMaskBg:'rgba(22,22,22,0.2)'
+    });
+
+}
 function out() {/*导出事件*/
+    loading();
+    console.log(new Date())
     var data = getFormJson($('#resultsearch .selectdata'));
     /*得到查询条件*/
     /*获取表单元素的值*/
@@ -2578,4 +2751,8 @@ function out() {/*导出事件*/
 
     document.getElementById("output").href = encodeURI('../../recordhourtracert/datadownload/' + schedulepolicy);
     document.getElementById("output").click();
+    setTimeout(function () {
+        removeLoading('test');
+    },74000);
 }
+

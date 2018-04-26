@@ -133,7 +133,7 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 		map1.put("ava_start",map.get("ava_start"));
 		map1.put("ava_terminal",map.get("ava_start"));
 		map1.put("startTime",map.get("starTime"));
-		map1.put("terminalTime","00:00:00");
+		map1.put("terminalTime","23:00:00");
 		map2.put("ava_start",map.get("ava_terminal"));
 		map2.put("ava_terminal",map.get("ava_terminal"));
 		map2.put("startTime","00:00:00");
@@ -454,7 +454,7 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 		map1.put("ava_start",map.get("ava_start"));
 		map1.put("ava_terminal",map.get("ava_start"));
 		map1.put("startTime",map.get("starTime"));
-		map1.put("terminalTime","00:00:00");
+		map1.put("terminalTime","23:00:00");
 		map2.put("ava_start",map.get("ava_terminal"));
 		map2.put("ava_terminal",map.get("ava_terminal"));
 		map2.put("startTime","00:00:00");
@@ -1443,7 +1443,7 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 		map1.put("ava_start",map.get("ava_start"));
 		map1.put("ava_terminal",map.get("ava_start"));
 		map1.put("startTime",map.get("starTime"));
-		map1.put("terminalTime","00:00:00");
+		map1.put("terminalTime","23:00:00");
 		map2.put("ava_start",map.get("ava_terminal"));
 		map2.put("ava_terminal",map.get("ava_terminal"));
 		map2.put("startTime","00:00:00");
@@ -1735,7 +1735,7 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 		map1.put("ava_start",map.get("ava_start"));
 		map1.put("ava_terminal",map.get("ava_start"));
 		map1.put("startTime",map.get("starTime"));
-		map1.put("terminalTime","00:00:00");
+		map1.put("terminalTime","23:00:00");
 		map2.put("ava_start",map.get("ava_terminal"));
 		map2.put("ava_terminal",map.get("ava_terminal"));
 		map2.put("startTime","00:00:00");
@@ -2237,10 +2237,14 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 			map1.put("target_id",map.get("target_id"));
 			map2.put("target_id",map.get("target_id"));
 		}
+		if(map.get("probe_id")!=null){
+			map1.put("probe_id",map.get("probe_id"));
+			map2.put("probe_id",map.get("probe_id"));
+		}
 		map1.put("ava_start",map.get("ava_start"));
 		map1.put("ava_terminal",map.get("ava_start"));
 		map1.put("startTime",map.get("starTime"));
-		map1.put("terminalTime","00:00:00");
+		map1.put("terminalTime","23:00:00");
 		map2.put("ava_start",map.get("ava_terminal"));
 		map2.put("ava_terminal",map.get("ava_terminal"));
 		map2.put("startTime","00:00:00");
@@ -2488,8 +2492,9 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 	}
 
 	@Override
-	public List<ScoreEntity> diagnoseDayHour(Map<String, Object> map,List<ScoreEntity> scoreList) throws ExecutionException, InterruptedException{
+	public List<ScoreEntity> diagnoseDayHour(Map<String, Object> map) throws ExecutionException, InterruptedException{
 		int service = Integer.parseInt(map.get("service").toString());
+		List<ScoreEntity> scoreList = new ArrayList<>();
 		RecordHourPingService recordHourPingService= (RecordHourPingService) SpringContextUtils.getBean("recordHourPingService");
 		RecordHourTracertService recordHourTracertService= (RecordHourTracertService) SpringContextUtils.getBean("recordHourTracertService");
 		RecordHourSlaService recordHourSlaService= (RecordHourSlaService) SpringContextUtils.getBean("recordHourSlaService");
@@ -2522,10 +2527,15 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 			map2.put("target_id",map.get("target_id"));
 			map3.put("target_id",map.get("target_id"));
 		}
+		if(map.get("probe_id")!=null){
+			map1.put("probe_id",map.get("probe_id"));
+			map2.put("probe_id",map.get("probe_id"));
+			map3.put("probe_id",map.get("probe_id"));
+		}
 		map1.put("ava_start",map.get("ava_start"));
 		map1.put("ava_terminal",map.get("ava_start"));
 		map1.put("startTime",map.get("starTime"));
-		map1.put("terminalTime","00:00:00");
+		map1.put("terminalTime","23:00:00");
 		map2.put("ava_start",map.get("ava_terminal"));
 		map2.put("ava_terminal",map.get("ava_terminal"));
 		map2.put("startTime","00:00:00");
@@ -2554,7 +2564,7 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 					List<ScoreEntity> pingUdp = recordHourPingService.calculatePingUdp(pingList);
 					List<ScoreEntity> tracertIcmp = recordHourPingService.calculateTracertIcmp(tracertList);
 					List<ScoreEntity> tracertUdp = recordHourPingService.calculateTracertUdp(tracertList);
-					scoreList.addAll(recordHourPingService.calculateDate1(pingIcmp, pingTcp, pingUdp, tracertIcmp, tracertUdp));
+					scoreList=recordHourPingService.calculateLayer1(pingIcmp, pingTcp, pingUdp, tracertIcmp, tracertUdp);
 					break;
 				}
 				Thread.sleep(1000);
@@ -2602,7 +2612,7 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 					List<ScoreEntity> dhcp = recordHourSlaService.calculateDhcp(dhcpList);
 					List<ScoreEntity> pppoe = recordHourSlaService.calculatePppoe(pppoeList);
 					List<ScoreEntity> radius = recordHourSlaService.calculateRadius(radiusList);
-					scoreList.addAll(recordHourSlaService.calculateDate2(slaTcp, slaUdp, dns, dhcp, pppoe, radius));
+					scoreList=recordHourSlaService.calculateLayer2(slaTcp, slaUdp, dns, dhcp, pppoe, radius);
 					break;
 				}
 				Thread.sleep(1000);
@@ -2616,7 +2626,8 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 					List<RecordHourWebPageEntity> webPageList = webPageList_future.get();
 					webPageList.addAll(webPageList_future1.get());
 					webPageList.addAll(webPageList_future2.get());
-					scoreList.addAll(recordHourWebPageService.calculateService3(webPageList));
+					List<ScoreEntity> list = recordHourWebPageService.calculateService3(webPageList);
+					scoreList=recordHourWebPageService.calculateLayer3(list);
 					break;
 				}
 				Thread.sleep(1000);
@@ -2640,7 +2651,7 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 					List<ScoreEntity> webDownload = recordHourWebDownloadService.calculateWebDownload(webDownloadList);
 					List<ScoreEntity> ftpDownload = recordHourWebDownloadService.calculateFtpDownload(ftpList);
 					List<ScoreEntity> ftpUpload = recordHourWebDownloadService.calculateFtpUpload(ftpList);
-					scoreList.addAll(recordHourWebDownloadService.calculateDate4(webDownload, ftpDownload, ftpUpload));
+					scoreList=recordHourWebDownloadService.calculateLayer4(webDownload, ftpDownload, ftpUpload);
 					break;
 				}
 				Thread.sleep(1000);
@@ -2654,7 +2665,8 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 					List<RecordHourWebVideoEntity> videoList = videoList_future.get();
 					videoList.addAll(videoList_future1.get());
 					videoList.addAll(videoList_future2.get());
-					scoreList.addAll(recordHourWebVideoService.calculateService5(videoList));
+					List<ScoreEntity> list = recordHourWebVideoService.calculateService5(videoList);
+					scoreList=recordHourWebVideoService.calculateLayer5(list);
 					break;
 				}
 				Thread.sleep(1000);
@@ -2668,7 +2680,8 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 					List<RecordHourGameEntity> gameList = gameList_future.get();
 					gameList.addAll(gameList_future1.get());
 					gameList.addAll(gameList_future2.get());
-					scoreList.addAll(recordHourGameService.calculateService6(gameList));
+					List<ScoreEntity> list = recordHourGameService.calculateService6(gameList);
+					scoreList=recordHourGameService.calculateLayer6(list);
 					break;
 				}
 				Thread.sleep(1000);
@@ -2679,8 +2692,9 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 	}
 
 	@Override
-	public List<ScoreEntity> diagnoseDay(Map<String, Object> map,List<ScoreEntity> scoreList) throws ExecutionException, InterruptedException{
+	public List<ScoreEntity> diagnoseDay(Map<String, Object> map) throws ExecutionException, InterruptedException{
 		int service = Integer.parseInt(map.get("service").toString());
+		List<ScoreEntity> scoreList = new ArrayList<>();
 		RecordHourPingService recordHourPingService= (RecordHourPingService) SpringContextUtils.getBean("recordHourPingService");
 		RecordHourTracertService recordHourTracertService= (RecordHourTracertService) SpringContextUtils.getBean("recordHourTracertService");
 		RecordHourSlaService recordHourSlaService= (RecordHourSlaService) SpringContextUtils.getBean("recordHourSlaService");
@@ -2705,7 +2719,7 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 					List<ScoreEntity> pingUdp = recordHourPingService.calculatePingUdp(pingList);
 					List<ScoreEntity> tracertIcmp = recordHourPingService.calculateTracertIcmp(tracertList);
 					List<ScoreEntity> tracertUdp = recordHourPingService.calculateTracertUdp(tracertList);
-					scoreList.addAll(recordHourPingService.calculateDate1(pingIcmp, pingTcp, pingUdp, tracertIcmp, tracertUdp));
+					scoreList=recordHourPingService.calculateLayer1(pingIcmp, pingTcp, pingUdp, tracertIcmp, tracertUdp);
 					break;
 				}
 				Thread.sleep(1000);
@@ -2730,7 +2744,7 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 					List<ScoreEntity> dhcp = recordHourSlaService.calculateDhcp(dhcpList);
 					List<ScoreEntity> pppoe = recordHourSlaService.calculatePppoe(pppoeList);
 					List<ScoreEntity> radius = recordHourSlaService.calculateRadius(radiusList);
-					scoreList.addAll(recordHourSlaService.calculateDate2(slaTcp, slaUdp, dns, dhcp, pppoe, radius));
+					scoreList=recordHourSlaService.calculateLayer2(slaTcp, slaUdp, dns, dhcp, pppoe, radius);
 					break;
 				}
 				Thread.sleep(1000);
@@ -2746,7 +2760,7 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 					List<ScoreEntity> webDownload = recordHourWebDownloadService.calculateWebDownload(webDownloadList);
 					List<ScoreEntity> ftpDownload = recordHourWebDownloadService.calculateFtpDownload(ftpList);
 					List<ScoreEntity> ftpUpload = recordHourWebDownloadService.calculateFtpUpload(ftpList);
-					scoreList.addAll(recordHourWebDownloadService.calculateDate4(webDownload, ftpDownload, ftpUpload));
+					scoreList=recordHourWebDownloadService.calculateLayer4(webDownload, ftpDownload, ftpUpload);
 					break;
 				}
 				Thread.sleep(1000);
@@ -2756,7 +2770,8 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 			while (true) {
 				if (webPageList_future.isDone()) {
 					List<RecordHourWebPageEntity> webPageList = webPageList_future.get();
-					scoreList.addAll(recordHourWebPageService.calculateService3(webPageList));
+					List<ScoreEntity> list = recordHourWebPageService.calculateService3(webPageList);
+					scoreList=recordHourWebPageService.calculateLayer3(list);
 					break;
 				}
 				Thread.sleep(1000);
@@ -2766,7 +2781,8 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 			while (true) {
 				if (videoList_future.isDone()) {
 					List<RecordHourWebVideoEntity> videoList = videoList_future.get();
-					scoreList.addAll(recordHourWebVideoService.calculateService5(videoList));
+					List<ScoreEntity> list = recordHourWebVideoService.calculateService5(videoList);
+					scoreList=recordHourWebVideoService.calculateLayer5(list);
 					break;
 				}
 				Thread.sleep(1000);
@@ -2776,7 +2792,8 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 			while (true) {
 				if (gameList_future.isDone()) {
 					List<RecordHourGameEntity> gameList = gameList_future.get();
-					scoreList.addAll(recordHourGameService.calculateService6(gameList));
+					List<ScoreEntity> list = recordHourGameService.calculateService6(gameList);
+					scoreList=recordHourGameService.calculateLayer6(list);
 					break;
 				}
 				Thread.sleep(1000);
@@ -2787,9 +2804,10 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 	}
 
 	@Override
-	public List<ScoreEntity> diagnoseHour(Map<String, Object> map,List<ScoreEntity> scoreList) throws ExecutionException, InterruptedException{
+	public List<ScoreEntity> diagnoseHour(Map<String, Object> map) throws ExecutionException, InterruptedException{
 		//datedifferent=1天的情况
 		//组装2个map对于数据进行筛选
+		List<ScoreEntity> scoreList = new ArrayList<>();
 		Map<String, Object> map1 = new HashMap<>();
 		Map<String, Object> map2 = new HashMap<>();
 		if(map.get("city_id")!=null){
@@ -2803,6 +2821,10 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 		if(map.get("target_id")!=null){
 			map1.put("target_id",map.get("target_id"));
 			map2.put("target_id",map.get("target_id"));
+		}
+		if(map.get("probe_id")!=null){
+			map1.put("probe_id",map.get("probe_id"));
+			map2.put("probe_id",map.get("probe_id"));
 		}
 		map1.put("ava_start",map.get("ava_start"));
 		map1.put("ava_terminal",map.get("ava_start"));
@@ -2842,7 +2864,7 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 					List<ScoreEntity> pingUdp = recordHourPingService.calculatePingUdp(pingList);
 					List<ScoreEntity> tracertIcmp = recordHourPingService.calculateTracertIcmp(tracertList);
 					List<ScoreEntity> tracertUdp = recordHourPingService.calculateTracertUdp(tracertList);
-					scoreList.addAll(recordHourPingService.calculateDate1(pingIcmp, pingTcp, pingUdp, tracertIcmp, tracertUdp));
+					scoreList=recordHourPingService.calculateLayer1(pingIcmp, pingTcp, pingUdp, tracertIcmp, tracertUdp);
 					break;
 				}
 				Thread.sleep(1000);
@@ -2877,7 +2899,7 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 					List<ScoreEntity> dhcp = recordHourSlaService.calculateDhcp(dhcpList);
 					List<ScoreEntity> pppoe = recordHourSlaService.calculatePppoe(pppoeList);
 					List<ScoreEntity> radius = recordHourSlaService.calculateRadius(radiusList);
-					scoreList.addAll(recordHourSlaService.calculateDate2(slaTcp, slaUdp, dns, dhcp, pppoe, radius));
+					scoreList=recordHourSlaService.calculateLayer2(slaTcp, slaUdp, dns, dhcp, pppoe, radius);
 					break;
 				}
 				Thread.sleep(1000);
@@ -2897,7 +2919,7 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 					List<ScoreEntity> webDownload = recordHourWebDownloadService.calculateWebDownload(webDownloadList);
 					List<ScoreEntity> ftpDownload = recordHourWebDownloadService.calculateFtpDownload(ftpList);
 					List<ScoreEntity> ftpUpload = recordHourWebDownloadService.calculateFtpUpload(ftpList);
-					scoreList.addAll(recordHourWebDownloadService.calculateDate4(webDownload, ftpDownload, ftpUpload));
+					scoreList=recordHourWebDownloadService.calculateLayer4(webDownload, ftpDownload, ftpUpload);
 					break;
 				}
 				Thread.sleep(1000);
@@ -2909,7 +2931,8 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 				if (webPageList_future.isDone()&&webPageList_future1.isDone()) {
 					List<RecordHourWebPageEntity> webPageList = webPageList_future.get();
 					webPageList.addAll(webPageList_future1.get());
-					scoreList.addAll(recordHourWebPageService.calculateService3(webPageList));
+					List<ScoreEntity> list = recordHourWebPageService.calculateService3(webPageList);
+					scoreList=recordHourWebPageService.calculateLayer3(list);
 					break;
 				}
 				Thread.sleep(1000);
@@ -2921,7 +2944,8 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 				if (videoList_future.isDone()&&videoList_future1.isDone()) {
 					List<RecordHourWebVideoEntity> videoList = videoList_future.get();
 					videoList.addAll(videoList_future1.get());
-					scoreList.addAll(recordHourWebVideoService.calculateService5(videoList));
+					List<ScoreEntity> list =recordHourWebVideoService.calculateService5(videoList);
+					scoreList=recordHourWebVideoService.calculateLayer5(list);
 					break;
 				}
 				Thread.sleep(1000);
@@ -2933,7 +2957,8 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 				if (gameList_future.isDone()&&gameList_future1.isDone()) {
 					List<RecordHourGameEntity> gameList = gameList_future.get();
 					gameList.addAll(gameList_future1.get());
-					scoreList.addAll(recordHourGameService.calculateService6(gameList));
+					List<ScoreEntity> list =recordHourGameService.calculateService6(gameList);
+					scoreList=recordHourGameService.calculateLayer6(list);
 					break;
 				}
 				Thread.sleep(1000);
