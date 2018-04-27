@@ -103,7 +103,7 @@ public class ProbeEntity implements Serializable {
     @ExcelIgnore
     private Integer concurrentTask;
     //心跳间隔
-    @ExportName(exportName = "心跳间隔")
+    @ExportName(exportName = "心跳间隔(s)")
     private Integer hbInterval;
     //上次心跳时间
     @ExportName(exportName = "上次心跳时间")
@@ -129,7 +129,6 @@ public class ProbeEntity implements Serializable {
     //创建时间
     @ExportName(exportName = "创建时间")
     private Date createTime;
-
 
     //接入层级
     @ExportName(exportName = "接入层级")

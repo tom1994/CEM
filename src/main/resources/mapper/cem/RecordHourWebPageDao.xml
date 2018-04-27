@@ -296,7 +296,9 @@
 		<if test="county_id != null and county_id != ''">
 			AND county_id = #{county_id}
 		</if>
-
+		<if test="target_id != null and target_id != ''">
+			AND target_id = #{target_id}
+		</if>
 		<if test="startTime != null and terminalTime != null">
 			AND record_time BETWEEN #{startTime} AND #{terminalTime}
 		</if>
@@ -340,10 +342,9 @@
 		<if test="county_id != null and county_id != ''">
 			AND county_id = #{county_id}
 		</if>
-		<if test="county_id != null and county_id != ''">
+		<if test="probe_id != null and probe_id != ''">
 			AND probe_id = #{probe_id}
 		</if>
-
 		GROUP BY target_id) t
 		INNER JOIN probe
 		ON t.probe_id = probe.id

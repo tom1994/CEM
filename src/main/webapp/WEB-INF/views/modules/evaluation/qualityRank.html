@@ -409,7 +409,6 @@
                                                         <div class="jq22">
                                                             <select id="doorselectservice" class="form-control  input"
                                                                     v-on:change="servicechange()" style="width: 140px;display: none;">
-                                                                <option value="0">综合业务</option>
                                                                 <option value="1">网络连通性业务</option>
                                                                 <option value="2">网络层质量业务</option>
                                                                 <option value="3">网页浏览业务</option>
@@ -686,35 +685,51 @@
         $('#areaTarget .jq22').comboSelect();
         $('#areaCity .jq22').comboSelect();
     });
-
+    var date=new Date();
+    var month = date.getMonth() + 1;
+    var strDate = date.getDate();
+    var years=date.getFullYear();
+    var newdate=years+'-'+month+'-'+strDate;
     $('#start_date').flatpickr({
         enableTime: true,
         dateFormat: "Y-m-d H:i",
+        defaultDate:newdate,
         time_24hr: true
     });
+    var date=new Date();
+    var month = date.getMonth() + 1;
+    var strDate = date.getDate();
+    var years=date.getFullYear();
+    var hours=date.getHours();
+    var endday=years+'-'+month+'-'+strDate+' '+hours;
     $('#terminal_date').flatpickr({
         enableTime: true,
         dateFormat: "Y-m-d H:i",
+        defaultDate:endday,
         time_24hr: true
     });
     $('#areastart_date').flatpickr({
         enableTime: true,
         dateFormat: "Y-m-d H:i",
+        defaultDate:newdate,
         time_24hr: true
     });
     $('#areaterminal_date').flatpickr({
         enableTime: true,
         dateFormat: "Y-m-d H:i",
+        defaultDate:endday,
         time_24hr: true
     });
     $('#doorstart_date').flatpickr({
         enableTime: true,
         dateFormat: "Y-m-d H:i",
+        defaultDate:newdate,
         time_24hr: true
     });
     $('#doorterminal_date').flatpickr({
         enableTime: true,
         dateFormat: "Y-m-d H:i",
+        defaultDate:endday,
         time_24hr: true
     });
 

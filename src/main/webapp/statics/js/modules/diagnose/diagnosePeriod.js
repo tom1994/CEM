@@ -358,14 +358,13 @@ var new_search = new Vue({
                 search.target_id = searchJson.target_id;
                 search.ava_start = searchJson.startDate.substr(0, 10);
                 search.ava_terminal = searchJson.terminalDate.substr(0, 10);
-                search.startTime = searchJson.startDate.substr(11, 15);
-                search.terminalTime = searchJson.terminalDate.substr(11, 15);
+                search.starTime = searchJson.startDate.substr(11, 15);
+                search.terminalTime = searchJson.startDate.substr(11, 15);
                 if (search.ava_start.length != 0 && search.ava_terminal.length != 0) {
                 } else {
                     search.ava_start = new Date(new Date() - 1000 * 60 * 60 * 24).Format("yyyy-MM-dd");
                     search.ava_terminal = (new Date()).Format("yyyy-MM-dd");
                 }
-                debugger
                 let param = {};
                 param.probedata = JSON.stringify(search);
                 loading()
@@ -730,7 +729,6 @@ function sla(val) {
             headers: [
                 {title: ''},
                 {title: '层级名称'},
-                {title: '探针名'},
                 {title: '时间'},
                 {title: 'TCP Sla', class: 'some-special-class'},
                 {title: 'UDP Sla'},
@@ -753,9 +751,9 @@ function sla(val) {
                 data: vm.rows,
                 searching: false,
                 paging: false,
-                // serverSide: true,
+                serverSide: true,
                 info: false,
-                // ordering: false, /*禁用排序功能*/
+                ordering: false, /*禁用排序功能*/
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
@@ -791,7 +789,6 @@ function sla(val) {
                         let row = [];
                         row.push(i++);
                         row.push(layerNames.get(item.accessLayer));
-                        row.push(item.probeName);
                         row.push(item.recordDate.substr(0, 10) + "   " + item.recordTime.substr(0, 10) + ':00');
                         row.push('<a class="fontcolor"   onclick="sla_info(this,1)" id=' + item.id + '   type =' + layerNames.get(item.accessLayer) + ' >' + fixed(item.tcpSlaScore) + '</a>&nbsp;');
                         row.push('<a class="fontcolor"    onclick="sla_info(this,2)" id=' + item.id + '  type =' + layerNames.get(item.accessLayer) + '>' + fixed(item.udpSlaScore) + '</a>&nbsp;');
@@ -817,7 +814,6 @@ function web(val) {
             headers: [
                 {title: '<div style="width:10px"></div>'},
                 {title: '层级名称'},
-                {title: '探针名'},
                 {title: '时间'},
                 {title: 'web浏览',},
             ],
@@ -835,9 +831,9 @@ function web(val) {
                 data: vm.rows,
                 searching: false,
                 paging: false,
-                // serverSide: true,
+                serverSide: true,
                 info: false,
-                // ordering: false, /*禁用排序功能*/
+                ordering: false, /*禁用排序功能*/
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
@@ -872,7 +868,6 @@ function web(val) {
                         let row = [];
                         row.push(i++);
                         row.push(layerNames.get(item.accessLayer));
-                        row.push(item.probeName)
                         row.push(item.recordDate.substr(0, 10) + "   " + item.recordTime.substr(0, 10) + ':00');
                         row.push('<a class="fontcolor"  onclick="web_info(this)"  id=' + item.id + '  type =' + layerNames.get(item.accessLayer) + '>' + fixed(item.score) + '</a>&nbsp;');
                         rows.push(row);
@@ -893,7 +888,6 @@ function download(val) {
             headers: [
                 {title: ''},
                 {title: '层级名称'},
-                {title: '探针名'},
                 {title: '时间'},
                 {title: 'web下载', class: 'some-special-class'},
                 {title: 'FTP上传'},
@@ -913,9 +907,9 @@ function download(val) {
                 data: vm.rows,
                 searching: false,
                 paging: false,
-                // serverSide: true,
+                serverSide: true,
                 info: false,
-                // ordering: false, /*禁用排序功能*/
+                ordering: false, /*禁用排序功能*/
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
@@ -950,11 +944,11 @@ function download(val) {
                         let row = [];
                         row.push(i++);
                         row.push(layerNames.get(item.accessLayer));
-                        row.push(item.probeName)
                         row.push(item.recordDate.substr(0, 10) + "   " + item.recordTime.substr(0, 10) + ':00');
                         row.push('<a class="fontcolor"  type =' + layerNames.get(item.accessLayer) + '  onclick="download_info(this,1)" id=' + item.id + '>' + fixed(item.webDownloadScore) + '</a>&nbsp;');
                         row.push('<a class="fontcolor" type =' + layerNames.get(item.accessLayer) + '  onclick="download_info(this,2)" id=' + item.id + '>' + fixed(item.ftpUploadScore) + '</a>&nbsp;');
                         row.push('<a class="fontcolor" type =' + layerNames.get(item.accessLayer) + '  onclick="download_info(this,3)" id=' + item.id + '>' + fixed(item.ftpDownloadScore) + '</a>&nbsp;');
+
                         rows.push(row);
                     });
                     returnData.data = rows;
@@ -973,7 +967,6 @@ function video(val) {
             headers: [
                 {title: ''},
                 {title: '层级名称'},
-                {title: '探针名'},
                 {title: '时间'},
                 {title: '在线视频'},
             ],
@@ -991,9 +984,9 @@ function video(val) {
                 data: vm.rows,
                 searching: false,
                 paging: false,
-                // serverSide: true,
+                serverSide: true,
                 info: false,
-                // ordering: false, /*禁用排序功能*/
+                ordering: false, /*禁用排序功能*/
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
@@ -1028,7 +1021,6 @@ function video(val) {
                         let row = [];
                         row.push(i++);
                         row.push(layerNames.get(item.accessLayer));
-                        row.push(item.probeName)
                         row.push(item.recordDate.substr(0, 10) + "   " + item.recordTime.substr(0, 10) + ':00');
                         row.push('<a class="fontcolor" type =' + layerNames.get(item.accessLayer) + '  onclick="video_info(this)" id=' + item.id + '>' + fixed(item.score) + '</a>&nbsp;')
                         rows.push(row);
@@ -1049,7 +1041,6 @@ function game(val) {
             headers: [
                 {title: ''},
                 {title: '层级名称'},
-                {title: '探针名'},
                 {title: '时间'},
                 {title: '在线游戏'},
             ],
@@ -1067,9 +1058,9 @@ function game(val) {
                 data: vm.rows,
                 searching: false,
                 paging: false,
-                // serverSide: true,
+                serverSide: true,
                 info: false,
-                // ordering: false, /*禁用排序功能*/
+                ordering: false, /*禁用排序功能*/
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
@@ -1107,7 +1098,6 @@ function game(val) {
                         let row = [];
                         row.push(i++);
                         row.push(layerNames.get(item.accessLayer));
-                        row.push(item.probeName)
                         row.push(item.recordDate.substr(0, 10) + "   " + item.recordTime.substr(0, 10) + ':00');
                         row.push('<a class="fontcolor" type =' + layerNames.get(item.accessLayer) + '  onclick="game_info(this)" id=' + item.id + '>' + fixed(item.score) + '</a>&nbsp;')
                         rows.push(row);
@@ -3154,27 +3144,15 @@ function game_table(obj, content) {
         }
     })
 }
-var date=new Date();
-var month = date.getMonth() + 1;
-var strDate = date.getDate();
-var years=date.getFullYear();
-var newdate=years+'-'+month+'-'+strDate;
+
 $('#start_date').flatpickr({
     enableTime: true,
     dateFormat: "Y-m-d H:i",
-    defaultDate:newdate,
     time_24hr: true
 });
-var date=new Date();
-var month = date.getMonth() + 1;
-var strDate = date.getDate();
-var years=date.getFullYear();
-var hours=date.getHours();
-var endday=years+'-'+month+'-'+strDate+' '+hours;
 $('#terminal_date').flatpickr({
     enableTime: true,
     dateFormat: "Y-m-d H:i",
-    defaultDate:endday,
     time_24hr: true
 });
 
@@ -3538,7 +3516,7 @@ function fixedRate(value) {
     }
 }
 
- function cloneObj(obj) {
+var cloneObj = function (obj) {
     var str, newobj = obj.constructor === Array ? [] : {};
     if (typeof obj !== 'object') {
         return;
@@ -3555,31 +3533,31 @@ function fixedRate(value) {
 };
 
 function combine(tmp) {
-        var sum = tmp[0][1];
-        var newTmp = [];
-        var b = 1;
-        var c = 0;
-        for (let i = 0; i < tmp.length - 1; i++) {
-            if (tmp[i + 1] != undefined) {
-                if (tmp[i][0] == tmp[i + 1][0]) {
-                    sum = sum + tmp[i + 1][1];
-                    b++
-                } else {
-                    let a = [];
-                    a[0] = tmp[i][0];
-                    a[1] = sum / b;
-                    newTmp.push(a);
-                    sum = tmp[i + 1][1];
-                    b = 1;
-                }
+    var sum = tmp[0][1];
+    var newTmp = [];
+    var b = 1;
+    var c = 0;
+    for (let i = 0; i < tmp.length - 1; i++) {
+        if (tmp[i + 1] != undefined) {
+            if (tmp[i][0] == tmp[i + 1][0]) {
+                sum = sum + tmp[i + 1][1];
+                b++
             } else {
-                c = i;
-                break;
+                let a = [];
+                a[0] = tmp[i][0];
+                a[1] = sum / b;
+                newTmp.push(a);
+                sum = tmp[i + 1][1];
+                b = 1;
             }
+        } else {
+            c = i;
+            break;
         }
-        let a = [];
-        a[0] = tmp[c][0];
-        a[1] = sum / b;
-        newTmp.push(a);
-        return newTmp;
+    }
+    let a = [];
+    a[0] = tmp[c][0];
+    a[1] = sum / b;
+    newTmp.push(a);
+    return newTmp;
 }

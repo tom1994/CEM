@@ -418,7 +418,6 @@
 			<if test="jitterStd != null">`jitter_std` = #{jitterStd}, </if>
 			<if test="jitterVar != null">`jitter_var` = #{jitterVar}, </if>
 			<if test="lossRate != null">`loss_rate` = #{lossRate}, </if>
-			<if test="hopRecord != null">`hop_record` = #{hopRecord}, </if>
 			<if test="remark != null">`remark` = #{remark}</if>
 		</set>
 		where id = #{id}

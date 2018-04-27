@@ -133,6 +133,11 @@ public class DiagnoseController {
                 scoreList.get(i).setTargetName("");
             }
         }
+        if (map.get("probe_id") == null) {
+            for (int i = 0; i < scoreList.size(); i++) {
+                scoreList.get(i).setProbeName("");
+            }
+        }
         int total = 0;
         if (page == null) {              /*没有传入page,则取全部值*/
             map.put("offset", null);

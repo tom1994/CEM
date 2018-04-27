@@ -183,7 +183,7 @@ var search_service = new Vue({
     methods: {
         testagentListsearch: function () {
             var searchJson = getFormJson($('#probesearch'));
-                debugger
+            debugger
             if((searchJson.startDate)>(searchJson.terminalDate)){
                 console.log("时间选择有误，请重新选择！");
                 $('#nonavailable_time').modal('show');
@@ -204,7 +204,7 @@ var search_service = new Vue({
 function getFormJson(form) {      /*将表单对象变为json对象*/
     var o = {};
     var a = $(form).serializeArray();
-     
+
     if(TypeSelected!=0){
         a[2]={}
         a[2].name='type'

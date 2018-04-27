@@ -243,7 +243,7 @@
 		ON t.target_id = target.id
     </select>
 
-	<!--区域排名-->
+	<!--门户排名-->
 	<select id="queryGameTargetList" resultType="io.cem.modules.cem.entity.RecordHourGameEntity">
 		SELECT t.*,
 		city.city_name AS city_name,
@@ -270,7 +270,6 @@
 		<if test="probe_id != null and probe_id != ''">
 			AND probe_id = #{probe_id}
 		</if>
-
 		GROUP BY target_id) t
 		LEFT JOIN city
 		ON t.city_id = city.city_id

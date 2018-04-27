@@ -240,14 +240,41 @@ function delete_All() {
         if (CheckALL[i].checked)
             check_val.push(CheckALL[i].value);
     }
-    if (check_val == []) {
+    if (check_val.length==0) {
         toastr.warning("请选择要删除探针!");
-    }
-    // console.log(check_val);
-    delete_ajax(check_val)
-    debugger
-}
+    }else {
+        delete_ajax(check_val)
 
+    }
+}
+function update_port() {
+    var CheckALL = document.getElementsByName("selectFlag");
+    var check_val = [];
+    for (var i in CheckALL) {
+        if (CheckALL[i].checked)
+            check_val.push(CheckALL[i].value);
+    }
+    if (check_val.length==0) {
+        toastr.warning("请选择要重启的探针!");
+    }else {
+        var ids = JSON.stringify(check_val);
+        $.ajax({
+            type: "POST", /*GET会乱码*/
+            url: "../../cem/probe/reboot",
+            cache: false,  //禁用缓存
+            data: ids,  //传入组装的参数
+            dataType: "json",
+            contentType: "application/json", /*必须要,不可少*/
+            success: function (result) {
+                toastr.success("探针重启成功!");
+                idArray = [];
+
+            }
+        });
+    }
+
+
+}
 function transString(string, i, j) {
     if (string == null) {
         return "";

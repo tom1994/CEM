@@ -446,6 +446,11 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 			map2.put("target_id",map.get("target_id"));
 			map3.put("target_id",map.get("target_id"));
 		}
+		if(map.get("probe_id")!=null){
+			map1.put("probe_id",map.get("probe_id"));
+			map2.put("probe_id",map.get("probe_id"));
+			map3.put("probe_id",map.get("probe_id"));
+		}
 		map1.put("ava_start",map.get("ava_start"));
 		map1.put("ava_terminal",map.get("ava_start"));
 		map1.put("startTime",map.get("starTime"));

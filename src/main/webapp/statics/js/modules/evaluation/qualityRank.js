@@ -586,7 +586,6 @@ var search_area_service = new Vue({
     // 在 `methods` 对象中定义方法
     methods: {
         testagentListsearch: function () {
-             
             var searchJson = getFormJson($('#areasearch'));
             if ((searchJson.startDate) > (searchJson.terminalDate)) {
                 console.log("时间选择有误，请重新选择！");
@@ -693,7 +692,6 @@ var search_door_service = new Vue({
 function getFormJson(form) {      /*将表单对象变为json对象*/
     var a = $(form).serializeArray();
     var o = {};
-
     if (form.selector == '#probesearch') {
         if (citySelected != 0) {
             a[2] = {};
@@ -1205,7 +1203,6 @@ var doortable = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                         
                         console.log(result);
                         //封装返回数据
                         let returnData = {};
@@ -4806,7 +4803,6 @@ function fixed(value) {
     }
 }
 function fixedRate(value) {
-    debugger
     if(value==null){
         return ''
     } else{

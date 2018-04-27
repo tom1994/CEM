@@ -552,6 +552,7 @@ function task_assign(obj) {
 //a=1 选择探针 a=0 选择探针组 b=1 测试目标 b=0 测试目标组 a=2选择核心探针 c=0 选择
 function submit_dispatch() {
     loading()
+    debugger
     var a = parseInt($('input[name=chooseprobe]:checked', '#dispatch_probe').val());
     var b = parseInt($('input[name=choosetarget]:checked', '#dispatch_target').val());
     console.log(a, b);
@@ -605,7 +606,14 @@ function submit_dispatch() {
                 contentType: "application/json", /*必须要,不可少*/
                 success: function (result) {
                     removeLoading('test');
-                    toastr.success("任务下发成功!");
+                 let code=result.code;
+                 switch(code){
+                     case 404:
+                         toastr.error("任务下发失败!"); ;
+                     default:
+                         toastr.success("任务下发成功!");
+                         break;
+                 }
                     $('#task_dispatch').modal('hide');
                     task_table.currReset();
                 }
@@ -673,7 +681,14 @@ function submit_dispatch() {
                 contentType: "application/json", /*必须要,不可少*/
                 success: function (result) {
                     removeLoading('test');
-                    toastr.success("任务下发成功!");
+                    let code=result.code;
+                    switch(code){
+                        case 404:
+                            toastr.error("任务下发失败!"); ;
+                        default:
+                            toastr.success("任务下发成功!");
+                            break;
+                    }
                     $('#task_dispatch').modal('hide');
                     task_table.currReset();
                 }
@@ -727,6 +742,7 @@ function submit_dispatch() {
             taskDispatch.probePort = probeList.probePort;
         }
         console.log(taskDispatch);
+        debugger
         if (typeof taskDispatch.probeIds == "undefined") {
             toastr.warning("请选择探针!");
         } else if (b == 1 && typeof taskDispatch.targetIds == "undefined") {
@@ -745,7 +761,14 @@ function submit_dispatch() {
                 success: function (result) {
                     console.log(result);
                     removeLoading('test');
-                    toastr.success("任务下发成功!");
+                    let code=result.code;
+                    switch(code){
+                        case 404:
+                            toastr.error("任务下发失败!"); ;
+                        default:
+                            toastr.success("任务下发成功!");
+                            break;
+                    }
                     $('#task_dispatch').modal('hide');
                     task_table.currReset();
                 }
@@ -889,7 +912,6 @@ var taskform_data = new Vue({
 
                         }
                 }
-
                 tasknewJson.domains=stringSplit;
                 let parameter = tasknewJson.parameter;
                 var param = JSON.parse(parameter);
@@ -1029,6 +1051,7 @@ var taskform_data = new Vue({
                                     case 0:
                                         toastr.success("新建成功!");
                                         $('#myModal_edit').modal('hide');
+                                        task_table.currReset();
                                         break;
                                     case 403:
                                         toastr.error(msg);
@@ -1222,6 +1245,7 @@ var task_table = new Vue({
             /*重置*/
         },
         currReset: function () {
+            debugger
             var vm = this;
             vm.dtHandle.clear();
             console.log("当前页面重绘");
@@ -1336,6 +1360,7 @@ var dispatch_table = new Vue({
             {title: '<div style="width:77px">探针名称</div>'},
             {title: '<div style="width:78px">位置</div>'},
             {title: '<div style="width:57px">层级</div>'},
+            {title: '<div style="width:57px">端口</div>'},
             {title: '<div style="width:212px">测试目标</div>'},
             {title: '<div style="width:67px">操作</div>'}
         ],
@@ -1433,8 +1458,8 @@ var dispatch_table = new Vue({
                             row.push(item.probeName);
                             row.push('<span title="' + item.location + '" style="white-space: nowrap">' + (item.location).substr(0, 10) + '</span>');
                             row.push(item.layerName);
+                            row.push(item.probePort);
                             row.push('<span title="' + item.target + '" style="white-space: nowrap;">' + (item.target).substr(0, 24) + '</span>');
-                            // row.push(item.targetName);
                             row.push('<a class="fontcolor" onclick="cancel_task(this)" id=' + item.id + '>取消任务</a>');
                             rows.push(row);
                         });

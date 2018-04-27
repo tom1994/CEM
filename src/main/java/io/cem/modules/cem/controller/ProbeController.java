@@ -59,6 +59,9 @@ public class ProbeController {
         return R.ok().put("page", pageUtil);
     }
 
+    /**
+     * 查看在线探针
+     */
     @RequestMapping("/listOnline/{id}")
     @RequiresPermissions("probe:list")
     public R listOnline(@PathVariable("id") Integer taskId) {
@@ -66,6 +69,9 @@ public class ProbeController {
         return R.ok().put("probe", probeList);
     }
 
+    /**
+     * 查看核心探针
+     */
     @RequestMapping("/listCenter/{id}")
     @RequiresPermissions("probe:list")
     public R listCenter(@PathVariable("id") Integer taskId) {
@@ -73,13 +79,7 @@ public class ProbeController {
         return R.ok().put("probe", probeList);
     }
 
-    //    @RequestMapping("/download")
-//    @RequiresPermissions("probe:download")
-//    public void downloadProbe(HttpServletResponse response) throws RRException {
-//        Map<String, Object> map = new HashMap<String, Object>();
-//        List<ProbeEntity> list = probeService.queryList(map);
-//        CollectionToFile.collectionToFile(response, list, ProbeEntity.class);
-//    }
+
     @RequestMapping("/download/{probedata}")
     @RequiresPermissions("probe:download")
     public void downloadProbe(HttpServletResponse response, @PathVariable String probedata) throws RRException {
@@ -93,7 +93,6 @@ public class ProbeController {
         List<ProbeEntity> probeList = probeService.queryProbeList(map);
         CollectionToFile.collectionToFile(response, probeList, ProbeEntity.class);
     }
-
 
     /**
      * 按区县信息搜索探针信息
@@ -191,12 +190,15 @@ public class ProbeController {
     @RequiresPermissions("probe:reboot")
     public R reboot(@RequestBody Integer[] ids) {
         int result;
+        try{
         for (int id : ids) {
             result = BypassHttps.sendRequestIgnoreSSL("GET", "https://114.236.91.16:23456/web/v1/probes/" + id + "/restart");
             if (result == 200 || result == 206) {
             } else {
                 return R.error(404, "id为"+id+"的探针重启失败，请联系管理员");
             }
+        }}catch (Exception e){
+            return R.error(500, "探针重启失败，未知错误");
         }
         return R.ok("探针重启成功！");
     }

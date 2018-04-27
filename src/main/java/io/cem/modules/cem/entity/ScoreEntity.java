@@ -10,6 +10,7 @@ import java.util.List;
 
 public class ScoreEntity {
     //记录ID
+    @ExcelIgnore
     private Integer id;
     //地市
     @ExportName(exportName = "地市")
