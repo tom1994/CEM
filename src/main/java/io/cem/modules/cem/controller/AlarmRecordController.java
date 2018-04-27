@@ -164,7 +164,7 @@ public class AlarmRecordController {
 			alarmList.setWebpageRedirectDelay(recordWebPage.getRedirectDelay());
 			alarmList.setWebpageAboveFoldDelay(recordWebPage.getAboveFoldDelay());
 			alarmList.setWebpagePageElementDelay(recordWebPage.getPageElementDelay());
-			alarmList.setWebVideoLoadDelay(recordWebPage.getLoadDelay());
+			alarmList.setWebpageLoadDelay(recordWebPage.getLoadDelay());
 			alarmList.setWebpageDownloadRate(recordWebPage.getDownloadRate());
 		}else if(service==30){
 			RecordWebDownloadEntity recordWebDownload = recordWebDownloadService.queryObject(record);
