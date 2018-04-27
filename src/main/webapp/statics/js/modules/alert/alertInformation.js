@@ -1,5 +1,4 @@
 /**
-/**
  * Created by Fern on 2017/12/20.
  */
 
@@ -15,10 +14,61 @@ var tus = new Map();//tus字典，可通过get方法查对应字符串。
 tus.set(0, "未确认");
 tus.set(1, "已确认");
 
+var typeName = new Map();//tus字典，可通过get方法查对应字符串。
+
+typeName.set(1, 'PING(ICMP ECHO)');
+typeName.set(2, 'PING(TCP ECHO)');
+typeName.set(3, 'PING(UDP ECHO)');
+typeName.set(4, 'Trace Route(ICMP)');
+typeName.set(5, 'Trace Route(UDP)');
+typeName.set(10,'SLA(TCP)');
+typeName.set(11, 'SLA(UDP)');
+typeName.set(12, 'ADSL接入');
+typeName.set(13, 'DHCP');
+typeName.set(14, 'DNS');
+typeName.set(15, 'Radius认证');
+typeName.set(20, 'WEB页面访问');
+typeName.set(30, 'WEB下载');
+typeName.set(31, 'FTP下载');
+typeName.set(32, 'FTP上传');
+typeName.set(40, '在线视频');
+typeName.set(50, '网络游戏');
+
+
+
 var TypeSelected=0;
 var LevelSelected=0;
 var StatusSeleted=0;
+var probeSelected=0;
+var serviceSelected=0
 $(document).ready(function () {
+    $('#probe .jq22').comboSelect();
+    probe();
+
+    $('#service .jq22').comboSelect();
+    $("#service input[type=text]").attr('placeholder', "--请选择--")
+    $('.combo-dropdown').css("z-index", "3");
+    $('#service .option-item').click(function (service) {
+        var a = $(service.currentTarget)[0].innerText;
+        serviceSelected = $($(service.currentTarget)[0]).data('value');
+        setTimeout(function () {
+            $('#service .combo-input').val(a);
+        }, 20);
+
+    });
+
+    $('#service input[type=text] ').keyup(function (service) {
+        if (service.keyCode == '13') {
+            var b = $("#service .option-hover.option-selected").text();
+            var c = ($("#service .option-hover.option-selected"));
+            var c = c[0].dataset
+            serviceSelected = c.value;
+            $('#service .combo-input').val(b);
+            $('#service .combo-select select').val(b);
+        }
+
+    });
+
     $('#Selecttype1 .jq22').comboSelect()
     $('.combo-dropdown').css("z-index","3");
     $('#Selecttype1 .option-item').click(function (type) {
@@ -76,6 +126,52 @@ $(document).ready(function () {
     });
     $('.combo-select  input[type=text]').css('height','28px')
 })
+function probe() {
+    probeSelected = 0;
+    $.ajax({
+        url: "../../cem/probe/list",//探针列表
+        type: "POST",
+        cache: false,  //禁用缓存
+        dataType: "json",
+        contentType: "application/json",
+        success: function (result) {
+            var probes = [];
+            for (var i = 0; i < result.page.list.length; i++) {
+                probes[i] = {message: result.page.list[i]}
+            }
+            search_data.probe = probes;
+            setTimeout(function () {
+                $('#probe .jq22').comboSelect();
+                $('.combo-dropdown').css("z-index", "3");
+                $('#probe .option-item').click(function (probe) {
+                    setTimeout(function () {
+                        var a = $(probe.currentTarget)[0].innerText;
+                        probeSelected = $($(probe.currentTarget)[0]).data('value');
+                        $('#probe .combo-input').val(a);
+                        $('#probe .combo-select select').val(a);
+                    }, 30);
+                });
+                $('#probe input[type=text] ').keyup(function (probe) {
+                    if (probe.keyCode == '13') {
+                        var b = $("#probe .option-hover.option-selected").text();
+                        probeSelected = $("#probe .option-hover.option-selected")[0].dataset.value;
+                        $('#probe .combo-input').val(b);
+                        $('#probe .combo-select select').val(b);
+                    }
+                })
+            }, 50);
+        }
+    });
+}
+var search_data = new Vue({
+    el: '#probesearch',
+    data: {
+        probe: [],
+    },
+    methods: {
+
+    }
+});
 var search_service = new Vue({
     el: '#search',
     data: {
@@ -87,7 +183,7 @@ var search_service = new Vue({
     methods: {
         testagentListsearch: function () {
             var searchJson = getFormJson($('#probesearch'));
-
+                debugger
             if((searchJson.startDate)>(searchJson.terminalDate)){
                 console.log("时间选择有误，请重新选择！");
                 $('#nonavailable_time').modal('show');
@@ -127,6 +223,16 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
         a[4]={}
         a[4].name='status'
         a[4].value=1
+    }
+    if(probeSelected!=0){
+        a[5]={}
+        a[5].name='probe_id'
+        a[5].value=probeSelected
+    }
+    if(serviceSelected!=-1){
+        a[6]={}
+        a[6].name='service_type'
+        a[6].value=serviceSelected
     }
     $.each(a, function () {
         if (o[this.name] !== undefined) {
@@ -411,14 +517,16 @@ var alerttable = new Vue({
     el: '#alert_table',
     data: {
         headers: [
-            {title: '<div style="width:10px"></div>'},
+            {title: '<div></div>'},
             {title: '<div class="checkbox" style="width:100%; align: center"> <label> <input type="checkbox" id="checkAll"></label> </div>'},
-            {title: '<div style="width:70px">告警类型</div>'},
-            {title: '<div style="width:70px">告警级别</div>'},
-            {title: '<div style="width:90px">告警状态</div>'},
-            {title: '<div style="width:60px">探针名称</div>'},
-            {title: '<div style="width:55px">时间</div>'},
-            {title: '<div style="width:80px">操作</div>'}
+            {title: '<div >告警类型</div>'},
+            {title: '<div >告警级别</div>'},
+            {title: '<div >告警状态</div>'},
+            {title: '<div >探针名称</div>'},
+            {title: '<div >业务类型</div>'},
+            {title: '<div >测试目标</div>'},
+            {title: '<div >时间</div>'},
+            {title: '<div >操作</div>'}
         ],
         rows: [],
         dtHandle: null,
@@ -459,6 +567,9 @@ var alerttable = new Vue({
             searching: false,
             paging: true,
             serverSide: true,
+            // scrollY :400,
+            // scrollX: true,
+            // scrollCollapse: true,
             info: false,
             ordering: false, /*禁用排序功能*/
             /*bInfo: false,*/
@@ -494,7 +605,6 @@ var alerttable = new Vue({
                     dataType: "json",
                     success: function (result) {
                         console.log(result);
-                         
                         //封装返回数据
                         let returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -512,6 +622,8 @@ var alerttable = new Vue({
                             row.push(le.get(item.level));
                             row.push(tus.get(item.status));
                             row.push(item.probeName);
+                            row.push(typeName.get(item.serviceType));
+                            row.push(item.targetName);
                             row.push(item.recordTime);
                             row.push('<a class="fontcolor" onclick="operate_this(this)"  id='+item.id+'  >确认</a>&nbsp;' +
                                 '<a class="fontcolor" onclick="update_this(this)" id='+item.id+'  type='+st.get(item.type)+'>详情</a>'); //Todo:完成详情与诊断
@@ -528,11 +640,6 @@ var alerttable = new Vue({
                             draggingClass:"dragging",
                             resizeMode:'overflow',
                         });
-                        // $('td').closest('table').find('th').eq(1).attr('style', 'text-align: center;');
-                        // $('#probe_table tbody').find('td').eq(1).attr('style', 'text-align: center;');
-                        // var trs = $('#probe_table tbody').find('tr');
-                        // trs.find("td").eq(1).attr('style', 'text-align: center;');
-
                     }
                 });
             }
@@ -540,14 +647,25 @@ var alerttable = new Vue({
     }
 });
 
-
+var date=new Date();
+var month = date.getMonth() + 1;
+var strDate = date.getDate()-1;
+var endDate = date.getDate();
+var years=date.getFullYear();
+var newdate=years+'-'+month+'-'+strDate;
+var hours=date.getHours();
+var endday=years+'-'+month+'-'+endDate+' '+hours;
 $('#start_date').flatpickr({
-    dateFormat: "Y-m-d",
+    enableTime: true,
+    dateFormat: "Y-m-d H:i",
+    defaultDate:newdate,
     time_24hr: true
 });
 
 $('#terminal_date').flatpickr({
-    dateFormat: "Y-m-d",
+    enableTime: true,
+    dateFormat: "Y-m-d H:i",
+    defaultDate:endday,
     time_24hr: true
 });
 

@@ -56,10 +56,13 @@
 
 	<select id="queryAlarmRecordList" resultMap="alarmRecordMap">
 		SELECT alarm_record.*,
-		probe.probe_name AS probe_name
+		probe.probe_name AS probe_name,
+		target.target_name AS target_name
 		FROM alarm_record
 		INNER JOIN probe
 		ON alarm_record.probe_id = probe.id
+		INNER JOIN target
+		ON alarm_record.target_id = target.id
 		WHERE alarm_record.id IS NOT NULL
 		<if test="startDate != null and startDate != '' and terminalDate != null and terminalDate != '' ">
 			AND alarm_record.record_time BETWEEN #{startDate} AND #{terminalDate}
@@ -79,7 +82,6 @@
 		<if test="status != null and (status == 0 or status ==1)">
 			AND alarm_record.status = #{status}
 		</if>
-
 		<choose>
 			<when test="sidx != null and sidx.trim() != ''">
 				order by ${sidx} ${order}
