@@ -127,13 +127,13 @@
                                         </div>
                                     </div>
                                     <div class="input-group searchspan " style="position: relative;top: -5px;">
-                                        <span class="searchname" title="起始" style="width: 40px">起始</span>
+                                        <span class="searchname" title="起始时间" style="width: 64px">起始时间</span>
                                         <input type="text" id="start_date" class="form-control" name="startDate"
                                                style="width: 140px;height: 36px;"
                                                value="">
                                     </div>
                                     <div class="input-group searchspan" style="position: relative;top: -5px;">
-                                        <span class="searchname" title="结束" style="width: 40px">结束</span>
+                                        <span class="searchname" title="结束时间" style="width: 64px">结束时间</span>
                                         <input type="text" id="terminal_date" class="form-control" name="terminalDate"
                                                style="width: 140px;height: 36px;"
                                                value="">
@@ -575,7 +575,7 @@
         })
         var date=new Date();
         var month = date.getMonth() + 1;
-        var strDate = date.getDate()-1;
+        var strDate = date.getDate();
         var years=date.getFullYear();
       var newdate=years+'-'+month+'-'+strDate;
       console.log(typeof newdate)
@@ -592,12 +592,13 @@
         var month = date.getMonth() + 1;
         var strDate = date.getDate();
         var years=date.getFullYear();
-        var endday=years+'-'+month+'-'+strDate;
+        var hours=date.getHours();
+        var endday=years+'-'+month+'-'+strDate+' '+hours;
+
         $('#terminal_date').flatpickr({
             enableTime: true,
             dateFormat: "Y-m-d H:i",
             defaultDate:endday,
-            defaultHour:'00',
             defaultMinute:'00',
             time_24hr: true
         });

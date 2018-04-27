@@ -1,3 +1,4 @@
+
 /**
  * Created by hh on 2018/3/28.
  */
@@ -24,7 +25,7 @@ recordtype.set(5,"video");
 recordtype.set(6,"game");
 
 var today = new Date();
-today.setDate(today.getDate() - 1); //显示近一天内的数据
+// today.setDate(today.getDate() - 1); //显示近一天内的数据
 
 var new_search = new Vue({
     /*监听查询事件*/
@@ -168,13 +169,23 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
     });
     return o;
 }
-
+var date=new Date();
+var month = date.getMonth() + 1;
+var strDate = date.getDate();
+var years=date.getFullYear();
+var newdate=years+'-'+month+'-'+strDate;
+var hours=date.getHours();
+var endday=years+'-'+month+'-'+strDate+' '+hours;
 $('#start_date').flatpickr({
-    dateFormat: "Y-m-d",
+    enableTime: true,
+    dateFormat: "Y-m-d H:i",
+    defaultDate:newdate,
     time_24hr: true
 });
 $('#terminal_date').flatpickr({
-    dateFormat: "Y-m-d",
+    enableTime: true,
+    dateFormat: "Y-m-d H:i",
+    defaultDate:endday,
     time_24hr: true
 });
 

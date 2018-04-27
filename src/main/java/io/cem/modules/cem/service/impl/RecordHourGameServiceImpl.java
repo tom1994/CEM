@@ -286,15 +286,11 @@ public class RecordHourGameServiceImpl implements RecordHourGameService {
 				scoreLayer.setFail(webPageList.get(i).getFail());
 				scoreLayer.setTotal(webPageList.get(i).getTotal());
 				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
-//				scoreBase.setWebpageDnsDelay(webPageList.get(i).getDnsDelay());
-//				scoreBase.setWebpageConnDelay(webPageList.get(i).getWebpageConnDelay());
-//				scoreBase.setWebpageHeadbyteDelay(webPageList.get(i).getWebpageHeadbyteDelay());
-//				scoreBase.setWebpagePageFileDelay(webPageList.get(i).getWebpagePageFileDelay());
-//				scoreBase.setWebpageRedirectDelay(webPageList.get(i).getWebpageRedirectDelay());
-//				scoreBase.setWebpageAboveFoldDelay(webPageList.get(i).getWebpageAboveFoldDelay());
-//				scoreBase.setWebpagePageElementDelay(webPageList.get(i).getWebpagePageElementDelay());
-//				scoreBase.setWebpageLoadDelay(webPageList.get(i).getWebpageLoadDelay());
-//				scoreBase.setWebpageDownloadRate(webPageList.get(i).getWebpageDownloadRate());
+				scoreBase.setGameDnsDelay(webPageList.get(i).getGameDnsDelay());
+				scoreBase.setGameConnDelay(webPageList.get(i).getGameConnDelay());
+				scoreBase.setGamePacketDelay(webPageList.get(i).getGamePacketDelay());
+				scoreBase.setGamePacketJitter(webPageList.get(i).getGamePacketJitter());
+				scoreBase.setGameLossRate(webPageList.get(i).getGameLossRate());
 				scoreBase.setScore(webPageList.get(i).getScore());
 				scoreBase.setBase(webPageList.get(i).getBase());
 				if (!connection.containsKey(scoreLayer)) {
@@ -303,15 +299,11 @@ public class RecordHourGameServiceImpl implements RecordHourGameService {
 
 				} else {
 					ScoreBaseEntity scoreBaseDul = connection.get(scoreLayer);
-//					scoreBase.setWebpageDnsDelay(scoreBase.getDnsDelay());
-//					scoreBase.setWebpageConnDelay(scoreBase.getWebpageConnDelay());
-//					scoreBase.setWebpageHeadbyteDelay(scoreBase.getWebpageHeadbyteDelay());
-//					scoreBase.setWebpagePageFileDelay(scoreBase.getWebpagePageFileDelay());
-//					scoreBase.setWebpageRedirectDelay(scoreBase.getWebpageRedirectDelay());
-//					scoreBase.setWebpageAboveFoldDelay(scoreBase.getWebpageAboveFoldDelay());
-//					scoreBase.setWebpagePageElementDelay(scoreBase.getWebpagePageElementDelay());
-//					scoreBase.setWebpageLoadDelay(scoreBase.getWebpageLoadDelay());
-//					scoreBase.setWebpageDownloadRate(scoreBase.getWebpageDownloadRate());
+					scoreBase.setGameDnsDelay(scoreBase.getGameDnsDelay());
+					scoreBase.setGameConnDelay(scoreBase.getGameConnDelay());
+					scoreBase.setGamePacketDelay(scoreBase.getGamePacketDelay());
+					scoreBase.setGamePacketJitter(scoreBase.getGamePacketJitter());
+					scoreBase.setGameLossRate(scoreBase.getGameLossRate());
 					scoreBase.setScore((scoreBase.getScore()+scoreBaseDul.getScore())/2);
 					scoreBase.setBase(scoreBase.getBase());
 
@@ -342,6 +334,11 @@ public class RecordHourGameServiceImpl implements RecordHourGameService {
 					finalScore.setPort(ite.getPort());
 					finalScore.setRecordTime(ite.getRecordTime());
 					finalScore.setRecordDate(ite.getRecordDate());
+					finalScore.setGameDnsDelay(connection.get(ite).getGameDnsDelay());
+					finalScore.setGameConnDelay(connection.get(ite).getGameConnDelay());
+					finalScore.setGamePacketDelay(connection.get(ite).getGamePacketDelay());
+					finalScore.setGamePacketJitter(connection.get(ite).getGamePacketJitter());
+					finalScore.setGameLossRate(connection.get(ite).getGameLossRate());
 					finalScore.setScore(connection.get(ite).getScore());
 					finalScore.setBase(connection.get(ite).getBase());
 					finalScore.setBase(Double.parseDouble(pros.getValue("browseweight")));

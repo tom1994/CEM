@@ -3533,31 +3533,31 @@ var cloneObj = function (obj) {
 };
 
 function combine(tmp) {
-        var sum = tmp[0][1];
-        var newTmp = [];
-        var b = 1;
-        var c = 0;
-        for (let i = 0; i < tmp.length - 1; i++) {
-            if (tmp[i + 1] != undefined) {
-                if (tmp[i][0] == tmp[i + 1][0]) {
-                    sum = sum + tmp[i + 1][1];
-                    b++
-                } else {
-                    let a = [];
-                    a[0] = tmp[i][0];
-                    a[1] = sum / b;
-                    newTmp.push(a);
-                    sum = tmp[i + 1][1];
-                    b = 1;
-                }
+    var sum = tmp[0][1];
+    var newTmp = [];
+    var b = 1;
+    var c = 0;
+    for (let i = 0; i < tmp.length - 1; i++) {
+        if (tmp[i + 1] != undefined) {
+            if (tmp[i][0] == tmp[i + 1][0]) {
+                sum = sum + tmp[i + 1][1];
+                b++
             } else {
-                c = i;
-                break;
+                let a = [];
+                a[0] = tmp[i][0];
+                a[1] = sum / b;
+                newTmp.push(a);
+                sum = tmp[i + 1][1];
+                b = 1;
             }
+        } else {
+            c = i;
+            break;
         }
-        let a = [];
-        a[0] = tmp[c][0];
-        a[1] = sum / b;
-        newTmp.push(a);
-        return newTmp;
+    }
+    let a = [];
+    a[0] = tmp[c][0];
+    a[1] = sum / b;
+    newTmp.push(a);
+    return newTmp;
 }

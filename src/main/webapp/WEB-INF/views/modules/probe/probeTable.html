@@ -306,7 +306,7 @@
                                     <button type="button" class="btn btn-sm btn-success"
                                             onclick="update_port()">
                                         <span
-                                                class="glyphicon glyphicon-trash Btn"></span>重启探针
+                                                class="glyphicon glyphicon-refresh"></span>重启探针
                                     </button>
                                     #end
                                     #if($shiro.hasPermission("probe:output"))
@@ -547,24 +547,23 @@
 
                                             <div class="form-group row">
                                                 <label for="registerTime"
-                                                       style="text-align: right !important;padding: 0px"
-                                                       class="col-lg-1 col-md-1 col-sm-1 input-label form_border">注册时间</label>
-                                                <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                                       style="text-align: right !important;"
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">注册时间</label>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border" style="padding-left: 0px">
                                                     <input type="text" class="form-control input clear"
                                                            id="registerTime" name="registerTime"
                                                            readonly="readonly" unselectable='on'>
                                                 </div>
                                                 <label for="lastHbtime"
-                                                       style="text-align: right !important;padding: 0px !important;margin-right: -10px;margin-left:13px"
-                                                       class="col-lg-1 col-md-1 col-sm-1 input-label form_border">最后心跳时间</label>
-                                                <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                                       style="text-align: right !important;"
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">最后心跳时间</label>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border" style="padding-left: 0px">
                                                     <input type="text" class="form-control input clear" id="lastHbtime"
                                                            name="lastHbtime" readonly="readonly" unselectable='on'>
                                                 </div>
-                                                <label for="lastReportTime" style="text-align: right !important;padding:0px !important;
-                                                margin-left: 7px;margin-right: -10px;"
-                                                       class="col-lg-1 col-md-1 col-sm-1 input-label form_border">最后上报时间</label>
-                                                <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                                <label for="lastReportTime" style="text-align: right !important;"
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">最后上报时间</label>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border"style="padding-left: 0px">
                                                     <input type="text" class="form-control input clear"
                                                            id="lastReportTime"
                                                            name="lastReportTime" readonly="readonly" unselectable='on'>
@@ -591,8 +590,8 @@
                                                 </div>
                                                 <label for="lastUpdateTime"
                                                        style="text-align: right !important;padding: 0px"
-                                                       class="col-lg-1 col-md-1 col-sm-1 input-label form_border">最后升级时间</label>
-                                                <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                                       class="col-lg-2 col-md-2 col-sm-2 input-label form_border">最后升级时间</label>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border" style="padding-left: 0px">
                                                     <input type="text" class="form-control input clear"
                                                            id="lastUpdateTime"
                                                            name="lastUpdateTime" readonly="readonly" unselectable='on'>

@@ -442,15 +442,18 @@ public class RecordHourWebVideoServiceImpl implements RecordHourWebVideoService 
 				scoreLayer.setFail(webPageList.get(i).getFail());
 				scoreLayer.setTotal(webPageList.get(i).getTotal());
 				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
-//				scoreBase.setWebpageDnsDelay(webPageList.get(i).getDnsDelay());
-//				scoreBase.setWebpageConnDelay(webPageList.get(i).getWebpageConnDelay());
-//				scoreBase.setWebpageHeadbyteDelay(webPageList.get(i).getWebpageHeadbyteDelay());
-//				scoreBase.setWebpagePageFileDelay(webPageList.get(i).getWebpagePageFileDelay());
-//				scoreBase.setWebpageRedirectDelay(webPageList.get(i).getWebpageRedirectDelay());
-//				scoreBase.setWebpageAboveFoldDelay(webPageList.get(i).getWebpageAboveFoldDelay());
-//				scoreBase.setWebpagePageElementDelay(webPageList.get(i).getWebpagePageElementDelay());
-//				scoreBase.setWebpageLoadDelay(webPageList.get(i).getWebpageLoadDelay());
-//				scoreBase.setWebpageDownloadRate(webPageList.get(i).getWebpageDownloadRate());
+				scoreBase.setWebVideoDnsDelay(webPageList.get(i).getWebVideoDnsDelay());
+				scoreBase.setWebVideoWsConnDelay(webPageList.get(i).getWebVideoWsConnDelay());
+				scoreBase.setWebVideoWebPageDelay(webPageList.get(i).getWebVideoWebPageDelay());
+				scoreBase.setWebVideoSsConnDelay(webPageList.get(i).getWebVideoSsConnDelay());
+				scoreBase.setWebVideoAddressDelay(webPageList.get(i).getWebVideoAddressDelay());
+				scoreBase.setWebVideoMsConnDelay(webPageList.get(i).getWebVideoMsConnDelay());
+				scoreBase.setWebVideoHeadFrameDelay(webPageList.get(i).getWebVideoHeadFrameDelay());
+				scoreBase.setWebVideoInitBufferDelay(webPageList.get(i).getWebVideoInitBufferDelay());
+				scoreBase.setWebVideoLoadDelay(webPageList.get(i).getWebVideoLoadDelay());
+				scoreBase.setWebVideoTotalBufferDelay(webPageList.get(i).getWebVideoTotalBufferDelay());
+				scoreBase.setWebVideoDownloadRate(webPageList.get(i).getWebVideoDownloadRate());
+				scoreBase.setWebVideoBufferTime(webPageList.get(i).getWebVideoBufferTime());
 				scoreBase.setScore(webPageList.get(i).getScore());
 				scoreBase.setBase(webPageList.get(i).getBase());
 				if (!connection.containsKey(scoreLayer)) {
@@ -459,15 +462,18 @@ public class RecordHourWebVideoServiceImpl implements RecordHourWebVideoService 
 
 				} else {
 					ScoreBaseEntity scoreBaseDul = connection.get(scoreLayer);
-//					scoreBase.setWebpageDnsDelay(scoreBase.getDnsDelay());
-//					scoreBase.setWebpageConnDelay(scoreBase.getWebpageConnDelay());
-//					scoreBase.setWebpageHeadbyteDelay(scoreBase.getWebpageHeadbyteDelay());
-//					scoreBase.setWebpagePageFileDelay(scoreBase.getWebpagePageFileDelay());
-//					scoreBase.setWebpageRedirectDelay(scoreBase.getWebpageRedirectDelay());
-//					scoreBase.setWebpageAboveFoldDelay(scoreBase.getWebpageAboveFoldDelay());
-//					scoreBase.setWebpagePageElementDelay(scoreBase.getWebpagePageElementDelay());
-//					scoreBase.setWebpageLoadDelay(scoreBase.getWebpageLoadDelay());
-//					scoreBase.setWebpageDownloadRate(scoreBase.getWebpageDownloadRate());
+					scoreBase.setWebVideoDnsDelay(scoreBase.getWebVideoDnsDelay());
+					scoreBase.setWebVideoWsConnDelay(scoreBase.getWebVideoWsConnDelay());
+					scoreBase.setWebVideoWebPageDelay(scoreBase.getWebVideoWebPageDelay());
+					scoreBase.setWebVideoSsConnDelay(scoreBase.getWebVideoSsConnDelay());
+					scoreBase.setWebVideoAddressDelay(scoreBase.getWebVideoAddressDelay());
+					scoreBase.setWebVideoMsConnDelay(scoreBase.getWebVideoMsConnDelay());
+					scoreBase.setWebVideoHeadFrameDelay(scoreBase.getWebVideoHeadFrameDelay());
+					scoreBase.setWebVideoInitBufferDelay(scoreBase.getWebVideoInitBufferDelay());
+					scoreBase.setWebVideoLoadDelay(scoreBase.getWebVideoLoadDelay());
+					scoreBase.setWebVideoTotalBufferDelay(scoreBase.getWebVideoTotalBufferDelay());
+					scoreBase.setWebVideoDownloadRate(scoreBase.getWebVideoDownloadRate());
+					scoreBase.setWebVideoBufferTime(scoreBase.getWebVideoBufferTime());
 					scoreBase.setScore((scoreBase.getScore()+scoreBaseDul.getScore())/2);
 					scoreBase.setBase(scoreBase.getBase());
 
@@ -498,6 +504,18 @@ public class RecordHourWebVideoServiceImpl implements RecordHourWebVideoService 
 					finalScore.setPort(ite.getPort());
 					finalScore.setRecordTime(ite.getRecordTime());
 					finalScore.setRecordDate(ite.getRecordDate());
+					finalScore.setWebVideoDnsDelay(connection.get(ite).getWebVideoDnsDelay());
+					finalScore.setWebVideoWsConnDelay(connection.get(ite).getWebVideoWsConnDelay());
+					finalScore.setWebVideoWebPageDelay(connection.get(ite).getWebVideoWebPageDelay());
+					finalScore.setWebVideoSsConnDelay(connection.get(ite).getWebVideoSsConnDelay());
+					finalScore.setWebVideoAddressDelay(connection.get(ite).getWebVideoAddressDelay());
+					finalScore.setWebVideoMsConnDelay(connection.get(ite).getWebVideoMsConnDelay());
+					finalScore.setWebVideoHeadFrameDelay(connection.get(ite).getWebVideoHeadFrameDelay());
+					finalScore.setWebVideoInitBufferDelay(connection.get(ite).getWebVideoInitBufferDelay());
+					finalScore.setWebVideoLoadDelay(connection.get(ite).getWebVideoLoadDelay());
+					finalScore.setWebVideoTotalBufferDelay(connection.get(ite).getWebVideoTotalBufferDelay());
+					finalScore.setWebVideoDownloadRate(connection.get(ite).getWebVideoDownloadRate());
+					finalScore.setWebVideoBufferTime(connection.get(ite).getWebVideoBufferTime());
 					finalScore.setScore(connection.get(ite).getScore());
 					finalScore.setBase(connection.get(ite).getBase());
 					finalScore.setBase(Double.parseDouble(pros.getValue("browseweight")));

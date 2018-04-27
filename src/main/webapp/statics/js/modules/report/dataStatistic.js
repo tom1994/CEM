@@ -752,7 +752,11 @@ var pingresulttable = new Vue({
             /*bInfo: false,*/
             /*bLengthChange: false,*/    /*禁用Show entries*/
             scroll: false,
+            bProcessing: true,
             oLanguage: {
+                sEmptyTable: "No data available in table",
+                sZeroRecords:"No data available in table",
+                sProcessing: "正在努力加载数据中...",
                 sLengthMenu: "每页 _MENU_ 行数据",
                 oPaginate: {
                     sNext: '<i class="fa fa-chevron-right" ></i>', /*图标替换上一页,下一页*/
@@ -912,7 +916,11 @@ var tracertresulttable = new Vue({
             /*bInfo: false,*/
             /*bLengthChange: false,*/    /*禁用Show entries*/
             scroll: false,
+            bProcessing: true,
             oLanguage: {
+                sEmptyTable: "No data available in table",
+                sZeroRecords:"No data available in table",
+                sProcessing: "正在努力加载数据中...",
                 sLengthMenu: "每页 _MENU_ 行数据",
                 oPaginate: {
                     sNext: '<i class="fa fa-chevron-right" ></i>', /*图标替换上一页,下一页*/
@@ -947,9 +955,12 @@ var tracertresulttable = new Vue({
                         // 重新整理返回数据以匹配表格
                         let rows = [];
                         var i = param.start + 1;
+                        let tr = $("#hop_table >tbody>tr");
+                        for(let i = 1;i<tr.length;i++){
+                            tr[i].remove();
+                        }
                         result.page.list.forEach(function (item) {
                             let row = [];
-                             
                             row.push(i++);
                             row.push(item.probeName);
                             row.push(item.port);
@@ -966,25 +977,32 @@ var tracertresulttable = new Vue({
                             row.push(item.jitterVar.toFixed(2));
                             row.push((item.lossRate*100).toFixed(2));
                            if(item.servicetypeName=='Trace Route(ICMP)'){
+                               var date = item.recordDate;
+                               var dateStr = date.split(" ")[0];
+                               var dateTime = dateStr+item.recordTime;
                                var a = JSON.parse(item.hopRecord);
                                var tables = $('table[id=hop_table]');
+                               // $("#hop_table tbody").html("");
+
+
                                for (let i =0;i<a.length;i++){
                                    var j = i+1;
-                                   var trtd = $("<tr><td hidden='hidden'>"+item.id+"</td><td>"+j+"</td><td>"+a[i].hop_ip +"</td><td>"+a[i].delay.toFixed(2)+"</td><td>"+a[i].loss_rate*100+"</td></tr>");
+                                   var trtd = $("<tr><td hidden='hidden'>"+item.probeName+"</td><td hidden='hidden'>"+item.targetName+"</td><td hidden='hidden'>"+dateTime+"</td><td>"+j+"</td><td>"+a[i].hop_ip +"</td><td>"+a[i].delay.toFixed(2)+"</td><td>"+(a[i].loss_rate*100).toFixed(2)+"</td></tr>");
                                    trtd.appendTo(tables);
                                }
                                $('#hop_table>tbody tr:eq(0)').css("display",'none');
                                $('#hop_table_paginate').css('display','none');
                                $('#hop_table_wrapper').css('height','450px');
                                $('#hop_table_wrapper').css('overflow-y','auto');
-                               row.push('<a class="fontcolor" style="white-space: nowrap" onclick="hopRecord_info(this)" id='+item.id+'  >详情</a>');
+
+                               row.push('<a class="fontcolor" style="white-space: nowrap" onclick="hopRecord_info(this)"  id='+item.probeName+'  type='+item.targetName+' name='+dateTime+' >详情</a>');
 
                            }else {
                                var a = JSON.parse(item.hopRecord);
                                var tables = $('table[id=Record_table]');
                                for (let i =0;i<a.length;i++){
                                    var j = i+1;
-                                   var trtd = $("<tr><td hidden='hidden'>"+item.id+"</td><td>"+j+"</td><td>"+a[i].hop_ip +"</td><td>"+a[i].delay.toFixed(2)+"</td><td>"+a[i].loss_rate*100+"</td></tr>");
+                                   var trtd = $("<tr><td hidden='hidden'>"+item.id+"</td><td>"+j+"</td><td>"+a[i].hop_ip +"</td><td>"+a[i].delay.toFixed(2)+"</td><td>"+(a[i].loss_rate*100).toFixed(2)+"</td></tr>");
                                    trtd.appendTo(tables);
                                }
                                $('#Record_table>tbody tr:eq(0)').css("display",'none');
@@ -1088,7 +1106,6 @@ var Router1trance= new Vue({
 
 })
 function Record(obj) {
-
     let id = obj.id;
     let tr = $("#Record_table >tbody>tr");
     for(let i = 1;i<tr.length;i++){
@@ -1103,17 +1120,14 @@ function Record(obj) {
 
 }
 function hopRecord_info(obj) {
-     
-    let id = obj.id;
+
+    let probeName = obj.id;
+    let name=obj.type;
+    let time = obj.name;
     let tr = $("#hop_table >tbody>tr");
     for(let i = 1;i<tr.length;i++){
-        if(tr[i].firstElementChild.innerText!=id){
+        if(tr[i].childNodes[2].innerText!= time||tr[i].firstElementChild.innerText!= probeName||tr[i].childNodes[1].innerText!= name){
             tr[i].hidden = true;
-        }else {
-          var trs={}
-           trs.value=tr[i];
-            console.log(trs)
-
         }
     }
 
@@ -1222,7 +1236,11 @@ var slaresulttable = new Vue({
             /*bInfo: false,*/
             /*bLengthChange: false,*/    /*禁用Show entries*/
             scroll: false,
+            bProcessing: true,
             oLanguage: {
+                sEmptyTable: "No data available in table",
+                sZeroRecords:"No data available in table",
+                sProcessing: "正在努力加载数据中...",
                 sLengthMenu: "每页 _MENU_ 行数据",
                 oPaginate: {
                     sNext: '<i class="fa fa-chevron-right" ></i>', /*图标替换上一页,下一页*/
@@ -1371,7 +1389,11 @@ var dhcpresult_Table = new Vue({
             /*bInfo: false,*/
             /*bLengthChange: false,*/    /*禁用Show entries*/
             scroll: false,
+            bProcessing: true,
             oLanguage: {
+                sEmptyTable: "No data available in table",
+                sZeroRecords:"No data available in table",
+                sProcessing: "正在努力加载数据中...",
                 sLengthMenu: "每页 _MENU_ 行数据",
                 oPaginate: {
                     sNext: '<i class="fa fa-chevron-right" ></i>', /*图标替换上一页,下一页*/
@@ -1503,7 +1525,11 @@ var dnsresult_Table = new Vue({
             /*bInfo: false,*/
             /*bLengthChange: false,*/    /*禁用Show entries*/
             scroll: false,
+            bProcessing: true,
             oLanguage: {
+                sEmptyTable: "No data available in table",
+                sZeroRecords:"No data available in table",
+                sProcessing: "正在努力加载数据中...",
                 sLengthMenu: "每页 _MENU_ 行数据",
                 oPaginate: {
                     sNext: '<i class="fa fa-chevron-right" ></i>', /*图标替换上一页,下一页*/
@@ -1637,7 +1663,11 @@ var radiusresult_Table = new Vue({
             /*bInfo: false,*/
             /*bLengthChange: false,*/    /*禁用Show entries*/
             scroll: false,
+            bProcessing: true,
             oLanguage: {
+                sEmptyTable: "No data available in table",
+                sZeroRecords:"No data available in table",
+                sProcessing: "正在努力加载数据中...",
                 sLengthMenu: "每页 _MENU_ 行数据",
                 oPaginate: {
                     sNext: '<i class="fa fa-chevron-right" ></i>', /*图标替换上一页,下一页*/
@@ -1770,7 +1800,11 @@ var ftpupresult_Table = new Vue({
             /*bInfo: false,*/
             /*bLengthChange: false,*/    /*禁用Show entries*/
             scroll: false,
+            bProcessing: true,
             oLanguage: {
+                sEmptyTable: "No data available in table",
+                sZeroRecords:"No data available in table",
+                sProcessing: "正在努力加载数据中...",
                 sLengthMenu: "每页 _MENU_ 行数据",
                 oPaginate: {
                     sNext: '<i class="fa fa-chevron-right" ></i>', /*图标替换上一页,下一页*/
@@ -1907,7 +1941,11 @@ var ftpdoresult_Table = new Vue({
             /*bInfo: false,*/
             /*bLengthChange: false,*/    /*禁用Show entries*/
             scroll: false,
+            bProcessing: true,
             oLanguage: {
+                sEmptyTable: "No data available in table",
+                sZeroRecords:"No data available in table",
+                sProcessing: "正在努力加载数据中...",
                 sLengthMenu: "每页 _MENU_ 行数据",
                 oPaginate: {
                     sNext: '<i class="fa fa-chevron-right" ></i>', /*图标替换上一页,下一页*/
@@ -2043,7 +2081,11 @@ var webdownloadresult_Table = new Vue({
             /*bInfo: false,*/
             /*bLengthChange: false,*/    /*禁用Show entries*/
             scroll: false,
+            bProcessing: true,
             oLanguage: {
+                sEmptyTable: "No data available in table",
+                sZeroRecords:"No data available in table",
+                sProcessing: "正在努力加载数据中...",
                 sLengthMenu: "每页 _MENU_ 行数据",
                 oPaginate: {
                     sNext: '<i class="fa fa-chevron-right" ></i>', /*图标替换上一页,下一页*/
@@ -2183,7 +2225,11 @@ var webpageresult_Table = new Vue({
             /*bInfo: false,*/
             /*bLengthChange: false,*/    /*禁用Show entries*/
             scroll: false,
+            bProcessing: true,
             oLanguage: {
+                sEmptyTable: "No data available in table",
+                sZeroRecords:"No data available in table",
+                sProcessing: "正在努力加载数据中...",
                 sLengthMenu: "每页 _MENU_ 行数据",
                 oPaginate: {
                     sNext: '<i class="fa fa-chevron-right" ></i>', /*图标替换上一页,下一页*/
@@ -2328,7 +2374,11 @@ var webvideoresult_Table = new Vue({
             /*bInfo: false,*/
             /*bLengthChange: false,*/    /*禁用Show entries*/
             scroll: false,
+            bProcessing: true,
             oLanguage: {
+                sEmptyTable: "No data available in table",
+                sZeroRecords:"No data available in table",
+                sProcessing: "正在努力加载数据中...",
                 sLengthMenu: "每页 _MENU_ 行数据",
                 oPaginate: {
                     sNext: '<i class="fa fa-chevron-right" ></i>', /*图标替换上一页,下一页*/
@@ -2467,7 +2517,11 @@ var gameresult_Table = new Vue({
             /*bInfo: false,*/
             /*bLengthChange: false,*/    /*禁用Show entries*/
             scroll: false,
+            bProcessing: true,
             oLanguage: {
+                sEmptyTable: "No data available in table",
+                sZeroRecords:"No data available in table",
+                sProcessing: "正在努力加载数据中...",
                 sLengthMenu: "每页 _MENU_ 行数据",
                 oPaginate: {
                     sNext: '<i class="fa fa-chevron-right" ></i>', /*图标替换上一页,下一页*/

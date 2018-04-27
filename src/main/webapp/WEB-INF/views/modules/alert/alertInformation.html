@@ -14,9 +14,9 @@
             line-height: 28px;
             padding-top: 0px;
         }
-        .left{
-            margin-left:52px;
-        }
+        /*.left{*/
+            /*margin-left:52px;*/
+        /*}*/
         .box{
             padding-bottom: 0px !important;
             padding: 0px; min-height: 0px;
@@ -33,7 +33,7 @@
         }
         .combo-select{
             display: inline-block;
-            max-width: 110px;
+            max-width: 123px;
             margin-top: 11px;
             left:4px
         }
@@ -77,7 +77,7 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-content" style="padding-bottom: 0 !important;">
                     <div class="row" id="searchbox" style="border: none !important;">
-                        <form class="col-lg-9 col-md-19 col-sm-9 form-horizontal" id="probesearch"
+                        <form class="col-lg-10 col-md-10 col-sm-10 form-horizontal" id="probesearch"
                               role="form">
                             <div class="form-group row" style="margin-bottom: -5px!important;">
                                 <div style="display:inline-block;">
@@ -95,7 +95,7 @@
                                 </div>
                                 </div>
                                 <div style="display: inline-block;">
-                                    <span class="searchname search left" title="告警级别" style="width: 80px;margin-left: 61px">告警级别</span>
+                                    <span class="searchname search left" title="告警级别" style="width: 80px;">告警级别</span>
                                     <div class="input-group searchspan" id="selectlevel1" style="top: -10px;">
                                         <div class="jq22">
                                             <select id="selectlevel" class="form-control"  style="display: none">
@@ -107,7 +107,7 @@
                                     </div>
                                 </div>
                                 <div style="display: inline-block;">
-                                    <span class="searchname search left" title="告警状态" style="width: 80px;text-align: center">告警状态</span>
+                                    <span class="searchname search left" title="告警状态" style="width: 80px;text-align: center;margin-left: 13px">告警状态</span>
                                     <div class="input-group searchspan" id="selectstatus1" style="top: -10px;">
                                         <div class="jq22">
                                             <select id="selectstatus" class="form-control"  style="display: none">
@@ -118,29 +118,55 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                <div style="display: inline-block;">
+                                    <span class="searchname search left" title="业务类型" style="width: 80px;text-align: center; ">业务类型</span>
+                                    <div class="input-group searchspan" id="service" >
+                                        <div class="jq22" style="top:-10px">
+                                            <select id="area_service" class="form-control  input" style="width: 140px;display: none;">
+                                                <option value="0">综合业务</option>
+                                                <option value="1">网络连通性业务</option>
+                                                <option value="2">网络层质量业务</option>
+                                                <option value="3">网页浏览业务</option>
+                                                <option value="4">文件下载业务</option>
+                                                <option value="5">在线视频业务</option>
+                                                <option value="6">网络游戏业务</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="form-group row" style="margin-bottom: -5px!important;">
+                                <div style="display: inline-block;">
+                                    <span class="searchname search " title="探针" style="width: 80px;">探针</span>
+                                    <div class="input-group searchspan" id="probe" >
+                                        <div class="jq22" style="top: -10px;">
+                                            <select id="selectprobe" class="form-control"   style="display: none">
+                                                <option value="">所有探针</option>
+                                                <option v-for="item in probe" v-bind:value="item.message.id">{{ item.message.name}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="input-group searchspan">
-                                    <span class="searchname search" title="起始时间" style="width: 80px">起始时间</span>
+                                    <span class="searchname search left" title="起始时间" style="width: 80px">起始时间</span>
                                     <input type="text" id="start_date" class="form-control  input"
                                            name="startDate"
-                                           style="width: 110px"
+                                           style="width: 123px"
                                            value="">
                                 </div>
                                 <div class="input-group searchspan">
                                     <span class="searchname  search left" title="结束时间" style="width: 80px">结束时间</span>
                                     <input type="text" id="terminal_date" class="form-control  input"
                                            name="terminalDate"
-                                           style="width: 110px"
+                                           style="width: 123px"
                                            value="">
                                 </div>
                             </div>
                         </form>
 
 
-                        <div class="col-lg-3 col-md-3 col-sm-3 pull-left"
+                        <div class="col-lg-2 col-md-2 col-sm-2 pull-left"
                              style="text-align:center;height:50px;position: relative;" id="search">
                             <button type="button" class="btn btn-sm btn-success"
                                     style="margin-right: 5px;position: relative;top: 50%;"
@@ -194,7 +220,7 @@
                     <form class="form-horizontal" id="schedulepolicyform_data" role="form">
                         <div class="form-group row">
                             <div class="col-lg-12 col-md-12 col-sm-12 form_border">
-                                <p style="font-size: medium;text-align: left">您输入的起止时间无效，请核查后重新输入！</p>
+                                <p style="font-size: medium;text-align: left">您输入的起止日期无效，请核查后重新输入！</p>
                             </div>
                         </div>
 
