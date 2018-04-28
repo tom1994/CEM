@@ -20,6 +20,7 @@
 		<result property="probeName" column="probe_name"/>
 		<result property="dataName" column="data_name"/>
 		<result property="targetName" column="target_name"/>
+		<result property="trigger" column="trigger"/>
     </resultMap>
 
 	<select id="queryObject" resultType="io.cem.modules.cem.entity.AlarmRecordEntity">

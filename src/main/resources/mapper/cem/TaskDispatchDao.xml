@@ -66,8 +66,7 @@
 		select task_dispatch.*,
 		task.task_name,
 		task.service_type,
-		schedule_policy.sp_name,
-		task.create_time
+		schedule_policy.sp_name
 		from task_dispatch
 		INNER JOIN task
 		ON task_dispatch.task_id = task.id
@@ -121,7 +120,8 @@
 			`test_number`, 
 			`test_interval`, 
 			`status`, 
-			`remark`
+			`remark`,
+			`create_time`
 		)
 		values
 		(
@@ -134,7 +134,8 @@
 			#{testNumber}, 
 			#{testInterval}, 
 			#{status}, 
-			#{remark}
+			#{remark},
+			#{createTime}
 		)
 	</insert>
 
@@ -150,7 +151,8 @@
 		`test_number`,
 		`test_interval`,
 		`status`,
-		`remark`
+		`remark`,
+		`create_time`
 		)
 		values
 		(
@@ -163,7 +165,8 @@
 		#{testNumber},
 		#{testInterval},
 		#{status},
-		#{remark}
+		#{remark},
+		#{createTime}
 		)
 	</insert>
 
@@ -220,7 +223,8 @@
 		`test_number`,
 		`test_interval`,
 		`status`,
-		`remark`
+		`remark`,
+		`create_time`
 		)
 		values
 		<foreach collection="list" item="item" index="index" separator=",">
@@ -234,7 +238,8 @@
 			#{item.testNumber},
 			#{item.testInterval},
 			#{item.status},
-			#{item.remark}
+			#{item.remark},
+			#{item.createTime}
 			)
 		</foreach>
 	</insert>

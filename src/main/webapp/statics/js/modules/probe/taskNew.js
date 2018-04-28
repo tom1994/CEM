@@ -563,6 +563,8 @@ function submit_dispatch() {
         var taskDispatch = {};
         taskDispatch.probePort = "port1";
         taskDispatch.status = 0;
+        var oDate = new Date();
+        taskDispatch.createTime = oDate.Format("yyyy-MM-dd hh:mm:ss");
         if (b == 1) {
             if (typeof targetList.targetId == "number") {
                 taskDispatch.targetIds = [];
@@ -642,6 +644,8 @@ function submit_dispatch() {
         var taskDispatch = {};
         taskDispatch.probePort = "port1";
         taskDispatch.status = 0;
+        var oDate = new Date();
+        taskDispatch.createTime = oDate.Format("yyyy-MM-dd hh:mm:ss");
         if (b == 1) {
             if (typeof targetList.targetId == "number") {
                 taskDispatch.targetIds = [];
@@ -711,6 +715,8 @@ function submit_dispatch() {
         var taskDispatch = {};
         // taskDispatch.probePort = "port1";
         taskDispatch.status = 0;
+        var oDate = new Date();
+        taskDispatch.createTime = oDate.Format("yyyy-MM-dd hh:mm:ss");
         if (b == 1) {
             if (typeof targetList.targetId == "number") {
                 taskDispatch.targetIds = [];
@@ -1226,6 +1232,7 @@ var task_table = new Vue({
             {title: '<div style="width:77px">子业务类型</div>'},
             {title: '<div style="width:67px">调度策略</div>'},
             {title: '<div style="width:67px">告警模板</div>'},
+            {title: '<div style="width:57px">创建时间</div>'},
             {title: '<div style="width:57px">分配数量</div>'},
             {title: '<div style="width:67px">操作</div>'}
         ],
@@ -1320,6 +1327,7 @@ var task_table = new Vue({
                             row.push(st.get(item.serviceType));
                             row.push(item.spName);
                             row.push(item.atName);
+                            row.push(item.createTime);
                             row.push('<a class="fontcolor" onclick="dispatch_info(this)" id=' + item.id + '>' + item.countDispatch + '</a>&nbsp;');
                             row.push('<a class="fontcolor" onclick="task_assign(this)" id=' + item.id + ' name=' + item.serviceType + '>下发任务</a>&nbsp;' +
                                 '<a class="fontcolor" onclick="view_this(this)" id=' + item.id + '>详情</a> &nbsp;' +
@@ -1357,7 +1365,7 @@ var dispatch_table = new Vue({
     data: {
         headers: [
             {title: '<div style="width:17px"></div>'},
-            {title: '<div style="width:77px">探针名称</div>'},
+            {title: '<div style="width:90px">探针名称</div>'},
             {title: '<div style="width:78px">位置</div>'},
             {title: '<div style="width:57px">层级</div>'},
             {title: '<div style="width:57px">端口</div>'},
