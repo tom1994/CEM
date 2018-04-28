@@ -59,6 +59,8 @@ public class TaskDispatchEntity implements Serializable {
 
 	private String spName;
 
+	private Date createTime;
+
 	/**
 	 * 设置：
 	 */
@@ -294,5 +296,13 @@ public class TaskDispatchEntity implements Serializable {
 
 	public void setSpName(String spName) {
 		this.spName = spName;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
 	}
 }

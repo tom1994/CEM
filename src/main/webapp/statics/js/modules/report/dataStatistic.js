@@ -29,6 +29,21 @@ for (let i = 30; i < 33; i++) {
 }
 //FTP下载
 spst.set(40, 5);
+spst.set(50, 6);for (let i = 1; i < 6; i++) {
+    spst.set(i, 1)
+}
+//网络连通性测试
+for (let i = 10; i < 16; i++) {
+    spst.set(i, 2)
+}
+//网络层质量测试
+spst.set(20, 3);
+//WEB页面访问
+for (let i = 30; i < 33; i++) {
+    spst.set(i, 4)
+}
+//FTP下载
+spst.set(40, 5);
 spst.set(50, 6);
 
 /*key:service_type value:用来表示不同datatable的字符串，便于查询id从而改变class*/
@@ -59,18 +74,18 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
     if(citySelected!=0){
         a[4]={};
         a[4].name="city_id";
-        a[4].value=citySelected;
+        a[4].value=parseInt(citySelected);
     }
     if(countrySelected!=0){
         a[5]={};
         a[5].name="country_id";
-        a[5].value=countrySelected;
+        a[5].value=parseInt(countrySelected);
     }
 
     if(probeSelected!=0){
         a[6]={};
         a[6].name="probe_id";
-        a[6].value=probeSelected;
+        a[6].value=parseInt(probeSelected);
     }
     if(serviceSelected==0){
         a[7]={};
@@ -80,22 +95,22 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
     if(serviceSelected!=0&&serviceSelected!=-1){
         a[7]={};
         a[7].name="service_type";
-        a[7].value=serviceSelected;
+        a[7].value=parseInt(serviceSelected);
     }
     if(taskSelected!=-1){
         a[8]={};
         a[8].name="task_id";
-        a[8].value=taskSelected;
+        a[8].value=parseInt(taskSelected);
     }
     if(targetSelected!=0){
         a[9]={};
         a[9].name="target_id";
-        a[9].value=targetSelected;
+        a[9].value=parseInt(targetSelected);
     }
     if(intervalSelected!=0){
         a[10]={};
         a[10].name="interval";
-        a[10].value=intervalSelected;
+        a[10].value=parseInt(intervalSelected);
     }
     $.each(a, function () {
         if (o[this.name] !== undefined) {
@@ -690,7 +705,6 @@ var pingresulttable = new Vue({
             {title: '<div style="width:110px">业务类型</div>'},
             {title: '<div style="width:110px">测试任务名称</div>'},
             {title: '<div style="width:110px">测试目标</div>'},
-            {title: '<div style="width:90px">目标地址</div>'},
             {title: '<div style="width:90px">测试目标IP</div>'},
             {title: '<div style="width:90px">往返时延(ms)</div>'},
             {title: '<div style="width:100px">时延标准差(ms)</div>'},
@@ -810,7 +824,6 @@ var pingresulttable = new Vue({
                             row.push(item.servicetypeName);
                             row.push(item.taskName);
                             row.push(item.targetName);
-                            row.push(item.targetipName);
                             row.push(numberToIp(item.targetIp));
                             row.push(item.delay.toFixed(2));
                             row.push(item.delayStd.toFixed(2));
@@ -852,7 +865,6 @@ var tracertresulttable = new Vue({
             {title: '<div style="width:115px">业务类型</div>'},
             {title: '<div style="width:110px">测试任务名称</div>'},
             {title: '<div style="width:145px">测试目标</div>'},
-            {title: '<div style="width:90px">目标地址</div>'},
             {title: '<div style="width:90px">测试目标IP</div>'},
             {title: '<div style="width:110px">单跳往返时延(ms)</div>'},
             {title: '<div style="width:120px">单跳时延标准差(ms)</div>'},
@@ -967,7 +979,6 @@ var tracertresulttable = new Vue({
                             row.push(item.servicetypeName);
                             row.push(item.taskName);
                             row.push(item.targetName);
-                            row.push(item.targetipName);
                             row.push(numberToIp(item.targetIp));
                             row.push(item.delay.toFixed(2));
                             row.push(item.delayStd.toFixed(2));
@@ -1161,6 +1172,8 @@ var slaresulttable = new Vue({
             {title: '<div style="width:10px"></div>'},
             {title: '<div style="width:70px">探针名</div>'},
             {title: '<div style="width:60px">探针端口</div>'},
+            {title: '<div style="width:60px">测试目标</div>'},
+            {title: '<div style="width:90px">测试目标IP</div>'},
             {title: '<div style="width:75px">时延(ms)</div>'},
             {title: '<div style="width:90px">往向时延(ms)</div>'},
             {title: '<div style="width:90px">返向时延(ms)</div>'},
@@ -1180,8 +1193,7 @@ var slaresulttable = new Vue({
             {title: '<div style="width:120px">往向抖动方差(ms)</div>'},
             {title: '<div style="width:120px">返向抖动方差(ms)</div>'},
             {title: '<div style="width:75px">丢包率(%)</div>'},
-            {title: '<div style="width:60px">测试目标</div>'},
-            {title: '<div style="width:90px">测试目标IP</div>'},
+
             {title: '<div style="width:100px">日期</div>'},
             {title: '<div style="width:60px">时间</div>'},
         ],
@@ -1280,6 +1292,8 @@ var slaresulttable = new Vue({
                             row.push(i++);
                             row.push(item.probeName);
                             row.push(item.port);
+                            row.push(item.targetName);
+                            row.push(numberToIp(item.targetIp));
                             row.push(item.delay.toFixed(2));
                             row.push(item.gDelay.toFixed(2));
                             row.push(item.rDelay.toFixed(2));
@@ -1299,8 +1313,7 @@ var slaresulttable = new Vue({
                             row.push(item.gJitterVar.toFixed(2));
                             row.push(item.rJitterVar.toFixed(2));
                             row.push(item.lossRate.toFixed(2)*100);
-                            row.push(item.targetName);
-                            row.push(numberToIp(item.targetIp));
+
                             row.push(item.recordDate.substr(0,10));
                             row.push(item.recordTime);
                             rows.push(row);
@@ -1331,10 +1344,11 @@ var dhcpresult_Table = new Vue({
             {title: '<div style="width:10px"></div>'},
             {title: '<div style="width:70px">探针名</div>'},
             {title: '<div style="width:60px">探针端口</div>'},
-            {title: '<div style="width:100px">分配时延(ms)</div>'},
-            {title: '<div style="width:75px">成功率(%)</div>'},
             {title: '<div style="width:60px">测试目标</div>'},
             {title: '<div style="width:90px">测试目标IP</div>'},
+            {title: '<div style="width:100px">分配时延(ms)</div>'},
+            {title: '<div style="width:75px">成功率(%)</div>'},
+
             {title: '<div style="width:100px">日期</div>'},
             {title: '<div style="width:60px">时间</div>'},
         ],
@@ -1433,10 +1447,11 @@ var dhcpresult_Table = new Vue({
                             row.push(i++);
                             row.push(item.probeName);
                             row.push(item.port);
-                            row.push(item.delay.toFixed(2));
-                            row.push(item.successRate.toFixed(2)*100);
                             row.push(item.targetName);
                             row.push(numberToIp(item.targetIp));
+                            row.push(item.delay.toFixed(2));
+                            row.push(item.successRate.toFixed(2)*100);
+
                             row.push(item.recordDate.substr(0,10));
                             row.push(item.recordTime);
                             rows.push(row);
@@ -1467,10 +1482,11 @@ var dnsresult_Table = new Vue({
             {title: '<div style="width:10px"></div>'},
             {title: '<div style="width:70px">探针名</div>'},
             {title: '<div style="width:60px">探针端口</div>'},
-            {title: '<div style="width:100px">解析时延(ms)</div>'},
-            {title: '<div style="width:60px">成功率(%)</div>'},
             {title: '<div style="width:60px">测试目标</div>'},
             {title: '<div style="width:90px">测试目标IP</div>'},
+            {title: '<div style="width:100px">解析时延(ms)</div>'},
+            {title: '<div style="width:60px">成功率(%)</div>'},
+
             {title: '<div style="width:100px">日期</div>'},
             {title: '<div style="width:60px">时间</div>'},
         ],
@@ -1570,10 +1586,11 @@ var dnsresult_Table = new Vue({
                             row.push(i++);
                             row.push(item.probeName);
                             row.push(item.port);
-                            row.push(item.delay.toFixed(2));
-                            row.push(item.successRate.toFixed(2)*100);
                             row.push(item.targetName);
                             row.push(numberToIp(item.targetIp));
+                            row.push(item.delay.toFixed(2));
+                            row.push(item.successRate.toFixed(2)*100);
+
                             row.push(item.recordDate.substr(0,10));
                             row.push(item.recordTime);
                             rows.push(row);
@@ -1604,10 +1621,10 @@ var radiusresult_Table = new Vue({
             {title: '<div style="width:10px"></div>'},
             {title: '<div style="width:70px">探针名</div>'},
             {title: '<div style="width:60px">探针端口</div>'},
-            {title: '<div style="width:90px">认证时延(ms)</div>'},
-            {title: '<div style="width:100px">成功率(%)</div>'},
             {title: '<div style="width:60px">测试目标</div>'},
             {title: '<div style="width:90px">测试目标IP</div>'},
+            {title: '<div style="width:90px">认证时延(ms)</div>'},
+            {title: '<div style="width:100px">成功率(%)</div>'},
             {title: '<div style="width:100px">日期</div>'},
             {title: '<div style="width:60px">时间</div>'},
         ],
@@ -1705,10 +1722,11 @@ var radiusresult_Table = new Vue({
                             row.push(i++);
                             row.push(item.probeName);
                             row.push(item.port);
-                            row.push(item.delay.toFixed(2));
-                            row.push(item.successRate.toFixed(2)*100);
                             row.push(item.targetName);
                             row.push(numberToIp(item.targetIp));
+                            row.push(item.delay.toFixed(2));
+                            row.push(item.successRate.toFixed(2)*100);
+
                             row.push(item.recordDate.substr(0,10));
                             row.push(item.recordTime);
                             rows.push(row);
@@ -1739,13 +1757,14 @@ var ftpupresult_Table = new Vue({
             {title: '<div style="width:10px"></div>'},
             {title: '<div style="width:70px">探针名</div>'},
             {title: '<div style="width:60px">探针端口</div>'},
+            {title: '<div style="width:60px">测试目标</div>'},
+            {title: '<div style="width:90px">测试目标IP</div>'},
             {title: '<div style="width:100px">DNS解析时延(ms)</div>'},
             {title: '<div style="width:90px">连接时延(ms)</div>'},
             {title: '<div style="width:90px">登录时延(ms)</div>'},
             {title: '<div style="width:100px">上传速率(KB/s)</div>'},
             {title: '<div style="width:130px">首字节到达时延(ms)</div>'},
-            {title: '<div style="width:60px">测试目标</div>'},
-            {title: '<div style="width:90px">测试目标IP</div>'},
+
             {title: '<div style="width:100px">日期</div>'},
             {title: '<div style="width:60px">时间</div>'},
         ],
@@ -1843,13 +1862,14 @@ var ftpupresult_Table = new Vue({
                             row.push(i++);
                             row.push(item.probeName);
                             row.push(item.port);
+                            row.push(item.targetName);
+                            row.push(numberToIp(item.targetIp));
                             row.push(item.dnsDelay.toFixed(2));
                             row.push(item.connDelay.toFixed(2));
                             row.push(item.loginDelay.toFixed(2));
                             row.push(item.uploadRate.toFixed(2));
                             row.push(item.headbyteDelay.toFixed(2));
-                            row.push(item.targetName);
-                            row.push(numberToIp(item.targetIp));
+
                             row.push(item.recordDate.substr(0,10));
                             row.push(item.recordTime);
                             rows.push(row);
@@ -1880,13 +1900,14 @@ var ftpdoresult_Table = new Vue({
             {title: '<div style="width:10px"></div>'},
             {title: '<div style="width:70px">探针名</div>'},
             {title: '<div style="width:60px">探针端口</div>'},
+            {title: '<div style="width:60px">测试目标</div>'},
+            {title: '<div style="width:90px">测试目标IP</div>'},
             {title: '<div style="width:100px">DNS解析时延(ms)</div>'},
             {title: '<div style="width:90px">连接时延(ms)</div>'},
             {title: '<div style="width:90px">登录时延(ms)</div>'},
             {title: '<div style="width:100px">下载速率(KB/s)</div>'},
             {title: '<div style="width:130px">首字节到达时延(ms)</div>'},
-            {title: '<div style="width:60px">测试目标</div>'},
-            {title: '<div style="width:90px">测试目标IP</div>'},
+
             {title: '<div style="width:100px">日期</div>'},
             {title: '<div style="width:60px">时间</div>'},
         ],
@@ -1984,13 +2005,13 @@ var ftpdoresult_Table = new Vue({
                             row.push(i++);
                             row.push(item.probeName);
                             row.push(item.port);
+                            row.push(item.targetName);
+                            row.push(numberToIp(item.targetIp));
                             row.push(item.dnsDelay.toFixed(2));
                             row.push(item.connDelay.toFixed(2));
                             row.push(item.loginDelay.toFixed(2));
-                            row.push(item.uploadRate.toFixed(2));
+                            row.push(item.downloadRate.toFixed(2));
                             row.push(item.headbyteDelay.toFixed(2));
-                            row.push(item.targetName);
-                            row.push(numberToIp(item.targetIp));
                             row.push(item.recordDate.substr(0,10));
                             row.push(item.recordTime);
                             rows.push(row);
@@ -2021,12 +2042,13 @@ var webdownloadresult_Table = new Vue({
             {title: '<div style="width:10px"></div>'},
             {title: '<div style="width:70px">探针名</div>'},
             {title: '<div style="width:60px">探针端口</div>'},
+            {title: '<div style="width:60px">测试目标</div>'},
+            {title: '<div style="width:90px">测试目标IP</div>'},
             {title: '<div style="width:110px">DNS解析时延(ms)</div>'},
             {title: '<div style="width:90px">连接时延(ms)</div>'},
             {title: '<div style="width:100px">下载速率(KB/s)</div>'},
             {title: '<div style="width:130px">首字节到达时延(ms)</div>'},
-            {title: '<div style="width:60px">测试目标</div>'},
-            {title: '<div style="width:90px">测试目标IP</div>'},
+
             {title: '<div style="width:100px">日期</div>'},
             {title: '<div style="width:60px">时间</div>'},
         ],
@@ -2124,12 +2146,13 @@ var webdownloadresult_Table = new Vue({
                             row.push(i++);
                             row.push(item.probeName);
                             row.push(item.port);
+                            row.push(item.targetName);
+                            row.push(numberToIp(item.targetIp));
                             row.push(item.dnsDelay.toFixed(2));
                             row.push(item.connDelay.toFixed(2));
                             row.push(item.downloadRate.toFixed(2));
                             row.push(item.headbyteDelay.toFixed(2));
-                            row.push(item.targetName);
-                            row.push(numberToIp(item.targetIp));
+
                             row.push(item.recordDate.substr(0,10));
                             row.push(item.recordTime);
                             rows.push(row);
@@ -2160,6 +2183,8 @@ var webpageresult_Table = new Vue({
             {title: '<div style="width:10px"></div>'},
             {title: '<div style="width:70px">探针名</div>'},
             {title: '<div style="width:60px">探针端口</div>'},
+            {title: '<div style="width:60px">测试目标</div>'},
+            {title: '<div style="width:90px">测试目标IP</div>'},
             {title: '<div style="width:120px">DNS解析时延(ms)</div>'},
             {title: '<div style="width:110px">连接时延(ms)</div>'},
             {title: '<div style="width:130px"> 首字节到达时延(ms)</div>'},
@@ -2168,8 +2193,7 @@ var webpageresult_Table = new Vue({
             {title: '<div style="width:120px"> 重定向时延(ms)</div>'},
             {title: '<div style="width:120px">页面文件时延(ms)</div>'},
             {title: '<div style="width:120px"> 页面加载时延(ms)</div>'},
-            {title: '<div style="width:60px">测试目标</div>'},
-            {title: '<div style="width:90px">测试目标IP</div>'},
+
             {title: '<div style="width:100px">日期</div>'},
             {title: '<div style="width:60px">时间</div>'},
         ],
@@ -2269,6 +2293,8 @@ var webpageresult_Table = new Vue({
                             row.push(i++);
                             row.push(item.probeName);
                             row.push(item.port);
+                            row.push(item.targetName);
+                            row.push(numberToIp(item.targetIp));
                             row.push(item.dnsDelay);
                             row.push(item.connDelay);
                             row.push(item.headbyteDelay);
@@ -2277,8 +2303,7 @@ var webpageresult_Table = new Vue({
                             row.push(item.redirectDelay);
                             row.push(item.pageFileDelay);
                             row.push(item.loadDelay);
-                            row.push(item.targetName);
-                            row.push(numberToIp(item.targetIp));
+
                             row.push(item.recordDate.substr(0,10));
                             row.push(item.recordTime);
                             rows.push(row);
@@ -2309,6 +2334,8 @@ var webvideoresult_Table = new Vue({
             {title: '<div style="width:10px"></div>'},
             {title: '<div style="width:70px">探针名</div>'},
             {title: '<div style="width:60px">探针端口</div>'},
+            {title: '<div style="width:60px">测试目标</div>'},
+            {title: '<div style="width:90px">测试目标IP</div>'},
             {title: '<div style="width:115px">首帧到达时延(ms)</div>'},
             {title: '<div style="width:115px">首次缓冲时延(ms)</div>'},
             {title: '<div style="width:115px">视频加载时延(ms)</div>'},
@@ -2318,8 +2345,7 @@ var webvideoresult_Table = new Vue({
             {title: '<div style="width:90px">DNS时延(ms)</div>'},
             {title: '<div style="width:161px">连接WEB服务器时延(ms)</div>'},
             {title: '<div style="width:120px"> WEB页面时延(ms)</div>'},
-            {title: '<div style="width:60px">测试目标</div>'},
-            {title: '<div style="width:90px">测试目标IP</div>'},
+
             {title: '<div style="width:100px">日期</div>'},
             {title: '<div style="width:60px">时间</div>'},
         ],
@@ -2417,6 +2443,8 @@ var webvideoresult_Table = new Vue({
                             row.push(i++);
                             row.push(item.probeName);
                             row.push(item.port);
+                            row.push(item.targetName);
+                            row.push(numberToIp(item.targetIp));
                             row.push(item.headFrameDelay.toFixed(2));
                             row.push(item.initBufferDelay.toFixed(2));
                             row.push(item.loadDelay.toFixed(2));
@@ -2426,8 +2454,7 @@ var webvideoresult_Table = new Vue({
                             row.push(item.dnsDelay.toFixed(2));
                             row.push(item.wsConnDelay.toFixed(2));
                             row.push(item.webPageDelay.toFixed(2));
-                            row.push(item.targetName);
-                            row.push(numberToIp(item.targetIp));
+
                             row.push(item.recordDate.substr(0,10));
                             row.push(item.recordTime);
                             rows.push(row);
@@ -2458,12 +2485,13 @@ var gameresult_Table = new Vue({
             {title: '<div style="width:10px"></div>'},
             {title: '<div style="width:70px">探针名</div>'},
             {title: '<div style="width:60px">探针端口</div>'},
+            {title: '<div style="width:90px">测试目标</div>'},
+            {title: '<div style="width:90px">测试目标IP</div>'},
             {title: '<div style="width:90px">DNS时延(ms)</div>'},
             {title: '<div style="width:128px"> 网络时延(ms)</div>'},
             {title: '<div style="width:128px"> 网络抖动(ms)</div>'},
             {title: '<div style="width:140px"> 丢包率(%)</div>'},
-            {title: '<div style="width:90px">测试目标</div>'},
-            {title: '<div style="width:90px">测试目标IP</div>'},
+
             {title: '<div style="width:90px">日期</div>'},
             {title: '<div style="width:90px">时间</div>'},
         ],
@@ -2560,12 +2588,13 @@ var gameresult_Table = new Vue({
                             row.push(i++);
                             row.push(item.probeName);
                             row.push(item.port);
+                            row.push(item.targetName);
+                            row.push(numberToIp(item.targetIp));
                             row.push(item.dnsDelay.toFixed(2));
                             row.push(item.packetDelay.toFixed(2));
                             row.push(item.packetJitter.toFixed(2));
                             row.push(item.lossRate.toFixed(2)*100);
-                            row.push(item.targetName);
-                            row.push(numberToIp(item.targetIp));
+
                             row.push(item.recordDate.substr(0,10));
                             row.push(item.recordTime);
                             rows.push(row);
