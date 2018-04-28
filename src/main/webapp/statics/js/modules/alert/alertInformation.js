@@ -1,5 +1,4 @@
 /**
-/**
  * Created by Fern on 2017/12/20.
  */
 
@@ -16,13 +15,27 @@ tus.set(0, "未确认");
 tus.set(1, "已确认");
 
 var typeName = new Map();//tus字典，可通过get方法查对应字符串。
-typeName.set(0, "综合业务");
-typeName.set(1, "网页连通性业务");
-typeName.set(2, "网络层质量业务");
-typeName.set(4, "网页浏览业务");
-typeName.set(3, "文件下载业务");
-typeName.set(5, "在线视频业务");
-typeName.set(5, "在线游戏业务");
+
+typeName.set(1, 'PING(ICMP ECHO)');
+typeName.set(2, 'PING(TCP ECHO)');
+typeName.set(3, 'PING(UDP ECHO)');
+typeName.set(4, 'Trace Route(ICMP)');
+typeName.set(5, 'Trace Route(UDP)');
+typeName.set(10,'SLA(TCP)');
+typeName.set(11, 'SLA(UDP)');
+typeName.set(12, 'ADSL接入');
+typeName.set(13, 'DHCP');
+typeName.set(14, 'DNS');
+typeName.set(15, 'Radius认证');
+typeName.set(20, 'WEB页面访问');
+typeName.set(30, 'WEB下载');
+typeName.set(31, 'FTP下载');
+typeName.set(32, 'FTP上传');
+typeName.set(40, '在线视频');
+typeName.set(50, '网络游戏');
+
+
+
 var TypeSelected=0;
 var LevelSelected=0;
 var StatusSeleted=0;
@@ -170,7 +183,7 @@ var search_service = new Vue({
     methods: {
         testagentListsearch: function () {
             var searchJson = getFormJson($('#probesearch'));
-                debugger
+            debugger
             if((searchJson.startDate)>(searchJson.terminalDate)){
                 console.log("时间选择有误，请重新选择！");
                 $('#nonavailable_time').modal('show');
@@ -191,7 +204,7 @@ var search_service = new Vue({
 function getFormJson(form) {      /*将表单对象变为json对象*/
     var o = {};
     var a = $(form).serializeArray();
-     
+
     if(TypeSelected!=0){
         a[2]={}
         a[2].name='type'
@@ -511,6 +524,7 @@ var alerttable = new Vue({
             {title: '<div >告警状态</div>'},
             {title: '<div >探针名称</div>'},
             {title: '<div >业务类型</div>'},
+            {title: '<div >测试目标</div>'},
             {title: '<div >时间</div>'},
             {title: '<div >操作</div>'}
         ],
@@ -608,7 +622,8 @@ var alerttable = new Vue({
                             row.push(le.get(item.level));
                             row.push(tus.get(item.status));
                             row.push(item.probeName);
-                            row.push(typeName.get(item.type));
+                            row.push(typeName.get(item.serviceType));
+                            row.push(item.targetName);
                             row.push(item.recordTime);
                             row.push('<a class="fontcolor" onclick="operate_this(this)"  id='+item.id+'  >确认</a>&nbsp;' +
                                 '<a class="fontcolor" onclick="update_this(this)" id='+item.id+'  type='+st.get(item.type)+'>详情</a>'); //Todo:完成详情与诊断
@@ -625,11 +640,6 @@ var alerttable = new Vue({
                             draggingClass:"dragging",
                             resizeMode:'overflow',
                         });
-                        // $('td').closest('table').find('th').eq(1).attr('style', 'text-align: center;');
-                        // $('#probe_table tbody').find('td').eq(1).attr('style', 'text-align: center;');
-                        // var trs = $('#probe_table tbody').find('tr');
-                        // trs.find("td").eq(1).attr('style', 'text-align: center;');
-
                     }
                 });
             }
@@ -639,11 +649,12 @@ var alerttable = new Vue({
 
 var date=new Date();
 var month = date.getMonth() + 1;
-var strDate = date.getDate();
+var strDate = date.getDate()-1;
+var endDate = date.getDate();
 var years=date.getFullYear();
 var newdate=years+'-'+month+'-'+strDate;
 var hours=date.getHours();
-var endday=years+'-'+month+'-'+strDate+' '+hours;
+var endday=years+'-'+month+'-'+endDate+' '+hours;
 $('#start_date').flatpickr({
     enableTime: true,
     dateFormat: "Y-m-d H:i",

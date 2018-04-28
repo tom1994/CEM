@@ -521,15 +521,15 @@
                                             <div class="form-group row">
                                                 <label for="hbInterval"
                                                        class="col-lg-2 col-md-2 col-sm-2 input-label form_border">心跳间隔(s)</label>
-                                                <div class="col-lg-1 col-md-1 col-sm-1 form_border" style="width:158px">
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border" >
                                                     <input type="text" class="form-control input clear" id="hbInterval"
                                                            name="hbInterval"
                                                            placeholder="30">
                                                 </div>
                                                 <label for="reportInterval"
                                                        class="col-lg-2 col-md-2 col-sm-2 input-label form_border">上报间隔(min)</label>
-                                                <div class="col-lg-1 col-md-1 col-sm-1 form_border"
-                                                     style="width:158px;">
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border"
+                                                     >
                                                     <input type="text" class="form-control input clear"
                                                            id="reportInterval"
                                                            name="reportInterval"
@@ -549,7 +549,7 @@
                                                 <label for="registerTime"
                                                        style="text-align: right !important;"
                                                        class="col-lg-2 col-md-2 col-sm-2 input-label form_border">注册时间</label>
-                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border" style="padding-left: 0px">
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border" style="padding-left: 0px" >
                                                     <input type="text" class="form-control input clear"
                                                            id="registerTime" name="registerTime"
                                                            readonly="readonly" unselectable='on'>
@@ -563,7 +563,7 @@
                                                 </div>
                                                 <label for="lastReportTime" style="text-align: right !important;"
                                                        class="col-lg-2 col-md-2 col-sm-2 input-label form_border">最后上报时间</label>
-                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border"style="padding-left: 0px">
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border" style="padding-left: 0px">
                                                     <input type="text" class="form-control input clear"
                                                            id="lastReportTime"
                                                            name="lastReportTime" readonly="readonly" unselectable='on'>
@@ -582,16 +582,16 @@
                                                 <label for="updateInterval"
                                                        style="padding-left:0 !important;padding-right:13px !important; "
                                                        class="col-lg-2 col-md-2 col-sm-2 input-label form_border">升级检测间隔(h)</label>
-                                                <div class="col-lg-1 col-md-1 col-sm-1 form_border" style="width:158px">
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border" >
                                                     <input type="text" class="form-control input clear"
                                                            id="updateInterval"
                                                            name="updateInterval"
                                                            placeholder="24">
                                                 </div>
                                                 <label for="lastUpdateTime"
-                                                       style="text-align: right !important;padding: 0px"
+                                                       style="text-align: right !important;"
                                                        class="col-lg-2 col-md-2 col-sm-2 input-label form_border">最后升级时间</label>
-                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border" style="padding-left: 0px">
+                                                <div class="col-lg-2 col-md-2 col-sm-2 form_border" style="padding-left: 0px" >
                                                     <input type="text" class="form-control input clear"
                                                            id="lastUpdateTime"
                                                            name="lastUpdateTime" readonly="readonly" unselectable='on'>
@@ -758,6 +758,59 @@
                                             v-on:click="cancel_delete">取消
                                     </button>
                                     <button type="button" class="btn btn-success" v-on:click="delete_data">确定</button>
+                                </div>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal -->
+                    </div>
+
+                    <!-- 批量删除模态框（Modal） -->
+                    <div class="modal fade" id="myModal_deleteall" tabindex="-1" role="dialog"
+                         aria-labelledby="myModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog" style="width: 500px">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                        &times;
+                                    </button>
+                                    <h3 class="modal-title" >
+                                        确认
+                                    </h3>
+                                </div>
+                                <div class="modal-body" style="font-size: medium">
+                                    <b>确定删除吗?</b>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal"
+                                            v-on:click="cancel_delete">取消
+                                    </button>
+                                    <button type="button" class="btn btn-success" onclick="submit_all()">确定</button>
+                                </div>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal -->
+                    </div>
+                    <!-- 重启模态框（Modal） -->
+                    <div class="modal fade" id="myModal_Restart" tabindex="-1" role="dialog"
+                         aria-labelledby="myModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog" style="width: 500px">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                        &times;
+                                    </button>
+                                    <h3 class="modal-title" >
+                                        确认
+                                    </h3>
+                                </div>
+                                <div class="modal-body" style="font-size: medium">
+                                    <b>确定重启探针吗?</b>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal"
+                                            v-on:click="cancel_delete">取消
+                                    </button>
+                                    <button type="button" class="btn btn-success" onclick="submit_port()">确定</button>
                                 </div>
                             </div><!-- /.modal-content -->
                         </div><!-- /.modal -->
@@ -937,6 +990,7 @@
                     </div>
                 </div>
             </div>
+            <!--删除模态框-->
             <div class="modal fade" id="myModal_groupdelete" tabindex="-1" role="dialog"
                  aria-labelledby="myModalLabel"
                  aria-hidden="true">
@@ -963,6 +1017,8 @@
                     </div><!-- /.modal-content -->
                 </div><!-- /.modal -->
             </div>
+
+
         </div>
     </div>
 </div>

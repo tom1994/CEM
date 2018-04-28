@@ -19,32 +19,31 @@ var statusSelected = 0
 
 function getFormJson(form) {      /*将表单对象变为json对象*/
     var o = {};
-    debugger
     var a = $(form).serializeArray();
     if (countrySelected != 0) {
         a[2] = {}
         a[2].name = "country_id"
-        a[2].value = countrySelected
+        a[2].value = parseInt(countrySelected)
     }
     if (groupSelected != 0) {
         a[3] = {}
         a[3].name = "group_id"
-        a[3].value = groupSelected
+        a[3].value = parseInt(groupSelected)
     }
     if (accessSelected != 0) {
         a[4] = {}
         a[4].name = "access_layer"
-        a[4].value = accessSelected
+        a[4].value =  parseInt(accessSelected)
     }
     if (typeSelected != 0) {
         a[5] = {}
         a[5].name = "type"
-        a[5].value = typeSelected;
+        a[5].value = parseInt(typeSelected)
     }
     if (statusSelected != 0) {
         a[6] = {}
         a[6].name = "status"
-        a[6].value = statusSelected
+        a[6].value =  parseInt(statusSelected)
 
     }
     // if(citySelected!=0){
@@ -132,7 +131,7 @@ var probedata_handle = new Vue({
                             clearArea(b);
                             var c = ($("#cities .option-hover.option-selected"));
                             var c = c[0].dataset
-                            citySelected = c.value;
+                            citySelected = parseInt(c.value);
                             clearArea(a);
                             getArea(citySelected);
                             $('#cities .combo-input').val(b);
@@ -216,7 +215,6 @@ var probedata_handle = new Vue({
             }
         },
         testagentListsearch: function () {   /*查询监听事件*/
-            debugger
             var data = getFormJson($('#probesearch'));
 
             probetable.probedata = data;
@@ -234,6 +232,7 @@ var probedata_handle = new Vue({
 });
 
 function delete_All() {
+    debugger
     var CheckALL = document.getElementsByName("selectFlag");
     var check_val = [];
     for (var i in CheckALL) {
@@ -243,11 +242,22 @@ function delete_All() {
     if (check_val.length==0) {
         toastr.warning("请选择要删除探针!");
     }else {
-        delete_ajax(check_val)
-
+        $('#myModal_deleteall').modal('show');
     }
 }
+
+function submit_all() {
+    var CheckALL = document.getElementsByName("selectFlag");
+    var check_val = [];
+    for (var i in CheckALL) {
+        if (CheckALL[i].checked)
+            check_val.push(CheckALL[i].value);
+    }
+        delete_ajax(check_val)
+
+}
 function update_port() {
+    debugger
     var CheckALL = document.getElementsByName("selectFlag");
     var check_val = [];
     for (var i in CheckALL) {
@@ -257,6 +267,20 @@ function update_port() {
     if (check_val.length==0) {
         toastr.warning("请选择要重启的探针!");
     }else {
+        $('#myModal_Restart').modal('show');
+    }
+
+
+}
+
+
+function submit_port() {
+    var CheckALL = document.getElementsByName("selectFlag");
+    var check_val = [];
+    for (var i in CheckALL) {
+        if (CheckALL[i].checked)
+            check_val.push(CheckALL[i].value);
+    }
         var ids = JSON.stringify(check_val);
         $.ajax({
             type: "POST", /*GET会乱码*/
@@ -268,13 +292,14 @@ function update_port() {
             success: function (result) {
                 toastr.success("探针重启成功!");
                 idArray = [];
+                $('#myModal_Restart').modal('hide');
 
             }
         });
     }
 
 
-}
+
 function transString(string, i, j) {
     if (string == null) {
         return "";
@@ -493,8 +518,9 @@ var dispatch_table = new Vue({
             {title: '<div style="width:17px"></div>'},
             {title: '<div style="width:117px">任务类型</div>'},
             {title: '<div style="width:117px">任务名称</div>'},
-            {title: '<div style="width:160px">调度策略</div>'},
-            {title: '<div style="width:160px">操作</div>'}
+            {title: '<div style="width:117px">调度策略</div>'},
+            {title: '<div style="width:117px">创建时间</div>'},
+            {title: '<div style="width:111px">操作</div>'}
         ],
         rows: [],
         dtHandle: null,
@@ -569,7 +595,7 @@ var dispatch_table = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                        //console.log(result);
+                        console.log(result);
                         //封装返回数据
                         let returnData = {};
                         returnData.draw = result.page.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -587,6 +613,7 @@ var dispatch_table = new Vue({
                             row.push(st.get(item.serviceType));
                             row.push(item.taskName);
                             row.push(item.spName);
+                            row.push(item.createTime);
                             // row.push('<span title="' + item.targetName + '" style="white-space: nowrap">' + transString(item.targetName,0,25)+ '</span>');
                             row.push('<a class="fontcolor" onclick="cancel_task(this)" id=' + item.id + '>取消任务</a>');
                             rows.push(row);
@@ -909,10 +936,9 @@ function delete_ajax(idArray) {
         contentType: "application/json", /*必须要,不可少*/
         success: function (result) {
 
-            toastr.success("业务信息删除成功!");
-
+            toastr.success("探针删除成功!");
             probetable.currReset();
-
+            $('#myModal_deleteall').modal('hide');
             idArray = [];
             /*清空id数组*/
             delete_data.close_modal();
@@ -1246,7 +1272,7 @@ var getArea = function (cityid) {
                 $('.combo-dropdown').css("z-index", "3");
                 $('#country .option-item').click(function (areas) {
                     setTimeout(function () {
-                        var a = $(areas.currentTarget)[0].innerText;
+                        var a = $(areas.currentTarget)[0].innerText.trim();
                         countrySelected = $($(areas.currentTarget)[0]).data('value');
                         $('#country .combo-input').val(a);
                         $('#country .combo-select select').val(a);
@@ -1255,7 +1281,7 @@ var getArea = function (cityid) {
                 });
                 $('#country input[type=text] ').keyup(function (areas) {
                     if (areas.keyCode == '13') {
-                        var b = $("#country .option-hover.option-selected").text();
+                        var b = $("#country .option-hover.option-selected").text().trim();
                         countrySelected = $("#country .option-hover.option-selected")[0].dataset.value;
                         $('#country .combo-input').val(b);
                         $('#country .combo-select select').val(b);
