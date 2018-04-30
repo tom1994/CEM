@@ -69,8 +69,7 @@
 			`jitter`, 
 			`jitter_std`, 
 			`jitter_var`, 
-			`loss_rate`, 
-			`hop_record`, 
+			`loss_rate`,
 			`remark`
 		)
 		values
@@ -91,8 +90,7 @@
 			#{jitter}, 
 			#{jitterStd}, 
 			#{jitterVar}, 
-			#{lossRate}, 
-			#{hopRecord}, 
+			#{lossRate},
 			#{remark}
 		)
 	</insert>

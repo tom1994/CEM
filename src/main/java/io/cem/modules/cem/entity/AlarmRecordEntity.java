@@ -42,6 +42,8 @@ public class AlarmRecordEntity implements Serializable {
 	//目标地址
 	private String targetName;
 
+	private String trigger;
+
 	/*ping details*/
 	//时延平均值
 	private Double pingDelay;
@@ -1039,5 +1041,13 @@ public class AlarmRecordEntity implements Serializable {
 
 	public void setWebpageLoadDelay(Double webpageLoadDelay) {
 		this.webpageLoadDelay = webpageLoadDelay;
+	}
+
+	public String getTrigger() {
+		return trigger;
+	}
+
+	public void setTrigger(String trigger) {
+		this.trigger = trigger;
 	}
 }
