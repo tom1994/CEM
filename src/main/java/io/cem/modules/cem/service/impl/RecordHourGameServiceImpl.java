@@ -299,11 +299,42 @@ public class RecordHourGameServiceImpl implements RecordHourGameService {
 
 				} else {
 					ScoreBaseEntity scoreBaseDul = connection.get(scoreLayer);
-					scoreBase.setGameDnsDelay(scoreBase.getGameDnsDelay());
-					scoreBase.setGameConnDelay(scoreBase.getGameConnDelay());
-					scoreBase.setGamePacketDelay(scoreBase.getGamePacketDelay());
-					scoreBase.setGamePacketJitter(scoreBase.getGamePacketJitter());
-					scoreBase.setGameLossRate(scoreBase.getGameLossRate());
+					if(scoreBase.getGameDnsDelay()!=null&scoreBaseDul.getGameDnsDelay()!=null){
+						scoreBase.setIcmpPingScore((scoreBase.getGameDnsDelay()+scoreBaseDul.getGameDnsDelay())/2);
+					}else if(scoreBase.getGameDnsDelay()!=null&&scoreBaseDul.getGameDnsDelay()==null){
+						scoreBase.setIcmpPingScore(scoreBase.getGameDnsDelay());
+					} else if(scoreBase.getGameDnsDelay()==null&&scoreBaseDul.getGameDnsDelay()!=null){
+						scoreBase.setIcmpPingScore(scoreBaseDul.getGameDnsDelay());
+					}
+					if(scoreBase.getGameConnDelay()!=null&scoreBaseDul.getGameConnDelay()!=null){
+						scoreBase.setIcmpPingScore((scoreBase.getGameConnDelay()+scoreBaseDul.getGameConnDelay())/2);
+					}else if(scoreBase.getGameConnDelay()!=null&&scoreBaseDul.getGameConnDelay()==null){
+						scoreBase.setIcmpPingScore(scoreBase.getGameConnDelay());
+					} else if(scoreBase.getGameConnDelay()==null&&scoreBaseDul.getGameConnDelay()!=null){
+						scoreBase.setIcmpPingScore(scoreBaseDul.getGameConnDelay());
+					}
+					if(scoreBase.getGamePacketDelay()!=null&scoreBaseDul.getGamePacketDelay()!=null){
+						scoreBase.setIcmpPingScore((scoreBase.getGamePacketDelay()+scoreBaseDul.getGamePacketDelay())/2);
+					}else if(scoreBase.getGamePacketDelay()!=null&&scoreBaseDul.getGamePacketDelay()==null){
+						scoreBase.setIcmpPingScore(scoreBase.getGamePacketDelay());
+					} else if(scoreBase.getGamePacketDelay()==null&&scoreBaseDul.getGamePacketDelay()!=null){
+						scoreBase.setIcmpPingScore(scoreBaseDul.getGamePacketDelay());
+					}
+					if(scoreBase.getGamePacketJitter()!=null&scoreBaseDul.getGamePacketJitter()!=null){
+						scoreBase.setIcmpPingScore((scoreBase.getGamePacketJitter()+scoreBaseDul.getGamePacketJitter())/2);
+					}else if(scoreBase.getGamePacketJitter()!=null&&scoreBaseDul.getGamePacketJitter()==null){
+						scoreBase.setIcmpPingScore(scoreBase.getGamePacketJitter());
+					} else if(scoreBase.getGamePacketJitter()==null&&scoreBaseDul.getGamePacketJitter()!=null){
+						scoreBase.setIcmpPingScore(scoreBaseDul.getGamePacketJitter());
+					}
+					if(scoreBase.getGameLossRate()!=null&scoreBaseDul.getGameLossRate()!=null){
+						scoreBase.setIcmpPingScore((scoreBase.getGameLossRate()+scoreBaseDul.getGameLossRate())/2);
+					}else if(scoreBase.getGameLossRate()!=null&&scoreBaseDul.getGameLossRate()==null){
+						scoreBase.setIcmpPingScore(scoreBase.getGameLossRate());
+					} else if(scoreBase.getGameLossRate()==null&&scoreBaseDul.getGameLossRate()!=null){
+						scoreBase.setIcmpPingScore(scoreBaseDul.getGameLossRate());
+					}
+
 					scoreBase.setScore((scoreBase.getScore()+scoreBaseDul.getScore())/2);
 					scoreBase.setBase(scoreBase.getBase());
 

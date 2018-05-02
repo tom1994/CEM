@@ -123,8 +123,9 @@ public class RecordHourTracertController {
 		if(map.get("target_id")==null){
 			for(int i=0;i<scoreList.size();i++){
 				scoreList.get(i).setTargetName("");
+				scoreList.get(i).setTargetId(-1);
 			}
-		}else{}
+		}
 
 		int total = 0;
 		if(page==null) {              /*没有传入page,则取全部值*/
@@ -199,16 +200,18 @@ public class RecordHourTracertController {
 		if(map.get("probe_id")==null){
 			for(int i=0;i<scoreList.size();i++){
 				scoreList.get(i).setProbeName("");
+				scoreList.get(i).setProbeId(-1);
 			}
 		}
 		if(map.get("county_id")==null){
 			for(int i=0;i<scoreList.size();i++){
 				scoreList.get(i).setCountyName("");
+				scoreList.get(i).setCountyId(-1);
 			}
 		}
 		if(map.get("city_id")==null){
 			for(int i=0;i<scoreList.size();i++){
-				scoreList.get(i).setCityName("");
+				scoreList.get(i).setCityId(-1);
 			}
 		}
 
