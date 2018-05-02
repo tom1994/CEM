@@ -23,7 +23,7 @@
                 order by ${sidx} ${order}
             </when>
 			<otherwise>
-                order by id desc
+                order by county_id
 			</otherwise>
         </choose>
 		<if test="offset != null and limit != null">
@@ -37,7 +37,7 @@
 		LEFT JOIN probe
   		ON probe.city_id= county.city_id
 		WHERE probe.id= #{value}
-		ORDER BY area_id
+		ORDER BY county.county_id
 	</select>
 
 	<select id="queryCountyList" resultType="io.cem.modules.cem.entity.CountyEntity">

@@ -184,11 +184,11 @@
                         <div class="ibox-title fontcolor "  style="padding-bottom: 0px !important;">
                             <div class="btn-group" id="charts_button">                   <!--Vue事件监听-->
                                 <button type="button" class="btn btn-default Btn color" v-on:click="ping" id="ping">网络连通性</button>
-                                <button type="button" class="btn btn-default Btn" v-on:click="sla">网络层质量</button>
-                                <button type="button" class="btn btn-default Btn" v-on:click="web">WEB浏览</button>
-                                <button type="button" class="btn btn-default Btn" v-on:click="download">文件下载</button>
-                                <button type="button" class="btn btn-default Btn" v-on:click="video">在线视频</button>
-                                <button type="button" class="btn btn-default Btn" v-on:click="game">网络游戏</button>
+                                <button type="button" class="btn btn-default Btn" v-on:click="sla" id="sla">网络层质量</button>
+                                <button type="button" class="btn btn-default Btn" v-on:click="web" id="web"> WEB浏览</button>
+                                <button type="button" class="btn btn-default Btn" v-on:click="download" id="download">文件下载</button>
+                                <button type="button" class="btn btn-default Btn" v-on:click="video"  id="video_button">在线视频</button>
+                                <button type="button" class="btn btn-default Btn" v-on:click="game" id="game_button">网络游戏</button>
                             </div>
                         </div>
                     </div>
@@ -391,7 +391,7 @@
                 </button>
                 <h3 class="modal-title myModalLabel">详细信息</h3>
             </div>
-            <div class="modal-body" style="height: 110px;">
+            <div class="modal-body" style="height: 145px;">
 
                 <div class="record-table ibox-content" id="video">
                     <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->

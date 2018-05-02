@@ -140,26 +140,8 @@ var search_service = new Vue({ //Todo:完成查询条件框
     }
 });
 
-
-function datedifference(sDate1, sDate2) {    //sDate1和sDate2是2006-12-18格式
-    var dateSpan,
-        tempDate,
-        iDays;
-    sDate1 = Date.parse(sDate1);
-    sDate2 = Date.parse(sDate2);
-    dateSpan = sDate2 - sDate1;
-    dateSpan = Math.abs(dateSpan);
-    iDays = Math.floor(dateSpan / (24 * 3600 * 1000));
-    return iDays
-};
 function sendAjax(param) {
     loading();
-    ping_list=undefined;
-    quality_list=undefined;
-    page_list=undefined;
-    download_list=undefined;
-    video_list=undefined;
-    game_list=undefined;
     $.ajax({
         type: "POST",
         url: "../../recordhourping/connection",
@@ -168,11 +150,29 @@ function sendAjax(param) {
         dataType: "json",
         success: function (result) {
             ping_list=result.scoreList
-            if(ping_list!=undefined){
                 removeLoading('test');
-                ping_change(param)
-                ping(ping_list);
+
+            for (let i = 0; i < options.series.length; i++) {
+                options.series[i].data = [];
             }
+            for (let i = 0; i < options.series.length; i++) {
+                for (let j = 0; j < ping_list.length; j++) {
+                    let date_token = ping_list[j].recordDate.split("-");
+                    let year = parseInt(date_token[0]);
+                    let month = parseInt(date_token[1]) - 1;
+                    let day = parseInt(date_token[2]);
+                    let hour = parseInt(ping_list[j].recordTime);
+                    if (isNaN(year) || isNaN(month) || isNaN(day)) {
+                        continue;
+                    }
+                    options.series[i].data[j] = [Date.UTC(year, month, day, hour), ping_list[j].score];
+                    options.series[i].data.sort(compare("0"));
+                }
+
+
+            }
+            var chart = new Highcharts.Chart('container_connection', options);
+
         }
     })
     $.ajax({
@@ -184,8 +184,25 @@ function sendAjax(param) {
         success: function (result) {
             quality_list=result.scoreList
             removeLoading('quality');
-            quality_change(param)
-            quality(quality_list)
+            for (let i = 0; i < options.series.length; i++) {
+                options.series[i].data = [];
+            }
+            for (let i = 0; i < options.series.length; i++) {
+                for (let j = 0; j < quality_list.length; j++) {
+                    let date_token = quality_list[j].recordDate.split("-");
+                    let year = parseInt(date_token[0]);
+                    let month = parseInt(date_token[1]) - 1;
+                    let day = parseInt(date_token[2]);
+                    let hour = parseInt(quality_list[j].recordTime);
+                    if (isNaN(year) || isNaN(month) || isNaN(day)) {
+                        continue;
+                    }
+                    options.series[i].data[j] = [Date.UTC(year, month, day, hour), quality_list[j].score];
+                    options.series[i].data.sort(compare("0"));
+                }
+
+            }
+            var chart = new Highcharts.Chart('container_quality', options);
         }
     })
     $.ajax({
@@ -197,8 +214,25 @@ function sendAjax(param) {
         success: function (result) {
             page_list=result.scoreList
             removeLoading('page');
-            page_change(param)
-            broswer(page_list)
+            for (let i = 0; i < options.series.length; i++) {
+                options.series[i].data = [];
+            }
+            for (let i = 0; i < options.series.length; i++) {
+                for (let j = 0; j < page_list.length; j++) {
+                    let date_token = page_list[j].recordDate.split("-");
+                    let year = parseInt(date_token[0]);
+                    let month = parseInt(date_token[1]) - 1;
+                    let day = parseInt(date_token[2]);
+                    let hour = parseInt(page_list[j].recordTime);
+                    if (isNaN(year) || isNaN(month) || isNaN(day)) {
+                        continue;
+                    }
+                    options.series[i].data[j] = [Date.UTC(year, month, day, hour), page_list[j].score];
+                    options.series[i].data.sort(compare("0"));
+                }
+
+            }
+            var chart = new Highcharts.Chart('container_page', options);
 
         }
     })
@@ -211,8 +245,25 @@ function sendAjax(param) {
         success: function (result) {
             download_list=result.scoreList
             removeLoading('download');
-            download_change(param)
-            download(download_list)
+            for (let i = 0; i < options.series.length; i++) {
+                options.series[i].data = [];
+            }
+            for (let i = 0; i < options.series.length; i++) {
+                for (let j = 0; j < download_list.length; j++) {
+                    let date_token = download_list[j].recordDate.split("-");
+                    let year = parseInt(date_token[0]);
+                    let month = parseInt(date_token[1]) - 1;
+                    let day = parseInt(date_token[2]);
+                    let hour = parseInt(download_list[j].recordTime);
+                    if (isNaN(year) || isNaN(month) || isNaN(day)) {
+                        continue;
+                    }
+                    options.series[i].data[j] = [Date.UTC(year, month, day, hour), download_list[j].score];
+                    options.series[i].data.sort(compare("0"));
+                }
+
+            }
+            var chart = new Highcharts.Chart('container_download', options);
         }
     })
     $.ajax({
@@ -224,8 +275,25 @@ function sendAjax(param) {
         success: function (result) {
             video_list=result.scoreList
             removeLoading('video');
-            video_change(param)
-            video(video_list)
+            for (let i = 0; i < options.series.length; i++) {
+                options.series[i].data = [];
+            }
+            for (let i = 0; i < options.series.length; i++) {
+                for (let j = 0; j < video_list.length; j++) {
+                    let date_token = video_list[j].recordDate.split("-");
+                    let year = parseInt(date_token[0]);
+                    let month = parseInt(date_token[1]) - 1;
+                    let day = parseInt(date_token[2]);
+                    let hour = parseInt(video_list[j].recordTime);
+                    if (isNaN(year) || isNaN(month) || isNaN(day)) {
+                        continue;
+                    }
+                    options.series[i].data[j] = [Date.UTC(year, month, day, hour), video_list[j].score];
+                    options.series[i].data.sort(compare("0"));
+                }
+
+            }
+            var chart = new Highcharts.Chart('container_video', options);
         }
     })
     $.ajax({
@@ -237,523 +305,28 @@ function sendAjax(param) {
         success: function (result) {
             game_list=result.scoreList;
             removeLoading('game');
-            game_change(param)
-            game(game_list)
+            for (let i = 0; i < options.series.length; i++) {
+                options.series[i].data = [];
+            }
+            for (let i = 0; i < options.series.length; i++) {
+                for (let j = 0; j < game_list.length; j++) {
+                    let date_token = game_list[j].recordDate.split("-");
+                    let year = parseInt(date_token[0]);
+                    let month = parseInt(date_token[1]) - 1;
+                    let day = parseInt(date_token[2]);
+                    let hour = parseInt(game_list[j].recordTime);
+                    if (isNaN(year) || isNaN(month) || isNaN(day)) {
+                        continue;
+                    }
+                    options.series[i].data[j] = [Date.UTC(year, month, day, hour), game_list[j].score];
+                    options.series[i].data.sort(compare("0"));
+                }
+
+            }
+            var chart = new Highcharts.Chart('container_game', options);
+
         }
     })
-
-}
-function ping_change(param) {
-    $('#container_connection').highcharts({
-        chart: {
-            type: 'spline',
-            backgroundColor: 'rgba(0,0,0,0)'
-        },
-        title: {
-            text: ''
-        },
-
-        xAxis: {
-            labels: {
-                rotation: 0//调节倾斜角度偏移
-            },
-            categories: (function () {
-                var arr = [];
-                var dateDiff = datedifference(param.chartdata.ava_start,param.chartdata.ava_terminal);
-                if(dateDiff > 5){
-                    for(var i=0;i<ping_list.length;i++){
-                        arr.push(ping_list[i].recordDate);
-                    }
-                }else{
-                    for(var i=0;i<ping_list.length;i++){
-                        var dateStrs =ping_list[i].recordDate.split(" ");
-                        arr.push(dateStrs[0].slice(5,10) + " " + ping_list[i].recordTime+":00");
-                    }
-                }
-
-
-                return arr.sort();
-
-            })(),
-            crosshair: true,
-        },
-        yAxis: {
-            max: 100,
-            min: 0,
-            title: {
-                text: ' '
-            }
-        },
-        tooltip: {
-            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-            '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
-            footerFormat: '</table>',
-            // shared: true,
-            useHTML: true
-        },
-        plotOptions: {
-            spline: {
-                marker: {
-                    enabled: false
-                }
-            },
-            series: {
-                stickyTracking: false,
-                events: {
-                    mouseOver: function () {
-                        $('.highcharts-tooltip').show();
-                    },
-                    mouseOut: function () {
-                        $('.highcharts-tooltip').hide();
-                    }
-                }
-            }
-        },
-        exporting: {
-            enabled:false
-        },
-        series: [{
-            name:"score" ,
-            data: (function () {
-                var arr = [];
-                for(var i=0;i<ping_list.length;i++){
-                    arr.push(parseFloat(ping_list[i].score));
-                }
-                return arr.sort();
-            })(),
-            showInLegend: false,
-        }]
-
-    });
-}
-function quality_change(param) {
-    $('#container_quality').highcharts({
-        chart: {
-            type: 'spline',
-            backgroundColor: 'rgba(0,0,0,0)'
-        },
-        title: {
-            text: ''
-        },
-
-        xAxis: {
-            labels: {
-                rotation: 0//调节倾斜角度偏移
-            },
-            categories: (function () {
-                var arr = [];
-                var dateDiff = datedifference(param.chartdata.ava_start,param.chartdata.ava_terminal);
-                if(dateDiff > 5){
-                    for(var i=0;i<quality_list.length;i++){
-                        arr.push(quality_list[i].recordDate);
-                    }
-                }else{
-                    for(var i=0;i<quality_list.length;i++){
-                        var dateStrs = quality_list[i].recordDate.split(" ");
-                        arr.push(dateStrs[0].slice(5,10)+ " " + quality_list[i].recordTime+":00");
-                    }
-                }
-
-                return arr.sort();
-
-            })(),
-            crosshair: true,
-        },
-        yAxis: {
-            max: 100,
-            min: 0,
-            title: {
-                text: ' '
-            }
-        },
-        tooltip: {
-            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-            '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
-            footerFormat: '</table>',
-            // shared: true,
-            useHTML: true
-        },
-        plotOptions: {
-            spline: {
-                marker: {
-                    enabled: false
-                }
-            },
-            series: {
-                stickyTracking: false,
-                events: {
-                    mouseOver: function () {
-                        $('.highcharts-tooltip').show();
-                    },
-                    mouseOut: function () {
-                        $('.highcharts-tooltip').hide();
-                    }
-                }
-            }
-        },
-        exporting: {
-            enabled:false
-        },
-        series: [{
-            name:"score" ,
-            data: (function () {
-                var arr = [];
-                for(var i=0;i<quality_list.length;i++){
-                    arr.push(parseFloat(quality_list[i].score));
-                }
-                return arr.sort();
-            })(),
-            showInLegend: false,
-        }]
-
-    });
-}
-function download_change(param) {
-    $('#container_download').highcharts({
-        chart: {
-            type: 'spline',
-            backgroundColor: 'rgba(0,0,0,0)'
-        },
-        title: {
-            text: ''
-        },
-
-        xAxis: {
-            labels: {
-                rotation: 0//调节倾斜角度偏移
-            },
-            categories: (function () {
-                var arr = [];
-                var dateDiff = datedifference(param.chartdata.ava_start,param.chartdata.ava_terminal);
-                if(download_list!=undefined){
-                    if(dateDiff > 5){
-                        for(var i=0;i<download_list.length;i++){
-                            arr.push(download_list[i].recordDate);
-                        }
-                    }else{
-                        for(var i=0;i<download_list.length;i++){
-                            var dateStrs = download_list[i].recordDate.split(" ");
-                            arr.push(dateStrs[0].slice(5,10) + " " + download_list[i].recordTime+":00");
-                        }
-                    }
-                    return arr.sort();
-                }else {
-                    return arr
-                }
-
-            })(),
-            crosshair: true,
-        },
-        yAxis: {
-            max: 100,
-            min: 0,
-            title: {
-                text: ' '
-            }
-        },
-        tooltip: {
-            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-            '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
-            footerFormat: '</table>',
-            // shared: true,
-            useHTML: true
-        },
-        plotOptions: {
-            spline: {
-                marker: {
-                    enabled: false
-                }
-            },
-            series: {
-                stickyTracking: false,
-                events: {
-                    mouseOver: function () {
-                        $('.highcharts-tooltip').show();
-                    },
-                    mouseOut: function () {
-                        $('.highcharts-tooltip').hide();
-                    }
-                }
-            }
-        },
-        exporting: {
-            enabled:false
-        },
-
-        series: [{
-            name:"score" ,
-
-            data: (function () {
-                var arr = [];
-                for(var i=0;i<download_list.length;i++){
-                    arr.push(parseFloat(download_list[i].score));
-                }
-                return arr.sort();
-            })(),
-            showInLegend: false,
-        }]
-
-
-    });
-}
-function page_change(param) {
-    $('#container_page').highcharts({
-        chart: {
-            type: 'spline',
-            backgroundColor: 'rgba(0,0,0,0)'
-        },
-        title: {
-            text: ''
-        },
-
-        xAxis: {
-            labels: {
-                rotation: 0//调节倾斜角度偏移
-            },
-            categories: (function () {
-                var arr = [];
-                var dateDiff = datedifference(param.chartdata.ava_start,param.chartdata.ava_terminal);
-                if(page_list!=undefined){
-                    if(dateDiff > 5){
-                        for(var i=0;i<page_list.length;i++){
-                            arr.push(page_list[i].recordDate);
-                        }
-                    }else{
-                        for(var i=0;i<page_list.length;i++){
-                            var dateStrs = page_list[i].recordDate.split(" ");
-                            arr.push(dateStrs[0].slice(5,10)+ " " + page_list[i].recordTime+":00");
-                        }
-                    }
-                }else {
-                    arr=[];
-                }
-                return arr.sort();
-            })(),
-            crosshair: true,
-        },
-        yAxis: {
-            max: 100,
-            min: 0,
-            title: {
-                text: ' '
-            }
-        },
-        tooltip: {
-            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-            '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
-            footerFormat: '</table>',
-            // shared: true,
-            useHTML: true
-        },
-        plotOptions: {
-            spline: {
-                marker: {
-                    enabled: false
-                }
-            },
-            series: {
-                stickyTracking: false,
-                events: {
-                    mouseOver: function () {
-                        $('.highcharts-tooltip').show();
-                    },
-                    mouseOut: function () {
-                        $('.highcharts-tooltip').hide();
-                    }
-                }
-            }
-        },
-        exporting: {
-            enabled:false
-        },
-        series: [{
-            name:"score" ,
-            data: (function () {
-                var arr = [];
-                if(page_list!=undefined){
-                    for(var i=0;i<page_list.length;i++){
-                        arr.push(parseFloat(page_list[i].score));
-                    }
-                    return arr.sort();
-                }else {
-                    return arr
-                }
-            })(),
-            showInLegend: false,
-        }]
-
-    });
-}
-function video_change(param) {
-    $('#container_video').highcharts({
-        chart: {
-            type: 'spline',
-            backgroundColor: 'rgba(0,0,0,0)'
-        },
-        title: {
-            text: ''
-        },
-
-        xAxis: {
-            labels: {
-                rotation: 0//调节倾斜角度偏移
-            },
-            categories: (function () {
-                var arr = [];
-
-                var dateDiff = datedifference(param.chartdata.ava_start,param.chartdata.ava_terminal);
-                if(dateDiff > 5){
-                    for(var i=0;i<video_list.length;i++){
-                        arr.push(video_list[i].recordDate);
-                    }
-                }else{
-                    for(var i=0;i<video_list.length;i++){
-                        var dateStrs = video_list[i].recordDate.split(" ");
-                        arr.push(dateStrs[0].slice(5,10) + " " + video_list[i].recordTime+":00");
-                    }
-                }
-
-                return arr.sort();
-
-            })(),
-            crosshair: true,
-        },
-        yAxis: {
-            max: 100,
-            min: 0,
-            title: {
-                text: ' '
-            }
-        },
-        tooltip: {
-            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-            '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
-            footerFormat: '</table>',
-            // shared: true,
-            useHTML: true
-        },
-        plotOptions: {
-            spline: {
-                marker: {
-                    enabled: false
-                }
-            },
-            series: {
-                stickyTracking: false,
-                events: {
-                    mouseOver: function () {
-                        $('.highcharts-tooltip').show();
-                    },
-                    mouseOut: function () {
-                        $('.highcharts-tooltip').hide();
-                    }
-                }
-            }
-        },
-        exporting: {
-            enabled:false
-        },
-        series: [{
-            name:"score" ,
-            data: (function () {
-                var arr = [];
-                for(var i=0;i<video_list.length;i++){
-                    arr.push(parseFloat(video_list[i].score));
-                }
-                return arr.sort();
-            })(),
-            showInLegend: false,
-        }]
-
-    });
-}
-function game_change(param) {
-    $('#container_game').highcharts({
-        chart: {
-            type: 'spline',
-            backgroundColor: 'rgba(0,0,0,0)'
-        },
-        title: {
-            text: ''
-        },
-
-        xAxis: {
-            labels: {
-                rotation: 0//调节倾斜角度偏移
-            },
-            categories: (function () {
-                var arr = [];
-                var dateDiff = datedifference(param.chartdata.ava_start,param.chartdata.ava_terminal);
-                if(dateDiff > 5){
-                    for(var i=0;i<game_list.length;i++){
-                        arr.push(game_list[i].recordDate);
-                    }
-                }else{
-                    for(var i=0;i<game_list.length;i++){
-                        var dateStrs = game_list[i].recordDate.split(" ");
-                        arr.push(dateStrs[0].slice(5,10) + " " + game_list[i].recordTime+":00");
-                    }
-                }
-
-                return arr.sort();
-
-            })(),
-            crosshair: true,
-        },
-        yAxis: {
-            max: 100,
-            min: 0,
-            title: {
-                text: ' '
-            }
-        },
-        tooltip: {
-            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-            '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
-            footerFormat: '</table>',
-            // shared: true,
-            useHTML: true
-        },
-        plotOptions: {
-            spline: {
-                marker: {
-                    enabled: false
-                }
-            },
-            series: {
-                stickyTracking: false,
-                events: {
-                    mouseOver: function () {
-                        $('.highcharts-tooltip').show();
-                    },
-                    mouseOut: function () {
-                        $('.highcharts-tooltip').hide();
-                    }
-                }
-            }
-        },
-        exporting: {
-            enabled:false
-        },
-        series: [{
-            name:"score" ,
-            data: (function () {
-                var arr = [];
-                for(var i=0;i<game_list.length;i++){
-                    arr.push(parseFloat(game_list[i].score));
-                }
-                return arr.sort();
-            })(),
-            showInLegend: false,
-        }]
-
-    });
 
 }
 
@@ -1015,6 +588,7 @@ var connection_service = new Vue({
     },
 
 });
+
 var connection=new Vue({
     el:'#container_connection',
     data:{
@@ -1030,18 +604,34 @@ var connection=new Vue({
             data: param,  //传入组装的参数
             dataType: "json",
             success: function (result) {
-                ping_list=result.scoreList
-                if(ping_list!=undefined){
-                    removeLoading('test');
-                    list_ping();
-                    ping(ping_list);
+                ping_list = result.scoreList
+                removeLoading('test');
+                for (let i = 0; i < options.series.length; i++) {
+                    options.series[i].data = [];
                 }
+                for (let i = 0; i < options.series.length; i++) {
+                    for (let j = 0; j < ping_list.length; j++) {
+                            let date_token = ping_list[j].recordDate.split("-");
+                            let year = parseInt(date_token[0]);
+                            let month = parseInt(date_token[1]) - 1;
+                            let day = parseInt(date_token[2]);
+                            let hour = parseInt(ping_list[j].recordTime);
+                            if (isNaN(year) || isNaN(month) || isNaN(day)) {
+                                continue;
+                            }
+                            options.series[i].data[j] = [Date.UTC(year, month, day, hour), ping_list[j].score];
+                            options.series[i].data.sort(compare("0"));
+                    }
 
+
+                }
+                var chart = new Highcharts.Chart('container_connection', options);
             }
         })
     }
 
 })
+
 var quality_service = new Vue({
     el: '#v-for-quality',
     data: {
@@ -1065,11 +655,26 @@ var quality_service = new Vue({
             dataType: "json",
             success: function (result) {
                 quality_list=result.scoreList
-                if(quality_list!=undefined){
                     removeLoading('quality');
-                    list_quality();
-                    quality(quality_list);
+                for (let i = 0; i < options.series.length; i++) {
+                    options.series[i].data = [];
                 }
+                for (let i = 0; i < options.series.length; i++) {
+                    for (let j = 0; j < quality_list.length; j++) {
+                        let date_token = quality_list[j].recordDate.split("-");
+                        let year = parseInt(date_token[0]);
+                        let month = parseInt(date_token[1]) - 1;
+                        let day = parseInt(date_token[2]);
+                        let hour = parseInt(quality_list[j].recordTime);
+                        if (isNaN(year) || isNaN(month) || isNaN(day)) {
+                            continue;
+                        }
+                        options.series[i].data[j] = [Date.UTC(year, month, day, hour), quality_list[j].score];
+                        options.series[i].data.sort(compare("0"));
+                    }
+
+                }
+                var chart = new Highcharts.Chart('container_quality', options);
 
             }
         })
@@ -1100,8 +705,26 @@ var download_service = new Vue({
             success: function (result) {
                 download_list=result.scoreList
                 removeLoading('download');
-                list_download();
-                download(download_list);
+
+                for (let i = 0; i < options.series.length; i++) {
+                    options.series[i].data = [];
+                }
+                for (let i = 0; i < options.series.length; i++) {
+                    for (let j = 0; j < download_list.length; j++) {
+                        let date_token = download_list[j].recordDate.split("-");
+                        let year = parseInt(date_token[0]);
+                        let month = parseInt(date_token[1]) - 1;
+                        let day = parseInt(date_token[2]);
+                        let hour = parseInt(download_list[j].recordTime);
+                        if (isNaN(year) || isNaN(month) || isNaN(day)) {
+                            continue;
+                        }
+                        options.series[i].data[j] = [Date.UTC(year, month, day, hour), download_list[j].score];
+                        options.series[i].data.sort(compare("0"));
+                    }
+
+                }
+                var chart = new Highcharts.Chart('container_download', options);
             }
         })
     }
@@ -1130,12 +753,26 @@ var page_service = new Vue({
             dataType: "json",
             success: function (result) {
                 page_list=result.scoreList
-                if(page_list!=undefined){
                     removeLoading('page');
-                    list_page();
-                    broswer(page_list);
+                for (let i = 0; i < options.series.length; i++) {
+                    options.series[i].data = [];
                 }
+                for (let i = 0; i < options.series.length; i++) {
+                    for (let j = 0; j < page_list.length; j++) {
+                        let date_token = page_list[j].recordDate.split("-");
+                        let year = parseInt(date_token[0]);
+                        let month = parseInt(date_token[1]) - 1;
+                        let day = parseInt(date_token[2]);
+                        let hour = parseInt(page_list[j].recordTime);
+                        if (isNaN(year) || isNaN(month) || isNaN(day)) {
+                            continue;
+                        }
+                        options.series[i].data[j] = [Date.UTC(year, month, day, hour), page_list[j].score];
+                        options.series[i].data.sort(compare("0"));
+                    }
 
+                }
+                var chart = new Highcharts.Chart('container_page', options);
             }
         })
     }
@@ -1164,11 +801,26 @@ var video_service = new Vue({
             dataType: "json",
             success: function (result) {
                 video_list=result.scoreList
-                if(video_list!=undefined){
                     removeLoading('video');
-                    list_video();
-                    video(video_list);
+                for (let i = 0; i < options.series.length; i++) {
+                    options.series[i].data = [];
                 }
+                for (let i = 0; i < options.series.length; i++) {
+                    for (let j = 0; j < video_list.length; j++) {
+                        let date_token = video_list[j].recordDate.split("-");
+                        let year = parseInt(date_token[0]);
+                        let month = parseInt(date_token[1]) - 1;
+                        let day = parseInt(date_token[2]);
+                        let hour = parseInt(video_list[j].recordTime);
+                        if (isNaN(year) || isNaN(month) || isNaN(day)) {
+                            continue;
+                        }
+                        options.series[i].data[j] = [Date.UTC(year, month, day, hour), video_list[j].score];
+                        options.series[i].data.sort(compare("0"));
+                    }
+
+                }
+                var chart = new Highcharts.Chart('container_video', options);
 
             }
         })
@@ -1198,608 +850,171 @@ var game_service = new Vue({
             dataType: "json",
             success: function (result) {
                 game_list=result.scoreList
-                if(game_list!=undefined){
                     removeLoading('video');
-                    list_game();
-                    game(game_list);
+                for (let i = 0; i < options.series.length; i++) {
+                    options.series[i].data = [];
                 }
+                for (let i = 0; i < options.series.length; i++) {
+                    for (let j = 0; j < game_list.length; j++) {
+                        let date_token = game_list[j].recordDate.split("-");
+                        let year = parseInt(date_token[0]);
+                        let month = parseInt(date_token[1]) - 1;
+                        let day = parseInt(date_token[2]);
+                        let hour = parseInt(game_list[j].recordTime);
+                        if (isNaN(year) || isNaN(month) || isNaN(day)) {
+                            continue;
+                        }
+                        options.series[i].data[j] = [Date.UTC(year, month, day, hour), game_list[j].score];
+                        options.series[i].data.sort(compare("0"));
+                    }
+
+                }
+                var chart = new Highcharts.Chart('container_game', options);
 
             }
         })
     }
 });
 
-
-function list_ping () {
-// *网络连通性图表*/
-    var connection_chart = new Vue({
-        el: '#container_connection',
-        data: {
-            chartdata: {
-                ava_start:(new Date()).Format("yyyy-MM-dd"),
-                ava_terminal:(new Date()).Format("yyyy-MM-dd")
+var options = {
+    chart: {
+        type: 'spline',
+        // events: {
+        //     load: function () {
+        //         $('.highcharts-tooltip').hide();
+        //     }
+        // }
+    },
+    title: {
+        text: ''
+    },
+    xAxis: {
+        type: 'datetime',
+        dateTimeLabelFormats: {
+            day: '%Y-%m-%d',
+            week: '%Y-%m-%d',
+            month: '%Y-%m-%d',
+            year: '%Y-%m-%d'
+        },
+        title: {
+            text: ''
+        }
+    },
+    yAxis: {
+        title: {
+            text: '结果(分)'
+        },
+        min: 0,
+        max: 100
+    },
+    legend: {
+        enabled: false
+    },
+    tooltip: {
+        crosshairs: true,
+        headerFormat: '<b>{series.name}</b><br>',
+        pointFormat: '日期:{point.x:%Y-%m-%d %H:00:00} 分数:{point.y:.2f}分',
+    },
+    plotOptions: {
+        spline: {
+            marker: {
+                enabled: false
             }
         },
-        methods:{
-
-        },
-        mounted: function(){         /*动态加载测试任务组数据*/
-            let param = {};
-            chartdata=this.chartdata;
-            param.chartdata = JSON.stringify(this.chartdata);
-            $('#container_connection').highcharts({
-                chart: {
-                    type: 'spline',
-                    backgroundColor: 'rgba(0,0,0,0)'
+        series: {
+            stickyTracking: false,
+            events: {
+                mouseOver: function () {
+                    $('.highcharts-tooltip').show();
                 },
-                title: {
-                    text: ''
-                },
-
-                xAxis: {
-                    labels: {
-                        rotation: 0//调节倾斜角度偏移
-                    },
-                    categories: (function () {
-                        var date=new Date();
-                        point=date.getDate();
-                        if(ping_list != undefined){
-                            var arr = [];
-                            for(var i=0;i<ping_list.length;i++){
-                                debugger
-                                var dateStrs = ping_list[i].recordDate.split(" ");
-                                arr.push(dateStrs[0].slice(5,10) + " " + ping_list[i].recordTime+":00");
-                            }
-                            return arr.sort();
-                        }
-                    })(),
-                    crosshair: true,
-                },
-                yAxis: {
-                    max: 100,
-                    min: 0,
-                    title: {
-                        text: ' '
-                    }
-                },
-                tooltip: {
-                    xDateFormat: '%Y-%m-%d',
-                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                    '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
-                    footerFormat: '</table>',
-                    useHTML: true,
-                },
-                plotOptions: {
-                    spline: {
-                        marker: {
-                            enabled: false
-                        }
-                    },
-                    series: {
-                        stickyTracking: false,
-                        events: {
-                            mouseOver: function () {
-                                $('.highcharts-tooltip').show();
-                            },
-                            mouseOut: function () {
-                                $('.highcharts-tooltip').hide();
-                            }
-                        }
-                    }
-                },
-                exporting: {
-                    enabled:false
-                },
-                series: [{
-                    name:"score" ,
-                    data: (function () {
-                        var arr=[];
-                        if(ping_list !=undefined){
-                            for(var i=0;i<ping_list.length;i++){
-                                arr.push(parseFloat(ping_list[i].score));
-                            }
-                        }
-                        return arr;
-                    })(),
-                    showInLegend: false,
-                }]
-
-            });
-
-        },
-    });
-}
-function list_quality() {
-    /*网络质量性图表*/
-    var quality_chart = new Vue({
-        el: '#container_quality',
-        data: {
-            chartdata: {ava_start:(new Date()).Format("yyyy-MM-dd"), ava_terminal:(new Date()).Format("yyyy-MM-dd")}
-        },
-        methods:{
-
-        },
-        mounted: function(){         /*动态加载测试任务组数据*/
-            let param = {};
-            param.chartdata = JSON.stringify(this.chartdata);
-            $('#container_quality').highcharts({
-                chart: {
-                    type: 'spline',
-                    backgroundColor: 'rgba(0,0,0,0)'
-                },
-                title: {
-                    text: ''
-                },
-
-                xAxis: {
-                    labels: {
-                        rotation: 0//调节倾斜角度偏移
-                    },
-                    categories: (function () {
-                        var arr = [];
-                        for(var i=0;i<quality_list.length;i++){
-                            var dateStrs = quality_list[i].recordDate.split(" ");
-                            arr.push(dateStrs[0].slice(5,10) + " " + quality_list[i].recordTime+":00");
-                        }
-                        return arr.sort();;
-                    })(),
-                    // categories:['3月','4月','5月',"6月",'7月','8月'],
-                    crosshair: true
-                },
-                yAxis: {
-                    max: 100,
-                    min: 0,
-                    title: {
-                        text: ' '
-                    }
-                },
-                tooltip: {
-                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                    '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
-                    footerFormat: '</table>',
-                    // shared: true,
-                    useHTML: true
-                },
-                plotOptions: {
-                    spline: {
-                        marker: {
-                            enabled: false
-                        }
-                    },
-                    series: {
-                        stickyTracking: false,
-                        events: {
-                            mouseOver: function () {
-                                $('.highcharts-tooltip').show();
-                            },
-                            mouseOut: function () {
-                                $('.highcharts-tooltip').hide();
-                            }
-                        }
-                    }
-                },
-                exporting: {
-                    enabled:false
-                },
-                series: [{
-                    name:"score" ,
-                    data: (function () {
-                        var arr = [];
-                        if(quality_list!=undefined){
-                            for(var i=0;i<quality_list.length;i++){
-                                arr.push(parseFloat(quality_list[i].score));
-                            }
-                        }
-                        return arr;
-                    })(),
-                    showInLegend: false,
-                }]
-
-            });
-
-        },
-
-    });
-}
-/*文件下载图表*/
-function list_download() {
-    var download_chart = new Vue({
-        el: '#container_download',
-        data: {
-            chartdata: {ava_start:(new Date()).Format("yyyy-MM-dd"), ava_terminal:(new Date()).Format("yyyy-MM-dd")}
-        },
-        methods:{
-
-        },
-        mounted: function(){         /*动态加载测试任务组数据*/
-            let param = {};
-            param.chartdata = JSON.stringify(this.chartdata);
-            $('#container_download').highcharts({
-                chart: {
-                    type: 'spline',
-                    backgroundColor: 'rgba(0,0,0,0)'
-                },
-                title: {
-                    text: ''
-                },
-
-                xAxis: {
-                    labels: {
-                        rotation: 0//调节倾斜角度偏移
-                    },
-                    categories: (function () {
-                        var arr = [];
-                        for(var i=0;i<download_list.length;i++){
-                            var dateStrs = download_list[i].recordDate.split(" ");
-                            arr.push(dateStrs[0].slice(5,10) + " " + download_list[i].recordTime+":00");
-                        }
-                        return arr.sort();;
-                    })(),
-                    crosshair: true
-                },
-                yAxis: {
-                    max: 100,
-                    min: 0,
-                    title: {
-                        text: ' '
-                    }
-                },
-                tooltip: {
-                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                    '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
-                    footerFormat: '</table>',
-                    // shared: true,
-                    useHTML: true
-                },
-                plotOptions: {
-                    spline: {
-                        marker: {
-                            enabled: false
-                        }
-                    },
-                    series: {
-                        stickyTracking: false,
-                        events: {
-                            mouseOver: function () {
-                                $('.highcharts-tooltip').show();
-                            },
-                            mouseOut: function () {
-                                $('.highcharts-tooltip').hide();
-                            }
-                        }
-                    }
-                },
-                exporting: {
-                    enabled:false
-                },
-                series: [{
-                    name:"score" ,
-                    data: (function () {
-                        var arr = [];
-                        for(var i=0;i<download_list.length;i++){
-                            arr.push(parseFloat(download_list[i].score));
-                        }
-                        return arr;;
-                    })(),
-                    showInLegend: false,
+                mouseOut: function () {
+                    $('.highcharts-tooltip').hide();
+                }
+            }
+        }
+    },
+    series: [{
+        name:'分数',
+        data:[]
+    }]
+};
 
 
-                }]
-
-            });
-
-        },
-
-    });
-}
-function list_page() {
-    /*网页浏览*/
-    var page_chart = new Vue({
-        el: '#container_page',
-        data: {
-            chartdata: {ava_start:(new Date()).Format("yyyy-MM-dd"), ava_terminal:(new Date()).Format("yyyy-MM-dd")}
-        },
-        methods:{
-
-        },
-        mounted: function(){         /*动态加载测试任务组数据*/
-            let param = {};
-            param.chartdata = JSON.stringify(this.chartdata);
-            $('#container_page').highcharts({
-                chart: {
-                    type: 'spline',
-                    backgroundColor: 'rgba(0,0,0,0)'
-                },
-                title: {
-                    text: ''
-                },
-
-                xAxis: {
-                    labels: {
-                        rotation: 0//调节倾斜角度偏移
-                    },
-                    categories: (function () {
-                        var arr = [];
-                        for(var i=0;i<page_list.length;i++){
-                            var dateStrs = page_list[i].recordDate.split(" ");
-                            arr.push(dateStrs[0].slice(5,10) + " " + page_list[i].recordTime+":00");
-                        }
-                        return arr.sort();;
-                    })(),
-                    crosshair: true
-                },
-                yAxis: {
-                    max: 100,
-                    min: 0,
-                    title: {
-                        text: ' '
-                    }
-                },
-                tooltip: {
-                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                    '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
-                    footerFormat: '</table>',
-                    // shared: true,
-                    useHTML: true
-                },
-                plotOptions: {
-                    spline: {
-                        marker: {
-                            enabled: false
-                        }
-                    },
-                    series: {
-                        stickyTracking: false,
-                        events: {
-                            mouseOver: function () {
-                                $('.highcharts-tooltip').show();
-                            },
-                            mouseOut: function () {
-                                $('.highcharts-tooltip').hide();
-                            }
-                        }
-                    }
-                },
-                exporting: {
-                    enabled:false
-                },
-                series: [{
-                    name:"score" ,
-                    data: (function () {
-                        var arr = [];
-                        for(var i=0;i<page_list.length;i++){
-                            arr.push(parseFloat(page_list[i].score));
-                        }
-                        return arr;
-                    })(),
-                    showInLegend: false,
 
 
-                }]
-
-            });
-
-        },
-
-    });
-}
-/*在线视频图表*/
-function list_video() {
-    var video_chart = new Vue({
-        el: '#container_video',
-        data: {
-            chartdata: {ava_start:(new Date()).Format("yyyy-MM-dd"), ava_terminal:(new Date()).Format("yyyy-MM-dd")}
-        },
-        methods:{
-
-        },
-        mounted: function(){         /*动态加载测试任务组数据*/
-            let param = {};
-            param.chartdata = JSON.stringify(this.chartdata);
-            $('#container_video').highcharts({
-                chart: {
-                    type: 'spline',
-                    backgroundColor: 'rgba(0,0,0,0)'
-                },
-                title: {
-                    text: ''
-                },
-
-                xAxis: {
-                    labels: {
-                        rotation: 0//调节倾斜角度偏移
-                    },
-                    categories: (function () {
-                        var arr = [];
-                        for(var i=0;i<video_list.length;i++){
-                            var dateStrs = video_list[i].recordDate.split(" ");
-                            arr.push(dateStrs[0].slice(5,10)+ " " + video_list[i].recordTime+":00");
-                        }
-                        return arr.sort();;
-                    })(),
-
-                    crosshair: true
-                },
-                yAxis: {
-                    max: 100,
-                    min: 0,
-                    title: {
-                        text: ' '
-                    }
-                },
-                tooltip: {
-                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                    '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
-                    footerFormat: '</table>',
-                    // shared: true,
-                    useHTML: true
-                },
-                plotOptions: {
-                    spline: {
-                        marker: {
-                            enabled: false
-                        }
-                    },
-                    series: {
-                        stickyTracking: false,
-                        events: {
-                            mouseOver: function () {
-                                $('.highcharts-tooltip').show();
-                            },
-                            mouseOut: function () {
-                                $('.highcharts-tooltip').hide();
-                            }
-                        }
-                    }
-                },
-                exporting: {
-                    enabled:false
-                },
-                series: [{
-                    name:"score" ,
-                    data: (function () {
-                        var arr = [];
-                        for(var i=0;i<video_list.length;i++){
-                            arr.push(parseFloat(video_list[i].score));
-                        }
-                        return arr;
-                    })(),
-                    showInLegend: false,
 
 
-                }]
+//TODO：详情并展示
+function update_this(service_type) {     /*监听修改触发事件*/
+    loading_info();
+    var searchJson = getFormJson($('#probesearch'));
+    debugger
+    if ((searchJson.startDate) > (searchJson.terminalDate)) {
+        console.log("时间选择有误，请重新选择！");
+        $('#nonavailable_time').modal('show');
+    } else {
+        var search = new Object();
+        search.city_id = searchJson.city;
+        search.county_id = searchJson.county;
+        search.service = service_type;
+        search.probe_id = searchJson.probe;
+        if (searchJson.startDate.length != 0 && searchJson.terminalDate.length != 0) {
+            var ava_start = searchJson.startDate.substr(0, 10);
+            var ava_terminal = searchJson.terminalDate.substr(0, 10);
+            var startTime = searchJson.startDate.substr(11, 15);
+            var terminalTime = searchJson.terminalDate.substr(11, 15);
+            search.ava_start = ava_start;
+            search.ava_terminal = ava_terminal;
+            search.starTime = startTime;
+            search.terminalTime = terminalTime;
+        } else {
+            search.ava_start = today.Format("yyyy-MM-dd");
+            search.ava_terminal = (new Date()).Format("yyyy-MM-dd");
+        }
+        var schedulepolicy = JSON.stringify(search);
+        console.log(schedulepolicy);
+        $.ajax({
+            type: "POST", /*GET会乱码*/
+            url: "../../recordhourtracert/areadetail/" + schedulepolicy,
+            cache: false,  //禁用缓存
+            dataType: "json",
+            contentType: "application/json", /*必须要,不可少*/
+            success: function (result) {
+                console.log('收到数据', new Date(), result);
+                removeLoading('info');
+                var Content = result.scoreList;
+                info( service_type,Content)
 
-            });
-
-        },
-
-    });
+            }
+        });
+    }
 }
 
-/*在线游戏图表*/
-function list_game() {
-    var game_chart = new Vue({
-        el: '#container_game',
-        data: {
-            chartdata: {ava_start:(new Date()).Format("yyyy-MM-dd"), ava_terminal:(new Date()).Format("yyyy-MM-dd")}
-        },
-        methods:{
+function info(service_type,Content) {
+    if(service_type==1){
+        ping(Content)
+        $('#myModal_connection').modal('show');
 
-        },
-        mounted: function(){         /*动态加载测试任务组数据*/
-            let param = {};
-            param.chartdata = JSON.stringify(this.chartdata);
-            $('#container_game').highcharts({
-                chart: {
-                    type: 'spline',
-                    backgroundColor: 'rgba(0,0,0,0)'
-                },
-                title: {
-                    text: ''
-                },
+    }else if(service_type==2){
+        quality(Content)
+        $('#myModal_quality').modal('show');
 
-                xAxis: {
-                    labels: {
-                        rotation: 0//调节倾斜角度偏移
-                    },
-                    categories: (function () {
-                        var arr = [];
-                        for(var i=0;i<game_list.length;i++){
-                            var dateStrs = game_list[i].recordDate.split(" ");
-                            arr.push(dateStrs[0].slice(5,10) + " " + game_list[i].recordTime+":00");
-                        }
-                        return arr.sort();;
-                    })(),
-                    // categories:['3月','4月','5月',"6月",'7月','8月'],
-                    crosshair: true,
-                },
-                yAxis: {
-                    max: 100,
-                    min: 0,
-                    title: {
-                        text: ' '
-                    }
-                },
-                tooltip: {
-
-                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                    '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
-                    footerFormat: '</table>',
-                    // shared: true,
-                    useHTML: true
-                },
-                plotOptions: {
-                    spline: {
-                        marker: {
-                            enabled: false
-                        }
-                    },
-                    series: {
-                        stickyTracking: false,
-                        events: {
-                            mouseOver: function () {
-                                $('.highcharts-tooltip').show();
-                            },
-                            mouseOut: function () {
-                                $('.highcharts-tooltip').hide();
-                            }
-                        }
-                    }
-                },
-                exporting: {
-                    enabled:false
-                },
-                series: [{
-                    name:"score" ,
-                    data: (function () {
-                        var arr = [];
-                        for(var i=0;i<game_list.length;i++){
-                            arr.push(parseFloat(game_list[i].score));
-                        }
-                        return arr;
-                    })(),
-                    showInLegend: false,
-
-
-                }]
-
-            });
-
-        },
-
-    });
+    }else if(service_type==3){
+        broswer(Content)
+        $('#myModal_broswer').modal('show');
+    }else if(service_type==4){
+        download(Content)
+        $('#myModal_download').modal('show');
+    }else if(service_type==5){
+        video(Content)
+        $('#myModal_video').modal('show');
+    }else if(service_type==6){
+        game(Content)
+        $('#myModal_game').modal('show');
+    }
 }
 
 
-function connection_info() {
-    $('#myModal_connection').modal('show');
-}
-
-function quality_info() {
-    $('#myModal_quality').modal('show');
-}
-
-function broswer_info() {
-    $('#myModal_broswer').modal('show');
-}
-
-function download_info() {
-    $('#myModal_download').modal('show');
-}
-
-function video_info() {
-    $('#myModal_video').modal('show');
-}
-
-function game_info() {
-    $('#myModal_game').modal('show');
-}
 
 
 //网络连通性表格
@@ -2207,7 +1422,7 @@ function broswer(val) {
                 {title: '<div style="width:100px">重定向时延(ms)</div>'},
                 {title: '<div style="width:100px">首屏时延(ms)</div>'},
                 {title: '<div style="width:115px">页面加载时延(ms)</div>'},
-                {title: '<div style="width:100px">下载速率(KB/S)</div>'},
+                {title: '<div style="width:100px">下载速率(KB/s)</div>'},
             ],
             rows: [],
             dtHandle: null,
@@ -2333,17 +1548,17 @@ function download(val) {
                 {title: '<div style="width:100px">DNS时延(ms)</div>'},
                 {title: '<div style="width:100px">连接时延(ms)</div>'},
                 {title: '<div style="width:100px">首字节时延(ms)</div>'},
-                {title: '<div style="width:100px">下载速率(KB/S)</div>'},
+                {title: '<div style="width:100px">下载速率(KB/s)</div>'},
                 {title: '<div style="width:100px">DNS时延(ms)</div>'},
                 {title: '<div style="width:100px">连接时延(ms)</div>'},
                 {title: '<div style="width:100px">登录时延(ms)</div>'},
                 {title: '<div style="width:100px">首字节时延(ms)</div>'},
-                {title: '<div style="width:100px">下载速率(KB/S)</div>'},
+                {title: '<div style="width:100px">下载速率(KB/s)</div>'},
                 {title: '<div style="width:100px">DNS时延(ms)</div>'},
                 {title: '<div style="width:100px">连接时延(ms)</div>'},
                 {title: '<div style="width:100px">登录时延(ms)</div>'},
                 {title: '<div style="width:100px">首字节时延(ms)</div>'},
-                {title: '<div style="width:100px">上传速率(KB/S)</div>'},
+                {title: '<div style="width:100px">上传速率(KB/s)</div>'},
             ],
             rows: [],
             dtHandle: null,
@@ -2500,7 +1715,7 @@ function video(val) {
                 {title: '<div style="width:120px">首次缓冲时延(ms)</div>'},
                 {title: '<div style="width:120px">视频加载时延(ms)</div>'},
                 {title: '<div style="width:120px">总体缓冲时间(ms)</div>'},
-                {title: '<div style="width:105px">下载速率(KB/S)</div>'},
+                {title: '<div style="width:105px">下载速率(KB/s)</div>'},
                 {title: '<div style="width:100px">缓冲次数</div>'},
             ],
             rows: [],
@@ -2827,6 +2042,25 @@ function loading() {
         titleColor:'#ADD8E6',
         loadingBg:'#312923',
         loadingMaskBg:'rgba(22,22,22,0.2)'
+    });
+}
+function loading_info() {
+    $('body').loading({
+        loadingWidth: 240,
+        title: '正在努力的加载中~',
+        name: 'info',
+        discription: '这是一个描述...',
+        direction: 'row',
+        type: 'origin',
+        originBg: '#B0E2FF',
+        originDivWidth: 30,
+        originDivHeight: 30,
+        originWidth: 4,
+        originHeight: 4,
+        smallLoading: false,
+        titleColor: '#ADD8E6',
+        loadingBg: '#312923',
+        loadingMaskBg: 'rgba(22,22,22,0.2)'
     });
 }
 

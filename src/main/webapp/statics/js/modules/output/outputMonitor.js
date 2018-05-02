@@ -1,4 +1,3 @@
-
 /**
  * Created by hh on 2018/3/28.
  */
@@ -25,7 +24,7 @@ recordtype.set(5,"video");
 recordtype.set(6,"game");
 
 var today = new Date();
-// today.setDate(today.getDate() - 1); //显示近一天内的数据
+today.setDate(today.getDate() - 1); //显示近一天内的数据
 
 var new_search = new Vue({
     /*监听查询事件*/
@@ -155,7 +154,7 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
     if(serviceSelected!=-1 ||serviceSelected!=''){
         a[3]={};
         a[3].name='service';
-        a[3].value=serviceSelected;
+        a[3].value=parseInt(serviceSelected);
     }
     $.each(a, function () {
         if (o[this.name] !== undefined) {
@@ -171,11 +170,12 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
 }
 var date=new Date();
 var month = date.getMonth() + 1;
-var strDate = date.getDate();
+var strDate = date.getDate()-1;
 var years=date.getFullYear();
 var newdate=years+'-'+month+'-'+strDate;
 var hours=date.getHours();
-var endday=years+'-'+month+'-'+strDate+' '+hours;
+var endDate = date.getDate();
+var endday=years+'-'+month+'-'+endDate+' '+hours;
 $('#start_date').flatpickr({
     enableTime: true,
     dateFormat: "Y-m-d H:i",
@@ -826,7 +826,7 @@ var broswer_table=new Vue({
             {title: '<div style="width:100px">重定向时延(ms)</div>'},
             {title: '<div style="width:100px">首屏时延(ms)</div>'},
             {title: '<div style="width:115px">页面加载时延(ms)</div>'},
-            {title: '<div style="width:100px">下载速率(KB/S)</div>'},
+            {title: '<div style="width:100px">下载速率(KB/s)</div>'},
         ],
         rows: [],
         dtHandle: null,
@@ -964,17 +964,17 @@ var download_table=new Vue({
             {title: '<div style="width:100px">DNS时延(ms)</div>'},
             {title: '<div style="width:100px">连接时延(ms)</div>'},
             {title: '<div style="width:100px">首字节时延(ms)</div>'},
-            {title: '<div style="width:100px">下载速率(KB/S)</div>'},
+            {title: '<div style="width:100px">下载速率(KB/s)</div>'},
             {title: '<div style="width:100px">DNS时延(ms)</div>'},
             {title: '<div style="width:100px">连接时延(ms)</div>'},
             {title: '<div style="width:100px">登录时延(ms)</div>'},
             {title: '<div style="width:100px">首字节时延(ms)</div>'},
-            {title: '<div style="width:100px">下载速率(KB/S)</div>'},
+            {title: '<div style="width:100px">下载速率(KB/s)</div>'},
             {title: '<div style="width:100px">DNS时延(ms)</div>'},
             {title: '<div style="width:100px">连接时延(ms)</div>'},
             {title: '<div style="width:100px">登录时延(ms)</div>'},
             {title: '<div style="width:100px">首字节时延(ms)</div>'},
-            {title: '<div style="width:100px">上传速率(KB/S)</div>'},
+            {title: '<div style="width:100px">上传速率(KB/s)</div>'},
         ],
         rows: [],
         dtHandle: null,
@@ -1145,7 +1145,7 @@ var video_table=new Vue({
             {title: '<div style="width:120px">首次缓冲时延(ms)</div>'},
             {title: '<div style="width:120px">视频加载时延(ms)</div>'},
             {title: '<div style="width:120px">总体缓冲时间(ms)</div>'},
-            {title: '<div style="width:105px">下载速率(KB/S)</div>'},
+            {title: '<div style="width:105px">下载速率(KB/s)</div>'},
             {title: '<div style="width:100px">缓冲次数</div>'},
         ],
         rows: [],

@@ -131,6 +131,8 @@ function PING() {
                 {title: '<div style="width:10px" ></div>'},
                 {title: '<div style="width:110px">探针名</div>'},
                 {title: '<div style="width:60px">探针端口</div>'},
+                {title: '<div style="width:60px">测试目标</div>'},
+                {title: '<div style="width:90px">测试目标IP</div>'},
                 {title: '<div style="width:90px">往返时延(ms)</div>'},
                 {title: '<div style="width:100px">时延标准差(ms)</div>'},
                 {title: '<div style="width:90px">时延方差(ms)</div>'},
@@ -138,8 +140,6 @@ function PING() {
                 {title: '<div style="width:100px">抖动标准差(ms)</div>'},
                 {title: '<div style="width:90px">抖动方差(ms)</div>'},
                 {title: '<div style="width:75px">丢包率(%)</div>'},
-                {title: '<div style="width:60px">测试目标</div>'},
-                {title: '<div style="width:90px">测试目标IP</div>'},
                 {title: '<div style="width:100px">测试目标归属地</div>'},
                 {title: '<div style="width:60px">测试结果</div>'},
                 
@@ -237,6 +237,9 @@ function PING() {
                                 row.push(i++);
                                 row.push(item.probeName);
                                 row.push(item.port);
+                                row.push(item.targetName);
+                                var targetip= numberToIp(item.targetIp);
+                                row.push(targetip);
                                 row.push(item.delay.toFixed(2));
                                 row.push(item.delayStd.toFixed(2));
                                 row.push(item.delayVar.toFixed(2));
@@ -244,9 +247,7 @@ function PING() {
                                 row.push(item.jitterStd.toFixed(2));
                                 row.push(item.jitterVar.toFixed(2));
                                row.push((item.lossRate).toFixed(2)*100.00);
-                                row.push(item.targetName);
-                                var targetip= numberToIp(item.targetIp);
-                                row.push(targetip);
+
                                 row.push(item.targetLoc);
                                 if(item.state==0){
                                     row.push("成功");
@@ -281,6 +282,8 @@ function PING() {
                 {title: '<div style="width:10px" ></div>'},
                 {title: '<div style="width:110px">探针名</div>'},
                 {title: '<div style="width:60px">探针端口</div>'},
+                {title: '<div style="width:60px">测试目标</div>'},
+                {title: '<div style="width:90px">测试目标IP</div>'},
                 {title: '<div style="width:90px">往返时延(ms)</div>'},
                 {title: '<div style="width:100px">时延标准差(ms)</div>'},
                 {title: '<div style="width:90px">时延方差(ms)</div>'},
@@ -288,8 +291,7 @@ function PING() {
                 {title: '<div style="width:100px">抖动标准差(ms)</div>'},
                 {title: '<div style="width:90px">抖动方差(ms)</div>'},
                 {title: '<div style="width:75px">丢包率(%)</div>'},
-                {title: '<div style="width:60px">测试目标</div>'},
-                {title: '<div style="width:90px">测试目标IP</div>'},
+
                 {title: '<div style="width:100px">测试目标归属地</div>'},
                 {title: '<div style="width:60px">测试结果</div>'},
                  
@@ -388,6 +390,9 @@ function PING() {
                                 row.push(i++);
                                 row.push(item.probeName);
                                 row.push(item.port);
+                                row.push(item.targetName);
+                                var targetip= numberToIp(item.targetIp);
+                                row.push(targetip);
                                 row.push(item.delay.toFixed(2));
                                 row.push(item.delayStd.toFixed(2));
                                 row.push(item.delayVar.toFixed(2));
@@ -395,9 +400,7 @@ function PING() {
                                 row.push(item.jitterStd.toFixed(2));
                                 row.push(item.jitterVar.toFixed(2));
                                  row.push((item.lossRate).toFixed(3)*100.00);
-                                row.push(item.targetName);
-                                var targetip= numberToIp(item.targetIp);
-                                row.push(targetip);
+
                                 row.push(item.targetLoc);
                                 if(item.state==0){
                                     row.push("成功");
@@ -432,6 +435,8 @@ function PING() {
                 {title: '<div style="width:10px" ></div>'},
                 {title: '<div style="width:110px">探针名</div>'},
                 {title: '<div style="width:60px">探针端口</div>'},
+                {title: '<div style="width:60px">测试目标</div>'},
+                {title: '<div style="width:90px">测试目标IP</div>'},
                 {title: '<div style="width:90px">往返时延(ms)</div>'},
                 {title: '<div style="width:100px">时延标准差(ms)</div>'},
                 {title: '<div style="width:90px">时延方差(ms)</div>'},
@@ -439,8 +444,7 @@ function PING() {
                 {title: '<div style="width:100px">抖动标准差(ms)</div>'},
                 {title: '<div style="width:90px">抖动方差(ms)</div>'},
                 {title: '<div style="width:75px">丢包率(%)</div>'},
-                {title: '<div style="width:60px">测试目标</div>'},
-                {title: '<div style="width:90px">测试目标IP</div>'},
+
                 {title: '<div style="width:100px">测试目标归属地</div>'},
                 {title: '<div style="width:60px">测试结果</div>'},
                  
@@ -538,6 +542,9 @@ function PING() {
                                 row.push(i++);
                                 row.push(item.probeName);
                                 row.push(item.port);
+                                row.push(item.targetName);
+                                var targetip= numberToIp(item.targetIp);
+                                row.push(targetip);
                                 row.push(item.delay.toFixed(2));
                                 row.push(item.delayStd.toFixed(2));
                                 row.push(item.delayVar.toFixed(2));
@@ -545,9 +552,7 @@ function PING() {
                                 row.push(item.jitterStd.toFixed(2));
                                 row.push(item.jitterVar.toFixed(2));
                                row.push((item.lossRate).toFixed(2)*100.00);
-                                row.push(item.targetName);
-                                var targetip= numberToIp(item.targetIp);
-                                row.push(targetip);
+
                                 row.push(item.targetLoc);
                                 if(item.state==0){
                                     row.push("成功");
@@ -583,6 +588,8 @@ function PING() {
                 {title: '<div style="width:10px"></div>'},
                 {title: '<div style="width:70px">探针名</div>'},
                 {title: '<div style="width:60px">探针端口</div>'},
+                {title: '<div style="width:60px">测试目标</div>'},
+                {title: '<div style="width:90px">测试目标IP</div>'},
                 {title: '<div style="width:120px">单跳往返时延(ms)</div>'},
                 {title: '<div style="width:130px">单跳时延标准差(ms)</div>'},
                 {title: '<div style="width:120px">单跳时延方差(ms)</div>'},
@@ -591,8 +598,7 @@ function PING() {
                 {title: '<div style="width:120px">单跳抖动方差(ms)</div>'},
                 {title: '<div style="width:75px">丢包率(%)</div>'},
                 {title: '<div style="width:110px">逐跳记录</div>'},
-                {title: '<div style="width:60px">测试目标</div>'},
-                {title: '<div style="width:90px">测试目标IP</div>'},
+
                 {title: '<div style="width:100px">测试目标归属地</div>'},
                 {title: '<div style="width:60px">测试结果</div>'},
                  
@@ -688,13 +694,16 @@ function PING() {
                                 row.push(i++);
                                 row.push(item.probeName);
                                 row.push(item.port);
+                                row.push(item.targetName);
+                                var targetip= numberToIp(item.targetIp);
+                                row.push(targetip);
                                 row.push(item.delay.toFixed(2));
                                 row.push(item.delayStd.toFixed(2));
                                 row.push(item.delayVar.toFixed(2));
                                 row.push(item.jitter.toFixed(2));
                                 row.push(item.jitterStd.toFixed(2));
                                 row.push(item.jitterVar.toFixed(2));
-                               row.push((item.lossRate).toFixed(3)*100.00);
+                                row.push((item.lossRate*100).toFixed(2));
                                 row.push('<a class="fontcolor" style="white-space: nowrap" onclick="hopRecord_info(this)" id='+item.id+'>详情</a>');
                                 var a = JSON.parse(item.hopRecord);
                                 var tables = $('table[id=hop_table]');
@@ -707,9 +716,7 @@ function PING() {
                                 $('#hop_table_paginate').css('display','none');
                                 $('#hop_table_wrapper').css('height','450px');
                                 $('#hop_table_wrapper').css('overflow-y','auto');
-                                row.push(item.targetName);
-                                var targetip= numberToIp(item.targetIp);
-                                row.push(targetip);
+
                                 row.push(item.targetLoc);
                                hopRecord =item.hopRecord;
                                 if(item.state==0){
@@ -743,6 +750,8 @@ function PING() {
                 {title: '<div style="width:10px"></div>'},
                 {title: '<div style="width:70px">探针名</div>'},
                 {title: '<div style="width:60px">探针端口</div>'},
+                {title: '<div style="width:60px">测试目标</div>'},
+                {title: '<div style="width:90px">测试目标IP</div>'},
                 {title: '<div style="width:120px">单跳往返时延(ms)</div>'},
                 {title: '<div style="width:130px">单跳时延标准差(ms)</div>'},
                 {title: '<div style="width:120px">单跳时延方差(ms)</div>'},
@@ -751,8 +760,7 @@ function PING() {
                 {title: '<div style="width:120px">单跳抖动方差(ms)</div>'},
                 {title: '<div style="width:75px">丢包率(%)</div>'},
                 {title: '<div style="width:110px">逐跳记录</div>'},
-                {title: '<div style="width:60px">测试目标</div>'},
-                {title: '<div style="width:90px">测试目标IP</div>'},
+
                 {title: '<div style="width:100px">测试目标归属地</div>'},
                 {title: '<div style="width:60px">测试结果</div>'},
 
@@ -847,31 +855,31 @@ function PING() {
                                 let row = [];
                                 row.push(i++);
                                 row.push(item.probeName);
-                                var probeName=[]
                                 row.push(item.port);
+                                row.push(item.targetName);
+                                var targetip= numberToIp(item.targetIp);
+                                row.push(targetip);
                                 row.push(item.delay.toFixed(2));
                                 row.push(item.delayStd.toFixed(2));
                                 row.push(item.delayVar.toFixed(2));
                                 row.push(item.jitter.toFixed(2));
                                 row.push(item.jitterStd.toFixed(2));
                                 row.push(item.jitterVar.toFixed(2));
-                                row.push((item.lossRate).toFixed(2)*100.00);
+                                row.push((item.lossRate*100).toFixed(2));
 
-                                    var a = JSON.parse(item.hopRecord);
-                                    var tables = $('table[id=Record_table]');
-                                    for (let i =0;i<a.length;i++){
-                                        var j = i+1;
-                                        var trtd = $("<tr><td hidden='hidden'>"+item.id+"</td><td>"+j+"</td><td>"+a[i].hop_ip +"</td><td>"+a[i].delay.toFixed(2)+"</td><td>"+a[i].loss_rate*100+"</td></tr>");
-                                        trtd.appendTo(tables);
-                                    }
-                                    $('#Record_table>tbody tr:eq(0)').css("display",'none');
-                                    $('#Record_table_paginate').css('display','none');
-                                    $('#Record_table_wrapper').css('height','450px');
-                                    $('#Record_table_wrapper').css('overflow-y','auto');
+                                var a = JSON.parse(item.hopRecord);
+                                var tables = $('table[id=Record_table]');
+                                for (let i =0;i<a.length;i++){
+                                    var j = i+1;
+                                    var trtd = $("<tr><td hidden='hidden'>"+item.id+"</td><td>"+j+"</td><td>"+a[i].hop_ip +"</td><td>"+a[i].delay.toFixed(2)+"</td><td>"+a[i].loss_rate*100+"</td></tr>");
+                                    trtd.appendTo(tables);
+                                }
+                                $('#Record_table>tbody tr:eq(0)').css("display",'none');
+                                $('#Record_table_paginate').css('display','none');
+                                $('#Record_table_wrapper').css('height','450px');
+                                $('#Record_table_wrapper').css('overflow-y','auto');
                                 row.push('<a class="fontcolor" style="white-space: nowrap" onclick="Record(this)" id='+item.id+'>详情</a>');
-                                row.push(item.targetName);
-                                var targetip= numberToIp(item.targetIp);
-                                row.push(targetip);
+
                                 row.push(item.targetLoc);
                                 hopRecord =item.hopRecord;
                                 if(item.state==0){
@@ -1027,6 +1035,8 @@ function quality() {
                 {title: '<div style="width:10px"></div>'},
                 {title: '<div style="width:70px">探针名</div>'},
                 {title: '<div style="width:60px">探针端口</div>'},
+                {title: '<div style="width:60px">测试目标</div>'},
+                {title: '<div style="width:90px">测试目标IP</div>'},
                 {title: '<div style="width:75px">时延(ms)</div>'},
                 {title: '<div style="width:90px">往向时延(ms)</div>'},
                 {title: '<div style="width:90px">返向时延(ms)</div>'},
@@ -1046,8 +1056,7 @@ function quality() {
                 {title: '<div style="width:120px">往向抖动方差(ms)</div>'},
                 {title: '<div style="width:120px">返向抖动方差(ms)</div>'},
                 {title: '<div style="width:75px">丢包率(%)</div>'},
-                {title: '<div style="width:60px">测试目标</div>'},
-                {title: '<div style="width:90px">测试目标IP</div>'},
+
                 {title: '<div style="width:100px">测试目标归属地</div>'},
                 {title: '<div style="width:60px">测试结果</div>'},
               
@@ -1140,6 +1149,9 @@ function quality() {
                                 row.push(i++);
                                 row.push(item.probeName);
                                 row.push(item.port);
+                                row.push(item.targetName);
+                                var targetip= numberToIp(item.targetIp);
+                                row.push(targetip);
                                 row.push(item.delay.toFixed(2));
                                 row.push(item.gDelay.toFixed(2));
                                 row.push(item.rDelay.toFixed(2));
@@ -1159,9 +1171,7 @@ function quality() {
                                 row.push(item.gJitterVar.toFixed(2));
                                 row.push(item.rJitterVar.toFixed(2));
                               row.push((item.lossRate).toFixed(2)*100.00);
-                                row.push(item.targetName);
-                                var targetip= numberToIp(item.targetIp);
-                                row.push(targetip);
+
                                 row.push(item.targetLoc);
                                 if(item.state==0){
                                     row.push("成功");
@@ -1196,6 +1206,8 @@ function quality() {
                 {title: '<div style="width:10px"></div>'},
                 {title: '<div style="width:70px">探针名</div>'},
                 {title: '<div style="width:60px">探针端口</div>'},
+                {title: '<div style="width:60px">测试目标</div>'},
+                {title: '<div style="width:90px">测试目标IP</div>'},
                 {title: '<div style="width:75px">时延(ms)</div>'},
                 {title: '<div style="width:90px">往向时延(ms)</div>'},
                 {title: '<div style="width:90px">返向时延(ms)</div>'},
@@ -1215,8 +1227,7 @@ function quality() {
                 {title: '<div style="width:120px">往向抖动方差(ms)</div>'},
                 {title: '<div style="width:120px">返向抖动方差(ms)</div>'},
                 {title: '<div style="width:75px">丢包率(%)</div>'},
-                {title: '<div style="width:60px">测试目标</div>'},
-                {title: '<div style="width:90px">测试目标IP</div>'},
+
                 {title: '<div style="width:100px">测试目标归属地</div>'},
                 {title: '<div style="width:60px">测试结果</div>'},
                
@@ -1309,6 +1320,9 @@ function quality() {
                                 row.push(i++);
                                 row.push(item.probeName);
                                 row.push(item.port);
+                                row.push(item.targetName);
+                                var targetip= numberToIp(item.targetIp);
+                                row.push(targetip);
                                 row.push(item.delay.toFixed(2));
                                 row.push(item.gDelay.toFixed(2));
                                 row.push(item.rDelay.toFixed(2));
@@ -1328,9 +1342,7 @@ function quality() {
                                 row.push(item.gJitterVar.toFixed(2));
                                 row.push(item.rJitterVar.toFixed(2));
                               row.push((item.lossRate).toFixed(2)*100.00);
-                                row.push(item.targetName);
-                                var targetip= numberToIp(item.targetIp);
-                                row.push(targetip);
+
                                 row.push(item.targetLoc);
                                 if(item.state==0){
                                     row.push("成功");
@@ -1364,11 +1376,12 @@ function quality() {
             headers: [
                 {title: '<div style="width:10px"></div>'},
                 {title: '<div style="width:70px">探针名</div>'},
+                {title: '<div style="width:60px">测试目标</div>'},
+                {title: '<div style="width:90px">测试目标IP</div>'},
                 {title: '<div style="width:60px">探针端口</div>'},
                 {title: '<div style="width:90px">分配时延(ms)</div>'},
                 {title: '<div style="width:100px">成功率(%)</div>'},
-                {title: '<div style="width:60px">测试目标</div>'},
-                {title: '<div style="width:90px">测试目标IP</div>'},
+
                 {title: '<div style="width:100px">测试目标归属地</div>'},
                 {title: '<div style="width:60px">测试结果</div>'},
                
@@ -1463,11 +1476,11 @@ function quality() {
                                 row.push(i++);
                                 row.push(item.probeName);
                                 row.push(item.port);
+                                var targetip= numberToIp(item.targetIp);
+                                row.push(targetip);
                                 row.push(item.delay.toFixed(2));
                                 row.push((item.successRate).toFixed(2)*100.00);
                                 row.push(item.targetName);
-                                var targetip= numberToIp(item.targetIp);
-                                row.push(targetip);
                                 row.push(item.targetLoc);
                                 if(item.state==0){
                                     row.push("成功");
@@ -1502,10 +1515,11 @@ function quality() {
                 {title: '<div style="width:10px"></div>'},
                 {title: '<div style="width:70px">探针名</div>'},
                 {title: '<div style="width:60px">探针端口</div>'},
-                {title: '<div style="width:90px">解析时延(ms)</div>'},
-                {title: '<div style="width:100px">成功率(%)</div>'},
                 {title: '<div style="width:60px">测试目标</div>'},
                 {title: '<div style="width:90px">测试目标IP</div>'},
+                {title: '<div style="width:90px">解析时延(ms)</div>'},
+                {title: '<div style="width:100px">成功率(%)</div>'},
+
                 {title: '<div style="width:100px">测试目标归属地</div>'},
                 {title: '<div style="width:60px">测试结果</div>'},
                
@@ -1599,10 +1613,11 @@ function quality() {
                                 row.push(i++);
                                 row.push(item.probeName);
                                 row.push(item.port);
-                                row.push(item.delay.toFixed(2));
-                                row.push((item.successRate).toFixed(3)*100.00);
                                 row.push(item.targetName);
                                 row.push(numberToIp(item.targetIp));
+                                row.push(item.delay.toFixed(2));
+                                row.push((item.successRate).toFixed(3)*100.00);
+
                                 row.push(item.targetLoc);
                                 if(item.state==0){
                                     row.push("成功");
@@ -1636,11 +1651,11 @@ function quality() {
             headers: [
                 {title: '<div style="width:10px"></div>'},
                 {title: '<div style="width:70px">探针名</div>'},
+                {title: '<div style="width:60px">测试目标</div>'},
+                {title: '<div style="width:90px">测试目标IP</div>'},
                 {title: '<div style="width:60px">探针端口</div>'},
                 {title: '<div style="width:90px">认证时延(ms)</div>'},
                 {title: '<div style="width:100px">成功率(%)</div>'},
-                {title: '<div style="width:60px">测试目标</div>'},
-                {title: '<div style="width:90px">测试目标IP</div>'},
                 {title: '<div style="width:100px">测试目标归属地</div>'},
                 {title: '<div style="width:60px">测试结果</div>'},
                
@@ -1732,11 +1747,12 @@ function quality() {
                                 row.push(i++);
                                 row.push(item.probeName);
                                 row.push(item.port);
-                                row.push(item.delay.toFixed(2));
-                                row.push((item.successRate).toFixed(3)*100.00);
                                 row.push(item.targetName);
                                 var targetip= numberToIp(item.targetIp);
                                 row.push(targetip);
+                                row.push(item.delay.toFixed(2));
+                                row.push((item.successRate).toFixed(3)*100.00);
+
                                 row.push(item.targetLoc);
                                 if(item.state==0){
                                     row.push("成功");
@@ -1774,13 +1790,14 @@ function download() {
                 {title: '<div style="width:10px"></div>'},
                 {title: '<div style="width:70px">探针名</div>'},
                 {title: '<div style="width:60px">探针端口</div>'},
+                {title: '<div style="width:60px">测试目标</div>'},
+                {title: '<div style="width:90px">测试目标IP</div>'},
                 {title: '<div style="width:120px">DNS解析时延(ms)</div>'},
                 {title: '<div style="width:90px">连接时延(ms)</div>'},
                 {title: '<div style="width:90px">登录时延(ms)</div>'},
                 {title: '<div style="width:130px">首字节到达时延(ms)</div>'},
                 {title: '<div style="width:100px">上传速率(KB/s)</div>'},
-                {title: '<div style="width:60px">测试目标</div>'},
-                {title: '<div style="width:90px">测试目标IP</div>'},
+
                 {title: '<div style="width:100px">测试目标归属地</div>'},
                 {title: '<div style="width:60px">测试结果</div>'},
                
@@ -1876,14 +1893,15 @@ function download() {
                                 row.push(i++);
                                 row.push(item.probeName);
                                 row.push(item.port);
+                                row.push(item.targetName);
+                                var targetip= numberToIp(item.targetIp);
+                                row.push(targetip);
                                 row.push(item.dnsDelay.toFixed(2));
                                 row.push(item.connDelay.toFixed(2));
                                 row.push(item.loginDelay.toFixed(2));
                                 row.push(item.headbyteDelay.toFixed(2));
                                 row.push(item.uploadRate.toFixed(2));
-                                row.push(item.targetName);
-                                var targetip= numberToIp(item.targetIp);
-                                row.push(targetip);
+
                                 row.push(item.targetLoc);
                                 if(item.state==0){
                                     row.push("成功");
@@ -1918,13 +1936,13 @@ function download() {
                 {title: '<div style="width:10px"></div>'},
                 {title: '<div style="width:70px">探针名</div>'},
                 {title: '<div style="width:60px">探针端口</div>'},
+                {title: '<div style="width:60px">测试目标</div>'},
+                {title: '<div style="width:90px">测试目标IP</div>'},
                 {title: '<div style="width:120px">DNS解析时延(ms)</div>'},
                 {title: '<div style="width:90px">连接时延(ms)</div>'},
                 {title: '<div style="width:90px">登录时延(ms)</div>'},
                 {title: '<div style="width:130px">首字节到达时延(ms)</div>'},
                 {title: '<div style="width:100px">下载速率(KB/s)</div>'},
-                {title: '<div style="width:60px">测试目标</div>'},
-                {title: '<div style="width:90px">测试目标IP</div>'},
                 {title: '<div style="width:100px">测试目标归属地</div>'},
                 {title: '<div style="width:60px">测试结果</div>'},
                
@@ -2020,14 +2038,15 @@ function download() {
                                 row.push(i++);
                                 row.push(item.probeName);
                                 row.push(item.port);
+                                row.push(item.targetName);
+                                var targetip= numberToIp(item.targetIp);
+                                row.push(targetip);
                                 row.push(item.dnsDelay.toFixed(2));
                                 row.push(item.connDelay.toFixed(2));
                                 row.push(item.loginDelay.toFixed(2));
                                 row.push(item.headbyteDelay.toFixed(2));
                                 row.push(item.downloadRate.toFixed(2));
-                                row.push(item.targetName);
-                                var targetip= numberToIp(item.targetIp);
-                                row.push(targetip);
+
                                 row.push(item.targetLoc);
                                 if(item.state==0){
                                     row.push("成功");
@@ -2063,12 +2082,13 @@ function download() {
                 {title: '<div style="width:10px"></div>'},
                 {title: '<div style="width:70px">探针名</div>'},
                 {title: '<div style="width:60px">探针端口</div>'},
+                {title: '<div style="width:60px">测试目标</div>'},
+                {title: '<div style="width:90px">测试目标IP</div>'},
                 {title: '<div style="width:120px">DNS解析时延(ms)</div>'},
                 {title: '<div style="width:90px">连接时延(ms)</div>'},
                 {title: '<div style="width:130px">首字节到达时延(ms)</div>'},
                 {title: '<div style="width:100px">下载速率(KB/s)</div>'},
-                {title: '<div style="width:60px">测试目标</div>'},
-                {title: '<div style="width:90px">测试目标IP</div>'},
+
                 {title: '<div style="width:100px">测试目标归属地</div>'},
                 {title: '<div style="width:60px">测试结果</div>'},
                
@@ -2163,13 +2183,14 @@ function download() {
                                 row.push(i++);
                                 row.push(item.probeName);
                                 row.push(item.port);
+                                row.push(item.targetName);
+                                var targetip= numberToIp(item.targetIp);
+                                row.push(targetip);
                                 row.push(item.dnsDelay.toFixed(2));
                                 row.push(item.connDelay.toFixed(2));
                                 row.push(item.headbyteDelay.toFixed(2));
                                 row.push(item.downloadRate.toFixed(2));
-                                row.push(item.targetName);
-                                var targetip= numberToIp(item.targetIp);
-                                row.push(targetip);
+
                                 row.push(item.targetLoc);
                                 if(item.state==0){
                                     row.push("成功");
@@ -2207,6 +2228,8 @@ function page() {
                 {title: '<div style="width:10px"></div>'},
                 {title: '<div style="width:70px">探针名</div>'},
                 {title: '<div style="width:60px">探针端口</div>'},
+                {title: '<div style="width:60px">测试目标</div>'},
+                {title: '<div style="width:90px">测试目标IP</div>'},
                 {title: '<div style="width:120px">DNS解析时延(ms)</div>'},
                 {title: '<div style="width:110px">连接时延(ms)</div>'},
                 {title: '<div style="width:130px"> 首字节到达时延(ms)</div>'},
@@ -2215,8 +2238,7 @@ function page() {
                 {title: '<div style="width:120px"> 首屏时延(ms)</div>'},
                 {title: '<div style="width:130px"> 页面加载时延(ms)</div>'},
                 {title: '<div style="width:110px">下载速率(KB/s)</div>'},
-                {title: '<div style="width:60px">测试目标</div>'},
-                {title: '<div style="width:90px">测试目标IP</div>'},
+
                 {title: '<div style="width:100px">测试目标归属地</div>'},
                 {title: '<div style="width:60px">测试结果</div>'},
                
@@ -2312,6 +2334,9 @@ function page() {
                                 row.push(i++);
                                 row.push(item.probeName);
                                 row.push(item.port);
+                                row.push(item.targetName);
+                                var targetip= numberToIp(item.targetIp);
+                                row.push(targetip);
                                 row.push(item.dnsDelay.toFixed(2));
                                 row.push(item.connDelay.toFixed(2));
                                 row.push(item.headbyteDelay.toFixed(2));
@@ -2320,9 +2345,7 @@ function page() {
                                 row.push(item.aboveFoldDelay.toFixed(2));
                                 row.push(item.loadDelay.toFixed(2));
                                 row.push(item.downloadRate.toFixed(2));
-                                row.push(item.targetName);
-                               var targetip= numberToIp(item.targetIp);
-                                row.push(targetip);
+
                                 row.push(item.targetLoc);
                                 if(item.state==0){
                                     row.push("成功");
@@ -2360,6 +2383,8 @@ function video() {
                 {title: '<div style="width:10px"></div>'},
                 {title: '<div style="width:70px">探针名</div>'},
                 {title: '<div style="width:60px">探针端口</div>'},
+                {title: '<div style="width:60px">测试目标</div>'},
+                {title: '<div style="width:90px">测试目标IP</div>'},
                 {title: '<div style="width:120px">DNS解析时延(ms)</div>'},
                 {title: '<div style="width:161px">连接WEB服务器时延(ms)</div>'},
                 {title: '<div style="width:120px"> WEB页面时延(ms)</div>'},
@@ -2369,8 +2394,7 @@ function video() {
                 {title: '<div style="width:115px">总体缓冲时间(ms)</div>'},
                 {title: '<div style="width:100px">总体缓冲次数</div>'},
                 {title: '<div style="width:100px">下载速率(KB/s)</div>'},
-                {title: '<div style="width:60px">测试目标</div>'},
-                {title: '<div style="width:90px">测试目标IP</div>'},
+
                 {title: '<div style="width:100px">测试目标归属地</div>'},
                 {title: '<div style="width:60px">测试结果</div>'},
                
@@ -2465,6 +2489,9 @@ function video() {
                                 row.push(i++);
                                 row.push(item.probeName);
                                 row.push(item.port);
+                                row.push(item.targetName);
+                                var targetip= numberToIp(item.targetIp);
+                                row.push(targetip);
                                 row.push(item.dnsDelay.toFixed(2));
                                 row.push(item.wsConnDelay.toFixed(2));
                                 row.push(item.webPageDelay.toFixed(2));
@@ -2474,9 +2501,7 @@ function video() {
                                 row.push(item.totalBufferDelay.toFixed(2));
                                 row.push(item.bufferTime.toFixed(2));
                                 row.push(item.downloadRate.toFixed(2));
-                                row.push(item.targetName);
-                                var targetip= numberToIp(item.targetIp);
-                                    row.push(targetip);
+
                                 row.push(item.targetLoc);
                                 if(item.state==0){
                                     row.push("成功");
@@ -2513,12 +2538,12 @@ function game() {
                 {title: '<div style="width:10px"></div>'},
                 {title: '<div style="width:70px">探针名</div>'},
                 {title: '<div style="width:60px">探针端口</div>'},
-                {title: '<div style="width:115px">连接时延(ms)</div>'},
+                {title: '<div style="width:90px">测试目标</div>'},
+                {title: '<div style="width:90px">测试目标IP</div>'},
+                {title: '<div style="width:115px">DNS时延(ms)</div>'},
                 {title: '<div style="width:128px"> 网络时延(ms)</div>'},
                 {title: '<div style="width:128px"> 网络抖动(ms)</div>'},
                 {title: '<div style="width:140px"> 丢包率(%)</div>'},
-                {title: '<div style="width:90px">测试目标</div>'},
-                {title: '<div style="width:90px">测试目标IP</div>'},
                 {title: '<div style="width:100px">测试目标归属地</div>'},
                 {title: '<div style="width:60px">测试结果</div>'},
                
@@ -2613,13 +2638,14 @@ function game() {
                                 row.push(i++);
                                 row.push(item.probeName);
                                 row.push(item.port);
-                                row.push(item.connDelay.toFixed(2));
+                                row.push(item.targetName);
+                                var targetip= numberToIp(item.targetIp);
+                                row.push(targetip);
+                                row.push(item.dnsDelay.toFixed(2));
                                 row.push(item.packetDelay.toFixed(2));
                                 row.push(item.packetJitter.toFixed(2));
                               row.push((item.lossRate).toFixed(2)*100.00);
-                                row.push(item.targetName);
-                               var targetip= numberToIp(item.targetIp);
-                                row.push(targetip);
+
                                 row.push(item.targetLoc);
                                 if(item.state==0){
                                     row.push("成功");

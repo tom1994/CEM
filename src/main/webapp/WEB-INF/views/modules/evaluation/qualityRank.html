@@ -20,8 +20,8 @@
         }
         .input{
             margin-bottom: -3px;
-            height: 28px;
-            line-height: 28px;
+            height:34px;
+            line-height: 34px;
             /*//text-align: center;*/
             padding-top: 0px;
         }
@@ -169,8 +169,8 @@
                                             <div class="form-group row" style="margin-bottom: -5px">
 
                                                 <div style="display: inline-block;">
-                                                    <span class="searchname search " title="目标地址" style="width: 80px;">目标地址</span>
-                                                    <div class="input-group searchspan" id="target" style="top: -8px;">
+                                                    <span class="searchname search " title="目标地址" style="width: 80px;line-height:1.5">目标地址</span>
+                                                    <div class="input-group searchspan" id="target" style="top: -10px;">
                                                         <div class="jq22">
                                                             <select id="select_target" class="form-control  input"
                                                                     style="width: 140px;display: none;">
@@ -295,7 +295,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="form-group row" style="margin-bottom: -5px">
+                                            <div class="form-group row" style="margin-bottom: 1px">
                                                 <div class="input-group searchspan">
                                                     <span class="searchname search" title="起始时间" style="width: 80px">起始时间</span>
                                                     <input type="text" id="areastart_date" class="form-control  input"
@@ -363,7 +363,7 @@
                                               role="form">
                                             <div class="form-group row" >
                                                 <div style="display:inline-block;">
-                                                    <span class="searchname" title="地市" style="width:80px; text-align: center">地市</span>
+                                                    <span class="searchname" title="地市" style="width:83px; text-align: center">地市</span>
                                                     <div class="input-group searchspan" id="doorcity" >
                                                         <div class="jq22">
                                                             <select id="doorselectcity" class="form-control"   v-on:change="citychange()" style="display: none">
@@ -389,7 +389,7 @@
                                                     </div>
                                                 </div>
                                                 <div style="display: inline-block;">
-                                                    <span class="searchname search " title="探针" style="width: 65px;">探针</span>
+                                                    <span class="searchname search " title="探针" style="width: 70px;">探针</span>
                                                     <div class="input-group searchspan" id="probe" >
                                                         <div class="jq22">
                                                             <select id="selectprobe" class="form-control"   style="display: none">
@@ -405,7 +405,7 @@
                                             <div class="form-group row" style="margin-bottom: -5px">
                                                 <div style="display: inline-block;">
                                                     <span class="searchname search " title="业务类型" style="width:83px;line-height: 1.5">业务类型</span>
-                                                    <div class="input-group searchspan" id="doorservice" style="top: -8px;" >
+                                                    <div class="input-group searchspan" id="doorservice" style="top: -10px;" >
                                                         <div class="jq22">
                                                             <select id="doorselectservice" class="form-control  input"
                                                                     v-on:change="servicechange()" style="width: 140px;display: none;">
@@ -421,14 +421,14 @@
                                                 </div>
 
                                                 <div class="input-group searchspan">
-                                                    <span class="searchname search " title="起始时间" style="width: 80px;">起始时间</span>
+                                                    <span class="searchname search " title="起始时间" style="width: 75px;">起始时间</span>
                                                     <input type="text" id="doorstart_date" class="form-control input clear"
                                                            name="startDate"
                                                            style="width: 140px;height: 34px"
                                                            value="">
                                                 </div>
                                                 <div class="input-group searchspan">
-                                                    <span class="searchname search " title="结束时间" style="width: 52px">结束时间</span>
+                                                    <span class="searchname search " title="结束时间" style="width: 61px">结束时间</span>
                                                     <input type="text" id="doorterminal_date" class="form-control input clear"
                                                            name="terminalDate"
                                                            style="width: 140px;height: 34px"
@@ -687,7 +687,7 @@
     });
     var date=new Date();
     var month = date.getMonth() + 1;
-    var strDate = date.getDate();
+    var strDate = date.getDate()-1;
     var years=date.getFullYear();
     var newdate=years+'-'+month+'-'+strDate;
     $('#start_date').flatpickr({

@@ -22,7 +22,7 @@
                 order by ${sidx} ${order}
             </when>
 			<otherwise>
-                order by id desc
+                order by city_id
 			</otherwise>
         </choose>
 		<if test="offset != null and limit != null">

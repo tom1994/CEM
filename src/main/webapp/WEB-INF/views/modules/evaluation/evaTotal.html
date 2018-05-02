@@ -180,7 +180,7 @@
                                         <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
                                             <span class="modulefont">网络连通性业务</span>
                                             <div  class="tools">
-                                                <a href="#" onclick="connection_info();return false;" style="color:white">查看详情</a>
+                                                <a href="#" onclick="update_this(1);return false;" style="color:white">查看详情</a>
                                             </div>
                                         </div>
 
@@ -213,7 +213,7 @@
                                         <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
                                             <span class="modulefont">网络层质量业务</span>
                                             <div class="tools">
-                                                <a href="#" onclick="quality_info();return false;" style="color:white">查看详情</a>
+                                                <a href="#" onclick="update_this(2);return false;" style="color:white">查看详情</a>
                                             </div>
                                         </div>
 
@@ -247,7 +247,7 @@
                                         <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
                                             <span class="modulefont">文件下载类业务</span>
                                             <div class="tools">
-                                                <a href="#" onclick="download_info();return false;" style="color:white">查看详情</a>
+                                                <a href="#" onclick="update_this(4);return false;" style="color:white">查看详情</a>
                                             </div>
                                         </div>
                                         <div class="wrapper-block" style="font-size:15px !important">
@@ -278,7 +278,7 @@
                                         <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
                                             <span class="modulefont">网页浏览类业务</span>
                                             <div class="tools">
-                                                <a href="#" onclick="broswer_info();return false;" style="color:white">查看详情</a>
+                                                <a href="#" onclick="update_this(3);return false;" style="color:white">查看详情</a>
                                             </div>
                                         </div>
 
@@ -312,7 +312,7 @@
                                         <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
                                             <span class="modulefont">在线视频类业务</span>
                                             <div class="tools">
-                                                <a href="#" onclick="video_info();return false;" style="color:white">查看详情</a>
+                                                <a href="#" onclick="update_this(5);return false;" style="color:white">查看详情</a>
                                             </div>
                                         </div>
 
@@ -344,7 +344,7 @@
                                         <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
                                             <span class="modulefont">网络游戏类业务</span>
                                             <div class="tools">
-                                                <a href="#" onclick="game_info();return false;" style="color:white">查看详情</a>
+                                                <a href="#" onclick="update_this(6);return false;" style="color:white">查看详情</a>
                                             </div>
                                         </div>
 
@@ -423,7 +423,7 @@
                 <div class="modal-body" style="height:400px;">
                     <div class="record-table ibox-content" id="connnection">
                         <data-table :ping_list="filteredData" style="display: none"></data-table>
-                        <div class="row" style="height: 350px; overflow: auto">     <!--表格 verflow-x: scroll超出滚动-->
+                        <div class="row" style="height: 350px; overflow: auto">
                             <table class="table table-bordered " id="pingdata_table" style="margin-top: 2px!important;"></table>
                         </div>
                     </div>
@@ -547,7 +547,7 @@
                 </div>
                 <div class="modal-body"  style="height:400px" >
                     <div class="record-table ibox-content" id="game">
-                        <div class="row" style="height: 350px; overflow: auto">   !--表格 verflow-x: scroll超出滚动-->
+                        <div class="row" style="height: 350px; overflow: auto">
                             <table class="table table-bordered " id="gamedata_table" style="margin-top: 2px!important;"></table>
                         </div>
                     </div>
