@@ -66,6 +66,12 @@ public class TaskDispatchServiceImpl implements TaskDispatchService {
     }
 
     @Override
+    public int queryCurrentDispatch(Integer id) {
+        return taskDispatchDao.queryCurrentDispatch(id);
+    }
+
+
+    @Override
     public int taskQueryDispatchTotal(Map<String, Object> map) {
         return taskDispatchDao.taskQueryDispatchTotal(map);
     }

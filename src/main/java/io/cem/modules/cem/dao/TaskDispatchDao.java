@@ -27,5 +27,7 @@ public interface TaskDispatchDao extends BaseDao<TaskDispatchEntity> {
 
     int taskQueryDispatchTotal(Map<String, Object> map);
 
+    int queryCurrentDispatch(Integer id);
+
     int saveAndReturn(TaskDispatchEntity taskDispatchEntity);
 }

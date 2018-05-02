@@ -610,10 +610,10 @@ function submit_dispatch() {
                     removeLoading('test');
                  let code=result.code;
                  switch(code){
-                     case 404:
-                         toastr.error("任务下发失败!"); ;
+                     case 200:
+                         toastr.success(result.msg);
                      default:
-                         toastr.success("任务下发成功!");
+                         toastr.error(result.msg);
                          break;
                  }
                     $('#task_dispatch').modal('hide');

@@ -28,6 +28,8 @@ public interface TaskDispatchService {
 
 	int queryDispatchTotal(Integer id);
 
+	int queryCurrentDispatch(Integer id);
+
 	int taskQueryDispatchTotal(Map<String, Object> map);
 
 	void cancelSave(Integer taskId);
