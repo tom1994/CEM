@@ -519,7 +519,7 @@ var dispatch_table = new Vue({
             {title: '<div style="width:117px">任务类型</div>'},
             {title: '<div style="width:117px">任务名称</div>'},
             {title: '<div style="width:117px">调度策略</div>'},
-            {title: '<div style="width:117px">创建时间</div>'},
+            {title: '<div style="width:117px">分配时间</div>'},
             {title: '<div style="width:111px">操作</div>'}
         ],
         rows: [],

@@ -528,10 +528,10 @@ function getFormJson(form) {
     var o = {};
     var a = $(form).serializeArray();
     if (groupSelected != 0) {
-        a[1].value = groupSelected;
+        a[1].value = parseInt(groupSelected);
     }
     if (serviceSelected != -1) {
-        a[2].value = serviceSelected
+        a[2].value = parseInt(serviceSelected)
     }
     $.each(a, function () {
         if (o[this.name] !== undefined) {

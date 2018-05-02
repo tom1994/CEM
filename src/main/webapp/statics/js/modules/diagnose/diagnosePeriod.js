@@ -17,6 +17,12 @@ var table_status = 1;
 var type;
 var val;
 var updateContent
+var a1;
+var a2;
+var a3;
+var a4;
+var a5;
+var a6;
 var st = new Map();//servicetype字典，可通过get方法查对应字符串。
 st.set(0, "综合业务");
 st.set(1, "网络连通性业务");
@@ -100,39 +106,88 @@ var button_change = new Vue({
 
     methods: {
         ping: function () {
-            $('#ping').removeClass('color');
+
+            $('#ping').addClass('color');
+            $('#sla').removeClass('color');
+            $('#web').removeClass('color');
+            $('#download').removeClass('color');
+            $('#video_button').removeClass('color');
+            $('#game_button').removeClass('color');
             status = 1;
-            changeStatus(1);
+            table_status=1
+            // changeStatus(1);
             console.log("连通性");
-            loading()
-            // options.title = this.option_ping.title;
+
+            if(a1!=undefined) {
+                new_data.scoredata = a1;
+                var chart = new Highcharts.Chart('container', options);
+
+                return;
+            }
+            loading();
             new_search.search();
 
             var chart = new Highcharts.Chart('container', options)
             /*重新绘图*/
         },
         sla: function () {
+            $('#sla').addClass('color');
             $('#ping').removeClass('color');
+            $('#web').removeClass('color');
+            $('#download').removeClass('color');
+            $('#video_button').removeClass('color');
+            $('#game_button').removeClass('color');
             status = 2;
-            changeStatus(2);
+            table_status=2
+            if(a2!=undefined) {
+                new_data.scoredata = a2;
+                var chart = new Highcharts.Chart('container', options);
+
+                return;
+            }
+            // changeStatus(2);
             console.log("网络层");
             loading()
             new_search.search();
             var chart = new Highcharts.Chart('container', options)
         },
         web: function () {
+            $('#web').addClass('color');
             $('#ping').removeClass('color');
+            $('#sla').removeClass('color');
+            $('#download').removeClass('color');
+            $('#video_button').removeClass('color');
+            $('#game_button').removeClass('color');
             status = 3;
-            changeStatus(3);
+            table_status=3
+            if(a3!=undefined) {
+                new_data.scoredata = a3;
+                var chart = new Highcharts.Chart('container', options);
+
+                return;
+            }
+            // changeStatus(3);
             console.log("web");
             loading()
             new_search.search();
             var chart = new Highcharts.Chart('container', options)
         },
         download: function () {
+            $('#download').addClass('color');
             $('#ping').removeClass('color');
+            $('#sla').removeClass('color');
+            $('#web').removeClass('color');
+            $('#video_button').removeClass('color');
+            $('#game_button').removeClass('color');
             status = 4;
-            changeStatus(4);
+            table_status=4
+            if(a4!=undefined) {
+                new_data.scoredata = a4;
+                var chart = new Highcharts.Chart('container', options);
+
+                return;
+            }
+            // changeStatus(4);
             loading()
             // options.title = this.option_web.title;
             new_search.search();
@@ -140,9 +195,23 @@ var button_change = new Vue({
             /*重新绘图*/
         },
         video: function () {
+            $('#video_button').addClass('color');
             $('#ping').removeClass('color');
+            $('#sla').removeClass('color');
+            $('#web').removeClass('color');
+            $('#download').removeClass('color');
+            $('#game_button').removeClass('color');
+
             status = 5;
-            changeStatus(5);
+            table_status=5
+            if(a5!=undefined) {
+                new_data.scoredata = a5;
+                var chart = new Highcharts.Chart('container', options)
+
+                return;
+            }
+
+            // changeStatus(5);
             loading()
             // options.title = this.option_ping.title;
             new_search.search();
@@ -150,9 +219,21 @@ var button_change = new Vue({
             /*重新绘图*/
         },
         game: function () {
+            $('#game_button').addClass('color');
             $('#ping').removeClass('color');
+            $('#sla').removeClass('color');
+            $('#web').removeClass('color');
+            $('#download').removeClass('color');
+            $('#video_button').removeClass('color');
             status = 6;
-            changeStatus(6);
+            table_status=6
+            if(a6!=undefined) {
+                new_data.scoredata = a6;
+                var chart = new Highcharts.Chart('container', options);
+
+                return;
+            }
+            // changeStatus(6);
             loading()
             // options.title = this.option_ping.title;
             new_search.search();
@@ -351,7 +432,7 @@ var new_search = new Vue({
                 toastr.warning('时间选择有误，请重新选择！');
             } else {
                 var search = {};
-                search.service = status;
+
                 search.city_id = searchJson.city_id;
                 search.county_id = searchJson.county_id;
                 search.probe_id = searchJson.probe_id;
@@ -359,34 +440,73 @@ var new_search = new Vue({
                 search.ava_start = searchJson.startDate.substr(0, 10);
                 search.ava_terminal = searchJson.terminalDate.substr(0, 10);
                 search.startTime = searchJson.startDate.substr(11, 15);
-                search.terminalTime = searchJson.terminalDate.substr(11, 15);
+                search.terminalTime = searchJson.startDate.substr(11, 15);
                 if (search.ava_start.length != 0 && search.ava_terminal.length != 0) {
+
                 } else {
                     search.ava_start = new Date(new Date() - 1000 * 60 * 60 * 24).Format("yyyy-MM-dd");
                     search.ava_terminal = (new Date()).Format("yyyy-MM-dd");
                 }
-                let param = {};
-                param.probedata = JSON.stringify(search);
+
                 loading()
-                $.ajax({
-                    /*后台取得数据,赋值给观察者*/
-                    type: "POST",
-                    url: "../../diagnose/list",
-                    cache: false,  //禁用缓存
-                    data: param,  //传入组装的参数
-                    dataType: "json",
-                    success: function (result) {
-                        removeLoading('test');
-                        removeLoading('table');
-                        console.log(result);
-                        if (result.page.list.length !== 0) {
-                            new_data.scoredata = result.page.list;
-                        } else {
-                            new_data.scoredata = [];
-                            toastr.warning('该日期范围没有对应数据！');
+                for(let i= 1;i<7;i++){
+                    search.service = i;
+                    let param = {};
+                    param.probedata = JSON.stringify(search);
+                    $.ajax({
+                        /*后台取得数据,赋值给观察者*/
+                        type: "POST",
+                        url: "../../diagnose/list",
+                        cache: false,  //禁用缓存
+                        data: param,  //传入组装的参数
+                        dataType: "json",
+                        success: function (result) {
+                            removeLoading('test');
+                            removeLoading('table');
+                            console.log(result);
+                            if (result.page.list.length !== 0) {
+
+                                if(i == 1){
+                                    a1 = result.page.list;
+                                    table_status=1
+                                } else if (i == 2) {
+                                    a2 = result.page.list;
+                                    table_status=2
+                                } else if (i == 3) {
+                                    a3 = result.page.list;
+                                    table_status=3
+                                } else if (i == 4) {
+                                    a4 = result.page.list;
+                                    table_status=4
+                                } else if (i == 5) {
+                                    a5 = result.page.list;
+                                    table_status=5
+                                } else if (i == 6) {
+                                    a6 = result.page.list;
+                                    table_status=6
+                                }
+
+                                    if(i==1&&$("#ping").hasClass("color")){
+                                        new_data.scoredata=a1;
+                                    }else if(i==2&&$("#sla").hasClass("color")){
+                                        new_data.scoredata=a2;
+                                    }else if(i==3&&$("#web").hasClass("color")){
+                                        new_data.scoredata=a3;
+                                    }else if(i==4&&$("#download").hasClass("color")){
+                                        new_data.scoredata=a4;
+                                    }else if(i==5&&$("#video_button").hasClass("color")){
+                                        new_data.scoredata=a5;
+                                    }else if(i==6&&$("#game_button").hasClass("color")){
+                                        new_data.scoredata=a6;
+                                    }
+
+                            } else {
+                                new_data.scoredata = [];
+                                toastr.warning('该日期范围没有对应数据！');
+                            }
                         }
-                    }
-                });
+                    });
+                }
             }
         },
         reset: function () {    /*重置*/
@@ -419,27 +539,30 @@ var Reset = new Vue({
             /*前4天日期*/
             param.endtime = (new Date()).Format("yyyy-MM-dd") + " 23:59:59";
             /*当前日期*/
-            $.ajax({
-                /*后台取得数据,赋值给观察者*/
-                type: "POST",
-                url: "../../diagnose/list",
-                cache: false,  //禁用缓存
-                data: param,  //传入组装的参数
-                dataType: "json",
-                success: function (result) {
-                    console.log(result);
-                    removeLoading('test');
-                    removeLoading('table');
-                    if (result.page.list.length !== 0) {
-                        /*option先回到状态0,注意,不然会出错*/
-                        new_data.scoredata = result.page.list;
-                        list = result.page.list;
-                        // console.log(new_data.scoredata);
-                    } else {
-                        toastr.warning('最近1天没有对应数据！');
+                $.ajax({
+                    /*后台取得数据,赋值给观察者*/
+                    type: "POST",
+                    url: "../../diagnose/list",
+                    cache: false,  //禁用缓存
+                    data: param,  //传入组装的参数
+                    dataType: "json",
+                    success: function (result) {
+                        console.log(result);
+
+                        removeLoading('test');
+                        removeLoading('table');
+                        if (result.page.list.length !== 0) {
+                            /*option先回到状态0,注意,不然会出错*/
+                            new_data.scoredata = result.page.list;
+                            list = result.page.list;
+
+                            a1 = result.page.list;
+                            // console.log(new_data.scoredata);
+                        } else {
+                            toastr.warning('最近1天没有对应数据！');
+                        }
                     }
-                }
-            });
+                });
         }
     }
 });
@@ -555,17 +678,13 @@ Vue.component('data-table', {
                         options.series[i].data.sort(compare("0"));
                     }
                 }
-                // var tmp=[[Date.UTC(2017, 4, 24, 22),1],[Date.UTC(2017, 4, 24, 22),2],[Date.UTC(2017, 5, 24, 22),3],[Date.UTC(2017, 5, 24, 22),4],[Date.UTC(2017, 6, 24, 22),1],[Date.UTC(2017, 7, 24, 22),1]];
-                // if (options.series[i].data.length > 0) {
-                //     options.series[i].data = combine(options.series[i].data);
-                // }
-                // var tmp = options.series[i].data;
-
             }
+
             removeLoading('test');
             var chart = new Highcharts.Chart('container', options);
             val = val
             if (table_status == 1) {
+                deleteTableTr("#ping_table");
                 ping(val)
                 $('#ping_table').removeAttr('style');
                 $('#sla_table').css('display', 'none');
@@ -634,6 +753,14 @@ Vue.component('data-table', {
 
     }
 });
+function deleteTableTr(tableid) {
+    let tr = $(tableid + " >tbody>tr");
+    for(let i = 1;i<tr.length;i++){
+        tr[i].hidden = false;
+    }
+}
+
+
 
 function ping(val) {
     var content = val
@@ -684,6 +811,7 @@ function ping(val) {
                     // param.page = (data.start / data.length) + 1;//当前页码
                     let returnData = {};
                     returnData.data = content;//返回的数据列表
+
                     var temp = cloneObj(content);
                     for (let i = 0; i < temp.length; i++) {
                         let date_token = val[i].recordDate.split("-");
@@ -696,11 +824,13 @@ function ping(val) {
                         }
                         temp[i].datetime = Date.UTC(year, month, day, hour)
                     }
-                    var sortTemp = temp.sort(compare("datetime"));
+                    temp.sort(compare("datetime"));
+                    var sortTemp = sortByLayer(temp);
                     updateContent = sortTemp;
                     let rows = [];
                     var i = 1;
                     sortTemp.forEach(function (item) {              /*观察user是否变化,更新表格数据*/
+                        debugger;
                         let row = [];
                         row.push(i++);
                         row.push(layerNames.get(item.accessLayer));
@@ -729,6 +859,7 @@ function sla(val) {
             headers: [
                 {title: ''},
                 {title: '层级名称'},
+                {title: '探针名'},
                 {title: '时间'},
                 {title: 'TCP Sla', class: 'some-special-class'},
                 {title: 'UDP Sla'},
@@ -781,7 +912,8 @@ function sla(val) {
                         }
                         temp[i].datetime = Date.UTC(year, month, day, hour)
                     }
-                    var sortTemp = temp.sort(compare("datetime"));
+                    temp.sort(compare("datetime"));
+                    var sortTemp = sortByLayer(temp);
                     updateContent = sortTemp;
                     let rows = [];
                     var i = 1;
@@ -789,6 +921,7 @@ function sla(val) {
                         let row = [];
                         row.push(i++);
                         row.push(layerNames.get(item.accessLayer));
+                        row.push(item.probeName);
                         row.push(item.recordDate.substr(0, 10) + "   " + item.recordTime.substr(0, 10) + ':00');
                         row.push('<a class="fontcolor"   onclick="sla_info(this,1)" id=' + item.id + '   type =' + layerNames.get(item.accessLayer) + ' >' + fixed(item.tcpSlaScore) + '</a>&nbsp;');
                         row.push('<a class="fontcolor"    onclick="sla_info(this,2)" id=' + item.id + '  type =' + layerNames.get(item.accessLayer) + '>' + fixed(item.udpSlaScore) + '</a>&nbsp;');
@@ -814,6 +947,7 @@ function web(val) {
             headers: [
                 {title: '<div style="width:10px"></div>'},
                 {title: '层级名称'},
+                {title: '探针名'},
                 {title: '时间'},
                 {title: 'web浏览',},
             ],
@@ -860,7 +994,8 @@ function web(val) {
                         }
                         temp[i].datetime = Date.UTC(year, month, day, hour)
                     }
-                    var sortTemp = temp.sort(compare("datetime"));
+                    temp.sort(compare("datetime"));
+                    var sortTemp = sortByLayer(temp);
                     updateContent = sortTemp;
                     let rows = [];
                     var i = 1;
@@ -868,6 +1003,7 @@ function web(val) {
                         let row = [];
                         row.push(i++);
                         row.push(layerNames.get(item.accessLayer));
+                        row.push(item.probeName)
                         row.push(item.recordDate.substr(0, 10) + "   " + item.recordTime.substr(0, 10) + ':00');
                         row.push('<a class="fontcolor"  onclick="web_info(this)"  id=' + item.id + '  type =' + layerNames.get(item.accessLayer) + '>' + fixed(item.score) + '</a>&nbsp;');
                         rows.push(row);
@@ -888,6 +1024,7 @@ function download(val) {
             headers: [
                 {title: ''},
                 {title: '层级名称'},
+                {title: '探针名'},
                 {title: '时间'},
                 {title: 'web下载', class: 'some-special-class'},
                 {title: 'FTP上传'},
@@ -936,7 +1073,8 @@ function download(val) {
                         }
                         temp[i].datetime = Date.UTC(year, month, day, hour)
                     }
-                    var sortTemp = temp.sort(compare("datetime"));
+                    temp.sort(compare("datetime"));
+                    var sortTemp = sortByLayer(temp);
                     updateContent = sortTemp;
                     let rows = [];
                     var i = 1;
@@ -944,10 +1082,11 @@ function download(val) {
                         let row = [];
                         row.push(i++);
                         row.push(layerNames.get(item.accessLayer));
+                        row.push(item.probeName)
                         row.push(item.recordDate.substr(0, 10) + "   " + item.recordTime.substr(0, 10) + ':00');
-                        row.push('<a class="fontcolor"  type =' + layerNames.get(item.accessLayer) + '  onclick="download_info(this,1)" id=' + item.id + '>' + fixed(item.webDownloadScore) + '</a>&nbsp;');
-                        row.push('<a class="fontcolor" type =' + layerNames.get(item.accessLayer) + '  onclick="download_info(this,2)" id=' + item.id + '>' + fixed(item.ftpUploadScore) + '</a>&nbsp;');
-                        row.push('<a class="fontcolor" type =' + layerNames.get(item.accessLayer) + '  onclick="download_info(this,3)" id=' + item.id + '>' + fixed(item.ftpDownloadScore) + '</a>&nbsp;');
+                        row.push('<a class="fontcolor"    onclick="download_info(this,1)" id=' + item.id + '    type =' + layerNames.get(item.accessLayer) + '>' + fixed(item.webDownloadScore) + '</a>&nbsp;');
+                        row.push('<a class="fontcolor"   onclick="download_info(this,2)" id=' + item.id + '      type =' + layerNames.get(item.accessLayer) + '>' + fixed(item.ftpUploadScore) + '</a>&nbsp;');
+                        row.push('<a class="fontcolor"   onclick="download_info(this,3)" id=' + item.id + '       type =' + layerNames.get(item.accessLayer) + '>' + fixed(item.ftpDownloadScore) + '</a>&nbsp;');
 
                         rows.push(row);
                     });
@@ -967,6 +1106,7 @@ function video(val) {
             headers: [
                 {title: ''},
                 {title: '层级名称'},
+                {title: '探针名'},
                 {title: '时间'},
                 {title: '在线视频'},
             ],
@@ -1013,7 +1153,8 @@ function video(val) {
                         }
                         temp[i].datetime = Date.UTC(year, month, day, hour)
                     }
-                    var sortTemp = temp.sort(compare("datetime"));
+                    temp.sort(compare("datetime"));
+                    var sortTemp = sortByLayer(temp);
                     updateContent = sortTemp;
                     let rows = [];
                     var i = 1;
@@ -1021,8 +1162,9 @@ function video(val) {
                         let row = [];
                         row.push(i++);
                         row.push(layerNames.get(item.accessLayer));
+                        row.push(item.probeName)
                         row.push(item.recordDate.substr(0, 10) + "   " + item.recordTime.substr(0, 10) + ':00');
-                        row.push('<a class="fontcolor" type =' + layerNames.get(item.accessLayer) + '  onclick="video_info(this)" id=' + item.id + '>' + fixed(item.score) + '</a>&nbsp;')
+                        row.push('<a class="fontcolor"  onclick="video_info(this)" id=' + item.id + '   type =' + layerNames.get(item.accessLayer) + ' >' + fixed(item.score) + '</a>&nbsp;')
                         rows.push(row);
                     });
                     returnData.data = rows;
@@ -1041,8 +1183,9 @@ function game(val) {
             headers: [
                 {title: ''},
                 {title: '层级名称'},
+                {title: '探针名'},
                 {title: '时间'},
-                {title: '在线游戏'},
+                {title: '网络游戏'},
             ],
             rows: [],
             dtHandle: null,
@@ -1090,7 +1233,8 @@ function game(val) {
                         }
                         temp[i].datetime = Date.UTC(year, month, day, hour)
                     }
-                    var sortTemp = temp.sort(compare("datetime"));
+                    temp.sort(compare("datetime"));
+                    var sortTemp = sortByLayer(temp);
                     updateContent = sortTemp;
                     let rows = [];
                     var i = param.start + 1;
@@ -1098,8 +1242,9 @@ function game(val) {
                         let row = [];
                         row.push(i++);
                         row.push(layerNames.get(item.accessLayer));
+                        row.push(item.probeName);
                         row.push(item.recordDate.substr(0, 10) + "   " + item.recordTime.substr(0, 10) + ':00');
-                        row.push('<a class="fontcolor" type =' + layerNames.get(item.accessLayer) + '  onclick="game_info(this)" id=' + item.id + '>' + fixed(item.score) + '</a>&nbsp;')
+                        row.push('<a class="fontcolor"   onclick="game_info(this)" id=' + item.id + '   type =' + layerNames.get(item.accessLayer) + '>' + fixed(item.score) + '</a>&nbsp;')
                         rows.push(row);
                     });
                     returnData.data = rows;
@@ -1171,6 +1316,7 @@ function ping_info(obj, type) {
 }
 
 function sla_info(obj, type) {
+
     var content = updateContent
     if (type == 1) {
         slatcp_table(obj, content)
@@ -1188,7 +1334,8 @@ function sla_info(obj, type) {
         $('#dhcp').css('display', 'none');
         $('#adsl').css('display', 'none');
         $('#radius').css('display', 'none');
-    } else if (type == 3) {
+    } else if (type == 5) {
+        debugger
         dns_table(obj, content)
         $('#dns').removeAttr('style');
         $('#slaudp').css('display', 'none');
@@ -1204,7 +1351,7 @@ function sla_info(obj, type) {
         $('#slatcp').css('display', 'none');
         $('#adsl').css('display', 'none');
         $('#radius').css('display', 'none');
-    } else if (type == 5) {
+    } else if (type == 3) {
         adsl_table(obj, content)
         $('#adsl').removeAttr('style');
         $('#slaudp').css('display', 'none');
@@ -1237,12 +1384,12 @@ function download_info(obj, type) {
         $('#web_download').removeAttr('style');
         $('#ftp_download').css('display', 'none');
         $('#ftp_upload').css('display', 'none')
-    } else if (type == 2) {
+    } else if (type == 3) {
         ftp_download(obj, content)
         $('#ftp_download').removeAttr('style');
         $('#web_download').css('display', 'none');
         $('#ftp_upload').css('display', 'none')
-    } else if (type == 3) {
+    } else if (type == 2) {
         ftp_upload(obj, content)
         $('#ftp_upload').removeAttr('style');
         $('#ftp_download').css('display', 'none');
@@ -2061,9 +2208,10 @@ function slaudp_table(obj, content) {
 
 //网络质量表格
 function dns_table(obj, content) {
+    debugger
     var id = obj.id;
-    var probeContent = content
-    var type = obj.type
+    var probeContent = content;
+    var type = obj.type;
     var dns_table = new Vue({
         el: '#dns_table',
         data: {
@@ -2131,9 +2279,9 @@ function dns_table(obj, content) {
                     // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
                     returnData.data = probeContent;//返回的数据列表
                     // // 重新整理返回数据以匹配表格
-                    console.log(returnData);
                     let rows = [];
                     var i = 1;
+                    debugger
                     probeContent.forEach(function (item) {
                         if (type == layerNames.get(item.accessLayer) && id == item.id) {
                             let row = [];
@@ -2141,7 +2289,6 @@ function dns_table(obj, content) {
                             row.push(item.probeName);
                             row.push(fixed(item.dnsDelay));
                             row.push(fixedRate(item.dnsSuccessRate) );
-
                             rows.push(row);
                         }
 
@@ -2495,7 +2642,7 @@ function broswer_table(obj, content) {
                 {title: '<div style="width:100px">重定向时延(ms)</div>'},
                 {title: '<div style="width:100px">首屏时延(ms)</div>'},
                 {title: '<div style="width:115px">页面加载时延(ms)</div>'},
-                {title: '<div style="width:100px">下载速率(KB/S)</div>'},
+                {title: '<div style="width:100px">下载速率(KB/s)</div>'},
             ],
             rows: [],
             dtHandle: null,
@@ -2568,7 +2715,7 @@ function broswer_table(obj, content) {
                             row.push(fixed(item.webpagePageFileDelay));
                             row.push(fixed(item.webpageRedirectDelay));
                             row.push(fixed(item.webpageAboveFoldDelay));
-                            row.push(fixed(item.webpageLoadDelay));
+                            row.push(fixed(item.loadDelay));
                             row.push(fixed(item.webpageDownloadRate));
                             rows.push(row);
                         }
@@ -2606,7 +2753,7 @@ function web_download(obj, content) {
                 {title: '<div style="width:160px">DNS时延(ms)</div>'},
                 {title: '<div style="width:160px">连接时延(ms)</div>'},
                 {title: '<div style="width:160px">首字节时延(ms)</div>'},
-                {title: '<div style="width:160px">下载速率(KB/S)</div>'},
+                {title: '<div style="width:160px">下载速率(KB/s)</div>'},
             ],
             rows: [],
             dtHandle: null,
@@ -2714,7 +2861,7 @@ function ftp_download(obj, content) {
                 {title: '<div style="width:140px">连接时延(ms)</div>'},
                 {title: '<div style="width:140px">登录时延(ms)</div>'},
                 {title: '<div style="width:140px">首字节时延(ms)</div>'},
-                {title: '<div style="width:140px">下载速率(KB/S)</div>'},
+                {title: '<div style="width:140px">下载速率(KB/s)</div>'},
 
             ],
             rows: [],
@@ -2824,7 +2971,7 @@ function ftp_upload(obj, content) {
                 {title: '<div style="width:140px">连接时延(ms)</div>'},
                 {title: '<div style="width:140px">登录时延(ms)</div>'},
                 {title: '<div style="width:140px">首字节时延(ms)</div>'},
-                {title: '<div style="width:140px">上传速率(KB/S)</div>'},
+                {title: '<div style="width:140px">上传速率(KB/s)</div>'},
             ],
             rows: [],
             dtHandle: null,
@@ -2937,7 +3084,7 @@ function video_table(obj, content) {
                 {title: '<div style="width:120px">首次缓冲时延(ms)</div>'},
                 {title: '<div style="width:120px">视频加载时延(ms)</div>'},
                 {title: '<div style="width:120px">总体缓冲时间(ms)</div>'},
-                {title: '<div style="width:105px">下载速率(KB/S)</div>'},
+                {title: '<div style="width:105px">下载速率(KB/s)</div>'},
                 {title: '<div style="width:100px">缓冲次数</div>'},
             ],
             rows: [],
@@ -3145,14 +3292,27 @@ function game_table(obj, content) {
     })
 }
 
+var date=new Date();
+var month = date.getMonth() + 1;
+var strDate = date.getDate()-1;
+var years=date.getFullYear();
+var newdate=years+'-'+month+'-'+strDate;
 $('#start_date').flatpickr({
     enableTime: true,
     dateFormat: "Y-m-d H:i",
+    defaultDate:newdate,
     time_24hr: true
 });
+var date=new Date();
+var month = date.getMonth() + 1;
+var strDate = date.getDate();
+var years=date.getFullYear();
+var hours=date.getHours();
+var endday=years+'-'+month+'-'+strDate+' '+hours;
 $('#terminal_date').flatpickr({
     enableTime: true,
     dateFormat: "Y-m-d H:i",
+    defaultDate:endday,
     time_24hr: true
 });
 
@@ -3163,22 +3323,22 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
     if (citySelected != 0) {
         a[2] = {};
         a[2].name = "city_id";
-        a[2].value = citySelected;
+        a[2].value = parseInt(citySelected);
     }
     if (countrySelected != 0) {
         a[3] = {};
         a[3].name = "country_id";
-        a[3].value = countrySelected;
+        a[3].value = parseInt(countrySelected);
     }
     if (probeSelected != 0) {
         a[4] = {};
         a[4].name = "probe_id";
-        a[4].value = probeSelected;
+        a[4].value = parseInt(probeSelected)
     }
     if (targetSelected != 0) {
         a[5] = {};
         a[5].name = "target_id";
-        a[5].value = targetSelected;
+        a[5].value = parseInt(targetSelected)
     }
 
     $.each(a, function () {
@@ -3195,7 +3355,7 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
 }
 
 function changeStatus(i) {
-    table_status = i;
+
     $.ajax({
         type: "POST", /*GET会乱码*/
         url: "../../target/infoList/" + i,
@@ -3478,23 +3638,6 @@ function loading() {
         loadingBg: '#312923',
         loadingMaskBg: 'rgba(22,22,22,0.2)'
     });
-    $('#table').loading({
-        loadingWidth: 240,
-        title: '正在努力的加载中',
-        name: 'table',
-        discription: '这是一个描述...',
-        direction: 'row',
-        type: 'origin',
-        originBg: '#B0E2FF',
-        originDivWidth: 30,
-        originDivHeight: 30,
-        originWidth: 4,
-        originHeight: 4,
-        smallLoading: false,
-        titleColor: '#ADD8E6',
-        loadingBg: '#312923',
-        loadingMaskBg: 'rgba(22,22,22,0.2)'
-    });
 
 }
 
@@ -3560,4 +3703,31 @@ function combine(tmp) {
     a[1] = sum / b;
     newTmp.push(a);
     return newTmp;
+}
+
+function sortByLayer(temp) {
+    var tmp = temp[0].datetime;
+    var array = [];
+    array.push(temp[0]);
+    for (let i = 1; i < temp.length; i++) {
+        if (temp[i].datetime == tmp) {
+            array.push(temp[i])
+        } else {
+            array.sort(compare("accessLayer"));
+            for (let j = 0; j < array.length; j++) {
+                temp[i - array.length+j] = array[j]
+            }
+            array = [];
+            array.push(temp[i]);
+            tmp = temp[i].datetime;
+        }
+    }
+    if(array.length!=0){
+        array.sort(compare("accessLayer"));
+        for (let j = 0; j < array.length; j++) {
+            temp[temp.length - array.length+j] = array[j]
+        }
+    }
+    return temp;
+
 }

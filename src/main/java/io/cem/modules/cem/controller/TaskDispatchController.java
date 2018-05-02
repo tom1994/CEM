@@ -15,10 +15,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -271,6 +268,7 @@ public class TaskDispatchController {
     @RequestMapping("/saveAll")
     @RequiresPermissions("taskdispatch:save")
     public R saveAll(@RequestBody TaskDispatchEntity taskDispatch) {
+        taskDispatch.setCreateTime(new Date());
         if (taskDispatch.getTargetGroupIds() != null) {
             int[] targetGroupIds = taskDispatch.getTargetGroupIds();
             ArrayList target = new ArrayList();
@@ -335,7 +333,7 @@ public class TaskDispatchController {
                 return R.error(404,"任务下发失败，错误代码"+result);
             }
         }catch (Exception e){
-            return R.error("未知错误");
+            return R.error("网络故障，下发失败");
         }
     }
 

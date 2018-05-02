@@ -1369,7 +1369,8 @@ var dispatch_table = new Vue({
             {title: '<div style="width:78px">位置</div>'},
             {title: '<div style="width:57px">层级</div>'},
             {title: '<div style="width:57px">端口</div>'},
-            {title: '<div style="width:212px">测试目标</div>'},
+            {title: '<div style="width:180px">测试目标</div>'},
+            {title: '<div style="width:120px">分配时间</div>'},
             {title: '<div style="width:67px">操作</div>'}
         ],
         rows: [],
@@ -1468,6 +1469,7 @@ var dispatch_table = new Vue({
                             row.push(item.layerName);
                             row.push(item.probePort);
                             row.push('<span title="' + item.target + '" style="white-space: nowrap;">' + (item.target).substr(0, 24) + '</span>');
+                            row.push(item.createTime);
                             row.push('<a class="fontcolor" onclick="cancel_task(this)" id=' + item.id + '>取消任务</a>');
                             rows.push(row);
                         });
