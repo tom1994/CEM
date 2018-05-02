@@ -173,28 +173,28 @@ public class RecordHourWebPageServiceImpl implements RecordHourWebPageService {
 				}
 
 				//head_byty_delay 100
-				if ((webPageList.get(i).getHeadbyteDelay()).compareTo(Double.parseDouble(pros.getValue("webP32"))) <= 0) {
-					score += 100 * (Double.parseDouble(pros.getValue("webP31")));
+				if ((webPageList.get(i).getHeadbyteDelay()).compareTo(Double.parseDouble(pros.getValue("webP42"))) <= 0) {
+					score += 100 * (Double.parseDouble(pros.getValue("webP41")));
 				}
 				//head_byty_delay 80-100
-				else if (((webPageList.get(i).getHeadbyteDelay()).compareTo(Double.parseDouble(pros.getValue("webP32"))) > 0) && ((webPageList.get(i).getHeadbyteDelay()).compareTo(Double.parseDouble(pros.getValue("webP33"))) <= 0)) {
-					score += (80 + ((((webPageList.get(i).getHeadbyteDelay().doubleValue()) - (Double.parseDouble(pros.getValue("webP33")))) * 20) / ((Double.parseDouble(pros.getValue("webP32")) - (Double.parseDouble(pros.getValue("webP33"))))))) * (Double.parseDouble(pros.getValue("webP31")));
+				else if (((webPageList.get(i).getHeadbyteDelay()).compareTo(Double.parseDouble(pros.getValue("webP42"))) > 0) && ((webPageList.get(i).getHeadbyteDelay()).compareTo(Double.parseDouble(pros.getValue("webP43"))) <= 0)) {
+					score += (80 + ((((webPageList.get(i).getHeadbyteDelay().doubleValue()) - (Double.parseDouble(pros.getValue("webP43")))) * 20) / ((Double.parseDouble(pros.getValue("webP42")) - (Double.parseDouble(pros.getValue("webP43"))))))) * (Double.parseDouble(pros.getValue("webP41")));
 				}
 				//head_byty_delay 60-80
-				else if (((webPageList.get(i).getHeadbyteDelay()).compareTo(Double.parseDouble(pros.getValue("webP33"))) > 0) && ((webPageList.get(i).getHeadbyteDelay()).compareTo(Double.parseDouble(pros.getValue("webP34"))) <= 0)) {
-					score += (60 + ((((webPageList.get(i).getHeadbyteDelay().doubleValue()) - (Double.parseDouble(pros.getValue("webP34")))) * 20) / ((Double.parseDouble(pros.getValue("webP33")) - (Double.parseDouble(pros.getValue("webP34"))))))) * (Double.parseDouble(pros.getValue("webP31")));
+				else if (((webPageList.get(i).getHeadbyteDelay()).compareTo(Double.parseDouble(pros.getValue("webP43"))) > 0) && ((webPageList.get(i).getHeadbyteDelay()).compareTo(Double.parseDouble(pros.getValue("webP44"))) <= 0)) {
+					score += (60 + ((((webPageList.get(i).getHeadbyteDelay().doubleValue()) - (Double.parseDouble(pros.getValue("webP44")))) * 20) / ((Double.parseDouble(pros.getValue("webP43")) - (Double.parseDouble(pros.getValue("webP44"))))))) * (Double.parseDouble(pros.getValue("webP41")));
 				}
 				//head_byty_delay 40-60
-				else if (((webPageList.get(i).getHeadbyteDelay()).compareTo(Double.parseDouble(pros.getValue("webP34"))) > 0) && ((webPageList.get(i).getHeadbyteDelay()).compareTo(Double.parseDouble(pros.getValue("webP35"))) <= 0)) {
-					score += (40 + ((((webPageList.get(i).getHeadbyteDelay().doubleValue()) - (Double.parseDouble(pros.getValue("webP35")))) * 20) / ((Double.parseDouble(pros.getValue("webP34")) - (Double.parseDouble(pros.getValue("webP35"))))))) * (Double.parseDouble(pros.getValue("webP31")));
+				else if (((webPageList.get(i).getHeadbyteDelay()).compareTo(Double.parseDouble(pros.getValue("webP44"))) > 0) && ((webPageList.get(i).getHeadbyteDelay()).compareTo(Double.parseDouble(pros.getValue("webP45"))) <= 0)) {
+					score += (40 + ((((webPageList.get(i).getHeadbyteDelay().doubleValue()) - (Double.parseDouble(pros.getValue("webP45")))) * 20) / ((Double.parseDouble(pros.getValue("webP44")) - (Double.parseDouble(pros.getValue("webP45"))))))) * (Double.parseDouble(pros.getValue("webP41")));
 				}
 				//head_byty_delay 20-40
-				else if (((webPageList.get(i).getHeadbyteDelay()).compareTo(Double.parseDouble(pros.getValue("webP35"))) > 0) && ((webPageList.get(i).getHeadbyteDelay()).compareTo(Double.parseDouble(pros.getValue("webP36"))) <= 0)) {
-					score += (20 + ((((webPageList.get(i).getHeadbyteDelay().doubleValue()) - (Double.parseDouble(pros.getValue("webP36")))) * 20) / ((Double.parseDouble(pros.getValue("webP35")) - (Double.parseDouble(pros.getValue("webP36"))))))) * (Double.parseDouble(pros.getValue("webP31")));
+				else if (((webPageList.get(i).getHeadbyteDelay()).compareTo(Double.parseDouble(pros.getValue("webP45"))) > 0) && ((webPageList.get(i).getHeadbyteDelay()).compareTo(Double.parseDouble(pros.getValue("webP46"))) <= 0)) {
+					score += (20 + ((((webPageList.get(i).getHeadbyteDelay().doubleValue()) - (Double.parseDouble(pros.getValue("webP46")))) * 20) / ((Double.parseDouble(pros.getValue("webP45")) - (Double.parseDouble(pros.getValue("webP46"))))))) * (Double.parseDouble(pros.getValue("webP41")));
 				}
 				//head_byty_delay 0-20
-				else if (((webPageList.get(i).getHeadbyteDelay()).compareTo(Double.parseDouble(pros.getValue("webP36"))) > 0) && ((webPageList.get(i).getHeadbyteDelay()).compareTo(Double.parseDouble(pros.getValue("webP37"))) <= 0)) {
-					score += ((((webPageList.get(i).getHeadbyteDelay().doubleValue()) - (Double.parseDouble(pros.getValue("webP37")))) * 20) / ((Double.parseDouble(pros.getValue("webP36")) - (Double.parseDouble(pros.getValue("webP37")))))) * (Double.parseDouble(pros.getValue("webP31")));
+				else if (((webPageList.get(i).getHeadbyteDelay()).compareTo(Double.parseDouble(pros.getValue("webP46"))) > 0) && ((webPageList.get(i).getHeadbyteDelay()).compareTo(Double.parseDouble(pros.getValue("webP47"))) <= 0)) {
+					score += ((((webPageList.get(i).getHeadbyteDelay().doubleValue()) - (Double.parseDouble(pros.getValue("webP47")))) * 20) / ((Double.parseDouble(pros.getValue("webP46")) - (Double.parseDouble(pros.getValue("webP47")))))) * (Double.parseDouble(pros.getValue("webP41")));
 				}
 				//head_byty_delay 0
 				else {
@@ -202,28 +202,28 @@ public class RecordHourWebPageServiceImpl implements RecordHourWebPageService {
 				}
 
 				//page_file_delay 100
-				if ((webPageList.get(i).getPageFileDelay()).compareTo(Double.parseDouble(pros.getValue("webP42"))) <= 0) {
-					score += 100 * (Double.parseDouble(pros.getValue("webP41")));
+				if ((webPageList.get(i).getPageFileDelay()).compareTo(Double.parseDouble(pros.getValue("webP52"))) <= 0) {
+					score += 100 * (Double.parseDouble(pros.getValue("webP51")));
 				}
 				//page_file_delay 80-100
-				else if (((webPageList.get(i).getPageFileDelay()).compareTo(Double.parseDouble(pros.getValue("webP42"))) > 0) && ((webPageList.get(i).getPageFileDelay()).compareTo(Double.parseDouble(pros.getValue("webP43"))) <= 0)) {
-					score += (80 + ((((webPageList.get(i).getPageFileDelay().doubleValue()) - (Double.parseDouble(pros.getValue("webP43")))) * 20) / ((Double.parseDouble(pros.getValue("webP42")) - (Double.parseDouble(pros.getValue("webP43"))))))) * (Double.parseDouble(pros.getValue("webP41")));
+				else if (((webPageList.get(i).getPageFileDelay()).compareTo(Double.parseDouble(pros.getValue("webP52"))) > 0) && ((webPageList.get(i).getPageFileDelay()).compareTo(Double.parseDouble(pros.getValue("webP53"))) <= 0)) {
+					score += (80 + ((((webPageList.get(i).getPageFileDelay().doubleValue()) - (Double.parseDouble(pros.getValue("webP53")))) * 20) / ((Double.parseDouble(pros.getValue("webP52")) - (Double.parseDouble(pros.getValue("webP53"))))))) * (Double.parseDouble(pros.getValue("webP51")));
 				}
 				//page_file_delay 60-80
-				else if (((webPageList.get(i).getPageFileDelay()).compareTo(Double.parseDouble(pros.getValue("webP43"))) > 0) && ((webPageList.get(i).getPageFileDelay()).compareTo(Double.parseDouble(pros.getValue("webP44"))) <= 0)) {
-					score += (60 + ((((webPageList.get(i).getPageFileDelay().doubleValue()) - (Double.parseDouble(pros.getValue("webP44")))) * 20) / ((Double.parseDouble(pros.getValue("webP43")) - (Double.parseDouble(pros.getValue("webP44"))))))) * (Double.parseDouble(pros.getValue("webP41")));
+				else if (((webPageList.get(i).getPageFileDelay()).compareTo(Double.parseDouble(pros.getValue("webP53"))) > 0) && ((webPageList.get(i).getPageFileDelay()).compareTo(Double.parseDouble(pros.getValue("webP54"))) <= 0)) {
+					score += (60 + ((((webPageList.get(i).getPageFileDelay().doubleValue()) - (Double.parseDouble(pros.getValue("webP54")))) * 20) / ((Double.parseDouble(pros.getValue("webP53")) - (Double.parseDouble(pros.getValue("webP54"))))))) * (Double.parseDouble(pros.getValue("webP51")));
 				}
 				//page_file_delay 40-60
-				else if (((webPageList.get(i).getPageFileDelay()).compareTo(Double.parseDouble(pros.getValue("webP44"))) > 0) && ((webPageList.get(i).getPageFileDelay()).compareTo(Double.parseDouble(pros.getValue("webP45"))) <= 0)) {
-					score += (40 + ((((webPageList.get(i).getPageFileDelay().doubleValue()) - (Double.parseDouble(pros.getValue("webP45")))) * 20) / ((Double.parseDouble(pros.getValue("webP44")) - (Double.parseDouble(pros.getValue("webP45"))))))) * (Double.parseDouble(pros.getValue("webP41")));
+				else if (((webPageList.get(i).getPageFileDelay()).compareTo(Double.parseDouble(pros.getValue("webP54"))) > 0) && ((webPageList.get(i).getPageFileDelay()).compareTo(Double.parseDouble(pros.getValue("webP55"))) <= 0)) {
+					score += (40 + ((((webPageList.get(i).getPageFileDelay().doubleValue()) - (Double.parseDouble(pros.getValue("webP55")))) * 20) / ((Double.parseDouble(pros.getValue("webP54")) - (Double.parseDouble(pros.getValue("webP55"))))))) * (Double.parseDouble(pros.getValue("webP51")));
 				}
 				//page_file_delay 20-40
-				else if (((webPageList.get(i).getPageFileDelay()).compareTo(Double.parseDouble(pros.getValue("webP45"))) > 0) && ((webPageList.get(i).getPageFileDelay()).compareTo(Double.parseDouble(pros.getValue("webP46"))) <= 0)) {
-					score += (20 + ((((webPageList.get(i).getPageFileDelay().doubleValue()) - (Double.parseDouble(pros.getValue("webP46")))) * 20) / ((Double.parseDouble(pros.getValue("webP45")) - (Double.parseDouble(pros.getValue("webP46"))))))) * (Double.parseDouble(pros.getValue("webP41")));
+				else if (((webPageList.get(i).getPageFileDelay()).compareTo(Double.parseDouble(pros.getValue("webP55"))) > 0) && ((webPageList.get(i).getPageFileDelay()).compareTo(Double.parseDouble(pros.getValue("webP56"))) <= 0)) {
+					score += (20 + ((((webPageList.get(i).getPageFileDelay().doubleValue()) - (Double.parseDouble(pros.getValue("webP56")))) * 20) / ((Double.parseDouble(pros.getValue("webP55")) - (Double.parseDouble(pros.getValue("webP56"))))))) * (Double.parseDouble(pros.getValue("webP51")));
 				}
 				//page_file_delay 0-20
-				else if (((webPageList.get(i).getPageFileDelay()).compareTo(Double.parseDouble(pros.getValue("webP46"))) > 0) && ((webPageList.get(i).getPageFileDelay()).compareTo(Double.parseDouble(pros.getValue("webP47"))) <= 0)) {
-					score += ((((webPageList.get(i).getPageFileDelay().doubleValue()) - (Double.parseDouble(pros.getValue("webP47")))) * 20) / ((Double.parseDouble(pros.getValue("webP46")) - (Double.parseDouble(pros.getValue("webP47")))))) * (Double.parseDouble(pros.getValue("webP41")));
+				else if (((webPageList.get(i).getPageFileDelay()).compareTo(Double.parseDouble(pros.getValue("webP56"))) > 0) && ((webPageList.get(i).getPageFileDelay()).compareTo(Double.parseDouble(pros.getValue("webP57"))) <= 0)) {
+					score += ((((webPageList.get(i).getPageFileDelay().doubleValue()) - (Double.parseDouble(pros.getValue("webP57")))) * 20) / ((Double.parseDouble(pros.getValue("webP56")) - (Double.parseDouble(pros.getValue("webP57")))))) * (Double.parseDouble(pros.getValue("webP51")));
 				}
 				//page_file_delay 0
 				else {
@@ -231,28 +231,28 @@ public class RecordHourWebPageServiceImpl implements RecordHourWebPageService {
 				}
 
 				//redirect_delay 100
-				if ((webPageList.get(i).getRedirectDelay()).compareTo(Double.parseDouble(pros.getValue("webP52"))) <= 0) {
-					score += 100 * (Double.parseDouble(pros.getValue("webP51")));
+				if ((webPageList.get(i).getRedirectDelay()).compareTo(Double.parseDouble(pros.getValue("webP62"))) <= 0) {
+					score += 100 * (Double.parseDouble(pros.getValue("webP61")));
 				}
 				//redirect_delay 80-100
-				else if (((webPageList.get(i).getRedirectDelay()).compareTo(Double.parseDouble(pros.getValue("webP52"))) > 0) && ((webPageList.get(i).getRedirectDelay()).compareTo(Double.parseDouble(pros.getValue("webP53"))) <= 0)) {
-					score += (80 + ((((webPageList.get(i).getRedirectDelay().doubleValue()) - (Double.parseDouble(pros.getValue("webP53")))) * 20) / ((Double.parseDouble(pros.getValue("webP52")) - (Double.parseDouble(pros.getValue("webP53"))))))) * (Double.parseDouble(pros.getValue("webP51")));
+				else if (((webPageList.get(i).getRedirectDelay()).compareTo(Double.parseDouble(pros.getValue("webP62"))) > 0) && ((webPageList.get(i).getRedirectDelay()).compareTo(Double.parseDouble(pros.getValue("webP63"))) <= 0)) {
+					score += (80 + ((((webPageList.get(i).getRedirectDelay().doubleValue()) - (Double.parseDouble(pros.getValue("webP63")))) * 20) / ((Double.parseDouble(pros.getValue("webP62")) - (Double.parseDouble(pros.getValue("webP63"))))))) * (Double.parseDouble(pros.getValue("webP61")));
 				}
 				//redirect_delay 60-80
-				else if (((webPageList.get(i).getRedirectDelay()).compareTo(Double.parseDouble(pros.getValue("webP53"))) > 0) && ((webPageList.get(i).getRedirectDelay()).compareTo(Double.parseDouble(pros.getValue("webP54"))) <= 0)) {
-					score += (60 + ((((webPageList.get(i).getRedirectDelay().doubleValue()) - (Double.parseDouble(pros.getValue("webP54")))) * 20) / ((Double.parseDouble(pros.getValue("webP53")) - (Double.parseDouble(pros.getValue("webP54"))))))) * (Double.parseDouble(pros.getValue("webP51")));
+				else if (((webPageList.get(i).getRedirectDelay()).compareTo(Double.parseDouble(pros.getValue("webP63"))) > 0) && ((webPageList.get(i).getRedirectDelay()).compareTo(Double.parseDouble(pros.getValue("webP64"))) <= 0)) {
+					score += (60 + ((((webPageList.get(i).getRedirectDelay().doubleValue()) - (Double.parseDouble(pros.getValue("webP64")))) * 20) / ((Double.parseDouble(pros.getValue("webP63")) - (Double.parseDouble(pros.getValue("webP64"))))))) * (Double.parseDouble(pros.getValue("webP61")));
 				}
 				//redirect_delay 40-60
-				else if (((webPageList.get(i).getRedirectDelay()).compareTo(Double.parseDouble(pros.getValue("webP54"))) > 0) && ((webPageList.get(i).getRedirectDelay()).compareTo(Double.parseDouble(pros.getValue("webP55"))) <= 0)) {
-					score += (40 + ((((webPageList.get(i).getRedirectDelay().doubleValue()) - (Double.parseDouble(pros.getValue("webP55")))) * 20) / ((Double.parseDouble(pros.getValue("webP54")) - (Double.parseDouble(pros.getValue("webP55"))))))) * (Double.parseDouble(pros.getValue("webP51")));
+				else if (((webPageList.get(i).getRedirectDelay()).compareTo(Double.parseDouble(pros.getValue("webP64"))) > 0) && ((webPageList.get(i).getRedirectDelay()).compareTo(Double.parseDouble(pros.getValue("webP65"))) <= 0)) {
+					score += (40 + ((((webPageList.get(i).getRedirectDelay().doubleValue()) - (Double.parseDouble(pros.getValue("webP65")))) * 20) / ((Double.parseDouble(pros.getValue("webP64")) - (Double.parseDouble(pros.getValue("webP65"))))))) * (Double.parseDouble(pros.getValue("webP61")));
 				}
 				//redirect_delay 20-40
-				else if (((webPageList.get(i).getRedirectDelay()).compareTo(Double.parseDouble(pros.getValue("webP55"))) > 0) && ((webPageList.get(i).getRedirectDelay()).compareTo(Double.parseDouble(pros.getValue("webP56"))) <= 0)) {
-					score += (20 + ((((webPageList.get(i).getRedirectDelay().doubleValue()) - (Double.parseDouble(pros.getValue("webP56")))) * 20) / ((Double.parseDouble(pros.getValue("webP55")) - (Double.parseDouble(pros.getValue("webP56"))))))) * (Double.parseDouble(pros.getValue("webP51")));
+				else if (((webPageList.get(i).getRedirectDelay()).compareTo(Double.parseDouble(pros.getValue("webP65"))) > 0) && ((webPageList.get(i).getRedirectDelay()).compareTo(Double.parseDouble(pros.getValue("webP66"))) <= 0)) {
+					score += (20 + ((((webPageList.get(i).getRedirectDelay().doubleValue()) - (Double.parseDouble(pros.getValue("webP66")))) * 20) / ((Double.parseDouble(pros.getValue("webP65")) - (Double.parseDouble(pros.getValue("webP66"))))))) * (Double.parseDouble(pros.getValue("webP61")));
 				}
 				//redirect_delay 0-20
-				else if (((webPageList.get(i).getRedirectDelay()).compareTo(Double.parseDouble(pros.getValue("webP56"))) > 0) && ((webPageList.get(i).getRedirectDelay()).compareTo(Double.parseDouble(pros.getValue("webP57"))) <= 0)) {
-					score += ((((webPageList.get(i).getRedirectDelay().doubleValue()) - (Double.parseDouble(pros.getValue("webP57")))) * 20) / ((Double.parseDouble(pros.getValue("webP56")) - (Double.parseDouble(pros.getValue("webP57")))))) * (Double.parseDouble(pros.getValue("webP51")));
+				else if (((webPageList.get(i).getRedirectDelay()).compareTo(Double.parseDouble(pros.getValue("webP66"))) > 0) && ((webPageList.get(i).getRedirectDelay()).compareTo(Double.parseDouble(pros.getValue("webP67"))) <= 0)) {
+					score += ((((webPageList.get(i).getRedirectDelay().doubleValue()) - (Double.parseDouble(pros.getValue("webP67")))) * 20) / ((Double.parseDouble(pros.getValue("webP66")) - (Double.parseDouble(pros.getValue("webP67")))))) * (Double.parseDouble(pros.getValue("webP61")));
 				}
 				//redirect_delay 0
 				else {
@@ -260,28 +260,28 @@ public class RecordHourWebPageServiceImpl implements RecordHourWebPageService {
 				}
 
 				//above_fold_delay 100
-				if ((webPageList.get(i).getAboveFoldDelay()).compareTo(Double.parseDouble(pros.getValue("webP62"))) <= 0) {
-					score += 100 * (Double.parseDouble(pros.getValue("webP61")));
+				if ((webPageList.get(i).getAboveFoldDelay()).compareTo(Double.parseDouble(pros.getValue("webP72"))) <= 0) {
+					score += 100 * (Double.parseDouble(pros.getValue("webP71")));
 				}
 				//above_fold_delay 80-100
-				else if (((webPageList.get(i).getAboveFoldDelay()).compareTo(Double.parseDouble(pros.getValue("webP62"))) > 0) && ((webPageList.get(i).getAboveFoldDelay()).compareTo(Double.parseDouble(pros.getValue("webP63"))) <= 0)) {
-					score += (80 + ((((webPageList.get(i).getAboveFoldDelay().doubleValue()) - (Double.parseDouble(pros.getValue("webP63")))) * 20) / ((Double.parseDouble(pros.getValue("webP62")) - (Double.parseDouble(pros.getValue("webP63"))))))) * (Double.parseDouble(pros.getValue("webP61")));
+				else if (((webPageList.get(i).getAboveFoldDelay()).compareTo(Double.parseDouble(pros.getValue("webP72"))) > 0) && ((webPageList.get(i).getAboveFoldDelay()).compareTo(Double.parseDouble(pros.getValue("webP73"))) <= 0)) {
+					score += (80 + ((((webPageList.get(i).getAboveFoldDelay().doubleValue()) - (Double.parseDouble(pros.getValue("webP73")))) * 20) / ((Double.parseDouble(pros.getValue("webP72")) - (Double.parseDouble(pros.getValue("webP73"))))))) * (Double.parseDouble(pros.getValue("webP71")));
 				}
 				//above_fold_delay 60-80
-				else if (((webPageList.get(i).getAboveFoldDelay()).compareTo(Double.parseDouble(pros.getValue("webP63"))) > 0) && ((webPageList.get(i).getAboveFoldDelay()).compareTo(Double.parseDouble(pros.getValue("webP64"))) <= 0)) {
-					score += (60 + ((((webPageList.get(i).getAboveFoldDelay().doubleValue()) - (Double.parseDouble(pros.getValue("webP64")))) * 20) / ((Double.parseDouble(pros.getValue("webP63")) - (Double.parseDouble(pros.getValue("webP64"))))))) * (Double.parseDouble(pros.getValue("webP61")));
+				else if (((webPageList.get(i).getAboveFoldDelay()).compareTo(Double.parseDouble(pros.getValue("webP73"))) > 0) && ((webPageList.get(i).getAboveFoldDelay()).compareTo(Double.parseDouble(pros.getValue("webP74"))) <= 0)) {
+					score += (60 + ((((webPageList.get(i).getAboveFoldDelay().doubleValue()) - (Double.parseDouble(pros.getValue("webP74")))) * 20) / ((Double.parseDouble(pros.getValue("webP73")) - (Double.parseDouble(pros.getValue("webP74"))))))) * (Double.parseDouble(pros.getValue("webP71")));
 				}
 				//above_fold_delay 40-60
-				else if (((webPageList.get(i).getAboveFoldDelay()).compareTo(Double.parseDouble(pros.getValue("webP64"))) > 0) && ((webPageList.get(i).getAboveFoldDelay()).compareTo(Double.parseDouble(pros.getValue("webP65"))) <= 0)) {
-					score += (40 + ((((webPageList.get(i).getAboveFoldDelay().doubleValue()) - (Double.parseDouble(pros.getValue("webP65")))) * 20) / ((Double.parseDouble(pros.getValue("webP64")) - (Double.parseDouble(pros.getValue("webP65"))))))) * (Double.parseDouble(pros.getValue("webP61")));
+				else if (((webPageList.get(i).getAboveFoldDelay()).compareTo(Double.parseDouble(pros.getValue("webP74"))) > 0) && ((webPageList.get(i).getAboveFoldDelay()).compareTo(Double.parseDouble(pros.getValue("webP75"))) <= 0)) {
+					score += (40 + ((((webPageList.get(i).getAboveFoldDelay().doubleValue()) - (Double.parseDouble(pros.getValue("webP75")))) * 20) / ((Double.parseDouble(pros.getValue("webP74")) - (Double.parseDouble(pros.getValue("webP75"))))))) * (Double.parseDouble(pros.getValue("webP71")));
 				}
 				//above_fold_delay 20-40
-				else if (((webPageList.get(i).getAboveFoldDelay()).compareTo(Double.parseDouble(pros.getValue("webP65"))) > 0) && ((webPageList.get(i).getAboveFoldDelay()).compareTo(Double.parseDouble(pros.getValue("webP66"))) <= 0)) {
-					score += (20 + ((((webPageList.get(i).getAboveFoldDelay().doubleValue()) - (Double.parseDouble(pros.getValue("webP66")))) * 20) / ((Double.parseDouble(pros.getValue("webP65")) - (Double.parseDouble(pros.getValue("webP66"))))))) * (Double.parseDouble(pros.getValue("webP61")));
+				else if (((webPageList.get(i).getAboveFoldDelay()).compareTo(Double.parseDouble(pros.getValue("webP75"))) > 0) && ((webPageList.get(i).getAboveFoldDelay()).compareTo(Double.parseDouble(pros.getValue("webP76"))) <= 0)) {
+					score += (20 + ((((webPageList.get(i).getAboveFoldDelay().doubleValue()) - (Double.parseDouble(pros.getValue("webP76")))) * 20) / ((Double.parseDouble(pros.getValue("webP75")) - (Double.parseDouble(pros.getValue("webP76"))))))) * (Double.parseDouble(pros.getValue("webP71")));
 				}
 				//above_fold_delay 0-20
-				else if (((webPageList.get(i).getAboveFoldDelay()).compareTo(Double.parseDouble(pros.getValue("webP66"))) > 0) && ((webPageList.get(i).getAboveFoldDelay()).compareTo(Double.parseDouble(pros.getValue("webP67"))) <= 0)) {
-					score += ((((webPageList.get(i).getAboveFoldDelay().doubleValue()) - (Double.parseDouble(pros.getValue("webP67")))) * 20) / ((Double.parseDouble(pros.getValue("webP66")) - (Double.parseDouble(pros.getValue("webP67")))))) * (Double.parseDouble(pros.getValue("webP61")));
+				else if (((webPageList.get(i).getAboveFoldDelay()).compareTo(Double.parseDouble(pros.getValue("webP76"))) > 0) && ((webPageList.get(i).getAboveFoldDelay()).compareTo(Double.parseDouble(pros.getValue("webP77"))) <= 0)) {
+					score += ((((webPageList.get(i).getAboveFoldDelay().doubleValue()) - (Double.parseDouble(pros.getValue("webP77")))) * 20) / ((Double.parseDouble(pros.getValue("webP76")) - (Double.parseDouble(pros.getValue("webP77")))))) * (Double.parseDouble(pros.getValue("webP81")));
 				}
 				//above_fold_delay 0
 				else {
@@ -289,28 +289,28 @@ public class RecordHourWebPageServiceImpl implements RecordHourWebPageService {
 				}
 
 				//page_element_delay 100
-				if ((webPageList.get(i).getPageElementDelay()).compareTo(Double.parseDouble(pros.getValue("webP72"))) <= 0) {
-					score += 100 * (Double.parseDouble(pros.getValue("webP71")));
+				if ((webPageList.get(i).getPageElementDelay()).compareTo(Double.parseDouble(pros.getValue("webP82"))) <= 0) {
+					score += 100 * (Double.parseDouble(pros.getValue("webP81")));
 				}
 				//page_element_delay 80-100
-				else if (((webPageList.get(i).getPageElementDelay()).compareTo(Double.parseDouble(pros.getValue("webP72"))) > 0) && ((webPageList.get(i).getPageElementDelay()).compareTo(Double.parseDouble(pros.getValue("webP73"))) <= 0)) {
-					score += (80 + ((((webPageList.get(i).getPageElementDelay().doubleValue()) - (Double.parseDouble(pros.getValue("webP73")))) * 20) / ((Double.parseDouble(pros.getValue("webP72")) - (Double.parseDouble(pros.getValue("webP73"))))))) * (Double.parseDouble(pros.getValue("webP71")));
+				else if (((webPageList.get(i).getPageElementDelay()).compareTo(Double.parseDouble(pros.getValue("webP82"))) > 0) && ((webPageList.get(i).getPageElementDelay()).compareTo(Double.parseDouble(pros.getValue("webP83"))) <= 0)) {
+					score += (80 + ((((webPageList.get(i).getPageElementDelay().doubleValue()) - (Double.parseDouble(pros.getValue("webP83")))) * 20) / ((Double.parseDouble(pros.getValue("webP82")) - (Double.parseDouble(pros.getValue("webP83"))))))) * (Double.parseDouble(pros.getValue("webP81")));
 				}
 				//page_element_delay 60-80
-				else if (((webPageList.get(i).getPageElementDelay()).compareTo(Double.parseDouble(pros.getValue("webP73"))) > 0) && ((webPageList.get(i).getPageElementDelay()).compareTo(Double.parseDouble(pros.getValue("webP74"))) <= 0)) {
-					score += (60 + ((((webPageList.get(i).getPageElementDelay().doubleValue()) - (Double.parseDouble(pros.getValue("webP74")))) * 20) / ((Double.parseDouble(pros.getValue("webP73")) - (Double.parseDouble(pros.getValue("webP74"))))))) * (Double.parseDouble(pros.getValue("webP71")));
+				else if (((webPageList.get(i).getPageElementDelay()).compareTo(Double.parseDouble(pros.getValue("webP83"))) > 0) && ((webPageList.get(i).getPageElementDelay()).compareTo(Double.parseDouble(pros.getValue("webP84"))) <= 0)) {
+					score += (60 + ((((webPageList.get(i).getPageElementDelay().doubleValue()) - (Double.parseDouble(pros.getValue("webP84")))) * 20) / ((Double.parseDouble(pros.getValue("webP83")) - (Double.parseDouble(pros.getValue("webP84"))))))) * (Double.parseDouble(pros.getValue("webP81")));
 				}
 				//page_element_delay 40-60
-				else if (((webPageList.get(i).getPageElementDelay()).compareTo(Double.parseDouble(pros.getValue("webP74"))) > 0) && ((webPageList.get(i).getPageElementDelay()).compareTo(Double.parseDouble(pros.getValue("webP75"))) <= 0)) {
-					score += (40 + ((((webPageList.get(i).getPageElementDelay().doubleValue()) - (Double.parseDouble(pros.getValue("webP75")))) * 20) / ((Double.parseDouble(pros.getValue("webP74")) - (Double.parseDouble(pros.getValue("webP75"))))))) * (Double.parseDouble(pros.getValue("webP71")));
+				else if (((webPageList.get(i).getPageElementDelay()).compareTo(Double.parseDouble(pros.getValue("webP84"))) > 0) && ((webPageList.get(i).getPageElementDelay()).compareTo(Double.parseDouble(pros.getValue("webP85"))) <= 0)) {
+					score += (40 + ((((webPageList.get(i).getPageElementDelay().doubleValue()) - (Double.parseDouble(pros.getValue("webP85")))) * 20) / ((Double.parseDouble(pros.getValue("webP84")) - (Double.parseDouble(pros.getValue("webP85"))))))) * (Double.parseDouble(pros.getValue("webP81")));
 				}
 				//page_element_delay 20-40
-				else if (((webPageList.get(i).getPageElementDelay()).compareTo(Double.parseDouble(pros.getValue("webP75"))) > 0) && ((webPageList.get(i).getPageElementDelay()).compareTo(Double.parseDouble(pros.getValue("webP76"))) <= 0)) {
-					score += (20 + ((((webPageList.get(i).getPageElementDelay().doubleValue()) - (Double.parseDouble(pros.getValue("webP76")))) * 20) / ((Double.parseDouble(pros.getValue("webP75")) - (Double.parseDouble(pros.getValue("webP76"))))))) * (Double.parseDouble(pros.getValue("webP71")));
+				else if (((webPageList.get(i).getPageElementDelay()).compareTo(Double.parseDouble(pros.getValue("webP85"))) > 0) && ((webPageList.get(i).getPageElementDelay()).compareTo(Double.parseDouble(pros.getValue("webP86"))) <= 0)) {
+					score += (20 + ((((webPageList.get(i).getPageElementDelay().doubleValue()) - (Double.parseDouble(pros.getValue("webP86")))) * 20) / ((Double.parseDouble(pros.getValue("webP85")) - (Double.parseDouble(pros.getValue("webP86"))))))) * (Double.parseDouble(pros.getValue("webP81")));
 				}
 				//page_element_delay 0-20
-				else if (((webPageList.get(i).getPageElementDelay()).compareTo(Double.parseDouble(pros.getValue("webP76"))) > 0) && ((webPageList.get(i).getPageElementDelay()).compareTo(Double.parseDouble(pros.getValue("webP77"))) <= 0)) {
-					score += ((((webPageList.get(i).getPageElementDelay().doubleValue()) - (Double.parseDouble(pros.getValue("webP77")))) * 20) / ((Double.parseDouble(pros.getValue("webP76")) - (Double.parseDouble(pros.getValue("webP77")))))) * (Double.parseDouble(pros.getValue("webP71")));
+				else if (((webPageList.get(i).getPageElementDelay()).compareTo(Double.parseDouble(pros.getValue("webP86"))) > 0) && ((webPageList.get(i).getPageElementDelay()).compareTo(Double.parseDouble(pros.getValue("webP87"))) <= 0)) {
+					score += ((((webPageList.get(i).getPageElementDelay().doubleValue()) - (Double.parseDouble(pros.getValue("webP87")))) * 20) / ((Double.parseDouble(pros.getValue("webP86")) - (Double.parseDouble(pros.getValue("webP87")))))) * (Double.parseDouble(pros.getValue("webP81")));
 				}
 				//page_element_delay 0
 				else {
@@ -318,28 +318,28 @@ public class RecordHourWebPageServiceImpl implements RecordHourWebPageService {
 				}
 
 				//download_rate 100
-				if ((webPageList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("webP82"))) >= 0) {
-					score += 100 * (Double.parseDouble(pros.getValue("webP81")));
+				if ((webPageList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("webP32"))) >= 0) {
+					score += 100 * (Double.parseDouble(pros.getValue("webP31")));
 				}
 				//page_element_delay 80-100
-				else if (((webPageList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("webP82"))) < 0) && ((webPageList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("webP83"))) >= 0)) {
-					score += (80 + ((((webPageList.get(i).getDownloadRate().doubleValue()) - (Double.parseDouble(pros.getValue("webP83")))) * 20) / ((Double.parseDouble(pros.getValue("webP82")) - (Double.parseDouble(pros.getValue("webP83"))))))) * (Double.parseDouble(pros.getValue("webP81")));
+				else if (((webPageList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("webP32"))) < 0) && ((webPageList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("webP33"))) >= 0)) {
+					score += (80 + ((((webPageList.get(i).getDownloadRate().doubleValue()) - (Double.parseDouble(pros.getValue("webP33")))) * 20) / ((Double.parseDouble(pros.getValue("webP32")) - (Double.parseDouble(pros.getValue("webP33"))))))) * (Double.parseDouble(pros.getValue("webP31")));
 				}
 				//page_element_delay 60-80
-				else if (((webPageList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("webP83"))) < 0) && ((webPageList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("webP84"))) >= 0)) {
-					score += (60 + ((((webPageList.get(i).getDownloadRate().doubleValue()) - (Double.parseDouble(pros.getValue("webP84")))) * 20) / ((Double.parseDouble(pros.getValue("webP83")) - (Double.parseDouble(pros.getValue("webP84"))))))) * (Double.parseDouble(pros.getValue("webP81")));
+				else if (((webPageList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("webP33"))) < 0) && ((webPageList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("webP34"))) >= 0)) {
+					score += (60 + ((((webPageList.get(i).getDownloadRate().doubleValue()) - (Double.parseDouble(pros.getValue("webP34")))) * 20) / ((Double.parseDouble(pros.getValue("webP33")) - (Double.parseDouble(pros.getValue("webP34"))))))) * (Double.parseDouble(pros.getValue("webP31")));
 				}
 				//page_element_delay 40-60
-				else if (((webPageList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("webP84"))) < 0) && ((webPageList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("webP85"))) >= 0)) {
-					score += (40 + ((((webPageList.get(i).getDownloadRate().doubleValue()) - (Double.parseDouble(pros.getValue("webP85")))) * 20) / ((Double.parseDouble(pros.getValue("webP84")) - (Double.parseDouble(pros.getValue("webP85"))))))) * (Double.parseDouble(pros.getValue("webP81")));
+				else if (((webPageList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("webP34"))) < 0) && ((webPageList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("webP35"))) >= 0)) {
+					score += (40 + ((((webPageList.get(i).getDownloadRate().doubleValue()) - (Double.parseDouble(pros.getValue("webP35")))) * 20) / ((Double.parseDouble(pros.getValue("webP34")) - (Double.parseDouble(pros.getValue("webP35"))))))) * (Double.parseDouble(pros.getValue("webP31")));
 				}
 				//page_element_delay 20-40
-				else if (((webPageList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("webP85"))) < 0) && ((webPageList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("webP86"))) >= 0)) {
-					score += (20 + ((((webPageList.get(i).getDownloadRate().doubleValue()) - (Double.parseDouble(pros.getValue("webP86")))) * 20) / ((Double.parseDouble(pros.getValue("webP85")) - (Double.parseDouble(pros.getValue("webP86"))))))) * (Double.parseDouble(pros.getValue("webP81")));
+				else if (((webPageList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("webP35"))) < 0) && ((webPageList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("webP36"))) >= 0)) {
+					score += (20 + ((((webPageList.get(i).getDownloadRate().doubleValue()) - (Double.parseDouble(pros.getValue("webP36")))) * 20) / ((Double.parseDouble(pros.getValue("webP35")) - (Double.parseDouble(pros.getValue("webP36"))))))) * (Double.parseDouble(pros.getValue("webP31")));
 				}
 				//page_element_delay 0-20
-				else if (((webPageList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("webP86"))) < 0) && ((webPageList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("webP87"))) >= 0)) {
-					score += ((((webPageList.get(i).getDownloadRate().doubleValue()) - (Double.parseDouble(pros.getValue("webP87")))) * 20) / ((Double.parseDouble(pros.getValue("webP86")) - (Double.parseDouble(pros.getValue("webP87")))))) * (Double.parseDouble(pros.getValue("webP81")));
+				else if (((webPageList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("webP36"))) < 0) && ((webPageList.get(i).getDownloadRate()).compareTo(Double.parseDouble(pros.getValue("webP37"))) >= 0)) {
+					score += ((((webPageList.get(i).getDownloadRate().doubleValue()) - (Double.parseDouble(pros.getValue("webP37")))) * 20) / ((Double.parseDouble(pros.getValue("webP36")) - (Double.parseDouble(pros.getValue("webP37")))))) * (Double.parseDouble(pros.getValue("webP31")));
 				}
 				//page_element_delay 0
 				else {
