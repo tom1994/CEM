@@ -392,6 +392,9 @@ public class RecordHourWebPageServiceImpl implements RecordHourWebPageService {
 			PropertiesUtils pros = new PropertiesUtils();
 			Map<ScoreLayerEntity,ScoreBaseEntity> connection= new HashMap<>();
 			for (int i = 0; i < webPageList.size(); i++) {
+				if(webPageList.get(i).getAccessLayer()==null){
+					continue;
+				}
 				ScoreLayerEntity scoreLayer = new ScoreLayerEntity();
 				scoreLayer.setCityId(webPageList.get(i).getCityId());
 				scoreLayer.setCountyId(webPageList.get(i).getCountyId());

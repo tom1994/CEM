@@ -267,6 +267,7 @@ var button_change = new Vue({
                     let newlayer = {};
                     newlayer.name = result.page.list[i].layerName;
                     newlayer.data = [];
+                    console.log("layer"+layerNames);
                     options.series[i] = newlayer;
                 }
             }
@@ -830,7 +831,6 @@ function ping(val) {
                     let rows = [];
                     var i = 1;
                     sortTemp.forEach(function (item) {              /*观察user是否变化,更新表格数据*/
-                        debugger;
                         let row = [];
                         row.push(i++);
                         row.push(layerNames.get(item.accessLayer));
