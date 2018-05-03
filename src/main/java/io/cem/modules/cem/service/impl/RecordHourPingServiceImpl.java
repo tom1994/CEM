@@ -1610,6 +1610,9 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 			PropertiesUtils pros = new PropertiesUtils();
 			Map<ScoreLayerEntity,Map<String,ScoreBaseEntity>> connection= new HashMap<>();
 			for (int i = 0; i < pingIcmp.size(); i++) {
+				if(pingIcmp.get(i).getAccessLayer()==null){
+					continue;
+				}
 				ScoreLayerEntity scoreLayer = new ScoreLayerEntity();
 				scoreLayer.setCityId(pingIcmp.get(i).getCityId());
 				scoreLayer.setCountyId(pingIcmp.get(i).getCountyId());
@@ -3532,6 +3535,9 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 	//Map Date function
 	public Map<ScoreLayerEntity,Map<String,ScoreBaseEntity>> putMapLayer(List<ScoreEntity> list,Map<ScoreLayerEntity,Map<String,ScoreBaseEntity>> map,String type){
 		for (int i = 0; i < list.size(); i++) {
+			if(list.get(i).getAccessLayer()==null){
+				continue;
+			}
 			ScoreLayerEntity scoreLayer = new ScoreLayerEntity();
 			scoreLayer.setCityId(list.get(i).getCityId());
 			scoreLayer.setCountyId(list.get(i).getCountyId());

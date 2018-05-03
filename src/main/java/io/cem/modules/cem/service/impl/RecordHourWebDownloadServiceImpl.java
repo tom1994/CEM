@@ -810,6 +810,9 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 			PropertiesUtils pros = new PropertiesUtils();
 			Map<ScoreLayerEntity,Map<String,ScoreBaseEntity>> connection= new HashMap<>();
 			for (int i = 0; i < webDownload.size(); i++) {
+				if(webDownload.get(i).getAccessLayer()==null){
+					continue;
+				}
 				ScoreLayerEntity scoreLayer = new ScoreLayerEntity();
 				scoreLayer.setCityId(webDownload.get(i).getCityId());
 				scoreLayer.setCountyId(webDownload.get(i).getCountyId());

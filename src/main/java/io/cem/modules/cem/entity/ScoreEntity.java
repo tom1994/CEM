@@ -3,6 +3,7 @@ package io.cem.modules.cem.entity;
 import io.cem.common.utils.excel.annotation.ExcelIgnore;
 import io.cem.common.utils.excel.annotation.ExportName;
 
+import java.text.DecimalFormat;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -480,6 +481,8 @@ public class ScoreEntity {
      * 设置：分数
      */
     public Double getScore() {
+        DecimalFormat df = new DecimalFormat("#.00");
+        score = Double.parseDouble(df.format(score));
         return score;
     }
     /**
