@@ -381,6 +381,14 @@ function dispatch_info(obj) {
     /*获取当前行探针数据id*/
     dispatch_table.redraw();
     $('#myModal_dispatch').modal('show');
+    setTimeout(function () {
+        $("#dispatch_table").colResizable({
+            liveDrag: true,
+            gripInnerHtml: "<div class='grip'></div>",
+            draggingClass: "dragging",
+            resizeMode: 'overflow',
+        });
+    }, 300);
 }
 
 function selectOnchang(obj) {
@@ -610,10 +618,10 @@ function submit_dispatch() {
                     removeLoading('test');
                  let code=result.code;
                  switch(code){
-                     case 200:
-                         toastr.success(result.msg);
+                     case 404:
+                         toastr.error("任务下发失败!"); ;
                      default:
-                         toastr.error(result.msg);
+                         toastr.success("任务下发成功!");
                          break;
                  }
                     $('#task_dispatch').modal('hide');
@@ -1365,8 +1373,8 @@ var dispatch_table = new Vue({
     data: {
         headers: [
             {title: '<div style="width:17px"></div>'},
-            {title: '<div style="width:90px">探针名称</div>'},
-            {title: '<div style="width:78px">位置</div>'},
+            {title: '<div style="width:104px">探针名称</div>'},
+            {title: '<div style="width:130px">位置</div>'},
             {title: '<div style="width:57px">层级</div>'},
             {title: '<div style="width:57px">端口</div>'},
             {title: '<div style="width:180px">测试目标</div>'},
@@ -1402,12 +1410,6 @@ var dispatch_table = new Vue({
             console.log("页面重绘");
             vm.dtHandle.draw();
             /*重绘*/
-            $("#dispatch_table").colResizable({
-                liveDrag: true,
-                gripInnerHtml: "<div class='grip'></div>",
-                draggingClass: "dragging",
-                resizeMode: 'overflow',
-            });
         },
         show_modal: function () {
             $('#myModal_dispatch').modal('show');
@@ -1422,6 +1424,9 @@ var dispatch_table = new Vue({
             data: vm.rows,
             searching: false,
             paging: true,
+            scrollY :300,
+            scrollX: true,
+            scrollCollapse: true,
             serverSide: true,
             info: false,
             ordering: false, /*禁用排序功能*/
@@ -1475,12 +1480,24 @@ var dispatch_table = new Vue({
                         });
                         returnData.data = rows;
                         callback(returnData);
+
                     }
                 });
             }
         });
     }
 });
+function resize() {
+    debugger;
+    setTimeout(function () {
+        $("#dispatch_table").colResizable({
+            liveDrag: true,
+            gripInnerHtml: "<div class='grip'></div>",
+            draggingClass: "dragging",
+            resizeMode: 'overflow',
+        });
+    }, 300);
+}
 
 $(document).on('hidden.bs.modal', '.modal', function (e) {
     $('.modal-dialog').css({'top': '0px', 'left': '0px'});
