@@ -293,28 +293,28 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 					}
 
 					//login_delay 100
-					if ((ftpList.get(i).getLoginDelay()).compareTo(Double.parseDouble(pros.getValue("ftpD22"))) <= 0) {
-						score+= 100 * (Double.parseDouble(pros.getValue("ftpD21")));
+					if ((ftpList.get(i).getLoginDelay()).compareTo(Double.parseDouble(pros.getValue("ftpD32"))) <= 0) {
+						score+= 100 * (Double.parseDouble(pros.getValue("ftpD31")));
 					}
 					//conn_delay 80-100
-					else if (((ftpList.get(i).getLoginDelay()).compareTo(Double.parseDouble(pros.getValue("ftpD22"))) > 0) && ((ftpList.get(i).getLoginDelay()).compareTo(Double.parseDouble(pros.getValue("ftpD23"))) <= 0)) {
-						score+= (80 + ((((ftpList.get(i).getLoginDelay().doubleValue()) - (Double.parseDouble(pros.getValue("ftpD23")))) * 20) / ((Double.parseDouble(pros.getValue("ftpD22")) - (Double.parseDouble(pros.getValue("ftpD23"))))))) * (Double.parseDouble(pros.getValue("ftpD21")));
+					else if (((ftpList.get(i).getLoginDelay()).compareTo(Double.parseDouble(pros.getValue("ftpD32"))) > 0) && ((ftpList.get(i).getLoginDelay()).compareTo(Double.parseDouble(pros.getValue("ftpD33"))) <= 0)) {
+						score+= (80 + ((((ftpList.get(i).getLoginDelay().doubleValue()) - (Double.parseDouble(pros.getValue("ftpD33")))) * 20) / ((Double.parseDouble(pros.getValue("ftpD32")) - (Double.parseDouble(pros.getValue("ftpD33"))))))) * (Double.parseDouble(pros.getValue("ftpD31")));
 					}
 					//conn_delay 60-80
-					else if (((ftpList.get(i).getLoginDelay()).compareTo(Double.parseDouble(pros.getValue("ftpD23"))) > 0) && ((ftpList.get(i).getLoginDelay()).compareTo(Double.parseDouble(pros.getValue("ftpD24"))) <= 0)) {
-						score+= (60 + ((((ftpList.get(i).getLoginDelay().doubleValue()) - (Double.parseDouble(pros.getValue("ftpD24")))) * 20) / ((Double.parseDouble(pros.getValue("ftpD23")) - (Double.parseDouble(pros.getValue("ftpD24"))))))) * (Double.parseDouble(pros.getValue("ftpD21")));
+					else if (((ftpList.get(i).getLoginDelay()).compareTo(Double.parseDouble(pros.getValue("ftpD33"))) > 0) && ((ftpList.get(i).getLoginDelay()).compareTo(Double.parseDouble(pros.getValue("ftpD34"))) <= 0)) {
+						score+= (60 + ((((ftpList.get(i).getLoginDelay().doubleValue()) - (Double.parseDouble(pros.getValue("ftpD34")))) * 20) / ((Double.parseDouble(pros.getValue("ftpD33")) - (Double.parseDouble(pros.getValue("ftpD34"))))))) * (Double.parseDouble(pros.getValue("ftpD31")));
 					}
 					//conn_delay 40-60
-					else if (((ftpList.get(i).getLoginDelay()).compareTo(Double.parseDouble(pros.getValue("ftpD24"))) > 0) && ((ftpList.get(i).getLoginDelay()).compareTo(Double.parseDouble(pros.getValue("ftpD25"))) <= 0)) {
-						score+= (40 + ((((ftpList.get(i).getLoginDelay().doubleValue()) - (Double.parseDouble(pros.getValue("ftpD25")))) * 20) / ((Double.parseDouble(pros.getValue("ftpD24")) - (Double.parseDouble(pros.getValue("ftpD25"))))))) * (Double.parseDouble(pros.getValue("ftpD21")));
+					else if (((ftpList.get(i).getLoginDelay()).compareTo(Double.parseDouble(pros.getValue("ftpD34"))) > 0) && ((ftpList.get(i).getLoginDelay()).compareTo(Double.parseDouble(pros.getValue("ftpD35"))) <= 0)) {
+						score+= (40 + ((((ftpList.get(i).getLoginDelay().doubleValue()) - (Double.parseDouble(pros.getValue("ftpD35")))) * 20) / ((Double.parseDouble(pros.getValue("ftpD34")) - (Double.parseDouble(pros.getValue("ftpD35"))))))) * (Double.parseDouble(pros.getValue("ftpD31")));
 					}
 					//conn_delay 20-40
-					else if (((ftpList.get(i).getLoginDelay()).compareTo(Double.parseDouble(pros.getValue("ftpD25"))) > 0) && ((ftpList.get(i).getLoginDelay()).compareTo(Double.parseDouble(pros.getValue("ftpD26"))) <= 0)) {
-						score+= (20 + ((((ftpList.get(i).getLoginDelay().doubleValue()) - (Double.parseDouble(pros.getValue("ftpD26")))) * 20) / ((Double.parseDouble(pros.getValue("ftpD25")) - (Double.parseDouble(pros.getValue("ftpD26"))))))) * (Double.parseDouble(pros.getValue("ftpD21")));
+					else if (((ftpList.get(i).getLoginDelay()).compareTo(Double.parseDouble(pros.getValue("ftpD35"))) > 0) && ((ftpList.get(i).getLoginDelay()).compareTo(Double.parseDouble(pros.getValue("ftpD36"))) <= 0)) {
+						score+= (20 + ((((ftpList.get(i).getLoginDelay().doubleValue()) - (Double.parseDouble(pros.getValue("ftpD36")))) * 20) / ((Double.parseDouble(pros.getValue("ftpD35")) - (Double.parseDouble(pros.getValue("ftpD36"))))))) * (Double.parseDouble(pros.getValue("ftpD31")));
 					}
 					//conn_delay 0-20
-					else if (((ftpList.get(i).getLoginDelay()).compareTo(Double.parseDouble(pros.getValue("ftpD26"))) > 0) && ((ftpList.get(i).getLoginDelay()).compareTo(Double.parseDouble(pros.getValue("ftpD27"))) <= 0)) {
-						score+= ((((ftpList.get(i).getLoginDelay().doubleValue()) - (Double.parseDouble(pros.getValue("ftpD27")))) * 20) / ((Double.parseDouble(pros.getValue("ftpD26")) - (Double.parseDouble(pros.getValue("ftpD27")))))) * (Double.parseDouble(pros.getValue("ftpD21")));
+					else if (((ftpList.get(i).getLoginDelay()).compareTo(Double.parseDouble(pros.getValue("ftpD36"))) > 0) && ((ftpList.get(i).getLoginDelay()).compareTo(Double.parseDouble(pros.getValue("ftpD37"))) <= 0)) {
+						score+= ((((ftpList.get(i).getLoginDelay().doubleValue()) - (Double.parseDouble(pros.getValue("ftpD37")))) * 20) / ((Double.parseDouble(pros.getValue("ftpD36")) - (Double.parseDouble(pros.getValue("ftpD37")))))) * (Double.parseDouble(pros.getValue("ftpD31")));
 					}
 					//conn_delay 0
 					else {

@@ -64,7 +64,7 @@
 		ON alarm_record.probe_id = probe.id
 		INNER JOIN target
 		ON alarm_record.target_id = target.id
-		WHERE alarm_record.id IS NOT NULL
+		WHERE 1=1
 		<if test="startDate != null and startDate != '' and terminalDate != null and terminalDate != '' ">
 			AND alarm_record.record_time BETWEEN #{startDate} AND #{terminalDate}
 		</if>
@@ -100,12 +100,20 @@
 	
  	<select id="queryTotal" resultType="int">
 		select count(*) from alarm_record
-		WHERE id IS NOT NULL
+		WHERE
+		probe_id IN (SELECT id FROM probe)
+		AND target_id IN (SELECT id FROM target)
 		<if test="startDate != null and startDate != '' and terminalDate != null and terminalDate != '' ">
 			AND alarm_record.record_time BETWEEN #{startDate} AND #{terminalDate}
 		</if>
 		<if test="type != null and type != ''">
 			AND alarm_record.type = #{type}
+		</if>
+		<if test="probe_id != null and probe_id!= ''">
+			AND alarm_record.probe_id = #{probe_id}
+		</if>
+		<if test="service_type != null and service_type!= ''">
+			AND alarm_record.service_type = #{service_type}
 		</if>
 		<if test="level != null and level != ''">
 			AND alarm_record.level = #{level}

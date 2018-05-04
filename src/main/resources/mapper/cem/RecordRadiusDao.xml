@@ -3,7 +3,7 @@
 
 <mapper namespace="io.cem.modules.cem.dao.RecordRadiusDao">
 
-	<!-- 可根据自己的需求，是否要使用 -->
+    <!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="io.cem.modules.cem.entity.RecordRadiusEntity" id="recordRadiusMap">
         <result property="id" column="id"/>
         <result property="probeId" column="probe_id"/>
@@ -23,87 +23,88 @@
         <result property="remark" column="remark"/>
     </resultMap>
 
-	<resultMap type="io.cem.modules.cem.entity.RecordHourRadiusEntity" id="recordHourRadiusMap">
-		<result property="id" column="id"/>
-		<result property="cityId" column="city_id"/>
-		<result property="countyId" column="county_id"/>
-		<result property="probeId" column="probe_id"/>
-		<result property="port" column="port"/>
-		<result property="taskId" column="task_id"/>
-		<result property="serviceType" column="service_type"/>
-		<result property="targetId" column="target_id"/>
-		<result property="targetIp" column="target_ip"/>
-		<result property="recordDate" column="record_date"/>
-		<result property="recordTime" column="record_time"/>
-		<result property="delay" column="delay"/>
-		<result property="successRate" column="success_rate"/>
-		<result property="remark" column="remark"/>
-		<result property="cityName" column="city_name"/>
-		<result property="areaName" column="area_name"/>
-		<result property="probeName" column="probe_name"/>
-		<result property="targetName" column="target_name"/>
-		<result property="fail" column="fail"/>
-		<result property="total" column="total"/>
-	</resultMap>
+    <resultMap type="io.cem.modules.cem.entity.RecordHourRadiusEntity" id="recordHourRadiusMap">
+        <result property="id" column="id"/>
+        <result property="cityId" column="city_id"/>
+        <result property="countyId" column="county_id"/>
+        <result property="probeId" column="probe_id"/>
+        <result property="port" column="port"/>
+        <result property="taskId" column="task_id"/>
+        <result property="serviceType" column="service_type"/>
+        <result property="targetId" column="target_id"/>
+        <result property="targetIp" column="target_ip"/>
+        <result property="recordDate" column="record_date"/>
+        <result property="recordTime" column="record_time"/>
+        <result property="delay" column="delay"/>
+        <result property="successRate" column="success_rate"/>
+        <result property="remark" column="remark"/>
+        <result property="cityName" column="city_name"/>
+        <result property="areaName" column="area_name"/>
+        <result property="probeName" column="probe_name"/>
+        <result property="targetName" column="target_name"/>
+        <result property="fail" column="fail"/>
+        <result property="total" column="total"/>
+    </resultMap>
 
-	<resultMap type="io.cem.modules.cem.entity.RecordDayRadiusEntity" id="recordDayRadiusMap">
-		<result property="id" column="id"/>
-		<result property="cityId" column="city_id"/>
-		<result property="countyId" column="county_id"/>
-		<result property="probeId" column="probe_id"/>
-		<result property="port" column="port"/>
-		<result property="taskId" column="task_id"/>
-		<result property="serviceType" column="service_type"/>
-		<result property="targetId" column="target_id"/>
-		<result property="targetIp" column="target_ip"/>
-		<result property="recordDate" column="record_date"/>
-		<result property="recordTime" column="record_time"/>
-		<result property="delay" column="delay"/>
-		<result property="successRate" column="success_rate"/>
-		<result property="remark" column="remark"/>
-		<result property="fail" column="fail"/>
-		<result property="total" column="total"/>
-	</resultMap>
+    <resultMap type="io.cem.modules.cem.entity.RecordDayRadiusEntity" id="recordDayRadiusMap">
+        <result property="id" column="id"/>
+        <result property="cityId" column="city_id"/>
+        <result property="countyId" column="county_id"/>
+        <result property="probeId" column="probe_id"/>
+        <result property="port" column="port"/>
+        <result property="taskId" column="task_id"/>
+        <result property="serviceType" column="service_type"/>
+        <result property="targetId" column="target_id"/>
+        <result property="targetIp" column="target_ip"/>
+        <result property="recordDate" column="record_date"/>
+        <result property="recordTime" column="record_time"/>
+        <result property="delay" column="delay"/>
+        <result property="successRate" column="success_rate"/>
+        <result property="remark" column="remark"/>
+        <result property="fail" column="fail"/>
+        <result property="total" column="total"/>
+    </resultMap>
 
-	<select id="queryObject" resultType="io.cem.modules.cem.entity.RecordRadiusEntity">
+    <select id="queryObject" resultType="io.cem.modules.cem.entity.RecordRadiusEntity">
 		select * from record_radius where id = #{value}
 	</select>
 
-	<select id="queryList" resultType="io.cem.modules.cem.entity.RecordRadiusEntity">
-		select * from record_radius
+    <select id="queryList" resultType="io.cem.modules.cem.entity.RecordRadiusEntity">
+        select * from record_radius
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
                 order by ${sidx} ${order}
             </when>
-			<otherwise>
+            <otherwise>
                 order by id desc
-			</otherwise>
+            </otherwise>
         </choose>
-		<if test="offset != null and limit != null">
-			limit #{offset}, #{limit}
-		</if>
-	</select>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
 
-	<select id="queryRadius" resultType="io.cem.modules.cem.entity.RecordHourRadiusEntity">
-		select rp.probe_id AS probe_id,
-		rp.port AS port,
-		rp.task_id AS task_id,
-		rp.service_type AS service_type,
-		rp.target_id AS target_id,
-		rp.target_ip AS target_ip,
-		time_format(rp.record_time,'%H:%30:%00') AS record_time,
-		rp.record_date AS record_date,
-		probe.city_id AS city_id,
-		probe.county_id AS county_id,
-		AVG(rp.delay) AS delay,
+    <select id="queryRadius" resultType="io.cem.modules.cem.entity.RecordHourRadiusEntity">
+	  SELECT rp.probe_id AS probe_id,
+       rp.port AS port,
+       rp.task_id AS task_id,
+       rp.service_type AS service_type,
+       rp.target_id AS target_id,
+       rp.target_ip AS target_ip,
+       time_format(rp.record_time,'%H:%30:%00') AS record_time,
+       rp.record_date AS record_date,
+       probe.city_id AS city_id,
+       probe.county_id AS county_id,
+	AVG(rp.delay) AS delay,
 		AVG(rp.success_rate) AS success_rate,
-		rp.remark AS remark,
-		t.fail AS fail,
-		t.total AS total
-		FROM record_radius rp
-		LEFT JOIN probe
-		ON  rp.probe_id =probe.id
-		INNER JOIN (SELECT probe_id  AS probe_id,
+       rp.remark AS remark,
+       t.total AS total,
+       t.fail AS fail
+FROM record_radius rp
+  INNER JOIN probe
+    ON  rp.probe_id =probe.id
+  INNER JOIN (SELECT
+                probe_id  AS probe_id,
                      port      AS port,
                      task_id   AS task_id,
                      service_type  AS service_type,
@@ -111,18 +112,18 @@
                      sum(state) AS fail,
                      count(record_radius.id)  AS total
               FROM record_radius
-                INNER JOIN probe
-                  ON probe_id = probe.id
               WHERE record_date = #{record_date}
+                AND probe_id IN (SELECT id FROM probe)
                     AND record_time BETWEEN #{start_time} AND #{terminal_time}
               GROUP BY port, service_type, target_id, task_id, probe_id) t
-		WHERE rp.record_date = #{record_date}
-		AND rp.record_time BETWEEN #{start_time} AND #{terminal_time}
-		AND rp.state = 0
-		GROUP BY rp.port,rp.service_type,rp.target_id,rp.task_id,rp.probe_id;
+ ON rp.port = t.port AND rp.service_type = t.service_type AND rp.target_id = t.target_id AND rp.task_id = t.task_id AND rp.probe_id = t.probe_id
+WHERE rp.record_date = #{record_date}
+      AND record_time BETWEEN #{start_time} AND #{terminal_time}
+      AND rp.state = 0
+GROUP BY rp.port,rp.service_type,rp.target_id,rp.task_id,rp.probe_id;
 	</select>
 
-	<select id="queryDay" resultType="io.cem.modules.cem.entity.RecordDayRadiusEntity">
+    <select id="queryDay" resultType="io.cem.modules.cem.entity.RecordDayRadiusEntity">
 		select rp.probe_id AS probe_id,
 		rp.port AS port,
 		rp.task_id AS task_id,
@@ -158,115 +159,116 @@
 		GROUP BY rp.port,rp.service_type,rp.target_id,rp.task_id,rp.probe_id;
 	</select>
 
-	<select id="queryRadiusTest" resultType="io.cem.modules.cem.entity.RecordRadiusEntity">
-		select record_radius.*,
-		probe.probe_name AS probe_name,
-		target.target_name AS target_name,
-		target.value AS targetip_name
-		FROM record_radius
-		LEFT JOIN probe
-		ON  record_radius.probe_id =probe.id
-		LEFT JOIN target
-		ON record_radius.target_id = target.id
-		WHERE
-		record_radius.dispatch_id = #{dispatch_id}
-		<choose>
-			<when test="sidx != null and sidx.trim() != ''">
-				order by ${sidx} ${order}
-			</when>
-			<otherwise>
-				order by id desc
-			</otherwise>
-		</choose>
-		<if test="offset != null and limit != null">
-			limit #{offset}, #{limit}
-		</if>
-	</select>
+    <select id="queryRadiusTest" resultType="io.cem.modules.cem.entity.RecordRadiusEntity">
+        select record_radius.*,
+        probe.probe_name AS probe_name,
+        target.target_name AS target_name,
+        target.value AS targetip_name
+        FROM record_radius
+        LEFT JOIN probe
+        ON record_radius.probe_id =probe.id
+        LEFT JOIN target
+        ON record_radius.target_id = target.id
+        WHERE
+        record_radius.dispatch_id = #{dispatch_id}
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+            <otherwise>
+                order by id desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
 
-	<!--根据条件查询测试结果-->
-	<select id="queryRadiusList" resultType="io.cem.modules.cem.entity.RecordRadiusEntity">
-		select record_radius.*,
-		probe.probe_name AS probe_name,
-		task.task_name AS task_name,
-		target.target_name AS target_name,
-		target.value AS targetip_name,
-		a.data_name AS tasktype_name,
-		b.data_name AS targettype_name,
-		c.data_name AS state_name,
-		d.data_name AS servicetype_name
-		FROM record_radius
-		INNER JOIN probe
-		ON  record_radius.probe_id =probe.id
-		INNER JOIN task
-		ON record_radius.task_id = task.id
-		AND task.is_ondemand =0
-		INNER JOIN target
-		ON record_radius.target_id = target.id
-		LEFT JOIN dic_data a
-		ON (a.dic_type_id = 6 AND record_radius.task_type = a.data_id)
-		LEFT JOIN dic_data b
-		ON (b.dic_type_id = 8 AND record_radius.target_type = b.data_id)
-		LEFT JOIN dic_data c
-		ON (c.dic_type_id = 9 AND record_radius.state = c.data_id)
-		LEFT JOIN dic_data d
-		ON (d.dic_type_id = 5 AND record_radius.service_type = d.data_id)
-		WHERE record_radius.service_type = #{service_type}
-		<if test="task_id != null and task_id != ''">
-			AND task_id = #{task_id}
-		</if>
-		<if test="target_id != null and target_id != ''">
-			AND target_id = #{target_id}
-		</if>
-		<if test="probe_id != null and probe_id != ''">
-			AND probe_id = #{probe_id}
-		</if>
-		<if test="startDate != null and startDate != '' and terminalDate != null and terminalDate != '' ">
-			AND record_date BETWEEN #{startDate} AND #{terminalDate}
-		</if>
-		<if test="start_time != null and start_time != '' and end_time != null and end_time != '' ">
-			AND record_time BETWEEN #{start_time} AND #{end_time}
-		</if>
-		<choose>
-			<when test="sidx != null and sidx.trim() != ''">
-				order by ${sidx} ${order}
-			</when>
-			<otherwise>
-				order by record_date desc,record_time desc
-			</otherwise>
-		</choose>
-		<if test="offset != null and limit != null">
-			limit #{offset}, #{limit}
-		</if>
-	</select>
+    <!--根据条件查询测试结果-->
+    <select id="queryRadiusList" resultType="io.cem.modules.cem.entity.RecordRadiusEntity">
+        select record_radius.*,
+        probe.probe_name AS probe_name,
+        task.task_name AS task_name,
+        target.target_name AS target_name,
+        target.value AS targetip_name,
+        a.data_name AS tasktype_name,
+        b.data_name AS targettype_name,
+        c.data_name AS state_name,
+        d.data_name AS servicetype_name
+        FROM record_radius
+        INNER JOIN probe
+        ON record_radius.probe_id =probe.id
+        INNER JOIN task
+        ON record_radius.task_id = task.id
+        AND task.is_ondemand =0
+        INNER JOIN target
+        ON record_radius.target_id = target.id
+        LEFT JOIN dic_data a
+        ON (a.dic_type_id = 6 AND record_radius.task_type = a.data_id)
+        LEFT JOIN dic_data b
+        ON (b.dic_type_id = 8 AND record_radius.target_type = b.data_id)
+        LEFT JOIN dic_data c
+        ON (c.dic_type_id = 9 AND record_radius.state = c.data_id)
+        LEFT JOIN dic_data d
+        ON (d.dic_type_id = 5 AND record_radius.service_type = d.data_id)
+        WHERE record_radius.service_type = #{service_type}
+        <if test="task_id != null and task_id != ''">
+            AND task_id = #{task_id}
+        </if>
+        <if test="target_id != null and target_id != ''">
+            AND target_id = #{target_id}
+        </if>
+        <if test="probe_id != null and probe_id != ''">
+            AND probe_id = #{probe_id}
+        </if>
+        <if test="startDate != null and startDate != '' and terminalDate != null and terminalDate != '' ">
+            AND record_date BETWEEN #{startDate} AND #{terminalDate}
+        </if>
+        <if test="start_time != null and start_time != '' and end_time != null and end_time != '' ">
+            AND record_time BETWEEN #{start_time} AND #{end_time}
+        </if>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+            <otherwise>
+                order by record_date desc,record_time desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
 
-	<select id="queryTotal" resultType="int">
-		select count(*) FROM record_radius
-		INNER JOIN probe
-		ON  record_radius.probe_id =probe.id
-		INNER JOIN task
-		ON record_radius.task_id = task.id
-		AND task.is_ondemand =0
-		INNER JOIN target
-		ON record_radius.target_id = target.id
-		WHERE
-		record_radius.service_type = #{service_type}
-		AND
-		record_date BETWEEN #{startDate} AND #{terminalDate}
-		<if test="task_id != null and task_id != ''">
-			AND task_id = #{task_id}
-		</if>
-		<if test="target_id != null and target_id != ''">
-			AND target_id = #{target_id}
-		</if>
-		<if test="probe_id != null and probe_id != ''">
-			AND probe_id = #{probe_id}
-		</if>
-		<if test="start_time != null and start_time != '' and end_time != null and end_time != '' ">
-			AND record_time BETWEEN #{start_time} AND #{end_time}
-		</if>
-	</select>
-	 
-	<insert id="save" parameterType="io.cem.modules.cem.entity.RecordRadiusEntity" useGeneratedKeys="true" keyProperty="id">
+    <select id="queryTotal" resultType="int">
+        select count(*) FROM record_radius
+        INNER JOIN probe
+        ON record_radius.probe_id =probe.id
+        INNER JOIN task
+        ON record_radius.task_id = task.id
+        AND task.is_ondemand =0
+        INNER JOIN target
+        ON record_radius.target_id = target.id
+        WHERE
+        record_radius.service_type = #{service_type}
+        AND
+        record_date BETWEEN #{startDate} AND #{terminalDate}
+        <if test="task_id != null and task_id != ''">
+            AND task_id = #{task_id}
+        </if>
+        <if test="target_id != null and target_id != ''">
+            AND target_id = #{target_id}
+        </if>
+        <if test="probe_id != null and probe_id != ''">
+            AND probe_id = #{probe_id}
+        </if>
+        <if test="start_time != null and start_time != '' and end_time != null and end_time != '' ">
+            AND record_time BETWEEN #{start_time} AND #{end_time}
+        </if>
+    </select>
+
+    <insert id="save" parameterType="io.cem.modules.cem.entity.RecordRadiusEntity" useGeneratedKeys="true"
+            keyProperty="id">
 		insert into record_radius
 		(
 			`probe_id`, 
@@ -304,38 +306,38 @@
 			#{remark}
 		)
 	</insert>
-	 
-	<update id="update" parameterType="io.cem.modules.cem.entity.RecordRadiusEntity">
-		update record_radius 
-		<set>
-			<if test="probeId != null">`probe_id` = #{probeId}, </if>
-			<if test="port != null">`port` = #{port}, </if>
-			<if test="taskId != null">`task_id` = #{taskId}, </if>
-			<if test="serviceType != null">`service_type` = #{serviceType}, </if>
-			<if test="taskType != null">`task_type` = #{taskType}, </if>
-			<if test="targetType != null">`target_type` = #{targetType}, </if>
-			<if test="targetId != null">`target_id` = #{targetId}, </if>
-			<if test="targetIp != null">`target_ip` = #{targetIp}, </if>
-			<if test="targetLoc != null">`target_loc` = #{targetLoc}, </if>
-			<if test="state != null">`state` = #{state}, </if>
-			<if test="recordDate != null">`record_date` = #{recordDate}, </if>
-			<if test="recordTime != null">`record_time` = #{recordTime}, </if>
-			<if test="delay != null">`delay` = #{delay}, </if>
-			<if test="successRate != null">`success_rate` = #{successRate}, </if>
-			<if test="remark != null">`remark` = #{remark}</if>
-		</set>
-		where id = #{id}
-	</update>
-	
-	<delete id="delete">
+
+    <update id="update" parameterType="io.cem.modules.cem.entity.RecordRadiusEntity">
+        update record_radius
+        <set>
+            <if test="probeId != null">`probe_id` = #{probeId},</if>
+            <if test="port != null">`port` = #{port},</if>
+            <if test="taskId != null">`task_id` = #{taskId},</if>
+            <if test="serviceType != null">`service_type` = #{serviceType},</if>
+            <if test="taskType != null">`task_type` = #{taskType},</if>
+            <if test="targetType != null">`target_type` = #{targetType},</if>
+            <if test="targetId != null">`target_id` = #{targetId},</if>
+            <if test="targetIp != null">`target_ip` = #{targetIp},</if>
+            <if test="targetLoc != null">`target_loc` = #{targetLoc},</if>
+            <if test="state != null">`state` = #{state},</if>
+            <if test="recordDate != null">`record_date` = #{recordDate},</if>
+            <if test="recordTime != null">`record_time` = #{recordTime},</if>
+            <if test="delay != null">`delay` = #{delay},</if>
+            <if test="successRate != null">`success_rate` = #{successRate},</if>
+            <if test="remark != null">`remark` = #{remark}</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="delete">
 		delete from record_radius where id = #{value}
 	</delete>
-	
-	<delete id="deleteBatch">
-		delete from record_radius where id in 
-		<foreach item="id" collection="array" open="(" separator="," close=")">
-			#{id}
-		</foreach>
-	</delete>
+
+    <delete id="deleteBatch">
+        delete from record_radius where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
 
 </mapper>

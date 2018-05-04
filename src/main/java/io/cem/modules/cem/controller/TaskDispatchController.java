@@ -264,7 +264,7 @@ public class TaskDispatchController {
         return R.ok().put("taskdispatch", dispatch);
     }
 
-    @SysLog("下发任务")
+    /*@SysLog("下发任务")
     @RequestMapping("/saveAll")
     @RequiresPermissions("taskdispatch:save")
     public R saveAll(@RequestBody TaskDispatchEntity taskDispatch) {
@@ -359,6 +359,79 @@ public class TaskDispatchController {
                 }
             }
         } catch (Exception e) {
+            return R.error("网络故障，下发失败");
+        }
+    }*/
+
+    @SysLog("下发任务")
+    @RequestMapping("/saveAll")
+    @RequiresPermissions("taskdispatch:save")
+    public R saveAll(@RequestBody TaskDispatchEntity taskDispatch) {
+        taskDispatch.setCreateTime(new Date());
+        if (taskDispatch.getTargetGroupIds() != null) {
+            int[] targetGroupIds = taskDispatch.getTargetGroupIds();
+            ArrayList target = new ArrayList();
+            JSONObject targetjson = new JSONObject();
+            targetjson.put("target_port", "");
+            targetjson.put("target_type", 1);
+            for (int i = 0; i < targetGroupIds.length; i++) {
+                List<TargetEntity> targetEntities = targetService.queryTargetListByGroup(targetGroupIds[i]);
+                for (int j = 0; j < targetEntities.size(); j++) {
+                    JSONObject targetObject = CloneUtils.clone(targetjson);
+                    targetObject.put("target_id", targetEntities.get(j).getId());
+                    targetObject.put("target_value", targetEntities.get(j).getValue());
+                    target.add(JSON.toJSONString(targetObject));
+                }
+            }
+            taskDispatch.setTarget(target.toString());
+        } else {
+            ArrayList target = new ArrayList();
+            int[] targetIds = taskDispatch.getTargetIds();
+            JSONObject targetjson = new JSONObject();
+            targetjson.put("target_port", "");
+            targetjson.put("target_type", 1);
+            for (int targetId : targetIds) {
+                JSONObject targetObject = CloneUtils.clone(targetjson);
+                TargetEntity targetEntity = targetService.queryObject(targetId);
+                targetObject.put("target_id", targetEntity.getId());
+                targetObject.put("target_value", targetEntity.getValue());
+                target.add(JSON.toJSON(targetObject));
+            }
+            taskDispatch.setTarget(target.toString());
+        }
+        if (taskDispatch.getProbeIds() == null && taskDispatch.getProbeGroupIds() != null) {
+            int[] probeGroupIds = taskDispatch.getProbeGroupIds();
+            List<TaskDispatchEntity> taskDispatchEntityList = new ArrayList<>();
+            for (int probeGroupId : probeGroupIds) {
+                List<ProbeEntity> probes = probeService.queryProbeListByGroup(probeGroupId);
+                for (ProbeEntity probe : probes) {
+                    TaskDispatchEntity taskDispatchEntity = CloneUtils.clone(taskDispatch);
+                    taskDispatchEntity.setProbeId(probe.getId());
+                    taskDispatchEntityList.add(taskDispatchEntity);
+                }
+            }
+            taskDispatchService.saveAll(taskDispatchEntityList);
+        } else if (taskDispatch.getProbeIds() != null && taskDispatch.getProbeGroupIds() == null) {
+            int[] probeIdsList = taskDispatch.getProbeIds();
+            List<TaskDispatchEntity> taskDispatchEntityList = new ArrayList<>();
+            for (int j = 0; j < probeIdsList.length; j++) {
+                TaskDispatchEntity taskDispatchEntity = CloneUtils.clone(taskDispatch);
+                taskDispatchEntity.setProbeId(probeIdsList[j]);
+                taskDispatchEntityList.add(taskDispatchEntity);
+            }
+            taskDispatchService.saveAll(taskDispatchEntityList);
+        } else {
+            return R.error(111, "探针或探针组格式错误");
+        }
+        try {
+            int result = BypassHttps.sendRequestIgnoreSSL("POST", "https://114.236.91.16:23456/web/v1/tasks/" + taskDispatch.getTaskId());
+            if(result == 200){
+                return R.ok();
+            }else{
+                taskDispatchService.cancelSave(taskDispatch.getTaskId());
+                return R.error(404,"任务下发失败，错误代码"+result);
+            }
+        }catch (Exception e){
             return R.error("网络故障，下发失败");
         }
     }
