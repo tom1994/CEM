@@ -295,6 +295,7 @@ public class RecordHourTracertController {
 		}else{
 			scoreList = recordHourRadiusService.calculateDayScore(map);
 		}
+		sortStringMethod(scoreList);
 //		int countyId = Integer.parseInt(map.get("county_id").toString());
 //		List<ProbeEntity> probeList = probeService.queryProbe(countyId);
 //		System.out.println(probeList);

@@ -441,7 +441,7 @@ var new_search = new Vue({
                 search.ava_start = searchJson.startDate.substr(0, 10);
                 search.ava_terminal = searchJson.terminalDate.substr(0, 10);
                 search.startTime = searchJson.startDate.substr(11, 15);
-                search.terminalTime = searchJson.startDate.substr(11, 15);
+                search.terminalTime = searchJson.terminalDate.substr(11, 15);
                 if (search.ava_start.length != 0 && search.ava_terminal.length != 0) {
 
                 } else {
