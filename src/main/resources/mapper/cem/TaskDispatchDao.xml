@@ -95,6 +95,12 @@
 		WHERE task_id = #{value} AND task_dispatch.status = 1
 	</select>
 
+	<!--查询一个探针已经有的任务数-->
+	<select id="queryCurrentDispatch" resultType="int">
+		select count(*) from task_dispatch
+		WHERE probe_id = #{value} AND task_dispatch.status = 1
+	</select>
+
 	<select id="queryTestStatus" resultType="int">
 		SELECT count(*) FROM task_dispatch
 		WHERE id = #{value}

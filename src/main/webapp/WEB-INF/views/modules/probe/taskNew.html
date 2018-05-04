@@ -65,6 +65,13 @@
         .btn-default.active.focus, .btn-default.active:focus, .btn-default.active:hover, .btn-default:active.focus, .btn-default:active:focus, .btn-default:active:hover, .open > .dropdown-toggle.btn-default.focus, .open > .dropdown-toggle.btn-default:focus, .open > .dropdown-toggle.btn-default:hover{
             background: white;
         }
+        .dataTable th {
+            white-space: nowrap !important;
+        }
+        .dataTable td {
+            overflow: visible; !important;
+            white-space: nowrap !important;
+        }
     </style>
 </head>
 <body>
@@ -103,7 +110,7 @@
                         已分配数量
                     </h3>
                 </div>
-                <div class="modal-body" style='height: 420px;overflow: auto; padding: 10px 30px; '>
+                <div class="modal-body" style=' padding: 10px 30px; '>
                     <div class="row " style="overflow-x: auto">     <!--表格 verflow-x: scroll超出滚动-->
                         <table class="table table-bordered " id="dispatch_table"></table>
                     </div>

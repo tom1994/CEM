@@ -19,6 +19,7 @@ var statusSelected = 0
 
 function getFormJson(form) {      /*将表单对象变为json对象*/
     var o = {};
+    debugger
     var a = $(form).serializeArray();
     if (countrySelected != 0) {
         a[2] = {}
@@ -46,11 +47,12 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
         a[6].value =  parseInt(statusSelected)
 
     }
-    // if(citySelected!=0){
-    //     a[0]={}
-    //     a[0].name='city_id'
-    //     a[0].value=citySelected;
-    // }
+    if(citySelected!=0){
+        a[7] = {}
+        a[7].name = "city_id"
+        a[7].value =  parseInt(citySelected)
+
+    }
     $.each(a, function () {
         if (o[this.name] !== undefined) {
             if (!o[this.name].push) {
@@ -232,7 +234,6 @@ var probedata_handle = new Vue({
 });
 
 function delete_All() {
-    debugger
     var CheckALL = document.getElementsByName("selectFlag");
     var check_val = [];
     for (var i in CheckALL) {
@@ -1715,5 +1716,24 @@ $(document).ready(function () {
 //     document.body.onselectstart = document.body.ondrag = null;
 //
 // })
-
+// $('#probedata_table').DataTable( {
+//     buttons: [
+//         'copy', 'excel', 'pdf'
+//     ]
+// } );
+//
+// //例子2： 导出Excel
+// $('#probedata_table').DataTable( {
+//     buttons: [
+//         {
+//             extend: 'excel',//使用 excel扩展
+//             text: '导出本页',// 显示文字
+//             exportOptions: {
+//                 //自定义导出选项
+//                 //如：可自定义导出那些列，那些行
+//                 //TODO...
+//             }
+//         }
+//     ]
+// } );
 

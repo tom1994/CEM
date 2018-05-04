@@ -269,6 +269,7 @@ public class TaskDispatchController {
     @RequiresPermissions("taskdispatch:save")
     public R saveAll(@RequestBody TaskDispatchEntity taskDispatch) {
         taskDispatch.setCreateTime(new Date());
+        List<String> probeLimited = new ArrayList<>();
         if (taskDispatch.getTargetGroupIds() != null) {
             int[] targetGroupIds = taskDispatch.getTargetGroupIds();
             ArrayList target = new ArrayList();
@@ -306,33 +307,58 @@ public class TaskDispatchController {
             for (int probeGroupId : probeGroupIds) {
                 List<ProbeEntity> probes = probeService.queryProbeListByGroup(probeGroupId);
                 for (ProbeEntity probe : probes) {
-                    TaskDispatchEntity taskDispatchEntity = CloneUtils.clone(taskDispatch);
-                    taskDispatchEntity.setProbeId(probe.getId());
-                    taskDispatchEntityList.add(taskDispatchEntity);
+                    if (probe.getConcurrentTask() > taskDispatchService.queryCurrentDispatch(probe.getId())) {
+                        TaskDispatchEntity taskDispatchEntity = CloneUtils.clone(taskDispatch);
+                        taskDispatchEntity.setProbeId(probe.getId());
+                        taskDispatchEntityList.add(taskDispatchEntity);
+                    } else {
+                        probeLimited.add(probe.getName());
+                    }
                 }
             }
             taskDispatchService.saveAll(taskDispatchEntityList);
         } else if (taskDispatch.getProbeIds() != null && taskDispatch.getProbeGroupIds() == null) {
             int[] probeIdsList = taskDispatch.getProbeIds();
             List<TaskDispatchEntity> taskDispatchEntityList = new ArrayList<>();
-            for (int j = 0; j < probeIdsList.length; j++) {
-                TaskDispatchEntity taskDispatchEntity = CloneUtils.clone(taskDispatch);
-                taskDispatchEntity.setProbeId(probeIdsList[j]);
-                taskDispatchEntityList.add(taskDispatchEntity);
+            Map mapEmpty = new HashMap();
+            List<ProbeEntity> probeEntityList = probeService.queryList(mapEmpty);
+            Map map = new HashMap();
+            Map outMap = new HashMap();
+            for (ProbeEntity probeEntity : probeEntityList) {
+                map.put(probeEntity.getId(), probeEntity.getConcurrentTask());
+                outMap.put(probeEntity.getId(), probeEntity.getName());
             }
-            taskDispatchService.saveAll(taskDispatchEntityList);
+            for (int j = 0; j < probeIdsList.length; j++) {
+                int CurrentTask = taskDispatchService.queryCurrentDispatch(probeIdsList[j]);
+                if (Integer.parseInt(map.get(probeIdsList[j]).toString()) > taskDispatchService.queryCurrentDispatch(probeIdsList[j])) {
+                    TaskDispatchEntity taskDispatchEntity = CloneUtils.clone(taskDispatch);
+                    taskDispatchEntity.setProbeId(probeIdsList[j]);
+                    taskDispatchEntityList.add(taskDispatchEntity);
+                    taskDispatchService.saveAll(taskDispatchEntityList);
+                } else {
+                    probeLimited.add(outMap.get(probeIdsList[j]).toString());
+                }
+            }
         } else {
             return R.error(111, "探针或探针组格式错误");
         }
         try {
             int result = BypassHttps.sendRequestIgnoreSSL("POST", "https://114.236.91.16:23456/web/v1/tasks/" + taskDispatch.getTaskId());
-            if(result == 200){
-                return R.ok();
-            }else{
+            if (result == 200) {
+                if (probeLimited.size() == 0) {
+                    return R.ok();
+                } else {
+                    return R.error(600, probeLimited.get(0) + "任务数量已经超出最大限制");
+                }
+            } else {
                 taskDispatchService.cancelSave(taskDispatch.getTaskId());
-                return R.error(404,"任务下发失败，错误代码"+result);
+                if (probeLimited.size()==0) {
+                    return R.error(404, "任务下发失败，错误代码" + result);
+                }else {
+                    return R.error(600, probeLimited.get(0) + "任务数量已经超出最大限制");
+                }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             return R.error("网络故障，下发失败");
         }
     }
@@ -364,7 +390,7 @@ public class TaskDispatchController {
         if (result == 200) {
             return R.ok();
         } else {
-            return R.error(404, "取消任务失败,错误代码"+result);
+            return R.error(404, "取消任务失败,错误代码" + result);
         }
     }
 }
