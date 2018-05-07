@@ -143,6 +143,7 @@ public class ScoreAreaEntity {
         if(this.getCityId().equals(temp.getCityId())&&this.getCountyId().equals(temp.getCountyId())){
             return true;
         }
+
         return false;
     }
 
@@ -162,4 +163,7 @@ public class ScoreAreaEntity {
     public void setAccessLayer(Integer accessLayer) {
         this.accessLayer = accessLayer;
     }
+
 }
+
+
