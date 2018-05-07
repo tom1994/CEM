@@ -380,6 +380,8 @@ public class RecordHourTracertController {
 				scoreList.get(i).setTargetId(-1);
 			}
 		}
+		sortStringMethod(scoreList);
+
 		System.out.println(scoreList);
 		CollectionToFile.collectionToFile(response, scoreList, ScoreEntity.class);
 	}
@@ -432,6 +434,7 @@ public class RecordHourTracertController {
 				scoreList.get(i).setCityId(-1);
 			}
 		}
+		sortStringMethod(scoreList);
 		System.out.println(scoreList);
 		CollectionToFile.collectionToFile(response, scoreList, ScoreEntity.class);
 	}
@@ -475,7 +478,7 @@ public class RecordHourTracertController {
 		for(int i=0;i<scoreList.size();i++){
 			scoreList.get(i).setProbeName("");
 		}
-
+		sortStringMethod(scoreList);
 
 		System.out.println(scoreList);
 		CollectionToFile.collectionToFile(response, scoreList, ScoreEntity.class);
