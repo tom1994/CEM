@@ -40,10 +40,10 @@ public class ProbeExitController {
 	 */
 	@RequestMapping("/list")
 	@RequiresPermissions("probeexit:list")
-	public R list(String probedata, Integer page, Integer limit) throws Exception {
+	public R list(String reportdata, Integer page, Integer limit) throws Exception {
 		//查询列表数据
 		Map<String, Object> map = new HashMap<>();
-		JSONObject probedata_jsonobject = JSONObject.parseObject(probedata);
+		JSONObject probedata_jsonobject = JSONObject.parseObject(reportdata);
 		try {
 			map.putAll(JSONUtils.jsonToMap(probedata_jsonobject));
 		} catch (RuntimeException e) {
