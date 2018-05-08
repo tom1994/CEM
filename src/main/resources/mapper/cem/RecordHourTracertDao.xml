@@ -162,6 +162,7 @@
 		city.city_name AS city_name,
 		county.county_name AS area_name,
 		probe.probe_name AS probe_name,
+		probe.access_layer AS access_layer,
 		target.target_name AS target_name,
 		time_format(record_time, '%H') AS record_time,
 		AVG(rht.delay) AS delay,
@@ -195,7 +196,7 @@
 		<if test="probe_id != null and probe_id != ''">
 			AND rht.probe_id = #{probe_id}
 		</if>
-		GROUP BY rht.city_id,rht.county_id,rht.service_type,rht.probe_id,date_format(rht.record_date,'%Y-%m-%d')
+		GROUP BY rht.city_id,rht.county_id,rht.service_type,rht.probe_id,rht.record_date
 	</select>
 
 	<select id="queryExitList" resultType="io.cem.modules.cem.entity.RecordHourTracertEntity">

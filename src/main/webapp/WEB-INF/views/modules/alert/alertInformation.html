@@ -68,6 +68,13 @@
         input[type=text]::-ms-clear{
             display: none;
         }
+        .dataTable th {
+            white-space: nowrap !important;
+        }
+        .dataTable td {
+            overflow: visible; !important;
+            white-space: nowrap !important;
+        }
     </style>
 </head>
 <body>
@@ -122,9 +129,10 @@
                                     <span class="searchname search left" title="业务类型" style="width: 80px;text-align: center; ">业务类型</span>
                                     <div class="input-group searchspan" id="service" >
                                         <div class="jq22" style="top:-10px">
-                                            <select  class="form-control" name="service_type"  style="display: none">
+                                            <select  class="form-control"  style="display: none">
+                                                <option value="">--请选择--</option>
                                                 <optgroup label="网络连通性测试">
-                                                    <option value="1" selected>PING(ICMP ECHO)</option>
+                                                    <option value="1">PING(ICMP ECHO)</option>
                                                     <option value="2">PING(TCP ECHO)</option>
                                                     <option value="3">PING(UDP ECHO)</option>
                                                     <option value="4">Trace Route(ICMP)</option>

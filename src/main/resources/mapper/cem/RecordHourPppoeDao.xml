@@ -198,6 +198,7 @@
 		city.city_name AS city_name,
 		county.county_name AS area_name,
 		probe.probe_name AS probe_name,
+		probe.access_layer AS access_layer,
 		target.target_name AS target_name,
 		time_format(record_time, '%H') AS record_time,
 		AVG(pppoe.delay) AS delay,
@@ -227,7 +228,7 @@
 		<if test="probe_id != null and probe_id != ''">
 			AND pppoe.probe_id = #{probe_id}
 		</if>
-		GROUP BY pppoe.city_id,pppoe.county_id,pppoe.probe_id,date_format(pppoe.record_date,'%Y-%m-%d')
+		GROUP BY pppoe.city_id,pppoe.county_id,pppoe.probe_id,pppoe.record_date
 
 	</select>
 

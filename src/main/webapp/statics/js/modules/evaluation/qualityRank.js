@@ -13,8 +13,14 @@ var typeNames = new Array();
 var statusNames = new Array();
 var probeContent = new Array();
 var doorContent = new Array();
-
-
+var probeId;
+var targetId;
+var cityId=0;
+var probeName;
+var cityName;
+var countyName;
+var countyId;
+var diagnosetargetSelected;
 var citySelected = 0;
 var countrySelected = 0;
 var serviceSelected = 0;
@@ -22,7 +28,7 @@ var area_Selected = 0;
 var probeSelected = 0;
 var targetSelected = 0;
 var today = new Date();
-today.setDate(today.getDate() - 1); //显示近一天内的数据
+today.setDate(today.getDate()); //显示近一天内的数据
 
 
 var st = new Map();//servicetype字典，可通过get方法查对应字符串。
@@ -167,7 +173,8 @@ var area_data = new Vue({
     }
 });
 
-var getArea = function (cityid) {
+var getCounty = function (cityid) {
+    debugger
     countrySeleted = 0
     $.ajax({
         url: "../../cem/county/info/" + cityid,
@@ -176,6 +183,7 @@ var getArea = function (cityid) {
         dataType: "json",
         contentType: "application/json",
         success: function (result) {
+
             search_data.areas = [];
             areaNames = [];
             for (var i = 0; i < result.county.length; i++) {
@@ -230,7 +238,7 @@ var getDoorArea = function (cityid) {
                         var a = $(areas.currentTarget)[0].innerText;
                         countrySelected = $($(areas.currentTarget)[0]).data('value');
 
-                        getProbe(countrySelected);
+                        getdoorProbe(countrySelected);
                         $('#doorcountry .combo-input').val(a);
                         $('#doorcountry .combo-select select').val(a);
                     }, 20)
@@ -240,7 +248,7 @@ var getDoorArea = function (cityid) {
                     if (areas.keyCode == '13') {
                         var b = $("#doorcountry .option-hover.option-selected").text();
                         countrySelected = $("#doorcountry .option-hover.option-selected")[0].dataset.value;
-                        getProbe(countrySelected);
+                        getdoorProbe(countrySelected);
                         $('#doorcountry .combo-input').val(b);
                         $('#doorcountry .combo-select select').val(b);
                     }
@@ -251,6 +259,7 @@ var getDoorArea = function (cityid) {
 }
 
 var getService = function (serviceId) {
+    debugger
     console.log("I'm here!!!!" + serviceId);
     targetSelected = 0
     $.ajax({
@@ -567,10 +576,11 @@ var search_service = new Vue({
             countrySelected = 0;
             serviceSelected = 0;
             area_Selected = 0;
-            probeSelected = 0
+            probeSelected = 0;
             targetSelected = 0;
             probetable.probedata = data;
             probetable.redraw();
+            getNow();
         }
     }
 });
@@ -586,6 +596,7 @@ var search_area_service = new Vue({
     // 在 `methods` 对象中定义方法
     methods: {
         testagentListsearch: function () {
+             
             var searchJson = getFormJson($('#areasearch'));
             if ((searchJson.startDate) > (searchJson.terminalDate)) {
                 console.log("时间选择有误，请重新选择！");
@@ -605,7 +616,7 @@ var search_area_service = new Vue({
                     search.ava_terminal = ava_terminal;
                     search.starTime = startTime;
                     search.terminalTime = terminalTime;
-                } else {
+                }  else {
                     search.ava_start = today.Format("yyyy-MM-dd");
                     search.ava_terminal = (new Date()).Format("yyyy-MM-dd");
                 }
@@ -630,6 +641,7 @@ var search_area_service = new Vue({
             targetSelected = 0;
             areatable.probedata = data;
             areatable.redraw();
+            getNow();
         }
     }
 });
@@ -648,7 +660,11 @@ var search_door_service = new Vue({
                 var search = new Object();
                 search.city_id = searchJson.city_id;
                 search.county_id = searchJson.country_id;
-                search.service = searchJson.service_type;
+                if(searchJson.service_type==undefined){
+                    search.service =1
+                }else {
+                    search.service =  searchJson.service_type;
+                }
                 search.probe_id = searchJson.probe;
                 search.target_id = searchJson.target;
                 if (searchJson.startDate.length != 0 && searchJson.terminalDate.length != 0) {
@@ -671,7 +687,7 @@ var search_door_service = new Vue({
             }
         },
         reset: function () {    /*重置*/
-            document.getElementById("doorsearch").reset();
+            document.getElementById("door_search").reset();
             var data = {
                 ava_start: today.Format("yyyy-MM-dd"),
                 ava_terminal: (new Date()).Format("yyyy-MM-dd"),
@@ -681,10 +697,11 @@ var search_door_service = new Vue({
             countrySelected = 0;
             serviceSelected = 0;
             area_Selected = 0;
-            probeSelected = 0
+            probeSelected = 0;
             targetSelected = 0;
             doortable.probedata = data;
             doortable.redraw();
+            getNow();
         }
     }
 });
@@ -692,65 +709,66 @@ var search_door_service = new Vue({
 function getFormJson(form) {      /*将表单对象变为json对象*/
     var a = $(form).serializeArray();
     var o = {};
+
     if (form.selector == '#probesearch') {
         if (citySelected != 0) {
             a[2] = {};
             a[2].name = "city_id";
-            a[2].value = citySelected;
+            a[2].value = parseInt(citySelected);
         }
         if (countrySelected != 0) {
             a[3] = {};
             a[3].name = "country_id";
-            a[3].value = countrySelected;
+            a[3].value = parseInt(countrySelected);
         }
         if (serviceSelected != -1) {
             a[4] = {};
             a[4].name = "service_type";
-            a[4].value = serviceSelected;
+            a[4].value = parseInt(serviceSelected);
         }
         if (targetSelected != 0) {
             a[5] = {};
             a[5].name = "target";
-            a[5].value = targetSelected;
+            a[5].value = parseInt(targetSelected);
         }
 
     } else if (form.selector == '#areasearch') {
         if (citySelected != 0) {
             a[2] = {};
             a[2].name = "city_id";
-            a[2].value = citySelected;
+            a[2].value = parseInt(citySelected)
         }
         if (area_Selected != -1) {
             a[3] = {};
             a[3].name = "service_type";
-            a[3].value = area_Selected;
+            a[3].value = parseInt(area_Selected)
         }
         if (targetSelected != 0) {
             a[4] = {};
             a[4].name = "target";
-            a[4].value = targetSelected;
+            a[4].value = parseInt(targetSelected);
         }
     } else {
         if (citySelected != 0) {
             a[2] = {};
             a[2].name = "city_id";
-            a[2].value = citySelected;
+            a[2].value = parseInt(citySelected);
         }
         if (countrySelected != 0) {
             a[3] = {};
             a[3].name = "country_id";
-            a[3].value = countrySelected;
+            a[3].value =parseInt(countrySelected);
         }
 
         if (probeSelected != 0) {
             a[4] = {};
             a[4].name = "probe";
-            a[4].value = probeSelected;
+            a[4].value = parseInt(probeSelected);
         }
-        if (serviceSelected != -1) {
+        if (serviceSelected != 0) {
             a[5] = {};
             a[5].name = "service_type";
-            a[5].value = serviceSelected;
+            a[5].value = parseInt(serviceSelected);
         }
 
     }
@@ -865,7 +883,6 @@ var probetable = new Vue({
             paging: true,
             serverSide: true,
             info: false,
-
             order:[[ 6, 'asc' ]],
             // bLoadingRecords: "载入中...",
             // ordering: false, /*禁用排序功能*/
@@ -906,6 +923,7 @@ var probetable = new Vue({
                     dataType: "json",
                     success: function (result) {
                         console.log(result);
+                        console.log(param)
                         //封装返回数据
                         let returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -923,11 +941,13 @@ var probetable = new Vue({
                             row.push(item.cityName);
                             row.push(item.countyName);
                             row.push(item.probeName);
+                            probeId=item.probeId
+                            targetId=item.targetId
                             row.push(st.get(item.serviceType));
                             row.push(item.targetName);
                             row.push(item.score.toFixed(2));
                             row.push('<a class="fontcolor" onclick="update_this(this)" id=' + item.id + ' type=' + st.get(item.serviceType) + ' >详情</a>&nbsp;' +
-                                '<a class="fontcolor"   onclick="diagnose(this)" id=' + item.id + ' type='+item.serviceType+' target='+item.targetId+'  name='+item.targetName+'>诊断</a>'); //Todo:完成详情与诊断
+                                '<a class="fontcolor"    onclick="diagnose_info(this,1)"   id=' + item.probeName + ' title='+item.cityName+'  lang='+item.countyName+'         type='+item.serviceType+'  charset='+item.targetName+' >诊断</a>'); //Todo:完成详情与诊断
                             rows.push(row);
                         });
                         returnData.data = rows;
@@ -1067,11 +1087,16 @@ var areatable = new Vue({
                             row.push(i++);
                             row.push(item.cityName);
                             row.push(item.countyName);
+                            probeId=item.probeId;
+                            targetId=item.targetId;
+                            cityId= item.cityId;
+                            debugger
                             row.push(st.get(item.serviceType));
                             row.push(item.targetName);
                             row.push(item.score.toFixed(2));
-                            row.push('<a class="fontcolor" onclick="areaupdate_this(this)"  id=' + item.countyId + ' type=' + st.get(item.serviceType) + ' >详情</a>&nbsp;' +
-                                '<a class="fontcolor" onclick="diagnose(this)" id=' + item.id + '>诊断</a>'); //Todo:完成详情与诊断
+
+                            row.push('<a class="fontcolor" onclick="areaupdate_this(this)"  id=' + item.countyId + '  type=' + st.get(item.serviceType) + ' >详情</a>&nbsp;' +
+                                '<a class="fontcolor"    onclick="diagnose_info(this,2)"  id=' + item.countyId + '   title='+item.cityName+'  lang='+item.countyName+'         type='+item.serviceType+'  charset='+item.targetName+' >诊断</a>'); //Todo:完成详情与诊断
                             rows.push(row);
                         });
                         returnData.data = rows;
@@ -1118,7 +1143,7 @@ var doortable = new Vue({
         probedata: {
             ava_start: today.Format("yyyy-MM-dd"),
             ava_terminal: (new Date()).Format("yyyy-MM-dd"),
-            service: '0'
+            service: '1'
         }
 
     },
@@ -1203,6 +1228,7 @@ var doortable = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
+                         
                         console.log(result);
                         //封装返回数据
                         let returnData = {};
@@ -1221,10 +1247,16 @@ var doortable = new Vue({
                             row.push(item.cityName);
                             row.push(item.countyName);
                             row.push(item.probeName);
+                            probeId=item.probeId;
+                            targetId=item.targetId;
+                            cityName=item.cityName;
+                            countyName=item.countyName;
+                            cityId=item.cityId;
+                            countyId=item.countyId
                             row.push(st.get(item.serviceType));
                             row.push(item.score.toFixed(2));
                             row.push('<a class="fontcolor" onclick="doorupdate_this(this)"  id=' + item.id + ' type=' + st.get(item.serviceType) + ' >详情</a>&nbsp;' +
-                                '<a class="fontcolor" onclick="diagnose(this)" id=' + item.id + '>诊断</a>'); //Todo:完成详情与诊断
+                                '<a   class="fontcolor"  onclick="diagnose_info(this,3)"   type='+item.serviceType+'  charset='+item.targetName+'  id=' + item.probeName + ' >诊断</a>'); //Todo:完成详情与诊断
                             rows.push(row);
                         });
                         returnData.data = rows;
@@ -1269,7 +1301,8 @@ $(document).ready(function () {
                         var a = $(city.currentTarget)[0].innerText;
                         clearArea(a);
                         citySelected = $($(city.currentTarget)[0]).data('value');
-                        getArea(citySelected);
+                        debugger
+                        getCounty(citySelected);
                         $('div#city .combo-input').val(a);
                         $('div#city .combo-select select').val(a);
                     }, 30);
@@ -1281,7 +1314,7 @@ $(document).ready(function () {
                         var c = ($("#city .option-hover.option-selected"));
                         var c = c[0].dataset
                         citySelected = c.value;
-                        getArea(citySelected);
+                        getCounty(citySelected);
                         $('#city .combo-input').val(b);
                         $('#city .combo-select select').val(b);
                     }
@@ -1311,7 +1344,7 @@ $(document).ready(function () {
                         citySelected = $($(city.currentTarget)[0]).data('value');
 
                         getDoorArea(citySelected);
-                        getProbeCity(citySelected);
+                        getdoorProbeCity(citySelected);
                         $('div#doorcity .combo-input').val(a);
                         $('div#doorcity .combo-select select').val(a);
                     }, 30);
@@ -1324,7 +1357,7 @@ $(document).ready(function () {
                         var c = c[0].dataset
                         citySelected = c.value;
                         getDoorArea(citySelected);
-                        getProbeCity(citySelected);
+                        getdoorProbeCity(citySelected);
                         $('#doorcity .combo-input').val(b);
                         $('#doorcity .combo-select select').val(b);
                     }
@@ -1375,6 +1408,7 @@ $(document).ready(function () {
             $('#country .combo-input').val("所有区县");
             $('#country .combo-select select').val("所有区县");
             search_data.areas = [];
+            doorprobe()
             $('#country ul').html("");
             $("#country ul").append("<li class='option-item option-hover option-selected' data-index=='0' data-value=''>" + "所有区县" + "</li>");
         }
@@ -1407,7 +1441,7 @@ $(document).ready(function () {
     });
 
     $('#doorservice .jq22').comboSelect();
-    $("#doorservice input[type=text]").attr('placeholder', "综合业务")
+    $("#doorservice input[type=text]").attr('placeholder', "网络连通性业务")
     $('.combo-dropdown').css("z-index", "3");
     $('#doorservice .option-item').click(function (service) {
         var a = $(service.currentTarget)[0].innerText;
@@ -1493,11 +1527,10 @@ $(document).ready(function () {
             }, 100);
         }
     });
-})
+});
 
 //探针
-var getProbe = function (countyid) {
-
+var getdoorProbe = function (countyid) {
     probeSelected = 0;
     $.ajax({//探针信息
         url: "../../cem/probe/info/" + countyid,
@@ -1536,8 +1569,7 @@ var getProbe = function (countyid) {
     });
 };
 //城市探针
-var getProbeCity = function (cityid) {
-
+var getdoorProbeCity = function (cityid) {
     probeSelected = 0;
     if (cityid != "" && cityid != null) {
         $.ajax({//探针信息
@@ -1579,9 +1611,146 @@ var getProbeCity = function (cityid) {
 
 };
 
-function diagnose(obj) {
-    console.log(obj)
-    location.href = "/diagnoseshow/setting?probeId="+obj.id+"&serviceType="+obj.type+"&targetId="+obj.target+"&targetName="+obj.name;
+function doorprobe() {
+    $.ajax({
+        url: "../../cem/probe/list",//探针列表
+        type: "POST",
+        cache: false,  //禁用缓存
+        dataType: "json",
+        contentType: "application/json",
+        success: function (result) {
+            var probes = [];
+            for (var i = 0; i < result.page.list.length; i++) {
+                probes[i] = {message: result.page.list[i]}
+            }
+            Doorsearch_data.probe = probes;
+            setTimeout(function () {
+                $('#probe .jq22').comboSelect();
+                $('.combo-dropdown').css("z-index", "3");
+                $('#probe .option-item').click(function (probe) {
+                    setTimeout(function () {
+                        var a = $(probe.currentTarget)[0].innerText;
+                        probeSelected = $($(probe.currentTarget)[0]).data('value');
+                        $('#probe .combo-input').val(a);
+                        $('#probe .combo-select select').val(a);
+                    }, 30);
+                });
+                $('#probe input[type=text] ').keyup(function (probe) {
+                    if (probe.keyCode == '13') {
+                        var b = $("#probe .option-hover.option-selected").text();
+                        probeSelected = $("#probe .option-hover.option-selected")[0].dataset.value;
+                        $('#probe .combo-input').val(b);
+                        $('#probe .combo-select select').val(b);
+                    }
+
+                })
+            }, 50);
+        }
+    });
+};
+
+function diagnose_info(obj,num) {
+    debugger
+    probeSelected=0;
+    diagnosetargetSelected;
+    $('#diagnoseprobe .combo-input').val('请选择');
+    $('#diagnoseprobe .combo-select select').val('请选择');
+    $('#diagnosecity .combo-input').val('请选择');
+    $('#diagnosecity .combo-select select').val('请选择');
+    $('#diagnosetarget .combo-input').val('请选择');
+    $('#diagnosetarget .combo-select select').val('请选择');
+    $('#diagnosecountry .combo-input').val('请选择');
+    $('#diagnosecountry .combo-select select').val('请选择');
+    if(num==1){
+        var probeName=obj.id;
+        var type=parseInt(obj.type);
+        var cityName=obj.title;
+        var countryName=obj.lang;
+        var targetName=obj.charset;
+        if(probeName!=undefined){
+            setTimeout(function () {
+                $('#diagnoseprobe .combo-input').val(probeName);
+                $('#diagnoseprobe .combo-select select').val(probeName);
+            },100)
+        }
+    }else if(num==2){
+        var cityId=cityId;
+        var countryId=obj.id;
+        getdiagnoseProbeCounty(countryId);
+        getArea(cityId);
+
+        var type=parseInt(obj.type);
+        var cityName=obj.title;
+        var countryName=obj.lang;
+        var targetName=obj.charset;
+        if(probeName!=undefined){
+            setTimeout(function () {
+                $('#diagnoseprobe .combo-input').val(probeName);
+                $('#diagnoseprobe .combo-select select').val(probeName);
+            },100)
+        }
+    }else {
+        probe();
+        var probeName=obj.id;
+        var type=parseInt(obj.type);
+        if(cityId!=undefined){
+          getArea(cityId)
+        }else if(countyId!=-1){
+            getdiagnoseProbeCounty(countryId);
+
+        }
+        var targetName=obj.charset;
+        if(probeName!=undefined){
+            setTimeout(function () {
+                $('#diagnoseprobe .combo-input').val(probeName);
+                $('#diagnoseprobe .combo-select select').val(probeName);
+            },500)
+        }
+    }
+
+
+    if(probeId!=-1){
+        probeSelected=probeId;
+    }
+    if(targetId!=-1){
+        diagnosetargetSelected=targetId;
+    }
+
+    console.log(diagnosetargetSelected)
+     if(type==1||type==0){
+        $('#ping').click();
+    }else if(type==2){
+        $('#sla').click();
+    }else if(type==3){
+        $('#web').click();
+    }else if(type==4){
+        $('#diagnosedownload').click();
+    }else if(type==5){
+        $('#diagnosevideo').click();
+    }else if(type==6){
+        $('#diagnosegame').click();
+    }
+
+    if(cityName!=undefined){
+        setTimeout(function () {
+            $('#diagnosecity .combo-input').val(cityName);
+            $('#diagnosecity .combo-select select').val(cityName);
+        },200)
+    }
+    if(countryName!=undefined){
+        setTimeout(function () {
+            $('#diagnosecountry .combo-input').val(countryName);
+            $('#diagnosecountry .combo-select select').val(countryName);
+        },200)
+    }
+    if(targetName!= undefined){
+       setTimeout(function () {
+           $('#diagnosetarget .combo-input').val(targetName);
+           $('#diagnosetarget .combo-select select').val(targetName);
+       },500)
+    }
+    $('#myModal_diagnose').modal('show');
+
 }
 
 
@@ -1998,6 +2167,9 @@ function quality(obj) {
                 {title: '<div style="width:10px"></div>'},
                 {title: '<div style="width:110px">探针名称</div>'},
                 {title: '<div style="width:70px">综合分数</div>'},
+                {title: '<div style="width:100px">解析时延(ms)</div>'},
+                {title: '<div style="width:100px">成功率(%)</div>'},
+
                 {title: '<div style="width:100px">时延(ms)</div>'},
                 {title: '<div style="width:100px">往向时延(ms)</div>'},
                 {title: '<div style="width:100px">返向时延(ms)</div>'},
@@ -2013,8 +2185,6 @@ function quality(obj) {
                 {title: '<div style="width:100px">返向抖动(ms)</div>'},
                 {title: '<div style="width:100px">丢包率(%)</div>'},
 
-                {title: '<div style="width:100px">解析时延(ms)</div>'},
-                {title: '<div style="width:100px">成功率(%)</div>'},
 
                 {title: '<div style="width:100px">分配时延(ms)</div>'},
                 {title: '<div style="width:100px">成功率(%)</div>'},
@@ -2070,9 +2240,10 @@ function quality(obj) {
                         innerTh += '<th colspan="1"></th>';
                         innerTh += '<th colspan="1"></th>';
                         var columnsCount = 25;//具体情况
+                        innerTh += '<th colspan="2 " style="text-align: center">DNS</th>';
                         innerTh += '<th colspan="7" style="text-align: center">Sla(TCP)</th>';
                         innerTh += '<th colspan="7" style="text-align: center">Sla(UDP)</th>';
-                        innerTh += '<th colspan="2 " style="text-align: center">DNS</th>';
+
                         innerTh += '<th colspan="2" style="text-align: center">DHCP</th>';
                         innerTh += '<th colspan="3" style="text-align: center">ADSL</th>';
                         innerTh += '<th colspan="2"style="text-align: center">Radius</th>';
@@ -2114,6 +2285,8 @@ function quality(obj) {
                             row.push(i++);
                             row.push(item.probeName);
                             row.push(fixed(item.score));
+                            row.push(fixed(item.dnsDelay));
+                            row.push(fixedRate(item.dnsSuccessRate));
                             row.push(fixed(item.slaTcpDelay));
                             row.push(fixed(item.slaTcpGDelay));
                             row.push(fixed(item.slaTcpRDelay));
@@ -2128,8 +2301,7 @@ function quality(obj) {
                             row.push(fixed(item.slaUdpGJitter));
                             row.push(fixed(item.slaUdpRJitter));
                             row.push(fixedRate(item.slaUdpLossRate));
-                            row.push(fixed(item.dnsDelay));
-                            row.push(fixedRate(item.dnsSuccessRate));
+
                             row.push(fixed(item.dhcpDelay));
                             row.push(fixedRate(item.dhcpSuccessRate));
                             row.push(fixed(item.pppoeDelay));
@@ -2176,7 +2348,7 @@ function broswer(obj) {
                 {title: '<div style="width:100px">重定向时延(ms)</div>'},
                 {title: '<div style="width:100px">首屏时延(ms)</div>'},
                 {title: '<div style="width:115px">页面加载时延(ms)</div>'},
-                {title: '<div style="width:100px">下载速率(KB/S)</div>'},
+                {title: '<div style="width:100px">下载速率(KB/s)</div>'},
             ],
             rows: [],
             dtHandle: null,
@@ -2286,17 +2458,17 @@ function download(obj) {
                 {title: '<div style="width:100px">DNS时延(ms)</div>'},
                 {title: '<div style="width:100px">连接时延(ms)</div>'},
                 {title: '<div style="width:100px">首字节时延(ms)</div>'},
-                {title: '<div style="width:100px">下载速率(KB/S)</div>'},
+                {title: '<div style="width:100px">下载速率(KB/s)</div>'},
                 {title: '<div style="width:100px">DNS时延(ms)</div>'},
                 {title: '<div style="width:100px">连接时延(ms)</div>'},
                 {title: '<div style="width:100px">登录时延(ms)</div>'},
                 {title: '<div style="width:100px">首字节时延(ms)</div>'},
-                {title: '<div style="width:100px">下载速率(KB/S)</div>'},
+                {title: '<div style="width:100px">下载速率(KB/s)</div>'},
                 {title: '<div style="width:100px">DNS时延(ms)</div>'},
                 {title: '<div style="width:100px">连接时延(ms)</div>'},
                 {title: '<div style="width:100px">登录时延(ms)</div>'},
                 {title: '<div style="width:100px">首字节时延(ms)</div>'},
-                {title: '<div style="width:100px">上传速率(KB/S)</div>'},
+                {title: '<div style="width:100px">上传速率(KB/s)</div>'},
             ],
             rows: [],
             dtHandle: null,
@@ -2438,7 +2610,7 @@ function video(obj) {
                 {title: '<div style="width:120px">首次缓冲时延(ms)</div>'},
                 {title: '<div style="width:120px">视频加载时延(ms)</div>'},
                 {title: '<div style="width:120px">总体缓冲时间(ms)</div>'},
-                {title: '<div style="width:105px">下载速率(KB/S)</div>'},
+                {title: '<div style="width:105px">下载速率(KB/s)</div>'},
                 {title: '<div style="width:100px">缓冲次数</div>'},
             ],
             rows: [],
@@ -3050,6 +3222,10 @@ function area_quality(obj, areaContent) {
                 {title: '<div style="width:10px"></div>'},
                 {title: '<div style="width:110px">探针名称</div>'},
                 {title: '<div style="width:70px">综合分数</div>'},
+
+                {title: '<div style="width:100px">解析时延(ms)</div>'},
+                {title: '<div style="width:100px">成功率(%)</div>'},
+
                 {title: '<div style="width:100px">时延(ms)</div>'},
                 {title: '<div style="width:100px">往向时延(ms)</div>'},
                 {title: '<div style="width:100px">返向时延(ms)</div>'},
@@ -3065,8 +3241,6 @@ function area_quality(obj, areaContent) {
                 {title: '<div style="width:100px">返向抖动(ms)</div>'},
                 {title: '<div style="width:100px">丢包率(%)</div>'},
 
-                {title: '<div style="width:100px">解析时延(ms)</div>'},
-                {title: '<div style="width:100px">成功率(%)</div>'},
 
                 {title: '<div style="width:100px">分配时延(ms)</div>'},
                 {title: '<div style="width:100px">成功率(%)</div>'},
@@ -3122,9 +3296,10 @@ function area_quality(obj, areaContent) {
                         innerTh += '<th colspan="1"></th>';
                         innerTh += '<th colspan="1"></th>';
                         var columnsCount = 25;//具体情况
+                        innerTh += '<th colspan="2 " style="text-align: center">DNS</th>';
                         innerTh += '<th colspan="7" style="text-align: center">Sla(TCP)</th>';
                         innerTh += '<th colspan="7" style="text-align: center">Sla(UDP)</th>';
-                        innerTh += '<th colspan="2 " style="text-align: center">DNS</th>';
+
                         innerTh += '<th colspan="2" style="text-align: center">DHCP</th>';
                         innerTh += '<th colspan="3" style="text-align: center">ADSL</th>';
                         innerTh += '<th colspan="2"style="text-align: center">Radius</th>';
@@ -3166,6 +3341,8 @@ function area_quality(obj, areaContent) {
                             row.push(i++);
                             row.push(item.probeName);
                             row.push(fixed(item.score));
+                            row.push(fixed(item.dnsDelay));
+                            row.push(fixedRate(item.dnsSuccessRate) );
                             row.push(fixed(item.slaTcpDelay));
                             row.push(fixed(item.slaTcpGDelay));
                             row.push(fixed(item.slaTcpRDelay));
@@ -3180,8 +3357,7 @@ function area_quality(obj, areaContent) {
                             row.push(fixed(item.slaUdpGJitter));
                             row.push(fixed(item.slaUdpRJitter));
                             row.push(fixedRate(item.slaUdpLossRate) );
-                            row.push(fixed(item.dnsDelay));
-                            row.push(fixedRate(item.dnsSuccessRate) );
+
                             row.push(fixed(item.dhcpDelay));
                             row.push(fixedRate(item.dhcpSuccessRate) );
                             row.push(fixed(item.pppoeDelay));
@@ -3228,7 +3404,7 @@ function area_broswer(obj, areaContent) {
                 {title: '<div style="width:100px">重定向时延(ms)</div>'},
                 {title: '<div style="width:100px">首屏时延(ms)</div>'},
                 {title: '<div style="width:115px">页面加载时延(ms)</div>'},
-                {title: '<div style="width:100px">下载速率(KB/S)</div>'},
+                {title: '<div style="width:100px">下载速率(KB/s)</div>'},
             ],
             rows: [],
             dtHandle: null,
@@ -3338,17 +3514,17 @@ function area_download(obj, areaContent) {
                 {title: '<div style="width:100px">DNS时延(ms)</div>'},
                 {title: '<div style="width:100px">连接时延(ms)</div>'},
                 {title: '<div style="width:100px">首字节时延(ms)</div>'},
-                {title: '<div style="width:100px">下载速率(KB/S)</div>'},
+                {title: '<div style="width:100px">下载速率(KB/s)</div>'},
                 {title: '<div style="width:100px">DNS时延(ms)</div>'},
                 {title: '<div style="width:100px">连接时延(ms)</div>'},
                 {title: '<div style="width:100px">登录时延(ms)</div>'},
                 {title: '<div style="width:100px">首字节时延(ms)</div>'},
-                {title: '<div style="width:100px">下载速率(KB/S)</div>'},
+                {title: '<div style="width:100px">下载速率(KB/s)</div>'},
                 {title: '<div style="width:100px">DNS时延(ms)</div>'},
                 {title: '<div style="width:100px">连接时延(ms)</div>'},
                 {title: '<div style="width:100px">登录时延(ms)</div>'},
                 {title: '<div style="width:100px">首字节时延(ms)</div>'},
-                {title: '<div style="width:100px">上传速率(KB/S)</div>'},
+                {title: '<div style="width:100px">上传速率(KB/s)</div>'},
             ],
             rows: [],
             dtHandle: null,
@@ -3490,7 +3666,7 @@ function area_video(obj, areaContent) {
                 {title: '<div style="width:120px">首次缓冲时延(ms)</div>'},
                 {title: '<div style="width:120px">视频加载时延(ms)</div>'},
                 {title: '<div style="width:120px">总体缓冲时间(ms)</div>'},
-                {title: '<div style="width:105px">下载速率(KB/S)</div>'},
+                {title: '<div style="width:105px">下载速率(KB/s)</div>'},
                 {title: '<div style="width:100px">缓冲次数</div>'},
             ],
             rows: [],
@@ -3916,7 +4092,7 @@ function door_ping(obj) {
         data: {
             headers: [
                 {title: '<div style="width:10px"></div>'},
-                {title: '<div style="width:110px">探针名称</div>'},
+                {title: '<div style="width:110px">测试目标</div>'},
                 {title: '<div style="width:70px">综合分数</div>'},
                 {title: '<div style="width:100px">往返时延(ms)</div>'},
                 {title: '<div style="width:100px">时延标准差(ms)</div>'},
@@ -4038,7 +4214,7 @@ function door_ping(obj) {
                         if (id == item.id) {
                             let row = [];
                             row.push(i++);
-                            row.push(item.probeName);
+                            row.push(item.targetName);
                             row.push(fixed(item.score));
                             row.push(fixed(item.pingIcmpDelay ));
                             row.push(fixed(item.pingIcmpDelayStd) );
@@ -4104,8 +4280,10 @@ function door_quality(obj) {
         data: {
             headers: [
                 {title: '<div style="width:10px"></div>'},
-                {title: '<div style="width:110px">探针名称</div>'},
+                {title: '<div style="width:110px">测试目标</div>'},
                 {title: '<div style="width:70px">综合分数</div>'},
+                {title: '<div style="width:100px">解析时延(ms)</div>'},
+                {title: '<div style="width:100px">成功率(%)</div>'},
                 {title: '<div style="width:100px">时延(ms)</div>'},
                 {title: '<div style="width:100px">往向时延(ms)</div>'},
                 {title: '<div style="width:100px">返向时延(ms)</div>'},
@@ -4121,8 +4299,7 @@ function door_quality(obj) {
                 {title: '<div style="width:100px">返向抖动(ms)</div>'},
                 {title: '<div style="width:100px">丢包率(%)</div>'},
 
-                {title: '<div style="width:100px">解析时延(ms)</div>'},
-                {title: '<div style="width:100px">成功率(%)</div>'},
+
 
                 {title: '<div style="width:100px">分配时延(ms)</div>'},
                 {title: '<div style="width:100px">成功率(%)</div>'},
@@ -4178,9 +4355,10 @@ function door_quality(obj) {
                         innerTh += '<th colspan="1"></th>';
                         innerTh += '<th colspan="1"></th>';
                         var columnsCount = 25;//具体情况
+                        innerTh += '<th colspan="2 " style="text-align: center">DNS</th>';
                         innerTh += '<th colspan="7" style="text-align: center">Sla(TCP)</th>';
                         innerTh += '<th colspan="7" style="text-align: center">Sla(UDP)</th>';
-                        innerTh += '<th colspan="2 " style="text-align: center">DNS</th>';
+
                         innerTh += '<th colspan="2" style="text-align: center">DHCP</th>';
                         innerTh += '<th colspan="3" style="text-align: center">ADSL</th>';
                         innerTh += '<th colspan="2"style="text-align: center">Radius</th>';
@@ -4220,8 +4398,10 @@ function door_quality(obj) {
                         if (id == item.id) {
                             let row = [];
                             row.push(i++);
-                            row.push(item.probeName);
+                            row.push(item.targetName);
                             row.push(fixed(item.score));
+                            row.push(fixed(item.dnsDelay));
+                            row.push(fixedRate(item.dnsSuccessRate) );
                             row.push(fixed(item.slaTcpDelay));
                             row.push(fixed(item.slaTcpGDelay));
                             row.push(fixed(item.slaTcpRDelay));
@@ -4236,8 +4416,7 @@ function door_quality(obj) {
                             row.push(fixed(item.slaUdpGJitter));
                             row.push(fixed(item.slaUdpRJitter));
                             row.push(fixedRate(item.slaUdpLossRate) );
-                            row.push(fixed(item.dnsDelay));
-                            row.push(fixedRate(item.dnsSuccessRate) );
+
                             row.push(fixed(item.dhcpDelay));
                             row.push(fixedRate(item.dhcpSuccessRate) );
                             row.push(fixed(item.pppoeDelay));
@@ -4275,7 +4454,7 @@ function door_broswer(obj) {
         data: {
             headers: [
                 {title: '<div style="width:10px"></div>'},
-                {title: '<div style="width:110px">探针名称</div>'},
+                {title: '<div style="width:110px">测试目标</div>'},
                 {title: '<div style="width:70px">综合分数</div>'},
                 {title: '<div style="width:100px">DNS时延(ms)</div>'},
                 {title: '<div style="width:100px">连接时延(ms)</div>'},
@@ -4284,7 +4463,7 @@ function door_broswer(obj) {
                 {title: '<div style="width:100px">重定向时延(ms)</div>'},
                 {title: '<div style="width:100px">首屏时延(ms)</div>'},
                 {title: '<div style="width:115px">页面加载时延(ms)</div>'},
-                {title: '<div style="width:100px">下载速率(KB/S)</div>'},
+                {title: '<div style="width:100px">下载速率(KB/s)</div>'},
             ],
             rows: [],
             dtHandle: null,
@@ -4349,7 +4528,7 @@ function door_broswer(obj) {
                         if (id == item.id) {
                             let row = [];
                             row.push(i++);
-                            row.push(item.probeName);
+                            row.push(item.targetName);
                             row.push(fixed(item.score));
                             row.push(fixed(item.webpageDnsDelay ));
                             row.push(fixed(item.webpageConnDelay ));
@@ -4389,22 +4568,22 @@ function door_download(obj) {
         data: {
             headers: [
                 {title: '<div style="width:10px"></div>'},
-                {title: '<div style="width:110px">探针名称</div>'},
+                {title: '<div style="width:110px">测试目标</div>'},
                 {title: '<div style="width:70px">综合分数</div>'},
                 {title: '<div style="width:100px">DNS时延(ms)</div>'},
                 {title: '<div style="width:100px">连接时延(ms)</div>'},
                 {title: '<div style="width:100px">首字节时延(ms)</div>'},
-                {title: '<div style="width:100px">下载速率(KB/S)</div>'},
+                {title: '<div style="width:100px">下载速率(KB/s)</div>'},
                 {title: '<div style="width:100px">DNS时延(ms)</div>'},
                 {title: '<div style="width:100px">连接时延(ms)</div>'},
                 {title: '<div style="width:100px">登录时延(ms)</div>'},
                 {title: '<div style="width:100px">首字节时延(ms)</div>'},
-                {title: '<div style="width:100px">下载速率(KB/S)</div>'},
+                {title: '<div style="width:100px">下载速率(KB/s)</div>'},
                 {title: '<div style="width:100px">DNS时延(ms)</div>'},
                 {title: '<div style="width:100px">连接时延(ms)</div>'},
                 {title: '<div style="width:100px">登录时延(ms)</div>'},
                 {title: '<div style="width:100px">首字节时延(ms)</div>'},
-                {title: '<div style="width:100px">上传速率(KB/S)</div>'},
+                {title: '<div style="width:100px">上传速率(KB/s)</div>'},
             ],
             rows: [],
             dtHandle: null,
@@ -4491,7 +4670,7 @@ function door_download(obj) {
                         if (id == item.id) {
                             let row = [];
                             row.push(i++);
-                            row.push(item.probeName);
+                            row.push(item.targetName);
                             row.push(item.score.toFixed);
                             row.push(fixed(item.webDownloadDnsDelay ));
                             row.push(fixed(item.webDownloadConnDelay ));
@@ -4537,7 +4716,7 @@ function door_video(obj) {
         data: {
             headers: [
                 {title: '<div style="width:10px"></div>'},
-                {title: '<div style="width:110px">探针名称</div>'},
+                {title: '<div style="width:110px">测试目标</div>'},
                 {title: '<div style="width:70px">综合分数</div>'},
                 {title: '<div style="width:100px">DNS时延(ms)</div>'},
                 {title: '<div style="width:150px">连接WEB服务器时延(ms)</div>'},
@@ -4546,7 +4725,7 @@ function door_video(obj) {
                 {title: '<div style="width:120px">首次缓冲时延(ms)</div>'},
                 {title: '<div style="width:120px">视频加载时延(ms)</div>'},
                 {title: '<div style="width:120px">总体缓冲时间(ms)</div>'},
-                {title: '<div style="width:105px">下载速率(KB/S)</div>'},
+                {title: '<div style="width:105px">下载速率(KB/s)</div>'},
                 {title: '<div style="width:100px">缓冲次数</div>'},
             ],
             rows: [],
@@ -4612,7 +4791,7 @@ function door_video(obj) {
                         if (id == item.id) {
                             let row = [];
                             row.push(i++);
-                            row.push(item.probeName);
+                            row.push(item.targetName);
                             row.push(fixed(item.score));
                             row.push(fixed(item.webVideoDnsDelay ));
                             row.push(fixed(item.webVideoWsConnDelay));
@@ -4653,7 +4832,7 @@ function door_game(obj) {
         data: {
             headers: [
                 {title: '<div style="width:10px"></div>'},
-                {title: '<div style="width:110px">探针名称</div>'},
+                {title: '<div style="width:110px">测试目标</div>'},
                 {title: '<div style="width:70px">综合分数</div>'},
                 {title: '<div style="width:100px">DNS时延(ms)</div>'},
                 {title: '<div style="width:120px">网络时延(ms)</div>'},
@@ -4724,7 +4903,7 @@ function door_game(obj) {
                         if (id == item.id) {
                             let row = [];
                             row.push(i++);
-                            row.push(item.probeName);
+                            row.push(item.targetName);
                             row.push(fixed(item.score));
                             row.push(fixed(item.gameDnsDelay));
                             row.push(fixed(item.gamePacketDelay) );
@@ -4802,10 +4981,499 @@ function fixed(value) {
         return value.toFixed(2)
     }
 }
+
 function fixedRate(value) {
     if(value==null){
         return ''
     } else{
         return (value*100).toFixed(2)
     }
+}
+
+function probe() {
+    $.ajax({
+        url: "../../cem/probe/list",//探针列表
+        type: "POST",
+        cache: false,  //禁用缓存
+        dataType: "json",
+        contentType: "application/json",
+        success: function (result) {
+            var probes = [];
+            for (var i = 0; i < result.page.list.length; i++) {
+                probes[i] = {message: result.page.list[i]}
+            }
+            diagnose_data.probe = probes;
+            setTimeout(function () {
+                $('#diagnoseprobe .jq22').comboSelect();
+                $('#diagnoseprobe .option-item').click(function (probe) {
+                    setTimeout(function () {
+                        var a = $(probe.currentTarget)[0].innerText;
+                        probeSelected = $($(probe.currentTarget)[0]).data('value');
+                        $('#diagnoseprobe .combo-input').val(a);
+                        $('#diagnoseprobe .combo-select select').val(a);
+                    }, 30);
+                });
+                $('#diagnoseprobe input[type=text] ').keyup(function (probe) {
+                    if( probe.keyCode=='13'){
+                        var b = $("#diagnoseprobe .option-hover.option-selected").text();
+                        probeSelected=parseInt(($("#diagnoseprobe .option-hover.option-selected"))[0].dataset.value);
+                        $('#diagnoseprobe .combo-input').val(b);
+                        $('#diagnoseprobe .combo-select select').val(b);
+                    }
+
+                })
+            }, 50);
+        }
+    });
+};
+var getProbeCity = function (cityid) {
+    probeSelected = 0;
+    if (cityid != "" && cityid != null){
+        $.ajax({//探针信息
+            url: "../../cem/probe/infoByCity/" + cityid,
+            type: "POST",
+            cache: false,  //禁用缓存
+            dataType: "json",
+            contentType: "application/json",
+            success: function (result) {
+                var probes = [];
+                for (var i = 0; i < result.probe.length; i++) {
+                    probes[i] = {message: result.probe[i]}
+                }
+                diagnose_data.probe = probes;
+                setTimeout(function () {
+                    $('#diagnoseprobe .jq22').comboSelect();
+                    $('#diagnoseprobe .option-item').click(function (probe) {
+                        setTimeout(function () {
+                            var a = $(probe.currentTarget)[0].innerText;
+                            probeSelected = $($(probe.currentTarget)[0]).data('value');
+                            $('#diagnoseprobe .combo-input').val(a);
+                            $('#diagnoseprobe .combo-select select').val(a);
+                        }, 30);
+                    });
+                    $('#diagnoseprobe input[type=text] ').keyup(function (probe) {
+                        if( probe.keyCode=='13'){
+                            var b = $("#diagnoseprobe .option-hover.option-selected").text();
+                            probeSelected=parseInt(($("#diagnoseprobe .option-hover.option-selected"))[0].dataset.value);
+                            $('#diagnoseprobe .combo-input').val(b);
+                            $('#diagnoseprobe .combo-select select').val(b);
+                        }
+
+                    })
+                }, 50);
+            }
+        });
+    }
+
+};
+//页面上直接加载
+$(document).ready(function () {
+    $('#diagnosecity .jq22').comboSelect()
+    $('#diagnosecountry .jq22').comboSelect();
+    $('#diagnoseprobe .jq22').comboSelect();
+    $('#diagnosetarget .jq22').comboSelect()
+    citySelected=0
+    $.ajax({
+        type: "POST", /*GET会乱码*/
+        url: "../../cem/city/list",//c城市列表
+        cache: false,  //禁用缓存
+        dataType: "json",
+        success: function (result) {
+            var cities = [];
+            for (var i = 0; i < result.page.list.length; i++) {
+                cities[i] = {message: result.page.list[i]}
+            }
+            diagnose_data.city = cities;
+            setTimeout(function () {
+                $('div#diagnosecity .jq22').comboSelect();
+                $('div#diagnosecity .option-item').click(function (city) {
+                    setTimeout(function () {
+                        var a = $(city.currentTarget)[0].innerText;
+                        citySelected = $($(city.currentTarget)[0]).data('value');
+                        $('div#diagnosecity .combo-input').val(a);
+                        $('div#diagnosecity .combo-select select').val(a);
+                        clearArea(a);
+                        getArea(citySelected);
+                        getProbeCity(citySelected);
+                    }, 30);
+                });
+                $('#diagnosecity input[type=text] ').keyup(function (city) {
+                    if( city.keyCode=='13'){
+                        var b = $("#diagnosecity .option-hover.option-selected").text();
+                        clearArea(b);
+                        citySelected=($("#diagnosecity .option-hover.option-selected"))[0].dataset.value;
+                        getArea(citySelected);
+                        getProbeCity(citySelected);
+                        $('#diagnosecity .combo-input').val(b);
+                        $('#diagnosecity .combo-select select').val(b);
+                    }
+                })
+            }, 50);
+        }
+    });
+    //目标列表
+    var form = $('#superservice').serializeArray();
+    $.ajax({
+        type: "POST", /*GET会乱码*/
+        url: "../../target/infoList/" + form[0].value,
+        cache: false,  //禁用缓存
+        dataType: "json",
+        success: function (result) {
+            var targets = [];
+            for (var i = 0; i < result.target.length; i++) {
+                targets[i] = {message: result.target[i]}
+            }
+            diagnose_target.target = targets;
+            setTimeout(function () {
+                $('div#diagnosetarget .jq22').comboSelect();
+                $('div#diagnosetarget .option-item').click(function (target) {
+                    setTimeout(function () {
+                        var a = $(target.currentTarget)[0].innerText;
+                        targetSelected = $($(target.currentTarget)[0]).data('value');
+                        $('div#diagnosetarget .combo-input').val(a);
+                        $('div#diagnosetarget .combo-select select').val(a);
+                    }, 30);
+                });
+                $('#target input[type=text] ').keyup(function (probe) {
+                    if( probe.keyCode=='13'){
+                        var b = $("#diagnosetarget .option-hover.option-selected").text();
+                        targetSelected=parseInt(($("#diagnosetarget .option-hover.option-selected"))[0].dataset.value);
+                        $('#diagnosetarget .combo-input').val(b);
+                        $('#diagnosetarget .combo-select select').val(b);
+                    }
+
+                })
+            }, 50);
+        }
+    });
+    //探针列表
+    probe()
+
+});
+
+$.ajax({
+    url: "../../cem/probe/list",//探针列表
+    type: "POST",
+    cache: false,  //禁用缓存
+    dataType: "json",
+    contentType: "application/json",
+    success: function (result) {
+        var probes = [];
+        for (var i = 0; i < result.page.list.length; i++) {
+            probes[i] = {message: result.page.list[i]}
+        }
+        diagnose_data.probe = probes;
+        setTimeout(function () {
+            $('#diagnoseprobe .jq22').comboSelect();
+            //这个触发条件是先选择测试目标在选择探针的时候触发
+            $('#diagnoseprobe .option-item').click(function (probe) {
+                setTimeout(function () {
+                    var a = $(probe.currentTarget)[0].innerText;
+                    probeSelected = $($(probe.currentTarget)[0]).data('value');
+                    $('#diagnoseprobe .combo-input').val(a);
+                    $('#diagnoseprobe .combo-select select').val(a);
+                }, 30);
+            });
+            $('#diagnoseprobe input[type=text] ').keyup(function (probe) {
+                if( probe.keyCode=='13'){
+                    var b = $("#diagnoseprobe .option-hover.option-selected").text();
+                    probeSelected=parseInt(($("#diagnoseprobe .option-hover.option-selected"))[0].dataset.value);
+                    $('#diagnoseprobe .combo-input').val(b);
+                    $('#diagnoseprobe .combo-select select').val(b);
+                }
+            })
+        },50);
+    }
+});
+
+var diagnose_data = new Vue({
+    el: '#diagnosesearch',
+    data: {
+        county: [],
+        city: [],
+        probe: [],
+        target: []
+    },
+    methods: {
+        citychange: function () {
+            this.county = getArea($("#selectcity").val());
+        },
+        areachange: function () {
+            this.probe = getProbeCounty($("#selectarea").val());
+        }
+    }
+});
+
+var diagnose_target = new Vue({
+    el: '#diagnosetarget',
+    data: {
+        target: []
+    },
+    methods: {
+
+
+    }
+});
+$('input[type=radio]').click(function () {
+
+    var id= $(this).val()
+    getTarget(id);
+})
+var getArea = function (cityid) {
+    countrySeleted=0
+    if (cityid != "" && cityid != null) {
+        $.ajax({//区县
+            url: "../../cem/county/info/" + cityid,
+            type: "POST",
+            cache: false,  //禁用缓存
+            dataType: "json",
+            contentType: "application/json",
+            success: function (result) {
+                search_data.county = [];
+                var counties = [];
+                for (var i = 0; i < result.county.length; i++) {
+                    counties[i] = {message: result.county[i]}
+                }
+                diagnose_data.county = counties;
+                setTimeout(function () {
+                    $('#diagnosecountry .jq22').comboSelect();
+                    $('#diagnosecountry .option-item').click(function (country) {
+                        setTimeout(function () {
+                            var a = $(country.currentTarget)[0].innerText;
+                            clearArea(a)
+                            countrySelected = $($(country.currentTarget)[0]).data('value');
+                            $('#diagnosecountry .combo-input').val(a);
+                            $('#diagnosecountry .combo-select select').val(a);
+                            getdiagnoseProbeCounty(countrySelected);
+                        }, 30);
+                    });
+                    $('#diagnosecountry input[type=text] ').keyup(function (country) {
+                        if( country.keyCode=='13'){
+                            var b = $("#diagnosecountry .option-hover.option-selected").text();
+                            countrySelected=($("#diagnosecountry .option-hover.option-selected"))[0].dataset.value;
+                            $('#diagnosecountry .combo-input').val(b);
+                            $('#diagnosecountry .combo-select select').val(b);
+                            getdiagnoseProbeCounty(countrySelected);
+                        }
+                    })
+                },50);
+
+            }
+        });
+    }
+};
+
+function clearArea(a) {
+    if(a=="所有地市"){
+
+        $('#diagnosecountry .combo-input').val("所有区县");
+        $('#diagnosecountry .combo-select select').val("所有区县");
+        diagnose_data.areas = [];
+        $('#diagnosecountry ul').html("");
+        // $('#country ul').append(<li class="option-item option-hover option-selected" data-index="0" data-value="">所有区县</li>);
+        $("#diagnosecountry ul").append("<li class='option-item option-hover option-selected' data-index=='0' data-value=''>"+"所有区县"+"</li>");
+
+    }
+    if(a=="所有区县"){
+        probe()
+    }
+}
+
+//获取城市的时候探针会发生改变
+var getdiagnoseProbeCounty = function (countyid) {
+    probeSelected = 0;
+    $.ajax({//探针信息
+        url: "../../cem/probe/info/" + countyid,
+        type: "POST",
+        cache: false,  //禁用缓存
+        dataType: "json",
+        contentType: "application/json",
+        success: function (result) {
+            var probes = [];
+            for (var i = 0; i < result.probe.length; i++) {
+                probes[i] = {message: result.probe[i]}
+            }
+            diagnose_data.probe = probes;
+            setTimeout(function () {
+                $('#diagnoseprobe .jq22').comboSelect();
+                $('#diagnoseprobe .option-item').click(function (probe) {
+                    setTimeout(function () {
+                        var a = $(probe.currentTarget)[0].innerText;
+                        probeSelected = $($(probe.currentTarget)[0]).data('value');
+                        $('#diagnoseprobe .combo-input').val(a);
+                        $('#diagnoseprobe .combo-select select').val(a);
+                    }, 30);
+                });
+                $('#diagnoseprobe input[type=text] ').keyup(function (probe) {
+                    if( probe.keyCode=='13'){
+                        var b = $("#diagnoseprobe .option-hover.option-selected").text();
+                        probeSelected=parseInt(($("#diagnoseprobe .option-hover.option-selected"))[0].dataset.value);
+                        $('#diagnoseprobe .combo-input').val(b);
+                        $('#diagnoseprobe .combo-select select').val(b);
+                    }
+
+                })
+            }, 50);
+        }
+    });
+};
+
+
+//目标
+var getTarget = function (id) {
+    // diagnosetargetSelected = 0;
+    $.ajax({
+        //目标列表
+        url: "../../target/infoList/" +parseInt(id),
+        type: "POST",
+        cache: false,  //禁用缓存
+        dataType: "json",
+        contentType: "application/json",
+        success: function (result) {
+            var targets = [];
+            for (var i = 0; i < result.target.length; i++) {
+                targets[i] = {message: result.target[i]}
+            }
+            diagnose_target.target = targets;
+            setTimeout(function () {
+                $('div#diagnosetarget .jq22').comboSelect();
+                $('div#diagnosetarget .option-item').click(function (target) {
+                    setTimeout(function () {
+                        var a = $(target.currentTarget)[0].innerText;
+                        diagnosetargetSelected = $($(target.currentTarget)[0]).data('value');
+                        $('div#diagnosetarget .combo-input').val(a);
+                        $('div#diagnosetarget .combo-select select').val(a);
+                    }, 30);
+                });
+                $('#diagnosetarget input[type=text] ').keyup(function (target) {
+                    if( target.keyCode=='13'){
+                        var b = $("#diagnosetarget .option-hover.option-selected").text();
+                        diagnosetargetSelected=parseInt(($("#diagnosetarget .option-hover.option-selected"))[0].dataset.value);
+                        $('#diagnosetarget .combo-input').val(b);
+                        $('#diagnosetarget .combo-select select').val(b);
+                    }
+
+                })
+            }, 50);
+        }
+    });
+
+};
+
+
+
+function diagnose() {
+    var param = getFormJson3($('#superservice'));
+    var service=param.service
+    switch(service){
+        case 1:param.ping=1;break;
+        case 2:param.sla=2;break;
+        case 3 :param.web=3;break;
+        case 4 :param.download=4;break;
+        case 5:param.video=5;break;
+        case 6 :param.game=6;break;
+    }
+    if (probeSelected == 0) {
+        toastr.warning('请选择探针！')
+    } else if (diagnosetargetSelected == undefined) {
+        toastr.warning('请选择测试目标！')
+    } else {
+        param.probeId = probeSelected;
+        param.target = diagnosetargetSelected;
+
+        $.ajax({
+            url: "../../cem/taskdispatch/saveAndReturn",
+            type: "POST",
+            cache: false,  //禁用缓存
+            data: JSON.stringify(param),
+            dataType: "json",
+            contentType: "application/json",
+            success: function (result) {
+                console.log(result)
+                var dispatch = result.taskdispatch;
+                console.log(JSON.stringify(dispatch));
+                var url = "../diagnose/information.html";
+                var dispatchString = JSON.stringify(dispatch);
+                url = url + "?dispatch=" + dispatchString.substring(1,dispatchString.length-1);
+                console.log(url);
+                document.getElementById("diagnose").href = encodeURI(url);
+                document.getElementById("diagnose").click();
+                $('#myModal_diagnose').modal('hide');
+            }
+        });
+    }
+}
+/*将表单对象变为json对象*/
+function getFormJson3(form) {
+    var o = {};
+    var a = $(form).serializeArray();
+    for (var i = 0; i < a.length; i++) {
+        if (a[i].value != null && a[i].value != "") {
+            a[i].value = parseInt(a[i].value);
+        }
+    }
+    $.each(a, function () {
+        if (o[this.name] !== undefined) {
+            if (!o[this.name].push) {
+                o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '');
+        } else {
+            o[this.name] = this.value || '';
+        }
+    });
+    return o;
+}
+
+
+
+function getNow() {
+    var date=new Date();
+    var month = date.getMonth() + 1;
+    var strDate = date.getDate();
+    var years=date.getFullYear();
+    var newdate=years+'-'+month+'-'+strDate;
+    $('#start_date').flatpickr({
+        enableTime: true,
+        dateFormat: "Y-m-d H:i",
+        defaultDate:newdate,
+        time_24hr: true
+    });
+    var date=new Date();
+    var month = date.getMonth() + 1;
+    var strDate = date.getDate();
+    var years=date.getFullYear();
+    var hours=date.getHours();
+    var endday=years+'-'+month+'-'+strDate+' '+hours;
+    $('#terminal_date').flatpickr({
+        enableTime: true,
+        dateFormat: "Y-m-d H:i",
+        defaultDate:endday,
+        time_24hr: true
+    });
+    $('#areastart_date').flatpickr({
+        enableTime: true,
+        dateFormat: "Y-m-d H:i",
+        defaultDate:newdate,
+        time_24hr: true
+    });
+    $('#areaterminal_date').flatpickr({
+        enableTime: true,
+        dateFormat: "Y-m-d H:i",
+        defaultDate:endday,
+        time_24hr: true
+    });
+    $('#doorstart_date').flatpickr({
+        enableTime: true,
+        dateFormat: "Y-m-d H:i",
+        defaultDate:newdate,
+        time_24hr: true
+    });
+    $('#doorterminal_date').flatpickr({
+        enableTime: true,
+        dateFormat: "Y-m-d H:i",
+        defaultDate:endday,
+        time_24hr: true
+    });
+
 }

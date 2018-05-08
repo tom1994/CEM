@@ -54,7 +54,7 @@
         }
 
         #dispatch_table_wrapper {
-            height: 400px;
+            height: 405px;
             overflow-y: auto;
         }
 
@@ -302,7 +302,7 @@
                                                 class="glyphicon glyphicon-trash Btn"></span>批量删除
                                     </button>
                                     #end
-                                    #if($shiro.hasPermission("probe:reboot"))
+                                    #if($shiro.hasPermission("probe:update"))
                                     <button type="button" class="btn btn-sm btn-success"
                                             onclick="update_port()">
                                         <span
@@ -378,7 +378,7 @@
                                                        class="col-lg-2 col-md-2 col-sm-2 input-label form_border">状态</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                                     <select id="status" class="form-control input clear" name="status"
-                                                            disabled="disabled" unselectable='on'>
+                                                            readonly="readonly" style="pointer-events:none" >
                                                         <!--VUE列表渲染-->
                                                         <option v-for="item in statusNames"
                                                                 v-bind:value="item.message.status">
@@ -523,7 +523,7 @@
                                                        class="col-lg-2 col-md-2 col-sm-2 input-label form_border">心跳间隔(s)</label>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border" >
                                                     <input type="text" class="form-control input clear" id="hbInterval"
-                                                           name="hbInterval"
+                                                           name="hbInterval" readonly="readonly" unselectable='on'
                                                            placeholder="30">
                                                 </div>
                                                 <label for="reportInterval"
@@ -532,7 +532,7 @@
                                                      >
                                                     <input type="text" class="form-control input clear"
                                                            id="reportInterval"
-                                                           name="reportInterval"
+                                                           name="reportInterval"readonly="readonly" unselectable='on'
                                                            placeholder="15">
                                                 </div>
                                                 <label for="concurrentTask"
@@ -585,7 +585,7 @@
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border" >
                                                     <input type="text" class="form-control input clear"
                                                            id="updateInterval"
-                                                           name="updateInterval"
+                                                           name="updateInterval"readonly="readonly" unselectable='on'
                                                            placeholder="24">
                                                 </div>
                                                 <label for="lastUpdateTime"
@@ -818,11 +818,11 @@
 
                     <!--探针任务分配详情模态框-->
                     <div class="modal fade" id="myModal_dispatch" tabindex="-1" role="dialog"
-                         aria-labelledby="myModalLabel" aria-hidden="" true>
+                         aria-labelledby="myModalLabel" aria-hidden="" true >
                         <div class="modal-dialog">
-                            <div class="modal-content" style="height: 100% ;overflow: auto;">
+                            <div class="modal-content" style="height: 100% ;overflow: auto;width: 760px">
                                 <!--position: fixed;-->
-                                <div class="modal-header" style="width: 598px; z-index:2;background: white;">
+                                <div class="modal-header" style="width: 760px; z-index:2;background: white;">
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                                         &times;
                                     </button>

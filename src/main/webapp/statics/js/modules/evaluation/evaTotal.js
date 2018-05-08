@@ -104,37 +104,6 @@ var search_service = new Vue({ //Todo:完成查询条件框
                 param.chartdata = JSON.stringify(search);
 
                 sendAjax(param);
-
-                $.ajax({
-                    type: "POST",   /*GET会乱码*/
-                    url: "../../recordhourping/qualityList",//Todo:改成测试任务组的list方法
-                    cache: false,  //禁用缓存
-                    data: param,  //传入组装的参数
-                    dataType: "json",
-                    /* contentType:"application/json",  /!*必须要,不可少*!/*/
-                    success: function (result) {
-                        console.log(result);
-                        connection_service.connection.max = parseFloat(result.score.connectionMax).toFixed(3);
-                        connection_service.connection.average = parseFloat(result.score.connectionAverage).toFixed(3);
-                        connection_service.connection.min = parseFloat(result.score.connectionMin).toFixed(3);
-                        quality_service.quality.max = parseFloat(result.score.qualityMax).toFixed(3);
-                        quality_service.quality.average = parseFloat(result.score.qualityAverage).toFixed(3);
-                        quality_service.quality.min = parseFloat(result.score.qualityMin).toFixed(3);
-                        download_service.download.max = parseFloat(result.score.downloadMax).toFixed(3);
-                        download_service.download.average = parseFloat(result.score.downloadAverage).toFixed(3);
-                        download_service.download.min = parseFloat(result.score.downloadMin).toFixed(3);
-                        page_service.page.max = parseFloat(result.score.pageMax).toFixed(3);
-                        page_service.page.average = parseFloat(result.score.pageAverage).toFixed(3);
-                        page_service.page.min = parseFloat(result.score.pageMin).toFixed(3);
-                        video_service.video.max = parseFloat(result.score.videoMax).toFixed(3);
-                        video_service.video.average = parseFloat(result.score.videoAverage).toFixed(3);
-                        video_service.video.min = parseFloat(result.score.videoMin).toFixed(3);
-                        game_service.game.max = parseFloat(result.score.gameMax).toFixed(3);
-                        game_service.game.average = parseFloat(result.score.gameAverage).toFixed(3);
-                        game_service.game.min = parseFloat(result.score.gameMin).toFixed(3);
-
-                    }
-                });
             }
         },
     }
@@ -151,7 +120,17 @@ function sendAjax(param) {
         success: function (result) {
             ping_list=result.scoreList
                 removeLoading('test');
-
+                ping(ping_list);
+            var arr=[]
+            for(var i=0;i<ping_list.length;i++){
+                arr.push(parseFloat(ping_list[i].score));
+            }
+            var Maxvalue=arrMaxNum2(arr);
+            var min=arrMinNum2(arr);
+            var ava=arrAverageNum2(arr);
+            connection_service.connection.max=Maxvalue
+            connection_service.connection.average =ava;
+            connection_service.connection.min=min;
             for (let i = 0; i < options.series.length; i++) {
                 options.series[i].data = [];
             }
@@ -184,6 +163,17 @@ function sendAjax(param) {
         success: function (result) {
             quality_list=result.scoreList
             removeLoading('quality');
+            quality(quality_list);
+            var arr=[]
+            for(var i=0;i<quality_list.length;i++){
+                arr.push(parseFloat(quality_list[i].score));
+            }
+            var Maxvalue=arrMaxNum2(arr);
+            var min=arrMinNum2(arr);
+            var ava=arrAverageNum2(arr);
+            quality_service.quality.max=Maxvalue
+            quality_service.quality.average =ava;
+            quality_service.quality.min=min;
             for (let i = 0; i < options.series.length; i++) {
                 options.series[i].data = [];
             }
@@ -214,6 +204,17 @@ function sendAjax(param) {
         success: function (result) {
             page_list=result.scoreList
             removeLoading('page');
+            broswer(page_list);
+            var arr=[]
+            for(var i=0;i<page_list.length;i++){
+                arr.push(parseFloat(page_list[i].score));
+            }
+            var Maxvalue=arrMaxNum2(arr);
+            var min=arrMinNum2(arr);
+            var ava=arrAverageNum2(arr);
+            page_service.page.max=Maxvalue
+            page_service.page.average =ava;
+            page_service.page.min=min;
             for (let i = 0; i < options.series.length; i++) {
                 options.series[i].data = [];
             }
@@ -245,9 +246,20 @@ function sendAjax(param) {
         success: function (result) {
             download_list=result.scoreList
             removeLoading('download');
+            download(download_list)
             for (let i = 0; i < options.series.length; i++) {
                 options.series[i].data = [];
             }
+            var arr=[]
+            for(var i=0;i<download_list.length;i++){
+                arr.push(parseFloat(download_list[i].score));
+            }
+            var Maxvalue=arrMaxNum2(arr);
+            var min=arrMinNum2(arr);
+            var ava=arrAverageNum2(arr);
+            download_service.download.max=Maxvalue
+            download_service.download.average =ava;
+            download_service.download.min=min;
             for (let i = 0; i < options.series.length; i++) {
                 for (let j = 0; j < download_list.length; j++) {
                     let date_token = download_list[j].recordDate.split("-");
@@ -275,6 +287,17 @@ function sendAjax(param) {
         success: function (result) {
             video_list=result.scoreList
             removeLoading('video');
+            video(video_list);
+            var arr=[]
+            for(var i=0;i<video_list.length;i++){
+                arr.push(parseFloat(video_list[i].score));
+            }
+            var Maxvalue=arrMaxNum2(arr);
+            var min=arrMinNum2(arr);
+            var ava=arrAverageNum2(arr);
+            video_service.video.max=Maxvalue
+            video_service.video.average =ava;
+            video_service.video.min=min;
             for (let i = 0; i < options.series.length; i++) {
                 options.series[i].data = [];
             }
@@ -305,6 +328,17 @@ function sendAjax(param) {
         success: function (result) {
             game_list=result.scoreList;
             removeLoading('game');
+            game(game_list);
+            var arr=[]
+            for(var i=0;i<game_list.length;i++){
+                arr.push(parseFloat(game_list[i].score));
+            }
+            var Maxvalue=arrMaxNum2(arr);
+            var min=arrMinNum2(arr);
+            var ava=arrAverageNum2(arr);
+            game_service.game.max=Maxvalue
+            game_service.game.average =ava;
+            game_service.game.min=min;
             for (let i = 0; i < options.series.length; i++) {
                 options.series[i].data = [];
             }
@@ -542,6 +576,20 @@ var getProbe = function (countyid) {
 $(function () {
     loading();
 });
+
+//最大值
+function arrMaxNum2(arr){
+    return Math.max.apply(null,arr);
+}
+//最小值
+function arrMinNum2(arr){
+    return Math.min.apply(null,arr);
+}
+//平均值
+function arrAverageNum2(arr){
+    var sum = eval(arr.join("+"));
+    return ~~(sum/arr.length*100)/100;
+}
 var connection_service = new Vue({
     el: '#v-for-connection',
     data: {
@@ -550,40 +598,7 @@ var connection_service = new Vue({
             average: 0,
             min: 0
         },
-        probedata: {ava_start:(new Date()).Format("yyyy-MM-dd"), ava_terminal:(new Date()).Format("yyyy-MM-dd")}
-    },
-    mounted: function(){         /*动态加载测试任务组数据*/
-        let param = {};
-        param.probedata = JSON.stringify(this.probedata);
-        $.ajax({
-            type: "POST",   /*GET会乱码*/
-            url: "../../recordhourping/qualityList",//Todo:改成测试任务组的list方法
-            cache: false,  //禁用缓存
-            data: param,  //传入组装的参数
-            dataType: "json",
-            success: function (result) {
-                console.log(result);
-                connection_service.connection.max = parseFloat(result.score.connectionMax).toFixed(3);
-                connection_service.connection.average = parseFloat(result.score.connectionAverage).toFixed(3);
-                connection_service.connection.min = parseFloat(result.score.connectionMin).toFixed(3);
-                quality_service.quality.max = parseFloat(result.score.qualityMax).toFixed(3);
-                quality_service.quality.average = parseFloat(result.score.qualityAverage).toFixed(3);
-                quality_service.quality.min = parseFloat(result.score.qualityMin).toFixed(3);
-                download_service.download.max = parseFloat(result.score.downloadMax).toFixed(3);
-                download_service.download.average = parseFloat(result.score.downloadAverage).toFixed(3);
-                download_service.download.min = parseFloat(result.score.downloadMin).toFixed(3);
-                page_service.page.max = parseFloat(result.score.pageMax).toFixed(3);
-                page_service.page.average = parseFloat(result.score.pageAverage).toFixed(3);
-                page_service.page.min = parseFloat(result.score.pageMin).toFixed(3);
-                video_service.video.max = parseFloat(result.score.videoMax).toFixed(3);
-                video_service.video.average = parseFloat(result.score.videoAverage).toFixed(3);
-                video_service.video.min = parseFloat(result.score.videoMin).toFixed(3);
-                game_service.game.max = parseFloat(result.score.gameMax).toFixed(3);
-                game_service.game.average = parseFloat(result.score.gameAverage).toFixed(3);
-                game_service.game.min = parseFloat(result.score.gameMin).toFixed(3);
-
-            }
-        });
+        probedata: {ava_start:(new Date()).Format("yyyy-MM-dd"), ava_terminal:(new Date()).Format("yyyy-MM-dd")},
 
     },
 
@@ -596,7 +611,7 @@ var connection=new Vue({
     },
     mounted:function () {
         let param={};
-        param.chartdata = JSON.stringify(this.probedata)
+        param.chartdata = JSON.stringify(this.probedata);
         $.ajax({
             type: "POST",
             url: "../../recordhourping/connection",
@@ -605,7 +620,18 @@ var connection=new Vue({
             dataType: "json",
             success: function (result) {
                 ping_list = result.scoreList
+                ping(ping_list);
                 removeLoading('test');
+                var arr=[]
+                for(var i=0;i<ping_list.length;i++){
+                    arr.push(parseFloat(ping_list[i].score));
+                }
+                var Maxvalue=arrMaxNum2(arr);
+                var min=arrMinNum2(arr);
+                var ava=arrAverageNum2(arr);
+                connection_service.connection.max=Maxvalue
+                connection_service.connection.average =ava;
+                connection_service.connection.min=min;
                 for (let i = 0; i < options.series.length; i++) {
                     options.series[i].data = [];
                 }
@@ -646,6 +672,7 @@ var quality_service = new Vue({
     },
     mounted:function () {
         let param={};
+        let vm=this
         param.chartdata = JSON.stringify(this.probedata);
         $.ajax({
             type: "POST",
@@ -656,6 +683,17 @@ var quality_service = new Vue({
             success: function (result) {
                 quality_list=result.scoreList
                     removeLoading('quality');
+                quality(quality_list);
+                var arr=[]
+                for(var i=0;i<quality_list.length;i++){
+                    arr.push(parseFloat(quality_list[i].score));
+                }
+                var Maxvalue=arrMaxNum2(arr);
+                var min=arrMinNum2(arr);
+                var ava=arrAverageNum2(arr);
+                vm.quality.max=Maxvalue
+                vm.quality.average =ava;
+                vm.quality.min=min;
                 for (let i = 0; i < options.series.length; i++) {
                     options.series[i].data = [];
                 }
@@ -695,6 +733,7 @@ var download_service = new Vue({
     },
     mounted:function () {
         let param={};
+        let vm=this
         param.chartdata = JSON.stringify(this.probedata);
         $.ajax({
             type: "POST",
@@ -705,7 +744,17 @@ var download_service = new Vue({
             success: function (result) {
                 download_list=result.scoreList
                 removeLoading('download');
-
+                download(download_list);
+                var arr=[]
+                for(var i=0;i<download_list.length;i++){
+                    arr.push(parseFloat(download_list[i].score));
+                }
+                var Maxvalue=arrMaxNum2(arr);
+                var min=arrMinNum2(arr);
+                var ava=arrAverageNum2(arr);
+                vm.download.max=Maxvalue
+                vm.download.average =ava;
+                vm.download.min=min;
                 for (let i = 0; i < options.series.length; i++) {
                     options.series[i].data = [];
                 }
@@ -744,6 +793,7 @@ var page_service = new Vue({
     },
     mounted:function () {
         let param={};
+        let vm=this
         param.chartdata = JSON.stringify(this.probedata);
         $.ajax({
             type: "POST",
@@ -754,6 +804,17 @@ var page_service = new Vue({
             success: function (result) {
                 page_list=result.scoreList
                     removeLoading('page');
+                broswer(page_list);
+                var arr=[]
+                for(var i=0;i<page_list.length;i++){
+                    arr.push(parseFloat(page_list[i].score));
+                }
+                var Maxvalue=arrMaxNum2(arr);
+                var min=arrMinNum2(arr);
+                var ava=arrAverageNum2(arr);
+                vm.page.max=Maxvalue
+                vm.page.average =ava;
+                vm.page.min=min;
                 for (let i = 0; i < options.series.length; i++) {
                     options.series[i].data = [];
                 }
@@ -792,6 +853,7 @@ var video_service = new Vue({
     },
     mounted:function () {
         let param={};
+        let vm=this;
         param.chartdata = JSON.stringify(this.probedata);
         $.ajax({
             type: "POST",
@@ -802,6 +864,17 @@ var video_service = new Vue({
             success: function (result) {
                 video_list=result.scoreList
                     removeLoading('video');
+                video(video_list);
+                var arr=[]
+                for(var i=0;i<video_list.length;i++){
+                    arr.push(parseFloat(video_list[i].score));
+                }
+                var Maxvalue=arrMaxNum2(arr);
+                var min=arrMinNum2(arr);
+                var ava=arrAverageNum2(arr);
+                vm.video.max=Maxvalue
+                vm.video.average =ava;
+                vm.video.min=min;
                 for (let i = 0; i < options.series.length; i++) {
                     options.series[i].data = [];
                 }
@@ -841,6 +914,7 @@ var game_service = new Vue({
     },
     mounted:function () {
         let param={};
+        let vm=this
         param.chartdata = JSON.stringify(this.probedata);
         $.ajax({
             type: "POST",
@@ -851,6 +925,17 @@ var game_service = new Vue({
             success: function (result) {
                 game_list=result.scoreList
                     removeLoading('video');
+                game(game_list);
+                var arr=[]
+                for(var i=0;i<game_list.length;i++){
+                    arr.push(parseFloat(game_list[i].score));
+                }
+                var Maxvalue=arrMaxNum2(arr);
+                var min=arrMinNum2(arr);
+                var ava=arrAverageNum2(arr);
+                vm.game.max=Maxvalue
+                vm.game.average =ava;
+                vm.game.min=min;
                 for (let i = 0; i < options.series.length; i++) {
                     options.series[i].data = [];
                 }
@@ -940,82 +1025,34 @@ var options = {
 };
 
 
-
-
-
-
-//TODO：详情并展示
-function update_this(service_type) {     /*监听修改触发事件*/
-    loading_info();
-    var searchJson = getFormJson($('#probesearch'));
-    debugger
-    if ((searchJson.startDate) > (searchJson.terminalDate)) {
-        console.log("时间选择有误，请重新选择！");
-        $('#nonavailable_time').modal('show');
-    } else {
-        var search = new Object();
-        search.city_id = searchJson.city;
-        search.county_id = searchJson.county;
-        search.service = service_type;
-        search.probe_id = searchJson.probe;
-        if (searchJson.startDate.length != 0 && searchJson.terminalDate.length != 0) {
-            var ava_start = searchJson.startDate.substr(0, 10);
-            var ava_terminal = searchJson.terminalDate.substr(0, 10);
-            var startTime = searchJson.startDate.substr(11, 15);
-            var terminalTime = searchJson.terminalDate.substr(11, 15);
-            search.ava_start = ava_start;
-            search.ava_terminal = ava_terminal;
-            search.starTime = startTime;
-            search.terminalTime = terminalTime;
-        } else {
-            search.ava_start = today.Format("yyyy-MM-dd");
-            search.ava_terminal = (new Date()).Format("yyyy-MM-dd");
-        }
-        var schedulepolicy = JSON.stringify(search);
-        console.log(schedulepolicy);
-        $.ajax({
-            type: "POST", /*GET会乱码*/
-            url: "../../recordhourtracert/areadetail/" + schedulepolicy,
-            cache: false,  //禁用缓存
-            dataType: "json",
-            contentType: "application/json", /*必须要,不可少*/
-            success: function (result) {
-                console.log('收到数据', new Date(), result);
-                removeLoading('info');
-                var Content = result.scoreList;
-                info( service_type,Content)
-
-            }
-        });
-    }
-}
-
-function info(service_type,Content) {
-    if(service_type==1){
-        ping(Content)
-        $('#myModal_connection').modal('show');
-
-    }else if(service_type==2){
-        quality(Content)
-        $('#myModal_quality').modal('show');
-
-    }else if(service_type==3){
-        broswer(Content)
-        $('#myModal_broswer').modal('show');
-    }else if(service_type==4){
-        download(Content)
-        $('#myModal_download').modal('show');
-    }else if(service_type==5){
-        video(Content)
-        $('#myModal_video').modal('show');
-    }else if(service_type==6){
-        game(Content)
-        $('#myModal_game').modal('show');
-    }
+function   connection_info() {     /*监听修改触发事件*/
+   $("#myModal_connection").modal('show')
 }
 
 
+function   quality_info() {     /*监听修改触发事件*/
+    $("#myModal_quality").modal('show')
+}
 
+
+function   broswer_info() {     /*监听修改触发事件*/
+    $("#myModal_broswer").modal('show')
+}
+
+
+function   download_info() {     /*监听修改触发事件*/
+    $("#myModal_download").modal('show')
+}
+
+
+function   video_info() {     /*监听修改触发事件*/
+    $("#myModal_video").modal('show')
+}
+
+
+function   game_info() {     /*监听修改触发事件*/
+    $("#myModal_game").modal('show')
+}
 
 //网络连通性表格
 function ping(val) {
@@ -1124,7 +1161,7 @@ function ping(val) {
                 paging: false,
                 // serverSide: true,
                 info: false,
-                // ordering: true, /*禁用排序功能*/
+                // ordering: false, /*禁用排序功能*/
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
@@ -1230,6 +1267,8 @@ function quality(val) {
                 {title: '<div style="width:110px">探针名称</div>'},
                 {title: '<div style="width:130px">时间</div>'},
                 {title: '<div style="width:70px">综合分数</div>'},
+                {title: '<div style="width:100px">解析时延(ms)</div>'},
+                {title: '<div style="width:100px">成功率(%)</div>'},
                 {title: '<div style="width:100px">时延(ms)</div>'},
                 {title: '<div style="width:100px">往向时延(ms)</div>'},
                 {title: '<div style="width:100px">返向时延(ms)</div>'},
@@ -1245,8 +1284,7 @@ function quality(val) {
                 {title: '<div style="width:100px">返向抖动(ms)</div>'},
                 {title: '<div style="width:100px">丢包率(%)</div>'},
 
-                {title: '<div style="width:100px">解析时延(ms)</div>'},
-                {title: '<div style="width:100px">成功率(%)</div>'},
+
 
                 {title: '<div style="width:100px">分配时延(ms)</div>'},
                 {title: '<div style="width:100px">成功率(%)</div>'},
@@ -1303,9 +1341,10 @@ function quality(val) {
                         innerTh +='<th colspan="1"></th>';
                         innerTh +='<th colspan="1"></th>';
                         var columnsCount = 25;//具体情况
+                        innerTh +='<th colspan="2 " style="text-align: center">DNS</th>';
                         innerTh +='<th colspan="7" style="text-align: center">Sla(TCP)</th>';
                         innerTh +='<th colspan="7" style="text-align: center">Sla(UDP)</th>';
-                        innerTh +='<th colspan="2 " style="text-align: center">DNS</th>';
+
                         innerTh +='<th colspan="2" style="text-align: center">DHCP</th>';
                         innerTh +='<th colspan="3" style="text-align: center">ADSL</th>';
                         innerTh +='<th colspan="2"style="text-align: center">Radius</th>';
@@ -1318,9 +1357,9 @@ function quality(val) {
                 },
                 searching: false,
                 paging: false,
-                serverSide: false,
+                // serverSide: true,
                 info: false,
-                ordering: true, /*禁用排序功能*/
+                // ordering: false, /*禁用排序功能*/
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
@@ -1361,6 +1400,8 @@ function quality(val) {
                         row.push(item.probeName);
                         row.push(item.recordDate.substr(0,10)+"   "+item.recordTime.substr(0,10)+':00');
                         row.push(fixed(item.score));
+                        row.push(fixed(item.dnsDelay));
+                        row.push(fixedRate(item.dnsSuccessRate));
                         row.push(fixed(item.slaTcpDelay));
                         row.push(fixed(item.slaTcpGDelay));
                         row.push(fixed(item.slaTcpRDelay));
@@ -1375,8 +1416,7 @@ function quality(val) {
                         row.push(fixed(item.slaUdpGJitter));
                         row.push(fixed(item.slaUdpRJitter));
                         row.push(fixedRate(item.slaUdpLossRate));
-                        row.push(fixed(item.dnsDelay));
-                        row.push(fixedRate(item.dnsSuccessRate));
+
                         row.push(fixed(item.dhcpDelay));
                         row.push(fixed(item.dhcpSuccessRate));
                         row.push(fixed(item.pppoeDelay));
@@ -1460,10 +1500,10 @@ function broswer(val) {
                 data: vm.rows,
                 searching: false,
                 paging: false,
-                serverSide: false,
+                // serverSide: true,
                 info: false,
 
-                ordering: true, /*禁用排序功能*/
+                // ordering: false, /*禁用排序功能*/
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
@@ -1512,7 +1552,7 @@ function broswer(val) {
                         row.push(fixed(item.webpagePageFileDelay));
                         row.push(fixed(item.webpageRedirectDelay));
                         row.push(fixed(item.webpageAboveFoldDelay));
-                        row.push(fixed(item.webpageLoadDelay));
+                        row.push(fixed(item.loadDelay));
                         row.push(fixed(item.webpageDownloadRate));
                         rows.push(row);
 
@@ -1618,10 +1658,10 @@ function download(val) {
                 },
                 searching: false,
                 paging: false,
-                serverSide: false,
+                // serverSide: true,
                 info: false,
 
-                ordering: true, /*禁用排序功能*/
+                // ordering: false, /*禁用排序功能*/
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
@@ -1709,7 +1749,7 @@ function video(val) {
                 {title: '<div style="width:130px">时间</div>'},
                 {title: '<div style="width:70px">综合分数</div>'},
                 {title: '<div style="width:100px">DNS时延(ms)</div>'},
-                {title: '<div style="width:130px">连接WEB服务器时延(ms)</div>'},
+                {title: '<div style="width:150px">连接WEB服务器时延(ms)</div>'},
                 {title: '<div style="width:120px">web页面时延(ms)</div>'},
                 {title: '<div style="width:110px">首帧到达时延(ms)</div>'},
                 {title: '<div style="width:120px">首次缓冲时延(ms)</div>'},
@@ -1754,9 +1794,10 @@ function video(val) {
                 data: vm.rows,
                 searching: false,
                 paging: false,
-                serverSide: false,
+                // serverSide: true,
                 info: false,
-                ordering: true, /*禁用排序功能*/
+
+                // ordering: false, /*禁用排序功能*/
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
@@ -1876,9 +1917,9 @@ function game(val) {
                 data: vm.rows,
                 searching: false,
                 paging: false,
-                serverSide: false,
+                // serverSide: true,
                 info: false,
-                ordering: true, /*禁用排序功能*/
+                // ordering: false, /*禁用排序功能*/
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
@@ -1920,7 +1961,7 @@ function game(val) {
                         row.push(fixed(item.gameDnsDelay));
                         row.push(fixed(item.gamePacketDelay));
                         row.push(fixed(item.gamePacketJitter));
-                        row.push(fixed(item.gameLossRate)*100);
+                        row.push(fixedRate(item.gameLossRate));
                         rows.push(row);
                     });
                     returnData.data = rows;
@@ -1939,6 +1980,7 @@ function game(val) {
         }
     })
 }
+
 
 function loading() {
     $('#container_connection').loading({
@@ -2044,25 +2086,7 @@ function loading() {
         loadingMaskBg:'rgba(22,22,22,0.2)'
     });
 }
-function loading_info() {
-    $('body').loading({
-        loadingWidth: 240,
-        title: '正在努力的加载中~',
-        name: 'info',
-        discription: '这是一个描述...',
-        direction: 'row',
-        type: 'origin',
-        originBg: '#B0E2FF',
-        originDivWidth: 30,
-        originDivHeight: 30,
-        originWidth: 4,
-        originHeight: 4,
-        smallLoading: false,
-        titleColor: '#ADD8E6',
-        loadingBg: '#312923',
-        loadingMaskBg: 'rgba(22,22,22,0.2)'
-    });
-}
+
 
 function probe() {
     probeSelected=0;
@@ -2206,3 +2230,5 @@ function compare(property) {
         return value1 - value2;     // 升序
     }
 }
+
+

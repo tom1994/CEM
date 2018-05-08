@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>资源监控</title>
+#parse("header.html")
+	<script src="${rc.contextPath}/statics/js/echarts-2.2.7/build/dist/echarts.js"></script>
+
+	<script>
+
+		var cpu_v = 0;
+		var mem_v = 0;
+		var disk_v = 0;
+		var swap_v = 0;
+		$(function () {
+            $.ajax({
+                type: "post",
+                async: false, //同步执行
+                url: "${rc.contextPath}/sys/status/show",
+                data: {id: '1'},
+                dataType: "json", //返回数据形式为json
+                success: function (result) {
+                    if (result) {
+                        console.log(result.sysinfo);
+                        debugger
+                            cpu_v = result.sysinfo.cpuPercentDecimal2;
+						     mem_v = result.sysinfo.memUsedPercent;
+							disk_v = result.sysinfo.diskUsedPercent;
+							swap_v = result.sysinfo.swapUsedPercent;
+
+                        $("#hsot_name_lable").html(result.sysinfo.hostName);
+						 $("#os_lable").html(result.sysinfo.os);
+                        $("#cpu_percent_lable").html(result.sysinfo.cpuPercentDecimal2);
+                        $("#mem_total_lable").html(result.sysinfo.memTotalGB);
+                        $("#mem_used_lable").html(result.sysinfo.memUsedGB);
+                        $("#disk_total_lable").html(result.sysinfo.diskTotalGB);
+                        $("#disk_used_lable").html(result.sysinfo.diskUsedGB);
+                        $("#swap_total_lable").html(result.sysinfo.swapTotalGB);
+                        $("#swap_used_lable").html(result.sysinfo.swapUsedGB);
+
+                    }
+                }
+            })
+
+        });
+
+
+        $(function () {
+            require.config({
+                paths: {
+                    echarts: '/statics/js/echarts-2.2.7/build/dist'
+                }
+            });
+
+            // 使用
+            require(
+                [
+                    'echarts',
+                    'echarts/chart/gauge'
+                ],
+                function (ec) {
+                    // 基于准备好的dom，初始化echarts图表
+                    var myChart = ec.init(document.getElementById('gauge_view1'));
+                    //var myChart2 = ec.init(document.getElementById('container3'));
+                    //var myChart3 = ec.init(document.getElementById('container4'));
+                    option = {
+                        tooltip : {
+                            formatter: "{a} <br/>{b} : {c}%"
+                        },
+                        toolbox: {
+                            show : true,
+                            feature : {
+                                mark : {show: false},
+                                restore : {show: false},
+                                saveAsImage : {show: false}
+                            }
+                        },
+                        series : [
+                            {
+                                name:'',
+                                type:'gauge',
+                                splitNumber: 10,       // 分割段数，默认为5
+                                axisLine: {            // 坐标轴线
+                                    lineStyle: {       // 属性lineStyle控制线条样式
+                                        color: [[0.2, '#228b22'],[0.8, '#48b'],[1, '#ff4500']],
+                                        width: 8
+                                    }
+                                },
+                                axisTick: {            // 坐标轴小标记
+                                    splitNumber: 10,   // 每份split细分多少段
+                                    length :12,        // 属性length控制线长
+                                    lineStyle: {       // 属性lineStyle控制线条样式
+                                        color: 'auto'
+                                    }
+                                },
+                                axisLabel: {           // 坐标轴文本标签，详见axis.axisLabel
+                                    textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                                        color: 'auto'
+                                    }
+                                },
+                                splitLine: {           // 分隔线
+                                    show: true,        // 默认显示，属性show控制显示与否
+                                    length :30,         // 属性length控制线长
+                                    lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+                                        color: 'auto'
+                                    }
+                                },
+                                pointer : {
+                                    width : 5
+                                },
+                                title : {
+                                    show : true,
+                                    offsetCenter: [0, '-40%'],       // x, y，单位px
+                                    textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                                        fontWeight: 'bolder'
+                                    }
+                                },
+                                detail : {
+                                    formatter:'{value}%',
+                                    textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                                        color: 'auto',
+                                        fontWeight: 'bolder'
+                                    }
+                                },
+                                data:[{value: 50, name: 'CPU使用率'}]
+                            }
+                        ]
+                    };
+                    option.series[0].data[0].value = cpu_v;
+                    myChart.setOption(option,true);
+
+                }
+
+            );
+        })
+
+        console.log("第一个加载完成");
+
+        $(function () {
+            require.config({
+                paths: {
+                    echarts: '/statics/js/echarts-2.2.7/build/dist'
+                }
+            });
+
+            // 使用
+            require(
+                [
+                    'echarts',
+                    'echarts/chart/gauge'
+                ],
+                function (ec) {
+                    // 基于准备好的dom，初始化echarts图表
+                    var myChart = ec.init(document.getElementById('gauge_view2'));
+                    option = {
+                        tooltip : {
+                            formatter: "{a} <br/>{b} : {c}%"
+                        },
+                        toolbox: {
+                            show : false,
+                            feature : {
+                                mark : {show: true},
+                                restore : {show: true},
+                                saveAsImage : {show: true}
+                            }
+                        },
+                        series : [
+                            {
+                                name:'',
+                                type:'gauge',
+                                splitNumber: 10,       // 分割段数，默认为5
+                                axisLine: {            // 坐标轴线
+                                    lineStyle: {       // 属性lineStyle控制线条样式
+                                        color: [[0.2, '#228b22'],[0.8, '#48b'],[1, '#ff4500']],
+                                        width: 8
+                                    }
+                                },
+                                axisTick: {            // 坐标轴小标记
+                                    splitNumber: 10,   // 每份split细分多少段
+                                    length :12,        // 属性length控制线长
+                                    lineStyle: {       // 属性lineStyle控制线条样式
+                                        color: 'auto'
+                                    }
+                                },
+                                axisLabel: {           // 坐标轴文本标签，详见axis.axisLabel
+                                    textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                                        color: 'auto'
+                                    }
+                                },
+                                splitLine: {           // 分隔线
+                                    show: true,        // 默认显示，属性show控制显示与否
+                                    length :30,         // 属性length控制线长
+                                    lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+                                        color: 'auto'
+                                    }
+                                },
+                                pointer : {
+                                    width : 5
+                                },
+                                title : {
+                                    show : true,
+                                    offsetCenter: [0, '-40%'],       // x, y，单位px
+                                    textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                                        fontWeight: 'bolder'
+                                    }
+                                },
+                                detail : {
+                                    formatter:'{value}%',
+                                    textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                                        color: 'auto',
+                                        fontWeight: 'bolder'
+                                    }
+                                },
+                                data:[{value: 50, name: '内存使用率'}]
+                            }
+                        ]
+                    };
+                    option.series[0].data[0].value = 45.36;
+                    myChart.setOption(option,true);
+
+                }
+
+            );
+        })
+
+        console.log("第二个加载完成");
+
+        $(function () {
+            require.config({
+                paths: {
+                    echarts: '/statics/js/echarts-2.2.7/build/dist'
+                }
+            });
+
+            // 使用
+            require(
+                [
+                    'echarts',
+                    'echarts/chart/gauge'
+                ],
+                function (ec) {
+                    // 基于准备好的dom，初始化echarts图表
+                    var myChart = ec.init(document.getElementById('gauge_view3'));
+                    //var myChart2 = ec.init(document.getElementById('container3'));
+                    //var myChart3 = ec.init(document.getElementById('container4'));
+                    option = {
+                        tooltip : {
+                            formatter: "{a} <br/>{b} : {c}%"
+                        },
+                        toolbox: {
+                            show : false,
+                            feature : {
+                                mark : {show: true},
+                                restore : {show: true},
+                                saveAsImage : {show: true}
+                            }
+                        },
+                        series : [
+                            {
+                                name:'',
+                                type:'gauge',
+                                splitNumber: 10,       // 分割段数，默认为5
+                                axisLine: {            // 坐标轴线
+                                    lineStyle: {       // 属性lineStyle控制线条样式
+                                        color: [[0.2, '#228b22'],[0.8, '#48b'],[1, '#ff4500']],
+                                        width: 8
+                                    }
+                                },
+                                axisTick: {            // 坐标轴小标记
+                                    splitNumber: 10,   // 每份split细分多少段
+                                    length :12,        // 属性length控制线长
+                                    lineStyle: {       // 属性lineStyle控制线条样式
+                                        color: 'auto'
+                                    }
+                                },
+                                axisLabel: {           // 坐标轴文本标签，详见axis.axisLabel
+                                    textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                                        color: 'auto'
+                                    }
+                                },
+                                splitLine: {           // 分隔线
+                                    show: true,        // 默认显示，属性show控制显示与否
+                                    length :30,         // 属性length控制线长
+                                    lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+                                        color: 'auto'
+                                    }
+                                },
+                                pointer : {
+                                    width : 5
+                                },
+                                title : {
+                                    show : true,
+                                    offsetCenter: [0, '-40%'],       // x, y，单位px
+                                    textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                                        fontWeight: 'bolder'
+                                    }
+                                },
+                                detail : {
+                                    formatter:'{value}%',
+                                    textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                                        color: 'auto',
+                                        fontWeight: 'bolder'
+                                    }
+                                },
+                                data:[{value: 50, name: '硬盘使用率'}]
+                            }
+                        ]
+                    };
+                    option.series[0].data[0].value = disk_v;
+                    myChart.setOption(option,true);
+
+                }
+
+            );
+        })
+
+        console.log("第三个加载完成");
+        $(function () {
+            require.config({
+                paths: {
+                    echarts: '/statics/js/echarts-2.2.7/build/dist'
+                }
+            });
+
+            // 使用
+            require(
+                [
+                    'echarts',
+                    'echarts/chart/gauge'
+                ],
+                function (ec) {
+                    // 基于准备好的dom，初始化echarts图表
+                    var myChart = ec.init(document.getElementById('gauge_view4'));
+                    //var myChart2 = ec.init(document.getElementById('container3'));
+                    //var myChart3 = ec.init(document.getElementById('container4'));
+                    option = {
+                        tooltip : {
+                            formatter: "{a} <br/>{b} : {c}%"
+                        },
+                        toolbox: {
+                            show : false,
+                            feature : {
+                                mark : {show: true},
+                                restore : {show: true},
+                                saveAsImage : {show: true}
+                            }
+                        },
+                        series : [
+                            {
+                                name:'',
+                                type:'gauge',
+                                splitNumber: 10,       // 分割段数，默认为5
+                                axisLine: {            // 坐标轴线
+                                    lineStyle: {       // 属性lineStyle控制线条样式
+                                        color: [[0.2, '#228b22'],[0.8, '#48b'],[1, '#ff4500']],
+                                        width: 8
+                                    }
+                                },
+                                axisTick: {            // 坐标轴小标记
+                                    splitNumber: 10,   // 每份split细分多少段
+                                    length :12,        // 属性length控制线长
+                                    lineStyle: {       // 属性lineStyle控制线条样式
+                                        color: 'auto'
+                                    }
+                                },
+                                axisLabel: {           // 坐标轴文本标签，详见axis.axisLabel
+                                    textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                                        color: 'auto'
+                                    }
+                                },
+                                splitLine: {           // 分隔线
+                                    show: true,        // 默认显示，属性show控制显示与否
+                                    length :30,         // 属性length控制线长
+                                    lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+                                        color: 'auto'
+                                    }
+                                },
+                                pointer : {
+                                    width : 5
+                                },
+                                title : {
+                                    show : true,
+                                    offsetCenter: [0, '-40%'],       // x, y，单位px
+                                    textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                                        fontWeight: 'bolder'
+                                    }
+                                },
+                                detail : {
+                                    formatter:'{value}%',
+                                    textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                                        color: 'auto',
+                                        fontWeight: 'bolder'
+                                    }
+                                },
+                                data:[{value: 50, name: '虚拟内存使用率'}]
+                            }
+                        ]
+                    };
+                    option.series[0].data[0].value = swap_v;
+                    myChart.setOption(option,true);
+
+                }
+
+            );
+        })
+        console.log("第四个加载完成");
+        //clearInterval(timeTicket);
+
+	</script>
+</head>
+<body>
+<h2>资源监控</h2>
+<table class="table table-striped table-bordered table-hover" >
+	<tr>
+		<td width="15%">主机名称：</td>
+		<td width="35%"><span id="hsot_name_lable"></span></td>
+		<td width="15%">操作系统</td>
+		<td width="30%"><span id="os_lable"></span></td>
+	</tr>
+	<tr>
+
+		<td>物理内存总量</td>
+		<td><span id="mem_total_lable"></span>GB</td>
+		<td>已使用内存</td>
+		<td><span id="mem_used_lable"></span>GB</td>
+	</tr>
+
+	<tr>
+		<td>硬盘空间总大小</td>
+		<td><span id="disk_total_lable"></span>GB</td>
+		<td>已使用硬盘空间</td>
+		<td><span id="disk_used_lable"></span>GB</td>
+	</tr>
+
+	<tr>
+		<td>虚拟内存总量</td>
+		<td><span id="swap_total_lable"></span>GB</td>
+		<td>已使用虚拟内存</td>
+		<td><span id="swap_used_lable"></span>GB</td>
+	</tr>
+	<tr>
+		<td>CPU使用率</td>
+		<td><span id="cpu_percent_lable"></span>%</td>
+		<td></td>
+		<td><span id="cpu_percent_lable2"></span></td>
+	</tr>
+</table>
+<table>
+	<tr>
+		<td><div id="gauge_view1" style="width:300px; height:300px;background: #0a6aa1" /></td>
+		<td><div id="gauge_view2" style="width:300px; height:300px;background: #1adbd1" /></td>
+		<td><div id="gauge_view3" style="width:300px; height:300px;background: #8a10a0" /></td>
+		<td><div id="gauge_view4" style="width:300px; height:300px;background: #8a10a0" /></td>
+	</tr>
+</table>
+
+
+</body>
+</html>

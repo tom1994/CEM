@@ -76,6 +76,16 @@
         .ibox-content{
             padding-bottom: 0px;
         }
+
+        .highcharts-contextmenu{
+            top: -20px;
+        }
+        hr {
+            margin-top: 0px;
+            margin-bottom: 0px;
+            border: 0;
+            border-top: 0px;
+        }
     </style>
 </head>
 
@@ -84,7 +94,7 @@
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="ibox float-e-margins">
-                    <div class="ibox-content" style="padding-bottom: 0 !important;">
+                    <div class="ibox-content" style="padding-bottom: 0 !important;padding-top: 1px">
                         <div class="row" id="searchbox" style="border: none !important;">
                             <form class="col-lg-11 col-md-11 col-sm-11 form-horizontal" id="probesearch"
                                   role="form">
@@ -180,7 +190,7 @@
                                         <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
                                             <span class="modulefont">网络连通性业务</span>
                                             <div  class="tools">
-                                                <a href="#" onclick="update_this(1);return false;" style="color:white">查看详情</a>
+                                                <a href="#" onclick="connection_info();return false;" style="color:white">查看详情</a>
                                             </div>
                                         </div>
 
@@ -188,9 +198,9 @@
                                             <div class="row">
                                                 <div class="left-up" >
                                                     <div id="v-for-connection" class="col-lg-12 col-md-12 col-sm-12" style="padding: 0px">
-                                                        <p  v-cloak>最高分：{{connection.max}}</p>
-                                                        <p  v-cloak>平均分：{{connection.average}}</p>
-                                                        <p  v-cloak>最低分：{{connection.min}}</p>
+                                                        <p  v-cloak  >最高分：{{connection.max}}</p>
+                                                        <p  v-cloak >平均分：{{connection.average}}</p>
+                                                        <p  v-cloak >最低分：{{connection.min}}</p>
                                                     </div>
                                                 </div>
 
@@ -213,7 +223,7 @@
                                         <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
                                             <span class="modulefont">网络层质量业务</span>
                                             <div class="tools">
-                                                <a href="#" onclick="update_this(2);return false;" style="color:white">查看详情</a>
+                                                <a href="#" onclick="quality_info();return false;" style="color:white">查看详情</a>
                                             </div>
                                         </div>
 
@@ -247,7 +257,7 @@
                                         <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
                                             <span class="modulefont">文件下载类业务</span>
                                             <div class="tools">
-                                                <a href="#" onclick="update_this(4);return false;" style="color:white">查看详情</a>
+                                                <a href="#" onclick="download_info();return false;" style="color:white">查看详情</a>
                                             </div>
                                         </div>
                                         <div class="wrapper-block" style="font-size:15px !important">
@@ -278,7 +288,7 @@
                                         <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
                                             <span class="modulefont">网页浏览类业务</span>
                                             <div class="tools">
-                                                <a href="#" onclick="update_this(3);return false;" style="color:white">查看详情</a>
+                                                <a href="#" onclick="broswer_info();return false;" style="color:white">查看详情</a>
                                             </div>
                                         </div>
 
@@ -312,7 +322,7 @@
                                         <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
                                             <span class="modulefont">在线视频类业务</span>
                                             <div class="tools">
-                                                <a href="#" onclick="update_this(5);return false;" style="color:white">查看详情</a>
+                                                <a href="#" onclick="video_info();return false;" style="color:white">查看详情</a>
                                             </div>
                                         </div>
 
@@ -344,7 +354,7 @@
                                         <div style="background-color: #1c84c6; border-radius:8px 8px 0 0 !important">
                                             <span class="modulefont">网络游戏类业务</span>
                                             <div class="tools">
-                                                <a href="#" onclick="update_this(6);return false;" style="color:white">查看详情</a>
+                                                <a href="#" onclick="game_info();return false;" style="color:white">查看详情</a>
                                             </div>
                                         </div>
 

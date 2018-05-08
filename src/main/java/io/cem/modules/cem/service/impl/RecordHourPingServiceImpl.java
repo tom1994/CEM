@@ -255,28 +255,29 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						}
 
 						//loss 100
-						if ((pingList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("pingI82"))) <= 0) {
+						Double lossRate = pingList.get(i).getLossRate()*100;
+						if (lossRate.compareTo(Double.parseDouble(pros.getValue("pingI82"))) <= 0) {
 							score += 100 * (Double.parseDouble(pros.getValue("pingI81")));
 						}
 						//loss 80-100
-						else if (((pingList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("pingI82"))) > 0) && ((pingList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("pingI83"))) <= 0)) {
-							score += (80 + ((((pingList.get(i).getLossRate().doubleValue()) - (Double.parseDouble(pros.getValue("pingI83")))) * 20) / ((Double.parseDouble(pros.getValue("pingI82")) - (Double.parseDouble(pros.getValue("pingI83"))))))) * (Double.parseDouble(pros.getValue("pingI81")));
+						else if ((lossRate.compareTo(Double.parseDouble(pros.getValue("pingI82"))) > 0) && (lossRate.compareTo(Double.parseDouble(pros.getValue("pingI83"))) <= 0)) {
+							score += (80 + ((((lossRate.doubleValue()) - (Double.parseDouble(pros.getValue("pingI83")))) * 20) / ((Double.parseDouble(pros.getValue("pingI82")) - (Double.parseDouble(pros.getValue("pingI83"))))))) * (Double.parseDouble(pros.getValue("pingI81")));
 						}
 						//loss 60-80
-						else if (((pingList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("pingI83"))) > 0) && ((pingList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("pingI84"))) <= 0)) {
-							score += (60 + ((((pingList.get(i).getLossRate().doubleValue()) - (Double.parseDouble(pros.getValue("pingI84")))) * 20) / ((Double.parseDouble(pros.getValue("pingI83")) - (Double.parseDouble(pros.getValue("pingI84"))))))) * (Double.parseDouble(pros.getValue("pingI81")));
+						else if ((lossRate.compareTo(Double.parseDouble(pros.getValue("pingI83"))) > 0) && (lossRate.compareTo(Double.parseDouble(pros.getValue("pingI84"))) <= 0)) {
+							score += (60 + ((((lossRate.doubleValue()) - (Double.parseDouble(pros.getValue("pingI84")))) * 20) / ((Double.parseDouble(pros.getValue("pingI83")) - (Double.parseDouble(pros.getValue("pingI84"))))))) * (Double.parseDouble(pros.getValue("pingI81")));
 						}
 						//loss 40-60
-						else if (((pingList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("pingI84"))) > 0) && ((pingList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("pingI85"))) <= 0)) {
-							score += (40 + ((((pingList.get(i).getLossRate().doubleValue()) - (Double.parseDouble(pros.getValue("pingI85")))) * 20) / ((Double.parseDouble(pros.getValue("pingI84")) - (Double.parseDouble(pros.getValue("pingI85"))))))) * (Double.parseDouble(pros.getValue("pingI81")));
+						else if ((lossRate.compareTo(Double.parseDouble(pros.getValue("pingI84"))) > 0) && (lossRate.compareTo(Double.parseDouble(pros.getValue("pingI85"))) <= 0)) {
+							score += (40 + ((((lossRate.doubleValue()) - (Double.parseDouble(pros.getValue("pingI85")))) * 20) / ((Double.parseDouble(pros.getValue("pingI84")) - (Double.parseDouble(pros.getValue("pingI85"))))))) * (Double.parseDouble(pros.getValue("pingI81")));
 						}
 						//loss 20-40
-						else if (((pingList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("pingI85"))) > 0) && ((pingList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("pingI86"))) <= 0)) {
-							score += (20 + ((((pingList.get(i).getLossRate().doubleValue()) - (Double.parseDouble(pros.getValue("pingI86")))) * 20) / ((Double.parseDouble(pros.getValue("pingI85")) - (Double.parseDouble(pros.getValue("pingI86"))))))) * (Double.parseDouble(pros.getValue("pingI81")));
+						else if ((lossRate.compareTo(Double.parseDouble(pros.getValue("pingI85"))) > 0) && (lossRate.compareTo(Double.parseDouble(pros.getValue("pingI86"))) <= 0)) {
+							score += (20 + ((((lossRate.doubleValue()) - (Double.parseDouble(pros.getValue("pingI86")))) * 20) / ((Double.parseDouble(pros.getValue("pingI85")) - (Double.parseDouble(pros.getValue("pingI86"))))))) * (Double.parseDouble(pros.getValue("pingI81")));
 						}
 						//loss 0-20
-						else if (((pingList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("pingI86"))) > 0) && ((pingList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("pingI87"))) <= 0)) {
-							score += ((((pingList.get(i).getLossRate().doubleValue()) - (Double.parseDouble(pros.getValue("pingI87")))) * 20) / ((Double.parseDouble(pros.getValue("pingI86")) - (Double.parseDouble(pros.getValue("pingI87")))))) * (Double.parseDouble(pros.getValue("pingI81")));
+						else if ((lossRate.compareTo(Double.parseDouble(pros.getValue("pingI86"))) > 0) && (lossRate.compareTo(Double.parseDouble(pros.getValue("pingI87"))) <= 0)) {
+							score += ((((lossRate.doubleValue()) - (Double.parseDouble(pros.getValue("pingI87")))) * 20) / ((Double.parseDouble(pros.getValue("pingI86")) - (Double.parseDouble(pros.getValue("pingI87")))))) * (Double.parseDouble(pros.getValue("pingI81")));
 						}
 						//loss 0
 						else {
@@ -510,28 +511,29 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						}
 
 						//loss 100
-						if ((pingList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("pingT82"))) <= 0) {
+						Double lossRate = pingList.get(i).getLossRate()*100;
+						if (lossRate.compareTo(Double.parseDouble(pros.getValue("pingT82"))) <= 0) {
 							score += 100 * (Double.parseDouble(pros.getValue("pingT81")));
 						}
 						//loss 80-100
-						else if (((pingList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("pingT82"))) > 0) && ((pingList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("pingT83"))) <= 0)) {
-							score += (80 + ((((pingList.get(i).getLossRate().doubleValue()) - (Double.parseDouble(pros.getValue("pingT83")))) * 20) / ((Double.parseDouble(pros.getValue("pingT82")) - (Double.parseDouble(pros.getValue("pingT83"))))))) * (Double.parseDouble(pros.getValue("pingT81")));
+						else if ((lossRate.compareTo(Double.parseDouble(pros.getValue("pingT82"))) > 0) && (lossRate.compareTo(Double.parseDouble(pros.getValue("pingT83"))) <= 0)) {
+							score += (80 + ((((lossRate.doubleValue()) - (Double.parseDouble(pros.getValue("pingT83")))) * 20) / ((Double.parseDouble(pros.getValue("pingT82")) - (Double.parseDouble(pros.getValue("pingT83"))))))) * (Double.parseDouble(pros.getValue("pingT81")));
 						}
 						//loss 60-80
-						else if (((pingList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("pingT83"))) > 0) && ((pingList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("pingT84"))) <= 0)) {
-							score += (60 + ((((pingList.get(i).getLossRate().doubleValue()) - (Double.parseDouble(pros.getValue("pingT84")))) * 20) / ((Double.parseDouble(pros.getValue("pingT83")) - (Double.parseDouble(pros.getValue("pingT84"))))))) * (Double.parseDouble(pros.getValue("pingT81")));
+						else if ((lossRate.compareTo(Double.parseDouble(pros.getValue("pingT83"))) > 0) && (lossRate.compareTo(Double.parseDouble(pros.getValue("pingT84"))) <= 0)) {
+							score += (60 + ((((lossRate.doubleValue()) - (Double.parseDouble(pros.getValue("pingT84")))) * 20) / ((Double.parseDouble(pros.getValue("pingT83")) - (Double.parseDouble(pros.getValue("pingT84"))))))) * (Double.parseDouble(pros.getValue("pingT81")));
 						}
 						//loss 40-60
-						else if (((pingList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("pingT84"))) > 0) && ((pingList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("pingT85"))) <= 0)) {
-							score += (40 + ((((pingList.get(i).getLossRate().doubleValue()) - (Double.parseDouble(pros.getValue("pingT85")))) * 20) / ((Double.parseDouble(pros.getValue("pingT84")) - (Double.parseDouble(pros.getValue("pingT85"))))))) * (Double.parseDouble(pros.getValue("pingT81")));
+						else if ((lossRate.compareTo(Double.parseDouble(pros.getValue("pingT84"))) > 0) && (lossRate.compareTo(Double.parseDouble(pros.getValue("pingT85"))) <= 0)) {
+							score += (40 + ((((lossRate.doubleValue()) - (Double.parseDouble(pros.getValue("pingT85")))) * 20) / ((Double.parseDouble(pros.getValue("pingT84")) - (Double.parseDouble(pros.getValue("pingT85"))))))) * (Double.parseDouble(pros.getValue("pingT81")));
 						}
 						//loss 20-40
-						else if (((pingList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("pingT85"))) > 0) && ((pingList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("pingT86"))) <= 0)) {
-							score += (20 + ((((pingList.get(i).getLossRate().doubleValue()) - (Double.parseDouble(pros.getValue("pingT86")))) * 20) / ((Double.parseDouble(pros.getValue("pingT85")) - (Double.parseDouble(pros.getValue("pingT86"))))))) * (Double.parseDouble(pros.getValue("pingT81")));
+						else if ((lossRate.compareTo(Double.parseDouble(pros.getValue("pingT85"))) > 0) && (lossRate.compareTo(Double.parseDouble(pros.getValue("pingT86"))) <= 0)) {
+							score += (20 + ((((lossRate.doubleValue()) - (Double.parseDouble(pros.getValue("pingT86")))) * 20) / ((Double.parseDouble(pros.getValue("pingT85")) - (Double.parseDouble(pros.getValue("pingT86"))))))) * (Double.parseDouble(pros.getValue("pingT81")));
 						}
 						//loss 0-20
-						else if (((pingList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("pingT86"))) > 0) && ((pingList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("pingT87"))) <= 0)) {
-							score += ((((pingList.get(i).getLossRate().doubleValue()) - (Double.parseDouble(pros.getValue("pingT87")))) * 20) / ((Double.parseDouble(pros.getValue("pingT86")) - (Double.parseDouble(pros.getValue("pingT87")))))) * (Double.parseDouble(pros.getValue("pingT81")));
+						else if ((lossRate.compareTo(Double.parseDouble(pros.getValue("pingT86"))) > 0) && (lossRate.compareTo(Double.parseDouble(pros.getValue("pingT87"))) <= 0)) {
+							score += ((((lossRate.doubleValue()) - (Double.parseDouble(pros.getValue("pingT87")))) * 20) / ((Double.parseDouble(pros.getValue("pingT86")) - (Double.parseDouble(pros.getValue("pingT87")))))) * (Double.parseDouble(pros.getValue("pingT81")));
 						}
 						//loss 0
 						else {
@@ -764,29 +766,30 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 							score += 0;
 						}
 
+						Double lossRate = pingList.get(i).getLossRate()*100;
 						//loss 100
-						if ((pingList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("pingU82"))) <= 0) {
+						if (lossRate.compareTo(Double.parseDouble(pros.getValue("pingU82"))) <= 0) {
 							score += 100 * (Double.parseDouble(pros.getValue("pingU81")));
 						}
 						//loss 80-100
-						else if (((pingList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("pingU82"))) > 0) && ((pingList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("pingU83"))) <= 0)) {
-							score += (80 + ((((pingList.get(i).getLossRate().doubleValue()) - (Double.parseDouble(pros.getValue("pingU83")))) * 20) / ((Double.parseDouble(pros.getValue("pingU82")) - (Double.parseDouble(pros.getValue("pingU83"))))))) * (Double.parseDouble(pros.getValue("pingU81")));
+						else if ((lossRate.compareTo(Double.parseDouble(pros.getValue("pingU82"))) > 0) && (lossRate.compareTo(Double.parseDouble(pros.getValue("pingU83"))) <= 0)) {
+							score += (80 + ((((lossRate.doubleValue()) - (Double.parseDouble(pros.getValue("pingU83")))) * 20) / ((Double.parseDouble(pros.getValue("pingU82")) - (Double.parseDouble(pros.getValue("pingU83"))))))) * (Double.parseDouble(pros.getValue("pingU81")));
 						}
 						//loss 60-80
-						else if (((pingList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("pingU83"))) > 0) && ((pingList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("pingU84"))) <= 0)) {
-							score += (60 + ((((pingList.get(i).getLossRate().doubleValue()) - (Double.parseDouble(pros.getValue("pingU84")))) * 20) / ((Double.parseDouble(pros.getValue("pingU83")) - (Double.parseDouble(pros.getValue("pingU84"))))))) * (Double.parseDouble(pros.getValue("pingU81")));
+						else if ((lossRate.compareTo(Double.parseDouble(pros.getValue("pingU83"))) > 0) && (lossRate.compareTo(Double.parseDouble(pros.getValue("pingU84"))) <= 0)) {
+							score += (60 + ((((lossRate.doubleValue()) - (Double.parseDouble(pros.getValue("pingU84")))) * 20) / ((Double.parseDouble(pros.getValue("pingU83")) - (Double.parseDouble(pros.getValue("pingU84"))))))) * (Double.parseDouble(pros.getValue("pingU81")));
 						}
 						//loss 40-60
-						else if (((pingList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("pingU84"))) > 0) && ((pingList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("pingU85"))) <= 0)) {
-							score += (40 + ((((pingList.get(i).getLossRate().doubleValue()) - (Double.parseDouble(pros.getValue("pingU85")))) * 20) / ((Double.parseDouble(pros.getValue("pingU84")) - (Double.parseDouble(pros.getValue("pingU85"))))))) * (Double.parseDouble(pros.getValue("pingU81")));
+						else if ((lossRate.compareTo(Double.parseDouble(pros.getValue("pingU84"))) > 0) && (lossRate.compareTo(Double.parseDouble(pros.getValue("pingU85"))) <= 0)) {
+							score += (40 + ((((lossRate.doubleValue()) - (Double.parseDouble(pros.getValue("pingU85")))) * 20) / ((Double.parseDouble(pros.getValue("pingU84")) - (Double.parseDouble(pros.getValue("pingU85"))))))) * (Double.parseDouble(pros.getValue("pingU81")));
 						}
 						//loss 20-40
-						else if (((pingList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("pingU85"))) > 0) && ((pingList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("pingU86"))) <= 0)) {
-							score += (20 + ((((pingList.get(i).getLossRate().doubleValue()) - (Double.parseDouble(pros.getValue("pingU86")))) * 20) / ((Double.parseDouble(pros.getValue("pingU85")) - (Double.parseDouble(pros.getValue("pingU86"))))))) * (Double.parseDouble(pros.getValue("pingU81")));
+						else if ((lossRate.compareTo(Double.parseDouble(pros.getValue("pingU85"))) > 0) && (lossRate.compareTo(Double.parseDouble(pros.getValue("pingU86"))) <= 0)) {
+							score += (20 + ((((lossRate.doubleValue()) - (Double.parseDouble(pros.getValue("pingU86")))) * 20) / ((Double.parseDouble(pros.getValue("pingU85")) - (Double.parseDouble(pros.getValue("pingU86"))))))) * (Double.parseDouble(pros.getValue("pingU81")));
 						}
 						//loss 0-20
-						else if (((pingList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("pingU86"))) > 0) && ((pingList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("pingU87"))) <= 0)) {
-							score += ((((pingList.get(i).getLossRate().doubleValue()) - (Double.parseDouble(pros.getValue("pingU87")))) * 20) / ((Double.parseDouble(pros.getValue("pingU86")) - (Double.parseDouble(pros.getValue("pingU87")))))) * (Double.parseDouble(pros.getValue("pingU81")));
+						else if ((lossRate.compareTo(Double.parseDouble(pros.getValue("pingU86"))) > 0) && (lossRate.compareTo(Double.parseDouble(pros.getValue("pingU87"))) <= 0)) {
+							score += ((((lossRate.doubleValue()) - (Double.parseDouble(pros.getValue("pingU87")))) * 20) / ((Double.parseDouble(pros.getValue("pingU86")) - (Double.parseDouble(pros.getValue("pingU87")))))) * (Double.parseDouble(pros.getValue("pingU81")));
 						}
 						//loss 0
 						else {
@@ -1018,28 +1021,29 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						}
 
 						//loss 100
-						if ((tracertList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("trI72"))) <= 0) {
+						Double lossRate = tracertList.get(i).getLossRate()*100;
+						if (lossRate.compareTo(Double.parseDouble(pros.getValue("trI72"))) <= 0) {
 							score += 100 * (Double.parseDouble(pros.getValue("trI71")));
 						}
 						//loss 80-100
-						else if (((tracertList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("trI72"))) > 0) && ((tracertList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("trI73"))) <= 0)) {
-							score += (80 + ((((tracertList.get(i).getLossRate().doubleValue()) - (Double.parseDouble(pros.getValue("trI73")))) * 20) / ((Double.parseDouble(pros.getValue("trI72")) - (Double.parseDouble(pros.getValue("trI73"))))))) * (Double.parseDouble(pros.getValue("trI71")));
+						else if ((lossRate.compareTo(Double.parseDouble(pros.getValue("trI72"))) > 0) && (lossRate.compareTo(Double.parseDouble(pros.getValue("trI73"))) <= 0)) {
+							score += (80 + ((((lossRate.doubleValue()) - (Double.parseDouble(pros.getValue("trI73")))) * 20) / ((Double.parseDouble(pros.getValue("trI72")) - (Double.parseDouble(pros.getValue("trI73"))))))) * (Double.parseDouble(pros.getValue("trI71")));
 						}
 						//loss 60-80
-						else if (((tracertList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("trI73"))) > 0) && ((tracertList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("trI74"))) <= 0)) {
-							score += (60 + ((((tracertList.get(i).getLossRate().doubleValue()) - (Double.parseDouble(pros.getValue("trI74")))) * 20) / ((Double.parseDouble(pros.getValue("trI73")) - (Double.parseDouble(pros.getValue("trI74"))))))) * (Double.parseDouble(pros.getValue("trI71")));
+						else if ((lossRate.compareTo(Double.parseDouble(pros.getValue("trI73"))) > 0) && (lossRate.compareTo(Double.parseDouble(pros.getValue("trI74"))) <= 0)) {
+							score += (60 + ((((lossRate.doubleValue()) - (Double.parseDouble(pros.getValue("trI74")))) * 20) / ((Double.parseDouble(pros.getValue("trI73")) - (Double.parseDouble(pros.getValue("trI74"))))))) * (Double.parseDouble(pros.getValue("trI71")));
 						}
 						//loss 40-60
-						else if (((tracertList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("trI74"))) > 0) && ((tracertList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("trI75"))) <= 0)) {
-							score += (40 + ((((tracertList.get(i).getLossRate().doubleValue()) - (Double.parseDouble(pros.getValue("trI75")))) * 20) / ((Double.parseDouble(pros.getValue("trI74")) - (Double.parseDouble(pros.getValue("trI75"))))))) * (Double.parseDouble(pros.getValue("trI71")));
+						else if ((lossRate.compareTo(Double.parseDouble(pros.getValue("trI74"))) > 0) && (lossRate.compareTo(Double.parseDouble(pros.getValue("trI75"))) <= 0)) {
+							score += (40 + ((((lossRate.doubleValue()) - (Double.parseDouble(pros.getValue("trI75")))) * 20) / ((Double.parseDouble(pros.getValue("trI74")) - (Double.parseDouble(pros.getValue("trI75"))))))) * (Double.parseDouble(pros.getValue("trI71")));
 						}
 						//loss 20-40
-						else if (((tracertList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("trI75"))) > 0) && ((tracertList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("trI76"))) <= 0)) {
-							score += (20 + ((((tracertList.get(i).getLossRate().doubleValue()) - (Double.parseDouble(pros.getValue("trI76")))) * 20) / ((Double.parseDouble(pros.getValue("trI75")) - (Double.parseDouble(pros.getValue("trI76"))))))) * (Double.parseDouble(pros.getValue("trI71")));
+						else if ((lossRate.compareTo(Double.parseDouble(pros.getValue("trI75"))) > 0) && (lossRate.compareTo(Double.parseDouble(pros.getValue("trI76"))) <= 0)) {
+							score += (20 + ((((lossRate.doubleValue()) - (Double.parseDouble(pros.getValue("trI76")))) * 20) / ((Double.parseDouble(pros.getValue("trI75")) - (Double.parseDouble(pros.getValue("trI76"))))))) * (Double.parseDouble(pros.getValue("trI71")));
 						}
 						//loss 0-20
-						else if (((tracertList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("trI76"))) > 0) && ((tracertList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("trI77"))) <= 0)) {
-							score += ((((tracertList.get(i).getLossRate().doubleValue()) - (Double.parseDouble(pros.getValue("trI77")))) * 20) / ((Double.parseDouble(pros.getValue("trI76")) - (Double.parseDouble(pros.getValue("trI77")))))) * (Double.parseDouble(pros.getValue("trI71")));
+						else if ((lossRate.compareTo(Double.parseDouble(pros.getValue("trI76"))) > 0) && (lossRate.compareTo(Double.parseDouble(pros.getValue("trI77"))) <= 0)) {
+							score += ((((lossRate.doubleValue()) - (Double.parseDouble(pros.getValue("trI77")))) * 20) / ((Double.parseDouble(pros.getValue("trI76")) - (Double.parseDouble(pros.getValue("trI77")))))) * (Double.parseDouble(pros.getValue("trI71")));
 						}
 						//loss 0
 						else {
@@ -1270,29 +1274,30 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 							score += 0;
 						}
 
+						Double lossRate = tracertList.get(i).getLossRate()*100;
 						//loss 100
-						if ((tracertList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("trT72"))) <= 0) {
+						if (lossRate.compareTo(Double.parseDouble(pros.getValue("trT72"))) <= 0) {
 							score += 100 * (Double.parseDouble(pros.getValue("trT71")));
 						}
 						//loss 80-100
-						else if (((tracertList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("trT72"))) > 0) && ((tracertList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("trT73"))) <= 0)) {
-							score += (80 + ((((tracertList.get(i).getLossRate().doubleValue()) - (Double.parseDouble(pros.getValue("trT73")))) * 20) / ((Double.parseDouble(pros.getValue("trT72")) - (Double.parseDouble(pros.getValue("trT73"))))))) * (Double.parseDouble(pros.getValue("trT71")));
+						else if ((lossRate.compareTo(Double.parseDouble(pros.getValue("trT72"))) > 0) && (lossRate.compareTo(Double.parseDouble(pros.getValue("trT73"))) <= 0)) {
+							score += (80 + ((((lossRate.doubleValue()) - (Double.parseDouble(pros.getValue("trT73")))) * 20) / ((Double.parseDouble(pros.getValue("trT72")) - (Double.parseDouble(pros.getValue("trT73"))))))) * (Double.parseDouble(pros.getValue("trT71")));
 						}
 						//loss 60-80
-						else if (((tracertList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("trT73"))) > 0) && ((tracertList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("trT74"))) <= 0)) {
-							score += (60 + ((((tracertList.get(i).getLossRate().doubleValue()) - (Double.parseDouble(pros.getValue("trT74")))) * 20) / ((Double.parseDouble(pros.getValue("trT73")) - (Double.parseDouble(pros.getValue("trT74"))))))) * (Double.parseDouble(pros.getValue("trT71")));
+						else if ((lossRate.compareTo(Double.parseDouble(pros.getValue("trT73"))) > 0) && (lossRate.compareTo(Double.parseDouble(pros.getValue("trT74"))) <= 0)) {
+							score += (60 + ((((lossRate.doubleValue()) - (Double.parseDouble(pros.getValue("trT74")))) * 20) / ((Double.parseDouble(pros.getValue("trT73")) - (Double.parseDouble(pros.getValue("trT74"))))))) * (Double.parseDouble(pros.getValue("trT71")));
 						}
 						//loss 40-60
-						else if (((tracertList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("trT74"))) > 0) && ((tracertList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("trT75"))) <= 0)) {
-							score += (40 + ((((tracertList.get(i).getLossRate().doubleValue()) - (Double.parseDouble(pros.getValue("trT75")))) * 20) / ((Double.parseDouble(pros.getValue("trT74")) - (Double.parseDouble(pros.getValue("trT75"))))))) * (Double.parseDouble(pros.getValue("trT71")));
+						else if ((lossRate.compareTo(Double.parseDouble(pros.getValue("trT74"))) > 0) && (lossRate.compareTo(Double.parseDouble(pros.getValue("trT75"))) <= 0)) {
+							score += (40 + ((((lossRate.doubleValue()) - (Double.parseDouble(pros.getValue("trT75")))) * 20) / ((Double.parseDouble(pros.getValue("trT74")) - (Double.parseDouble(pros.getValue("trT75"))))))) * (Double.parseDouble(pros.getValue("trT71")));
 						}
 						//loss 20-40
-						else if (((tracertList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("trT75"))) > 0) && ((tracertList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("trT76"))) <= 0)) {
-							score += (20 + ((((tracertList.get(i).getLossRate().doubleValue()) - (Double.parseDouble(pros.getValue("trT76")))) * 20) / ((Double.parseDouble(pros.getValue("trT75")) - (Double.parseDouble(pros.getValue("trT76"))))))) * (Double.parseDouble(pros.getValue("trT71")));
+						else if ((lossRate.compareTo(Double.parseDouble(pros.getValue("trT75"))) > 0) && (lossRate.compareTo(Double.parseDouble(pros.getValue("trT76"))) <= 0)) {
+							score += (20 + ((((lossRate.doubleValue()) - (Double.parseDouble(pros.getValue("trT76")))) * 20) / ((Double.parseDouble(pros.getValue("trT75")) - (Double.parseDouble(pros.getValue("trT76"))))))) * (Double.parseDouble(pros.getValue("trT71")));
 						}
 						//loss 0-20
-						else if (((tracertList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("trT76"))) > 0) && ((tracertList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("trT77"))) <= 0)) {
-							score += ((((tracertList.get(i).getLossRate().doubleValue()) - (Double.parseDouble(pros.getValue("trT77")))) * 20) / ((Double.parseDouble(pros.getValue("trT76")) - (Double.parseDouble(pros.getValue("trT77")))))) * (Double.parseDouble(pros.getValue("trT71")));
+						else if ((lossRate.compareTo(Double.parseDouble(pros.getValue("trT76"))) > 0) && (lossRate.compareTo(Double.parseDouble(pros.getValue("trT77"))) <= 0)) {
+							score += ((((lossRate.doubleValue()) - (Double.parseDouble(pros.getValue("trT77")))) * 20) / ((Double.parseDouble(pros.getValue("trT76")) - (Double.parseDouble(pros.getValue("trT77")))))) * (Double.parseDouble(pros.getValue("trT71")));
 						}
 						//loss 0
 						else {

@@ -515,7 +515,7 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 		RecordHourDhcpService recordHourDhcpService= (RecordHourDhcpService) SpringContextUtils.getBean("recordHourDhcpService");
 		RecordHourWebDownloadService recordHourWebDownloadService= (RecordHourWebDownloadService) SpringContextUtils.getBean("recordHourWebDownloadService");
 		RecordHourFtpService recordHourFtpService= (RecordHourFtpService) SpringContextUtils.getBean("recordHourFtpService");
-		Future<List<RecordHourWebDownloadEntity>> webDownloadList_future = recordHourWebDownloadService.queryWebDownloadList(map);
+		Future<List<RecordHourWebDownloadEntity>> webDownloadList_future = recordHourWebDownloadService.queryDayList(map);
 		Future<List<RecordHourFtpEntity>> ftpList_future = recordHourFtpService.queryDayList(map);
 		while (true) {
 			if (webDownloadList_future.isDone() && ftpList_future.isDone()) {

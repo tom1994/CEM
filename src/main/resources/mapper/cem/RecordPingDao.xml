@@ -152,20 +152,21 @@ FROM record_ping rp
 WHERE rp.record_date = #{record_date}
       AND record_time BETWEEN #{start_time} AND #{terminal_time}
       AND rp.state = 0
-GROUP BY rp.port,rp.service_type,rp.target_id,rp.task_id,rp.probe_id;
+      AND rp.task_type=0
+GROUP BY rp.port,rp.service_type,rp.target_id,rp.task_id,rp.probe_id
 	</select>
 
     <select id="queryDay" resultType="io.cem.modules.cem.entity.RecordDayPingEntity">
-		select rp.probe_id AS probe_id,
-		rp.port AS port,
-		rp.task_id AS task_id,
-		rp.service_type AS service_type,
-		rp.target_id AS target_id,
-		rp.target_ip AS target_ip,
-		rp.record_time AS record_time,
-		rp.record_date AS record_date,
-		probe.city_id AS city_id,
-		probe.county_id AS county_id,
+		SELECT rp.probe_id AS probe_id,
+       rp.port AS port,
+       rp.task_id AS task_id,
+       rp.service_type AS service_type,
+       rp.target_id AS target_id,
+       rp.target_ip AS target_ip,
+       rp.record_time AS record_time,
+       rp.record_date AS record_date,
+       probe.city_id AS city_id,
+       probe.county_id AS county_id,
 		AVG(rp.delay) AS delay,
 		AVG(rp.delay_std) AS delay_std,
 		AVG(rp.delay_var) AS delay_var,
@@ -173,27 +174,29 @@ GROUP BY rp.port,rp.service_type,rp.target_id,rp.task_id,rp.probe_id;
 		AVG(rp.jitter_std) AS jitter_std,
 		AVG(rp.jitter_var) AS jitter_var,
 		AVG(rp.loss_rate) AS loss_rate,
-		rp.remark AS remark,
-		t.fail AS fail,
-		t.total AS total
-		FROM record_ping rp
-		INNER JOIN probe
-		ON  rp.probe_id =probe.id
-		INNER JOIN (SELECT probe_id  AS probe_id,
-                           port      AS port,
-                           task_id   AS task_id,
-                           service_type  AS service_type,
-                           target_id     AS target_id,
-                           sum(state) AS fail,
-                           count(record_ping.id)  AS total
-                    FROM record_ping
-                    INNER JOIN probe
-                    ON probe_id = probe.id
-                    WHERE record_date = #{record_date}
-                    GROUP BY port, service_type, target_id, task_id, probe_id) t
-		WHERE rp.record_date = #{record_date}
-		AND rp.state = 0
-		GROUP BY rp.port,rp.service_type,rp.target_id,rp.task_id,rp.probe_id;
+       rp.remark AS remark,
+       t.total AS total,
+       t.fail AS fail
+FROM record_ping rp
+  INNER JOIN probe
+    ON  rp.probe_id =probe.id
+  INNER JOIN (SELECT
+                probe_id  AS probe_id,
+                     port      AS port,
+                     task_id   AS task_id,
+                     service_type  AS service_type,
+                     target_id     AS target_id,
+                     sum(state) AS fail,
+                     count(record_ping.id)  AS total
+              FROM record_ping
+              WHERE record_date = #{record_date}
+                AND probe_id IN (SELECT id FROM probe)
+              GROUP BY port, service_type, target_id, task_id, probe_id) t
+ ON rp.port = t.port AND rp.service_type = t.service_type AND rp.target_id = t.target_id AND rp.task_id = t.task_id AND rp.probe_id = t.probe_id
+WHERE rp.record_date = #{record_date}
+      AND rp.state = 0
+      AND task_type = 0
+GROUP BY rp.port,rp.service_type,rp.target_id,rp.task_id,rp.probe_id
 	</select>
 
     <!--根据条件查询测试结果-->

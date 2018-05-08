@@ -19,7 +19,6 @@ var statusSelected = 0
 
 function getFormJson(form) {      /*将表单对象变为json对象*/
     var o = {};
-    debugger
     var a = $(form).serializeArray();
     if (countrySelected != 0) {
         a[2] = {}
@@ -257,6 +256,7 @@ function submit_all() {
         delete_ajax(check_val)
 
 }
+
 function update_port() {
     debugger
     var CheckALL = document.getElementsByName("selectFlag");
@@ -407,7 +407,7 @@ var probegroupdata_handle = new Vue({
         },
         reset: function () {    /*重置*/
             document.getElementById("groupsearchdata").reset();
-            probetable.reset();
+            grouptable.reset();
         }
     }
 });
@@ -664,7 +664,7 @@ function update_this(obj) {     /*监听修改触发事件*/
                 dataType: "json",
                 // contentType: "application/json", /*必须要,不可少*/
                 success: function (result) {
-                    //console.log(result.probe);
+                    // console.log(result.probe);
                     forms[0].value = result.probe.id;
                     forms[1].value = result.probe.name;
                     forms[2].value = result.probe.serialNumber;
@@ -692,7 +692,8 @@ function update_this(obj) {     /*监听修改触发事件*/
                     forms[22].value = result.probe.version;
                     forms[23].value = result.probe.updateInterval;
                     forms[24].value = result.probe.lastUpdateTime;
-                    portIP = JSON.parse(result.probe.portIp)
+                    portIP = JSON.parse(result.probe.portIp);
+                    console.log(portIP);
                     if (portIP.length == "1") {
                         $('#con').css('display', 'none')
                         $('#portIP').removeAttr('style')
@@ -712,7 +713,11 @@ function update_this(obj) {     /*监听修改触发事件*/
                         $('#portIP').css('display', 'none')
                         $('#con').removeAttr('style')
                         forms[28].value = portIP[0].port;
-                        forms[29].value = portIP[0].ip;
+                        if(  portIP[0].ip==undefined){
+                            forms[29].value = '';
+                        }else {
+                            forms[29].value = portIP[0].ip;
+                        }
                         if (portIP[0].ip_type == '1') {
                             forms[30].value = "静态IP"
                         }
@@ -723,7 +728,11 @@ function update_this(obj) {     /*监听修改触发事件*/
                             forms[30].value = "PPPoE拨号"
                         }
                         forms[31].value = portIP[1].port;
-                        forms[32].value = portIP[1].ip;
+                      if(  portIP[1].ip==undefined){
+                          forms[32].value = '';
+                      }else {
+                          forms[32].value = portIP[1].ip;
+                      }
                         if (portIP[1].ip_type == '1') {
                             forms[33].value = "静态IP"
                         }
@@ -734,7 +743,11 @@ function update_this(obj) {     /*监听修改触发事件*/
                             forms[33].value = "PPPoE拨号"
                         }
                         forms[34].value = portIP[2].port;
-                        forms[35].value = portIP[2].ip;
+                        if(  portIP[2].ip==undefined){
+                            forms[35].value = '';
+                        }else {
+                            forms[35].value = portIP[2].ip;
+                        }
                         if (portIP[2].ip_type == '1') {
                             forms[36].value = "静态IP"
                         }
@@ -745,7 +758,12 @@ function update_this(obj) {     /*监听修改触发事件*/
                             forms[36].value = "PPPoE拨号"
                         }
                         forms[37].value = portIP[3].port;
-                        forms[38].value = portIP[3].ip;
+                        if(  portIP[3].ip==undefined){
+                            forms[38].value = '';
+                        }else {
+                            forms[38].value = portIP[3].ip;
+                        }
+                        // forms[38].value = portIP[3].ip;
                         if (portIP[3].ip_type == '1') {
                             forms[39].value = "静态IP"
                         }
@@ -756,7 +774,11 @@ function update_this(obj) {     /*监听修改触发事件*/
                             forms[39].value = "PPPoE拨号"
                         }
                         forms[40].value = portIP[4].port;
-                        forms[41].value = portIP[4].ip;
+                        if(  portIP[4].ip==undefined){
+                            forms[41].value = '';
+                        }else {
+                            forms[41].value = portIP[4].ip;
+                        }
                         if (portIP[4].ip_type == '1') {
                             forms[42].value = "静态IP"
                         }
@@ -773,118 +795,155 @@ function update_this(obj) {     /*监听修改触发事件*/
         }
     });
     $.ajax({
-        type: "POST", /*GET会乱码*/
-        url: "../../cem/probe/detail/" + update_data_id,
+        url: "../../cem/county/infoByProbe/" + update_data_id,
+        type: "POST",
         cache: false,  //禁用缓存
         dataType: "json",
-        // contentType: "application/json", /*必须要,不可少*/
-        success: function (result) {
-            //console.log(result.probe);
-            forms[0].value = result.probe.id;
-            forms[1].value = result.probe.name;
-            forms[2].value = result.probe.serialNumber;
-            forms[3].value = result.probe.status;
-            forms[4].value = result.probe.type;
-            forms[5].value = result.probe.groupId;
-            forms[6].value = result.probe.isp;
-            forms[7].value = result.probe.city;
-            setTimeout(function () {
-                forms[8].value = result.probe.county;
-            }, 100);
-            forms[9].value = result.probe.location;
-            forms[10].value = result.probe.accessLayer;
-            forms[11].value = result.probe.upstream;
-            forms[12].value = result.probe.device;
-            forms[13].value = result.probe.brasName;
-            forms[14].value = result.probe.brasIp;
-            forms[15].value = result.probe.brasPort;
-            forms[16].value = result.probe.hbInterval;
-            forms[17].value = result.probe.reportInterval;
-            forms[18].value = result.probe.concurrentTask;
-            forms[19].value = result.probe.registerTime;
-            forms[20].value = result.probe.lastHbTime;
-            forms[21].value = result.probe.lastReportTime;
-            forms[22].value = result.probe.version;
-            forms[23].value = result.probe.updateInterval;
-            forms[24].value = result.probe.lastUpdateTime;
-            portIP = JSON.parse(result.probe.portIp)
-            if (portIP.length == "1") {
-                $('#con').css('display', 'none')
-                $('#portIP').removeAttr('style')
-                forms[25].value = portIP[0].port;
-                forms[26].value = portIP[0].ip;
-                if (portIP[0].ip_type == '1') {
-                    forms[27].value = "静态IP"
-                }
-                if (portIP[0].ip_type == "2") {
-                    forms[27].value = "DHCP动态分配"
-                }
-                if (portIP[0].ip_type == "3") {
-                    forms[27].value = "PPPoE拨号"
-                }
-            }
-            else {
-                $('#portIP').css('display', 'none')
-                $('#con').removeAttr('style')
-                forms[28].value = portIP[0].port;
-                forms[29].value = portIP[0].ip;
-                if (portIP[0].ip_type == '1') {
-                    forms[30].value = "静态IP"
-                }
-                if (portIP[0].ip_type == "2") {
-                    forms[30].value = "DHCP动态分配"
-                }
-                if (portIP[0].ip_type == "3") {
-                    forms[30].value = "PPPoE拨号"
-                }
-                forms[31].value = portIP[1].port;
-                forms[32].value = portIP[1].ip;
-                if (portIP[1].ip_type == '1') {
-                    forms[33].value = "静态IP"
-                }
-                if (portIP[1].ip_type == "2") {
-                    forms[33].value = "DHCP动态分配"
-                }
-                if (portIP[1].ip_type == "3") {
-                    forms[33].value = "PPPoE拨号"
-                }
-                forms[34].value = portIP[2].port;
-                forms[35].value = portIP[2].ip;
-                if (portIP[2].ip_type == '1') {
-                    forms[36].value = "静态IP"
-                }
-                if (portIP[2].ip_type == "2") {
-                    forms[36].value = "DHCP动态分配"
-                }
-                if (portIP[2].ip_type == "3") {
-                    forms[36].value = "PPPoE拨号"
-                }
-                forms[37].value = portIP[3].port;
-                forms[38].value = portIP[3].ip;
-                if (portIP[3].ip_type == '1') {
-                    forms[39].value = "静态IP"
-                }
-                if (portIP[3].ip_type == "2") {
-                    forms[39].value = "DHCP动态分配"
-                }
-                if (portIP[3].ip_type == "3") {
-                    forms[39].value = "PPPoE拨号"
-                }
-                forms[40].value = portIP[4].port;
-                forms[41].value = portIP[4].ip;
-                if (portIP[4].ip_type == '1') {
-                    forms[42].value = "静态IP"
-                }
-                if (portIP[4].ip_type == "2") {
-                    forms[42].value = "DHCP动态分配"
-                }
-                if (portIP[4].ip_type == "3") {
-                    forms[42].value = "PPPoE拨号"
-                }
+        contentType: "application/json",
+        success: function (result_county) {
+            //console.log(result_county);
 
+            var areaNames = [];
+            for (var i = 0; i < result_county.county.length; i++) {
+                areaNames[i] = {message: result_county.county[i]}
             }
+            probeform_data.countyNames = areaNames;
+            $.ajax({
+                type: "POST", /*GET会乱码*/
+                url: "../../cem/probe/detail/" + update_data_id,
+                cache: false,  //禁用缓存
+                dataType: "json",
+                // contentType: "application/json", /*必须要,不可少*/
+                success: function (result) {
+                    // console.log(result.probe);
+                    forms[0].value = result.probe.id;
+                    forms[1].value = result.probe.name;
+                    forms[2].value = result.probe.serialNumber;
+                    forms[3].value = result.probe.status;
+                    forms[4].value = result.probe.type;
+                    forms[5].value = result.probe.groupId;
+                    forms[6].value = result.probe.isp;
+                    forms[7].value = result.probe.city;
+                    setTimeout(function () {
+                        forms[8].value = result.probe.county;
+                    }, 100);
+                    forms[9].value = result.probe.location;
+                    forms[10].value = result.probe.accessLayer;
+                    forms[11].value = result.probe.upstream;
+                    forms[12].value = result.probe.device;
+                    forms[13].value = result.probe.brasName;
+                    forms[14].value = result.probe.brasIp;
+                    forms[15].value = result.probe.brasPort;
+                    forms[16].value = result.probe.hbInterval;
+                    forms[17].value = result.probe.reportInterval;
+                    forms[18].value = result.probe.concurrentTask;
+                    forms[19].value = result.probe.registerTime;
+                    forms[20].value = result.probe.lastHbTime;
+                    forms[21].value = result.probe.lastReportTime;
+                    forms[22].value = result.probe.version;
+                    forms[23].value = result.probe.updateInterval;
+                    forms[24].value = result.probe.lastUpdateTime;
+                    portIP = JSON.parse(result.probe.portIp);
+                    console.log(portIP);
+                    if (portIP.length == "1") {
+                        $('#con').css('display', 'none')
+                        $('#portIP').removeAttr('style')
+                        forms[25].value = portIP[0].port;
+                        forms[26].value = portIP[0].ip;
+                        if (portIP[0].ip_type == '1') {
+                            forms[27].value = "静态IP"
+                        }
+                        if (portIP[0].ip_type == "2") {
+                            forms[27].value = "DHCP动态分配"
+                        }
+                        if (portIP[0].ip_type == "3") {
+                            forms[27].value = "PPPoE拨号"
+                        }
+                    }
+                    else {
+                        $('#portIP').css('display', 'none')
+                        $('#con').removeAttr('style')
+                        forms[28].value = portIP[0].port;
+                        if(  portIP[0].ip==undefined){
+                            forms[29].value = '';
+                        }else {
+                            forms[29].value = portIP[0].ip;
+                        }
+                        if (portIP[0].ip_type == '1') {
+                            forms[30].value = "静态IP"
+                        }
+                        if (portIP[0].ip_type == "2") {
+                            forms[30].value = "DHCP动态分配"
+                        }
+                        if (portIP[0].ip_type == "3") {
+                            forms[30].value = "PPPoE拨号"
+                        }
+                        forms[31].value = portIP[1].port;
+                        if(  portIP[1].ip==undefined){
+                            forms[32].value = '';
+                        }else {
+                            forms[32].value = portIP[1].ip;
+                        }
+                        if (portIP[1].ip_type == '1') {
+                            forms[33].value = "静态IP"
+                        }
+                        if (portIP[1].ip_type == "2") {
+                            forms[33].value = "DHCP动态分配"
+                        }
+                        if (portIP[1].ip_type == "3") {
+                            forms[33].value = "PPPoE拨号"
+                        }
+                        forms[34].value = portIP[2].port;
+                        if(  portIP[2].ip==undefined){
+                            forms[35].value = '';
+                        }else {
+                            forms[35].value = portIP[2].ip;
+                        }
+                        if (portIP[2].ip_type == '1') {
+                            forms[36].value = "静态IP"
+                        }
+                        if (portIP[2].ip_type == "2") {
+                            forms[36].value = "DHCP动态分配"
+                        }
+                        if (portIP[2].ip_type == "3") {
+                            forms[36].value = "PPPoE拨号"
+                        }
+                        forms[37].value = portIP[3].port;
+                        if(  portIP[3].ip==undefined){
+                            forms[38].value = '';
+                        }else {
+                            forms[38].value = portIP[3].ip;
+                        }
+                        // forms[38].value = portIP[3].ip;
+                        if (portIP[3].ip_type == '1') {
+                            forms[39].value = "静态IP"
+                        }
+                        if (portIP[3].ip_type == "2") {
+                            forms[39].value = "DHCP动态分配"
+                        }
+                        if (portIP[3].ip_type == "3") {
+                            forms[39].value = "PPPoE拨号"
+                        }
+                        forms[40].value = portIP[4].port;
+                        if(  portIP[4].ip==undefined){
+                            forms[41].value = '';
+                        }else {
+                            forms[41].value = portIP[4].ip;
+                        }
+                        if (portIP[4].ip_type == '1') {
+                            forms[42].value = "静态IP"
+                        }
+                        if (portIP[4].ip_type == "2") {
+                            forms[42].value = "DHCP动态分配"
+                        }
+                        if (portIP[4].ip_type == "3") {
+                            forms[42].value = "PPPoE拨号"
+                        }
+
+                    }
+                }
+            });
         }
-
     });
     probeform_data.modaltitle = "详细信息";
     /*修改模态框标题*/
@@ -925,7 +984,6 @@ function updategroup_this(obj) {     /*监听修改触发事件*/
 function delete_ajax(idArray) {
     var ids = JSON.stringify(idArray);
     // console.log(typeof idArray)
-    debugger
     // var ids = parseInt(idArray)
     /*对象数组字符串*/
     $.ajax({
@@ -1716,24 +1774,5 @@ $(document).ready(function () {
 //     document.body.onselectstart = document.body.ondrag = null;
 //
 // })
-// $('#probedata_table').DataTable( {
-//     buttons: [
-//         'copy', 'excel', 'pdf'
-//     ]
-// } );
-//
-// //例子2： 导出Excel
-// $('#probedata_table').DataTable( {
-//     buttons: [
-//         {
-//             extend: 'excel',//使用 excel扩展
-//             text: '导出本页',// 显示文字
-//             exportOptions: {
-//                 //自定义导出选项
-//                 //如：可自定义导出那些列，那些行
-//                 //TODO...
-//             }
-//         }
-//     ]
-// } );
+
 

@@ -199,28 +199,29 @@ public class RecordHourGameServiceImpl implements RecordHourGameService {
 				}
 
 				//loss_rate 100
-				if ((gameList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("game42"))) <= 0) {
+				Double lossRate = gameList.get(i).getLossRate()*100;
+				if (lossRate.compareTo(Double.parseDouble(pros.getValue("game42"))) <= 0) {
 					score += 100 * (Double.parseDouble(pros.getValue("game41")));
 				}
 				//loss_rate 80-100
-				else if (((gameList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("game42"))) > 0) && ((gameList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("game43"))) <= 0)) {
-					score += (80 + ((((gameList.get(i).getLossRate().doubleValue()) - (Double.parseDouble(pros.getValue("game43")))) * 20) / ((Double.parseDouble(pros.getValue("game42")) - (Double.parseDouble(pros.getValue("game43"))))))) * (Double.parseDouble(pros.getValue("game41")));
+				else if ((lossRate.compareTo(Double.parseDouble(pros.getValue("game42"))) > 0) && (lossRate.compareTo(Double.parseDouble(pros.getValue("game43"))) <= 0)) {
+					score += (80 + ((((lossRate.doubleValue()) - (Double.parseDouble(pros.getValue("game43")))) * 20) / ((Double.parseDouble(pros.getValue("game42")) - (Double.parseDouble(pros.getValue("game43"))))))) * (Double.parseDouble(pros.getValue("game41")));
 				}
 				//loss_rate 60-80
-				else if (((gameList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("game43"))) > 0) && ((gameList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("game44"))) <= 0)) {
-					score += (60 + ((((gameList.get(i).getLossRate().doubleValue()) - (Double.parseDouble(pros.getValue("game44")))) * 20) / ((Double.parseDouble(pros.getValue("game43")) - (Double.parseDouble(pros.getValue("game44"))))))) * (Double.parseDouble(pros.getValue("game41")));
+				else if ((lossRate.compareTo(Double.parseDouble(pros.getValue("game43"))) > 0) && (lossRate.compareTo(Double.parseDouble(pros.getValue("game44"))) <= 0)) {
+					score += (60 + ((((lossRate.doubleValue()) - (Double.parseDouble(pros.getValue("game44")))) * 20) / ((Double.parseDouble(pros.getValue("game43")) - (Double.parseDouble(pros.getValue("game44"))))))) * (Double.parseDouble(pros.getValue("game41")));
 				}
 				//loss_rate 40-60
-				else if (((gameList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("game44"))) > 0) && ((gameList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("game45"))) <= 0)) {
-					score += (40 + ((((gameList.get(i).getLossRate().doubleValue()) - (Double.parseDouble(pros.getValue("game45")))) * 20) / ((Double.parseDouble(pros.getValue("game44")) - (Double.parseDouble(pros.getValue("game45"))))))) * (Double.parseDouble(pros.getValue("game41")));
+				else if ((lossRate.compareTo(Double.parseDouble(pros.getValue("game44"))) > 0) && (lossRate.compareTo(Double.parseDouble(pros.getValue("game45"))) <= 0)) {
+					score += (40 + ((((lossRate.doubleValue()) - (Double.parseDouble(pros.getValue("game45")))) * 20) / ((Double.parseDouble(pros.getValue("game44")) - (Double.parseDouble(pros.getValue("game45"))))))) * (Double.parseDouble(pros.getValue("game41")));
 				}
 				//loss_rate 20-40
-				else if (((gameList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("game45"))) > 0) && ((gameList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("game46"))) <= 0)) {
-					score += (20 + ((((gameList.get(i).getLossRate().doubleValue()) - (Double.parseDouble(pros.getValue("game46")))) * 20) / ((Double.parseDouble(pros.getValue("game45")) - (Double.parseDouble(pros.getValue("game46"))))))) * (Double.parseDouble(pros.getValue("game41")));
+				else if ((lossRate.compareTo(Double.parseDouble(pros.getValue("game45"))) > 0) && (lossRate.compareTo(Double.parseDouble(pros.getValue("game46"))) <= 0)) {
+					score += (20 + ((((lossRate.doubleValue()) - (Double.parseDouble(pros.getValue("game46")))) * 20) / ((Double.parseDouble(pros.getValue("game45")) - (Double.parseDouble(pros.getValue("game46"))))))) * (Double.parseDouble(pros.getValue("game41")));
 				}
 				//loss_rate 0-20
-				else if (((gameList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("game46"))) > 0) && ((gameList.get(i).getLossRate()).compareTo(Double.parseDouble(pros.getValue("game47"))) <= 0)) {
-					score += ((((gameList.get(i).getLossRate().doubleValue()) - (Double.parseDouble(pros.getValue("game47")))) * 20) / ((Double.parseDouble(pros.getValue("game46")) - (Double.parseDouble(pros.getValue("game47")))))) * (Double.parseDouble(pros.getValue("game41")));
+				else if ((lossRate.compareTo(Double.parseDouble(pros.getValue("game46"))) > 0) && (lossRate.compareTo(Double.parseDouble(pros.getValue("game47"))) <= 0)) {
+					score += ((((lossRate.doubleValue()) - (Double.parseDouble(pros.getValue("game47")))) * 20) / ((Double.parseDouble(pros.getValue("game46")) - (Double.parseDouble(pros.getValue("game47")))))) * (Double.parseDouble(pros.getValue("game41")));
 				}
 				//loss_rate 0
 				else {

@@ -123,11 +123,6 @@ public class DiagnoseController {
                 scoreList=recordHourRadiusService.diagnoseHour(map);
             }
         }
-
-
-
-    //    recordHourDhcpService.combination(map,scoreList);
-
         if (map.get("target_id") == null) {
             for (int i = 0; i < scoreList.size(); i++) {
                 scoreList.get(i).setTargetName("");
@@ -149,7 +144,6 @@ public class DiagnoseController {
             map.put("limit", limit);
             total = scoreList.size();
         }
-        //List<RecordHourPingEntity> probeList = recordHourPingService.queryList(map);
         PageUtils pageUtil = new PageUtils(scoreList, total, limit, page);
         return R.ok().put("page", pageUtil);
     }

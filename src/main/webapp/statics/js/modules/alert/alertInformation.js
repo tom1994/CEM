@@ -34,8 +34,6 @@ typeName.set(32, 'FTP上传');
 typeName.set(40, '在线视频');
 typeName.set(50, '网络游戏');
 
-
-
 var TypeSelected=0;
 var LevelSelected=0;
 var StatusSeleted=0;
@@ -182,8 +180,9 @@ var search_service = new Vue({
     // 在 `methods` 对象中定义方法
     methods: {
         testagentListsearch: function () {
+             
             var searchJson = getFormJson($('#probesearch'));
-                debugger
+
             if((searchJson.startDate)>(searchJson.terminalDate)){
                 console.log("时间选择有误，请重新选择！");
                 $('#nonavailable_time').modal('show');
@@ -229,7 +228,7 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
         a[5].name='probe_id'
         a[5].value=parseInt(probeSelected)
     }
-    if(serviceSelected!=-1){
+    if(serviceSelected!=0){
         a[6]={}
         a[6].name='service_type'
         a[6].value=parseInt(serviceSelected)
@@ -266,172 +265,7 @@ function operate_this (obj) {     /*监听修改触发事件*/
 
 }
 
-/*告警列表详情功能*/
-function update_this (obj) {     /*监听修改触发事件*/
-    debugger
-    $('#ping').css('display','none');
-    $('#trance').css('display','none');
-    $('#sla').css('display','none');
-    $('#dns').css('display','none');
-    $('#dhcp').css('display','none');
-    $('#ppoe').css('display','none');
-    $('#radius').css('display','none');
-    $('#web_page').css('display','none');
-    $('#web_download').css('display','none');
-    $('#ftp').css('display','none');
-    $('#video').css('display','none');
-    $('#game').css('display','none');
-    update_data_id = parseInt(obj.id);
-    /*获取当前行探针数据id*/
-    console.log(update_data_id);
-    status = 1;      /*状态1表示修改*/
-    var forms = $('#probeform_data  .form-control');
-    var formparam = $('#probeform_param .form-control');
-    /*去除只读状态*/
-    //$('#probeform_data input[type=text]').prop("readonly", false);
-    $.ajax({
-        type: "POST", /*GET会乱码*/
-        url: "../../alarmrecord/detail/"+update_data_id,
-        cache: false,  //禁用缓存
-        dataType: "json",
-        // contentType: "application/json", /*必须要,不可少*/
-        success: function (result) {
-            console.log(result);
-            debugger
-            forms[0].value = result.alarm.id;
-            forms[1].value = st.get(result.alarm.type);
-            forms[2].value = le.get(result.alarm.level);
-            forms[3].value = tus.get(result.alarm.status);
-            forms[4].value = result.alarm.probeName;
-            forms[5].value = result.alarm.targetName;
-            forms[6].value = result.alarm.dataName;
-            forms[7].value = result.alarm.recordTime;
-            if(obj.type=='阈值告警'){
-                if((result.alarm.dataName=='PING(ICMP Echo)')||(result.alarm.dataName=='PING(TCP Echo)')|| (result.alarm.dataName=='PING(UDP Echo)')){
-                    $('#ping').css('display','inherit');
-                    formparam[0].value = result.alarm.pingDelay;
-                    formparam[1].value = result.alarm.pingDelayStd;
-                    formparam[2].value = result.alarm.pingDelayVar;
-                    formparam[3].value = result.alarm.pingJitter;
-                    formparam[4].value = result.alarm.pingJitterStd;
-                    formparam[5].value = result.alarm.pingJitterVar;
-                    formparam[6].value = result.alarm.pingLossRate*100;
-                }
-                else if((result.alarm.dataName=="Trace Route(ICMP)")||(result.alarm.dataName=="Trace Route(UDP)")){
-                    $('#trance').css('display','inherit');
-                    formparam[7].value = result.alarm.tracertDelay;
-                    formparam[8].value = result.alarm.tracertDelayStd;
-                    formparam[9].value = result.alarm.tracertDelayVar;
-                    formparam[10].value = result.alarm.tracertJitter;
-                    formparam[11].value = result.alarm.tracertJitterStd;
-                    formparam[12].value = result.alarm.tracertJitterVar;
-                    formparam[13].value = result.alarm.tracertLossRate*100;
-                }
-                else if((result.alarm.dataName == "SLA(TCP)")||(result.alarm.dataName =="SLA(UDP)")){
-                    $('#sla').css('display','inherit');
-                    formparam[14].value = result.alarm.slaDelay;
-                    formparam[15].value = result.alarm.slaGDelay;
-                    formparam[16].value = result.alarm.slaRDelay;
-                    formparam[17].value = result.alarm.slaDelayStd;
-                    formparam[18].value = result.alarm.slaGDelayStd;
-                    formparam[19].value = result.alarm.slaRDelayStd;
-                    formparam[20].value = result.alarm.slaDelayVar;
-                    formparam[21].value = result.alarm.slaGDelayVar;
-                    formparam[22].value = result.alarm.slaRDelayVar;
-                    formparam[23].value = result.alarm.slaJitter;
-                    formparam[24].value = result.alarm.slaGJitter;
-                    formparam[25].value = result.alarm.slaRJitter;
-                    formparam[26].value = result.alarm.slaJitterStd;
-                    formparam[27].value = result.alarm.slaGJitterStd;
-                    formparam[28].value = result.alarm.slaRJitterStd;
-                    formparam[29].value = result.alarm.slaJitterVar;
-                    formparam[30].value = result.alarm.slaGJitterVar;
-                    formparam[31].value = result.alarm.slaRJitterVar;
-                    formparam[32].value = result.alarm.slaLossRate*100;
-                    formparam[33].value = result.alarm.slaGLossRate*100;
-                    formparam[34].value = result.alarm.slaRLossRate*100;
-                }
-                else  if(result.alarm.dataName == "DNS"){
-                    $('#dns').css('display','inherit');
-                    formparam[35].value = result.alarm.dnsDelay;
-                    formparam[36].value = result.alarm.dnsSuccessRate*100;
-                }
-                else if(result.alarm.dataName == 'DHCP'){
-                    $('#dhcp').css('display','inherit');
-                    formparam[37].value = result.alarm.dhcpDelay;
-                    formparam[38].value = result.alarm.dhcpSuccessRate*100;
-                }
-                else if(result.alarm.dataName == 'ADSL'){
-                    $('#ppoe').css('display','inherit');
-                    formparam[39].value = result.alarm.pppoeDelay;
-                    formparam[40].value = result.alarm.pppoeDropRate*100;
-                    formparam[41].value = result.alarm.pppoeSuccessRate*100;
-                }
-                else  if (result.alarm.dataName == 'Radius认证'){
-                    $('#radius').css('display','inherit');
-                    formparam[42].value = result.alarm.radiusDelay;
-                    formparam[43].value = result.alarm.radiusSuccessRate*100;
-                }
-                else if (result.alarm.dataName == 'WEB页面访问'){
-                    $('#web_page').css('display','inherit');
-                    formparam[44].value = result.alarm.webpageDnsDelay;
-                    formparam[45].value = result.alarm.webpageConnDelay;
-                    formparam[46].value = result.alarm.webpageHeadbyteDelay;
-                    formparam[47].value = result.alarm.webpagePageFileDelay;
-                    formparam[48].value = result.alarm.webpageRedirectDelay;
-                    formparam[49].value = result.alarm.webpageAboveFoldDelay;
-                    formparam[50].value = result.alarm.webpageLoadDelay;
-                    formparam[51].value = result.alarm.webpageDownloadRate;
-                }
-                else if(result.alarm.dataName == 'WEB下载'){
-                    $('#web_download').css('display','inherit');
-                    formparam[52].value = result.alarm.webDownloadDnsDelay;
-                    formparam[53].value = result.alarm.webDownloadConnDelay;
-                    formparam[54].value = result.alarm.webDownloadHeadbyteDelay;
-                    formparam[55].value = result.alarm.webDownloadDownloadRate;
-                }
-                else if((result.alarm.dataName == 'FTP下载')||(result.alarm.dataName == 'FTP上传')){
-                    $('#ftp').css('display','inherit');
-                    formparam[56].value = result.alarm.ftpDnsDelay;
-                    formparam[57].value = result.alarm.ftpConnDelay;
-                    formparam[58].value = result.alarm.ftpLoginDelay;
-                    formparam[59].value = result.alarm.ftpHeadbyteDelay;
-                    formparam[60].value = result.alarm.ftpDownloadRate;
-                    formparam[61].value = result.alarm.ftpUploadRate;
-                }
-                else if(result.alarm.dataName == '在线视频'){
-                    $('#video').css('display','inherit');
-                    formparam[62].value = result.alarm.webDownloadDnsDelay;
-                    formparam[63].value = result.alarm.webDownloadConnDelay;
-                    formparam[64].value = result.alarm.webVideoWebPageDelay;
-                    formparam[65].value = result.alarm.webVideoSsConnDelay;
-                    formparam[66].value = result.alarm.webVideoAddressDelay;
-                    formparam[67].value = result.alarm.webVideoMsConnDelay;
-                    formparam[68].value = result.alarm.webVideoHeadFrameDelay;
-                    formparam[69].value = result.alarm.webVideoInitBufferDelay;
-                    formparam[70].value = result.alarm.webVideoLoadDelay;
-                    formparam[71].value = result.alarm.webVideoTotalBufferDelay;
-                    formparam[72].value = result.alarm.webVideoDownloadRate;
-                    formparam[73].value = result.alarm.webVideoBufferTime;
 
-                }
-                else if(result.alarm.dataName =='在线游戏'){
-                    $('#game').css('display','inherit');
-                    formparam[74].value = result.alarm.gameDnsDelay;
-                    formparam[75].value = result.alarm.gameConnDelay;
-                    formparam[76].value = result.alarm.gamePacketDelay;
-                    formparam[77].value = result.alarm.gamePacketJitter;
-                    formparam[78].value = result.alarm.gameLossRate*100;
-                }
-            }
-        }
-    });
-    probeform_data.modaltitle = "详细信息";
-    /*修改模态框标题*/
-    $('#myModal_update').modal('show');
-}
-
-//
 function delete_All(){
     var CheckALL = document.getElementsByName("selectFlag");
     var  check_val = [];
@@ -525,6 +359,7 @@ var alerttable = new Vue({
             {title: '<div >探针名称</div>'},
             {title: '<div >业务类型</div>'},
             {title: '<div >测试目标</div>'},
+            {title: '<div >详情</div>'},
             {title: '<div >时间</div>'},
             {title: '<div >操作</div>'}
         ],
@@ -613,10 +448,10 @@ var alerttable = new Vue({
                         returnData.data = result.page.list;//返回的数据列表
                         // 重新整理返回数据以匹配表格
                         let rows = [];
-                        var i = param.start+1;
+                        var Index = param.start+1;
                         result.page.list.forEach(function (item) {
                             let row = [];
-                            row.push(i++);
+                            row.push(Index++);
                             row.push('<div class="checkbox"> <label> <input type="checkbox" id="checkALl" name="selectFlag" value='+item.id+'><div style="display: none">'+item.id+'</div></label> </div>');
                             row.push(st.get(item.type));
                             row.push(le.get(item.level));
@@ -624,9 +459,430 @@ var alerttable = new Vue({
                             row.push(item.probeName);
                             row.push(typeName.get(item.serviceType));
                             row.push(item.targetName);
+                            var info=JSON.parse(item.trigger);
+                            let newObj = {}
+                            info.map((e,index)=>{
+                                Object.assign(newObj,e);
+                            })
+                            console.log(newObj,item.trigger)
+                            debugger
+                           if(st.get(item.type)=='阈值告警'){
+                               if(item.serviceType==1||item.serviceType==2|| item.serviceType==3 ||item.serviceType==4||item.serviceType==5){
+                                   var b="",c="",d="" ,e='',f='',g='',h='';
+
+                                   if(newObj.loss_rate){
+                                    b='丢包率(%)：'+(newObj.loss_rate*100).toFixed(2)
+
+                                 }
+                                   if(newObj.jitter){
+                                        c="抖动(ms)："+newObj.jitter.toFixed(2)
+
+                                   }
+                                   if(newObj.delay){
+                                      d="往返时延(ms)："+newObj.delay.toFixed(2)
+
+                                   }
+                                   if(newObj.delay_std){
+                                       e="时延标准差(ms)："+newObj.delay_std.toFixed(2)
+
+                                   }
+                                   if(newObj.delay_var){
+                                       f="时延方差(ms)："+newObj.delay_var.toFixed(2)
+
+                                   }
+                                   if(newObj.jitter_std){
+                                       g="抖动标准差(ms)："+newObj.jitter_std.toFixed(2)
+
+                                   }
+                                   if(newObj.jitter_var){
+                                       h="抖动方差(ms)："+newObj.jitter_var.toFixed(2)
+
+                                   }
+                                   var tool=b+' '+c+' '+d+' '+e+' '+f+' '+g+' '+h;
+                                   var a='<div style="max-width: 200px;!important;overflow: visible;' +
+                                       ' white-space:nowrap; word-wrap:break-word;"<span title="'+tool+'">';
+                                   var a1='</span></div>';
+                                   var total=a+b+' '+c+' '+d+' '+e+' '+f+' '+g+' '+h+a1;
+                                   row.push(total);
+
+
+                               } else if(item.serviceType==10||item.serviceType==11){
+
+                                   var b="",c="",d="" ,e='',f='',g='',h='';
+                                   var b1="",b2='',d1="" ,d2='',e1='',e2='',f1='', f2='',g1='',g2='',c1="",c2="";
+                                   if(newObj.delay){
+                                       b="时延(ms)："+newObj.delay.toFixed(2)
+
+                                   }
+                                   if(newObj.g_delay){
+                                       b1="往向时延(ms)："+newObj.g_delay.toFixed(2)
+
+                                   }
+                                   if(newObj.r_delay){
+                                       b2="返向时延(ms)："+newObj.r_delay.toFixed(2)
+
+                                   }
+                                   if(newObj.delay_std){
+                                       c="时延标准差(ms)："+newObj.delay_std.toFixed(2)
+
+                                   }
+                                   if(newObj.g_delay_std){
+                                       c1="往向时延标准差(ms)："+newObj.g_delay_std.toFixed(2)
+
+                                   }
+                                   if(newObj.r_delay_std){
+                                       c2="返向时延标准差(ms)："+newObj.r_delay_std.toFixed(2)
+
+                                   }
+
+                                   if(newObj.delay_var){
+                                       d="时延方差(ms)："+newObj.delay_var.toFixed(2)
+
+                                   }
+                                   if(newObj.g_delay_var){
+                                       d1="往向时延方差(ms)："+newObj.g_delay_var.toFixed(2)
+
+                                   }
+                                   if(newObj.r_delay_var){
+                                       d2="返向时延方差(ms)："+newObj.r_delay_var.toFixed(2)
+
+                                   }
+                                   if(newObj.jitter){
+                                       e="抖动(ms)："+newObj.jitter.toFixed(2)
+
+                                   }
+                                   if(newObj.g_delay_var){
+                                       e1="往向抖动(ms)："+newObj.g_delay_var.toFixed(2)
+
+                                   }
+                                   if(newObj.r_delay_var){
+                                       e2="返向抖动(ms)："+newObj.r_delay_var.toFixed(2)
+
+                                   }
+                                   if(newObj.jitter_std){
+                                       f="抖动标准差(ms)："+newObj.jitter_std.toFixed(2)
+
+                                   }
+                                   if(newObj.g_jitter_std){
+                                       f1="往向抖动标准差(ms)："+newObj.g_jitter_std.toFixed(2)
+
+                                   }
+                                   if(newObj.r_jitter_std){
+                                      f2="返向抖动标准差(ms)："+newObj.r_jitter_std.toFixed(2)
+
+                                   }
+                                   if(newObj.jitter_var){
+                                       g="抖动方差(ms)："+newObj.jitter_var.toFixed(2)
+
+                                   }
+                                   if(newObj.g_jitter_var){
+                                       g1="往向抖动方差(ms)："+newObj.g_jitter_var.toFixed(2)
+
+                                   }
+                                   if(newObj.r_jitter_var){
+                                       g2="返向抖动方差(ms)："+newObj.r_jitter_var.toFixed(2)
+
+                                   }
+                                   if(newObj.loss_rate){
+                                       h="丢包率(%)："+(newObj.loss_rate*100).toFixed(2)
+
+                                   }
+                                   var tool=b+'  '+b1+' '+b2+' '+c+' '+c1+' '+c2+' '+d+'  '+d1+' '+d2+' '+e+' '+e1+' '+e2+' '+f+' '+f1+' '+f2+' '+g+' '+g1+' '+g2+'  '+h;
+                                   var a='<div style="max-width: 200px;!important;overflow: visible;' +
+                                       ' white-space:nowrap; word-wrap:break-word;"<span title="'+tool+'">';
+                                   var a1='</span></div>';
+                                   var total=a+b+'  '+b1+' '+b2+' '+c+' '+c1+' '+c2+' '+d+'  '+d1+' '+d2+' '+e+' '+e1+' '+e2+' '+f+' '+f1+' '+f2+' '+g+' '+g1+' '+g2+'  '+h+a1;
+
+                                   row.push(total);
+
+                               }else if (item.serviceType==12){
+
+                                   var b="",c="",d="" ;
+                                   if(newObj.delay){
+                                       b="拨号时延(ms)："+newObj.delay.toFixed(2) ;
+
+                                   }
+                                   if(newObj.drop_rate){
+                                       c="掉线率(%)："+(newObj.drop_rate*100).toFixed(2) ;
+
+                                   }
+
+                                   if(newObj.success_rate){
+                                       d="成功率(%)："+(newObj.success_rate*100).toFixed(2)
+                                   }
+
+
+                                   var tool=b+' '+c+' '+d;
+                                   var a='<div style="max-width: 200px;!important;overflow: visible;' +
+                                       ' white-space:nowrap; word-wrap:break-word;"<span title="'+tool+'">';
+                                   var a1='</span></div>';
+                                   var total=a+b+' '+c+' '+d+a1
+                                   row.push(total);
+
+
+                               }else if (item.serviceType==13){
+
+                                   var b="",c="" ;
+                                   if(newObj.delay){
+                                       b="分配时延(ms)："+newObj.delay.toFixed(2);
+
+                                   }
+                                   if(newObj.success_rate){
+                                       c="成功率(%)："+(newObj.success_rate*100).toFixed(2) ;
+                                   }
+                                   var tool=b+' '+c;
+                                   var a='<div style="max-width: 200px;!important;overflow: visible;' +
+                                       ' white-space:nowrap; word-wrap:break-word;"<span title="'+tool+'">';
+                                   var a1='</span></div>';
+                                   var total=a+b+' '+c+' '+a1
+                                   row.push(total);
+
+                               }else if (item.serviceType==14){
+
+                                   var b="",c="" ;
+                                   if(newObj.delay){
+                                       b="解析时延(ms)："+newObj.delay.toFixed(2)
+
+                                   }
+                                   if(newObj.success_rate){
+                                       c="成功率(%)："+(newObj.success_rate*100).toFixed(2)
+                                   }
+
+                                   var tool=b+' '+c;
+                                   var a='<div style="max-width: 200px;!important;overflow: visible;' +
+                                       ' white-space:nowrap; word-wrap:break-word;"<span title="'+tool+'">';
+                                   var a1='</span></div>';
+                                   var total=a+b+' '+c+' '+a1
+                                   row.push(total);
+                               }else if (item.serviceType==15){
+
+                                   var b="",c="" ;
+                                   if(newObj.delay){
+                                       b="认证时延(ms)："+newObj.delay.toFixed(2)
+
+                                   }
+                                   if(newObj.success_rate){
+                                       c="成功率(%)："+(newObj.success_rate*100).toFixed(2)
+                                   }
+
+                                   var tool=b+' '+c;
+                                   var a='<div style="max-width: 200px;!important;overflow: visible;' +
+                                       ' white-space:nowrap; word-wrap:break-word;"<span title="'+tool+'">';
+                                   var a1='</span></div>';
+                                   var total=a+b+' '+c+' '+a1;
+                                   row.push(total);
+                               }else if (item.serviceType==20){
+
+                                   var b="",c="",d="" ,e='',f='',g='',h='',i='';
+                                   if(newObj.dns_delay){
+                                       b="DNS解析时延(ms)："+newObj.dns_delay.toFixed(2)
+
+                                   }
+                                   if(newObj.conn_delay){
+                                       c="连接时延(ms)："+newObj.conn_delay.toFixed(2)
+
+                                   }
+
+                                   if(newObj.headbyte_delay){
+                                       d="首字节到达时延(ms)："+newObj.headbyte_delay.toFixed(2)
+
+                                   }
+                                   if(newObj.page_file_delay){
+                                       e="传输页面文件时延(ms)："+newObj.page_file_delay.toFixed(2)
+
+                                   }
+                                   if(newObj.redirect_delay){
+                                       f="重定向时延(ms)："+newObj.redirect_delay.toFixed(2)
+
+                                   }
+                                   if(newObj.above_fold_delay){
+                                       g="首屏时延(ms)："+newObj.above_fold_delay.toFixed(2)
+
+                                   }
+                                   if(newObj.load_delay){
+                                       h="页面加载时延(ms)："+newObj.load_delay.toFixed(2)
+
+                                   }
+                                   if(newObj.download_rate){
+                                       i="下载速率(KB/s)："+newObj.download_rate.toFixed(2)
+
+                                   }
+                                   var tool=b+' '+c+' '+d+' '+e+' '+f+' '+g+' '+h+''+i ;
+                                   var a='<div style="max-width: 200px;!important;overflow: visible;' +
+                                       ' white-space:nowrap; word-wrap:break-word;"<span title="'+tool+'">';
+                                   var a1='</span></div>';
+                                   var total=a+b+' '+c+' '+d+' '+e+' '+f+' '+g+' '+h+' '+i+a1;
+                                   row.push(total);
+
+                               }else if (item.serviceType==30){
+
+                                   var b="",c="",d="" ,e='';
+                                   if(newObj.dns_delay){
+                                       b="DNS解析时延(ms)："+newObj.dns_delay.toFixed(2)
+
+                                   }
+                                   if(newObj.conn_delay){
+                                       c="连接时延(ms)："+newObj.conn_delay.toFixed(2)
+
+                                   }
+
+                                   if(newObj.headbyte_delay){
+                                       d="首字节到达时延(ms)："+newObj.headbyte_delay.toFixed(2)
+
+                                   }
+                                   if(newObj.download_rate){
+                                       e="下载速率(KB/s)："+newObj.download_rate.toFixed(2)
+
+                                   }
+
+                                   var tool=b+' '+c+' '+d+' '+e ;
+                                   var a='<div style="max-width: 200px;!important;overflow: visible;' +
+                                       ' white-space:nowrap; word-wrap:break-word;"<span title="'+tool+'">';
+                                   var a1='</span></div>';
+                                   var total=a+b+' '+c+' '+d+' '+e+a1;
+                                   row.push(total);
+
+                               }else if (item.serviceType==31){
+
+                                   var b="",c="",d="" ,e='',f='';
+                                   if(newObj.dns_delay){
+                                       b="DNS解析时延(ms)："+newObj.dns_delay.toFixed(2)
+
+                                   }
+                                   if(newObj.conn_delay){
+                                       c="连接时延(ms)："+newObj.conn_delay.toFixed(2)
+
+                                   }
+
+                                   if(newObj.login_delay){
+                                       d="登录时延(ms)："+newObj.login_delay.toFixed(2)
+
+                                   }
+                                   if(newObj.headbyte_delay){
+                                       e="首字节到达时延(ms)："+newObj.headbyte_delay.toFixed(2)
+                                   }
+                                   if(newObj.download_rate){
+                                       f="下载速率(KB/s)："+newObj.download_rate.toFixed(2)
+
+                                   }
+                                   var tool=b+' '+c+' '+d+' '+e+''+f ;
+                                   var a='<div style="max-width: 200px;!important;overflow: visible;' +
+                                       ' white-space:nowrap; word-wrap:break-word;"<span title="'+tool+'">';
+                                   var a1='</span></div>';
+                                   var total=a+b+' '+c+' '+d+' '+e+''+f+a1;
+                                   row.push(total);
+
+
+                               }else if (item.serviceType==32){
+
+                                   var b="",c="",d="" ,e='',f='';
+                                   if(newObj.dns_delay){
+                                       b="DNS解析时延(ms)："+newObj.dns_delay.toFixed(2)
+
+                                   }
+                                   if(newObj.conn_delay){
+                                       c="连接时延(ms)："+newObj.conn_delay.toFixed(2)
+
+                                   }
+
+                                   if(newObj.login_delay){
+                                       d="登录时延(ms)："+newObj.login_delay.toFixed(2)
+
+                                   }
+                                   if(newObj.headbyte_delay){
+                                       e="首字节到达时延(ms)："+newObj.headbyte_delay.toFixed(2)
+                                   }
+                                   if(newObj.upload_rate){
+                                       f="上传速率(KB/s)："+newObj.upload_rate.toFixed(2)
+
+                                   }
+                                   var tool=b+' '+c+' '+d+' '+e+''+f ;
+                                   var a='<div style="max-width: 200px;!important;overflow: visible;' +
+                                       ' white-space:nowrap; word-wrap:break-word;"<span title="'+tool+'">';
+                                   var a1='</span></div>';
+                                   var total=a+b+' '+c+' '+d+' '+e+''+f+a1;
+                                   row.push(total);
+
+                               }else if (item.serviceType==40){
+
+                                   var b="",c="",d="" ,e='',f='',g='',h='',i='',j='';
+                                   if(newObj.dns_delay){
+                                       b="DNS解析时延(ms)："+newObj.dns_delay.toFixed(2)
+
+                                   }
+                                   if(newObj.ws_conn_delay){
+                                       c="连接WEB服务器时延(ms)："+newObj.ws_conn_delay.toFixed(2)
+
+                                   }
+
+                                   if(newObj.web_page_delay){
+                                       d="WEB页面时延(ms)："+newObj.web_page_delay.toFixed(2)
+
+                                   }
+                                   if(newObj.head_frame_delay){
+                                       e="首帧到达时延(ms)："+newObj.head_frame_delay.toFixed(2)
+
+                                   }
+                                   if(newObj.init_buffer_delay){
+                                       f="首次缓冲时延(ms)："+newObj.init_buffer_delay.toFixed(2)
+
+                                   }
+                                   if(newObj.load_delay){
+                                       g="视频加载时延(ms)："+newObj.load_delay.toFixed(2)
+
+                                   }
+                                   if(newObj.total_buffer_delay){
+                                       h="总体缓冲时间(ms)："+newObj.total_buffer_delay.toFixed(2)
+
+                                   }
+                                   if(newObj.buffer_time){
+                                       i="总体缓冲次数："+newObj.buffer_time.toFixed(2)
+
+                                   }
+                                   if(newObj.download_rate){
+                                       j="下载速率(KB/s)："+newObj.download_rate.toFixed(2)
+
+                                   }
+                                   var tool=b+' '+c+' '+d+' '+e+' '+f+' '+g+' '+h+' '+i+''+j;
+                                   var a='<div style="max-width: 200px;!important;overflow: visible;' +
+                                       ' white-space:nowrap; word-wrap:break-word;"<span title="'+tool+'">';
+                                   var a1='</span></div>';
+                                   var total=a+b+' '+c+' '+d+' '+e+' '+f+' '+g+' '+h+' '+i+''+j+a1;
+                                   row.push(total);
+
+                               }else if (item.serviceType==50){
+
+                                   var b="",c="",d="" ,e='';
+                                   if(newObj.conn_delay){
+                                       b="连接时延(ms)："+newObj.conn_delay.toFixed(2)
+
+                                   }
+                                   if(newObj.packet_delay){
+                                       c="网络时延(ms)："+newObj.packet_delay.toFixed(2)+'(ms)'
+
+                                   }
+
+                                   if(newObj.packet_jitter){
+                                       d="网络抖动(ms)："+newObj.packet_jitter.toFixed(2)+'(ms)'
+
+                                   }
+                                   if(newObj.loss_rate){
+                                       e="丢包率(%)："+newObj.loss_rate.toFixed(2) + ''
+
+                                   }
+                                   var tool=b+' '+c+' '+d+' '+e;
+                                   var a='<div style="max-width: 200px;!important;overflow: visible;' +
+                                       ' white-space:nowrap; word-wrap:break-word;"<span title="'+tool+'">';
+                                   var a1='</span></div>';
+                                   var total=a+b+' '+c+' '+d+' '+e+a1;
+                                   row.push(total);
+                               }
+                           }else {
+                               row.push('')
+                           }
                             row.push(item.recordTime);
-                            row.push('<a class="fontcolor" onclick="operate_this(this)"  id='+item.id+'  >确认</a>&nbsp;' +
-                                '<a class="fontcolor" onclick="update_this(this)" id='+item.id+'  type='+st.get(item.type)+'>详情</a>'); //Todo:完成详情与诊断
+                            row.push('<a class="fontcolor" onclick="operate_this(this)"  id='+item.id+'  >确认</a>&nbsp;' )
+                                // '<a class="fontcolor" onclick="update_this(this)" id='+item.id+'  type='+st.get(item.type)+'>详情</a>'); //Todo:完成详情与诊断
                             rows.push(row);
                         });
                         returnData.data = rows;
@@ -649,7 +905,7 @@ var alerttable = new Vue({
 
 var date=new Date();
 var month = date.getMonth() + 1;
-var strDate = date.getDate()-1;
+var strDate = date.getDate();
 var endDate = date.getDate();
 var years=date.getFullYear();
 var newdate=years+'-'+month+'-'+strDate;

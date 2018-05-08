@@ -261,8 +261,7 @@
             AND rhp.probe_id = #{probe_id}
         </if>
         GROUP BY
-        rhp.city_id,rhp.county_id,rhp.service_type,rhp.probe_id,rhp.target_id,date_format(rhp.record_date,'%Y-%m-%d')
-
+        rhp.record_date,rhp.city_id,rhp.county_id,rhp.service_type,rhp.probe_id,rhp.target_id
     </select>
 
     <select id="queryExitList" resultType="io.cem.modules.cem.entity.RecordHourPingEntity">

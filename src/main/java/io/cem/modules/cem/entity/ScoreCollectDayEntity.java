@@ -13,6 +13,8 @@ public class ScoreCollectDayEntity  implements Serializable {
     private Integer interval;
     private Integer serviceType;
     private Date scoreDate;
+    private String scoreTime;
+
 
     public Integer getId() {
         return id;
@@ -54,5 +56,13 @@ public class ScoreCollectDayEntity  implements Serializable {
 
     public void setScoreDate(Date scoreDate) {
         this.scoreDate = scoreDate;
+    }
+
+    public void setScoreTime(String scoreTime) {
+        this.scoreTime = scoreTime;//0
+    }
+
+    public String getScoreTime() {
+        return scoreTime;
     }
 }

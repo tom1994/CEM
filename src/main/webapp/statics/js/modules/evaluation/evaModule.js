@@ -253,6 +253,7 @@ var weightSet = new Vue({
                 contentType: "application/json", /*必须要,不可少*/
                 success: function (result) {
                     var forms = $('#web_download_form .form-input');
+                    console.log(result);
                     for (var i = 0; i < 28; i++) {
                         forms[i].value = result.webDownload[i];
                     }

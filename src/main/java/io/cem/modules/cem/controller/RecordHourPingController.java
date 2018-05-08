@@ -180,12 +180,12 @@ public class RecordHourPingController {
             e.printStackTrace();
         }
         EvaluationEntity score;
-        if(dateDifferent>5){
-            score = recordHourFtpService.calculateDayQualityScore(map);
-        }else if(dateDifferent>=3){
+        if(dateDifferent==0){
+            score = recordHourFtpService.calculateDayHourQualityScore(map);
+        }else if(dateDifferent==1){
             score = recordHourFtpService.calculateHourQualityScore(map);
         } else{
-            score = recordHourFtpService.calculateDayHourQualityScore(map);
+            score = recordHourFtpService.calculateDayQualityScore(map);
         }
 
 
@@ -227,6 +227,11 @@ public class RecordHourPingController {
         } else{
             scoreList = recordHourDhcpService.connectionDayHourChart(map);
         }
+        if(map.get("probe_id")==null){
+            for(int i=0;i<scoreList.size();i++){
+                scoreList.get(i).setProbeName("所有探针");
+            }
+        }
         return R.ok().put("scoreList", scoreList);
     }
 
@@ -267,7 +272,11 @@ public class RecordHourPingController {
         } else{
             scoreList = recordHourDhcpService.qualityDayHourChart(map);
         }
-
+        if(map.get("probe_id")==null){
+            for(int i=0;i<scoreList.size();i++){
+                scoreList.get(i).setProbeName("所有探针");
+            }
+        }
         return R.ok().put("scoreList", scoreList);
     }
 
@@ -307,6 +316,11 @@ public class RecordHourPingController {
             //查询小时表
             scoreList = recordHourDhcpService.pageHourChart(map);
         }
+        if(map.get("probe_id")==null){
+            for(int i=0;i<scoreList.size();i++){
+                scoreList.get(i).setProbeName("所有探针");
+            }
+        }
         return R.ok().put("scoreList", scoreList);
     }
 
@@ -345,6 +359,11 @@ public class RecordHourPingController {
             scoreList = recordHourDhcpService.downloadHourChart(map);
         } else{
             scoreList = recordHourDhcpService.downloadDayHourChart(map);
+        }
+        if(map.get("probe_id")==null){
+            for(int i=0;i<scoreList.size();i++){
+                scoreList.get(i).setProbeName("所有探针");
+            }
         }
         return R.ok().put("scoreList", scoreList);
     }
@@ -386,6 +405,11 @@ public class RecordHourPingController {
             scoreList = recordHourDhcpService.videoHourChart(map);
         }
         System.out.println(scoreList);
+        if(map.get("probe_id")==null){
+            for(int i=0;i<scoreList.size();i++){
+                scoreList.get(i).setProbeName("所有探针");
+            }
+        }
         return R.ok().put("scoreList", scoreList);
     }
 
@@ -426,6 +450,11 @@ public class RecordHourPingController {
             scoreList = recordHourDhcpService.gameHourChart(map);
         }
         System.out.println(scoreList);
+        if(map.get("probe_id")==null){
+            for(int i=0;i<scoreList.size();i++){
+                scoreList.get(i).setProbeName("所有探针");
+            }
+        }
         return R.ok().put("scoreList", scoreList);
     }
 

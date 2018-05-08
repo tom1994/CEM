@@ -1,92 +1,169 @@
 package io.cem.modules.cem.controller;
 
+
+import io.cem.common.utils.PropertiesUtils;
 import io.cem.common.utils.R;
+import io.cem.modules.cem.entity.ScoreEntity;
 import io.cem.modules.cem.service.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ExecutionException;
+import java.util.Properties;
 
 @Controller
 @RequestMapping("/cem/test")
 public class TestController {
-    public static Log log=LogFactory.getLog(IndexController.class);
-    @Autowired
-    private IndexHistogramViewService indexHistogramViewService;
-    @Autowired
-    private IndexLineViewService indexLineViewService;
-    @Autowired
-    private IndexRadaViewService indexRadaViewService;
-    @Autowired
-    private IndexRankingViewService indexRankingViewService;
+    public static Log log=LogFactory.getLog(TestController.class);
 
     @Autowired
-    private IndexTaskService indexTaskService;
+    private ScoreCollectAllService scoreCollectAllService;
 
-    @RequestMapping("/savescores")
+
+    @Autowired
+    private ScoreCollectTargetService scoreCollectTargetService;
+
+    @Autowired
+    private ScoreCollectLayerService scoreCollectLayerService;
+
+    @Autowired
+    private ScoreCollectBusyIdleTimeService scoreCollectBusyIdleTimeService;
+
+    @Autowired
+    private ScoreCollectCityService scoreCollectCityService;
+
+    @RequestMapping("/savetargetscores")
     @ResponseBody
-    public R saveScores(@RequestParam String serviceType){ //  http://localhost:8080/cem/test/savescores?serviceType=1
-        List<Map<String,String>> dateList = new LinkedList<Map<String,String>>();
-        Map<String,String> p1 = new LinkedHashMap<String,String>();
-        p1.put("startTime","2017-11-1");
-        p1.put("endTime","2017-11-30");
-        dateList.add(p1);
-        Map<String,String> p2 = new LinkedHashMap<String,String>();
-        p2.put("startTime","2017-12-1");
-        p2.put("endTime","2017-12-31");
-        dateList.add(p2);
-        Map<String,String> p3 = new LinkedHashMap<String,String>();
-        p3.put("startTime","2018-1-1");
-        p3.put("endTime","2018-1-31");
-        dateList.add(p3);
-        Map<String,String> p4 = new LinkedHashMap<String,String>();
-        p4.put("startTime","2018-2-1");
-        p4.put("endTime","2018-2-28");
-        dateList.add(p4);
-        Map<String,String> p5 = new LinkedHashMap<String,String>();
-        p5.put("startTime","2018-3-1");
-        p5.put("endTime","2018-3-31");
-        dateList.add(p5);
-        String startDate = "2018-3-1";
-        String endDate = "2018-3-31";
-        //log.info("==========dateList=="+dateList);
-
-        //indexLineViewService.saveConnectivityScore(dateList,"1000");
-        //indexLineViewService.saveDownLoadScore(dateList,"1000");
-        //indexLineViewService.saveGameScore(dateList,"1000");
-        //indexLineViewService.saveWebVideoScore(dateList,"1000");
-        //indexLineViewService.saveWebPageScore(dateList,"1000");
-
-        //indexRadaViewService.saveConnectivityScore(startDate,endDate,1);
-        //indexRadaViewService.saveDownLoadScore(startDate,endDate,2);
-        //indexRadaViewService.saveGameScore(startDate,endDate,1);
-        //indexRadaViewService.saveWebPageScore(startDate,endDate,2);
-        //indexRadaViewService.saveWebVideoScore(startDate,endDate,1);
-
-        //indexRankingViewService.saveConnectivityScore(startDate,endDate,1);
+    public R saveTargetScores(){ //  http://localhost:8080/cem/test/savetargetscores?serviceType=1
+        List<ScoreEntity> scores = new ArrayList<ScoreEntity>();
+        String stime ="";
+        String ntime ="";
         try {
-            //indexRankingViewService.saveDownLoadScore(startDate, endDate, 2);
-           // indexRankingViewService.saveGameScore(startDate, endDate, 1);
-           // indexRankingViewService.saveWebPageScore(startDate, endDate, 2);
-           // indexRankingViewService.saveWebVideoScore(startDate, endDate, 1);
 
-            indexTaskService.run();
-            log.info("执行完成..");
+            InputStream in = new BufferedInputStream(new FileInputStream(PropertiesUtils.class.getClassLoader().getResource("chart.properties").getPath()));
+            Properties prop = new Properties();
+            prop.load(in);
+            stime = prop.getProperty("stime");
+            ntime = prop.getProperty("etime");
 
+            scoreCollectTargetService.saveScore(stime, ntime);
+
+            log.info("门户排行数据导入任务执行完成..");
         }catch (Exception e){
             e.printStackTrace();
-            return  R.ok().put("msg","error ");
         }
-        return  R.ok().put("msg","test success ");
+        return  R.ok().put("startTime",stime).put("endTime",ntime);
 
     }
+
+    @RequestMapping("/savemonthcores")
+    @ResponseBody
+    public R saveMonthScores(){ //  http://localhost:8080/cem/test/savemonthcores
+        List<ScoreEntity> scores = new ArrayList<ScoreEntity>();
+        String stime ="";
+        String ntime ="";
+        try {
+
+            InputStream in = new BufferedInputStream(new FileInputStream(PropertiesUtils.class.getClassLoader().getResource("chart.properties").getPath()));
+            Properties prop = new Properties();
+            prop.load(in);
+            stime = prop.getProperty("stime");
+            ntime = prop.getProperty("etime");
+
+            log.info("保存最近n个月的汇总数据，开始调用scoreCollectAllService.saveConnectivityScore");
+            scoreCollectAllService.saveConnectivityScore(stime,ntime);
+            log.info("保存最近n个月的汇总数据，开始调用scoreCollectAllService.saveNetworkLayerScore");
+            scoreCollectAllService.saveNetworkLayerScore(stime,ntime);
+            log.info("保存最近n个月的汇总数据，开始调用scoreCollectAllService.saveWebPageScore");
+            scoreCollectAllService.saveWebPageScore(stime,ntime);
+            log.info("保存最近n个月的汇总数据，开始调用scoreCollectAllService.saveWebVideoScore");
+            scoreCollectAllService.saveWebVideoScore(stime,ntime);
+            log.info("保存最近n个月的汇总数据，开始调用scoreCollectAllService.saveDownLoadScore");
+            scoreCollectAllService.saveDownLoadScore(stime,ntime);
+            log.info("保存最近n个月的汇总数据，开始调用scoreCollectAllService.saveGameScore");
+            scoreCollectAllService.saveGameScore(stime,ntime);
+
+            log.info("各应用网络 qoe 分析数据导入任务执行完成..");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return  R.ok().put("startTime",stime).put("endTime",ntime);
+
+    }
+    @RequestMapping("/savelayerscores")
+    @ResponseBody
+    public R saveLayerScores(){ //  http://localhost:8080/cem/test/savelayerscores
+        List<ScoreEntity> scores = new ArrayList<ScoreEntity>();
+        String stime ="";
+        String ntime ="";
+        try {
+            InputStream in = new BufferedInputStream(new FileInputStream(PropertiesUtils.class.getClassLoader().getResource("chart.properties").getPath()));
+            Properties prop = new Properties();
+            prop.load(in);
+            stime = prop.getProperty("stime");
+            ntime = prop.getProperty("etime");
+            scoreCollectLayerService.saveScores(stime,ntime);
+            System.out.println("test");
+            log.info("各应用网络分层质量数据导入任务执行完成..");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return  R.ok().put("startTime",stime).put("endTime",ntime);
+
+    }
+    @RequestMapping("/savebusyidlescores")
+    @ResponseBody
+    public R saveBusyIdleScores(){ //  http://localhost:8080/cem/test/savebusyidlescores
+        List<ScoreEntity> scores = new ArrayList<ScoreEntity>();
+        String stime ="";
+        String ntime ="";
+        try {
+            InputStream in = new BufferedInputStream(new FileInputStream(PropertiesUtils.class.getClassLoader().getResource("chart.properties").getPath()));
+            Properties prop = new Properties();
+            prop.load(in);
+            stime = prop.getProperty("stime");
+            ntime = prop.getProperty("etime");
+            for(int i=1;i<7;i++){
+                scoreCollectBusyIdleTimeService.saveScore(stime,ntime,i);
+            }
+            log.info("各应用网络忙闲时数据导入任务执行完成..");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return  R.ok().put("startTime",stime).put("endTime",ntime);
+
+    }
+    @RequestMapping("/savecityscores")
+    @ResponseBody
+    public R saveCityScores(){ //  http://localhost:8080/cem/test/savecityscores
+        List<ScoreEntity> scores = new ArrayList<ScoreEntity>();
+        String stime ="";
+        String etime ="";
+        try {
+            InputStream in = new BufferedInputStream(new FileInputStream(PropertiesUtils.class.getClassLoader().getResource("chart.properties").getPath()));
+            Properties prop = new Properties();
+            prop.load(in);
+            stime = prop.getProperty("stime");
+            etime = prop.getProperty("etime");
+
+            scoreCollectCityService.saveScores(stime,etime);
+
+            log.info("各地区平均统计数据导入任务执行完成..");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return  R.ok().put("startTime",stime).put("endTime",etime);
+
+    }
+
+
+
 }

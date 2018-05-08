@@ -21,6 +21,19 @@ public class ScoreCollectCityEntity implements Serializable {
 
     private Date scoreDate;
 
+    private String scoreTime;
+
+    private String areaName;
+
+    private int areaId;
+
+    public String getScoreTime() {
+        return scoreTime;
+    }
+
+    public void setScoreTime(String scoreTime) {
+        this.scoreTime = scoreTime;
+    }
 
     public Integer getId() {
         return id;
@@ -72,5 +85,29 @@ public class ScoreCollectCityEntity implements Serializable {
 
     public void setCityId(Integer cityId) {
         this.cityId = cityId;
+    }
+
+    public String getAreaName() {
+        return areaName;
+    }
+    public int getAreaId() {
+        return areaId;
+    }
+
+    public void setAreaName(String areaName) {
+        this.areaName = areaName;
+    }
+
+    public void setAreaId(int areaId) {
+        this.areaId = areaId;
+    }
+
+    public String toString(){
+        return "score:"+getScore()+";"+
+                "cityName:"+getCityName()+";"+
+                "areaName:"+getAreaName()+";"+
+                "scoreDate:"+getScoreDate()+";"+
+                "scoreTime:"+getScoreTime()+";"+
+                "serviceType:"+getServiceType()+";";
     }
 }

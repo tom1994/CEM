@@ -704,6 +704,8 @@ var target_table = new Vue({
             scroll: true,
             oLanguage: {
                 sLengthMenu: "每页 _MENU_ 行数据",
+                sEmptyTable: "No data available in table",
+                sZeroRecords:"No data available in table",
                 oPaginate: {
                     sNext: '<i class="fa fa-chevron-right" ></i>', /*图标替换上一页,下一页*/
                     sPrevious: '<i class="fa fa-chevron-left" ></i>'
@@ -820,14 +822,14 @@ var tg_table = new Vue({
             searching: false,
             paging: true,
             serverSide: true,
+            // autowidth:true,
+            bAutoWidth:false,
             info: false,
             ordering: false, /*禁用排序功能*/
-            bAutoWidth:false,
-            /*bInfo: false,*/
-            /*bLengthChange: false,*/    /*禁用Show entries*/
-            scroll: false,
             oLanguage: {
                 sLengthMenu: "每页 _MENU_ 行数据",
+                sEmptyTable: "No data available in table",
+                sZeroRecords:"No data available in table",
                 oPaginate: {
                     sNext: '<i class="fa fa-chevron-right" ></i>', /*图标替换上一页,下一页*/
                     sPrevious: '<i class="fa fa-chevron-left" ></i>'

@@ -478,18 +478,13 @@ var search_data = new Vue({
             targetSelected=0;
             intervalSelected=0
             var data = {
-                startDate: today.Format("yyyy-MM-dd"),
-                terminalDate: (new Date()).Format("yyyy-MM-dd"),
-                interval: "",
-                probe_id: '',
-                task_id: '',
-                target_id: '',
-                start_time: "00:00:00",
-                end_time: "24:00:00",
-                queryType: "1"
+                service_type: "1", interval: "", probe_id: "", task_id: "", target_id: "",
+                startDate: today.Format("yyyy-MM-dd"), terminalDate: (new Date()).Format("yyyy-MM-dd"),
+                start_time: "00:00:00", end_time: "24:00:00", queryType: "1"
             };
             pingresulttable.resultdata = data;
             pingresulttable.redraw();
+            getNow()
         }
     }
 });
@@ -692,7 +687,7 @@ Date.prototype.Format = function (fmt) {
 };
 
 var today = new Date();
-today.setDate(today.getDate() - 1); //显示近一天内的数据
+today.setDate(today.getDate() ); //显示近一天内的数据
 //console.log(today.Format("yyyy-MM-dd"));
 // ping统计结果列表(页面展示的是探针1对应的recordping)
 var pingresulttable = new Vue({
@@ -825,13 +820,13 @@ var pingresulttable = new Vue({
                             row.push(item.taskName);
                             row.push(item.targetName);
                             row.push(numberToIp(item.targetIp));
-                            row.push(item.delay.toFixed(2));
-                            row.push(item.delayStd.toFixed(2));
-                            row.push(item.delayVar.toFixed(2));
-                            row.push(item.jitter.toFixed(2));
-                            row.push(item.jitterStd.toFixed(2));
-                            row.push(item.jitterVar.toFixed(2));
-                            row.push(item.lossRate.toFixed(2)*100);
+                            row.push(fixed(item.delay) );
+                            row.push(fixed(item.delayStd ));
+                            row.push(fixed(item.delayVar ));
+                            row.push(fixed(item.jitter ));
+                            row.push(fixed(item.jitterStd ));
+                            row.push(fixed(item.jitterVar ));
+                            row.push(fixedRate(item.lossRate ));
                             row.push(item.recordDate.substr(0, 10));
                             row.push(item.recordTime);
                             rows.push(row);
@@ -980,25 +975,24 @@ var tracertresulttable = new Vue({
                             row.push(item.taskName);
                             row.push(item.targetName);
                             row.push(numberToIp(item.targetIp));
-                            row.push(item.delay.toFixed(2));
-                            row.push(item.delayStd.toFixed(2));
-                            row.push(item.delayVar.toFixed(2));
-                            row.push(item.jitter.toFixed(2));
-                            row.push(item.jitterStd.toFixed(2));
-                            row.push(item.jitterVar.toFixed(2));
-                            row.push((item.lossRate*100).toFixed(2));
+                            row.push(fixed(item.delay));
+                            row.push(fixed(item.delayStd ));
+                            row.push(fixed(item.delayVar ));
+                            row.push(fixed(item.jitter ));
+                            row.push(fixed(item.jitterStd) );
+                            row.push(fixed(item.jitterVar ));
+                            row.push(fixedRate((item.lossRate)) );
                            if(item.servicetypeName=='Trace Route(ICMP)'){
                                var date = item.recordDate;
                                var dateStr = date.split(" ")[0];
                                var dateTime = dateStr+item.recordTime;
                                var a = JSON.parse(item.hopRecord);
                                var tables = $('table[id=hop_table]');
-                               // $("#hop_table tbody").html("");
 
 
                                for (let i =0;i<a.length;i++){
                                    var j = i+1;
-                                   var trtd = $("<tr><td hidden='hidden'>"+item.probeName+"</td><td hidden='hidden'>"+item.targetName+"</td><td hidden='hidden'>"+dateTime+"</td><td>"+j+"</td><td>"+a[i].hop_ip +"</td><td>"+a[i].delay.toFixed(2)+"</td><td>"+(a[i].loss_rate*100).toFixed(2)+"</td></tr>");
+                                   var trtd = $("<tr><td hidden='hidden'>"+item.probeName+"</td><td hidden='hidden'>"+item.targetName+"</td><td hidden='hidden'>"+dateTime+"</td><td>"+j+"</td><td>"+a[i].hop_ip +"</td><td>"+fixed(a[i].delay) +"</td><td>"+(a[i].loss_rate*100) +"</td></tr>");
                                    trtd.appendTo(tables);
                                }
                                $('#hop_table>tbody tr:eq(0)').css("display",'none');
@@ -1013,7 +1007,7 @@ var tracertresulttable = new Vue({
                                var tables = $('table[id=Record_table]');
                                for (let i =0;i<a.length;i++){
                                    var j = i+1;
-                                   var trtd = $("<tr><td hidden='hidden'>"+item.id+"</td><td>"+j+"</td><td>"+a[i].hop_ip +"</td><td>"+a[i].delay.toFixed(2)+"</td><td>"+(a[i].loss_rate*100).toFixed(2)+"</td></tr>");
+                                   var trtd = $("<tr><td hidden='hidden'>"+item.id+"</td><td>"+j+"</td><td>"+a[i].hop_ip +"</td><td>"+fixed(a[i].delay) +"</td><td>"+(a[i].loss_rate*100) +"</td></tr>");
                                    trtd.appendTo(tables);
                                }
                                $('#Record_table>tbody tr:eq(0)').css("display",'none');
@@ -1294,26 +1288,25 @@ var slaresulttable = new Vue({
                             row.push(item.port);
                             row.push(item.targetName);
                             row.push(numberToIp(item.targetIp));
-                            row.push(item.delay.toFixed(2));
-                            row.push(item.gDelay.toFixed(2));
-                            row.push(item.rDelay.toFixed(2));
-                            row.push(item.delayStd.toFixed(2));
-                            row.push(item.gDelayStd.toFixed(2));
-                            row.push(item.rDelayStd.toFixed(2));
-                            row.push(item.delayVar.toFixed(2));
-                            row.push(item.gDelayVar.toFixed(2));
-                            row.push(item.rDelayVar.toFixed(2));
-                            row.push(item.jitter.toFixed(2));
-                            row.push(item.gJitter.toFixed(2));
-                            row.push(item.rJitter.toFixed(2));
-                            row.push(item.jitterStd.toFixed(2));
-                            row.push(item.gJitterStd).toFixed(2);
-                            row.push(item.rJitterStd.toFixed(2));
-                            row.push(item.jitterVar.toFixed(2));
-                            row.push(item.gJitterVar.toFixed(2));
-                            row.push(item.rJitterVar.toFixed(2));
-                            row.push(item.lossRate.toFixed(2)*100);
-
+                            row.push(fixed(item.delay ));
+                            row.push(fixed(item.gDelay ));
+                            row.push(fixed(item.rDelay ));
+                            row.push(fixed(item.delayStd ));
+                            row.push(fixed(item.gDelayStd ));
+                            row.push(fixed(item.rDelayStd ));
+                            row.push(fixed(item.delayVar ));
+                            row.push(fixed(item.gDelayVar ));
+                            row.push(fixed(item.rDelayVar ));
+                            row.push(fixed(item.jitter ));
+                            row.push(fixed(item.gJitter ));
+                            row.push(fixed(item.rJitter ));
+                            row.push(fixed(item.jitterStd ));
+                            row.push(fixed(item.gJitterStd)) ;
+                            row.push(fixed(item.rJitterStd ));
+                            row.push(fixed(item.jitterVar ));
+                            row.push(fixed(item.gJitterVar ));
+                            row.push(fixed(item.rJitterVar ));
+                            row.push(fixedRate(item.lossRate));
                             row.push(item.recordDate.substr(0,10));
                             row.push(item.recordTime);
                             rows.push(row);
@@ -1449,8 +1442,8 @@ var dhcpresult_Table = new Vue({
                             row.push(item.port);
                             row.push(item.targetName);
                             row.push(numberToIp(item.targetIp));
-                            row.push(item.delay.toFixed(2));
-                            row.push(item.successRate.toFixed(2)*100);
+                            row.push(fixed(item.delay) );
+                            row.push(fixedRate(item.successRate) );
 
                             row.push(item.recordDate.substr(0,10));
                             row.push(item.recordTime);
@@ -1588,8 +1581,8 @@ var dnsresult_Table = new Vue({
                             row.push(item.port);
                             row.push(item.targetName);
                             row.push(numberToIp(item.targetIp));
-                            row.push(item.delay.toFixed(2));
-                            row.push(item.successRate.toFixed(2)*100);
+                            row.push(fixed(item.delay) );
+                            row.push(fixedRate(item.successRate));
 
                             row.push(item.recordDate.substr(0,10));
                             row.push(item.recordTime);
@@ -1724,8 +1717,8 @@ var radiusresult_Table = new Vue({
                             row.push(item.port);
                             row.push(item.targetName);
                             row.push(numberToIp(item.targetIp));
-                            row.push(item.delay.toFixed(2));
-                            row.push(item.successRate.toFixed(2)*100);
+                            row.push(fixed(item.delay ));
+                            row.push(fixedRate(item.successRate));
 
                             row.push(item.recordDate.substr(0,10));
                             row.push(item.recordTime);
@@ -1864,11 +1857,11 @@ var ftpupresult_Table = new Vue({
                             row.push(item.port);
                             row.push(item.targetName);
                             row.push(numberToIp(item.targetIp));
-                            row.push(item.dnsDelay.toFixed(2));
-                            row.push(item.connDelay.toFixed(2));
-                            row.push(item.loginDelay.toFixed(2));
-                            row.push(item.uploadRate.toFixed(2));
-                            row.push(item.headbyteDelay.toFixed(2));
+                            row.push(fixed(item.dnsDelay) );
+                            row.push(fixed(item.connDelay) );
+                            row.push(fixed(item.loginDelay) );
+                            row.push(fixed(item.uploadRate ));
+                            row.push(fixed(item.headbyteDelay ));
 
                             row.push(item.recordDate.substr(0,10));
                             row.push(item.recordTime);
@@ -2007,11 +2000,11 @@ var ftpdoresult_Table = new Vue({
                             row.push(item.port);
                             row.push(item.targetName);
                             row.push(numberToIp(item.targetIp));
-                            row.push(item.dnsDelay.toFixed(2));
-                            row.push(item.connDelay.toFixed(2));
-                            row.push(item.loginDelay.toFixed(2));
-                            row.push(item.downloadRate.toFixed(2));
-                            row.push(item.headbyteDelay.toFixed(2));
+                            row.push(fixed(item.dnsDelay ));
+                            row.push(fixed(item.connDelay ));
+                            row.push(fixed(item.loginDelay ));
+                            row.push(fixed(item.downloadRate) );
+                            row.push(fixed(item.headbyteDelay) );
                             row.push(item.recordDate.substr(0,10));
                             row.push(item.recordTime);
                             rows.push(row);
@@ -2148,11 +2141,10 @@ var webdownloadresult_Table = new Vue({
                             row.push(item.port);
                             row.push(item.targetName);
                             row.push(numberToIp(item.targetIp));
-                            row.push(item.dnsDelay.toFixed(2));
-                            row.push(item.connDelay.toFixed(2));
-                            row.push(item.downloadRate.toFixed(2));
-                            row.push(item.headbyteDelay.toFixed(2));
-
+                            row.push(fixed(item.dnsDelay) );
+                            row.push(fixed(item.connDelay) );
+                            row.push(fixed(item.downloadRate) );
+                            row.push(fixed(item.headbyteDelay) );
                             row.push(item.recordDate.substr(0,10));
                             row.push(item.recordTime);
                             rows.push(row);
@@ -2295,14 +2287,14 @@ var webpageresult_Table = new Vue({
                             row.push(item.port);
                             row.push(item.targetName);
                             row.push(numberToIp(item.targetIp));
-                            row.push(item.dnsDelay);
-                            row.push(item.connDelay);
-                            row.push(item.headbyteDelay);
-                            row.push(item.aboveFoldDelay);
-                            row.push(item.downloadRate);
-                            row.push(item.redirectDelay);
-                            row.push(item.pageFileDelay);
-                            row.push(item.loadDelay);
+                            row.push(fixed(item.dnsDelay));
+                            row.push(fixed(item.connDelay));
+                            row.push(fixed(item.headbyteDelay));
+                            row.push(fixed(item.aboveFoldDelay));
+                            row.push(fixed(item.downloadRate));
+                            row.push(fixed(item.redirectDelay));
+                            row.push(fixed(item.pageFileDelay));
+                            row.push(fixed(item.loadDelay));
 
                             row.push(item.recordDate.substr(0,10));
                             row.push(item.recordTime);
@@ -2445,15 +2437,15 @@ var webvideoresult_Table = new Vue({
                             row.push(item.port);
                             row.push(item.targetName);
                             row.push(numberToIp(item.targetIp));
-                            row.push(item.headFrameDelay.toFixed(2));
-                            row.push(item.initBufferDelay.toFixed(2));
-                            row.push(item.loadDelay.toFixed(2));
-                            row.push(item.totalBufferDelay.toFixed(2));
-                            row.push(item.downloadRate.toFixed(2));
-                            row.push(item.bufferTime.toFixed(2));
-                            row.push(item.dnsDelay.toFixed(2));
-                            row.push(item.wsConnDelay.toFixed(2));
-                            row.push(item.webPageDelay.toFixed(2));
+                            row.push(fixed(item.headFrameDelay ));
+                            row.push(fixed(item.initBufferDelay ));
+                            row.push(fixed(item.loadDelay ));
+                            row.push(fixed(item.totalBufferDelay) );
+                            row.push(fixed(item.downloadRate ));
+                            row.push(fixed(item.bufferTime ));
+                            row.push(fixed(item.dnsDelay ));
+                            row.push(fixed(item.wsConnDelay) );
+                            row.push(fixed(item.webPageDelay) );
 
                             row.push(item.recordDate.substr(0,10));
                             row.push(item.recordTime);
@@ -2590,11 +2582,10 @@ var gameresult_Table = new Vue({
                             row.push(item.port);
                             row.push(item.targetName);
                             row.push(numberToIp(item.targetIp));
-                            row.push(item.dnsDelay.toFixed(2));
-                            row.push(item.packetDelay.toFixed(2));
-                            row.push(item.packetJitter.toFixed(2));
-                            row.push(item.lossRate.toFixed(2)*100);
-
+                            row.push(fixed(item.dnsDelay) );
+                            row.push(fixed(item.packetDelay ));
+                            row.push(fixed(item.packetJitter ));
+                            row.push(fixedRate(item.lossRate));
                             row.push(item.recordDate.substr(0,10));
                             row.push(item.recordTime);
                             rows.push(row);
@@ -2663,6 +2654,25 @@ $(document).ready(
  }
  }
  })*/
+
+function fixed(value) {
+    if(value==''||value==null){
+        return ''
+    }else{
+        return value 
+    }
+}
+
+function fixedRate(value) {
+    if(value==null){
+        return ''
+    } else{
+        return (value*100) 
+    }
+}
+
+
+
 function probe() {
     probeSelected=0;
     $.ajax({
@@ -2839,3 +2849,20 @@ function out() {/*导出事件*/
     },74000);
 }
 
+function getNow() {
+    var date=new Date();
+    var month = date.getMonth() + 1;
+    var strDate = date.getDate();
+    var years=date.getFullYear();
+    var newdate=years+'-'+month+'-'+strDate;
+    $('#start_date').flatpickr({
+        enableTime: false,
+        defaultDate:newdate,
+        dateFormat: "Y-m-d"
+    });
+    $('#terminal_date').flatpickr({
+        enableTime: false,
+        defaultDate:new Date(),
+        dateFormat: "Y-m-d"
+    });
+}

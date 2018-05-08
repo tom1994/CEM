@@ -24,7 +24,7 @@ recordtype.set(5,"video");
 recordtype.set(6,"game");
 
 var today = new Date();
-today.setDate(today.getDate() - 1); //显示近一天内的数据
+today.setDate(today.getDate()); //显示近一天内的数据
 
 var new_search = new Vue({
     /*监听查询事件*/
@@ -49,7 +49,7 @@ var new_search = new Vue({
                 search.ava_terminal = searchJson.terminalDate.substr(0, 10);
                 if (search.ava_start.length != 0 && search.ava_terminal.length != 0) {
                 } else {
-                    search.ava_start =  new Date(new Date() - 1000 * 60 * 60 * 24 * 4).Format("yyyy-MM-dd");
+                    search.ava_start =  new Date(new Date()).Format("yyyy-MM-dd");
                     search.ava_terminal = (new Date()).Format("yyyy-MM-dd");
                 }
                 console.log(search);
@@ -170,7 +170,7 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
 }
 var date=new Date();
 var month = date.getMonth() + 1;
-var strDate = date.getDate()-1;
+var strDate = date.getDate();
 var years=date.getFullYear();
 var newdate=years+'-'+month+'-'+strDate;
 var hours=date.getHours();
@@ -203,7 +203,7 @@ function toggle1(param){
 }
 serviceSelected=0
 $('#service .jq22').comboSelect();
-$('.combo-dropdown').css("z-index","3");
+$('.combo-dropdown').css("z-index","10");
 $('#service input[type=text]').attr('placeholder','综合业务')
 $('#service .option-item').click(function (service) {
     var a = $(service.currentTarget)[0].innerText;
@@ -267,11 +267,11 @@ var probetable = new Vue({
             {title: '<div style="width:110px">业务类型</div>'},
             {title: '<div style="width:70px">综合分数</div>'},
             {title: '<div style="width:100px">网络连通性分数</div>'},
-            {title: '<div style="width:100px">网络质量分数</div>'},
+            {title: '<div style="width:100px">网络层质量分数</div>'},
             {title: '<div style="width:100px">网页浏览分数</div>'},
             {title: '<div style="width:100px">文件下载分数</div>'},
             {title: '<div style="width:100px">在线视频分数</div>'},
-            {title: '<div style="width:100px">在线游戏分数</div>'},
+            {title: '<div style="width:100px">网络游戏分数</div>'},
         ],
         rows: [],
         dtHandle: null,
@@ -560,35 +560,35 @@ var ping_table=new Vue({
                             row.push(fixed(item.pingIcmpJitter ));
                             row.push(fixed(item.pingIcmpJitterStd ));
                             row.push(fixed(item.pingIcmpJitterVar ));
-                            row.push(fixed(item.pingIcmpLossRate )*100);
+                            row.push(fixedRate(item.pingIcmpLossRate ));
                             row.push(fixed(item.pingTcpDelay ));
                             row.push(fixed(item.pingTcpDelayStd) );
                             row.push(fixed(item.pingTcpDelayVar ));
                             row.push(fixed(item.pingTcpJitter ));
                             row.push(fixed(item.pingTcpJitterStd ));
                             row.push(fixed(item.pingTcpJitterVar ));
-                            row.push(fixed(item.pingTcpLossRate )*100);
+                            row.push(fixedRate(item.pingTcpLossRate ));
                             row.push(fixed(item.pingUdpDelay));
                             row.push(fixed(item.pingUdpDelayStd));
                             row.push(fixed(item.pingUdpDelayVar));
                             row.push(fixed(item.pingUdpJitter));
                             row.push(fixed(item.pingUdpJitterStd));
                             row.push(fixed(item.pingUdpJitterVar));
-                            row.push(fixed(item.pingUdpLossRate)*100);
+                            row.push(fixedRate(item.pingUdpLossRate));
                             row.push(fixed(item.tracertIcmpDelay));
                             row.push(fixed(item.tracertIcmpDelayStd));
                             row.push(fixed(item.tracertIcmpDelayVar));
                             row.push(fixed(item.tracertIcmpJitter));
                             row.push(fixed(item.tracertIcmpJitterStd));
                             row.push(fixed(item.tracertIcmpJitterVar));
-                            row.push(fixed(item.tracertIcmpLossRate)*100);
+                            row.push(fixedRate(item.tracertIcmpLossRate));
                             row.push(fixed(item.tracertTcpDelay));
                             row.push(fixed(item.tracertTcpDelayStd));
                             row.push(fixed(item.tracertTcpDelayVar));
                             row.push(fixed(item.tracertTcpJitter));
                             row.push(fixed(item.tracertTcpJitterStd));
                             row.push(fixed(item.tracertTcpJitterVar));
-                            row.push(fixed(item.tracertTcpLossRate)*100);
+                            row.push(fixedRate(item.tracertTcpLossRate));
                             rows.push(row);
 
                         });
@@ -693,7 +693,6 @@ var quality_table=new Vue({
                     innerTh +='<th colspan="1"></th>';
                     innerTh +='<th colspan="1"></th>';
                     innerTh +='<th colspan="1"></th>';
-                    innerTh +='<th colspan="1"></th>';
                     var columnsCount = 25;//具体情况
                     innerTh +='<th colspan="7" style="text-align: center">Sla(TCP)</th>';
                     innerTh +='<th colspan="7" style="text-align: center">Sla(UDP)</th>';
@@ -770,23 +769,23 @@ var quality_table=new Vue({
                             row.push(fixed(item.slaTcpJitter));
                             row.push(fixed(item.slaTcpGJitter));
                             row.push(fixed(item.slaTcpRJitter));
-                            row.push(fixed(item.slaTcpLossRate)*100);
+                            row.push(fixedRate(item.slaTcpLossRate));
                             row.push(fixed(item.slaUdpDelay));
                             row.push(fixed(item.slaUdpGDelay));
                             row.push(fixed(item.slaUdpRDelay));
                             row.push(fixed(item.slaUdpJitter));
                             row.push(fixed(item.slaUdpGJitter));
                             row.push(fixed(item.slaUdpRJitter));
-                            row.push(fixed(item.slaUdpLossRate)*100);
+                            row.push(fixedRate(item.slaUdpLossRate));
                             row.push(fixed(item.dnsDelay));
-                            row.push(fixed(item.dnsSuccessRate)*100);
+                            row.push(fixedRate(item.dnsSuccessRate));
                             row.push(fixed(item.dhcpDelay));
-                            row.push(fixed(item.dhcpSuccessRate)*100);
+                            row.push(fixedRate(item.dhcpSuccessRate));
                             row.push(fixed(item.pppoeDelay));
-                            row.push(fixed(item.pppoeDropRate)*100);
-                            row.push(fixed(item.pppoeSuccessRate)*100);
+                            row.push(fixedRate(item.pppoeDropRate));
+                            row.push(fixedRate(item.pppoeSuccessRate));
                             row.push(fixed(item.radiusDelay));
-                            row.push(fixed(item.radiusSuccessRate)*100);
+                            row.push(fixedRate(item.radiusSuccessRate));
                             rows.push(row);
 
                         });
@@ -927,7 +926,7 @@ var broswer_table=new Vue({
                             row.push(fixed(item.webpageRedirectDelay ));
                             row.push(fixed(item.webpageAboveFoldDelay ));
                             row.push(fixed(item.webpageLoadDelay));
-                            row.push(fixed(item.webpageDownloadRate )*100);
+                            row.push(fixed(item.webpageDownloadRate ));
                             rows.push(row);
 
 
@@ -1379,7 +1378,7 @@ var game_table=new Vue({
                             row.push(fixed(item.gameDnsDelay));
                             row.push(fixed(item.gamePacketDelay ));
                             row.push(fixed(item.gamePacketJitter ));
-                            row.push(fixed(item.gameLossRate )*100);
+                            row.push(fixedRate(item.gameLossRate ));
                             rows.push(row);
 
                         });
@@ -1406,8 +1405,15 @@ function fixed(value) {
     if(value==null){
         return ''
     }else if(value==0){
-        return value
+        return  value
     } else{
         return value.toFixed(2)
+    }
+}
+function fixedRate(value) {
+    if(value==null){
+        return ''
+    } else{
+        return (value*100).toFixed(2)
     }
 }

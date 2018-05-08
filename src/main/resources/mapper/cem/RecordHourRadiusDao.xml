@@ -193,6 +193,7 @@
 		city.city_name AS city_name,
 		county.county_name AS area_name,
 		probe.probe_name AS probe_name,
+		probe.access_layer AS access_layer,
 		target.target_name AS target_name,
 		time_format(record_time, '%H') AS record_time,
 		AVG(radius.delay) AS delay,
@@ -221,7 +222,7 @@
 		<if test="probe_id != null and probe_id != ''">
 			AND radius.probe_id = #{probe_id}
 		</if>
-		GROUP BY radius.city_id,radius.county_id,radius.probe_id,date_format(radius.record_date,'%Y-%m-%d')
+		GROUP BY radius.city_id,radius.county_id,radius.probe_id,radius.record_date
 
 	</select>
 

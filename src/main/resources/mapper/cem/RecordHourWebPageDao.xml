@@ -361,6 +361,7 @@
 		city.city_name AS city_name,
 		county.county_name AS area_name,
 		probe.probe_name AS probe_name,
+		probe.access_layer AS access_layer,
 		target.target_name AS target_name,
 		time_format(webp.record_time, '%H') AS record_time,
 		AVG(webp.dns_delay) AS dns_delay,
@@ -396,7 +397,7 @@
 		<if test="probe_id != null and probe_id != ''">
 			AND webp.probe_id = #{probe_id}
 		</if>
-		GROUP BY webp.city_id,webp.county_id,webp.service_type,webp.probe_id,webp.record_date,webp.record_time
+		GROUP BY webp.city_id,webp.county_id,webp.service_type,webp.probe_id,webp.record_date
 
 	</select>
 

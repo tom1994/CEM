@@ -23,6 +23,7 @@ var a3;
 var a4;
 var a5;
 var a6;
+var typea=1;
 var st = new Map();//servicetype字典，可通过get方法查对应字符串。
 st.set(0, "综合业务");
 st.set(1, "网络连通性业务");
@@ -65,45 +66,6 @@ Date.prototype.Format = function (fmt) {
 var button_change = new Vue({
     /*实例化Vue*/
     el: '#charts_button',
-    // data: {
-    //     option_ping: {
-    //         /*设置时延option*/
-    //         title: {
-    //             text: '网络连通性'
-    //         }
-    //     },
-    //     option_sla: {
-    //         /*设置丢包option*/
-    //         title: {
-    //             text: '网络层质量'
-    //         },
-    //     },
-    //     option_web: {
-    //         /*设置web option*/
-    //         title: {
-    //             text: 'Web浏览'
-    //         }
-    //     },
-    //     option_download: {
-    //         /*设置丢包option*/
-    //         title: {
-    //             text: '文件下载'
-    //         },
-    //     },
-    //     option_video: {
-    //         /*设置丢包option*/
-    //         title: {
-    //             text: '在线视频'
-    //         },
-    //     },
-    //     option_game: {
-    //         /*设置丢包option*/
-    //         title: {
-    //             text: '网络游戏'
-    //         },
-    //     }
-    // },
-
     methods: {
         ping: function () {
 
@@ -115,7 +77,6 @@ var button_change = new Vue({
             $('#game_button').removeClass('color');
             status = 1;
             table_status=1
-            // changeStatus(1);
             console.log("连通性");
 
             if(a1!=undefined) {
@@ -125,12 +86,13 @@ var button_change = new Vue({
                 return;
             }
             loading();
-            new_search.search();
-
+            // changeStatus(1);
+            new_search.search(typea);
             var chart = new Highcharts.Chart('container', options)
             /*重新绘图*/
         },
         sla: function () {
+            debugger
             $('#sla').addClass('color');
             $('#ping').removeClass('color');
             $('#web').removeClass('color');
@@ -148,10 +110,11 @@ var button_change = new Vue({
             // changeStatus(2);
             console.log("网络层");
             loading()
-            new_search.search();
+            new_search.search(typea);
             var chart = new Highcharts.Chart('container', options)
         },
         web: function () {
+            debugger
             $('#web').addClass('color');
             $('#ping').removeClass('color');
             $('#sla').removeClass('color');
@@ -169,10 +132,11 @@ var button_change = new Vue({
             // changeStatus(3);
             console.log("web");
             loading()
-            new_search.search();
+            new_search.search(typea);
             var chart = new Highcharts.Chart('container', options)
         },
         download: function () {
+            debugger
             $('#download').addClass('color');
             $('#ping').removeClass('color');
             $('#sla').removeClass('color');
@@ -190,11 +154,12 @@ var button_change = new Vue({
             // changeStatus(4);
             loading()
             // options.title = this.option_web.title;
-            new_search.search();
+            new_search.search(typea);
             var chart = new Highcharts.Chart('container', options)
             /*重新绘图*/
         },
         video: function () {
+            debugger
             $('#video_button').addClass('color');
             $('#ping').removeClass('color');
             $('#sla').removeClass('color');
@@ -211,14 +176,14 @@ var button_change = new Vue({
                 return;
             }
 
+            loading();
             // changeStatus(5);
-            loading()
-            // options.title = this.option_ping.title;
-            new_search.search();
+            new_search.search(typea);
             var chart = new Highcharts.Chart('container', options)
             /*重新绘图*/
         },
         game: function () {
+            debugger
             $('#game_button').addClass('color');
             $('#ping').removeClass('color');
             $('#sla').removeClass('color');
@@ -236,7 +201,7 @@ var button_change = new Vue({
             // changeStatus(6);
             loading()
             // options.title = this.option_ping.title;
-            new_search.search();
+            new_search.search(typea);
             var chart = new Highcharts.Chart('container', options)
             /*重新绘图*/
         }
@@ -267,7 +232,6 @@ var button_change = new Vue({
                     let newlayer = {};
                     newlayer.name = result.page.list[i].layerName;
                     newlayer.data = [];
-                    console.log("layer"+layerNames);
                     options.series[i] = newlayer;
                 }
             }
@@ -423,7 +387,7 @@ var new_search = new Vue({
     /*监听查询事件*/
     el: '#search',
     methods: {
-        search: function () {
+        search: function (typea) {
             for (let i = 0; i < options.series.length; i++) {
                 options.series[i].data = [];
             }
@@ -433,7 +397,6 @@ var new_search = new Vue({
                 toastr.warning('时间选择有误，请重新选择！');
             } else {
                 var search = {};
-
                 search.city_id = searchJson.city_id;
                 search.county_id = searchJson.county_id;
                 search.probe_id = searchJson.probe_id;
@@ -445,12 +408,20 @@ var new_search = new Vue({
                 if (search.ava_start.length != 0 && search.ava_terminal.length != 0) {
 
                 } else {
-                    search.ava_start = new Date(new Date() - 1000 * 60 * 60 * 24).Format("yyyy-MM-dd");
+                    search.ava_start = new Date(new Date() ).Format("yyyy-MM-dd");
                     search.ava_terminal = (new Date()).Format("yyyy-MM-dd");
                 }
-
                 loading()
-                for(let i= 1;i<7;i++){
+                if(typea!=1){
+                    a1 = undefined;
+                    a2 = undefined;
+                    a3 = undefined;
+                    a4 = undefined;
+                    a5 = undefined;
+                    a6 = undefined;
+                }
+
+                    i = status;
                     search.service = i;
                     let param = {};
                     param.probedata = JSON.stringify(search);
@@ -462,8 +433,7 @@ var new_search = new Vue({
                         data: param,  //传入组装的参数
                         dataType: "json",
                         success: function (result) {
-                            removeLoading('test');
-                            removeLoading('table');
+
                             console.log(result);
                             if (result.page.list.length !== 0) {
 
@@ -487,19 +457,27 @@ var new_search = new Vue({
                                     table_status=6
                                 }
 
-                                    if(i==1&&$("#ping").hasClass("color")){
-                                        new_data.scoredata=a1;
-                                    }else if(i==2&&$("#sla").hasClass("color")){
-                                        new_data.scoredata=a2;
-                                    }else if(i==3&&$("#web").hasClass("color")){
-                                        new_data.scoredata=a3;
-                                    }else if(i==4&&$("#download").hasClass("color")){
-                                        new_data.scoredata=a4;
-                                    }else if(i==5&&$("#video_button").hasClass("color")){
-                                        new_data.scoredata=a5;
-                                    }else if(i==6&&$("#game_button").hasClass("color")){
-                                        new_data.scoredata=a6;
-                                    }
+                                        if(i==1&&$("#ping").hasClass("color")){
+                                            new_data.scoredata=a1;
+                                            removeLoading('test');
+                                        }else if(i==2&&$("#sla").hasClass("color")){
+                                            new_data.scoredata=a2;
+                                            removeLoading('test');
+                                        }else if(i==3&&$("#web").hasClass("color")){
+                                            new_data.scoredata=a3;
+                                            removeLoading('test');
+                                        }else if(i==4&&$("#download").hasClass("color")){
+                                            new_data.scoredata=a4;
+                                            removeLoading('test');
+                                        }else if(i==5&&$("#video_button").hasClass("color")){
+                                            new_data.scoredata=a5;
+                                            removeLoading('test');
+                                        }else if(i==6&&$("#game_button").hasClass("color")){
+                                            new_data.scoredata=a6;
+                                            removeLoading('test');
+                                        }
+
+
 
                             } else {
                                 new_data.scoredata = [];
@@ -507,7 +485,7 @@ var new_search = new Vue({
                             }
                         }
                     });
-                }
+                // }
             }
         },
         reset: function () {    /*重置*/
@@ -516,6 +494,8 @@ var new_search = new Vue({
             targetSelected = 0;
             citySelected = 0;
             countrySelected = 0;
+            getNow();
+            Reset.reset();
         }
     }
 });
@@ -525,7 +505,7 @@ var Reset = new Vue({
     el: '#reset',
     data: {
         probedata: {
-            ava_start: new Date(new Date() - 1000 * 60 * 60 * 24).Format("yyyy-MM-dd"),
+            ava_start: new Date(new Date() ).Format("yyyy-MM-dd"),
             ava_terminal: (new Date()).Format("yyyy-MM-dd"),
             service: '1'
         }
@@ -536,7 +516,7 @@ var Reset = new Vue({
             var param = {};
             this.probedata.service = status;
             param.probedata = JSON.stringify(this.probedata);
-            param.starttime = new Date(new Date() - 1000 * 60 * 60 * 24).Format("yyyy-MM-dd") + " 00:00:00";
+            param.starttime = new Date(new Date() ).Format("yyyy-MM-dd") + " 00:00:00";
             /*前4天日期*/
             param.endtime = (new Date()).Format("yyyy-MM-dd") + " 23:59:59";
             /*当前日期*/
@@ -549,9 +529,7 @@ var Reset = new Vue({
                     dataType: "json",
                     success: function (result) {
                         console.log(result);
-
                         removeLoading('test');
-                        removeLoading('table');
                         if (result.page.list.length !== 0) {
                             /*option先回到状态0,注意,不然会出错*/
                             new_data.scoredata = result.page.list;
@@ -739,7 +717,7 @@ Vue.component('data-table', {
     },
     mounted: function () {
         let vm = this;
-        changeStatus(status);
+        // changeStatus(status);
         vm.dtHandle = $(this.$el).DataTable({
             columns: vm.headers,
             data: vm.rows,
@@ -761,8 +739,43 @@ function deleteTableTr(tableid) {
     }
 }
 
-
-
+function changeStatus(i) {
+    table_status = i;
+    $.ajax({
+        type: "POST", /*GET会乱码*/
+        url: "../../target/infoList/" + i,
+        cache: false,  //禁用缓存
+        dataType: "json",
+        success: function (result) {
+            var targets = [];
+            for (var i = 0; i < result.target.length; i++) {
+                targets[i] = {message: result.target[i]}
+            }
+            search_data.target = targets;
+            setTimeout(function () {
+                $('#target .jq22').comboSelect();
+                $('.combo-dropdown').css("z-index", "3");
+                $('div#target input[type=text]').attr('placeholder', '---请选择---');
+                $('div#target .option-item').click(function (target) {
+                    setTimeout(function () {
+                        var a = $(target.currentTarget)[0].innerText;
+                        targetSelected = $($(target.currentTarget)[0]).data('value');
+                        $('div#target .combo-input').val(a);
+                        $('div#target .combo-select select').val(a);
+                    }, 30);
+                });
+                $('#target input[type=text] ').keyup(function (target) {
+                    if (target.keyCode == '13') {
+                        var b = $("#target .option-hover.option-selected").text();
+                        targetSelected = $("#target .option-hover.option-selected")[0].dataset.value;
+                        $('#target .combo-input').val(b);
+                        $('#target .combo-select select').val(b);
+                    }
+                })
+            }, 50);
+        }
+    });
+}
 function ping(val) {
     var content = val
     var pingTable = new Vue({
@@ -773,11 +786,11 @@ function ping(val) {
                 {title: '层级名称'},
                 {title: '探针名'},
                 {title: '时间'},
-                {title: 'ICMP Ping'},
-                {title: 'UDP Ping'},
-                {title: 'TCP Ping'},
-                {title: 'ICMP Trace Route'},
-                {title: 'UDP Trace Route'},
+                {title: 'PING(ICMP ECHO)'},
+                {title: 'PING(UDP ECHO)'},
+                {title: 'PING(TCP ECHO)'},
+                {title: 'Trace Route(ICMP)'},
+                {title: 'Trace Route(UDP)'},
             ],
             rows: [],
             dtHandle: null,
@@ -830,6 +843,7 @@ function ping(val) {
                     updateContent = sortTemp;
                     let rows = [];
                     var i = 1;
+                    console.log(sortTemp)
                     sortTemp.forEach(function (item) {              /*观察user是否变化,更新表格数据*/
                         let row = [];
                         row.push(i++);
@@ -861,12 +875,13 @@ function sla(val) {
                 {title: '层级名称'},
                 {title: '探针名'},
                 {title: '时间'},
-                {title: 'TCP Sla', class: 'some-special-class'},
-                {title: 'UDP Sla'},
-                {title: 'ADSL'},
-                {title: 'DHCP'},
                 {title: 'DNS'},
-                {title: 'Radius'},
+                {title: 'SLA(TCP)',},
+                {title: 'SLA(UDP)'},
+                {title: 'ADSL接入'},
+                {title: 'DHCP'},
+
+                {title: 'Radius认证'},
             ],
             rows: [],
             dtHandle: null,
@@ -882,9 +897,9 @@ function sla(val) {
                 data: vm.rows,
                 searching: false,
                 paging: false,
-                serverSide: true,
+                // serverSide: true,
                 info: false,
-                ordering: false, /*禁用排序功能*/
+                // ordering: false, /*禁用排序功能*/
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
@@ -923,11 +938,12 @@ function sla(val) {
                         row.push(layerNames.get(item.accessLayer));
                         row.push(item.probeName);
                         row.push(item.recordDate.substr(0, 10) + "   " + item.recordTime.substr(0, 10) + ':00');
+                        row.push('<a class="fontcolor"   onclick="sla_info(this,5)" id=' + item.id + '  type =' + layerNames.get(item.accessLayer) + '>' + fixed(item.dnsScore) + '</a>&nbsp;');
                         row.push('<a class="fontcolor"   onclick="sla_info(this,1)" id=' + item.id + '   type =' + layerNames.get(item.accessLayer) + ' >' + fixed(item.tcpSlaScore) + '</a>&nbsp;');
                         row.push('<a class="fontcolor"    onclick="sla_info(this,2)" id=' + item.id + '  type =' + layerNames.get(item.accessLayer) + '>' + fixed(item.udpSlaScore) + '</a>&nbsp;');
                         row.push('<a class="fontcolor"    onclick="sla_info(this,3)" id=' + item.id + '  type =' + layerNames.get(item.accessLayer) + '>' + fixed(item.pppoeScore) + '</a>&nbsp;');
                         row.push('<a class="fontcolor"   onclick="sla_info(this,4)" id=' + item.id + '  type =' + layerNames.get(item.accessLayer) + '>' + fixed(item.dhcpScore) + '</a>&nbsp;');
-                        row.push('<a class="fontcolor"   onclick="sla_info(this,5)" id=' + item.id + '  type =' + layerNames.get(item.accessLayer) + '>' + fixed(item.dnsScore) + '</a>&nbsp;');
+
                         row.push('<a class="fontcolor"   onclick="sla_info(this,6)" id=' + item.id + '  type =' + layerNames.get(item.accessLayer) + '>' + fixed(item.radiusScore) + '</a>&nbsp;');
                         rows.push(row);
                     });
@@ -949,7 +965,7 @@ function web(val) {
                 {title: '层级名称'},
                 {title: '探针名'},
                 {title: '时间'},
-                {title: 'web浏览',},
+                {title: 'WEB页面访问',},
             ],
             rows: [],
             dtHandle: null,
@@ -965,9 +981,9 @@ function web(val) {
                 data: vm.rows,
                 searching: false,
                 paging: false,
-                serverSide: true,
+                // serverSide: true,
                 info: false,
-                ordering: false, /*禁用排序功能*/
+                // ordering: false, /*禁用排序功能*/
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
@@ -1026,7 +1042,7 @@ function download(val) {
                 {title: '层级名称'},
                 {title: '探针名'},
                 {title: '时间'},
-                {title: 'web下载', class: 'some-special-class'},
+                {title: 'WEB下载'},
                 {title: 'FTP上传'},
                 {title: 'FTP下载'},
             ],
@@ -1044,9 +1060,9 @@ function download(val) {
                 data: vm.rows,
                 searching: false,
                 paging: false,
-                serverSide: true,
+                // serverSide: true,
                 info: false,
-                ordering: false, /*禁用排序功能*/
+                // ordering: false, /*禁用排序功能*/
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
@@ -1124,9 +1140,9 @@ function video(val) {
                 data: vm.rows,
                 searching: false,
                 paging: false,
-                serverSide: true,
+                // serverSide: true,
                 info: false,
-                ordering: false, /*禁用排序功能*/
+                // ordering: false, /*禁用排序功能*/
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
@@ -1201,9 +1217,9 @@ function game(val) {
                 data: vm.rows,
                 searching: false,
                 paging: false,
-                serverSide: true,
+                // serverSide: true,
                 info: false,
-                ordering: false, /*禁用排序功能*/
+                // ordering: false, /*禁用排序功能*/
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
@@ -1335,7 +1351,6 @@ function sla_info(obj, type) {
         $('#adsl').css('display', 'none');
         $('#radius').css('display', 'none');
     } else if (type == 5) {
-        debugger
         dns_table(obj, content)
         $('#dns').removeAttr('style');
         $('#slaudp').css('display', 'none');
@@ -2208,7 +2223,6 @@ function slaudp_table(obj, content) {
 
 //网络质量表格
 function dns_table(obj, content) {
-    debugger
     var id = obj.id;
     var probeContent = content;
     var type = obj.type;
@@ -2281,7 +2295,6 @@ function dns_table(obj, content) {
                     // // 重新整理返回数据以匹配表格
                     let rows = [];
                     var i = 1;
-                    debugger
                     probeContent.forEach(function (item) {
                         if (type == layerNames.get(item.accessLayer) && id == item.id) {
                             let row = [];
@@ -3291,30 +3304,34 @@ function game_table(obj, content) {
         }
     })
 }
+getNow()
+function getNow() {
 
-var date=new Date();
-var month = date.getMonth() + 1;
-var strDate = date.getDate()-1;
-var years=date.getFullYear();
-var newdate=years+'-'+month+'-'+strDate;
-$('#start_date').flatpickr({
-    enableTime: true,
-    dateFormat: "Y-m-d H:i",
-    defaultDate:newdate,
-    time_24hr: true
-});
-var date=new Date();
-var month = date.getMonth() + 1;
-var strDate = date.getDate();
-var years=date.getFullYear();
-var hours=date.getHours();
-var endday=years+'-'+month+'-'+strDate+' '+hours;
-$('#terminal_date').flatpickr({
-    enableTime: true,
-    dateFormat: "Y-m-d H:i",
-    defaultDate:endday,
-    time_24hr: true
-});
+    var date=new Date();
+    var month = date.getMonth() + 1;
+    var strDate = date.getDate();
+    var years=date.getFullYear();
+    var newdate=years+'-'+month+'-'+strDate;
+    $('#start_date').flatpickr({
+        enableTime: true,
+        dateFormat: "Y-m-d H:i",
+        defaultDate:newdate,
+        time_24hr: true
+    });
+    var date=new Date();
+    var month = date.getMonth() + 1;
+    var strDate = date.getDate();
+    var years=date.getFullYear();
+    var hours=date.getHours();
+    var endday=years+'-'+month+'-'+strDate+' '+hours;
+    $('#terminal_date').flatpickr({
+        enableTime: true,
+        dateFormat: "Y-m-d H:i",
+        defaultDate:endday,
+        time_24hr: true
+    });
+
+}
 
 function getFormJson(form) {      /*将表单对象变为json对象*/
     var o = {};
@@ -3354,43 +3371,6 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
     return o;
 }
 
-function changeStatus(i) {
-
-    $.ajax({
-        type: "POST", /*GET会乱码*/
-        url: "../../target/infoList/" + i,
-        cache: false,  //禁用缓存
-        dataType: "json",
-        success: function (result) {
-            var targets = [];
-            for (var i = 0; i < result.target.length; i++) {
-                targets[i] = {message: result.target[i]}
-            }
-            search_data.target = targets;
-            setTimeout(function () {
-                $('#target .jq22').comboSelect();
-                $('.combo-dropdown').css("z-index", "3");
-                $('div#target input[type=text]').attr('placeholder', '---请选择---');
-                $('div#target .option-item').click(function (target) {
-                    setTimeout(function () {
-                        var a = $(target.currentTarget)[0].innerText;
-                        targetSelected = $($(target.currentTarget)[0]).data('value');
-                        $('div#target .combo-input').val(a);
-                        $('div#target .combo-select select').val(a);
-                    }, 30);
-                });
-                $('#target input[type=text] ').keyup(function (target) {
-                    if (target.keyCode == '13') {
-                        var b = $("#target .option-hover.option-selected").text();
-                        targetSelected = $("#target .option-hover.option-selected")[0].dataset.value;
-                        $('#target .combo-input').val(b);
-                        $('#target .combo-select select').val(b);
-                    }
-                })
-            }, 50);
-        }
-    });
-}
 
 
 function probe() {
@@ -3492,7 +3472,43 @@ $(document).ready(function () {
         }
     }
 
-    probe()
+    probe();
+
+    $.ajax({
+        type: "POST", /*GET会乱码*/
+        url: "../../target/list/" ,
+        cache: false,  //禁用缓存
+        dataType: "json",
+        success: function (result) {
+            debugger
+            var targets = [];
+            for (var i = 0; i < result.page.list.length; i++) {
+                targets[i] = {message:  result.page.list[i]}
+            }
+            search_data.target = targets;
+            setTimeout(function () {
+                $('#target .jq22').comboSelect();
+                $('.combo-dropdown').css("z-index", "3");
+                $('div#target input[type=text]').attr('placeholder', '---请选择---');
+                $('div#target .option-item').click(function (target) {
+                    setTimeout(function () {
+                        var a = $(target.currentTarget)[0].innerText;
+                        targetSelected = $($(target.currentTarget)[0]).data('value');
+                        $('div#target .combo-input').val(a);
+                        $('div#target .combo-select select').val(a);
+                    }, 30);
+                });
+                $('#target input[type=text] ').keyup(function (target) {
+                    if (target.keyCode == '13') {
+                        var b = $("#target .option-hover.option-selected").text();
+                        targetSelected = $("#target .option-hover.option-selected")[0].dataset.value;
+                        $('#target .combo-input').val(b);
+                        $('#target .combo-select select').val(b);
+                    }
+                })
+            }, 50);
+        }
+    });
 });
 
 
