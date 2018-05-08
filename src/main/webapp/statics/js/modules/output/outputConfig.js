@@ -1,7 +1,7 @@
 var st = new Map();//servicetype字典，可通过get方法查对应字符串。
 st.set(0, "正在监控");
 st.set(1, "未监控");
-
+var   outId;
 var spdata_handle = new Vue({
     el: '#handle',
     data: {},
@@ -88,27 +88,28 @@ var spform_data = new Vue({
                         if (status == 0) {
                             switch (code) {
                                 case 0:
-                                    toastr.success("出口创建成功!");
+                                    toastr.success("任务创建成功!");
                                     $('#myModal_sp').modal('hide');    //jQuery选定
-                                    break;
-                                case 300:
-                                    toastr.error(msg);
                                     break;
                                 case 403:
                                     toastr.error(msg);
+                                    break;
+                                case 300:
+                                    toastr.warning(msg);
                                     break;
                                 default:
                                     toastr.error("创建出现未知错误");
                                     break
                             }
-                        } else if (status == 1) {
+                        }
+                        else if (status == 1) {
                             switch (code) {
                                 case 0:
                                     toastr.success("策略修改成功!");
                                     $('#myModal_sp').modal('hide');
                                     break;
                                 case 300:
-                                    toastr.error(msg);
+                                    toastr.warning(msg);
                                     break;
                                 case 403:
                                     toastr.error(msg);
@@ -242,7 +243,8 @@ function view_this (obj) {     /*监听修改触发事件*/
     operate_data_id = parseInt(obj.id);
     /*获取当前行探针数据id*/
     console.log(operate_data_id);
-    $('saveId').val(operate_data_id)
+    outId=operate_data_id
+    // $('saveId').val(operate_data_id)
     status = 1;
     var forms = $('#opform_data .form-control');
     $.ajax({
@@ -278,7 +280,7 @@ function view_this (obj) {     /*监听修改触发事件*/
     $('#myModal_output').modal('show');
 }
 function  Save() {
-    var id=$('saveId').val()
+    var id=outId;
     var spJson = getFormJson($('#opform_data'));
     console.log(spJson);
     var sp = JSON.stringify(spJson);
@@ -295,14 +297,10 @@ function  Save() {
             let code = result.code;
             let msg = result.msg;
             console.log(result);
-            if (status == 1) {
                 switch (code) {
                     case 0:
                         toastr.success("出口修改成功!");
                         $('#myModal_output').modal('hide');
-                        break;
-                    case 300:
-                        toastr.error(msg);
                         break;
                     case 403:
                         toastr.error(msg);
@@ -311,35 +309,11 @@ function  Save() {
                         toastr.error("未知错误");
                         break
                 }
-            }
+
             sptable.currReset();
         }
     });
 }
-
-var search_list = new Vue({
-    el: '#search',
-    data: {},
-    methods: {
-        testagentListsearch: function () {   /*查询监听事件*/
-            var data = getFormJson($('#outputsearch'));
-            var search = {};
-            search.exit=data.exit;
-            console.log(data);
-            /*得到查询条件*/
-            /*获取表单元素的值*/
-            sptable.probedata = search;
-            console.log(search);
-            sptable.redraw();
-            /*根据查询条件重绘*/
-        },
-        reset: function () {    /*重置*/
-            document.getElementById("outputsearch").reset();
-            // $('#outputsearch input[type=text]').reset();
-            sptable.redraw();
-        }
-    }
-});
 
 var sptable = new Vue({
     el: '#exit_table',
@@ -354,13 +328,14 @@ var sptable = new Vue({
         ],
         rows: [],
         dtHandle: null,
-        probedata: {}
+        reportdata: {}
     },
 
     methods: {
         reset: function () {
             let vm = this;
-            vm.probedata = {};
+            vm.spdata = {};
+            /*清空spdata*/
             vm.dtHandle.clear();
             console.log("重置");
             vm.dtHandle.draw();
@@ -374,6 +349,7 @@ var sptable = new Vue({
             /*当前页面重绘*/
         },
         redraw: function () {
+            debugger
             let vm = this;
             vm.dtHandle.clear();
             console.log("页面重绘");
@@ -411,7 +387,8 @@ var sptable = new Vue({
                 param.limit = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
                 param.start = data.start;//开始的记录序号
                 param.page = (data.start / data.length) + 1;//当前页码
-                param.probedata = JSON.stringify(vm.probedata);
+                param.reportdata = JSON.stringify(vm.reportdata);
+
                 /*用于查询sp数据*/
                 console.log(param);
                 //ajax请求数据
@@ -422,6 +399,7 @@ var sptable = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
+                        console.log(result);
                         //封装返回数据
                         let returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -462,5 +440,26 @@ var sptable = new Vue({
                 });
             }
         });
+    }
+});
+
+var search_list = new Vue({
+    el: '#search',
+    data: {},
+    methods: {
+        testagentListsearch: function () {   /*查询监听事件*/
+            var data = getFormJson($('#outputsearch'));
+            /*得到查询条件*/
+            /*获取表单元素的值*/
+            console.log(data);
+            sptable.reportdata = data;
+            sptable.redraw();
+            /*根据查询条件重绘*/
+        },
+        reset: function () {    /*重置*/
+            document.getElementById("outputsearch").reset();
+            // $('#outputsearch input[type=text]').reset();
+            sptable.redraw();
+        }
     }
 });
