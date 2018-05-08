@@ -223,7 +223,7 @@ public class ScoreBaseEntity {
     //下载速率
     private Double webVideoDownloadRate;
     //缓冲次数
-    private Integer webVideoBufferTime;
+    private Double webVideoBufferTime;
 
     /*game details*/
     //DNS时延
@@ -1037,11 +1037,11 @@ public class ScoreBaseEntity {
         this.webVideoDownloadRate = webVideoDownloadRate;
     }
 
-    public Integer getWebVideoBufferTime() {
+    public Double getWebVideoBufferTime() {
         return webVideoBufferTime;
     }
 
-    public void setWebVideoBufferTime(Integer webVideoBufferTime) {
+    public void setWebVideoBufferTime(Double webVideoBufferTime) {
         this.webVideoBufferTime = webVideoBufferTime;
     }
 

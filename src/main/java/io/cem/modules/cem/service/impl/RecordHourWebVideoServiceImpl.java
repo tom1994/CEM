@@ -199,28 +199,28 @@ public class RecordHourWebVideoServiceImpl implements RecordHourWebVideoService 
 				}
 
 				//buffer_time 100
-				if ((videoList.get(i).getBufferTime()).compareTo(Integer.parseInt(pros.getValue("video42"))) <= 0) {
+				if ((videoList.get(i).getBufferTime()).compareTo(Double.parseDouble(pros.getValue("video42"))) <= 0) {
 					score += 100 * (Double.parseDouble(pros.getValue("video41")));
 				}
 				//buffer_time 80-100
-				else if (((videoList.get(i).getBufferTime()).compareTo(Integer.parseInt(pros.getValue("video42"))) > 0) && ((videoList.get(i).getBufferTime()).compareTo(Integer.parseInt(pros.getValue("video43"))) <= 0)) {
-					score += (80 + ((((videoList.get(i).getBufferTime().doubleValue()) - (Integer.parseInt(pros.getValue("video43")))) * 20) / ((Integer.parseInt(pros.getValue("video42")) - (Integer.parseInt(pros.getValue("video43"))))))) * (Double.parseDouble(pros.getValue("video41")));
+				else if (((videoList.get(i).getBufferTime()).compareTo(Double.parseDouble(pros.getValue("video42"))) > 0) && ((videoList.get(i).getBufferTime()).compareTo(Double.parseDouble(pros.getValue("video43"))) <= 0)) {
+					score += (80 + ((((videoList.get(i).getBufferTime().doubleValue()) - (Double.parseDouble(pros.getValue("video43")))) * 20) / ((Double.parseDouble(pros.getValue("video42")) - (Double.parseDouble(pros.getValue("video43"))))))) * (Double.parseDouble(pros.getValue("video41")));
 				}
 				//buffer_time 60-80
-				else if (((videoList.get(i).getBufferTime()).compareTo(Integer.parseInt(pros.getValue("video43"))) > 0) && ((videoList.get(i).getBufferTime()).compareTo(Integer.parseInt(pros.getValue("video44"))) <= 0)) {
-					score += (60 + ((((videoList.get(i).getBufferTime().doubleValue()) - (Integer.parseInt(pros.getValue("video44")))) * 20) / ((Integer.parseInt(pros.getValue("video43")) - (Integer.parseInt(pros.getValue("video44"))))))) * (Double.parseDouble(pros.getValue("video41")));
+				else if (((videoList.get(i).getBufferTime()).compareTo(Double.parseDouble(pros.getValue("video43"))) > 0) && ((videoList.get(i).getBufferTime()).compareTo(Double.parseDouble(pros.getValue("video44"))) <= 0)) {
+					score += (60 + ((((videoList.get(i).getBufferTime().doubleValue()) - (Double.parseDouble(pros.getValue("video44")))) * 20) / ((Double.parseDouble(pros.getValue("video43")) - (Double.parseDouble(pros.getValue("video44"))))))) * (Double.parseDouble(pros.getValue("video41")));
 				}
 				//buffer_time 40-60
-				else if (((videoList.get(i).getBufferTime()).compareTo(Integer.parseInt(pros.getValue("video44"))) > 0) && ((videoList.get(i).getBufferTime()).compareTo(Integer.parseInt(pros.getValue("video45"))) <= 0)) {
-					score += (40 + ((((videoList.get(i).getBufferTime().doubleValue()) - (Integer.parseInt(pros.getValue("video45")))) * 20) / ((Integer.parseInt(pros.getValue("video44")) - (Integer.parseInt(pros.getValue("video45"))))))) * (Double.parseDouble(pros.getValue("video41")));
+				else if (((videoList.get(i).getBufferTime()).compareTo(Double.parseDouble(pros.getValue("video44"))) > 0) && ((videoList.get(i).getBufferTime()).compareTo(Double.parseDouble(pros.getValue("video45"))) <= 0)) {
+					score += (40 + ((((videoList.get(i).getBufferTime().doubleValue()) - (Double.parseDouble(pros.getValue("video45")))) * 20) / ((Double.parseDouble(pros.getValue("video44")) - (Double.parseDouble(pros.getValue("video45"))))))) * (Double.parseDouble(pros.getValue("video41")));
 				}
 				//buffer_time 20-40
-				else if (((videoList.get(i).getBufferTime()).compareTo(Integer.parseInt(pros.getValue("video45"))) > 0) && ((videoList.get(i).getBufferTime()).compareTo(Integer.parseInt(pros.getValue("video46"))) <= 0)) {
-					score += (20 + ((((videoList.get(i).getBufferTime().doubleValue()) - (Integer.parseInt(pros.getValue("video46")))) * 20) / ((Integer.parseInt(pros.getValue("video45")) - (Integer.parseInt(pros.getValue("video46"))))))) * (Double.parseDouble(pros.getValue("video41")));
+				else if (((videoList.get(i).getBufferTime()).compareTo(Double.parseDouble(pros.getValue("video45"))) > 0) && ((videoList.get(i).getBufferTime()).compareTo(Double.parseDouble(pros.getValue("video46"))) <= 0)) {
+					score += (20 + ((((videoList.get(i).getBufferTime().doubleValue()) - (Double.parseDouble(pros.getValue("video46")))) * 20) / ((Double.parseDouble(pros.getValue("video45")) - (Double.parseDouble(pros.getValue("video46"))))))) * (Double.parseDouble(pros.getValue("video41")));
 				}
 				//buffer_time 0-20
-				else if (((videoList.get(i).getBufferTime()).compareTo(Integer.parseInt(pros.getValue("video46"))) > 0) && ((videoList.get(i).getBufferTime()).compareTo(Integer.parseInt(pros.getValue("video47"))) <= 0)) {
-					score += ((((videoList.get(i).getBufferTime().doubleValue()) - (Integer.parseInt(pros.getValue("video47")))) * 20) / ((Integer.parseInt(pros.getValue("video46")) - (Integer.parseInt(pros.getValue("video47")))))) * (Double.parseDouble(pros.getValue("video41")));
+				else if (((videoList.get(i).getBufferTime()).compareTo(Double.parseDouble(pros.getValue("video46"))) > 0) && ((videoList.get(i).getBufferTime()).compareTo(Double.parseDouble(pros.getValue("video47"))) <= 0)) {
+					score += ((((videoList.get(i).getBufferTime().doubleValue()) - (Double.parseDouble(pros.getValue("video47")))) * 20) / ((Double.parseDouble(pros.getValue("video46")) - (Double.parseDouble(pros.getValue("video47")))))) * (Double.parseDouble(pros.getValue("video41")));
 				}
 				//buffer_time 0
 				else {

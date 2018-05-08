@@ -370,7 +370,7 @@ public class ScoreEntity {
     private Double webVideoDownloadRate;
     //缓冲次数
     @ExcelIgnore
-    private Integer webVideoBufferTime;
+    private Double webVideoBufferTime;
 
     /*game details*/
     //DNS时延
@@ -1336,11 +1336,11 @@ public class ScoreEntity {
         this.webVideoDownloadRate = webVideoDownloadRate;
     }
 
-    public Integer getWebVideoBufferTime() {
+    public Double getWebVideoBufferTime() {
         return webVideoBufferTime;
     }
 
-    public void setWebVideoBufferTime(Integer webVideoBufferTime) {
+    public void setWebVideoBufferTime(Double webVideoBufferTime) {
         this.webVideoBufferTime = webVideoBufferTime;
     }
 

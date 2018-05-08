@@ -3902,9 +3902,17 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 		System.out.println("一个小时前的时间：" + df2.format(calendar.getTime()));
 		System.out.println("当前的时间：" + df2.format(new Date()));
 
-		map.put("start_time",df2.format(calendar.getTime()));
-		map.put("terminal_time",df2.format(new Date()));
-		map.put("record_date",df.format(new Date()));
+		if(df2.format(new Date()).equals("00:00:00")){
+			map.put("start_time","23:00:00");
+			map.put("terminal_time","23:59:00");
+			String beforeDay=queryBeforeDay(df.format(new Date()));
+			map.put("record_date",beforeDay);
+		}else {
+			map.put("start_time", df2.format(calendar.getTime()));
+			map.put("terminal_time", df2.format(new Date()));
+			map.put("record_date", df.format(new Date()));
+		}
+
 		return map;
 	}
 
@@ -3913,7 +3921,8 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 		Map<String, Object> map = new HashMap<String, Object>();
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
 		System.out.println("正在执行" + df.format(new Date()));// new Date()为获取当前系统时间
-		map.put("record_date",df.format(new Date()));
+		String beforeDay = queryBeforeDay(df.format(new Date()));
+		map.put("record_date",beforeDay);
 		return map;
 	}
 

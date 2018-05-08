@@ -104,7 +104,7 @@ public class RecordHourWebVideoEntity implements Serializable {
 	private Double downloadRate;
 	//缓冲次数
 	@ExportName(exportName = "缓冲次数")
-	private Integer bufferTime;
+	private Double bufferTime;
 	//备注
 	@ExportName(exportName = "备注")
 	private String remark;
@@ -436,13 +436,13 @@ public class RecordHourWebVideoEntity implements Serializable {
 	/**
 	 * 设置：缓冲次数
 	 */
-	public void setBufferTime(Integer bufferTime) {
+	public void setBufferTime(Double bufferTime) {
 		this.bufferTime = bufferTime;
 	}
 	/**
 	 * 获取：缓冲次数
 	 */
-	public Integer getBufferTime() {
+	public Double getBufferTime() {
 		return bufferTime;
 	}
 	/**

@@ -104,6 +104,113 @@ public class TestTask {
 		logger.info("我是不带参数的test2方法，正在被执行");
 	}
 
+	public void calculateHour(){
+		Map<String,Object> map = recordHourPingService.queryTime();
+		System.out.println(map);
+		List<RecordHourPingEntity> pingList = recordHourPingService.queryPing(map);
+		for(int i=0;i<pingList.size();i++){
+			recordHourPingService.save(pingList.get(i));
+		}
+		List<RecordHourTracertEntity> tracertList = recordHourTracertService.queryTracert(map);
+		for(int i=0;i<tracertList.size();i++){
+			recordHourTracertService.save(tracertList.get(i));
+		}
+		List<RecordHourSlaEntity> slaList = recordHourSlaService.querySla(map);
+		for(int i=0;i<slaList.size();i++){
+			recordHourSlaService.save(slaList.get(i));
+		}
+		List<RecordHourDnsEntity> dnsList = recordHourDnsService.queryDns(map);
+		for(int i=0;i<dnsList.size();i++){
+			recordHourDnsService.save(dnsList.get(i));
+		}
+		List<RecordHourDhcpEntity> dhcplist = recordHourDhcpService.queryDhcp(map);
+		for(int i=0;i<dhcplist.size();i++){
+			recordHourDhcpService.save(dhcplist.get(i));
+		}
+		List<RecordHourPppoeEntity> pppoeList = recordHourPppoeService.queryPppoe(map);
+		for(int i=0;i<pppoeList.size();i++){
+			recordHourPppoeService.save(pppoeList.get(i));
+		}
+		List<RecordHourRadiusEntity> radiusList = recordHourRadiusService.queryRadius(map);
+		for(int i=0;i<radiusList.size();i++){
+			recordHourRadiusService.save(radiusList.get(i));
+		}
+		List<RecordHourWebPageEntity> webpageList = recordHourWebPageService.queryWebPage(map);
+		for(int i=0;i<webpageList.size();i++){
+			recordHourWebPageService.save(webpageList.get(i));
+		}
+		List<RecordHourFtpEntity> ftpList = recordHourFtpService.queryFtp(map);
+		for(int i=0;i<ftpList.size();i++){
+			recordHourFtpService.save(ftpList.get(i));
+		}
+		List<RecordHourWebDownloadEntity> webdownloadList = recordHourWebDownloadService.queryWebDownload(map);
+		for(int i=0;i<webdownloadList.size();i++){
+			recordHourWebDownloadService.save(webdownloadList.get(i));
+		}
+		List<RecordHourWebVideoEntity> videoList = recordHourWebVideoService.queryWebVideo(map);
+		for(int i=0;i<videoList.size();i++){
+			recordHourWebVideoService.save(videoList.get(i));
+		}
+		List<RecordHourGameEntity> gameList = recordHourGameService.queryGame(map);
+		for(int i=0;i<gameList.size();i++){
+			recordHourGameService.save(gameList.get(i));
+		}
+
+	}
+
+	public void calculateDay(){
+		Map<String,Object> map = recordHourPingService.queryDay();
+		System.out.println(map);
+		List<RecordDayPingEntity> pingList = recordDayPingService.queryDay(map);
+		for(int i=0;i<pingList.size();i++){
+			recordDayPingService.save(pingList.get(i));
+		}
+		List<RecordDayTracertEntity> tarcertList = recordDayTracertService.queryDay(map);
+		for(int i=0;i<tarcertList.size();i++){
+			recordDayTracertService.save(tarcertList.get(i));
+		}
+		List<RecordDaySlaEntity> slaList = recordDaySlaService.queryDay(map);
+		for(int i=0;i<slaList.size();i++){
+			recordDaySlaService.save(slaList.get(i));
+		}
+		List<RecordDayDnsEntity> dnsList = recordDayDnsService.queryDay(map);
+		for(int i=0;i<dnsList.size();i++){
+			recordDayDnsService.save(dnsList.get(i));
+		}
+		List<RecordDayDhcpEntity> dhcpList = recordDayDhcpService.queryDay(map);
+		for(int i=0;i<dhcpList.size();i++){
+			recordDayDhcpService.save(dhcpList.get(i));
+		}
+		List<RecordDayPppoeEntity> pppoeList = recordDayPppoeService.queryDay(map);
+		for(int i=0;i<pppoeList.size();i++){
+			recordDayPppoeService.save(pppoeList.get(i));
+		}
+		List<RecordDayRadiusEntity> radiusList = recordDayRadiusService.queryDay(map);
+		for(int i=0;i<radiusList.size();i++){
+			recordDayRadiusService.save(radiusList.get(i));
+		}
+		List<RecordDayWebPageEntity> webpageList = recordDayWebPageService.queryDay(map);
+		for(int i=0;i<webpageList.size();i++){
+			recordDayWebPageService.save(webpageList.get(i));
+		}
+		List<RecordDayFtpEntity> ftpList = recordDayFtpService.queryDay(map);
+		for(int i=0;i<ftpList.size();i++){
+			recordDayFtpService.save(ftpList.get(i));
+		}
+		List<RecordDayWebDownloadEntity> webdownloadList = recordDayWebDownloadService.queryDay(map);
+		for(int i=0;i<webdownloadList.size();i++){
+			recordDayWebDownloadService.save(webdownloadList.get(i));
+		}
+		List<RecordDayWebVideoEntity> videoList = recordDayWebVideoService.queryDay(map);
+		for(int i=0;i<videoList.size();i++){
+			recordDayWebVideoService.save(videoList.get(i));
+		}
+		List<RecordDayGameEntity> gameList = recordDayGameService.queryDay(map);
+		for(int i=0;i<gameList.size();i++){
+			recordDayGameService.save(gameList.get(i));
+		}
+	}
+
 //	ping按1小时压
 	public void pingHour(){
 		Map<String,Object> map = recordHourPingService.queryTime();
