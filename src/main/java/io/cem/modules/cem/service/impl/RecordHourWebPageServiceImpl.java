@@ -1,10 +1,10 @@
 package io.cem.modules.cem.service.impl;
 
 import io.cem.common.utils.PropertiesUtils;
+import io.cem.modules.cem.dao.RecordHourWebPageDao;
 import io.cem.modules.cem.dao.RecordWebPageDao;
-import io.cem.modules.cem.entity.ScoreBaseEntity;
-import io.cem.modules.cem.entity.ScoreEntity;
-import io.cem.modules.cem.entity.ScoreLayerEntity;
+import io.cem.modules.cem.entity.*;
+import io.cem.modules.cem.service.RecordHourWebPageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
@@ -13,10 +13,6 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.Future;
-
-import io.cem.modules.cem.dao.RecordHourWebPageDao;
-import io.cem.modules.cem.entity.RecordHourWebPageEntity;
-import io.cem.modules.cem.service.RecordHourWebPageService;
 
 
 
@@ -386,6 +382,108 @@ public class RecordHourWebPageServiceImpl implements RecordHourWebPageService {
 	}
 
 	@Override
+	public List<ScoreEntity> calculateDate3(List<ScoreEntity> webPageList){
+		List<ScoreEntity> connectionScore = new ArrayList<>();
+		try {
+			PropertiesUtils pros = new PropertiesUtils();
+			Map<ScoreDateEntity,ScoreBaseEntity> connection= new HashMap<>();
+			for (int i = 0; i < webPageList.size(); i++) {
+				ScoreDateEntity scoreDate = new ScoreDateEntity();
+				scoreDate.setCityId(webPageList.get(i).getCityId());
+				scoreDate.setCountyId(webPageList.get(i).getCountyId());
+				scoreDate.setProbeId(webPageList.get(i).getProbeId());
+				scoreDate.setTargetId(webPageList.get(i).getTargetId());
+				scoreDate.setCityName(webPageList.get(i).getCityName());
+				scoreDate.setCountyName(webPageList.get(i).getCountyName());
+				scoreDate.setProbeName(webPageList.get(i).getProbeName());
+				scoreDate.setTargetName(webPageList.get(i).getTargetName());
+				scoreDate.setAccessLayer(webPageList.get(i).getAccessLayer());
+				scoreDate.setRecordDate(webPageList.get(i).getRecordDate());
+				scoreDate.setRecordTime(webPageList.get(i).getRecordTime());
+				scoreDate.setPort(webPageList.get(i).getPort());
+				scoreDate.setFail(webPageList.get(i).getFail());
+				scoreDate.setTotal(webPageList.get(i).getTotal());
+				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
+				scoreBase.setWebpageDnsDelay(webPageList.get(i).getWebpageDnsDelay());
+				scoreBase.setWebpageConnDelay(webPageList.get(i).getWebpageConnDelay());
+				scoreBase.setWebpageHeadbyteDelay(webPageList.get(i).getWebpageHeadbyteDelay());
+				scoreBase.setWebpagePageFileDelay(webPageList.get(i).getWebpagePageFileDelay());
+				scoreBase.setWebpageRedirectDelay(webPageList.get(i).getWebpageRedirectDelay());
+				scoreBase.setWebpageAboveFoldDelay(webPageList.get(i).getWebpageAboveFoldDelay());
+				scoreBase.setWebpagePageElementDelay(webPageList.get(i).getWebpagePageElementDelay());
+				scoreBase.setWebpageLoadDelay(webPageList.get(i).getWebpageLoadDelay());
+				scoreBase.setWebpageDownloadRate(webPageList.get(i).getWebpageDownloadRate());
+				scoreBase.setScore(webPageList.get(i).getScore());
+				scoreBase.setBase(webPageList.get(i).getBase());
+				if (!connection.containsKey(scoreDate)) {
+
+					connection.put(scoreDate,scoreBase);
+
+				} else {
+					ScoreBaseEntity scoreBaseDul = connection.get(scoreDate);
+					scoreBase.setWebpageDnsDelay(scoreBase.getWebpageDnsDelay());
+					scoreBase.setWebpageConnDelay(scoreBase.getWebpageConnDelay());
+					scoreBase.setWebpageHeadbyteDelay(scoreBase.getWebpageHeadbyteDelay());
+					scoreBase.setWebpagePageFileDelay(scoreBase.getWebpagePageFileDelay());
+					scoreBase.setWebpageRedirectDelay(scoreBase.getWebpageRedirectDelay());
+					scoreBase.setWebpageAboveFoldDelay(scoreBase.getWebpageAboveFoldDelay());
+					scoreBase.setWebpagePageElementDelay(scoreBase.getWebpagePageElementDelay());
+					scoreBase.setWebpageLoadDelay(scoreBase.getWebpageLoadDelay());
+					scoreBase.setWebpageDownloadRate(scoreBase.getWebpageDownloadRate());
+					scoreBase.setScore((scoreBase.getScore()+scoreBaseDul.getScore())/2);
+					scoreBase.setBase(scoreBase.getBase());
+
+					connection.put(scoreDate,scoreBase);
+				}
+
+			}
+			
+
+			Set<ScoreDateEntity> key = connection.keySet();
+			Iterator<ScoreDateEntity> iterator = key.iterator();
+			int id = 1;
+			while (iterator.hasNext()) {
+				ScoreDateEntity ite = iterator.next();
+				try {
+					ScoreEntity finalScore = new ScoreEntity();
+					finalScore.setId(id);
+					finalScore.setCityId(ite.getCityId());
+					finalScore.setCityName(ite.getCityName());
+					finalScore.setCountyId(ite.getCountyId());
+					finalScore.setCountyName(ite.getCountyName());
+					finalScore.setProbeId(ite.getProbeId());
+					finalScore.setProbeName(ite.getProbeName());
+					finalScore.setServiceType(3);
+					finalScore.setTargetId(ite.getTargetId());
+					finalScore.setTargetName(ite.getTargetName());
+					finalScore.setAccessLayer(ite.getAccessLayer());
+					finalScore.setPort(ite.getPort());
+					finalScore.setRecordTime(ite.getRecordTime());
+					finalScore.setRecordDate(ite.getRecordDate());
+					finalScore.setWebpageDnsDelay(connection.get(ite).getWebpageDnsDelay());
+					finalScore.setWebpageConnDelay(connection.get(ite).getWebpageConnDelay());
+					finalScore.setWebpageHeadbyteDelay(connection.get(ite).getWebpageHeadbyteDelay());
+					finalScore.setWebpagePageFileDelay(connection.get(ite).getWebpagePageFileDelay());
+					finalScore.setWebpageRedirectDelay(connection.get(ite).getWebpageRedirectDelay());
+					finalScore.setWebpageAboveFoldDelay(connection.get(ite).getWebpageAboveFoldDelay());
+					finalScore.setWebpagePageElementDelay(connection.get(ite).getWebpagePageElementDelay());
+					finalScore.setWebpageLoadDelay(connection.get(ite).getWebpageLoadDelay());
+					finalScore.setWebpageDownloadRate(connection.get(ite).getWebpageDownloadRate());
+					finalScore.setScore(connection.get(ite).getScore());
+					finalScore.setBase(connection.get(ite).getBase());
+					finalScore.setBase(Double.parseDouble(pros.getValue("browseweight")));
+					connectionScore.add(finalScore);
+				} catch (IOException e) {
+				}
+				id++;
+			}
+		}catch(IOException e){}
+
+		return connectionScore;
+	}
+
+
+	@Override
 	public List<ScoreEntity> calculateLayer3(List<ScoreEntity> webPageList){
 		List<ScoreEntity> connectionScore = new ArrayList<>();
 		try {
@@ -444,7 +542,7 @@ public class RecordHourWebPageServiceImpl implements RecordHourWebPageService {
 				}
 
 			}
-			
+
 
 			Set<ScoreLayerEntity> key = connection.keySet();
 			Iterator<ScoreLayerEntity> iterator = key.iterator();

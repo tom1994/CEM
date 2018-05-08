@@ -38,6 +38,8 @@ public interface RecordHourWebPageService {
 
 	List<ScoreEntity> calculateLayer3(List<ScoreEntity> webPageList);
 
+	List<ScoreEntity> calculateDate3(List<ScoreEntity> webPageList);
+
 	int queryTotal(Map<String, Object> map);
 	
 	void save(RecordHourWebPageEntity recordHourWebPage);

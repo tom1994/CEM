@@ -63,7 +63,7 @@ public interface RecordHourDhcpService {
 	List<ScoreEntity> gameHourChart(Map<String,Object> map) throws ExecutionException, InterruptedException;
 
 
-	List<ScoreEntity> combination(Map<String,Object> map,List<ScoreEntity> scoreList);
+	//List<ScoreEntity> combination(Map<String,Object> map,List<ScoreEntity> scoreList);
 
 	int queryTotal(Map<String, Object> map);
 	

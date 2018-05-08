@@ -209,7 +209,7 @@ public class RecordHourFtpServiceImpl implements RecordHourFtpService {
 			}
 			Thread.sleep(1000);
 		}
-		connectionList=recordHourDhcpService.combination(map,connectionList);
+		//connectionList=recordHourDhcpService.combination(map,connectionList);
 		if (connectionList.size() != 0) {
 			double maxConnection = connectionList.get(0).getScore();
 			double averageConnection = 0;
@@ -271,7 +271,7 @@ public class RecordHourFtpServiceImpl implements RecordHourFtpService {
 			}
 			Thread.sleep(1000);
 		}
-		qualityList=recordHourDhcpService.combination(map,qualityList);
+		//qualityList=recordHourDhcpService.combination(map,qualityList);
 		if (qualityList.size() != 0) {
 			double maxQuality = qualityList.get(0).getScore();
 			double averageQuality = 0;
@@ -311,7 +311,7 @@ public class RecordHourFtpServiceImpl implements RecordHourFtpService {
 			}
 			Thread.sleep(1000);
 		}
-		pageList=recordHourDhcpService.combination(map,pageList);
+		//pageList=recordHourDhcpService.combination(map,pageList);
 		if (pageList.size() != 0) {
 			double maxPage = pageList.get(0).getScore();
 			double averagePage = 0;
@@ -359,7 +359,7 @@ public class RecordHourFtpServiceImpl implements RecordHourFtpService {
 			}
 			Thread.sleep(1000);
 		}
-		downloadList=recordHourDhcpService.combination(map,downloadList);
+		//downloadList=recordHourDhcpService.combination(map,downloadList);
 		if (downloadList.size() != 0) {
 			double maxDownload = downloadList.get(0).getScore();
 			double averageDownload = 0;
@@ -399,7 +399,7 @@ public class RecordHourFtpServiceImpl implements RecordHourFtpService {
 			}
 			Thread.sleep(1000);
 		}
-		videoServiceList=recordHourDhcpService.combination(map,videoServiceList);
+		//videoServiceList=recordHourDhcpService.combination(map,videoServiceList);
 		if (videoServiceList.size() != 0) {
 			double maxVideo = videoServiceList.get(0).getScore();
 			double averageVideo = 0;
@@ -439,7 +439,7 @@ public class RecordHourFtpServiceImpl implements RecordHourFtpService {
 			}
 			Thread.sleep(1000);
 		}
-		gameServiceList=recordHourDhcpService.combination(map,gameServiceList);
+		//gameServiceList=recordHourDhcpService.combination(map,gameServiceList);
 		if (gameServiceList.size() != 0) {
 			double maxGame = gameServiceList.get(0).getScore();
 			double averageGame = 0;
@@ -526,7 +526,7 @@ public class RecordHourFtpServiceImpl implements RecordHourFtpService {
 			}
 			Thread.sleep(1000);
 		}
-		connectionList=recordHourDhcpService.combination(map,connectionList);
+		//connectionList=recordHourDhcpService.combination(map,connectionList);
 		if (connectionList.size() != 0) {
 			double maxConnection = connectionList.get(0).getScore();
 			double averageConnection = 0;
@@ -576,7 +576,7 @@ public class RecordHourFtpServiceImpl implements RecordHourFtpService {
 			}
 			Thread.sleep(1000);
 		}
-		qualityList=recordHourDhcpService.combination(map,qualityList);
+		//qualityList=recordHourDhcpService.combination(map,qualityList);
 		if (qualityList.size() != 0) {
 			double maxQuality = qualityList.get(0).getScore();
 			double averageQuality = 0;
@@ -616,7 +616,7 @@ public class RecordHourFtpServiceImpl implements RecordHourFtpService {
 			}
 			Thread.sleep(1000);
 		}
-		pageList=recordHourDhcpService.combination(map,pageList);
+		//pageList=recordHourDhcpService.combination(map,pageList);
 		if (pageList.size() != 0) {
 			double maxPage = pageList.get(0).getScore();
 			double averagePage = 0;
@@ -660,7 +660,7 @@ public class RecordHourFtpServiceImpl implements RecordHourFtpService {
 			}
 			Thread.sleep(1000);
 		}
-		downloadList=recordHourDhcpService.combination(map,downloadList);
+		//downloadList=recordHourDhcpService.combination(map,downloadList);
 		if (downloadList.size() != 0) {
 			double maxDownload = downloadList.get(0).getScore();
 			double averageDownload = 0;
@@ -700,7 +700,7 @@ public class RecordHourFtpServiceImpl implements RecordHourFtpService {
 			}
 			Thread.sleep(1000);
 		}
-		videoServiceList=recordHourDhcpService.combination(map,videoServiceList);
+		//videoServiceList=recordHourDhcpService.combination(map,videoServiceList);
 		if (videoServiceList.size() != 0) {
 			double maxVideo = videoServiceList.get(0).getScore();
 			double averageVideo = 0;
@@ -740,7 +740,7 @@ public class RecordHourFtpServiceImpl implements RecordHourFtpService {
 			}
 			Thread.sleep(1000);
 		}
-		gameServiceList=recordHourDhcpService.combination(map,gameServiceList);
+		//gameServiceList=recordHourDhcpService.combination(map,gameServiceList);
 		if (gameServiceList.size() != 0) {
 			double maxGame = gameServiceList.get(0).getScore();
 			double averageGame = 0;
@@ -869,7 +869,7 @@ public class RecordHourFtpServiceImpl implements RecordHourFtpService {
 			}
 			Thread.sleep(1000);
 		}
-		connectionList=recordHourDhcpService.combination(map,connectionList);
+		//connectionList=recordHourDhcpService.combination(map,connectionList);
 		if (connectionList.size() != 0) {
 			double maxConnection = connectionList.get(0).getScore();
 			double averageConnection = 0;
@@ -924,7 +924,7 @@ public class RecordHourFtpServiceImpl implements RecordHourFtpService {
 			}
 			Thread.sleep(1000);
 		}
-		qualityList=recordHourDhcpService.combination(map,qualityList);
+		//qualityList=recordHourDhcpService.combination(map,qualityList);
 		if (qualityList.size() != 0) {
 			double maxQuality = qualityList.get(0).getScore();
 			double averageQuality = 0;
@@ -964,7 +964,7 @@ public class RecordHourFtpServiceImpl implements RecordHourFtpService {
 			}
 			Thread.sleep(1000);
 		}
-		pageList=recordHourDhcpService.combination(map,pageList);
+		//pageList=recordHourDhcpService.combination(map,pageList);
 		if (pageList.size() != 0) {
 			double maxPage = pageList.get(0).getScore();
 			double averagePage = 0;
@@ -1010,7 +1010,7 @@ public class RecordHourFtpServiceImpl implements RecordHourFtpService {
 			}
 			Thread.sleep(1000);
 		}
-		downloadList=recordHourDhcpService.combination(map,downloadList);
+		//downloadList=recordHourDhcpService.combination(map,downloadList);
 		if (downloadList.size() != 0) {
 			double maxDownload = downloadList.get(0).getScore();
 			double averageDownload = 0;
@@ -1051,7 +1051,7 @@ public class RecordHourFtpServiceImpl implements RecordHourFtpService {
 			}
 			Thread.sleep(1000);
 		}
-		videoServiceList=recordHourDhcpService.combination(map,videoServiceList);
+		//videoServiceList=recordHourDhcpService.combination(map,videoServiceList);
 		if (videoServiceList.size() != 0) {
 			double maxVideo = videoServiceList.get(0).getScore();
 			double averageVideo = 0;
@@ -1092,7 +1092,7 @@ public class RecordHourFtpServiceImpl implements RecordHourFtpService {
 			}
 			Thread.sleep(1000);
 		}
-		gameServiceList=recordHourDhcpService.combination(map,gameServiceList);
+		//gameServiceList=recordHourDhcpService.combination(map,gameServiceList);
 		if (gameServiceList.size() != 0) {
 			double maxGame = gameServiceList.get(0).getScore();
 			double averageGame = 0;

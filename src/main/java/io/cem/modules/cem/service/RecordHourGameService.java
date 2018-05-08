@@ -33,6 +33,8 @@ public interface RecordHourGameService {
 	List<ScoreEntity> calculateService6(List<RecordHourGameEntity> gameList);
 
 	List<ScoreEntity> calculateLayer6(List<ScoreEntity> gameList);
+
+	List<ScoreEntity> calculateDate6(List<ScoreEntity> gameList);
 	
 	int queryTotal(Map<String, Object> map);
 	

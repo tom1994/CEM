@@ -121,7 +121,7 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 			}
 			Thread.sleep(1000);
 		}
-		scoreList=recordHourDhcpService.combination(map,scoreList);
+		//scoreList=recordHourDhcpService.combination(map,scoreList);
 
 		return scoreList;
 	}
@@ -193,7 +193,7 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 			}
 			Thread.sleep(1000);
 		}
-		scoreList=recordHourDhcpService.combination(map,scoreList);
+		//scoreList=recordHourDhcpService.combination(map,scoreList);
 	    return scoreList;
 	}
 
@@ -252,7 +252,7 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 			}
 			Thread.sleep(1000);
 		}
-		scoreList=recordHourDhcpService.combination(map,scoreList);
+		//scoreList=recordHourDhcpService.combination(map,scoreList);
 		return scoreList;
 	}
 
@@ -287,7 +287,7 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 			}
 			Thread.sleep(1000);
 		}
-		scoreList=recordHourDhcpService.combination(map,scoreList);
+		//scoreList=recordHourDhcpService.combination(map,scoreList);
 		return scoreList;
 	}
 
@@ -382,7 +382,7 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 			}
 			Thread.sleep(1000);
 		}
-		scoreList=recordHourDhcpService.combination(map,scoreList);
+		//scoreList=recordHourDhcpService.combination(map,scoreList);
 		return scoreList;
 	}
 
@@ -459,7 +459,7 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 			}
 			Thread.sleep(1000);
 		}
-		scoreList=recordHourDhcpService.combination(map,scoreList);
+		//scoreList=recordHourDhcpService.combination(map,scoreList);
 		return scoreList;
 	}
 
@@ -474,11 +474,12 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 			if (webPageList_future.isDone()) {
 				List<RecordHourWebPageEntity> webPageList = webPageList_future.get();
 				scoreList = recordHourWebPageService.calculateService3(webPageList);
+				scoreList = recordHourWebPageService.calculateDate3(scoreList);
 				break;
 			}
 			Thread.sleep(1000);
 		}
-		scoreList=recordHourDhcpService.combination(map,scoreList);
+		//scoreList=recordHourDhcpService.combination(map,scoreList);
 		return scoreList;
 	}
 
@@ -501,11 +502,12 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 			if (webPageList_future.isDone()) {
 				List<RecordHourWebPageEntity> webPageList = webPageList_future.get();
 				scoreList = recordHourWebPageService.calculateService3(webPageList);
+				scoreList = recordHourWebPageService.calculateDate3(scoreList);
 				break;
 			}
 			Thread.sleep(1000);
 		}
-		scoreList=recordHourDhcpService.combination(map,scoreList);
+		//scoreList=recordHourDhcpService.combination(map,scoreList);
 		return scoreList;
 	}
 
@@ -529,7 +531,7 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 			}
 			Thread.sleep(1000);
 		}
-		scoreList=recordHourDhcpService.combination(map,scoreList);
+		//scoreList=recordHourDhcpService.combination(map,scoreList);
 		return scoreList;
 	}
 
@@ -599,7 +601,7 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 			}
 			Thread.sleep(1000);
 		}
-		scoreList=recordHourDhcpService.combination(map,scoreList);
+		//scoreList=recordHourDhcpService.combination(map,scoreList);
 		return scoreList;
 	}
 
@@ -660,7 +662,7 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 			}
 			Thread.sleep(1000);
 		}
-		scoreList=recordHourDhcpService.combination(map,scoreList);
+		//scoreList=recordHourDhcpService.combination(map,scoreList);
 		return scoreList;
 	}
 
@@ -674,11 +676,12 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 			if (videoList_future.isDone()) {
 				List<RecordHourWebVideoEntity> videoList = videoList_future.get();
 				scoreList = recordHourWebVideoService.calculateService5(videoList);
+				scoreList = recordHourWebVideoService.calculateDate5(scoreList);
 				break;
 			}
 			Thread.sleep(1000);
 		}
-		scoreList=recordHourDhcpService.combination(map,scoreList);
+		//scoreList=recordHourDhcpService.combination(map,scoreList);
 		return scoreList;
 	}
 
@@ -701,11 +704,12 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 			if (videoList_future.isDone()) {
 				List<RecordHourWebVideoEntity> videoList = videoList_future.get();
 				scoreList = recordHourWebVideoService.calculateService5(videoList);
+				scoreList = recordHourWebVideoService.calculateDate5(scoreList);
 				break;
 			}
 			Thread.sleep(1000);
 		}
-		scoreList=recordHourDhcpService.combination(map,scoreList);
+		//scoreList=recordHourDhcpService.combination(map,scoreList);
 		return scoreList;
 	
 	}
@@ -720,11 +724,12 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 			if (gameList_future.isDone()) {
 				List<RecordHourGameEntity> gameList = gameList_future.get();
 				scoreList = recordHourGameService.calculateService6(gameList);
+				scoreList = recordHourGameService.calculateDate6(scoreList);
 				break;
 			}
 			Thread.sleep(1000);
 		}
-		scoreList=recordHourDhcpService.combination(map,scoreList);
+		//scoreList=recordHourDhcpService.combination(map,scoreList);
 		return scoreList;
 	}
 
@@ -747,29 +752,30 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 			if (gameList_future.isDone()) {
 				List<RecordHourGameEntity> gameList = gameList_future.get();
 				scoreList = recordHourGameService.calculateService6(gameList);
+				scoreList = recordHourGameService.calculateDate6(scoreList);
 				break;
 			}
 			Thread.sleep(1000);
 		}
-		scoreList=recordHourDhcpService.combination(map,scoreList);
+		//scoreList=recordHourDhcpService.combination(map,scoreList);
 		return scoreList;
 	}
 
-	@Override
-	public List<ScoreEntity> combination(Map<String,Object> map,List<ScoreEntity> scoreList){
-		List<ScoreEntity> list=new ArrayList<>();
-		RecordHourPingService recordHourPingService= (RecordHourPingService) SpringContextUtils.getBean("recordHourPingService");
-		if (map.get("city_Id") == null && map.get("county_id") == null && map.get("probe_id") == null) {
-			list = recordHourPingService.dateChart1(scoreList);
-		} else if (map.get("county_id") == null && map.get("probe_id") == null) {
-			list = recordHourPingService.cityChart1(scoreList);
-		} else if ((map.get("probe_id") == null)||(map.get("city_id") == null&&map.get("probe_id") == null)) {
-			list = recordHourPingService.probeChart1(scoreList);
-		} else {
-			list = scoreList;
-		}
-		return list;
-	}
+//	@Override
+//	public List<ScoreEntity> combination(Map<String,Object> map,List<ScoreEntity> scoreList){
+//		List<ScoreEntity> list=new ArrayList<>();
+//		RecordHourPingService recordHourPingService= (RecordHourPingService) SpringContextUtils.getBean("recordHourPingService");
+//		if (map.get("city_Id") == null && map.get("county_id") == null && map.get("probe_id") == null) {
+//			list = recordHourPingService.dateChart1(scoreList);
+//		} else if (map.get("county_id") == null && map.get("probe_id") == null) {
+//			list = recordHourPingService.cityChart1(scoreList);
+//		} else if ((map.get("probe_id") == null)||(map.get("city_id") == null&&map.get("probe_id") == null)) {
+//			list = recordHourPingService.probeChart1(scoreList);
+//		} else {
+//			list = scoreList;
+//		}
+//		return list;
+//	}
 
 
 	

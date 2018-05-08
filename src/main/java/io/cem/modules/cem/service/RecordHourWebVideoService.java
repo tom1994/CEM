@@ -39,7 +39,9 @@ public interface RecordHourWebVideoService {
 	List<ScoreEntity> calculateService5 (List<RecordHourWebVideoEntity> videoList);
 
 	List<ScoreEntity> calculateLayer5(List<ScoreEntity> videoList);
-	
+
+	List<ScoreEntity> calculateDate5(List<ScoreEntity> videoList);
+
 	int queryTotal(Map<String, Object> map);
 	
 	void save(RecordHourWebVideoEntity recordHourWebVideo);
