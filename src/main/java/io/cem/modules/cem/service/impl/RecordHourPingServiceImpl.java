@@ -3901,8 +3901,8 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 		SimpleDateFormat df2 = new SimpleDateFormat("HH:mm:ss");
 		System.out.println("一个小时前的时间：" + df2.format(calendar.getTime()));
 		System.out.println("当前的时间：" + df2.format(new Date()));
-
-		if(df2.format(new Date()).equals("00:00:00")){
+		SimpleDateFormat df3 = new SimpleDateFormat("HH");
+		if(df3.format(new Date()).equals("00")){
 			map.put("start_time","23:00:00");
 			map.put("terminal_time","23:59:00");
 			String beforeDay=queryBeforeDay(df.format(new Date()));
