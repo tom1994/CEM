@@ -466,7 +466,7 @@ var probegroup_handle = new Vue({
     }
 });
 //取消任务
-var = new Vue({
+var cancel_confirm = new Vue({
     el: '#cancel_confirm',
     data: {
         taskDispatchId: 0
