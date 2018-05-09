@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.cem.modules.cem.dao.ScoreCollectAllDao">
+
+    <resultMap type="io.cem.modules.cem.entity.ScoreCollectAllEntity" id="scoreCollectAllMap">
+        <result property="id" column="id"/>
+        <result property="score" column="score"/>
+        <result property="scoreDate" column="score_date"/>
+        <result property="accessLayer" column="access_layer"/>
+        <result property="target" column="target"/>
+        <result property="serviceType" column="service_type"/>
+        <result property="city_name" column="cityName"/>
+        <result property="area_name" column="areaName"/>
+    </resultMap>
+
+    <select id="queryList" resultMap="scoreCollectAllMap">
+
+        SELECT id,avg(score) as score,score_date,score_time,service_type FROM cem.score_collect_all
+
+        <where>
+             `score_date` between #{startDate} and #{endDate}
+             and `service_type` = #{serviceType}
+
+        </where>
+
+    </select>
+
+    <select id="queryListForServiceType" resultMap="scoreCollectAllMap">
+
+        SELECT id,avg(score) as score,score_date,access_layer,target,service_type,city_name,area_name FROM cem.score_collect_all
+
+        <where>
+            `service_type`= #{serviceType} and `score_date` between #{stime} and #{etime}
+            <if test="accessLayer != null">
+                and access_layer=#{accessLayer}
+            </if>
+        </where>
+
+        group by `service_type`
+
+    </select>
+
+
+
+    <select id="queryListForTarget" resultMap="scoreCollectAllMap">
+
+        SELECT id,avg(score) as score,score_date,access_layer,target,service_type,city_name,area_name FROM cem.score_collect_all
+
+        <where>
+            `service_type`= #{serviceType} and `score_date` between #{stime} and #{etime}
+        </where>
+
+        <if test="1==1">
+            group by `target`
+            order by `score` desc
+            limit 10
+        </if>
+
+
+
+    </select>
+
+
+    <select id="queryListForArea" resultMap="scoreCollectAllMap">
+        SELECT id,avg(score) as score,score_date,access_layer,target,service_type,city_name,area_name FROM cem.score_collect_all
+
+        <where>
+            `score_date` between #{stime} and #{etime}
+        </where>
+
+        <if test="qtype == 0">
+            group by `area_name`
+        </if>
+        <if test="qtype == 1">
+            group by `city_name`
+        </if>
+
+
+    </select>
+
+    <insert id="save" parameterType="io.cem.modules.cem.entity.ScoreCollectDayEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into score_collect_all
+		(
+			`score`,
+			`score_date`,
+			`score_time`,
+			`service_type`
+		)
+		values
+		(
+			#{score},
+			#{scoreDate},
+			#{scoreTime},
+			#{serviceType}
+		)
+	</insert>
+
+    <delete id="del">
+
+        delete from score_collect_all where score_date between #{stime} and #{etime}
+
+    </delete>
+
+</mapper>

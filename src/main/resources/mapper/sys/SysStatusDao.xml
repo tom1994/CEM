@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">    
+<mapper namespace="io.cem.modules.sys.dao.SysStatusDao">
+	<resultMap type="io.cem.modules.sys.entity.SysStatusEntity" id="resultMap">
+		<result property="id" column="id"/>
+		<result property="hostName" column="host_name"/>
+		<result property="os" column="os"/>
+		<result property="memUsed" column="mem_used"/>
+		<result property="memTotal" column="mem_total"/>
+		<result property="diskUsed" column="disk_used"/>
+		<result property="diskTotal" column="disk_total"/>
+		<result property="cpuPercent" column="cpu_percent"/>
+		<result property="baseboardSerial" column="baseboard_serial"/>
+		<result property="swapUsed" column="swap_used"/>
+		<result property="swapTotal" column="swap_total"/>
+	</resultMap>
+	<select id="queryObject" resultMap="resultMap">
+		select * from system_status where id=#{id};
+	</select>
+
+</mapper>

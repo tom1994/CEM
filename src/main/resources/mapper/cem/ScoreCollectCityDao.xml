@@ -8,21 +8,24 @@
         <result property="city_id" column="cityId"/>
         <result property="city_name" column="cityName"/>
         <result property="score_date" column="scoreDate"/>
+        <result property="score_time" column="scoreTime"/>
         <result property="service_type" column="serviceType"/>
+        <result property="area_name" column="areaName"/>
+        <result property="area_id" column="areaId"/>
     </resultMap>
     <select id="queryList" resultType="io.cem.modules.cem.entity.ScoreCollectCityEntity">
-        select score,city_name from score_collect_city
+        SELECT id,avg(score) as score,score_date,score_time,service_type,city_name,area_name FROM cem.score_collect_city
+
         <where>
-            score_date between #{startTime} and #{endTime}
+            `score_date` between #{startDate} and #{endDate}
         </where>
-        <choose>
-            <when test="sidx != null and sidx.trim() != ''">
-                order by ${sidx} ${order}
-            </when>
-            <otherwise>
-                order by id desc
-            </otherwise>
-        </choose>
+
+        <if test="qtype == 0">
+            group by `area_name`
+        </if>
+        <if test="qtype == 1">
+            group by `city_name`
+        </if>
     </select>
     <insert id="save" parameterType="io.cem.modules.cem.entity.ScoreCollectCityEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into score_collect_city
@@ -30,16 +33,22 @@
 			`score`,
 			`city_id`,
 			`city_name`,
+			`area_id`,
+			`area_name`,
 			`score_date`,
-			`service_type`
+			`service_type`,
+			`score_time`
 		)
 		values
 		(
 			#{score},
 			#{cityId},
 			#{cityName},
+			#{areaId},
+			#{areaName},
 			#{scoreDate},
-			#{serviceType}
+			#{serviceType},
+			#{scoreTime}
 		)
 	</insert>
     <delete id="deleteBatch">

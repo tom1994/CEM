@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.cem.modules.cem.dao.ScoreCollectLayerDao">
+
+    <resultMap type="io.cem.modules.cem.entity.ScoreCollectLayerEntity" id="scoreCollectLayerMap">
+        <result property="id" column="id"/>
+        <result property="score" column="score"/>
+        <result property="scoreDate" column="score_date"/>
+        <result property="scoreTime" column="score_time"/>
+        <result property="accessLayer" column="access_layer"/>
+        <result property="serviceType" column="service_type"/>
+    </resultMap>
+
+    <select id="queryList" resultMap="scoreCollectLayerMap">
+
+        SELECT id,score,score_date,score_time,access_layer,service_type FROM cem.score_collect_layer
+
+        <where>
+            `service_type`= #{serviceType}
+            and `score_date` between #{startDate} and #{endDate}
+        </where>
+
+
+    </select>
+
+    <insert id="save" parameterType="io.cem.modules.cem.entity.ScoreCollectLayerEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into score_collect_layer
+		(
+			`score`,
+			`score_date`,
+			`score_time`,
+			`access_layer`,
+			`service_type`
+		)
+		values
+		(
+			#{score},
+			#{scoreDate},
+			#{scoreTime},
+			#{accessLayer},
+			#{serviceType}
+		)
+	</insert>
+
+    <delete id="del">
+
+        delete from score_collect_layer where score_date between #{stime} and #{etime}
+
+    </delete>
+
+</mapper>

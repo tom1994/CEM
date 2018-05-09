@@ -7,6 +7,7 @@
         <result property="score" column="score"/>
         <result property="interval" column="interval"/>
         <result property="score_date" column="scoreDate"/>
+        <result property="score_time" column="scoreTime"/>
         <result property="service_type" column="serviceType"/>
     </resultMap>
     <select id="queryList" resultType="io.cem.modules.cem.entity.ScoreCollectDayEntity">
@@ -14,6 +15,9 @@
         <where>
             `interval` = #{interval} and (score_date between #{startTime} and #{endTime})
         </where>
+        <if test="1==1">
+            group by service_type
+        </if>
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
                 order by ${sidx} ${order}
@@ -29,6 +33,7 @@
 			`score`,
 			`interval`,
 			`score_date`,
+			`score_time`,
 			`service_type`
 		)
 		values
@@ -36,6 +41,7 @@
 			#{score},
 			#{interval},
 			#{scoreDate},
+			#{scoreTime},
 			#{serviceType}
 		)
 	</insert>

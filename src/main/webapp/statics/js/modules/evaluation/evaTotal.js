@@ -1828,6 +1828,7 @@ function video(val) {
                         temp[i].datetime = Date.UTC(year, month, day, hour)
                     }
                     var sortTemp = temp.sort(compare("datetime"));
+                    console.log(sortTemp);
                     let rows = [];
                     var i = 1;
                     sortTemp.forEach(function (item) {
