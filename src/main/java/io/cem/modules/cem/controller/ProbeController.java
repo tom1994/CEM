@@ -59,6 +59,13 @@ public class ProbeController {
         return R.ok().put("page", pageUtil);
     }
 
+
+    @RequestMapping("/showlist")
+    public R showList(String probedata) throws Exception {
+        List<ProbeEntity> probeList = probeService.queryShowList();
+        return R.ok().put("probe", probeList);
+    }
+
     /**
      * 查看在线探针
      */

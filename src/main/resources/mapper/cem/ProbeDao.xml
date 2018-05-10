@@ -140,7 +140,7 @@
         LEFT JOIN(SELECT probe.probe_name AS parent_name,probe.id AS parent_id FROM probe
         WHERE id in (SELECT upstream_id FROM probe)) parent
         ON parent.parent_id = probe.upstream_id
-        WHERE type = 10
+        order by convert(probe_name USING gbk)
     </select>
 
     <select id="queryOnlineList" resultType="io.cem.modules.cem.entity.ProbeEntity">
@@ -415,6 +415,11 @@
         SELECT *
         FROM probe
         WHERE city_id = #{value}
+        order by convert(probe_name USING gbk)
+    </select>
+
+    <select id="queryShowList" resultMap="probeMap">
+        SELECT * FROM probe
         order by convert(probe_name USING gbk)
     </select>
 
