@@ -11,6 +11,7 @@ import java.util.Map;
  */
 public interface ProbeDao extends BaseDao<ProbeEntity> {
     List<ProbeEntity> queryProbeList(Map<String,Object> map);
+    List<ProbeEntity> queryShowList();
     List<ProbeEntity> queryExitList(Map<String,Object> map);
     List<ProbeEntity> queryProbe(Integer id);
     List<ProbeEntity> queryPortList(Integer id);

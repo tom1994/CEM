@@ -27,6 +27,12 @@ public class ProbeServiceImpl implements ProbeService {
         return probeDao.queryList(map);
     }
 
+
+    @Override
+    public List<ProbeEntity> queryShowList() {
+        return probeDao.queryShowList();
+    }
+
     @Override
     public List<ProbeEntity> queryProbeList(Map<String, Object> map) {
         List<ProbeEntity> probeEntityList = probeDao.queryProbeList(map);

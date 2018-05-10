@@ -14,6 +14,8 @@ public interface ProbeService {
 	
 	List<ProbeEntity> queryList(Map<String, Object> map);
 
+	List<ProbeEntity> queryShowList();
+
 	List<ProbeEntity> queryProbeList(Map<String, Object> map);
 
 	List<ProbeEntity> queryProbe(Integer id);

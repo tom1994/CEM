@@ -2092,15 +2092,15 @@ function loading() {
 function probe() {
     probeSelected=0;
     $.ajax({
-        url: "../../cem/probe/list",//探针列表
+        url: "../../cem/probe/showlist",//探针列表
         type: "POST",
         cache: false,  //禁用缓存
         dataType: "json",
         contentType: "application/json",
         success: function (result) {
             var probes = [];
-            for (var i = 0; i < result.page.list.length; i++) {
-                probes[i] = {message: result.page.list[i]}
+            for (var i = 0; i < result.probe.length; i++) {
+                probes[i] = {message: result.probe[i]}
             }
             search_data.probe = probes;
             setTimeout(function () {
