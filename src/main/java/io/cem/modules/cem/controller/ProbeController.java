@@ -79,7 +79,6 @@ public class ProbeController {
         return R.ok().put("probe", probeList);
     }
 
-
     @RequestMapping("/download/{probedata}")
     @RequiresPermissions("probe:download")
     public void downloadProbe(HttpServletResponse response, @PathVariable String probedata) throws RRException {

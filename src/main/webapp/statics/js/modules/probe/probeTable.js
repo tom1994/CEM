@@ -21,13 +21,13 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
     var o = {};
     var a = $(form).serializeArray();
     if (countrySelected != 0) {
-        a[2] = {}
-        a[2].name = "country_id"
+        a[2] = {};
+        a[2].name = "county_id";
         a[2].value = parseInt(countrySelected)
     }
     if (groupSelected != 0) {
-        a[3] = {}
-        a[3].name = "group_id"
+        a[3] = {};
+        a[3].name = "group_id";
         a[3].value = parseInt(groupSelected)
     }
     if (accessSelected != 0) {
@@ -47,8 +47,8 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
 
     }
     if(citySelected!=0){
-        a[7] = {}
-        a[7].name = "city_id"
+        a[7] = {};
+        a[7].name = "city_id";
         a[7].value =  parseInt(citySelected)
 
     }
@@ -258,7 +258,6 @@ function submit_all() {
 }
 
 function update_port() {
-    debugger
     var CheckALL = document.getElementsByName("selectFlag");
     var check_val = [];
     for (var i in CheckALL) {
@@ -466,7 +465,7 @@ var probegroup_handle = new Vue({
     }
 });
 //取消任务
-var = new Vue({
+var cancel_confirm = new Vue({
     el: '#cancel_confirm',
     data: {
         taskDispatchId: 0
@@ -1122,6 +1121,7 @@ var probeform_data = new Vue({
             this.countyNames = queryArea($("#city").val());
         },
         submit: function () {
+            debugger
             var probeJson = getFormJson($('#probeform_data'));
             if (typeof(probeJson["name"]) == "undefined") {
                 toastr.warning("请录入探针名!");
@@ -1142,6 +1142,7 @@ var probeform_data = new Vue({
                     dataType: "json",
                     contentType: "application/json", /*必须要,不可少*/
                     success: function (result) {
+                        debugger
                         let code = result.code;
                         let msg = result.msg;
                         console.log(result);
