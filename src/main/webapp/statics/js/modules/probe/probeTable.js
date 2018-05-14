@@ -64,7 +64,21 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
     });
     return o;
 }
-
+function getFormJson2(form) {      /*将表单对象变为json对象*/
+    var o = {};
+    var a = $(form).serializeArray();
+    $.each(a, function () {
+        if (o[this.name] !== undefined) {
+            if (!o[this.name].push) {
+                o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '');
+        } else {
+            o[this.name] = this.value || '';
+        }
+    });
+    return o;
+}
 var st = new Map();//servicetype字典，可通过get方法查对应字符串。
 st.set(1, "PING(ICMP Echo)");
 st.set(2, "PING(TCP Echo)");
@@ -535,21 +549,21 @@ var dispatch_table = new Vue({
             vm.taskdata = {};
             /*清空taskdata*/
             vm.dtHandle.clear();
-            console.log("重置");
+            // console.log("重置");
             vm.dtHandle.draw();
             /*重置*/
         },
         currReset: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("当前页面重绘");
+            // console.log("当前页面重绘");
             vm.dtHandle.draw(false);
             /*当前页面重绘*/
         },
         redraw: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("页面重绘");
+            // console.log("页面重绘");
             vm.dtHandle.draw();
             /*重绘*/
         },
@@ -585,7 +599,7 @@ var dispatch_table = new Vue({
                 param.start = data.start;//开始的记录序号
                 param.page = (data.start / data.length) + 1;//当前页码
                 param.taskdata = JSON.stringify(vm.taskdata);
-                console.log(param);
+                // console.log(param);
                 //ajax请求数据
                 $.ajax({
                     type: "POST", /*GET会乱码*/
@@ -595,7 +609,7 @@ var dispatch_table = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                        console.log(result);
+                        // console.log(result);
                         //封装返回数据
                         let returnData = {};
                         returnData.draw = result.page.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -953,7 +967,7 @@ function update_this(obj) {     /*监听修改触发事件*/
 function updategroup_this(obj) {     /*监听修改触发事件*/
     groupdata_id = parseInt(obj.id);
     /*获取当前行探针组数据id*/
-    console.log(groupdata_id);
+    // console.log(groupdata_id);
     status = 1;
     /*状态1表示修改*/
     /*find被选中的行*/
@@ -968,7 +982,7 @@ function updategroup_this(obj) {     /*监听修改触发事件*/
         dataType: "json",
         contentType: "application/json", /*必须要,不可少*/
         success: function (result) {
-            console.log(result);
+            // console.log(result);
             forms[0].value = result.probeGroup.id;
             forms[1].value = result.probeGroup.name;
             forms[2].value = result.probeGroup.remark;
@@ -1010,7 +1024,7 @@ function delete_this(obj) {
     delete_data.show_deleteModal();
     delete_data.id = parseInt(obj.id);
     /*获取当前行探针数据id*/
-    console.log(delete_data.id);
+    // console.log(delete_data.id);
 }
 
 var delete_data = new Vue({
@@ -1068,7 +1082,7 @@ function deletegroup_this(obj) {
     deletegroup_data.show_deleteModal();
     deletegroup_data.id = parseInt(obj.id);
     /*获取当前行探针组数据id*/
-    console.log(deletegroup_data.id);
+    // console.log(deletegroup_data.id);
 }
 
 var deletegroup_data = new Vue({
@@ -1121,13 +1135,13 @@ var probeform_data = new Vue({
             this.countyNames = queryArea($("#city").val());
         },
         submit: function () {
-            debugger
-            var probeJson = getFormJson($('#probeform_data'));
+
+            var probeJson = getFormJson2($('#probeform_data'));
             if (typeof(probeJson["name"]) == "undefined") {
                 toastr.warning("请录入探针名!");
             } else {
                 var probe = JSON.stringify(probeJson);
-                console.log(probe);
+                // console.log(probe);
                 var mapstr;
                 if (status == 0) {
                     mapstr = "save";
@@ -1142,10 +1156,10 @@ var probeform_data = new Vue({
                     dataType: "json",
                     contentType: "application/json", /*必须要,不可少*/
                     success: function (result) {
-                        debugger
+                         
                         let code = result.code;
                         let msg = result.msg;
-                        console.log(result);
+                        // console.log(result);
                         if (status == 0) {
                             switch (code) {
                                 case 0:
@@ -1233,7 +1247,7 @@ var groupform_data = new Vue({
                 var probegroup = JSON.stringify(probegroupJson);
                 /*封装成json数组*/
                 /*获取表单元素的值*/
-                console.log(probegroup);
+                // console.log(probegroup);
                 var mapstr;
                 if (status == 0) {
                     mapstr = "save";
@@ -1250,7 +1264,7 @@ var groupform_data = new Vue({
                     success: function (result) {
                         let code = result.code;
                         let msg = result.msg;
-                        console.log(result);
+                        // console.log(result);
                         if (status == 0) {
                             switch (code) {
                                 case 0:
@@ -1458,21 +1472,21 @@ var probetable = new Vue({
             vm.probedata = {};
             /*清空probedata*/
             vm.dtHandle.clear();
-            console.log("重置");
+            // console.log("重置");
             vm.dtHandle.draw();
             /*重置*/
         },
         currReset: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("当前页面重绘");
+            // console.log("当前页面重绘");
             vm.dtHandle.draw(false);
             /*当前页面重绘*/
         },
         redraw: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("页面重绘");
+            // console.log("页面重绘");
             vm.dtHandle.draw();
             /*重绘*/
         }
@@ -1509,7 +1523,7 @@ var probetable = new Vue({
                 param.page = (data.start / data.length) + 1;//当前页码
                 param.probedata = JSON.stringify(vm.probedata);
                 /*用于查询probe数据*/
-                console.log(param.probedata);
+                // console.log(param.probedata);
                 //ajax请求数据
                 $.ajax({
                     url: "../../cem/probe/list",
@@ -1518,14 +1532,14 @@ var probetable = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                        console.log(result);
+                        //console.log(result);
                         //封装返回数据
                         let returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
                         returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
                         returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
                         returnData.data = result.page.list;//返回的数据列表
-                        //console.log(result.page);
+                        ////console.log(result.page);
                         // 重新整理返回数据以匹配表格
                         let rows = [];
                         var i = param.start + 1;
@@ -1550,7 +1564,7 @@ var probetable = new Vue({
                             rows.push(row);
                         });
                         returnData.data = rows;
-                        //console.log(returnData);
+                        ////console.log(returnData);
                         //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);
@@ -1593,21 +1607,21 @@ var grouptable = new Vue({
             vm.groupdata = {};
             /*清空groupdata*/
             vm.dtHandle.clear();
-            console.log("重置");
+            //console.log("重置");
             vm.dtHandle.draw();
             /*重置*/
         },
         currReset: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("当前页面重绘");
+            //console.log("当前页面重绘");
             vm.dtHandle.draw(false);
             /*当前页面重绘*/
         },
         redraw: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("页面重绘");
+            //console.log("页面重绘");
             vm.dtHandle.draw();
             /*重绘*/
             $("#probegroup_table").colResizable({
@@ -1647,7 +1661,7 @@ var grouptable = new Vue({
                 param.start = data.start;//开始的记录序号
                 param.page = (data.start / data.length) + 1;//当前页码
                 param.groupdata = JSON.stringify(vm.groupdata);
-                //console.log(param);
+                ////console.log(param);
                 //ajax请求数据
                 $.ajax({
                     /*用于查询probegroup数据*/
@@ -1657,7 +1671,7 @@ var grouptable = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                        //console.log(result);
+                        ////console.log(result);
                         //封装返回数据
                         let returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回

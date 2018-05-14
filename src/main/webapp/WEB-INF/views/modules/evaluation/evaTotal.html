@@ -421,7 +421,8 @@
 
 <!--六大业务详情模态框（Modal） -->
     <!--w网络连通性-->
-    <div class="modal fade" id="myModal_connection" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="myModal_connection" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog" style="width:995px"> <!--修改bootstrap modal模态框的宽度-->
             <div class="modal-content">
                 <div class="modal-header">
@@ -588,7 +589,6 @@
         var strDate = date.getDate();
         var years=date.getFullYear();
       var newdate=years+'-'+month+'-'+strDate;
-      console.log(typeof newdate)
     $('#start_date').flatpickr({
         enableTime: true,
         dateFormat: "Y-m-d H:i",

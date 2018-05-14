@@ -32,7 +32,7 @@ var spdata_handle = new Vue({
 /*function update_this (obj) {     /!*监听修改触发事件*!/
     update_data_id = parseInt(obj.id);
     /!*获取当前行探针数据id*!/
-    console.log(update_data_id);
+    //console.log(update_data_id);
     status = 1;      /!*状态1表示修改*!/
     /!*find被选中的行*!/
     var forms = $('#spform_data .form-control');
@@ -86,7 +86,7 @@ function delete_this(obj) {
     delete_data.show_deleteModal();
     delete_data.id = parseInt(obj.id);
     /*获取当前行探针数据id*/
-    console.log(delete_data.id);
+    //console.log(delete_data.id);
 }
 
 var delete_data = new Vue({
@@ -158,9 +158,9 @@ var spform_data = new Vue({
     methods: {
         submit: function () {
             var spJson = getFormJson($('#spform_data'));
-            console.log(spJson);
+            //console.log(spJson);
             var datevalue = $('input:radio[name="choosedate"]:checked').val();
-            console.log(datevalue);
+            //console.log(datevalue);
             if (datevalue == 1) {
                 spJson.startDate = new Date().Format("yyyy-MM-dd hh:mm:ss");
                 spJson.endDate = "2070-12-31";
@@ -183,7 +183,7 @@ var spform_data = new Vue({
                 spJson.scheduler = "["+JSON.stringify(schedulerObj)+"]";
                 var sp = JSON.stringify(spJson);
                 /*封装成json数组*/
-                console.log(sp);
+                //console.log(sp);
                 var mapstr;
                 if (status == 0) {
                     mapstr = "save";
@@ -200,15 +200,12 @@ var spform_data = new Vue({
                     success: function (result) {
                         let code = result.code;
                         let msg = result.msg;
-                        console.log(result);
+                        //console.log(result);
                         if (status == 0) {
                             switch (code) {
                                 case 0:
                                     toastr.success("任务创建成功!");
                                     $('#myModal_sp').modal('hide');    //jQuery选定
-                                    break;
-                                case 300:
-                                    toastr.error(msg);
                                     break;
                                 case 403:
                                     toastr.error(msg);
@@ -222,9 +219,6 @@ var spform_data = new Vue({
                                 case 0:
                                     toastr.success("策略修改成功!");
                                     $('#myModal_sp').modal('hide');
-                                    break;
-                                case 300:
-                                    toastr.error(msg);
                                     break;
                                 case 403:
                                     toastr.error(msg);
@@ -302,7 +296,7 @@ var sptable = new Vue({
             {title: '<div style="width:15px"></div>'},
             {title: '<div style="width:142px">策略名称</div>'},
             {title: '<div style="width:180px">起止日期</div>'},
-            {title: '<div style="width:120px">时间间隔(分钟)</div>'},
+            {title: '<div style="width:120px">时间间隔(min)</div>'},
             {title: '<div style="width:160px">备注</div>'},
             {title: '<div style="width:100px">创建时间</div>'},
             {title: '<div style="width:40px">操作</div>'}
@@ -318,21 +312,21 @@ var sptable = new Vue({
             vm.spdata = {};
             /*清空spdata*/
             vm.dtHandle.clear();
-            console.log("重置");
+            //console.log("重置");
             vm.dtHandle.draw();
             /*重置*/
         },
         currReset: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("当前页面重绘");
+            //console.log("当前页面重绘");
             vm.dtHandle.draw(false);
             /*当前页面重绘*/
         },
         redraw: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("页面重绘");
+            //console.log("页面重绘");
             vm.dtHandle.draw();
             /*重绘*/
         }
@@ -369,7 +363,7 @@ var sptable = new Vue({
                 param.page = (data.start / data.length) + 1;//当前页码
                 param.spdata = JSON.stringify(vm.spdata);
                 /*用于查询sp数据*/
-                console.log(param);
+                //console.log(param);
                 //ajax请求数据
                 $.ajax({
                     type: "POST", /*GET会乱码*/
@@ -405,7 +399,7 @@ var sptable = new Vue({
                             rows.push(row);
                         });
                         returnData.data = rows;
-                        console.log(returnData);
+                        //console.log(returnData);
 
                         //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕

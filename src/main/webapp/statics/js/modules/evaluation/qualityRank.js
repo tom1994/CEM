@@ -119,11 +119,11 @@ var search_data = new Vue({
     methods: {
         citychange: function () {
             this.areas = getArea($("#selectcity").val());
-            console.log($("#selectcity").val());
+            //console.log($("#selectcity").val());
         },
         servicechange: function () {
             this.target = getService($("#selectservice").val());
-            console.log($("#selectservice").val())
+            //console.log($("#selectservice").val())
         }
     }
 });
@@ -143,11 +143,11 @@ var Doorsearch_data = new Vue({
     methods: {
         citychange: function () {
             this.areas = getArea($("#doorselectcity").val());
-            console.log($("#doorselectcity").val());
+            //console.log($("#doorselectcity").val());
         },
         servicechange: function () {
             this.target = getService($("#doorselectservice").val());
-            console.log($("#doorselectservice").val())
+            //console.log($("#doorselectservice").val())
         }
     }
 });
@@ -168,13 +168,13 @@ var area_data = new Vue({
     methods: {
         servicechange: function () {
             this.target = getAreaService($("#area_service").val());
-            console.log($("#area_service").val())
+            //console.log($("#area_service").val())
         }
     }
 });
 
 var getCounty = function (cityid) {
-    debugger
+      
     countrySeleted = 0
     $.ajax({
         url: "../../cem/county/info/" + cityid,
@@ -259,8 +259,8 @@ var getDoorArea = function (cityid) {
 }
 
 var getService = function (serviceId) {
-    debugger
-    console.log("I'm here!!!!" + serviceId);
+      
+    //console.log("I'm here!!!!" + serviceId);
     targetSelected = 0
     $.ajax({
         url: "../../target/infobat/" + serviceId,
@@ -300,7 +300,7 @@ var getService = function (serviceId) {
 }
 
 var getDoorService = function (serviceId) {
-    console.log("I'm here!!!!" + serviceId);
+    //console.log("I'm here!!!!" + serviceId);
 
     targetSelected = 0
     $.ajax({
@@ -340,7 +340,7 @@ var getDoorService = function (serviceId) {
 }
 
 var getAreaService = function (serviceId) {
-    console.log("I'm here!!!!" + serviceId);
+    //console.log("I'm here!!!!" + serviceId);
     targetSelected = 0
     $.ajax({
         url: "../../target/infobat/" + serviceId,
@@ -382,7 +382,7 @@ var getAreaService = function (serviceId) {
 function out() {/*导出事件*/
     var searchJson = getFormJson($('#probesearch'));
     if ((searchJson.startDate) > (searchJson.terminalDate)) {
-        console.log("时间选择有误，请重新选择！");
+        //console.log("时间选择有误，请重新选择！");
         $('#nonavailable_time').modal('show');
     } else {
         var search = new Object();
@@ -404,7 +404,7 @@ function out() {/*导出事件*/
             search.ava_terminal = (new Date()).Format("yyyy-MM-dd");
         }
         var schedulepolicy = JSON.stringify(search);
-        console.log(schedulepolicy);
+        //console.log(schedulepolicy);
 
         document.getElementById("output").href = encodeURI('../../recordhourtracert/download/' + schedulepolicy);
         document.getElementById("output").click();
@@ -415,7 +415,7 @@ function out() {/*导出事件*/
 function doorout() {/*导出事件*/
     var searchJson = getFormJson($('#door_search'));
     if ((searchJson.startDate) > (searchJson.terminalDate)) {
-        console.log("时间选择有误，请重新选择！");
+        //console.log("时间选择有误，请重新选择！");
         $('#nonavailable_time').modal('show');
     } else {
         var search = new Object();
@@ -438,7 +438,7 @@ function doorout() {/*导出事件*/
             search.ava_terminal = (new Date()).Format("yyyy-MM-dd");
         }
         var schedulepolicy = JSON.stringify(search);
-        console.log(schedulepolicy);
+        //console.log(schedulepolicy);
 
         document.getElementById("door_output").href = encodeURI('../../recordhourtracert/doordownload/' + schedulepolicy);
         document.getElementById("door_output").click();
@@ -453,7 +453,7 @@ function areaupdate_this(obj) {     /*监听修改触发事件*/
     countyId = parseInt(obj.id);
     var searchJson = getFormJson($('#areasearch'));
     if ((searchJson.startDate) > (searchJson.terminalDate)) {
-        console.log("时间选择有误，请重新选择！");
+        //console.log("时间选择有误，请重新选择！");
         $('#nonavailable_time').modal('show');
     } else {
         var search = new Object();
@@ -479,7 +479,7 @@ function areaupdate_this(obj) {     /*监听修改触发事件*/
             search.ava_terminal = (new Date()).Format("yyyy-MM-dd");
         }
         var schedulepolicy = JSON.stringify(search);
-        console.log(schedulepolicy);
+        //console.log(schedulepolicy);
         $.ajax({
             type: "POST", /*GET会乱码*/
             url: "../../recordhourtracert/areadetail/" + schedulepolicy,
@@ -487,7 +487,7 @@ function areaupdate_this(obj) {     /*监听修改触发事件*/
             dataType: "json",
             contentType: "application/json", /*必须要,不可少*/
             success: function (result) {
-                console.log('收到数据', new Date(), result);
+                //console.log('收到数据', new Date(), result);
                     removeLoading('test');
                     var areaContent = result.scoreList;
                     area_this(obj, areaContent)
@@ -500,7 +500,7 @@ function areaupdate_this(obj) {     /*监听修改触发事件*/
 function AreaOut() {/*导出事件*/
     var searchJson = getFormJson($('#areasearch'));
     if ((searchJson.startDate) > (searchJson.terminalDate)) {
-        console.log("时间选择有误，请重新选择！");
+        //console.log("时间选择有误，请重新选择！");
         $('#nonavailable_time').modal('show');
     } else {
         var search = new Object();
@@ -522,7 +522,7 @@ function AreaOut() {/*导出事件*/
             search.ava_terminal = (new Date()).Format("yyyy-MM-dd");
         }
         var schedulepolicy = JSON.stringify(search);
-        console.log(schedulepolicy);
+        //console.log(schedulepolicy);
 
         document.getElementById("areaOutput").href = encodeURI('../../recordhourtracert/areaDownload/' + schedulepolicy);
         document.getElementById("areaOutput").click();
@@ -538,7 +538,7 @@ var search_service = new Vue({
         testagentListsearch: function () {
             var searchJson = getFormJson($('#probesearch'));
             if ((searchJson.startDate) > (searchJson.terminalDate)) {
-                console.log("时间选择有误，请重新选择！");
+                //console.log("时间选择有误，请重新选择！");
                 $('#nonavailable_time').modal('show');
             } else {
                 var search = new Object();
@@ -560,7 +560,7 @@ var search_service = new Vue({
                     search.ava_terminal = (new Date()).Format("yyyy-MM-dd");
                 }
                 var schedulepolicy = JSON.stringify(search);
-                console.log(schedulepolicy);
+                //console.log(schedulepolicy);
                 probetable.probedata = search;
                 probetable.redraw();
             }
@@ -599,7 +599,7 @@ var search_area_service = new Vue({
              
             var searchJson = getFormJson($('#areasearch'));
             if ((searchJson.startDate) > (searchJson.terminalDate)) {
-                console.log("时间选择有误，请重新选择！");
+                //console.log("时间选择有误，请重新选择！");
                 $('#nonavailable_time').modal('show');
             } else {
                 var search = new Object();
@@ -621,7 +621,7 @@ var search_area_service = new Vue({
                     search.ava_terminal = (new Date()).Format("yyyy-MM-dd");
                 }
                 var schedulepolicy = JSON.stringify(search);
-                console.log(schedulepolicy);
+                //console.log(schedulepolicy);
                 areatable.probedata = search;
                 areatable.redraw();
             }
@@ -654,7 +654,7 @@ var search_door_service = new Vue({
         DoorListsearch: function () {
             var searchJson = getFormJson($('#door_search'));
             if ((searchJson.startDate) > (searchJson.terminalDate)) {
-                console.log("时间选择有误，请重新选择！");
+                //console.log("时间选择有误，请重新选择！");
                 $('#nonavailable_time').modal('show');
             } else {
                 var search = new Object();
@@ -681,7 +681,7 @@ var search_door_service = new Vue({
                     search.ava_terminal = (new Date()).Format("yyyy-MM-dd");
                 }
                 var schedulepolicy = JSON.stringify(search);
-                console.log(schedulepolicy);
+                //console.log(schedulepolicy);
                 doortable.probedata = search;
                 doortable.redraw();
             }
@@ -846,21 +846,21 @@ var probetable = new Vue({
             vm.probedata = {};
             /*清空probedata*/
             vm.dtHandle.clear();
-            console.log("重置");
+            //console.log("重置");
             vm.dtHandle.draw();
             /*重置*/
         },
         currReset: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("当前页面重绘");
+            //console.log("当前页面重绘");
             vm.dtHandle.draw(false);
             /*当前页面重绘*/
         },
         redraw: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("页面重绘");
+            //console.log("页面重绘");
             vm.dtHandle.draw();
             /*重绘*/
         }
@@ -904,16 +904,16 @@ var probetable = new Vue({
             sDom: 'Rfrtlip', /*显示在左下角*/
             ajax: function (data, callback, settings) {
                 //封装请求参数
-                console.log(data);
+                //console.log(data);
                 let param = {};
                 param.limit = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
                 param.start = data.start;//开始的记录序号
                 param.page = (data.start / data.length) + 1;//当前页码
                 param.order = data.order[0].dir;
-                console.log(param.order);
+                //console.log(param.order);
                 param.probedata = JSON.stringify(vm.probedata);
                 /*用于查询probe数据*/
-                console.log(param);
+                //console.log(param);
                 //ajax请求数据
                 $.ajax({
                     type: "POST", /*GET会乱码*/
@@ -922,8 +922,8 @@ var probetable = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                        console.log(result);
-                        console.log(param)
+                        //console.log(result);
+                        //console.log(param)
                         //封装返回数据
                         let returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -931,7 +931,7 @@ var probetable = new Vue({
                         returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
                         returnData.data = result.page.list;//返回的数据列表
                         // 重新整理返回数据以匹配表格
-                        console.log(returnData);
+                        //console.log(returnData);
                         let rows = [];
                         var i = param.start + 1;
                         probeContent = result.page.list;
@@ -951,7 +951,7 @@ var probetable = new Vue({
                             rows.push(row);
                         });
                         returnData.data = rows;
-                        console.log(returnData);
+                        //console.log(returnData);
                         //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);
@@ -1000,21 +1000,21 @@ var areatable = new Vue({
             vm.probedata = {};
             /*清空probedata*/
             vm.dtHandle.clear();
-            console.log("重置");
+            //console.log("重置");
             vm.dtHandle.draw();
             /*重置*/
         },
         currReset: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("当前页面重绘");
+            //console.log("当前页面重绘");
             vm.dtHandle.draw(false);
             /*当前页面重绘*/
         },
         redraw: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("页面重绘");
+            //console.log("页面重绘");
             vm.dtHandle.draw();
             /*重绘*/
         }
@@ -1063,7 +1063,7 @@ var areatable = new Vue({
                 param.order = data.order[0].dir;
                 param.probedata = JSON.stringify(vm.probedata);
                 /*用于查询probe数据*/
-                //console.log(param);
+                ////console.log(param);
                 //ajax请求数据
                 $.ajax({
                     type: "POST", /*GET会乱码*/
@@ -1072,7 +1072,7 @@ var areatable = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                        console.log(result);
+                        //console.log(result);
                         //封装返回数据
                         let returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -1090,7 +1090,7 @@ var areatable = new Vue({
                             probeId=item.probeId;
                             targetId=item.targetId;
                             cityId= item.cityId;
-                            debugger
+                              
                             row.push(st.get(item.serviceType));
                             row.push(item.targetName);
                             row.push(item.score.toFixed(2));
@@ -1100,12 +1100,12 @@ var areatable = new Vue({
                             rows.push(row);
                         });
                         returnData.data = rows;
-                        //console.log(returnData);
+                        ////console.log(returnData);
                         //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);
                         // setTimeout(function () {
-                        //     console.log('hello');
+                        //     //console.log('hello');
                         //     $("#areadata_table").colResizable({
                         //         liveDrag: true,
                         //         gripInnerHtml: "<div class='grip'></div>",
@@ -1153,21 +1153,21 @@ var doortable = new Vue({
             vm.probedata = {};
             /*清空probedata*/
             vm.dtHandle.clear();
-            console.log("重置");
+            //console.log("重置");
             vm.dtHandle.draw();
             /*重置*/
         },
         currReset: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("当前页面重绘");
+            //console.log("当前页面重绘");
             vm.dtHandle.draw(false);
             /*当前页面重绘*/
         },
         redraw: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("页面重绘");
+            //console.log("页面重绘");
             vm.dtHandle.draw();
             /*重绘*/
         }
@@ -1210,16 +1210,16 @@ var doortable = new Vue({
             sDom: 'Rfrtlip', /*显示在左下角*/
             ajax: function (data, callback, settings) {
                 //封装请求参数
-                console.log(data);
+                //console.log(data);
                 let param = {};
                 param.limit = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
                 param.start = data.start;//开始的记录序号
                 param.page = (data.start / data.length) + 1;//当前页码
                 param.order = data.order[0].dir;
-                console.log(param.order);
+                //console.log(param.order);
                 param.probedata = JSON.stringify(vm.probedata);
                 /*用于查询probe数据*/
-                console.log(param);
+                //console.log(param);
                 //ajax请求数据
                 $.ajax({
                     type: "POST", /*GET会乱码*/
@@ -1229,7 +1229,7 @@ var doortable = new Vue({
                     dataType: "json",
                     success: function (result) {
                          
-                        console.log(result);
+                        //console.log(result);
                         //封装返回数据
                         let returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -1301,7 +1301,7 @@ $(document).ready(function () {
                         var a = $(city.currentTarget)[0].innerText;
                         clearArea(a);
                         citySelected = $($(city.currentTarget)[0]).data('value');
-                        debugger
+                          
                         getCounty(citySelected);
                         $('div#city .combo-input').val(a);
                         $('div#city .combo-select select').val(a);
@@ -1369,15 +1369,15 @@ $(document).ready(function () {
 
     probeSelected = 0;
     $.ajax({
-        url: "../../cem/probe/list",//探针列表
+        url: "../../cem/probe/showlist",//探针列表
         type: "POST",
         cache: false,  //禁用缓存
         dataType: "json",
         contentType: "application/json",
         success: function (result) {
             var probes = [];
-            for (var i = 0; i < result.page.list.length; i++) {
-                probes[i] = {message: result.page.list[i]}
+            for (var i = 0; i < result.probe.length; i++) {
+                probes[i] = {message: result.probe[i]}
             }
             Doorsearch_data.probe = probes;
             setTimeout(function () {
@@ -1613,15 +1613,15 @@ var getdoorProbeCity = function (cityid) {
 
 function doorprobe() {
     $.ajax({
-        url: "../../cem/probe/list",//探针列表
+        url: "../../cem/probe/showlist",//探针列表
         type: "POST",
         cache: false,  //禁用缓存
         dataType: "json",
         contentType: "application/json",
         success: function (result) {
             var probes = [];
-            for (var i = 0; i < result.page.list.length; i++) {
-                probes[i] = {message: result.page.list[i]}
+            for (var i = 0; i < result.probe.length; i++) {
+                probes[i] = {message: result.probe[i]}
             }
             Doorsearch_data.probe = probes;
             setTimeout(function () {
@@ -1650,7 +1650,7 @@ function doorprobe() {
 };
 
 function diagnose_info(obj,num) {
-    debugger
+      
     probeSelected=0;
     diagnosetargetSelected;
     $('#diagnoseprobe .combo-input').val('请选择');
@@ -1678,7 +1678,6 @@ function diagnose_info(obj,num) {
         var countryId=obj.id;
         getdiagnoseProbeCounty(countryId);
         getArea(cityId);
-
         var type=parseInt(obj.type);
         var cityName=obj.title;
         var countryName=obj.lang;
@@ -1716,7 +1715,7 @@ function diagnose_info(obj,num) {
         diagnosetargetSelected=targetId;
     }
 
-    console.log(diagnosetargetSelected)
+    //console.log(diagnosetargetSelected)
      if(type==1||type==0){
         $('#ping').click();
     }else if(type==2){
@@ -1859,21 +1858,21 @@ function information(obj) {
                 vm.probedata = {};
                 /*清空probedata*/
                 vm.dtHandle.clear();
-                console.log("重置");
+                //console.log("重置");
                 vm.dtHandle.draw();
                 /*重置*/
             },
             currReset: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("当前页面重绘");
+                //console.log("当前页面重绘");
                 vm.dtHandle.draw(false);
                 /*当前页面重绘*/
             },
             redraw: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("页面重绘");
+                //console.log("页面重绘");
                 vm.dtHandle.draw();
                 /*重绘*/
             }
@@ -1907,7 +1906,7 @@ function information(obj) {
                     // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
                     returnData.data = probeContent;//返回的数据列表
                     // // 重新整理返回数据以匹配表格
-                    console.log(returnData);
+                    //console.log(returnData);
                     let rows = [];
                     var i = 1;
                     probeContent.forEach(function (item) {
@@ -2024,21 +2023,21 @@ function ping(obj) {
                 vm.probedata = {};
                 /*清空probedata*/
                 vm.dtHandle.clear();
-                console.log("重置");
+                //console.log("重置");
                 vm.dtHandle.draw();
                 /*重置*/
             },
             currReset: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("当前页面重绘");
+                //console.log("当前页面重绘");
                 vm.dtHandle.draw(false);
                 /*当前页面重绘*/
             },
             redraw: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("页面重绘");
+                //console.log("页面重绘");
                 vm.dtHandle.draw();
                 /*重绘*/
             }
@@ -2092,7 +2091,7 @@ function ping(obj) {
                     // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
                     returnData.data = probeContent;//返回的数据列表
                     // // 重新整理返回数据以匹配表格
-                    console.log(returnData);
+                    //console.log(returnData);
                     let rows = [];
                     var i = 1;
                     probeContent.forEach(function (item) {
@@ -2206,21 +2205,21 @@ function quality(obj) {
                 vm.probedata = {};
                 /*清空probedata*/
                 vm.dtHandle.clear();
-                console.log("重置");
+                //console.log("重置");
                 vm.dtHandle.draw();
                 /*重置*/
             },
             currReset: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("当前页面重绘");
+                //console.log("当前页面重绘");
                 vm.dtHandle.draw(false);
                 /*当前页面重绘*/
             },
             redraw: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("页面重绘");
+                //console.log("页面重绘");
                 vm.dtHandle.draw();
                 /*重绘*/
             }
@@ -2276,7 +2275,7 @@ function quality(obj) {
                     // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
                     returnData.data = probeContent;//返回的数据列表
                     // // 重新整理返回数据以匹配表格
-                    console.log(returnData);
+                    //console.log(returnData);
                     let rows = [];
                     var i = 1;
                     probeContent.forEach(function (item) {
@@ -2359,21 +2358,21 @@ function broswer(obj) {
                 vm.probedata = {};
                 /*清空probedata*/
                 vm.dtHandle.clear();
-                console.log("重置");
+                //console.log("重置");
                 vm.dtHandle.draw();
                 /*重置*/
             },
             currReset: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("当前页面重绘");
+                //console.log("当前页面重绘");
                 vm.dtHandle.draw(false);
                 /*当前页面重绘*/
             },
             redraw: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("页面重绘");
+                //console.log("页面重绘");
                 vm.dtHandle.draw();
                 /*重绘*/
             }
@@ -2406,7 +2405,7 @@ function broswer(obj) {
                     // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
                     returnData.data = probeContent;//返回的数据列表
                     // // 重新整理返回数据以匹配表格
-                    console.log(returnData);
+                    //console.log(returnData);
                     let rows = [];
                     var i = 1;
                     probeContent.forEach(function (item) {
@@ -2479,21 +2478,21 @@ function download(obj) {
                 vm.probedata = {};
                 /*清空probedata*/
                 vm.dtHandle.clear();
-                console.log("重置");
+                //console.log("重置");
                 vm.dtHandle.draw();
                 /*重置*/
             },
             currReset: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("当前页面重绘");
+                //console.log("当前页面重绘");
                 vm.dtHandle.draw(false);
                 /*当前页面重绘*/
             },
             redraw: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("页面重绘");
+                //console.log("页面重绘");
                 vm.dtHandle.draw();
                 /*重绘*/
             }
@@ -2548,7 +2547,7 @@ function download(obj) {
                     // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
                     returnData.data = probeContent;//返回的数据列表
                     // // 重新整理返回数据以匹配表格
-                    console.log(returnData);
+                    //console.log(returnData);
                     let rows = [];
                     var i = 1;
                     probeContent.forEach(function (item) {
@@ -2622,21 +2621,21 @@ function video(obj) {
                 vm.probedata = {};
                 /*清空probedata*/
                 vm.dtHandle.clear();
-                console.log("重置");
+                //console.log("重置");
                 vm.dtHandle.draw();
                 /*重置*/
             },
             currReset: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("当前页面重绘");
+                //console.log("当前页面重绘");
                 vm.dtHandle.draw(false);
                 /*当前页面重绘*/
             },
             redraw: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("页面重绘");
+                //console.log("页面重绘");
                 vm.dtHandle.draw();
                 /*重绘*/
             }
@@ -2669,7 +2668,7 @@ function video(obj) {
                     // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
                     returnData.data = probeContent;//返回的数据列表
                     // // 重新整理返回数据以匹配表格
-                    console.log(returnData);
+                    //console.log(returnData);
                     let rows = [];
                     var i = 1;
                     probeContent.forEach(function (item) {
@@ -2733,21 +2732,21 @@ function game(obj) {
                 vm.probedata = {};
                 /*清空probedata*/
                 vm.dtHandle.clear();
-                console.log("重置");
+                //console.log("重置");
                 vm.dtHandle.draw();
                 /*重置*/
             },
             currReset: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("当前页面重绘");
+                //console.log("当前页面重绘");
                 vm.dtHandle.draw(false);
                 /*当前页面重绘*/
             },
             redraw: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("页面重绘");
+                //console.log("页面重绘");
                 vm.dtHandle.draw();
                 /*重绘*/
             }
@@ -2780,7 +2779,7 @@ function game(obj) {
                     // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
                     returnData.data = probeContent;//返回的数据列表
                     // // 重新整理返回数据以匹配表格
-                    console.log(returnData);
+                    //console.log(returnData);
                     let rows = [];
                     var i = 1;
                     probeContent.forEach(function (item) {
@@ -2914,21 +2913,21 @@ function area_information(obj, areaContent) {
                 vm.probedata = {};
                 /*清空probedata*/
                 vm.dtHandle.clear();
-                console.log("重置");
+                //console.log("重置");
                 vm.dtHandle.draw();
                 /*重置*/
             },
             currReset: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("当前页面重绘");
+                //console.log("当前页面重绘");
                 vm.dtHandle.draw(false);
                 /*当前页面重绘*/
             },
             redraw: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("页面重绘");
+                //console.log("页面重绘");
                 vm.dtHandle.draw();
                 /*重绘*/
             }
@@ -2961,7 +2960,7 @@ function area_information(obj, areaContent) {
                     // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
                     returnData.data = probeContent;//返回的数据列表
                     // // 重新整理返回数据以匹配表格
-                    console.log(content);
+                    //console.log(content);
                     let rows = [];
                     var i = 1;
                     content.forEach(function (item) {
@@ -3078,21 +3077,21 @@ function area_ping(obj, areaContent) {
                 vm.probedata = {};
                 /*清空probedata*/
                 vm.dtHandle.clear();
-                console.log("重置");
+                //console.log("重置");
                 vm.dtHandle.draw();
                 /*重置*/
             },
             currReset: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("当前页面重绘");
+                //console.log("当前页面重绘");
                 vm.dtHandle.draw(false);
                 /*当前页面重绘*/
             },
             redraw: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("页面重绘");
+                //console.log("页面重绘");
                 vm.dtHandle.draw();
                 /*重绘*/
             }
@@ -3146,7 +3145,7 @@ function area_ping(obj, areaContent) {
                     // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
                     returnData.data = probeContent;//返回的数据列表
                     // // 重新整理返回数据以匹配表格
-                    console.log(returnData);
+                    //console.log(returnData);
                     let rows = [];
                     var i = 1;
                     content.forEach(function (item) {
@@ -3262,21 +3261,21 @@ function area_quality(obj, areaContent) {
                 vm.probedata = {};
                 /*清空probedata*/
                 vm.dtHandle.clear();
-                console.log("重置");
+                //console.log("重置");
                 vm.dtHandle.draw();
                 /*重置*/
             },
             currReset: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("当前页面重绘");
+                //console.log("当前页面重绘");
                 vm.dtHandle.draw(false);
                 /*当前页面重绘*/
             },
             redraw: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("页面重绘");
+                //console.log("页面重绘");
                 vm.dtHandle.draw();
                 /*重绘*/
             }
@@ -3332,7 +3331,7 @@ function area_quality(obj, areaContent) {
                     // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
                     returnData.data = probeContent;//返回的数据列表
                     // // 重新整理返回数据以匹配表格
-                    console.log(returnData);
+                    //console.log(returnData);
                     let rows = [];
                     var i = 1;
                     content.forEach(function (item) {
@@ -3415,21 +3414,21 @@ function area_broswer(obj, areaContent) {
                 vm.probedata = {};
                 /*清空probedata*/
                 vm.dtHandle.clear();
-                console.log("重置");
+                //console.log("重置");
                 vm.dtHandle.draw();
                 /*重置*/
             },
             currReset: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("当前页面重绘");
+                //console.log("当前页面重绘");
                 vm.dtHandle.draw(false);
                 /*当前页面重绘*/
             },
             redraw: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("页面重绘");
+                //console.log("页面重绘");
                 vm.dtHandle.draw();
                 /*重绘*/
             }
@@ -3462,7 +3461,7 @@ function area_broswer(obj, areaContent) {
                     // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
                     returnData.data = probeContent;//返回的数据列表
                     // // 重新整理返回数据以匹配表格
-                    console.log(returnData);
+                    //console.log(returnData);
                     let rows = [];
                     var i = 1;
                     content.forEach(function (item) {
@@ -3535,21 +3534,21 @@ function area_download(obj, areaContent) {
                 vm.probedata = {};
                 /*清空probedata*/
                 vm.dtHandle.clear();
-                console.log("重置");
+                //console.log("重置");
                 vm.dtHandle.draw();
                 /*重置*/
             },
             currReset: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("当前页面重绘");
+                //console.log("当前页面重绘");
                 vm.dtHandle.draw(false);
                 /*当前页面重绘*/
             },
             redraw: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("页面重绘");
+                //console.log("页面重绘");
                 vm.dtHandle.draw();
                 /*重绘*/
             }
@@ -3604,7 +3603,7 @@ function area_download(obj, areaContent) {
                     // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
                     returnData.data = probeContent;//返回的数据列表
                     // // 重新整理返回数据以匹配表格
-                    console.log(returnData);
+                    //console.log(returnData);
                     let rows = [];
                     var i = 1;
                     content.forEach(function (item) {
@@ -3678,21 +3677,21 @@ function area_video(obj, areaContent) {
                 vm.probedata = {};
                 /*清空probedata*/
                 vm.dtHandle.clear();
-                console.log("重置");
+                //console.log("重置");
                 vm.dtHandle.draw();
                 /*重置*/
             },
             currReset: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("当前页面重绘");
+                //console.log("当前页面重绘");
                 vm.dtHandle.draw(false);
                 /*当前页面重绘*/
             },
             redraw: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("页面重绘");
+                //console.log("页面重绘");
                 vm.dtHandle.draw();
                 /*重绘*/
             }
@@ -3725,7 +3724,7 @@ function area_video(obj, areaContent) {
                     // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
                     returnData.data = probeContent;//返回的数据列表
                     // // 重新整理返回数据以匹配表格
-                    console.log(returnData);
+                    //console.log(returnData);
                     let rows = [];
                     var i = 1;
                     content.forEach(function (item) {
@@ -3789,21 +3788,21 @@ function area_game(obj, areaContent) {
                 vm.probedata = {};
                 /*清空probedata*/
                 vm.dtHandle.clear();
-                console.log("重置");
+                //console.log("重置");
                 vm.dtHandle.draw();
                 /*重置*/
             },
             currReset: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("当前页面重绘");
+                //console.log("当前页面重绘");
                 vm.dtHandle.draw(false);
                 /*当前页面重绘*/
             },
             redraw: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("页面重绘");
+                //console.log("页面重绘");
                 vm.dtHandle.draw();
                 /*重绘*/
             }
@@ -3836,11 +3835,11 @@ function area_game(obj, areaContent) {
                     // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
                     returnData.data = probeContent;//返回的数据列表
                     // // 重新整理返回数据以匹配表格
-                    console.log(returnData);
+                    //console.log(returnData);
                     let rows = [];
                     var i = 1;
                     content.forEach(function (item) {
-                        debugger
+                          
                         if (id == item.countyId) {
                             let row = [];
                             row.push(i++);
@@ -3975,21 +3974,21 @@ function door_information(obj) {
                 vm.probedata = {};
                 /*清空probedata*/
                 vm.dtHandle.clear();
-                console.log("重置");
+                //console.log("重置");
                 vm.dtHandle.draw();
                 /*重置*/
             },
             currReset: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("当前页面重绘");
+                //console.log("当前页面重绘");
                 vm.dtHandle.draw(false);
                 /*当前页面重绘*/
             },
             redraw: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("页面重绘");
+                //console.log("页面重绘");
                 vm.dtHandle.draw();
                 /*重绘*/
             }
@@ -4023,7 +4022,7 @@ function door_information(obj) {
                     // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
                     returnData.data = probeContent;//返回的数据列表
                     // // 重新整理返回数据以匹配表格
-                    console.log(returnData);
+                    //console.log(returnData);
                     let rows = [];
                     var i = 1;
                     doorContent.forEach(function (item) {
@@ -4139,21 +4138,21 @@ function door_ping(obj) {
                 vm.probedata = {};
                 /*清空probedata*/
                 vm.dtHandle.clear();
-                console.log("重置");
+                //console.log("重置");
                 vm.dtHandle.draw();
                 /*重置*/
             },
             currReset: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("当前页面重绘");
+                //console.log("当前页面重绘");
                 vm.dtHandle.draw(false);
                 /*当前页面重绘*/
             },
             redraw: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("页面重绘");
+                //console.log("页面重绘");
                 vm.dtHandle.draw();
                 /*重绘*/
             }
@@ -4207,7 +4206,7 @@ function door_ping(obj) {
                     // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
                     returnData.data = doorContent;//返回的数据列表
                     // // 重新整理返回数据以匹配表格
-                    console.log(returnData);
+                    //console.log(returnData);
                     let rows = [];
                     var i = 1;
                     doorContent.forEach(function (item) {
@@ -4321,21 +4320,21 @@ function door_quality(obj) {
                 vm.probedata = {};
                 /*清空probedata*/
                 vm.dtHandle.clear();
-                console.log("重置");
+                //console.log("重置");
                 vm.dtHandle.draw();
                 /*重置*/
             },
             currReset: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("当前页面重绘");
+                //console.log("当前页面重绘");
                 vm.dtHandle.draw(false);
                 /*当前页面重绘*/
             },
             redraw: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("页面重绘");
+                //console.log("页面重绘");
                 vm.dtHandle.draw();
                 /*重绘*/
             }
@@ -4391,7 +4390,7 @@ function door_quality(obj) {
                     // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
                     returnData.data = doorContent;//返回的数据列表
                     // // 重新整理返回数据以匹配表格
-                    console.log(returnData);
+                    //console.log(returnData);
                     let rows = [];
                     var i = 1;
                     doorContent.forEach(function (item) {
@@ -4474,21 +4473,21 @@ function door_broswer(obj) {
                 vm.probedata = {};
                 /*清空probedata*/
                 vm.dtHandle.clear();
-                console.log("重置");
+                //console.log("重置");
                 vm.dtHandle.draw();
                 /*重置*/
             },
             currReset: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("当前页面重绘");
+                //console.log("当前页面重绘");
                 vm.dtHandle.draw(false);
                 /*当前页面重绘*/
             },
             redraw: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("页面重绘");
+                //console.log("页面重绘");
                 vm.dtHandle.draw();
                 /*重绘*/
             }
@@ -4521,7 +4520,7 @@ function door_broswer(obj) {
                     // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
                     returnData.data = doorContent;//返回的数据列表
                     // // 重新整理返回数据以匹配表格
-                    console.log(returnData);
+                    //console.log(returnData);
                     let rows = [];
                     var i = 1;
                     doorContent.forEach(function (item) {
@@ -4594,21 +4593,21 @@ function door_download(obj) {
                 vm.probedata = {};
                 /*清空probedata*/
                 vm.dtHandle.clear();
-                console.log("重置");
+                //console.log("重置");
                 vm.dtHandle.draw();
                 /*重置*/
             },
             currReset: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("当前页面重绘");
+                //console.log("当前页面重绘");
                 vm.dtHandle.draw(false);
                 /*当前页面重绘*/
             },
             redraw: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("页面重绘");
+                //console.log("页面重绘");
                 vm.dtHandle.draw();
                 /*重绘*/
             }
@@ -4663,7 +4662,7 @@ function door_download(obj) {
                     // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
                     returnData.data = doorContent;//返回的数据列表
                     // // 重新整理返回数据以匹配表格
-                    console.log(returnData);
+                    //console.log(returnData);
                     let rows = [];
                     var i = 1;
                     doorContent.forEach(function (item) {
@@ -4737,21 +4736,21 @@ function door_video(obj) {
                 vm.probedata = {};
                 /*清空probedata*/
                 vm.dtHandle.clear();
-                console.log("重置");
+                //console.log("重置");
                 vm.dtHandle.draw();
                 /*重置*/
             },
             currReset: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("当前页面重绘");
+                //console.log("当前页面重绘");
                 vm.dtHandle.draw(false);
                 /*当前页面重绘*/
             },
             redraw: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("页面重绘");
+                //console.log("页面重绘");
                 vm.dtHandle.draw();
                 /*重绘*/
             }
@@ -4784,7 +4783,7 @@ function door_video(obj) {
                     // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
                     returnData.data = doorContent;//返回的数据列表
                     // // 重新整理返回数据以匹配表格
-                    console.log(returnData);
+                    //console.log(returnData);
                     let rows = [];
                     var i = 1;
                     doorContent.forEach(function (item) {
@@ -4848,21 +4847,21 @@ function door_game(obj) {
                 vm.probedata = {};
                 /*清空probedata*/
                 vm.dtHandle.clear();
-                console.log("重置");
+                //console.log("重置");
                 vm.dtHandle.draw();
                 /*重置*/
             },
             currReset: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("当前页面重绘");
+                //console.log("当前页面重绘");
                 vm.dtHandle.draw(false);
                 /*当前页面重绘*/
             },
             redraw: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("页面重绘");
+                //console.log("页面重绘");
                 vm.dtHandle.draw();
                 /*重绘*/
             }
@@ -4896,7 +4895,7 @@ function door_game(obj) {
                     // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
                     returnData.data = doorContent;//返回的数据列表
                     // // 重新整理返回数据以匹配表格
-                    console.log(returnData);
+                    //console.log(returnData);
                     let rows = [];
                     var i = 1;
                     doorContent.forEach(function (item) {
@@ -4975,8 +4974,6 @@ function loading() {
 function fixed(value) {
     if(value==null){
         return ''
-    }else if(value==0){
-        return  value
     } else{
         return value.toFixed(2)
     }
@@ -4992,15 +4989,15 @@ function fixedRate(value) {
 
 function probe() {
     $.ajax({
-        url: "../../cem/probe/list",//探针列表
+        url: "../../cem/probe/showlist",//探针列表
         type: "POST",
         cache: false,  //禁用缓存
         dataType: "json",
         contentType: "application/json",
         success: function (result) {
             var probes = [];
-            for (var i = 0; i < result.page.list.length; i++) {
-                probes[i] = {message: result.page.list[i]}
+            for (var i = 0; i <  result.probe.length; i++) {
+                probes[i] = {message: result.probe[i]}
             }
             diagnose_data.probe = probes;
             setTimeout(function () {
@@ -5152,15 +5149,15 @@ $(document).ready(function () {
 });
 
 $.ajax({
-    url: "../../cem/probe/list",//探针列表
+    url: "../../cem/probe/showlist",//探针列表
     type: "POST",
     cache: false,  //禁用缓存
     dataType: "json",
     contentType: "application/json",
     success: function (result) {
         var probes = [];
-        for (var i = 0; i < result.page.list.length; i++) {
-            probes[i] = {message: result.page.list[i]}
+        for (var i = 0; i < result.probe.length; i++) {
+            probes[i] = {message: result.probe[i]}
         }
         diagnose_data.probe = probes;
         setTimeout(function () {
@@ -5389,13 +5386,13 @@ function diagnose() {
             dataType: "json",
             contentType: "application/json",
             success: function (result) {
-                console.log(result)
+                //console.log(result)
                 var dispatch = result.taskdispatch;
-                console.log(JSON.stringify(dispatch));
+                //console.log(JSON.stringify(dispatch));
                 var url = "../diagnose/information.html";
                 var dispatchString = JSON.stringify(dispatch);
                 url = url + "?dispatch=" + dispatchString.substring(1,dispatchString.length-1);
-                console.log(url);
+                //console.log(url);
                 document.getElementById("diagnose").href = encodeURI(url);
                 document.getElementById("diagnose").click();
                 $('#myModal_diagnose').modal('hide');

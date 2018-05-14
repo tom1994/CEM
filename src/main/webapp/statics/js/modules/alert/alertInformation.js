@@ -127,15 +127,15 @@ $(document).ready(function () {
 function probe() {
     probeSelected = 0;
     $.ajax({
-        url: "../../cem/probe/list",//探针列表
+        url: "../../cem/probe/showlist",//探针列表
         type: "POST",
         cache: false,  //禁用缓存
         dataType: "json",
         contentType: "application/json",
         success: function (result) {
             var probes = [];
-            for (var i = 0; i < result.page.list.length; i++) {
-                probes[i] = {message: result.page.list[i]}
+            for (var i = 0; i < result.probe.length; i++) {
+                probes[i] = {message: result.probe[i]}
             }
             search_data.probe = probes;
             setTimeout(function () {
@@ -184,7 +184,7 @@ var search_service = new Vue({
             var searchJson = getFormJson($('#probesearch'));
 
             if((searchJson.startDate)>(searchJson.terminalDate)){
-                console.log("时间选择有误，请重新选择！");
+                //console.log("时间选择有误，请重新选择！");
                 $('#nonavailable_time').modal('show');
             }else{
                 alerttable.probedata = searchJson;
@@ -250,7 +250,7 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
 function operate_this (obj) {     /*监听修改触发事件*/
     operate_data_id = parseInt(obj.id);
     /*获取当前行探针数据id*/
-    console.log(operate_data_id);
+    //console.log(operate_data_id);
     $.ajax({
         type: "POST", /*GET会乱码*/
         url: "../../alarmrecord/operate/"+operate_data_id,
@@ -276,17 +276,17 @@ function delete_All(){
     if(check_val==[]){
         toastr.warning("请选择要确定的告警信息!");
     }
-    console.log(check_val);
+    //console.log(check_val);
     operate_ajax(check_val)
 }
 
 function operate_ajax(check_val) {
     var ids = new Array();
-    console.log(ids);
+    //console.log(ids);
     for(var i=0;i<check_val.length;i++){
         ids[i]=parseInt(check_val[i]);
     }
-    console.log(ids);
+    //console.log(ids);
     /*对象数组字符串*/
 
     $.ajax({
@@ -351,17 +351,17 @@ var alerttable = new Vue({
     el: '#alert_table',
     data: {
         headers: [
-            {title: '<div></div>'},
-            {title: '<div class="checkbox" style="width:100%; align: center"> <label> <input type="checkbox" id="checkAll"></label> </div>'},
-            {title: '<div >告警类型</div>'},
-            {title: '<div >告警级别</div>'},
-            {title: '<div >告警状态</div>'},
-            {title: '<div >探针名称</div>'},
-            {title: '<div >业务类型</div>'},
-            {title: '<div >测试目标</div>'},
+            {title: '<div style="width: 15px"></div>'},
+            {title: '<div class="checkbox" style="width:17px; align: center"> <label> <input type="checkbox" id="checkAll"></label> </div>'},
+            {title: '<div  style="width: 52px">告警类型</div>'},
+            {title: '<div  style="width: 52px">告警级别</div>'},
+            {title: '<div  style="width: 52px">告警状态</div>'},
+            {title: '<div  style="width: 70px">探针名称</div>'},
+            {title: '<div  style="width: 80px">业务类型</div>'},
+            {title: '<div style="width: 100px" >测试目标</div>'},
             {title: '<div >详情</div>'},
-            {title: '<div >时间</div>'},
-            {title: '<div >操作</div>'}
+            {title: '<div style="width: 200px" >时间</div>'},
+            {title: '<div  style="width: 90px" >操作</div>'}
         ],
         rows: [],
         dtHandle: null,
@@ -374,21 +374,21 @@ var alerttable = new Vue({
             vm.probedata = {};
             /*清空probedata*/
             vm.dtHandle.clear();
-            console.log("重置");
+            //console.log("重置");
             vm.dtHandle.draw();
             /*重置*/
         },
         currReset: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("当前页面重绘");
+            //console.log("当前页面重绘");
             vm.dtHandle.draw(false);
             /*当前页面重绘*/
         },
         redraw: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("页面重绘");
+            //console.log("页面重绘");
             vm.dtHandle.draw();
             /*重绘*/
         }
@@ -402,8 +402,8 @@ var alerttable = new Vue({
             searching: false,
             paging: true,
             serverSide: true,
-            // scrollY :400,
-            // scrollX: true,
+            scrollY :320,
+            scrollX: true,
             // scrollCollapse: true,
             info: false,
             ordering: false, /*禁用排序功能*/
@@ -430,7 +430,7 @@ var alerttable = new Vue({
                 param.page = (data.start / data.length) + 1;//当前页码
                 param.probedata = JSON.stringify(vm.probedata);
                 /*用于查询probe数据*/
-                console.log(param);
+                //console.log(param);
                 //ajax请求数据
                 $.ajax({
                     type: "POST", /*GET会乱码*/
@@ -439,7 +439,7 @@ var alerttable = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                        console.log(result);
+                        //console.log(result);
                         //封装返回数据
                         let returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -464,8 +464,7 @@ var alerttable = new Vue({
                             info.map((e,index)=>{
                                 Object.assign(newObj,e);
                             })
-                            console.log(newObj,item.trigger)
-                            debugger
+                            //console.log(newObj,item.trigger)
                            if(st.get(item.type)=='阈值告警'){
                                if(item.serviceType==1||item.serviceType==2|| item.serviceType==3 ||item.serviceType==4||item.serviceType==5){
                                    var b="",c="",d="" ,e='',f='',g='',h='';
@@ -886,7 +885,7 @@ var alerttable = new Vue({
                             rows.push(row);
                         });
                         returnData.data = rows;
-                        console.log(returnData);
+                        //console.log(returnData);
                         //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);
@@ -902,7 +901,7 @@ var alerttable = new Vue({
         });
     }
 });
-
+// $("#alert_table").fixedtableheader();
 var date=new Date();
 var month = date.getMonth() + 1;
 var strDate = date.getDate();
