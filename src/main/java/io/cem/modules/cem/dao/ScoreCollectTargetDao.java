@@ -11,4 +11,5 @@ public interface ScoreCollectTargetDao {
     List<ScoreCollectTargetEntity> queryList(Map<String, Object> map);
     void save(ScoreCollectTargetEntity ste);
     void deleteBatch(int[] ids);
+    void delAll();
 }

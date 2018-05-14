@@ -60,6 +60,10 @@ public class ScoreCollectBusyIdleTimeServiceImpl implements ScoreCollectBusyIdle
         List<ScoreEntity> busyScores = new ArrayList<ScoreEntity>();
         List<ScoreEntity> freeScores = new ArrayList<ScoreEntity>();
         log.info("开始计算忙时分数");
+        log.info("开始计算忙时分数,查询开始日期，ava_start：" + param.get("ava_start"));
+        log.info("开始计算忙时分数，查询结束日期，ava_terminal：" + param.get("ava_terminal"));
+        log.info("开始计算忙时分数,查询开始时间，startTime：" + param.get("startTime"));
+        log.info("开始计算忙时分数，查询结束时间，terminalTime：" + param.get("terminalTime"));
         busyScores = selectMethod(mothedCode,param);
         log.info("忙时分数计算结束，业务类型："+mothedCode);
         log.info("忙时分数计算结束，数量："+busyScores.size());
@@ -71,6 +75,10 @@ public class ScoreCollectBusyIdleTimeServiceImpl implements ScoreCollectBusyIdle
         param.put("startTime",proparams.get("recordTimeStartFree"));
         param.put("terminalTime",proparams.get("recordTimeEndFree"));
         log.info("开始计算闲时分数，第一时间段");
+        log.info("开始计算闲时分数，第一时间段,查询开始日期，ava_start：" + param.get("ava_start"));
+        log.info("开始计算闲时分数，第一时间段，查询结束日期，ava_terminal：" + param.get("ava_terminal"));
+        log.info("开始计算闲时分数，第一时间段,查询开始时间，startTime：" + param.get("startTime"));
+        log.info("开始计算闲时分数，第一时间段，查询结束时间，terminalTime：" + param.get("terminalTime"));
         freeScores = selectMethod(mothedCode,param);
         log.info("结束计算闲时分数，第一时间段，业务类型："+mothedCode);
         log.info("结束计算闲时分数，第一时间段，分数值数量："+freeScores.size());
@@ -78,6 +86,10 @@ public class ScoreCollectBusyIdleTimeServiceImpl implements ScoreCollectBusyIdle
         param.put("terminalTime",proparams.get("recordTimeEndFree2"));
         log.info("开始计算闲时分数，第二时间段");
         log.info("结束计算闲时分数，第二时间段，业务类型："+mothedCode);
+        log.info("开始计算闲时分数，第二时间段,查询开始日期，ava_start：" + param.get("ava_start"));
+        log.info("开始计算闲时分数，第二时间段，查询结束日期，ava_terminal：" + param.get("ava_terminal"));
+        log.info("开始计算闲时分数，第二时间段,查询开始时间，startTime：" + param.get("startTime"));
+        log.info("开始计算闲时分数，第二时间段，查询结束时间，terminalTime：" + param.get("terminalTime"));
         freeScores.addAll(selectMethod(mothedCode,param));
         log.info("结束计算闲时分数，第二时间段，分数值数量："+freeScores.size());
         log.info("开始保存闲时分数");
@@ -107,27 +119,27 @@ public class ScoreCollectBusyIdleTimeServiceImpl implements ScoreCollectBusyIdle
             switch (code){
                 case 1:
                     log.info("计算忙闲时分数，调用的方法是：recordHourDhcpService.connectionDayHourChart");
-                    scores = recordHourDhcpService.connectionDayHourChart(param);
+                    scores = recordHourDhcpService.connectionHourChart(param);
                     break;
                 case 2:
                     log.info("计算忙闲时分数，调用的方法是：recordHourDhcpService.qualityDayHourChart");
-                    scores = recordHourDhcpService.qualityDayHourChart(param);
+                    scores = recordHourDhcpService.qualityHourChart(param);
                     break;
                 case 3:
                     log.info("计算忙闲时分数，调用的方法是：recordHourDhcpService.pageDayChart");
-                    scores = recordHourDhcpService.pageDayChart(param);
+                    scores = recordHourDhcpService.pageHourChart(param);
                     break;
                 case 4:
                     log.info("计算忙闲时分数，调用的方法是：recordHourDhcpService.downloadDayHourChart");
-                    scores = recordHourDhcpService.downloadDayHourChart(param);
+                    scores = recordHourDhcpService.downloadHourChart(param);
                     break;
                 case 5:
                     log.info("计算忙闲时分数，调用的方法是：recordHourDhcpService.videoDayChart");
-                    scores = recordHourDhcpService.videoDayChart(param);
+                    scores = recordHourDhcpService.videoHourChart(param);
                     break;
                 case 6:
                     log.info("计算忙闲时分数，调用的方法是：recordHourDhcpService.gameDayChart");
-                    scores = recordHourDhcpService.gameDayChart(param);
+                    scores = recordHourDhcpService.gameHourChart(param);
                     break;
             }
         }catch (Exception e){
@@ -138,6 +150,9 @@ public class ScoreCollectBusyIdleTimeServiceImpl implements ScoreCollectBusyIdle
     }
     public List<ScoreCollectDayEntity> getScores(Map<String,Object> params){
         return scoreCollectDayDao.queryList(params);
+    }
+    public void delAll(){
+        scoreCollectDayDao.delAll();
     }
 
     private Map<String,String> getQueryParams(){

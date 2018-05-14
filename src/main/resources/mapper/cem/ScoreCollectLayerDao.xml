@@ -13,11 +13,10 @@
 
     <select id="queryList" resultMap="scoreCollectLayerMap">
 
-        SELECT id,score,score_date,score_time,access_layer,service_type FROM cem.score_collect_layer
+        SELECT id,score,score_date,score_time,access_layer,service_type FROM score_collect_layer
 
         <where>
             `service_type`= #{serviceType}
-            and `score_date` between #{startDate} and #{endDate}
         </where>
 
 
@@ -46,6 +45,10 @@
 
         delete from score_collect_layer where score_date between #{stime} and #{etime}
 
+    </delete>
+
+    <delete id="delAll">
+        truncate table score_collect_layer
     </delete>
 
 </mapper>

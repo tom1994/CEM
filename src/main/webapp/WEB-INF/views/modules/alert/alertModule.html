@@ -35,6 +35,18 @@
         .modal-open .modal{
             overflow-y: hidden;
         }
+        .dataTable th {
+            white-space: nowrap !important;
+        }
+        .dataTable td {
+            overflow: visible; !important;
+            white-space: nowrap !important;
+        }
+        .dataTables_wrapper .dataTables_scroll .dataTables_scrollHead .dataTables_scrollHeadInner,
+        .dataTables_wrapper .dataTables_scroll .dataTables_scrollHead .dataTables_scrollHeadInner >table.dataTable,
+        .dataTables_wrapper .dataTables_scroll .dataTables_scrollBody > table.dataTable {
+            width: 800px !important;
+        }
     </style>
 
 </head>
@@ -178,15 +190,15 @@
                                 <div class="form-group row">
                                     <label for="connection_delay"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                            >时延(ms)</label>
+                                            >往返时延(ms)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="connection_delay"
-                                               value="10" disabled="disabled" name="delay"
+                                               value="90" disabled="disabled" name="delay"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="10" disabled="disabled" name="delay"
+                                               value="110" disabled="disabled" name="delay"
                                                placeholder="">
                                     </div>
 
@@ -197,12 +209,12 @@
                                     >时延标准差(ms)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="connection_delay_std"
-                                               value="100" disabled="disabled" name="delay_std"
+                                               value="0" disabled="disabled" name="delay_std"
                                                placeholder="">
                                      </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="100" disabled="disabled" name="delay_std"
+                                               value="0" disabled="disabled" name="delay_std"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -212,11 +224,11 @@
                                     >时延方差(ms)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="connection_delay_var"
-                                               value="100" disabled="disabled" name="delay_var" placeholder="">
+                                               value="0" disabled="disabled" name="delay_var" placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="100" disabled="disabled" name="delay_var" placeholder="">
+                                               value="0" disabled="disabled" name="delay_var" placeholder="">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -225,12 +237,12 @@
                                             >抖动(ms)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="connection_jitter"
-                                               value="32" disabled="disabled" name="jitter"
+                                               value="35" disabled="disabled" name="jitter"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5  col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="32" disabled="disabled" name="jitter"
+                                               value="45" disabled="disabled" name="jitter"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -240,11 +252,11 @@
                                     >抖动标准差(ms)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="connection_jitter_std"
-                                               value="100" disabled="disabled" name="jitter_std" placeholder="">
+                                               value="0" disabled="disabled" name="jitter_std" placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="100" disabled="disabled" name="jitter_std" placeholder="">
+                                               value="0" disabled="disabled" name="jitter_std" placeholder="">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -253,12 +265,12 @@
                                             >抖动方差(ms)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="connection_jitter_var"
-                                               value="32" disabled="disabled" name="jitter_var"
+                                               value="0" disabled="disabled" name="jitter_var"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="32" disabled="disabled" name="jitter_var"
+                                               value="0" disabled="disabled" name="jitter_var"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -268,11 +280,11 @@
                                             >丢包率(%)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="connection_loss_rate"
-                                               value="100" disabled="disabled" name="loss_rate" placeholder="">
+                                               value="20" disabled="disabled" name="loss_rate" placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="100" disabled="disabled" name="loss_rate" placeholder="">
+                                               value="30" disabled="disabled" name="loss_rate" placeholder="">
                                     </div>
                                 </div>
                             </div>
@@ -289,12 +301,12 @@
                                     >时延(ms)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="sla_delay"
-                                               value="10" disabled="disabled" name="delay"
+                                               value="90" disabled="disabled" name="delay"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="10" disabled="disabled" name="delay"
+                                               value="110" disabled="disabled" name="delay"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -304,12 +316,12 @@
                                             >往向时延(ms)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="sla_g_delay"
-                                               value="100" disabled="disabled" name="g_delay"
+                                               value="45" disabled="disabled" name="g_delay"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="100" disabled="disabled" name="g_delay"
+                                               value="55" disabled="disabled" name="g_delay"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -319,12 +331,12 @@
                                     >返向时延(ms)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="sla_r_delay"
-                                               value="10" disabled="disabled" name="r_delay"
+                                               value="45" disabled="disabled" name="r_delay"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="10" disabled="disabled" name="r_delay"
+                                               value="55" disabled="disabled" name="r_delay"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -335,12 +347,12 @@
                                             >时延标准差(ms)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="sla_delay_std"
-                                               value="100" disabled="disabled" name="delay_std"
+                                               value="0" disabled="disabled" name="delay_std"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="100" disabled="disabled" name="delay_std"
+                                               value="0" disabled="disabled" name="delay_std"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -350,12 +362,12 @@
                                     >往向时延标准差(ms)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="sla_g_delay_std"
-                                               value="10" disabled="disabled" name="g_delay_std"
+                                               value="0" disabled="disabled" name="g_delay_std"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="10" disabled="disabled" name="g_delay_std"
+                                               value="0" disabled="disabled" name="g_delay_std"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -365,12 +377,12 @@
                                             >返向时延标准差(ms)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="sla_r_delay_std"
-                                               value="100" disabled="disabled" name="r_delay_std"
+                                               value="0" disabled="disabled" name="r_delay_std"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="100" disabled="disabled" name="r_delay_std"
+                                               value="0" disabled="disabled" name="r_delay_std"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -380,12 +392,12 @@
                                     >时延方差(ms)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="sla_delay_var"
-                                               value="10" disabled="disabled" name="delay_var"
+                                               value="0" disabled="disabled" name="delay_var"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="10" disabled="disabled" name="delay_var"
+                                               value="0" disabled="disabled" name="delay_var"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -396,12 +408,12 @@
                                             >往向时延方差(ms)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="sla_g_delay_var"
-                                               value="100" disabled="disabled" name="g_delay_var"
+                                               value="0" disabled="disabled" name="g_delay_var"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="100" disabled="disabled" name="g_delay_var"
+                                               value="0" disabled="disabled" name="g_delay_var"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -411,12 +423,12 @@
                                     >返向时延方差(ms)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="sla_r_delay_var"
-                                               value="10" disabled="disabled" name="r_delay_var"
+                                               value="0" disabled="disabled" name="r_delay_var"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="10" disabled="disabled" name="r_delay_var"
+                                               value="0" disabled="disabled" name="r_delay_var"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -426,12 +438,12 @@
                                             >抖动(ms)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="sla_jitter"
-                                               value="100" disabled="disabled" name="jitter"
+                                               value="35" disabled="disabled" name="jitter"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="100" disabled="disabled" name="jitter"
+                                               value="45" disabled="disabled" name="jitter"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -441,12 +453,12 @@
                                     >往向抖动(ms)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="sla_g_jitter"
-                                               value="10" disabled="disabled" name="g_jitter"
+                                               value="30" disabled="disabled" name="g_jitter"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="10" disabled="disabled" name="g_jitter"
+                                               value="40" disabled="disabled" name="g_jitter"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -457,12 +469,12 @@
                                             >返向抖动(ms)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="sla_r_jitter"
-                                               value="100" disabled="disabled" name="r_jitter"
+                                               value="30" disabled="disabled" name="r_jitter"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="100" disabled="disabled" name="r_jitter"
+                                               value="40" disabled="disabled" name="r_jitter"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -472,12 +484,12 @@
                                     >抖动标准差(ms)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="sla_jitter_std"
-                                               value="10" disabled="disabled" name="jitter_std"
+                                               value="0" disabled="disabled" name="jitter_std"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="10" disabled="disabled" name="jitter_std"
+                                               value="0" disabled="disabled" name="jitter_std"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -487,12 +499,12 @@
                                             >往向抖动标准差(ms)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="sla_g_jitter_std"
-                                               value="100" disabled="disabled" name="g_jitter_std"
+                                               value="0" disabled="disabled" name="g_jitter_std"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="100" disabled="disabled" name="g_jitter_std"
+                                               value="0" disabled="disabled" name="g_jitter_std"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -502,12 +514,12 @@
                                     >返向抖动标准差(ms)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="sla_r_jitter_std"
-                                               value="10" disabled="disabled" name="r_jitter_std"
+                                               value="0" disabled="disabled" name="r_jitter_std"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="10" disabled="disabled" name="r_jitter_std"
+                                               value="0" disabled="disabled" name="r_jitter_std"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -517,12 +529,12 @@
                                             >抖动方差(ms)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="sla_jitter_var"
-                                               value="100" disabled="disabled" name="jitter_var"
+                                               value="0" disabled="disabled" name="jitter_var"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="100" disabled="disabled" name="jitter_var"
+                                               value="0" disabled="disabled" name="jitter_var"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -532,12 +544,12 @@
                                     >往向抖动方差(ms)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="sla_g_jitter_var"
-                                               value="10" disabled="disabled" name="g_jitter_var"
+                                               value="0" disabled="disabled" name="g_jitter_var"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="10" disabled="disabled" name="g_jitter_var"
+                                               value="0" disabled="disabled" name="g_jitter_var"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -547,12 +559,12 @@
                                             >返向抖动方差(ms)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="sla_r_jitter_var"
-                                               value="100" disabled="disabled" name="r_jitter_var"
+                                               value="0" disabled="disabled" name="r_jitter_var"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="100" disabled="disabled" name="r_jitter_var"
+                                               value="0" disabled="disabled" name="r_jitter_var"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -562,12 +574,12 @@
                                             >丢包率(%)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="sla_loss_rate"
-                                               value="10" disabled="disabled" name="loss_rate"
+                                               value="20" disabled="disabled" name="loss_rate"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="10" disabled="disabled" name="loss_rate"
+                                               value="30" disabled="disabled" name="loss_rate"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -582,15 +594,15 @@
                                 <div class="form-group row">
                                     <label for="dns_delay"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                    >时延(ms)</label>
+                                    >解析时延(ms)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="dns_delay"
-                                               value="10" disabled="disabled" name="delay"
+                                               value="500" disabled="disabled" name="delay"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="10" disabled="disabled" name="delay"
+                                               value="1000" disabled="disabled" name="delay"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -598,15 +610,15 @@
 
                                     <label for="dns_success_rate"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                            >查询成功率(%)</label>
+                                            >解析成功率(%)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="dns_success_rate"
-                                               value="100" disabled="disabled" name="success_rate"
+                                               value="60" disabled="disabled" name="success_rate"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="100" disabled="disabled" name="success_rate"
+                                               value="40" disabled="disabled" name="success_rate"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -622,15 +634,15 @@
                                 <div class="form-group row">
                                     <label for="dhcp_delay"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                    >时延(ms)</label>
+                                    >分配时延(ms)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="dhcp_delay"
-                                               value="10" disabled="disabled" name="delay"
+                                               value="50" disabled="disabled" name="delay"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="10" disabled="disabled" name="delay"
+                                               value="100" disabled="disabled" name="delay"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -641,12 +653,12 @@
                                             >分配成功率(%)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="dhcp_success_rate"
-                                               value="100" disabled="disabled" name="success_rate"
+                                               value="80" disabled="disabled" name="success_rate"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="100" disabled="disabled" name="success_rate"
+                                               value="70" disabled="disabled" name="success_rate"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -665,12 +677,12 @@
                                     >拨号时延(ms)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="adsl_delay"
-                                               value="10" disabled="disabled" name="delay"
+                                               value="0" disabled="disabled" name="delay"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="10" disabled="disabled" name="delay"
+                                               value="0" disabled="disabled" name="delay"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -680,12 +692,12 @@
                                             >掉线率(%)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="adsl_drop_rate"
-                                               value="100" disabled="disabled" name="drop_rate"
+                                               value="0" disabled="disabled" name="drop_rate"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="100" disabled="disabled" name="drop_rate"
+                                               value="0" disabled="disabled" name="drop_rate"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -695,12 +707,12 @@
                                             >拨号成功率(%)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="adsl_success_rate"
-                                               value="10" disabled="disabled" name="success_rate"
+                                               value="0" disabled="disabled" name="success_rate"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="10" disabled="disabled" name="success_rate"
+                                               value="0" disabled="disabled" name="success_rate"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -719,12 +731,12 @@
                                     >认证时延(ms)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="radius_delay"
-                                               value="10" disabled="disabled" name="delay"
+                                               value="500" disabled="disabled" name="delay"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="10" disabled="disabled" name="delay"
+                                               value="1000" disabled="disabled" name="delay"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -734,12 +746,12 @@
                                             >认证成功率(%)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="radius_success_rate"
-                                               value="100" disabled="disabled" name="success_rate"
+                                               value="60" disabled="disabled" name="success_rate"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="100" disabled="disabled" name="success_rate"
+                                               value="40" disabled="disabled" name="success_rate"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -755,15 +767,15 @@
                                 <div class="form-group row">
                                     <label for="web_page_dns_delay"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                    >DNS时延(ms)</label>
+                                    >DNS解析时延(ms)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="web_page_dns_delay"
-                                               value="10" disabled="disabled" name="dns_delay"
+                                               value="500" disabled="disabled" name="dns_delay"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="10" disabled="disabled" name="dns_delay"
+                                               value="1000" disabled="disabled" name="dns_delay"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -774,12 +786,12 @@
                                             >连接时延(ms)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="web_page_conn_delay"
-                                               value="100" disabled="disabled" name="conn_delay"
+                                               value="500" disabled="disabled" name="conn_delay"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="100" disabled="disabled" name="conn_delay"
+                                               value="1000" disabled="disabled" name="conn_delay"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -789,12 +801,12 @@
                                     >重定向时延时延(ms)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="web_page_redirect_delay"
-                                               value="10" disabled="disabled" name="redirect_delay"
+                                               value="0" disabled="disabled" name="redirect_delay"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="10" disabled="disabled" name="redirect_delay"
+                                               value="0" disabled="disabled" name="redirect_delay"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -804,27 +816,27 @@
                                             >首字节到达时延(ms)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="web_page_headbyte_delay"
-                                               value="100" disabled="disabled" name="headbyte_delay"
+                                               value="500" disabled="disabled" name="headbyte_delay"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="100" disabled="disabled" name="headbyte_delay"
+                                               value="1000" disabled="disabled" name="headbyte_delay"
                                                placeholder="">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="web_page_page_file_delay"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                    >页面文件时延(ms)</label>
+                                    >传输页面文件时延(ms)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="web_page_page_file_delay"
-                                               value="10" disabled="disabled" name="page_file_delay"
+                                               value="500" disabled="disabled" name="page_file_delay"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="10" disabled="disabled" name="page_file_delay"
+                                               value="1000" disabled="disabled" name="page_file_delay"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -834,12 +846,12 @@
                                             >页面加载时延(ms)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="load_delay"
-                                               value="100" disabled="disabled" name="load_delay"
+                                               value="6000" disabled="disabled" name="load_delay"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="100" disabled="disabled" name="load_delay"
+                                               value="10000" disabled="disabled" name="load_delay"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -849,12 +861,12 @@
                                     >首屏时延(ms)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="web_page_above_fold_delay"
-                                               value="10" disabled="disabled" name="above_fold_delay"
+                                               value="3500" disabled="disabled" name="above_fold_delay"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="10" disabled="disabled" name="above_fold_delay"
+                                               value="5500" disabled="disabled" name="above_fold_delay"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -862,15 +874,15 @@
 
                                     <label for="web_page_download_speed"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                            >下载速率(kb/s)</label>
+                                            >下载速率(KB/s)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="web_page_download_speed"
-                                               value="100" disabled="disabled" name="download_rate"
+                                               value="400" disabled="disabled" name="download_rate"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="100" disabled="disabled" name="download_rate"
+                                               value="200" disabled="disabled" name="download_rate"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -886,15 +898,15 @@
                                 <div class="form-group row">
                                     <label for="web_download_dns_delay"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                    >DNS时延(ms)</label>
+                                    >DNS解析时延(ms)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="web_download_dns_delay"
-                                               value="10" disabled="disabled" name="dns_delay"
+                                               value="500" disabled="disabled" name="dns_delay"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="10" disabled="disabled" name="dns_delay"
+                                               value="1000" disabled="disabled" name="dns_delay"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -904,27 +916,27 @@
                                             >连接时延(ms)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="web_download_conn_delay"
-                                               value="100" disabled="disabled" name="conn_delay"
+                                               value="500" disabled="disabled" name="conn_delay"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="100" disabled="disabled" name="conn_delay"
+                                               value="1000" disabled="disabled" name="conn_delay"
                                                placeholder="">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="web_download_download_speed"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                    >下载速率(kb/s)</label>
+                                    >下载速率(KB/s)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="web_download_download_speed"
-                                               value="10" disabled="disabled" name="download_rate"
+                                               value="1000" disabled="disabled" name="download_rate"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="10" disabled="disabled" name="download_rate"
+                                               value="500" disabled="disabled" name="download_rate"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -934,12 +946,12 @@
                                             >首字节到达时延(ms)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="web_download_headbyte_delay"
-                                               value="100" disabled="disabled" name="headbyte_delay"
+                                               value="500" disabled="disabled" name="headbyte_delay"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="100" disabled="disabled" name="headbyte_delay"
+                                               value="1000" disabled="disabled" name="headbyte_delay"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -954,15 +966,15 @@
                                 <div class="form-group row">
                                     <label for="ftp_dns_delay"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                    >DNS时延(ms)</label>
+                                    >DNS解析时延(ms)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="ftp_dns_delay"
-                                               value="10" disabled="disabled" name="dns_delay"
+                                               value="500" disabled="disabled" name="dns_delay"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="10" disabled="disabled" name="dns_delay"
+                                               value="1000" disabled="disabled" name="dns_delay"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -972,12 +984,12 @@
                                             >连接时延(ms)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="ftp_conn_delay"
-                                               value="100" disabled="disabled" name="conn_delay"
+                                               value="500" disabled="disabled" name="conn_delay"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="100" disabled="disabled" name="conn_delay"
+                                               value="1000" disabled="disabled" name="conn_delay"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -987,12 +999,12 @@
                                     >登录时延(ms)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="ftp_login_delay"
-                                               value="10" disabled="disabled" name="login_delay"
+                                               value="0" disabled="disabled" name="login_delay"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="10" disabled="disabled" name="login_delay"
+                                               value="0" disabled="disabled" name="login_delay"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -1000,15 +1012,15 @@
 
                                     <label for="ftp_download_speed"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                            >下载速率(kb/s)</label>
+                                            >下载速率(KB/s)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="ftp_download_speed"
-                                               value="100" disabled="disabled" name="download_rate"
+                                               value="750" disabled="disabled" name="download_rate"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="100" disabled="disabled" name="download_rate"
+                                               value="500" disabled="disabled" name="download_rate"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -1018,12 +1030,12 @@
                                     >首字节到达时延(ms)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="ftp_headbyte_delay"
-                                               value="10" disabled="disabled" name="headbyte_delay"
+                                               value="500" disabled="disabled" name="headbyte_delay"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="10" disabled="disabled" name="headbyte_delay"
+                                               value="1000" disabled="disabled" name="headbyte_delay"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -1038,15 +1050,15 @@
                                 <div class="form-group row">
                                     <label for="ftp_dns_delay"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                    >DNS时延(ms)</label>
+                                    >DNS解析时延(ms)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="10" disabled="disabled" name="dns_delay"
+                                               value="500" disabled="disabled" name="dns_delay"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="10" disabled="disabled" name="dns_delay"
+                                               value="1000" disabled="disabled" name="dns_delay"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -1056,12 +1068,12 @@
                                     >连接时延(ms)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="100" disabled="disabled" name="conn_delay"
+                                               value="500" disabled="disabled" name="conn_delay"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="100" disabled="disabled" name="conn_delay"
+                                               value="1000" disabled="disabled" name="conn_delay"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -1071,12 +1083,12 @@
                                     >登录时延(ms)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="10" disabled="disabled" name="login_delay"
+                                               value="0" disabled="disabled" name="login_delay"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="10" disabled="disabled" name="login_delay"
+                                               value="0" disabled="disabled" name="login_delay"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -1086,22 +1098,22 @@
                                     >首字节到达时延(ms)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="10" disabled="disabled" name="headbyte_delay"
+                                               value="500" disabled="disabled" name="headbyte_delay"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="10" disabled="disabled" name="headbyte_delay"
+                                               value="1000" disabled="disabled" name="headbyte_delay"
                                                placeholder="">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="ftp_upload_speed"
                                            class="col-lg-2 col-md-2 col-sm-2 form_border"
-                                    >上传速率(kb/s)</label>
+                                    >上传速率(KB/s)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="ftp_upload_speed"
-                                               value="100" disabled="disabled" name="upload_rate"
+                                               value="250" disabled="disabled" name="upload_rate"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
@@ -1121,15 +1133,15 @@
                                 <div class="form-group row">
                                     <label for="video_dns_delay"
                                            class="col-lg-3 col-md-3 col-sm-3 form_border"
-                                    >DNS时延(ms)</label>
+                                    >DNS解析时延(ms)</label>
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <input type="text" class="form-control input clear" id="video_dns_delay"
-                                               value="10" disabled="disabled" name="dns_delay"
+                                               value="500" disabled="disabled" name="dns_delay"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <input type="text" class="form-control input clear"
-                                               value="10" disabled="disabled" name="dns_delay"
+                                               value="1000" disabled="disabled" name="dns_delay"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -1139,12 +1151,12 @@
                                             >连接WEB服务器时延(ms)</label>
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <input type="text" class="form-control input clear" id="video_ws_conn_delay"
-                                               value="100" disabled="disabled" name="ws_conn_delay"
+                                               value="500" disabled="disabled" name="ws_conn_delay"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <input type="text" class="form-control input clear"
-                                               value="100" disabled="disabled" name="ws_conn_delay"
+                                               value="1000" disabled="disabled" name="ws_conn_delay"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -1154,12 +1166,12 @@
                                     >WEB页面时延(ms)</label>
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <input type="text" class="form-control input clear" id="video_web_page_delay"
-                                               value="10" disabled="disabled" name="web_page_delay"
+                                               value="6000" disabled="disabled" name="web_page_delay"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <input type="text" class="form-control input clear"
-                                               value="10" disabled="disabled" name="web_page_delay"
+                                               value="10000" disabled="disabled" name="web_page_delay"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -1169,12 +1181,12 @@
                                     >首帧到达时延(ms)</label>
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <input type="text" class="form-control input clear" id="video_head_frame_delay"
-                                               value="10" disabled="disabled" name="head_frame_delay"
+                                               value="1000" disabled="disabled" name="head_frame_delay"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <input type="text" class="form-control input clear"
-                                               value="10" disabled="disabled" name="head_frame_delay"
+                                               value="1500" disabled="disabled" name="head_frame_delay"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -1184,12 +1196,12 @@
                                             >首次缓冲时延(ms)</label>
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <input type="text" class="form-control input clear" id="video_init_buffer_delay"
-                                               value="100" disabled="disabled" name="init_buffer_delay"
+                                               value="1200" disabled="disabled" name="init_buffer_delay"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <input type="text" class="form-control input clear"
-                                               value="100" disabled="disabled" name="init_buffer_delay"
+                                               value="1600" disabled="disabled" name="init_buffer_delay"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -1199,12 +1211,12 @@
                                     >视频加载时延(ms)</label>
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <input type="text" class="form-control input clear" id="video_load_delay"
-                                               value="10" disabled="disabled" name="load_delay"
+                                               value="2000" disabled="disabled" name="load_delay"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <input type="text" class="form-control input clear"
-                                               value="10" disabled="disabled" name="load_delay"
+                                               value="3000" disabled="disabled" name="load_delay"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -1215,27 +1227,27 @@
                                             >总缓冲时延(ms)</label>
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <input type="text" class="form-control input clear" id="video_total_buffer_delay"
-                                               value="100" disabled="disabled" name="total_buffer_delay"
+                                               value="2000" disabled="disabled" name="total_buffer_delay"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <input type="text" class="form-control input clear"
-                                               value="100" disabled="disabled" name="total_buffer_delay"
+                                               value="3000" disabled="disabled" name="total_buffer_delay"
                                                placeholder="">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="video_download_speed"
                                            class="col-lg-3 col-md-3 col-sm-3 form_border"
-                                    >下载速度(kb/s)</label>
+                                    >下载速率(KB/s)</label>
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <input type="text" class="form-control input clear" id="video_download_speed"
-                                               value="10" disabled="disabled" name="download_rate"
+                                               value="600" disabled="disabled" name="download_rate"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <input type="text" class="form-control input clear"
-                                               value="10" disabled="disabled" name="download_rate"
+                                               value="300" disabled="disabled" name="download_rate"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -1245,12 +1257,12 @@
                                             >缓冲次数</label>
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <input type="text" class="form-control input clear" id="video_buffer_time"
-                                               value="100" disabled="disabled" name="buffer_time"
+                                               value="3" disabled="disabled" name="buffer_time"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <input type="text" class="form-control input clear"
-                                               value="100" disabled="disabled" name="buffer_time"
+                                               value="4" disabled="disabled" name="buffer_time"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -1268,12 +1280,12 @@
                                     >DNS时延(ms)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="game_dns_delay"
-                                               value="10" disabled="disabled" name="dns_delay"
+                                               value="0" disabled="disabled" name="dns_delay"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="10" disabled="disabled" name="dns_delay"
+                                               value="0" disabled="disabled" name="dns_delay"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -1284,12 +1296,12 @@
                                     >网络时延(ms)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="game_packet_delay"
-                                               value="10" disabled="disabled" name="packet_delay"
+                                               value="90" disabled="disabled" name="packet_delay"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="10" disabled="disabled" name="packet_delay"
+                                               value="110" disabled="disabled" name="packet_delay"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -1300,12 +1312,12 @@
                                             >网络抖动(ms)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="game_packet_jitter"
-                                               value="100" disabled="disabled" name="packet_jitter"
+                                               value="35" disabled="disabled" name="packet_jitter"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="100" disabled="disabled" name="packet_jitter"
+                                               value="45" disabled="disabled" name="packet_jitter"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -1315,12 +1327,12 @@
                                             >丢包率(%)</label>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear" id="game_packet_loss_rate"
-                                               value="10" disabled="disabled" name="loss_rate"
+                                               value="20" disabled="disabled" name="loss_rate"
                                                placeholder="">
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <input type="text" class="form-control input clear"
-                                               value="10" disabled="disabled" name="loss_rate"
+                                               value="30" disabled="disabled" name="loss_rate"
                                                placeholder="">
                                     </div>
 

@@ -32,6 +32,7 @@ public class ScoreCollectCityServiceImpl implements ScoreCollectCityService {
         param.put("ava_terminal",etime);
         param.put("startTime","00:00:00");
         param.put("terminalTime","23:00:00");
+        param.put("service",1);
         log.info("开始计算各地区统计分数，调用recordHourRadiusService.calculateAreaDayScore方法");
         List<ScoreEntity> scores = recordHourRadiusService.calculateAreaDayScore(param);
         log.info("各地区统计分数计算结束，返回"+scores.size()+"条数据");
@@ -52,4 +53,8 @@ public class ScoreCollectCityServiceImpl implements ScoreCollectCityService {
         }
     }
     public List<ScoreCollectCityEntity> getScores(Map<String,Object> params){return scoreCollectCityDao.queryList(params);}
+    @Override
+    public void delAll(){
+        scoreCollectCityDao.delAll();
+    }
 }

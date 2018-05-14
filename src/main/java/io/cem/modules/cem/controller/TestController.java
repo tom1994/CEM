@@ -1,6 +1,7 @@
 package io.cem.modules.cem.controller;
 
 
+import io.cem.common.utils.DateUtils;
 import io.cem.common.utils.PropertiesUtils;
 import io.cem.common.utils.R;
 import io.cem.modules.cem.entity.ScoreEntity;
@@ -16,6 +17,7 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
@@ -46,6 +48,7 @@ public class TestController {
         List<ScoreEntity> scores = new ArrayList<ScoreEntity>();
         String stime ="";
         String ntime ="";
+        String fix = "";
         try {
 
             InputStream in = new BufferedInputStream(new FileInputStream(PropertiesUtils.class.getClassLoader().getResource("chart.properties").getPath()));
@@ -54,9 +57,17 @@ public class TestController {
             stime = prop.getProperty("stime");
             ntime = prop.getProperty("etime");
 
-            scoreCollectTargetService.saveScore(stime, ntime);
+            fix = prop.getProperty("queryDayRange");
 
+            stime = DateUtils.format(DateUtils.getPreviousDay(new Date(),Integer.parseInt(fix)));
+            ntime = DateUtils.format(DateUtils.getPreviousDay(new Date(),1));
+
+            scoreCollectTargetService.delAll();
+            log.info("清空门户排行数据完成..");
+
+            scoreCollectTargetService.saveScore(stime, ntime);
             log.info("门户排行数据导入任务执行完成..");
+
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -104,12 +115,20 @@ public class TestController {
         List<ScoreEntity> scores = new ArrayList<ScoreEntity>();
         String stime ="";
         String ntime ="";
+        String fix = "";
         try {
             InputStream in = new BufferedInputStream(new FileInputStream(PropertiesUtils.class.getClassLoader().getResource("chart.properties").getPath()));
             Properties prop = new Properties();
             prop.load(in);
             stime = prop.getProperty("stime");
             ntime = prop.getProperty("etime");
+
+            fix = prop.getProperty("queryDayRange");
+
+            stime = DateUtils.format(DateUtils.getPreviousDay(new Date(),Integer.parseInt(fix)));
+            ntime = DateUtils.format(DateUtils.getPreviousDay(new Date(),1));
+
+            scoreCollectLayerService.delAll();
             scoreCollectLayerService.saveScores(stime,ntime);
             System.out.println("test");
             log.info("各应用网络分层质量数据导入任务执行完成..");
@@ -125,12 +144,22 @@ public class TestController {
         List<ScoreEntity> scores = new ArrayList<ScoreEntity>();
         String stime ="";
         String ntime ="";
+        String fix = "";
         try {
             InputStream in = new BufferedInputStream(new FileInputStream(PropertiesUtils.class.getClassLoader().getResource("chart.properties").getPath()));
             Properties prop = new Properties();
             prop.load(in);
             stime = prop.getProperty("stime");
             ntime = prop.getProperty("etime");
+
+            fix = prop.getProperty("queryDayRange");
+
+            stime = DateUtils.format(DateUtils.getDayforBegin(DateUtils.getPreviousDay(new Date(),Integer.parseInt(fix))),DateUtils.DATE_TIME_PATTERN);
+            ntime = DateUtils.format(DateUtils.getDayforEnd(DateUtils.getPreviousDay(new Date(),1)),DateUtils.DATE_TIME_PATTERN);
+
+            scoreCollectBusyIdleTimeService.delAll();
+            log.info("各应用网络忙闲时历史数据全部清空..");
+
             for(int i=1;i<7;i++){
                 scoreCollectBusyIdleTimeService.saveScore(stime,ntime,i);
             }
@@ -147,12 +176,20 @@ public class TestController {
         List<ScoreEntity> scores = new ArrayList<ScoreEntity>();
         String stime ="";
         String etime ="";
+        String fix ="";
+
         try {
             InputStream in = new BufferedInputStream(new FileInputStream(PropertiesUtils.class.getClassLoader().getResource("chart.properties").getPath()));
             Properties prop = new Properties();
             prop.load(in);
             stime = prop.getProperty("stime");
             etime = prop.getProperty("etime");
+            fix = prop.getProperty("queryDayRange");
+
+            stime = DateUtils.format(DateUtils.getPreviousDay(new Date(),Integer.parseInt(fix)));
+            etime = DateUtils.format(DateUtils.getPreviousDay(new Date(),1));
+
+            scoreCollectCityService.delAll();
 
             scoreCollectCityService.saveScores(stime,etime);
 

@@ -79,7 +79,6 @@ public class ScoreCollectTargetEntity implements Serializable {
         ";target:"+target+
         ";targetName:"+targetName+
         ";serviceType:"+serviceType+
-
                 ";scoreDate:"+scoreDate+
                 ";scoreTime:"+scoreTime;
 

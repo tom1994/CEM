@@ -33,13 +33,13 @@ var new_search = new Vue({
         search: function () {
             $(".record-table").addClass("service_unselected");
             this.servicetype = parseInt(serviceSelected);
-            console.log(this.servicetype );
+            //console.log(this.servicetype );
             recordtag = recordtype.get(this.servicetype);
-            console.log(recordtag);
+            //console.log(recordtag);
             $("#" + recordtag + "_record ").removeClass("service_unselected");
             var searchJson = getFormJson($('#outputSearch'));
             if ((searchJson.startDate) > (searchJson.terminalDate)) {
-                console.log("时间选择有误，请重新选择！");
+                //console.log("时间选择有误，请重新选择！");
                 toastr.warning('时间选择有误，请重新选择！');
             } else {
                 var search = {};
@@ -52,7 +52,7 @@ var new_search = new Vue({
                     search.ava_start =  new Date(new Date()).Format("yyyy-MM-dd");
                     search.ava_terminal = (new Date()).Format("yyyy-MM-dd");
                 }
-                console.log(search);
+                //console.log(search);
                 if (recordtag == "probe") {
                     loading()
                     probetable.probedata = search;
@@ -98,30 +98,27 @@ var new_search = new Vue({
                     /*根据查询条件重绘*/
                 }
             }
-                // probetable.probedata = search;
-                // probetable.redraw();
-                // $.ajax({
-                //     /*后台取得数据,赋值给观察者*/
-                //     type: "POST",
-                //     url: "../../diagnose/list",
-                //     cache: false,  //禁用缓存
-                //     data: param,  //传入组装的参数
-                //     dataType: "json",
-                //     success: function (result) {
-                //         console.log(result);
-                //         if (result.page.list.length !== 0) {
-                //             new_data.scoredata = result.page.list;
-                //         } else {
-                //             new_data.scoredata = [];
-                //             toastr.warning('该日期范围没有对应数据！');
-                //         }
-                //     }
-                // });
             },
-        // },
         reset: function () {    /*重置*/
+            var probedata={ava_start:today.Format("yyyy-MM-dd"), ava_terminal:(new Date()).Format("yyyy-MM-dd"),service:'0'}
+
             document.getElementById("outputSearch").reset();
             serviceSelected=0;
+            getNow();
+            probetable.probedata = probedata;
+            ping_table.probedata = probedata;
+            quality_table.probedata = probedata;
+            broswer_table.probedata=probedata
+            download_table.probedata=probedata
+            video_table.probedata=probedata
+            game_table.probedata=probedata
+            probetable.redraw();
+            ping_table.redraw();
+            quality_table.redraw();
+            broswer_table.redraw();
+            download_table.redraw();
+            video_table.redraw();
+            game_table.redraw();
         }
     }
 });
@@ -168,26 +165,7 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
     });
     return o;
 }
-var date=new Date();
-var month = date.getMonth() + 1;
-var strDate = date.getDate();
-var years=date.getFullYear();
-var newdate=years+'-'+month+'-'+strDate;
-var hours=date.getHours();
-var endDate = date.getDate();
-var endday=years+'-'+month+'-'+endDate+' '+hours;
-$('#start_date').flatpickr({
-    enableTime: true,
-    dateFormat: "Y-m-d H:i",
-    defaultDate:newdate,
-    time_24hr: true
-});
-$('#terminal_date').flatpickr({
-    enableTime: true,
-    dateFormat: "Y-m-d H:i",
-    defaultDate:endday,
-    time_24hr: true
-});
+
 
 //参数para1：希望隐藏元素的id值
 function toggle1(param){
@@ -284,21 +262,21 @@ var probetable = new Vue({
             vm.probedata = {};
             /*清空probedata*/
             vm.dtHandle.clear();
-            console.log("重置");
+            //console.log("重置");
             vm.dtHandle.draw();
             /*重置*/
         },
         currReset: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("当前页面重绘");
+            //console.log("当前页面重绘");
             vm.dtHandle.draw(false);
             /*当前页面重绘*/
         },
         redraw: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("页面重绘");
+            //console.log("页面重绘");
             vm.dtHandle.draw();
             /*重绘*/
         }
@@ -337,7 +315,7 @@ var probetable = new Vue({
                 param.page = (data.start / data.length) + 1;//当前页码
                 param.probedata = JSON.stringify(vm.probedata);
                 /*用于查询probe数据*/
-                console.log(param);
+                //console.log(param);
                 //ajax请求数据
                 $.ajax({
                     type: "POST", /*GET会乱码*/
@@ -347,7 +325,7 @@ var probetable = new Vue({
                     dataType: "json",
                     success: function (result) {
                         removeLoading('test');
-                        console.log(result);
+                        //console.log(result);
                         //封装返回数据
                         let returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -355,7 +333,7 @@ var probetable = new Vue({
                         returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
                         returnData.data = result.page.list;//返回的数据列表
                         // 重新整理返回数据以匹配表格
-                        console.log(returnData);
+                        //console.log(returnData);
                         let rows = [];
                         var i = param.start+1;
                         result.page.list.forEach(function (item) {
@@ -375,7 +353,7 @@ var probetable = new Vue({
                             rows.push(row);
                         });
                         returnData.data = rows;
-                        console.log(returnData);
+                        //console.log(returnData);
                         //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);
@@ -450,21 +428,21 @@ var ping_table=new Vue({
             vm.probedata = {};
             /*清空probedata*/
             vm.dtHandle.clear();
-            console.log("重置");
+            //console.log("重置");
             vm.dtHandle.draw();
             /*重置*/
         },
         currReset: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("当前页面重绘");
+            //console.log("当前页面重绘");
             vm.dtHandle.draw(false);
             /*当前页面重绘*/
         },
         redraw: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("页面重绘");
+            //console.log("页面重绘");
             vm.dtHandle.draw();
             /*重绘*/
         }
@@ -525,7 +503,7 @@ var ping_table=new Vue({
                 param.page = (data.start / data.length) + 1;//当前页码
                 param.probedata = JSON.stringify(vm.probedata);
                 /*用于查询probe数据*/
-                console.log(param);
+                //console.log(param);
                 //ajax请求数据
                 $.ajax({
                     type: "POST", /*GET会乱码*/
@@ -535,7 +513,7 @@ var ping_table=new Vue({
                     dataType: "json",
                     success: function (result) {
                         removeLoading('test');
-                        console.log(result);
+                        //console.log(result);
                         //封装返回数据
                         let returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -543,7 +521,7 @@ var ping_table=new Vue({
                         returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
                         returnData.data = result.page.list;//返回的数据列表
                         // 重新整理返回数据以匹配表格
-                        console.log(returnData);
+                        //console.log(returnData);
                         let rows = [];
                         var i = param.start+1;
                         result.page.list.forEach(function (item) {
@@ -593,7 +571,7 @@ var ping_table=new Vue({
 
                         });
                         returnData.data = rows;
-                        console.log(returnData);
+                        //console.log(returnData);
                         //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);
@@ -621,6 +599,10 @@ var quality_table=new Vue({
             {title: '<div style="width:70px">端口</div>'},
             {title: '<div style="width:110px">业务类型</div>'},
             {title: '<div style="width:70px">综合分数</div>'},
+
+            {title: '<div style="width:100px">解析时延(ms)</div>'},
+            {title: '<div style="width:100px">成功率(%)</div>'},
+
             {title: '<div style="width:100px">时延(ms)</div>'},
             {title: '<div style="width:100px">往向时延(ms)</div>'},
             {title: '<div style="width:100px">返向时延(ms)</div>'},
@@ -628,6 +610,7 @@ var quality_table=new Vue({
             {title: '<div style="width:100px">往向抖动(ms)</div>'},
             {title: '<div style="width:100px">返向抖动(ms)</div>'},
             {title: '<div style="width:100px">丢包率(%)</div>'},
+
             {title: '<div style="width:100px">时延(ms)</div>'},
             {title: '<div style="width:100px">往向时延(ms)</div>'},
             {title: '<div style="width:100px">返向时延(ms)</div>'},
@@ -635,14 +618,13 @@ var quality_table=new Vue({
             {title: '<div style="width:100px">往向抖动(ms)</div>'},
             {title: '<div style="width:100px">返向抖动(ms)</div>'},
             {title: '<div style="width:100px">丢包率(%)</div>'},
-            {title: '<div style="width:100px">时延(ms)</div>'},
-            {title: '<div style="width:100px">查询成功率(%)</div>'},
-            {title: '<div style="width:100px">时延(ms)</div>'},
-            {title: '<div style="width:100px">查询成功率(%)</div>'},
-            {title: '<div style="width:100px">时延(ms)</div>'},
+
+            {title: '<div style="width:100px">分配时延(ms)</div>'},
+            {title: '<div style="width:100px">成功率(%)</div>'},
+            {title: '<div style="width:100px">解析时延(ms)</div>'},
             {title: '<div style="width:100px">掉线率(%)</div>'},
-            {title: '<div style="width:100px">查询成功率(%)</div>'},
-            {title: '<div style="width:100px">时延(ms)</div>'},
+            {title: '<div style="width:100px">成功率(%)</div>'},
+            {title: '<div style="width:100px">认证时延(ms)</div>'},
             {title: '<div style="width:100px">认证成功率(%)</div>'},
 
         ],
@@ -657,21 +639,21 @@ var quality_table=new Vue({
             vm.probedata = {};
             /*清空probedata*/
             vm.dtHandle.clear();
-            console.log("重置");
+            //console.log("重置");
             vm.dtHandle.draw();
             /*重置*/
         },
         currReset: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("当前页面重绘");
+            //console.log("当前页面重绘");
             vm.dtHandle.draw(false);
             /*当前页面重绘*/
         },
         redraw: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("页面重绘");
+            //console.log("页面重绘");
             vm.dtHandle.draw();
             /*重绘*/
         }
@@ -694,9 +676,10 @@ var quality_table=new Vue({
                     innerTh +='<th colspan="1"></th>';
                     innerTh +='<th colspan="1"></th>';
                     var columnsCount = 25;//具体情况
+                    innerTh +='<th colspan="2 " style="text-align: center">DNS</th>';
                     innerTh +='<th colspan="7" style="text-align: center">Sla(TCP)</th>';
                     innerTh +='<th colspan="7" style="text-align: center">Sla(UDP)</th>';
-                    innerTh +='<th colspan="2 " style="text-align: center">DNS</th>';
+
                     innerTh +='<th colspan="2" style="text-align: center">DHCP</th>';
                     innerTh +='<th colspan="3" style="text-align: center">ADSL</th>';
                     innerTh +='<th colspan="2"style="text-align: center">Radius</th>';
@@ -734,7 +717,7 @@ var quality_table=new Vue({
                 param.page = (data.start / data.length) + 1;//当前页码
                 param.probedata = JSON.stringify(vm.probedata);
                 /*用于查询probe数据*/
-                console.log(param);
+                //console.log(param);
                 //ajax请求数据
                 $.ajax({
                     type: "POST", /*GET会乱码*/
@@ -743,7 +726,7 @@ var quality_table=new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                        console.log(result);
+                        //console.log(result);
                         removeLoading('test');
                         //封装返回数据
                         let returnData = {};
@@ -752,7 +735,7 @@ var quality_table=new Vue({
                         returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
                         returnData.data = result.page.list;//返回的数据列表
                         // 重新整理返回数据以匹配表格
-                        console.log(returnData);
+                        //console.log(returnData);
                         let rows = [];
                         var i = param.start+1;
                         result.page.list.forEach(function (item) {
@@ -763,6 +746,9 @@ var quality_table=new Vue({
                             row.push(item.port);
                             row.push(st.get(item.serviceType));
                             row.push(fixed(item.score ));
+                            row.push(fixed(item.dnsDelay));
+                            row.push(fixedRate(item.dnsSuccessRate));
+
                             row.push(fixed(item.slaTcpDelay));
                             row.push(fixed(item.slaTcpGDelay));
                             row.push(fixed(item.slaTcpRDelay));
@@ -777,8 +763,7 @@ var quality_table=new Vue({
                             row.push(fixed(item.slaUdpGJitter));
                             row.push(fixed(item.slaUdpRJitter));
                             row.push(fixedRate(item.slaUdpLossRate));
-                            row.push(fixed(item.dnsDelay));
-                            row.push(fixedRate(item.dnsSuccessRate));
+
                             row.push(fixed(item.dhcpDelay));
                             row.push(fixedRate(item.dhcpSuccessRate));
                             row.push(fixed(item.pppoeDelay));
@@ -790,7 +775,7 @@ var quality_table=new Vue({
 
                         });
                         returnData.data = rows;
-                        console.log(returnData);
+                        //console.log(returnData);
                         //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);
@@ -838,21 +823,21 @@ var broswer_table=new Vue({
             vm.probedata = {};
             /*清空probedata*/
             vm.dtHandle.clear();
-            console.log("重置");
+            //console.log("重置");
             vm.dtHandle.draw();
             /*重置*/
         },
         currReset: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("当前页面重绘");
+            //console.log("当前页面重绘");
             vm.dtHandle.draw(false);
             /*当前页面重绘*/
         },
         redraw: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("页面重绘");
+            //console.log("页面重绘");
             vm.dtHandle.draw();
             /*重绘*/
         }
@@ -890,7 +875,7 @@ var broswer_table=new Vue({
                 param.page = (data.start / data.length) + 1;//当前页码
                 param.probedata = JSON.stringify(vm.probedata);
                 /*用于查询probe数据*/
-                console.log(param);
+                //console.log(param);
                 //ajax请求数据
                 $.ajax({
                     type: "POST", /*GET会乱码*/
@@ -899,7 +884,7 @@ var broswer_table=new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                        console.log(result);
+                        //console.log(result);
                         removeLoading('test');
                         //封装返回数据
                         let returnData = {};
@@ -908,7 +893,7 @@ var broswer_table=new Vue({
                         returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
                         returnData.data = result.page.list;//返回的数据列表
                         // 重新整理返回数据以匹配表格
-                        console.log(returnData);
+                        //console.log(returnData);
                         let rows = [];
                         var i = param.start+1;
                         result.page.list.forEach(function (item) {
@@ -932,7 +917,7 @@ var broswer_table=new Vue({
 
                         });
                         returnData.data = rows;
-                        console.log(returnData);
+                        //console.log(returnData);
                         //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);
@@ -986,21 +971,21 @@ var download_table=new Vue({
             vm.probedata = {};
             /*清空probedata*/
             vm.dtHandle.clear();
-            console.log("重置");
+            //console.log("重置");
             vm.dtHandle.draw();
             /*重置*/
         },
         currReset: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("当前页面重绘");
+            //console.log("当前页面重绘");
             vm.dtHandle.draw(false);
             /*当前页面重绘*/
         },
         redraw: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("页面重绘");
+            //console.log("页面重绘");
             vm.dtHandle.draw();
             /*重绘*/
         }
@@ -1061,7 +1046,7 @@ var download_table=new Vue({
                 param.page = (data.start / data.length) + 1;//当前页码
                 param.probedata = JSON.stringify(vm.probedata);
                 /*用于查询probe数据*/
-                console.log(param);
+                //console.log(param);
                 //ajax请求数据
                 $.ajax({
                     type: "POST", /*GET会乱码*/
@@ -1070,7 +1055,7 @@ var download_table=new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                        console.log(result);
+                        //console.log(result);
                         removeLoading('test');
                         //封装返回数据
                         let returnData = {};
@@ -1079,7 +1064,7 @@ var download_table=new Vue({
                         returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
                         returnData.data = result.page.list;//返回的数据列表
                         // 重新整理返回数据以匹配表格
-                        console.log(returnData);
+                        //console.log(returnData);
                         let rows = [];
                         var i = param.start+1;
                         result.page.list.forEach(function (item) {
@@ -1109,7 +1094,7 @@ var download_table=new Vue({
 
                         });
                         returnData.data = rows;
-                        console.log(returnData);
+                        //console.log(returnData);
                         //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);
@@ -1158,21 +1143,21 @@ var video_table=new Vue({
             vm.probedata = {};
             /*清空probedata*/
             vm.dtHandle.clear();
-            console.log("重置");
+            //console.log("重置");
             vm.dtHandle.draw();
             /*重置*/
         },
         currReset: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("当前页面重绘");
+            //console.log("当前页面重绘");
             vm.dtHandle.draw(false);
             /*当前页面重绘*/
         },
         redraw: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("页面重绘");
+            //console.log("页面重绘");
             vm.dtHandle.draw();
             /*重绘*/
         }
@@ -1209,7 +1194,7 @@ var video_table=new Vue({
                 param.page = (data.start / data.length) + 1;//当前页码
                 param.probedata = JSON.stringify(vm.probedata);
                 /*用于查询probe数据*/
-                console.log(param);
+                //console.log(param);
                 //ajax请求数据
                 $.ajax({
                     type: "POST", /*GET会乱码*/
@@ -1218,7 +1203,7 @@ var video_table=new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                        console.log(result);
+                        //console.log(result);
                         removeLoading('test');
                         //封装返回数据
                         let returnData = {};
@@ -1227,7 +1212,7 @@ var video_table=new Vue({
                         returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
                         returnData.data = result.page.list;//返回的数据列表
                         // 重新整理返回数据以匹配表格
-                        console.log(returnData);
+                        //console.log(returnData);
                         let rows = [];
                         var i = param.start+1;
                         result.page.list.forEach(function (item) {
@@ -1250,7 +1235,7 @@ var video_table=new Vue({
                                 rows.push(row);
                         });
                         returnData.data = rows;
-                        console.log(returnData);
+                        //console.log(returnData);
                         //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);
@@ -1295,21 +1280,21 @@ var game_table=new Vue({
             vm.probedata = {};
             /*清空probedata*/
             vm.dtHandle.clear();
-            console.log("重置");
+            //console.log("重置");
             vm.dtHandle.draw();
             /*重置*/
         },
         currReset: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("当前页面重绘");
+            //console.log("当前页面重绘");
             vm.dtHandle.draw(false);
             /*当前页面重绘*/
         },
         redraw: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("页面重绘");
+            //console.log("页面重绘");
             vm.dtHandle.draw();
             /*重绘*/
         }
@@ -1327,6 +1312,10 @@ var game_table=new Vue({
             ordering: false, /*禁用排序功能*/
             /*bInfo: false,*/
             /*bLengthChange: false,*/    /*禁用Show entries*/
+            autoWidth: true,
+            scrollY :320,
+            scrollX: true,
+            scrollCollapse: true,
             scroll: false,
             oLanguage: {
                 sEmptyTable: "No data available in table",
@@ -1346,7 +1335,7 @@ var game_table=new Vue({
                 param.page = (data.start / data.length) + 1;//当前页码
                 param.probedata = JSON.stringify(vm.probedata);
                 /*用于查询probe数据*/
-                console.log(param);
+                //console.log(param);
                 //ajax请求数据
                 $.ajax({
                     type: "POST", /*GET会乱码*/
@@ -1355,7 +1344,7 @@ var game_table=new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                        console.log(result);
+                        //console.log(result);
                         removeLoading('test');
                         //封装返回数据
                         let returnData = {};
@@ -1364,7 +1353,7 @@ var game_table=new Vue({
                         returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
                         returnData.data = result.page.list;//返回的数据列表
                         // 重新整理返回数据以匹配表格
-                        console.log(returnData);
+                        //console.log(returnData);
                         let rows = [];
                         var i = param.start+1;
                         result.page.list.forEach(function (item) {
@@ -1383,7 +1372,7 @@ var game_table=new Vue({
 
                         });
                         returnData.data = rows;
-                        console.log(returnData);
+                        //console.log(returnData);
                         //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);
@@ -1416,4 +1405,28 @@ function fixedRate(value) {
     } else{
         return (value*100).toFixed(2)
     }
+}
+
+getNow()
+function getNow() {
+    var date=new Date();
+    var month = date.getMonth() + 1;
+    var strDate = date.getDate();
+    var years=date.getFullYear();
+    var newdate=years+'-'+month+'-'+strDate;
+    var hours=date.getHours();
+    var endDate = date.getDate();
+    var endday=years+'-'+month+'-'+endDate+' '+hours;
+    $('#start_date').flatpickr({
+        enableTime: true,
+        dateFormat: "Y-m-d H:i",
+        defaultDate:newdate,
+        time_24hr: true
+    });
+    $('#terminal_date').flatpickr({
+        enableTime: true,
+        dateFormat: "Y-m-d H:i",
+        defaultDate:endday,
+        time_24hr: true
+    });
 }

@@ -12,10 +12,10 @@
         <result property="serviceType" column="service_type"/>
     </resultMap>
     <select id="queryList" resultMap="scoreCollectTargetMap">
-        SELECT id,score,score_date,target,target_name,service_type,score_time FROM cem.score_collect_target
+        SELECT id,score,score_date,target,target_name,service_type,score_time FROM score_collect_target
 
         <where>
-            `service_type`= #{serviceType} and `score_date` between #{startDate} and #{endDate}
+            `service_type`= #{serviceType}
         </where>
         <if test="1==1">
             group by `target`
@@ -48,5 +48,8 @@
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>
+    </delete>
+    <delete id="delAll">
+        truncate table score_collect_target
     </delete>
 </mapper>

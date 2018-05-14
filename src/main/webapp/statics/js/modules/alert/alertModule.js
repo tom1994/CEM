@@ -75,21 +75,209 @@ var taskform_data = new Vue({
     methods: {
         submit: function () {
             $("#serviceType").removeAttr("disabled","disabled");
-            debugger
             var tasknewJson = getFormJson($('#taskform_data'));
             var paramnewJson = getFormJson2($('#' + type.get(parseInt(tasknewJson.serviceType)) + '_param'));
             tasknewJson.value = paramnewJson;
             var serviceType =tasknewJson.serviceType
-            console.log(tasknewJson.serviceType);
+            //console.log(tasknewJson.serviceType);
             tasknewJson.createTime = (new Date()).Format("yyyy-MM-dd hh:mm:ss");
             var tasknew = JSON.stringify(tasknewJson);
-            console.log(tasknew);
-            // var newJson=tasknewJson.value
+            //console.log(tasknew);
+            var newJson=tasknewJson.value
+
             if (tasknewJson.atName == "") {
                 toastr.warning("请输入模板名称!");
             } else if (tasknewJson.serviceType == "") {
                 toastr.warning("请选择任务类型!");
-            } else {
+           } else if((serviceType==1||serviceType==2||serviceType==3||serviceType==4||serviceType==5||serviceType==10||serviceType==11||serviceType==13||serviceType==14)&&(new String(newJson.delay[0])=='' || new String(newJson.delay[1])=='')){
+                toastr.warning("时延的一般和严重的指标输入不能为空");
+            }else if((serviceType==12)&&(new String(newJson.delay[0])=='' || new String(newJson.delay[1])=='')){
+                toastr.warning("拨号时延的一般和严重的指标输入不能为空");
+            }else if((serviceType==15)&&(new String(newJson.delay[0])=='' || new String(newJson.delay[1])=='')){
+                toastr.warning("认证时延的一般和严重的指标输入不能为空");
+            }else if((serviceType==12)&&(newJson.delay[0]>=newJson.delay[1])&& newJson.delay[0]!=0&&newJson.delay[1]!=0){
+                toastr.warning("拨号时延的一般和严重的指标输入有误!严重指标要大于一般指标");
+            }else if((serviceType==15)&&(newJson.delay[0]>=newJson.delay[1])&& newJson.delay[0]!=0&&newJson.delay[1]!=0){
+                toastr.warning("认证时延的一般和严重的指标输入有误!严重指标要大于一般指标");
+            } else if((serviceType==1||serviceType==2||serviceType==3||serviceType==4||serviceType==5||serviceType==10||serviceType==11)&&(new String(newJson.delay_std[0])=='' || new String(newJson.delay_std[1])=='')){
+                toastr.warning("时延标准差的一般和严重的指标输入不能为空");
+            }else if((serviceType==1||serviceType==2||serviceType==3||serviceType==4||serviceType==5||serviceType==10||serviceType==11)&&(new String(newJson.delay_var[0])=='' || new String(newJson.delay_var[1])=='')){
+                toastr.warning("时延方差的一般和严重的指标输入不能为空");
+            }else if((serviceType==1||serviceType==2||serviceType==3||serviceType==4||serviceType==5||serviceType==10||serviceType==11)&&(new String(newJson.jitter[0])=='' || new String(newJson.jitter[1])=='')){
+                toastr.warning("抖动的一般和严重的指标输入不能为空");
+            }else if((serviceType==1||serviceType==2||serviceType==3||serviceType==4||serviceType==5||serviceType==10||serviceType==11)&&(new String(newJson.jitter_std[0])=='' || new String(newJson.jitter_std[1])=='')){
+                toastr.warning("抖动标准差的一般和严重的指标输入不能为空");
+            }else if((serviceType==1||serviceType==2||serviceType==3||serviceType==4||serviceType==5||serviceType==10||serviceType==11)&&(new String(newJson.jitter_var[0])=='' || new String(newJson.jitter_var[1])=='')){
+                toastr.warning("抖动方差的一般和严重的指标输入不能为空");
+            }else if((serviceType==1||serviceType==2||serviceType==3||serviceType==4||serviceType==5||serviceType==10||serviceType==11||serviceType==50)&&(new String(newJson.loss_rate[0])=='' || new String(newJson.loss_rate[1])=='')){
+                toastr.warning("丢包率的一般和严重的指标输入不能为空");
+            } else if((serviceType==1||serviceType==2||serviceType==3||serviceType==4||serviceType==5||serviceType==10||serviceType==11||serviceType==13||serviceType==14)&&(newJson.delay[0]>=newJson.delay[1])&& newJson.delay[0]!=0&&newJson.delay[1]!=0){
+                toastr.warning("时延的一般和严重的指标输入有误!严重指标要大于一般指标");
+            }else if((serviceType==1||serviceType==2||serviceType==3||serviceType==4||serviceType==5||serviceType==10||serviceType==11)&&newJson.delay_std[0]>=newJson.delay_std[1]&&newJson.delay_std[0]!=0&&newJson.delay_std[1]!=0){
+                toastr.warning("时延标准差的一般和严重的指标输入有误!严重指标要大于一般指标");
+            }else if((serviceType==1||serviceType==2||serviceType==3||serviceType==4||serviceType==5||serviceType==10||serviceType==11)&&(newJson.delay_var[0]>=newJson.delay_var[1])&& newJson.delay_var[0]!=0&&newJson.delay_var[1]!=0){
+                toastr.warning("时延方差的一般和严重的指标输入有误!严重指标要大于一般指标");
+            }else if((serviceType==1||serviceType==2||serviceType==3||serviceType==4||serviceType==5||serviceType==10||serviceType==11)&&(newJson.jitter[0]>=newJson.jitter[1])&& newJson.jitter[0]!=0&&newJson.jitter[1]!=0){
+                toastr.warning("抖动的一般和严重的指标输入有误!严重指标要大于一般指标");
+            }else if((serviceType==1||serviceType==2||serviceType==3||serviceType==4||serviceType==5||serviceType==10||serviceType==11)&&(newJson.jitter_std[0]>=newJson.jitter_std[1])&& newJson.jitter_std[0]!=0&&newJson.jitter_std[1]!=0){
+                toastr.warning("抖动标准差的一般和严重的指标输入有误!严重指标要大于一般指标");
+            }else if((serviceType==1||serviceType==2||serviceType==3||serviceType==4||serviceType==5||serviceType==10||serviceType==11)&&(newJson.jitter_var[0]>=newJson.jitter_var[1])&& newJson.jitter_var[0]!=0&&newJson.jitter_var[1]!=0){
+                toastr.warning("抖动方差的一般和严重的指标输入有误!严重指标要大于一般指标");
+            }else if((serviceType==1||serviceType==2||serviceType==3||serviceType==4||serviceType==5||serviceType==10||serviceType==11||serviceType==50)&&(newJson.loss_rate[0]>=newJson.loss_rate[1]||(newJson.loss_rate[0]>100 && newJson.loss_rate[1]>100))&& newJson.loss_rate[0]!=0&&newJson.loss_rate[1]!=0){
+                toastr.warning("丢包率的一般和严重的指标输入有误!严重指标要大于一般指标并且指标不能大于100");
+            } else if((serviceType==10||serviceType==11)&&(new String(newJson.g_delay[0])=='' || new String(newJson.g_delay[1])=='')){
+                toastr.warning("往向时延的一般和严重的指标不能为空");
+            }else if((serviceType==10||serviceType==11)&&(new String(newJson.r_delay[0])=='' || new String(newJson.r_delay[1])=='')){
+                toastr.warning("返向时延的一般和严重的指标不能为空");
+            }else if((serviceType==10||serviceType==11)&&(new String(newJson.g_delay_std[0])=='' || new String(newJson.g_delay_std[1])=='')){
+                toastr.warning("往向时延标准差的一般和严重的指标不能为空");
+            }else if((serviceType==10||serviceType==11)&&(new String(newJson.r_delay_std[0])=='' || new String(newJson.r_delay_std[1])=='')){
+                toastr.warning("返向时延标准差的一般和严重的指标不能为空");
+            }else if((serviceType==10||serviceType==11)&&(new String(newJson.g_delay_var[0])=='' || new String(newJson.g_delay_var[1])=='')){
+                toastr.warning("往向时延方差的一般和严重的指标不能为空");
+            }else if((serviceType==10||serviceType==11)&&(new String(newJson.r_delay_var[0])=='' || new String(newJson.r_delay_var[1])=='')){
+                toastr.warning("返向时延方差的一般和严重的指标不能为空");
+            }else if((serviceType==10||serviceType==11)&&(new String(newJson.g_jitter[0])=='' || new String(newJson.g_jitter[1])=='')){
+                toastr.warning("往向抖动的一般和严重的指标输入不能为空");
+            }else if((serviceType==10||serviceType==11)&&(new String(newJson.r_jitter[0])=='' || new String(newJson.r_jitter[1])=='')){
+                toastr.warning("返向抖动的一般和严重的指标输入不能为空");
+            }else if((serviceType==10||serviceType==11)&&(new String(newJson.g_jitter_std[0])=='' || new String(newJson.g_jitter_std[1])=='')){
+                toastr.warning("往向抖动标准差的一般和严重的指标输入不能为空");
+            }else if((serviceType==10||serviceType==11)&&(new String(newJson.r_jitter_std[0])=='' || new String(newJson.r_jitter_std[1])=='')){
+                toastr.warning("返向抖动标准差的一般和严重的指标输入不能为空");
+            }else if((serviceType==10||serviceType==11)&&(new String(newJson.g_jitter_var[0])=='' || new String(newJson.g_jitter_var[1])=='')){
+                toastr.warning("往向抖动方差的一般和严重的指标输入不能为空");
+            }else if((serviceType==10||serviceType==11)&&(new String(newJson.r_jitter_var[0])=='' || new String(newJson.r_jitter_var[1])=='')) {
+                toastr.warning("返向抖动方差的一般和严重的指标输入不能为空");
+            } else if((serviceType==10||serviceType==11)&&(newJson.g_delay[0]>=newJson.g_delay[1])&&newJson.g_delay[0]!=0&&newJson.g_delay[1]!=0){
+                toastr.warning("往向时延的一般和严重的指标输入有误!严重指标要大于一般指标");
+            }else if((serviceType==10||serviceType==11)&&(newJson.r_delay[0]>=newJson.r_delay[1])&&newJson.r_delay[0]!=0&&newJson.r_delay[1]!=0){
+                toastr.warning("返向时延的一般和严重的指标输入有误!严重指标要大于一般指标");
+            }else if((serviceType==10||serviceType==11)&&(newJson.g_delay_std[0]>=newJson.g_delay_std[1])&&newJson.g_delay_std[0]!=0&&newJson.g_delay_std[1]!=0){
+                toastr.warning("往向时延标准差的一般和严重的指标输入有误!严重指标要大于一般指标");
+            }else if((serviceType==10||serviceType==11)&&(newJson.r_delay_std[0]>=newJson.r_delay_std[1])&&newJson.r_delay_std[0]!=0&&newJson.r_delay_std[1]!=0){
+                toastr.warning("返向时延标准差的一般和严重的指标输入有误!严重指标要大于一般指标");
+            }else if((serviceType==10||serviceType==11)&&(newJson.g_delay_var[0]>=newJson.g_delay_var[1])&&newJson.g_delay_var[0]!=0&&newJson.g_delay_var[1]!=0){
+                toastr.warning("往向时延方差的一般和严重的指标输入有误!严重指标要大于一般指标");
+            }else if((serviceType==10||serviceType==11)&&(newJson.r_delay_var[0]>=newJson.r_delay_var[1])&&newJson.r_delay_var[0]!=0&&newJson.r_delay_var[1]!=0){
+                toastr.warning("返向时延方差的一般和严重的指标输入有误!严重指标要大于一般指标");
+            }else if((serviceType==10||serviceType==11)&&(newJson.g_jitter[0]>=newJson.g_jitter[1])&&newJson.g_jitter[0]!=0&&newJson.g_jitter[1]!=0){
+                toastr.warning("往向抖动的一般和严重的指标输入有误!严重指标要大于一般指标");
+            }else if((serviceType==10||serviceType==11)&&(newJson.r_jitter[0]>=newJson.r_jitter[1])&&newJson.r_jitter[0]!=0&&newJson.r_jitter[1]!=0){
+                toastr.warning("返向抖动的一般和严重的指标输入有误!严重指标要大于一般指标");
+            }else if((serviceType==10||serviceType==11)&&(newJson.g_jitter_std[0]>=newJson.g_jitter_std[1])&&newJson.g_jitter_std[0]!=0&&newJson.g_jitter_std[1]!=0){
+                toastr.warning("往向抖动标准差的一般和严重的指标输入有误!严重指标要大于一般指标");
+            }else if((serviceType==10||serviceType==11)&&(newJson.r_jitter_std[0]>=newJson.r_jitter_std[1])&&newJson.r_jitter_std[0]!=0&&newJson.r_jitter_std[1]!=0){
+                toastr.warning("返向抖动标准差的一般和严重的指标输入有误!严重指标要大于一般指标");
+            }else if((serviceType==10||serviceType==11)&&(newJson.g_jitter_var[0]>=newJson.g_jitter_var[1])&&newJson.g_jitter_var[0]!=0&&newJson.g_jitter_var[1]!=0){
+                toastr.warning("往向抖动方差的一般和严重的指标输入有误!严重指标要大于一般指标");
+            }else if((serviceType==10||serviceType==11)&&(newJson.r_jitter_var[0]>=newJson.r_jitter_var[1])&&newJson.r_jitter_var[0]!=0&&newJson.r_jitter_var[1]!=0) {
+                toastr.warning("返向抖动方差的一般和严重的指标输入有误!严重指标要大于一般指标");
+            }else if((serviceType==12)&&(new String(newJson.drop_rate[0])=='' || new String(newJson.drop_rate[1])=='')){
+                toastr.warning("掉线率的一般和严重的指标不能为空");
+            }else if((serviceType==12)&&(new String(newJson.success_rate[0])=='' || new String(newJson.success_rate[1])=='')){
+                toastr.warning("拨号成功率的一般和严重的指标不能为空");
+            } else if((serviceType==12)&&(newJson.drop_rate[0]<=newJson.drop_rate[1]||(newJson.drop_rate[0]>100 && newJson.drop_rate[1]>100))&& newJson.drop_rate[0]!=0&&newJson.drop_rate[1]!=0){
+                toastr.warning("掉线率的一般和严重的指标输入有误!严重指标要大于一般指标并且指标不能大于100");
+            }else if((serviceType==12)&&(newJson.success_rate[0]<=newJson.success_rate[1]||(newJson.success_rate[0]>100 && newJson.success_rate[1]>100))&& newJson.success_rate[0]!=0&&newJson.success_rate[1]!=0){
+                toastr.warning("拨号成功率的一般和严重的指标输入有误!严重指标要大于一般指标并且指标不能大于100");
+            }else if((serviceType==13)&&(new String(newJson.success_rate[0])=='' || new String(newJson.success_rate[1])=='')){
+                toastr.warning("分配成功率的一般和严重的指标不能为空");
+            } else if((serviceType==13)&&(newJson.success_rate[0]<=newJson.success_rate[1]||(newJson.success_rate[0]>100 && newJson.success_rate[1]>100))&& newJson.success_rate[0]!=0&&newJson.success_rate[1]!=0){
+                toastr.warning("分配成功率的一般和严重的指标输入有误!严重指标要小于一般指标并且指标不能大于100");
+            }else if((serviceType==14)&&(new String(newJson.success_rate[0])=='' || new String(newJson.success_rate[1])=='')){
+                toastr.warning("查询成功率的一般和严重的指标不能为空");
+            } else if((serviceType==14)&&(newJson.success_rate[0]<=newJson.success_rate[1]||(newJson.success_rate[0]>100 && newJson.success_rate[1]>100))&& newJson.success_rate[0]!=0&&newJson.success_rate[1]!=0){
+                toastr.warning("查询成功率的一般和严重的指标输入有误!严重指标要小于一般指标并且指标不能大于100");
+            }else if((serviceType==15)&&(new String(newJson.success_rate[0])=='' || new String(newJson.success_rate[1])=='')){
+                toastr.warning("认证成功率的一般和严重的指标不能为空");
+            } else if((serviceType==15)&&(newJson.success_rate[0]<=newJson.success_rate[1]||(newJson.success_rate[0]>100 && newJson.success_rate[1]>100))&& newJson.success_rate[0]!=0&&newJson.success_rate[1]!=0){
+                toastr.warning("认证成功率的一般和严重的指标输入有误!严重指标要小于一般指标并且指标不能大于100");
+            }
+            else if((serviceType==20||serviceType==30||serviceType==31||serviceType==32||serviceType==50||serviceType==40)&&(new String(newJson.dns_delay[0])=='' || new String(newJson.dns_delay[1])=='')){
+                toastr.warning("DNS时延的一般和严重的指标不能为空");
+            } else if((serviceType==20||serviceType==30||serviceType==31||serviceType==32||serviceType==50||serviceType==40)&&(newJson.dns_delay[0]>=newJson.dns_delay[1])&& newJson.dns_delay[0]!=0&&newJson.dns_delay[1]!=0){
+                toastr.warning("DNS时延的一般和严重的指标输入有误!严重指标要大于一般指标");
+            }else if((serviceType==20||serviceType==30||serviceType==31||serviceType==32)&&(new String(newJson.conn_delay[0])=='' || new String(newJson.conn_delay[1])=='')){
+                toastr.warning("连接时延的一般和严重的指标不能为空");
+            } else if((serviceType==20||serviceType==30||serviceType==31||serviceType==32)&&(newJson.conn_delay[0]>=newJson.conn_delay[1])&& newJson.conn_delay[0]!=0&&newJson.conn_delay[1]!=0){
+                toastr.warning("连接时延的一般和严重的指标输入有误!严重指标要大于一般指标");
+            }else if((serviceType==20)&&(new String(newJson.redirect_delay[0])=='' || new String(newJson.redirect_delay[1])=='')){
+                toastr.warning("重定向时延的一般和严重的指标不能为空");
+            } else if((serviceType==20)&&(newJson.redirect_delay[0]>=newJson.redirect_delay[1])&& newJson.redirect_delay[0]!=0&&newJson.redirect_delay[1]!=0){
+                toastr.warning("重定向时延的一般和严重的指标输入有误!严重指标要大于一般指标");
+            }else if((serviceType==20||serviceType==30||serviceType==31||serviceType==32)&&(new String(newJson.headbyte_delay[0])=='' || new String(newJson.headbyte_delay[1])=='')){
+                toastr.warning("首字节到达时延的一般和严重的指标不能为空");
+            } else if((serviceType==20||serviceType==30||serviceType==31||serviceType==32)&&(newJson.headbyte_delay[0]>=newJson.headbyte_delay[1])&& newJson.headbyte_delay[0]!=0&&newJson.headbyte_delay[1]!=0){
+                toastr.warning("首字节到达时延的一般和严重的指标输入有误!严重指标要大于一般指标");
+            }else if((serviceType==20)&&(new String(newJson.page_file_delay[0])=='' || new String(newJson.page_file_delay[1])=='')){
+                toastr.warning("页面文件时延的一般和严重的指标不能为空");
+            } else if((serviceType==20)&&(newJson.page_file_delay[0]>=newJson.page_file_delay[1])&& newJson.page_file_delay[0]!=0&&newJson.page_file_delay[1]!=0){
+                toastr.warning("页面文件时延的一般和严重的指标输入有误!严重指标要大于一般指标");
+            }else if((serviceType==20)&&(new String(newJson.load_delay[0])=='' || new String(newJson.load_delay[1])=='')){
+                toastr.warning("页面加载时延的一般和严重的指标不能为空");
+            } else if((serviceType==20)&&(newJson.load_delay[0]>=newJson.load_delay[1])&& newJson.load_delay[0]!=0&&newJson.load_delay[1]!=0){
+                toastr.warning("页面加载时延的一般和严重的指标输入有误!严重指标要大于一般指标");
+            }else if((serviceType==20)&&(new String(newJson.above_fold_delay[0])=='' || new String(newJson.above_fold_delay[1])=='')){
+                toastr.warning("首屏时延的一般和严重的指标不能为空");
+            } else if((serviceType==20)&&(newJson.above_fold_delay[0]>=newJson.above_fold_delay[1])&& newJson.above_fold_delay[0]!=0&&newJson.above_fold_delay[1]!=0){
+                toastr.warning("首屏时延的一般和严重的指标输入有误!严重指标要大于一般指标");
+            }else if((serviceType==20||serviceType==30||serviceType==31||serviceType==40)&&(new String(newJson.download_rate[0])=='' || new String(newJson.download_rate[1])=='')){
+                toastr.warning("下载速率的一般和严重的指标不能为空");
+            } else if((serviceType==20||serviceType==30||serviceType==31||serviceType==40)&&(newJson.download_rate[0]<=newJson.download_rate[1]||(newJson.download_rate[0]>100 && newJson.download_rate[1]>100))&& newJson.download_rate[0]!=0&&newJson.download_rate[1]!=0){
+                toastr.warning("下载速率的一般和严重的指标输入有误!严重指标要小于一般指标并且指标不能大于100");
+            } else if((serviceType==31||serviceType==32)&&(new String(newJson.login_delay[0])=='' || new String(newJson.login_delay[1])=='')){
+                toastr.warning("登录时延的一般和严重的指标不能为空");
+            } else if((serviceType==31||serviceType==32)&&(newJson.login_delay[0]>=newJson.login_delay[1])&& newJson.login_delay[0]!=0&&newJson.login_delay[1]!=0){
+                toastr.warning("登录时延的一般和严重的指标输入有误!严重指标要大于一般指标");
+            }else if((serviceType==32)&&(new String(newJson.upload_rate[0])=='' || new String(newJson.upload_rate[1])=='')){
+                toastr.warning("上传速率的一般和严重的指标不能为空");
+            } else if((serviceType==32)&&(newJson.upload_rate[0]<=newJson.upload_rate[1]||(newJson.upload_rate[0]>100 && newJson.upload_rate[1]>100))&& newJson.upload_rate[0]!=0&&newJson.upload_rate[1]!=0){
+                toastr.warning("上传速率的一般和严重的指标输入有误!严重指标要小于一般指标并且指标不能大于100");
+            }
+            //在线视频
+            else if((serviceType==40)&&(new String(newJson.ws_conn_delay[0])=='' || new String(newJson.ws_conn_delay[1])=='')){
+                toastr.warning("连接WEB服务器时延的一般和严重的指标不能为空");
+            } else if((serviceType==40)&&(newJson.ws_conn_delay[0]>=newJson.ws_conn_delay[1])&& newJson.ws_conn_delay[0]!=0&&newJson.ws_conn_delay[1]!=0){
+                toastr.warning("连接WEB服务器时延的一般和严重的指标输入有误!严重指标要大于一般指标");
+            } else if((serviceType==40)&&(new String(newJson.web_page_delay[0])=='' || new String(newJson.web_page_delay[1])=='')){
+                toastr.warning("WEB页面时延的一般和严重的指标不能为空");
+            } else if((serviceType==40)&&(newJson.web_page_delay[0]>=newJson.web_page_delay[1])&& newJson.web_page_delay[0]!=0&&newJson.web_page_delay[1]!=0){
+                toastr.warning("WEB页面时延的一般和严重的指标输入有误!严重指标要大于一般指标");
+            } else if((serviceType==40)&&(new String(newJson.head_frame_delay[0])=='' || new String(newJson.head_frame_delay[1])=='')){
+                toastr.warning("首帧到达时延的一般和严重的指标不能为空");
+            } else if((serviceType==40)&&(newJson.head_frame_delay[0]>=newJson.head_frame_delay[1])&& newJson.head_frame_delay[0]!=0&&newJson.head_frame_delay[1]!=0){
+                toastr.warning("首帧到达时延的一般和严重的指标输入有误!严重指标要大于一般指标");
+            }else if((serviceType==40)&&(new String(newJson.init_buffer_delay[0])=='' || new String(newJson.init_buffer_delay[1])=='')){
+                toastr.warning("首次缓冲时延的一般和严重的指标不能为空");
+            } else if((serviceType==40)&&(newJson.init_buffer_delay[0]>=newJson.init_buffer_delay[1])&& newJson.init_buffer_delay[0]!=0&&newJson.init_buffer_delay[1]!=0){
+                toastr.warning("首次缓冲时延的一般和严重的指标输入有误!严重指标要大于一般指标");
+            }else if((serviceType==40)&&(new String(newJson.load_delay[0])=='' || new String(newJson.load_delay[1])=='')){
+                toastr.warning("视频加载时延的一般和严重的指标不能为空");
+            } else if((serviceType==40)&&(newJson.load_delay[0]>=newJson.load_delay[1])&& newJson.load_delay[0]!=0&&newJson.load_delay[1]!=0){
+                toastr.warning("视频加载时延的一般和严重的指标输入有误!严重指标要大于一般指标");
+            }else if((serviceType==40)&&(new String(newJson.total_buffer_delay[0])=='' || new String(newJson.total_buffer_delay[1])=='')){
+                toastr.warning("总缓冲时延的一般和严重的指标不能为空");
+            } else if((serviceType==40)&&(newJson.total_buffer_delay[0]>=newJson.total_buffer_delay[1])&& newJson.total_buffer_delay[0]!=0&&newJson.total_buffer_delay[1]!=0){
+                toastr.warning("总缓冲时延的一般和严重的指标输入有误!严重指标要大于一般指标");
+            }else if((serviceType==40)&&(new String(newJson.buffer_time[0])=='' || new String(newJson.buffer_time[1])=='')){
+                toastr.warning("缓冲次数的一般和严重的指标不能为空");
+            } else if((serviceType==40)&&(newJson.buffer_time[0]>=newJson.buffer_time[1])&& newJson.buffer_time[0]!=0&&newJson.buffer_time[1]!=0){
+                toastr.warning("缓冲次数的一般和严重的指标输入有误!严重指标要大于一般指标");
+            }
+            //网络游戏
+            else if((serviceType==50)&&(new String(newJson.packet_delay[0])=='' || new String(newJson.packet_delay[1])=='')){
+                toastr.warning("网络时延的一般和严重的指标不能为空");
+            } else if((serviceType==50)&&(newJson.packet_delay[0]>=newJson.packet_delay[1])&& newJson.packet_delay[0]!=0&&newJson.packet_delay[1]!=0){
+                toastr.warning("网络时延的一般和严重的指标输入有误!严重指标要大于一般指标");
+            }else if((serviceType==50)&&(new String(newJson.packet_jitter[0])=='' || new String(newJson.packet_jitter[1])=='')){
+                toastr.warning("网络抖动的一般和严重的指标不能为空");
+            } else if((serviceType==50)&&(newJson.packet_jitter[0]>=newJson.packet_jitter[1])&& newJson.packet_jitter[0]!=0&&newJson.packet_jitter[1]!=0){
+                toastr.warning("网络抖动的一般和严重的指标输入有误!严重指标要大于一般指标");
+            }
+
+
+            else {
                 var mapstr;
                 if (status == 0) {
                     mapstr = "save";
@@ -104,10 +292,8 @@ var taskform_data = new Vue({
                     dataType: "json",
                     contentType: "application/json", /*必须要,不可少*/
                     success: function (result) {
-                        debugger
                         let code = result.code;
                         let msg = result.msg;
-
                         if (status == 0) {
                             switch (code) {
                                 case 0:
@@ -191,7 +377,6 @@ var taskform_data = new Vue({
 });
 
 function getFormJson(form) {      /*将表单对象变为json对象*/
-    debugger
     var o = {};
     var a = $(form).serializeArray();
     $.each(a, function () {
@@ -262,7 +447,7 @@ function delete_this(obj) {
     delete_data.show_deleteModal();
     delete_data.id = parseInt(obj.id);
     /*获取当前行数据id*/
-    console.log(delete_data.id);
+    //console.log(delete_data.id);
 }
 
 var delete_data = new Vue({
@@ -344,7 +529,6 @@ function update_this (obj) {     /*监听修改触发事件*/
         dataType: "json",
         // contentType: "application/json", /*必须要,不可少*/
         success: function (result) {
-            console.log(result.atList);
             var service=parseInt(result.atList[0].serviceType);
             var param=JSON.parse(result.atList[0].value);
             var formparam = ($('#' + type.get(parseInt(service)) + '_param'))[0];
@@ -439,8 +623,8 @@ function update_this (obj) {     /*监听修改触发事件*/
                 formparam[7].value = param.headbyte_delay[1];
                 formparam[8].value = param.page_file_delay[0];
                 formparam[9].value = param.page_file_delay[1];
-                formparam[10].value = param.loadDelay[0];
-                formparam[11].value = param.loadDelay[1];
+                formparam[10].value = param.load_delay[0];
+                formparam[11].value = param.load_delay[1];
                 formparam[12].value = param.above_fold_delay[0];
                 formparam[13].value = param.above_fold_delay[1];
                 formparam[14].value = param.download_rate[0];
@@ -522,11 +706,11 @@ var alert_table = new Vue({
     data: {
         headers: [
             {title: '<div style="width:17px"></div>'},
-            {title: '<div style="width:97px">模版名称</div>'},
-            {title: '<div style="width:77px">子业务类型</div>'},
-            {title: '<div style="width:67px">创建时间</div>'},
-            {title: '<div style="width:67px">备注</div>'},
-            {title: '<div style="width:67px">操作</div>'}
+            {title: '<div style="width:200px">模版名称</div>'},
+            {title: '<div style="width:200px">子业务类型</div>'},
+            {title: '<div style="width:200px">创建时间</div>'},
+            {title: '<div style="width:200px">备注</div>'},
+            {title: '<div style="width:180px">操作</div>'}
         ],
         rows: [],
         dtHandle: null,
@@ -539,21 +723,21 @@ var alert_table = new Vue({
             vm.taskdata = {};
             /*清空taskdata*/
             vm.dtHandle.clear();
-            console.log("重置");
+            //console.log("重置");
             vm.dtHandle.draw();
             /*重置*/
         },
         currReset: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("当前页面重绘");
+            //console.log("当前页面重绘");
             vm.dtHandle.draw();
             /*当前页面重绘*/
         },
         redraw: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("页面重绘");
+            //console.log("页面重绘");
             vm.dtHandle.draw();
             /*重绘*/
         }
@@ -569,6 +753,9 @@ var alert_table = new Vue({
             paging: true,
             serverSide: true,
             info: false,
+            scrollY :300,
+            scrollX: true,
+            scrollCollapse: true,
             ordering: false, /*禁用排序功能*/
             /*bInfo: false,*/
             /*bLengthChange: false,*/    /*禁用Show entries*/
@@ -591,7 +778,7 @@ var alert_table = new Vue({
                 param.start = data.start;//开始的记录序号
                 param.page = (data.start / data.length) + 1;//当前页码
                 param.taskdata = JSON.stringify(vm.taskdata);
-                // console.log(param);
+                // //console.log(param);
                 //ajax请求数据
                 $.ajax({
                     type: "POST", /*GET会乱码*/
@@ -624,18 +811,19 @@ var alert_table = new Vue({
                         //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);
-                        $("#alert_table").colResizable({
-                            liveDrag: true,
-                            gripInnerHtml: "<div class='grip'></div>",
-                            draggingClass: "dragging",
-                            resizeMode: 'overflow',
-                        });
+                        // $("#alert_table").colResizable({
+                        //     liveDrag: true,
+                        //     gripInnerHtml: "<div class='grip'></div>",
+                        //     draggingClass: "dragging",
+                        //     resizeMode: 'overflow',
+                        // });
                     }
                 });
             }
         });
     }
 });
+
 
 $(document).ready(function () {
     $("#myModal_delete").draggable();//为模态对话框添加拖拽

@@ -15,7 +15,7 @@ var spdata_handle = new Vue({
             contentType: "application/json",
             success: function (result) {
                 var probes = [];
-                console.log(result.page.list[0]);
+                //console.log(result.page.list[0]);
                 for (var i = 0; i < result.page.list.length; i++) {
                     probes[i] = {message: result.page.list[i]}
                 }
@@ -57,12 +57,12 @@ var spform_data = new Vue({
     methods: {
         /*模态框中选择区县*/
         queryPort: function(){
-            console.log($("#probe").val());
+            //console.log($("#probe").val());
             this.port = queryPort($("#probe").val());
         },
         submit: function () {
             var spJson = getFormJson($('#spform_data'));
-            console.log(spJson);
+            //console.log(spJson);
             spJson.status=0;
             if (spJson.exit == "") {
                 toastr.warning("请输入出口名称!");
@@ -73,7 +73,7 @@ var spform_data = new Vue({
             }else {
                 var sp = JSON.stringify(spJson);
                 /*封装成json数组*/
-                console.log(sp);
+                //console.log(sp);
                 $.ajax({
                     type: "POST", /*GET会乱码*/
                     url: "../../probeexit/save" ,
@@ -84,7 +84,7 @@ var spform_data = new Vue({
                     success: function (result) {
                         let code = result.code;
                         let msg = result.msg;
-                        console.log(result);
+                        //console.log(result);
                         if (status == 0) {
                             switch (code) {
                                 case 0:
@@ -136,7 +136,7 @@ var queryPort = function (probeid) {
         success: function (result) {
             var port_detail = new Array();
             var port = new Array();
-            console.log(result);
+            //console.log(result);
             for(var i=0;i<result.port.length;i++){
                 port_detail[i] = {message: result.port[i]}
             }
@@ -171,7 +171,7 @@ function delete_this(obj) {
     delete_data.show_deleteModal();
     delete_data.id = parseInt(obj.id);
     /*获取当前行探针数据id*/
-    console.log(delete_data.id);
+    //console.log(delete_data.id);
 }
 
 var delete_data = new Vue({
@@ -226,7 +226,7 @@ function delete_ajax() {
 function operate_this (obj) {     /*监听修改触发事件*/
     operate_data_id = parseInt(obj.id);
     /*获取当前行探针数据id*/
-    console.log(operate_data_id);
+    //console.log(operate_data_id);
     $.ajax({
         type: "POST", /*GET会乱码*/
         url: "../../probeexit/operate/"+operate_data_id,
@@ -242,7 +242,7 @@ function operate_this (obj) {     /*监听修改触发事件*/
 function view_this (obj) {     /*监听修改触发事件*/
     operate_data_id = parseInt(obj.id);
     /*获取当前行探针数据id*/
-    console.log(operate_data_id);
+    //console.log(operate_data_id);
     outId=operate_data_id
     // $('saveId').val(operate_data_id)
     status = 1;
@@ -255,7 +255,7 @@ function view_this (obj) {     /*监听修改触发事件*/
         contentType: "application/json",
         success: function (result) {
             var probes = [];
-            console.log(result.page.list[0]);
+            //console.log(result.page.list[0]);
             for (var i = 0; i < result.page.list.length; i++) {
                 probes[i] = {message: result.page.list[i]}
             }
@@ -275,17 +275,15 @@ function view_this (obj) {     /*监听修改触发事件*/
             forms[3].value = result.probeExit.port;
         }
     });
-    $('#probe1').attr('disabled','disabled');
-    $('#port1').attr('disabled','disabled');
     $('#myModal_output').modal('show');
 }
 function  Save() {
     var id=outId;
     var spJson = getFormJson($('#opform_data'));
-    console.log(spJson);
+    //console.log(spJson);
     var sp = JSON.stringify(spJson);
     /*封装成json数组*/
-    console.log(sp);
+    //console.log(sp);
     $.ajax({
         type: "POST", /*GET会乱码*/
         url: "../../probeexit/update/"+id ,
@@ -296,7 +294,7 @@ function  Save() {
         success: function (result) {
             let code = result.code;
             let msg = result.msg;
-            console.log(result);
+            //console.log(result);
                 switch (code) {
                     case 0:
                         toastr.success("出口修改成功!");
@@ -337,22 +335,22 @@ var sptable = new Vue({
             vm.spdata = {};
             /*清空spdata*/
             vm.dtHandle.clear();
-            console.log("重置");
+            //console.log("重置");
             vm.dtHandle.draw();
             /*重置*/
         },
         currReset: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("当前页面重绘");
+            //console.log("当前页面重绘");
             vm.dtHandle.draw(false);
             /*当前页面重绘*/
         },
         redraw: function () {
-            debugger
+             
             let vm = this;
             vm.dtHandle.clear();
-            console.log("页面重绘");
+            //console.log("页面重绘");
             vm.dtHandle.draw();
             /*重绘*/
         }
@@ -370,7 +368,10 @@ var sptable = new Vue({
             info: false,
             ordering: false, /*禁用排序功能*/
             /*bInfo: false,*/
-
+            autoWidth: false,
+            scrollY :320,
+            scrollX: true,
+            scrollCollapse: true,
             /*bLengthChange: false,*/    /*禁用Show entries*/
             /*scrollY: 432,    /!*表格高度固定*!/*/
             oLanguage: {
@@ -390,7 +391,7 @@ var sptable = new Vue({
                 param.reportdata = JSON.stringify(vm.reportdata);
 
                 /*用于查询sp数据*/
-                console.log(param);
+                //console.log(param);
                 //ajax请求数据
                 $.ajax({
                     type: "POST", /*GET会乱码*/
@@ -399,7 +400,7 @@ var sptable = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                        console.log(result);
+                        //console.log(result);
                         //封装返回数据
                         let returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -410,7 +411,7 @@ var sptable = new Vue({
                         let rows = [];
                         var i = param.start+1;
                         result.page.list.forEach(function (item) {
-                            console.log(item);
+                            //console.log(item);
                             let row = [];
                             row.push(i++);
                             row.push(item.exit);
@@ -425,17 +426,17 @@ var sptable = new Vue({
                         });
 
                         returnData.data = rows;
-                        console.log(returnData);
+                        //console.log(returnData);
 
                         //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);
-                        $("#spdata_table").colResizable({
-                            liveDrag:true,
-                            gripInnerHtml:"<div class='grip'></div>",
-                            draggingClass:"dragging",
-                            resizeMode:'overflow',
-                        });
+                        // $("#spdata_table").colResizable({
+                        //     liveDrag:true,
+                        //     gripInnerHtml:"<div class='grip'></div>",
+                        //     draggingClass:"dragging",
+                        //     resizeMode:'overflow',
+                        // });
                     }
                 });
             }
@@ -451,7 +452,7 @@ var search_list = new Vue({
             var data = getFormJson($('#outputsearch'));
             /*得到查询条件*/
             /*获取表单元素的值*/
-            console.log(data);
+            //console.log(data);
             sptable.reportdata = data;
             sptable.redraw();
             /*根据查询条件重绘*/

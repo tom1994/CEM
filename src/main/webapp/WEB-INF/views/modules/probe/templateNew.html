@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+    #parse("cemHeader.html")  <!--导入CSS和js文件-->
+    <link href="${rc.contextPath}/statics/css/formStyle.css" rel="stylesheet">  <!--自定义CSS-->
+    <style type="text/css">
+        tr:hover{background:#E5E5E5 }
+
+    </style>
+</head>
+<body>
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title-upper">
+                    <p class="fontcolor" style="font-size: medium">新建任务模版</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--最上一层-->
+<form id="task_form_up">
+    <div class="wrapper-module">
+        <div class="module left-up">
+            <div class="wrapper-block task_border">
+                <label><input type="checkbox" id="netconnection" style="font-size: medium"> <span>网络连通性测试业务</span> </label>
+            </div>
+            <div class="wrapper-block">
+               <label><input type="checkbox" class="netconnection" id="PING_ICMP" v-on:click="#PING_ICMP_MODAL">
+                    <a  data-toggle="modal" href="#PING_ICMP_MODAL">PING(ICMP)测试</a> </label>
+            <!--   <a  data-toggle="modal" href="#PING_ICMP_MODAL"><input type="checkbox" class="netconnection" id="PING_ICMP">
+                    <span>PING(ICMP)测试</span> </a>    -->
+                <label><input type="checkbox" class="netconnection" id="PING_TCP" v-on:click="PING_TCP">
+                    <span>PING(TCP)测试</span> </label>
+                <label><input type="checkbox" class="netconnection" id="PING_UDP" v-on:click="PING_UDP">
+                    <span>PING(UDP)测试</span> </label>
+            </div>
+            <div class="wrapper-block">
+                <label><input type="checkbox" class="netconnection" id="TraceRoute_ICMP" v-on:click="TraceRoute_ICMP">
+                    <span>Trace Route(ICMP)测试</span> </label>
+                <label><input type="checkbox" class="netconnection" id="TraceRoute_TCP" v-on:click="TraceRoute_TCP">
+                    <span>Trace Route(TCP)测试</span> </label>
+            </div>
+        </div>
+
+        <div class="module right">
+            <div class="wrapper-block task_border">
+                <label><input type="checkbox" id="netlayerquality" style="font-size: medium"> <span>网络层质量测试业务</span> </label>
+            </div>
+            <div class="wrapper-block">
+                <label><input type="checkbox" class="netlayerquality" id="SLA_TCP" v-on:click="SLA_TCP">
+                    <span>SLA(TCP)测试</span> </label>
+                <label><input type="checkbox" class="netlayerquality" id="SLA_UDP" v-on:click="SLA_UDP">
+                    <span>SLA(UDP)测试</span> </label>
+                <label><input type="checkbox" class="netlayerquality" id="DNS" v-on:click="DNS">
+                    <span>DNS测试</span> </label>
+            </div>
+            <div class="wrapper-block">
+                <label><input type="checkbox" class="netlayerquality" id="DHCP" v-on:click="DHCP">
+                    <span>DHCP测试</span> </label>
+                <label><input type="checkbox" class="netlayerquality" id="ADSL" v-on:click="ADSL">
+                    <span>ADSL接入测试</span> </label>
+                <label><input type="checkbox" class="netlayerquality" id="Radius" v-on:click="Radius">
+                    <span>Radius认证测试</span> </label>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!--中间一层-->
+<form id="task_form_medium">
+    <div class="wrapper-module">
+        <div class="module left-up">
+            <div class="wrapper-block task_border">
+                <label><input type="checkbox" id="webbrowse" style="font-size: medium"> <span>网页浏览类业务</span> </label>
+            </div>
+            <div class="wrapper-block">
+                <label><input type="checkbox" class="webbrowse" id="pageaccess" v-on:click="pageaccess">
+                    <span>WEB页面访问测试</span> </label>
+            </div>
+        </div>
+
+        <div class="module right">
+            <div class="wrapper-block task_border">
+                <label><input type="checkbox" id="filedownload" style="font-size: medium"> <span>文件下载类业务</span> </label>
+            </div>
+            <div class="wrapper-block">
+                <label><input type="checkbox" class="filedownload" id="ftp_upload" v-on:click="ftp_upload">
+                    <span>FTP上传测试</span> </label>
+                <label><input type="checkbox" class="filedownload" id="ftp_download" v-on:click="ftp_download">
+                    <span>FTP上传测试</span> </label>
+                <label><input type="checkbox" class="filedownload" id="web" v-on:click="web">
+                    <span>WEB下载测试</span> </label>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!--最后一层-->
+<form id="task_form_down">
+    <div class="wrapper-module">
+        <div class="module left-up">
+            <div class="wrapper-block task_border">
+                <label><input type="checkbox" id="onlinevideo" style="font-size: medium"> <span>在线视频类业务</span> </label>
+            </div>
+            <div class="wrapper-block">
+                <label><input type="checkbox" class="onlinevideo" id="video" v-on:click="video">
+                    <span>在线视频测试</span> </label>
+            </div>
+        </div>
+
+        <div class="module right">
+            <div class="wrapper-block task_border">
+                <label><input type="checkbox" id="onlinegame" style="font-size: medium"> <span>网络游戏类业务</span> </label>
+            </div>
+            <div class="wrapper-block">
+                <label><input type="checkbox" class="onlinegame" id="game" v-on:click="game">
+                    <span>网络游戏测试</span> </label>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="wrapper-module">
+      <div class="right-footer" >
+          <a href="taskNew.html">
+          <button type="button" class="btn btn-sm btn-default">取消</span>
+          </button>
+          </a>
+          <button type="button" class="btn btn-sm btn-success">保存</span>
+          </button>
+      </div>
+</div>
+
+<!-- ICMP-PING编辑模态框（Modal） -->
+<div class="modal fade" id="PING_ICMP_MODAL" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width:700px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3 class="modal-title myModalLabel">PING(ICMP)参数设置</h3>
+            </div>
+
+            <div class="modal-body" style="padding: 0px 30px 0px 30px !important;">
+                <div class="row">
+                    <form class="form-horizontal" id="probeform_data" role="form">
+
+                        <div class="form-group row">
+                            <label for="package_num"
+                                   class="col-lg-3 col-md-3 col-sm-3 input-label form_border"`>单次发包个数:</label>
+                            <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                <input type="text" class="form-control" id="package_num" name="packetNumber"
+                                       placeholder="请输入">
+                            </div>
+                            <label for="package_interval"
+                                   class="col-lg-3 col-md-3 col-sm-3 input-label form_border">发包间隔（ms）:</label>
+                            <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                <input type="text" class="form-control" id="package_interval" name="packetInterval"
+                                       placeholder="请输入">
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row">
+                            <label for="package_size"
+                                   class="col-lg-3 col-md-3 col-sm-3 input-label form_border">测试包大小（Byte）:</label>
+                            <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                <input type="text" class="form-control" id="package_size" name="packageSize"
+                                       placeholder="请输入">
+                            </div>
+                            <label for="package_content"
+                                   class="col-lg-3 col-md-3 col-sm-3 input-label form_border">测试包内容:</label>
+                            <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                <input type="text" class="form-control" id="package_content" name="packageContent"
+                                       placeholder="请输入">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="TTL_value"
+                                   class="col-lg-3 col-md-3 col-sm-3 input-label form_border">TTL:</label>
+                            <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                <input type="text" class="form-control" id="TTL_value" name="ttlValue"
+                                       placeholder="请输入">
+                            </div>
+                            <label for="package_overtime"
+                                   class="col-lg-3 col-md-3 col-sm-3 input-label form_border">测试包超时（s）:</label>
+                            <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                <input type="text" class="form-control" id="package_overtime" name="packageOvertime"
+                                       placeholder="请输入">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="IP_type"
+                                   class="col-lg-3 col-md-3 col-sm-3 input-label form_border">IP服务类型:</label>
+                            <div class="col-lg-3 col-md-3 col-sm-3 form_border">
+                                <input id="IP_type" class="form-control" name="ipType"
+                                       placeholder="请输入">
+                                </input>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-success" >确定</button>
+            </div>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+
+</body>
+</html>
+
+<script>window.jQuery || document.write('<script src="${rc.contextPath}/statics/js/plugins/jquery/jquery-2.0.3.js"><\/script>')</script>
+<script type="text/javascript"
+        src="${rc.contextPath}/statics/js/modules/probe/templateNew.js?_${date.systemTime}"></script>
+<!--
+<script type="text/javascript" src="${rc.contextPath}/statics/js/index.js"></script>-->

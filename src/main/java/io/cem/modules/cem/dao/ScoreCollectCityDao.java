@@ -11,5 +11,5 @@ public interface ScoreCollectCityDao {
     List<ScoreCollectCityEntity> queryList(Map<String, Object> map);
     void save(ScoreCollectCityEntity scc);
     void deleteBatch(int[] ids);
-
+    void delAll();
 }

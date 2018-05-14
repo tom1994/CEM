@@ -32,7 +32,7 @@ var targetgroupdata_handle = new Vue({
             dataType: "json",
             /* contentType:"application/json",  /!*必须要,不可少*!/*/
             success: function (result) {
-                console.log(result);
+                //console.log(result);
                 for (var i = 0; i < result.page.list.length; i++) {
                     targetGroupNames[i] = {message: result.page.list[i]}
                 }
@@ -104,7 +104,7 @@ var target_search = new Vue({
             var data = getFormJson($('#targetsearch'));
             /*得到查询条件*/
             /*获取表单元素的值*/
-            console.log(data);
+            //console.log(data);
             target_table.targetdata = data;
             target_table.redraw();
             /*根据查询条件重绘*/
@@ -125,7 +125,7 @@ var tg_search = new Vue({
             var data = getFormJson2($('#tgsearch'));
             /*得到查询条件*/
             /*获取表单元素的值*/
-            console.log(data);
+            //console.log(data);
             tg_table.tgdata = data;
             tg_table.redraw();
             /*根据查询条件重绘*/
@@ -163,12 +163,12 @@ var targetdata_handle = new Vue({
                 /*for (var i = 0; i < trs.length; i++) {
                     var tds = trs.eq(i).find("td");
                     idArray[i] = parseInt(tds.eq(2).text());
-                    console.log(tds.eq(2).text())
+                    //console.log(tds.eq(2).text())
                 }*/
                 $('input[name="selectFlag"]:checked').each(function () {
                     idArray.push(getId(this));
                 });
-                console.log(idArray);
+                //console.log(idArray);
                 delete_ajax();
                 /*ajax传输*/
             }
@@ -178,13 +178,13 @@ var targetdata_handle = new Vue({
 
 function getId(obj) {
     return (parseInt(obj.id));
-    console.log(parseInt(obj.id));
+    //console.log(parseInt(obj.id));
 }
 
 /*测试目标列表编辑功能*/
 function update_this(obj) {
     update_data_id = parseInt(obj.id);
-    console.log(update_data_id);
+    //console.log(update_data_id);
     status = 1;
     /*状态1表示修改*/
     var forms = $('#targetform_data .form-control');
@@ -196,7 +196,7 @@ function update_this(obj) {
         dataType: "json",
         contentType: "application/json", /*必须要,不可少*/
         success: function (result) {
-            console.log(result);
+            //console.log(result);
             forms[0].value = result.target.id;
             forms[1].value = result.target.targetName;
             forms[2].value = result.target.value;
@@ -214,7 +214,7 @@ function update_this(obj) {
 function tgupdate_this(obj) {     /*监听修改触发事件*/
     tgdata_id = parseInt(obj.id);
     /*获取当前行测试目标组数据id*/
-    console.log(tgdata_id);
+    //console.log(tgdata_id);
     status = 1;
     /*状态1表示修改*/
     /*find被选中的行*/
@@ -227,7 +227,7 @@ function tgupdate_this(obj) {     /*监听修改触发事件*/
         dataType: "json",
         contentType: "application/json", /*必须要,不可少*/
         success: function (result) {
-            console.log(result);
+            //console.log(result);
             forms[0].value = result.targetGroup.id;
             forms[1].value = result.targetGroup.tgName;
             forms[2].value = result.targetGroup.superserviceType;
@@ -265,7 +265,7 @@ function delete_this(obj) {
     delete_data.show_deleteModal();
     delete_data.id = parseInt(obj.id);
     /*获取当前行探针数据id*/
-    console.log(delete_data.id);
+    //console.log(delete_data.id);
 }
 
 var delete_data = new Vue({
@@ -300,7 +300,7 @@ var delete_data = new Vue({
 function tgdelete_ajax() {
     var tgids = JSON.stringify(tgidArray);
     /*对象数组字符串*/
-    console.log(tgids);
+    //console.log(tgids);
     $.ajax({
         type: "POST", /*GET会乱码*/
         url: "../../targetgroup/delete",
@@ -323,7 +323,7 @@ function tgdelete_this(obj) {
     tgdelete_data.show_deleteModal();
     tgdelete_data.id = parseInt(obj.id);
     /*获取当前行探针组数据id*/
-    console.log(tgdelete_data.id);
+    //console.log(tgdelete_data.id);
 }
 
 var tgdelete_data = new Vue({
@@ -364,9 +364,9 @@ var targetform_data = new Vue({
     // 在 `methods` 对象中定义方法
     methods: {
         submit: function () {
-            debugger
+             
             var targetJson = getFormJson2($('#targetform_data'));
-            console.log(targetJson);
+            //console.log(targetJson);
             var reg1 = /^(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\/])+$/;
             var reg = /^((https|http|ftp|rtsp|mms)?:\/\/)[^\s]+/;
             if (targetJson.targetname == "") {
@@ -384,7 +384,7 @@ var targetform_data = new Vue({
                 var d = new Date().Format("yyyy-MM-dd hh:mm:ss");        //获取日期与时间
                 targetJson.createTime = d;
                 var target = JSON.stringify(targetJson);
-                console.log(target);
+                //console.log(target);
                 var mapstr;
                 if (status == 0) {
                     mapstr = "save";
@@ -401,7 +401,7 @@ var targetform_data = new Vue({
                     success: function (result) {
                         let code = result.code;
                         let msg = result.msg;
-                        console.log(result);
+                        //console.log(result);
                         if (status == 0) {
                             switch (code) {
                                 case 0:
@@ -453,8 +453,8 @@ var tgform_data = new Vue({
     methods: {
         submit: function () {
             var tgJson = getFormJson2($('#tgform_data'));
-            debugger
-            console.log(tgJson);
+             
+            //console.log(tgJson);
             if (tgJson.tgName == "") {
                 toastr.warning("请输入名称!");
             } else if (tgJson.superserviceType == "") {
@@ -465,7 +465,7 @@ var tgform_data = new Vue({
                 var tg = JSON.stringify(tgJson);
                 /*封装成json数组*/
                 /*获取表单元素的值*/
-                console.log(tg);
+                //console.log(tg);
                 var mapstr;
                 if (status == 0) {
                     mapstr = "save";
@@ -481,7 +481,7 @@ var tgform_data = new Vue({
                     success: function (result) {
                         let code = result.code;
                         let msg = result.msg;
-                        console.log(result);
+                        //console.log(result);
                         if (status == 0) {
                             switch (code) {
                                 case 0:
@@ -649,11 +649,11 @@ var target_table = new Vue({
         headers: [
             {title: '<div ></div>'},
             {title: '<div class="checkbox"> <label> <input type="checkbox" id="checkAll"></label> </div>'},
-            {title: '<div>测试目标名</div>'},
-            {title: '<div style="width: 200px">测试目标地址</div>'},
-            {title: '<div>业务类型</div>'},
+            {title: '<div >测试目标名</div>'},
+            {title: '<div>测试目标地址</div>'},
+            {title: '<div >业务类型</div>'},
             {title: '<div >测试目标组</div>'},
-            {title: '<div >备注</div>'},
+            {title: '<div>备注</div>'},
             {title: '<div >创建时间</div>'},
             {title: '<div >操作</div>'}
         ],
@@ -667,22 +667,22 @@ var target_table = new Vue({
             vm.targetdata = {};
             /*清空targetdata*/
             vm.dtHandle.clear();
-            console.log("重置");
+            //console.log("重置");
             vm.dtHandle.draw();
             /*重置*/
         },
         currReset: function () {
             let vm = this;
-            console.log(vm.dtHandle)
+            //console.log(vm.dtHandle)
             vm.dtHandle.clear();
-            console.log("当前页面重绘");
+            //console.log("当前页面重绘");
             vm.dtHandle.draw(false);
             /*当前页面重绘*/
         },
         redraw: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("页面重绘");
+            //console.log("页面重绘");
             vm.dtHandle.draw();
             /*重绘*/
         }
@@ -697,6 +697,9 @@ var target_table = new Vue({
             paging: true,
             serverSide: true,
             info: false,
+            // scrollY :350,
+            // scrollX: true,
+            // scrollCollapse: true,
             ordering: false, /*禁用排序功能*/
             // bAutoWidth:false,
             /*bInfo: false,*/
@@ -720,7 +723,7 @@ var target_table = new Vue({
                 param.page = (data.start / data.length) + 1;//当前页码
                 param.targetdata = JSON.stringify(vm.targetdata);
                 /*用于查询target数据*/
-                console.log(param);
+                //console.log(param);
                 //ajax请求数据
                 $.ajax({
                     type: "POST", /*GET会乱码*/
@@ -729,7 +732,7 @@ var target_table = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                        console.log(result);
+                        //console.log(result);
                         //封装返回数据
                         let returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -744,7 +747,8 @@ var target_table = new Vue({
                             row.push(i++);
                             row.push('<div class="checkbox"> <label> <input type="checkbox" id=' + item.id + ' name="selectFlag" onclick="getId(this)">');
                             row.push('<a onclick="update_this(this)" id=' + item.id + '><span style="color: black;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">' + item.targetName + '</span></a>');
-                            row.push('<div style="max-width: 200px;!important;overflow: visible; white-space:nowrap; word-wrap:break-word;"><span title="'+item.value+'">'+item.value+'</span>');
+                            row.push('<div style="max-width: 200px;!important;overflow: visible; white-space:nowrap; word-wrap:break-word;">' +
+                                '<span title="'+item.value+'">'+item.value+'</span>');
                             row.push('<div style="overflow:hidden; white-space:nowrap; word-wrap:break-word;">'+sst.get(item.superserviceType));
                             row.push('<div style="overflow:hidden; white-space:nowrap; word-wrap:break-word;">'+item.groupName);
                             row.push('<div style="overflow:hidden; white-space:nowrap; word-wrap:break-word;">'+item.remark);
@@ -794,21 +798,21 @@ var tg_table = new Vue({
             vm.tgdata = {};
             /*清空tgdata*/
             vm.dtHandle.clear();
-            console.log("重置");
+            ////console.log("重置");
             vm.dtHandle.draw();
             /*重置*/
         },
         currReset: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("当前页面重绘");
+            //console.log("当前页面重绘");
             vm.dtHandle.draw(false);
             /*当前页面重绘*/
         },
         redraw: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("页面重绘");
+            //console.log("页面重绘");
             vm.dtHandle.draw();
             /*重绘*/
         }
@@ -844,7 +848,7 @@ var tg_table = new Vue({
                 param.page = (data.start / data.length) + 1;//当前页码
                 param.tgdata = JSON.stringify(vm.tgdata);
                 /*用于查询数据*/
-                console.log(param);
+                //console.log(param);
                 //ajax请求数据
                 $.ajax({
                     type: "POST", /*GET会乱码*/
@@ -853,7 +857,7 @@ var tg_table = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                        console.log(result);
+                        //console.log(result);
                         //封装返回数据
                         let returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -875,7 +879,7 @@ var tg_table = new Vue({
                             rows.push(row);
                         });
                         returnData.data = rows;
-                        console.log(returnData);
+                        //console.log(returnData);
                         //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);

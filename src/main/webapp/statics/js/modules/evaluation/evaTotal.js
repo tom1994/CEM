@@ -79,7 +79,7 @@ var search_service = new Vue({ //Todo:完成查询条件框
         testagentListsearch: function () {
             var searchJson = getFormJson($('#probesearch'));
             if((searchJson.startDate)>(searchJson.terminalDate)){
-                console.log("时间选择有误，请重新选择！");
+                //console.log("时间选择有误，请重新选择！");
                 $('#nonavailable_time').modal('show');
             }else{
                 var search = new Object();
@@ -119,8 +119,8 @@ function sendAjax(param) {
         dataType: "json",
         success: function (result) {
             ping_list=result.scoreList
-                removeLoading('test');
-                ping(ping_list);
+            removeLoading('test');
+            ping(ping_list);
             var arr=[]
             for(var i=0;i<ping_list.length;i++){
                 arr.push(parseFloat(ping_list[i].score));
@@ -202,6 +202,7 @@ function sendAjax(param) {
         data: param,  //传入组装的参数
         dataType: "json",
         success: function (result) {
+            //console.log(result);
             page_list=result.scoreList
             removeLoading('page');
             broswer(page_list);
@@ -440,11 +441,11 @@ var search_data = new Vue({
     methods:{
         citychange: function () {
             this.areas = getArea($("#selectcity").val());
-            console.log($("#selectcity").val());
+            //console.log($("#selectcity").val());
         },
         areachange: function () {
             this.probe = getProbe($("#selectarea").val());
-            console.log($("#selectarea").val());
+            //console.log($("#selectarea").val());
         }
     }
 });
@@ -579,16 +580,29 @@ $(function () {
 
 //最大值
 function arrMaxNum2(arr){
-    return Math.max.apply(null,arr);
+    if(arr.length==0){
+        return 0
+    }else {
+        return Math.max.apply(null,arr);
+    }
+
 }
 //最小值
 function arrMinNum2(arr){
-    return Math.min.apply(null,arr);
+    if(arr.length==0){
+        return 0
+    }else {
+        return Math.min.apply(null, arr);
+    }
 }
 //平均值
 function arrAverageNum2(arr){
-    var sum = eval(arr.join("+"));
-    return ~~(sum/arr.length*100)/100;
+    if(arr.length==0){
+        return 0
+    }else {
+        var sum = eval(arr.join("+"));
+        return ~~(sum / arr.length * 100) / 100;
+    }
 }
 var connection_service = new Vue({
     el: '#v-for-connection',
@@ -1110,21 +1124,21 @@ function ping(val) {
                 vm.probedata = {};
                 /*清空probedata*/
                 vm.dtHandle.clear();
-                console.log("重置");
+                //console.log("重置");
                 vm.dtHandle.draw();
                 /*重置*/
             },
             currReset: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("当前页面重绘");
+                //console.log("当前页面重绘");
                 vm.dtHandle.draw(false);
                 /*当前页面重绘*/
             },
             redraw: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("页面重绘");
+                //console.log("页面重绘");
                 vm.dtHandle.draw();
                 /*重绘*/
             }
@@ -1136,6 +1150,7 @@ function ping(val) {
                 columns: vm.headers,
                 data: vm.rows,
                 createdRow: function ( row, data, index ) {
+
                     var trs=$("#pingdata_table>thead tr");
                     if(trs.length>1){
                         return
@@ -1161,10 +1176,18 @@ function ping(val) {
                 paging: false,
                 // serverSide: true,
                 info: false,
+                // scrollY:  300,
+                // scrollX:  true,
+                // scrollCollapse: true,
+                // fixedColumns:   {
+                //     leftColumns: 4
+                // },
                 // ordering: false, /*禁用排序功能*/
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
-                scroll: false,
+                // scroll: false,
+                // scrollY: 200,
+                // scrollX: true,
                 oLanguage: {
                     sEmptyTable: "No data available in table",
                     sZeroRecords:"No data available in table",
@@ -1306,21 +1329,21 @@ function quality(val) {
                 vm.probedata = {};
                 /*清空probedata*/
                 vm.dtHandle.clear();
-                console.log("重置");
+                //console.log("重置");
                 vm.dtHandle.draw();
                 /*重置*/
             },
             currReset: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("当前页面重绘");
+                //console.log("当前页面重绘");
                 vm.dtHandle.draw(false);
                 /*当前页面重绘*/
             },
             redraw: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("页面重绘");
+                //console.log("页面重绘");
                 vm.dtHandle.draw();
                 /*重绘*/
             }
@@ -1391,7 +1414,7 @@ function quality(val) {
                         temp[i].datetime = Date.UTC(year, month, day, hour)
                     }
                     var sortTemp = temp.sort(compare("datetime"));
-                    console.log(returnData);
+                    //console.log(returnData);
                     let rows = [];
                     var i = 1;
                     sortTemp.forEach(function (item) {
@@ -1473,21 +1496,21 @@ function broswer(val) {
                 vm.probedata = {};
                 /*清空probedata*/
                 vm.dtHandle.clear();
-                console.log("重置");
+                //console.log("重置");
                 vm.dtHandle.draw();
                 /*重置*/
             },
             currReset: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("当前页面重绘");
+                //console.log("当前页面重绘");
                 vm.dtHandle.draw(false);
                 /*当前页面重绘*/
             },
             redraw: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("页面重绘");
+                //console.log("页面重绘");
                 vm.dtHandle.draw();
                 /*重绘*/
             }
@@ -1609,21 +1632,21 @@ function download(val) {
                 vm.probedata = {};
                 /*清空probedata*/
                 vm.dtHandle.clear();
-                console.log("重置");
+                //console.log("重置");
                 vm.dtHandle.draw();
                 /*重置*/
             },
             currReset: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("当前页面重绘");
+                //console.log("当前页面重绘");
                 vm.dtHandle.draw(false);
                 /*当前页面重绘*/
             },
             redraw: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("页面重绘");
+                //console.log("页面重绘");
                 vm.dtHandle.draw();
                 /*重绘*/
             }
@@ -1767,21 +1790,21 @@ function video(val) {
                 vm.probedata = {};
                 /*清空probedata*/
                 vm.dtHandle.clear();
-                console.log("重置");
+                //console.log("重置");
                 vm.dtHandle.draw();
                 /*重置*/
             },
             currReset: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("当前页面重绘");
+                //console.log("当前页面重绘");
                 vm.dtHandle.draw(false);
                 /*当前页面重绘*/
             },
             redraw: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("页面重绘");
+                //console.log("页面重绘");
                 vm.dtHandle.draw();
                 /*重绘*/
             }
@@ -1828,7 +1851,6 @@ function video(val) {
                         temp[i].datetime = Date.UTC(year, month, day, hour)
                     }
                     var sortTemp = temp.sort(compare("datetime"));
-                    console.log(sortTemp);
                     let rows = [];
                     var i = 1;
                     sortTemp.forEach(function (item) {
@@ -1891,21 +1913,21 @@ function game(val) {
                 vm.probedata = {};
                 /*清空probedata*/
                 vm.dtHandle.clear();
-                console.log("重置");
+                //console.log("重置");
                 vm.dtHandle.draw();
                 /*重置*/
             },
             currReset: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("当前页面重绘");
+                //console.log("当前页面重绘");
                 vm.dtHandle.draw(false);
                 /*当前页面重绘*/
             },
             redraw: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("页面重绘");
+                //console.log("页面重绘");
                 vm.dtHandle.draw();
                 /*重绘*/
             }

@@ -68,6 +68,105 @@ recordtype.set(32,"ftpup");
 recordtype.set(40,"webvideo");
 recordtype.set(50,"game");
 
+function probe() {
+    probeSelected=0;
+    $.ajax({
+        url: "../../cem/probe/showlist",//探针列表
+        type: "POST",
+        cache: false,  //禁用缓存
+        dataType: "json",
+        contentType: "application/json",
+        success: function (result) {
+            var probes = [];
+            for (var i = 0; i < result.probe.length; i++) {
+                probes[i] = {message: result.probe[i]}
+            }
+            search_data.probe = probes;
+            setTimeout(function () {
+                $('#probe .jq22').comboSelect();
+                $('.combo-dropdown').css("z-index","3");
+                $('#probe .option-item').click(function (probe) {
+                    setTimeout(function () {
+                        var a = $(probe.currentTarget)[0].innerText;
+                        probeSelected = $($(probe.currentTarget)[0]).data('value');
+                        $('#probe .combo-input').val(a);
+                        $('#probe .combo-select select').val(a);
+                    }, 30);
+                });
+                $('#probe input[type=text] ').keyup(function (probe) {
+                    if( probe.keyCode=='13'){
+                        var b = $("#probe .option-hover.option-selected").text();
+                        probeSelected=$("#probe .option-hover.option-selected")[0].dataset.value;
+                        $('#probe .combo-input').val(b);
+                        $('#probe .combo-select select').val(b);
+                    }
+                })
+            },50);
+        }
+    });
+}
+$(document).ready(function () {
+    $('#country .jq22').comboSelect();
+    $('#probe .jq22').comboSelect();
+    $('#city .jq22').comboSelect();
+    $('#target .jq22').comboSelect();
+    citySelected=0
+    $.ajax({
+        type: "POST", /*GET会乱码*/
+        url: "../../cem/city/list",//c城市列表
+        cache: false,  //禁用缓存
+        dataType: "json",
+        success: function (result) {
+            var cities = [];
+            for (var i = 0; i < result.page.list.length; i++) {
+                cities[i] = {message: result.page.list[i]}
+            }
+            search_data.city = cities;
+            setTimeout(function () {
+                $('div#city .jq22').comboSelect();
+                $('.combo-dropdown').css("z-index","3");
+                $('div#city .option-item').click(function (city) {
+                    setTimeout(function () {
+                        var a = $(city.currentTarget)[0].innerText;
+                        clearArea(a);
+                        citySelected = $($(city.currentTarget)[0]).data('value');
+                        getArea(citySelected);
+                        getProbeCity(citySelected);
+                        $('div#city .combo-input').val(a);
+                        $('div#city .combo-select select').val(a);
+                    }, 30);
+                });
+                $('#city input[type=text] ').keyup(function (city) {
+                    if( city.keyCode=='13'){
+                        var b = $("#city .option-hover.option-selected").text();
+                        clearArea(b);
+                        citySelected=$("#city .option-hover.option-selected")[0].dataset.value
+                        getArea(citySelected);
+                        getProbeCity(citySelected);
+                        $('#city .combo-input').val(b);
+                        $('#city .combo-select select').val(b);
+                    }
+                })
+            }, 50);
+        }
+    });
+
+    function clearArea(a) {
+        if(a=="所有地市"){
+            $('#country .combo-input').val("所有区县");
+            $('#country .combo-select select').val("所有区县");
+            search_data.areas = [];
+            $('#country ul').html("");
+            $("#country ul").append("<li class='option-item option-hover option-selected' data-index=='0' data-value=''>"+"所有区县"+"</li>");
+            probe()
+        }
+        if(a=="所有区县"){
+            probe()
+        }
+    }
+    probe()
+});
+
 function getFormJson(form) {      /*将表单对象变为json对象*/
     var o = {};
     var a = $(form).serializeArray();
@@ -134,6 +233,7 @@ var getProbeCity = function (cityid) {
             dataType: "json",
             contentType: "application/json",
             success: function (result) {
+                debugger
                 var probes = [];
                 for (var i = 0; i < result.probe.length; i++) {
                     probes[i] = {message: result.probe[i]}
@@ -148,7 +248,7 @@ var getProbeCity = function (cityid) {
                             probeSelected = $($(probe.currentTarget)[0]).data('value');
                             $('#probe .combo-input').val(a);
                             $('#probe .combo-select select').val(a);
-                        }, 30);
+                        }, 10);
                     });
                     $('#probe input[type=text] ').keyup(function (probe) {
                         if( probe.keyCode=='13'){
@@ -159,7 +259,7 @@ var getProbeCity = function (cityid) {
                         }
 
                     })
-                }, 50);
+                }, 20);
             }
         });
     }
@@ -249,19 +349,183 @@ function clearArea(a) {
     }
 }
 
+var getArea = function (cityid) {
+    countrySeleted=0
+    if (cityid != "" && cityid != null) {
+        $.ajax({//区县
+            url: "../../cem/county/info/" + cityid,
+            type: "POST",
+            cache: false,  //禁用缓存
+            dataType: "json",
+            contentType: "application/json",
+            success: function (result) {
+                search_data.county = [];
+                var counties = [];
+                for (var i = 0; i < result.county.length; i++) {
+                    counties[i] = {message: result.county[i]}
+                }
+                search_data.areas = counties;
+                setTimeout(function () {
+                    $('#country .jq22').comboSelect();
+                    $('.combo-dropdown').css("z-index","3");
+                    $('#country .option-item').click(function (country) {
+                        setTimeout(function () {
+                            var a = $(country.currentTarget)[0].innerText;
+                            countrySelected = $($(country.currentTarget)[0]).data('value');
+                            $('#country .combo-input').val(a);
+                            getProbeCounty(countrySelected);
+                            clearArea(a)
+                            $('#country .combo-select select').val(a);
+                        }, 50);
+                    });
+                    $('#country input[type=text] ').keyup(function (country) {
+                        if( country.keyCode=='13'){
+                            var b = $("#country .option-hover.option-selected").text();
+                            countrySelected=($("#country .option-hover.option-selected"))[0].dataset.value;
+                            getProbeCounty(countrySelected);
+                            clearArea(b);
+                            $('#country .combo-input').val(b);
+                            $('#country .combo-select select').val(b);
+
+                        }
+                    })
+                },100);
+
+            }
+        });
+    }
+};
+
+var getProbeCounty = function (countyid) {
+    probeSelected = 0;
+    $.ajax({//探针信息
+        url: "../../cem/probe/info/" + countyid,
+        type: "POST",
+        cache: false,  //禁用缓存
+        dataType: "json",
+        contentType: "application/json",
+        success: function (result) {
+            var probes = [];
+            for (var i = 0; i < result.probe.length; i++) {
+                probes[i] = {message: result.probe[i]}
+            }
+            search_data.probe = probes;
+            setTimeout(function () {
+                $('#probe .jq22').comboSelect();
+                $('.combo-dropdown').css("z-index","3");
+                $('#probe .option-item').click(function (probe) {
+                    setTimeout(function () {
+                        var a = $(probe.currentTarget)[0].innerText;
+                        probeSelected = $($(probe.currentTarget)[0]).data('value');
+                        $('#probe .combo-input').val(a);
+                        $('#probe .combo-select select').val(a);
+                    }, 30);
+                });
+                $('#probe input[type=text] ').keyup(function (probe) {
+                    if( probe.keyCode=='13'){
+                        var b = $("#probe .option-hover.option-selected").text();
+                        probeSelected=parseInt(($("#probe .option-hover.option-selected"))[0].dataset.value);
+                        $('#probe .combo-input').val(b);
+                        $('#probe .combo-select select').val(b);
+                    }
+
+                })
+            }, 50);
+        }
+    });
+};
+var getTask = function (servicetype) {
+    taskSelected=0
+    $.ajax({
+        url: "../../cem/task/infoByService/"+servicetype,
+        type: "POST", /*GET会乱码*/
+        cache: false,  //禁用缓存
+        dataType: "json",
+        contentType: "application/json", /*必须要,不可少*/
+        success: function (result) {
+            taskNames = [];
+            for(var i=0;i<result.task.length;i++){
+                taskNames[i] = {message: result.task[i]}
+            }
+            search_data.tasks = taskNames;
+            setTimeout(function () {
+                $('#task .jq22').comboSelect();
+                $('.combo-dropdown').css("z-index","3");
+                $('#task .option-item').click(function (tasks) {
+                    setTimeout(function () {
+                        var a = $(tasks.currentTarget)[0].innerText.trim();
+                        taskSelected = $($(tasks.currentTarget)[0]).data('value');
+                        $('#task .combo-input').val(a);
+                        $('#task .combo-select select').val(a);
+                    },20)
+
+                });
+                $('#task input[type=text] ').keyup(function (tasks) {
+                    if( tasks.keyCode=='13'){
+                        var b = $("#task .option-hover.option-selected").text().trim();
+                        taskSelected=$("#task .option-hover.option-selected")[0].dataset.value;
+                        $('#task .combo-input').val(b);
+                        $('#task .combo-select select').val(b);
+                    }
+                })
+            }, 50);
+        }
+    });
+}
+
+/*此处的serviceId其实是superservice的*/
+var getTarget = function (serviceId) {
+    targetSelected=0;
+    $.ajax({
+        url: "../../target/infobat/"+serviceId,
+        type: "POST", /*GET会乱码*/
+        cache: false,  //禁用缓存
+        dataType: "json",
+        contentType: "application/json", /*必须要,不可少*/
+        success: function (result) {
+            targetNames = [];
+            for(var i=0;i<result.target.length;i++){
+                targetNames[i] = {message: result.target[i]}
+            }
+            search_data.targets = targetNames;
+            setTimeout(function () {
+                $('#target .jq22').comboSelect();
+                $('.combo-dropdown').css("z-index","3");
+                $('#target .option-item').click(function (target) {
+                    setTimeout(function () {
+                        var a = $(target.currentTarget)[0].innerText.trim();
+                        targetSelected = $($(target.currentTarget)[0]).data('value');
+                        $('#target .combo-input').val(a);
+                        $('#target .combo-select select').val(a);
+                    },20)
+                });
+                $('#target input[type=text] ').keyup(function (target) {
+                    if( target.keyCode=='13'){
+                        var b = $("#target .option-hover.option-selected").text().trim();
+                        targetSelected=$("#target .option-hover.option-selected")[0].dataset.value;
+                        $('#target .combo-input').val(b);
+                        $('#target .combo-select select').val(b);
+                    }
+                })
+            }, 50);
+        }
+    });
+}
+
 
 
 var resultdata_handle = new Vue({
     el: '#resulthandle',
     data: {},
     mounted: function () {         /*动态加载地市数据*/
+        citySelected=0
         $.ajax({
             type: "POST",   /*GET会乱码*/
             url: "../../cem/city/list",
             cache: false,  //禁用缓存
             dataType: "json",
             success: function (result) {
-                //console.log(result);
+                ////console.log(result);
                 var cities = [];
                 for (var i = 0; i < result.page.list.length; i++) {
                     cities[i] = {message: result.page.list[i]}
@@ -279,7 +543,7 @@ var resultdata_handle = new Vue({
                             clearArea(a);
                             getArea(citySelected);
                             getProbeCity(citySelected);
-                        }, 30);
+                        }, 20);
                     });
                     $('#city input[type=text] ').keyup(function (city) {
                         if( city.keyCode=='13'){
@@ -295,10 +559,11 @@ var resultdata_handle = new Vue({
                             $('#city .combo-select select').val(b);
                         }
                     })
-                }, 50);
+                }, 30);
 
             }
         });
+        probeSelected=0;
         $.ajax({
             type: "POST",   /*GET会乱码*/
             url: "../../cem/probe/list",
@@ -343,9 +608,10 @@ var search_data = new Vue({
     data: {
         areas: [],
         cities: [],
-        probeNames: [],
+        probe: [],
         tasks: [],
-        targets: []
+        targets: [],
+
     },
     methods: {
         servicechange: function () {
@@ -365,9 +631,9 @@ var search_data = new Vue({
             /*显示相应的data_table*/
             $(".record-table").addClass("service_unselected");
             this.servicetype = parseInt(serviceSelected);
-            console.log(this.servicetype );
+            //console.log(this.servicetype );
             recordtag = recordtype.get(this.servicetype);
-            console.log(recordtag);
+            //console.log(recordtag);
             $("#" + recordtag + "_record ").removeClass("service_unselected");
             var data = getFormJson($('#resultsearch .selectdata'));
              
@@ -392,14 +658,14 @@ var search_data = new Vue({
             if (termtemp != "") {
                 data.end_time = termtemp + ":00";
             }
-            console.log(data);
+            //console.log(data);
 
             if (data.interval == "" || data.interval == undefined) {
                 data.queryType = "1";
             } else {
                 data.queryType = "0";//统计数据
             }
-            console.log(data);
+            //console.log(data);
             if (recordtag == "ping") {
                 pingresulttable.resultdata = data;
                 pingresulttable.redraw();
@@ -489,173 +755,6 @@ var search_data = new Vue({
     }
 });
 
-var getArea = function (cityid) {
-    countrySeleted=0;
-    $.ajax({
-        url: "../../cem/county/info/" + cityid,
-        type: "POST",
-        cache: false,  //禁用缓存
-        dataType: "json",
-        contentType: "application/json",
-        success: function (result) {
-            search_data.areas = [];
-            areaNames = [];
-            for (let i = 0; i < result.county.length; i++) {
-                areaNames[i] = {message: result.county[i]}
-            }
-            search_data.areas = areaNames;
-            setTimeout(function () {
-                $('#country .jq22').comboSelect();
-                $('.combo-dropdown').css("z-index","3");
-                $('#country .option-item').click(function (areas) {
-                    setTimeout(function () {
-                        var a = $(areas.currentTarget)[0].innerText;
-                        countrySelected = $($(areas.currentTarget)[0]).data('value');
-                        $('#country .combo-input').val(a);
-                        $('#country .combo-select select').val(a);
-
-                        getProbe(countrySelected);
-                    },20)
-
-                });
-                $('#country input[type=text] ').keyup(function (areas) {
-                    if( areas.keyCode=='13'){
-                        var b = $("#country .option-hover.option-selected").text();
-                        countrySelected=$("#country .option-hover.option-selected")[0].dataset.value;
-                        $('#country .combo-input').val(b);
-                        $('#country .combo-select select').val(b);
-                        getProbe(countrySelected);
-                    }
-                })
-            }, 50);
-
-        }
-    });
-};
-
-var getProbe = function (countyid) {
-    var countrySeleted=0;
-    probeNames = [];
-    $.ajax({
-        url: "../../cem/county/info/" + cityid,
-        type: "POST",
-        cache: false,  //禁用缓存
-        dataType: "json",
-        contentType: "application/json",
-        success: function (result) {
-            search_data.areas = [];
-            areaNames = [];
-            for (let i = 0; i < result.county.length; i++) {
-                areaNames[i] = {message: result.county[i]}
-            }
-            search_data.areas = areaNames;
-            setTimeout(function () {
-                $('#country .jq22').comboSelect();
-                $('.combo-dropdown').css("z-index","3");
-                $('#country .option-item').click(function (areas) {
-                    setTimeout(function () {
-                        var a = $(areas.currentTarget)[0].innerText;
-                        countrySelected = $($(areas.currentTarget)[0]).data('value');
-                        $('#country .combo-input').val(a);
-                        $('#country .combo-select select').val(a);
-
-                        getProbe(countrySelected);
-                    },20)
-
-                });
-                $('#country input[type=text] ').keyup(function (areas) {
-                    if( areas.keyCode=='13'){
-                        var b = $("#country .option-hover.option-selected").text();
-                        countrySelected=$("#country .option-hover.option-selected")[0].dataset.value;
-                        $('#country .combo-input').val(b);
-                        $('#country .combo-select select').val(b);
-                        getProbe(countrySelected);
-                    }
-                })
-            }, 50);
-
-        }
-    });
-}
-
-var getTask = function (servicetype) {
-    var taskSelected=0
-    $.ajax({
-        url: "../../cem/task/infoByService/"+servicetype,
-        type: "POST", /*GET会乱码*/
-        cache: false,  //禁用缓存
-        dataType: "json",
-        contentType: "application/json", /*必须要,不可少*/
-        success: function (result) {
-            taskNames = [];
-            for(var i=0;i<result.task.length;i++){
-                taskNames[i] = {message: result.task[i]}
-            }
-            search_data.tasks = taskNames;
-            setTimeout(function () {
-                $('#task .jq22').comboSelect();
-                $('.combo-dropdown').css("z-index","3");
-                $('#task .option-item').click(function (tasks) {
-                    setTimeout(function () {
-                        var a = $(tasks.currentTarget)[0].innerText.trim();
-                        taskSelected = $($(tasks.currentTarget)[0]).data('value');
-                        $('#task .combo-input').val(a);
-                        $('#task .combo-select select').val(a);
-                    },20)
-
-                });
-                $('#task input[type=text] ').keyup(function (tasks) {
-                    if( tasks.keyCode=='13'){
-                        var b = $("#task .option-hover.option-selected").text().trim();
-                        taskSelected=$("#task .option-hover.option-selected")[0].dataset.value;
-                        $('#task .combo-input').val(b);
-                        $('#task .combo-select select').val(b);
-                    }
-                })
-            }, 50);
-        }
-    });
-}
-
-/*此处的serviceId其实是superservice的*/
-var getTarget = function (serviceId) {
-    targetSelected=0;
-    $.ajax({
-        url: "../../target/infobat/"+serviceId,
-        type: "POST", /*GET会乱码*/
-        cache: false,  //禁用缓存
-        dataType: "json",
-        contentType: "application/json", /*必须要,不可少*/
-        success: function (result) {
-            targetNames = [];
-            for(var i=0;i<result.target.length;i++){
-                targetNames[i] = {message: result.target[i]}
-            }
-            search_data.targets = targetNames;
-            setTimeout(function () {
-                $('#target .jq22').comboSelect();
-                $('.combo-dropdown').css("z-index","3");
-                $('#target .option-item').click(function (target) {
-                    setTimeout(function () {
-                        var a = $(target.currentTarget)[0].innerText.trim();
-                        targetSelected = $($(target.currentTarget)[0]).data('value');
-                        $('#target .combo-input').val(a);
-                        $('#target .combo-select select').val(a);
-                    },20)
-                });
-                $('#target input[type=text] ').keyup(function (target) {
-                    if( target.keyCode=='13'){
-                        var b = $("#target .option-hover.option-selected").text().trim();
-                        targetSelected=$("#target .option-hover.option-selected")[0].dataset.value;
-                        $('#target .combo-input').val(b);
-                        $('#target .combo-select select').val(b);
-                    }
-                })
-            }, 50);
-        }
-    });
-}
-
 //格式化日期
 Date.prototype.Format = function (fmt) {
     var o = {
@@ -688,7 +787,7 @@ Date.prototype.Format = function (fmt) {
 
 var today = new Date();
 today.setDate(today.getDate() ); //显示近一天内的数据
-//console.log(today.Format("yyyy-MM-dd"));
+////console.log(today.Format("yyyy-MM-dd"));
 // ping统计结果列表(页面展示的是探针1对应的recordping)
 var pingresulttable = new Vue({
     el: '#pingdata_table',
@@ -725,21 +824,21 @@ var pingresulttable = new Vue({
             vm.resultdata = {};
             /*清空resultdata*/
             vm.dtHandle.clear();
-            console.log("重置");
+            //console.log("重置");
             vm.dtHandle.draw();
             /*重置*/
         },
         currReset: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("当前页面重绘");
+            //console.log("当前页面重绘");
             vm.dtHandle.draw(false);
             /*当前页面重绘*/
         },
         redraw: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("页面重绘");
+            //console.log("页面重绘");
             vm.dtHandle.draw();
             /*重绘*/
         }
@@ -781,7 +880,7 @@ var pingresulttable = new Vue({
                 param.page = (data.start / data.length) + 1;//当前页码
                 param.resultdata = JSON.stringify(vm.resultdata);
                 var timeTag = (vm.resultdata).queryType;
-                //console.log((vm.resultdata).queryType);
+                ////console.log((vm.resultdata).queryType);
                 /*用于查询probe数据*/
                 //ajax请求数据
                 $.ajax({
@@ -791,27 +890,28 @@ var pingresulttable = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                        console.log(result);
+                        //console.log(result);
                         //封装返回数据
                         let returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
                         returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
                         returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
                         returnData.data = result.page.list;//返回的数据列表
-                        console.log(returnData);
+                        //console.log(returnData);
                         // 重新整理返回数据以匹配表格
                         let rows = [];
                         var i = param.start + 1;
                         var recordDateTime = "";
                         var timeRange = "";
                         result.page.list.forEach(function (item) {
-                            //console.log(item);
+                            ////console.log(item);
+                             
                             if (timeTag == "1") {
                                 recordDateTime = (item.recordDate).substr(0, 10) + " " + item.recordTime;
                             } else if (timeTag == "0") {
                                 timeRange = (item.recordDate).substr(0, 10) + " " + item.timeRange;
                             }
-                            //console.log(recordDateTime);
+                            ////console.log(recordDateTime);
                             let row = [];
                             row.push(i++);
                             row.push(item.probeName);
@@ -832,16 +932,16 @@ var pingresulttable = new Vue({
                             rows.push(row);
                         });
                         returnData.data = rows;
-                        //console.log(returnData);
+                        ////console.log(returnData);
                         //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);
-                        $("#pingdata_table").colResizable({
-                            liveDrag: true,
-                            gripInnerHtml: "<div class='grip'></div>",
-                            draggingClass: "dragging",
-                            resizeMode: 'overflow',
-                        });
+                        // $("#pingdata_table").colResizable({
+                        //     liveDrag: true,
+                        //     gripInnerHtml: "<div class='grip'></div>",
+                        //     draggingClass: "dragging",
+                        //     resizeMode: 'overflow',
+                        // });
                     }
                 });
             }
@@ -886,21 +986,21 @@ var tracertresulttable = new Vue({
             vm.resultdata = {};
             /*清空probedata*/
             vm.dtHandle.clear();
-            console.log("重置");
+            //console.log("重置");
             vm.dtHandle.draw();
             /*重置*/
         },
         currReset: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("当前页面重绘");
+            //console.log("当前页面重绘");
             vm.dtHandle.draw(false);
             /*当前页面重绘*/
         },
         redraw: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("页面重绘");
+            //console.log("页面重绘");
             vm.dtHandle.draw();
             /*重绘*/
         }
@@ -943,7 +1043,7 @@ var tracertresulttable = new Vue({
                 param.page = (data.start / data.length) + 1;//当前页码
                 param.resultdata = JSON.stringify(vm.resultdata);
                 /*用于查询probe数据*/
-                console.log(param);
+                //console.log(param);
                 //ajax请求数据
                 $.ajax({
                     type: "POST", /*GET会乱码*/
@@ -952,7 +1052,7 @@ var tracertresulttable = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                        console.log(result);
+                        //console.log(result);
                         //封装返回数据
                         let returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -1022,16 +1122,16 @@ var tracertresulttable = new Vue({
                             rows.push(row);
                         });
                         returnData.data = rows;
-                        //console.log(returnData);
+                        ////console.log(returnData);
                         //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);
-                        $("#tracertdata_table").colResizable({
-                            liveDrag: true,
-                            gripInnerHtml: "<div class='grip'></div>",
-                            draggingClass: "dragging",
-                            resizeMode: 'overflow',
-                        });
+                        // $("#tracertdata_table").colResizable({
+                        //     liveDrag: true,
+                        //     gripInnerHtml: "<div class='grip'></div>",
+                        //     draggingClass: "dragging",
+                        //     resizeMode: 'overflow',
+                        // });
                     }
                 });
             }
@@ -1206,21 +1306,21 @@ var slaresulttable = new Vue({
             vm.resultdata = {};
             /*清空probedata*/
             vm.dtHandle.clear();
-            console.log("重置");
+            //console.log("重置");
             vm.dtHandle.draw();
             /*重置*/
         },
         currReset: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("当前页面重绘");
+            //console.log("当前页面重绘");
             vm.dtHandle.draw(false);
             /*当前页面重绘*/
         },
         redraw: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("页面重绘");
+            //console.log("页面重绘");
             vm.dtHandle.draw();
             /*重绘*/
         }
@@ -1262,7 +1362,7 @@ var slaresulttable = new Vue({
                 param.page = (data.start / data.length) + 1;//当前页码
                 param.resultdata = JSON.stringify(vm.resultdata);
                 /*用于查询probe数据*/
-                console.log(param);
+                //console.log(param);
                 //ajax请求数据
                 $.ajax({
                     type: "POST", /*GET会乱码*/
@@ -1271,7 +1371,7 @@ var slaresulttable = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                        console.log(result);
+                        //console.log(result);
                         //封装返回数据
                         let returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -1312,16 +1412,16 @@ var slaresulttable = new Vue({
                             rows.push(row);
                         });
                         returnData.data = rows;
-                        //console.log(returnData);
+                        ////console.log(returnData);
                         //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);
-                        $("#sladata_table").colResizable({
-                            liveDrag: true,
-                            gripInnerHtml: "<div class='grip'></div>",
-                            draggingClass: "dragging",
-                            resizeMode: 'overflow',
-                        });
+                        // $("#sladata_table").colResizable({
+                        //     liveDrag: true,
+                        //     gripInnerHtml: "<div class='grip'></div>",
+                        //     draggingClass: "dragging",
+                        //     resizeMode: 'overflow',
+                        // });
                     }
                 });
             }
@@ -1360,21 +1460,21 @@ var dhcpresult_Table = new Vue({
             vm.probedata = {};
             /*清空probedata*/
             vm.dtHandle.clear();
-            console.log("重置");
+            //console.log("重置");
             vm.dtHandle.draw();
             /*重置*/
         },
         currReset: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("当前页面重绘");
+            //console.log("当前页面重绘");
             vm.dtHandle.draw(false);
             /*当前页面重绘*/
         },
         redraw: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("页面重绘");
+            //console.log("页面重绘");
             vm.dtHandle.draw();
             /*重绘*/
         }
@@ -1415,7 +1515,7 @@ var dhcpresult_Table = new Vue({
                 param.start = data.start;//开始的记录序号
                 param.page = (data.start / data.length) + 1;//当前页码
                 param.resultdata = JSON.stringify(vm.resultdata);
-                console.log(param);
+                //console.log(param);
                 var timeTag = (vm.resultdata).queryType;
                 $.ajax({
                     type: "POST", /*GET会乱码*/
@@ -1424,7 +1524,7 @@ var dhcpresult_Table = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                        console.log(result);
+                        //console.log(result);
                         // 封装返回数据
                         let returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -1435,7 +1535,7 @@ var dhcpresult_Table = new Vue({
                         let rows = [];
                         var i = param.start + 1;
                         result.page.list.forEach(function (item) {
-                            //console.log(item);
+                            ////console.log(item);
                             let row = [];
                             row.push(i++);
                             row.push(item.probeName);
@@ -1450,16 +1550,16 @@ var dhcpresult_Table = new Vue({
                             rows.push(row);
                         });
                         returnData.data = rows;
-                        //console.log(returnData);
+                        ////console.log(returnData);
                         //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);
-                        $("#dncpdata_table").colResizable({
-                            liveDrag: true,
-                            gripInnerHtml: "<div class='grip'></div>",
-                            draggingClass: "dragging",
-                            resizeMode: 'overflow',
-                        });
+                        // $("#dncpdata_table").colResizable({
+                        //     liveDrag: true,
+                        //     gripInnerHtml: "<div class='grip'></div>",
+                        //     draggingClass: "dragging",
+                        //     resizeMode: 'overflow',
+                        // });
                     }
                 });
             }
@@ -1498,21 +1598,21 @@ var dnsresult_Table = new Vue({
             vm.probedata = {};
             /*清空probedata*/
             vm.dtHandle.clear();
-            console.log("重置");
+            //console.log("重置");
             vm.dtHandle.draw();
             /*重置*/
         },
         currReset: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("当前页面重绘");
+            //console.log("当前页面重绘");
             vm.dtHandle.draw(false);
             /*当前页面重绘*/
         },
         redraw: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("页面重绘");
+            //console.log("页面重绘");
             vm.dtHandle.draw();
             /*重绘*/
         }
@@ -1563,7 +1663,7 @@ var dnsresult_Table = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                        console.log(result);
+                        //console.log(result);
                         // 封装返回数据
                         let returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -1574,7 +1674,7 @@ var dnsresult_Table = new Vue({
                         let rows = [];
                         var i = param.start + 1;
                         result.page.list.forEach(function (item) {
-                            //console.log(item);
+                            ////console.log(item);
                             let row = [];
                             row.push(i++);
                             row.push(item.probeName);
@@ -1589,16 +1689,16 @@ var dnsresult_Table = new Vue({
                             rows.push(row);
                         });
                         returnData.data = rows;
-                        //console.log(returnData);
+                        ////console.log(returnData);
                         //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);
-                        $("#dnsdata_table").colResizable({
-                            liveDrag: true,
-                            gripInnerHtml: "<div class='grip'></div>",
-                            draggingClass: "dragging",
-                            resizeMode: 'overflow',
-                        });
+                        // $("#dnsdata_table").colResizable({
+                        //     liveDrag: true,
+                        //     gripInnerHtml: "<div class='grip'></div>",
+                        //     draggingClass: "dragging",
+                        //     resizeMode: 'overflow',
+                        // });
                     }
                 });
             }
@@ -1636,21 +1736,21 @@ var radiusresult_Table = new Vue({
             vm.probedata = {};
             /*清空probedata*/
             vm.dtHandle.clear();
-            console.log("重置");
+            //console.log("重置");
             vm.dtHandle.draw();
             /*重置*/
         },
         currReset: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("当前页面重绘");
+            //console.log("当前页面重绘");
             vm.dtHandle.draw(false);
             /*当前页面重绘*/
         },
         redraw: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("页面重绘");
+            //console.log("页面重绘");
             vm.dtHandle.draw();
             /*重绘*/
         }
@@ -1702,7 +1802,7 @@ var radiusresult_Table = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                        console.log(result);
+                        //console.log(result);
                         // 封装返回数据
                         let returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -1725,16 +1825,16 @@ var radiusresult_Table = new Vue({
                             rows.push(row);
                         });
                         returnData.data = rows;
-                        //console.log(returnData);
+                        ////console.log(returnData);
                         //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);
-                        $("#radiusdata_table").colResizable({
-                            liveDrag: true,
-                            gripInnerHtml: "<div class='grip'></div>",
-                            draggingClass: "dragging",
-                            resizeMode: 'overflow',
-                        });
+                        // $("#radiusdata_table").colResizable({
+                        //     liveDrag: true,
+                        //     gripInnerHtml: "<div class='grip'></div>",
+                        //     draggingClass: "dragging",
+                        //     resizeMode: 'overflow',
+                        // });
                     }
                 });
             }
@@ -1776,21 +1876,21 @@ var ftpupresult_Table = new Vue({
             vm.probedata = {};
             /*清空probedata*/
             vm.dtHandle.clear();
-            console.log("重置");
+            //console.log("重置");
             vm.dtHandle.draw();
             /*重置*/
         },
         currReset: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("当前页面重绘");
+            //console.log("当前页面重绘");
             vm.dtHandle.draw(false);
             /*当前页面重绘*/
         },
         redraw: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("页面重绘");
+            //console.log("页面重绘");
             vm.dtHandle.draw();
             /*重绘*/
         }
@@ -1839,7 +1939,7 @@ var ftpupresult_Table = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                        console.log(result);
+                        //console.log(result);
                         // 封装返回数据
                         let returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -1850,7 +1950,7 @@ var ftpupresult_Table = new Vue({
                         let rows = [];
                         var i = param.start + 1;
                         result.page.list.forEach(function (item) {
-                            //console.log(item);
+                            ////console.log(item);
                             let row = [];
                             row.push(i++);
                             row.push(item.probeName);
@@ -1868,16 +1968,16 @@ var ftpupresult_Table = new Vue({
                             rows.push(row);
                         });
                         returnData.data = rows;
-                        //console.log(returnData);
+                        ////console.log(returnData);
                         //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);
-                        $("#ftpdata_table").colResizable({
-                            liveDrag: true,
-                            gripInnerHtml: "<div class='grip'></div>",
-                            draggingClass: "dragging",
-                            resizeMode: 'overflow',
-                        });
+                        // $("#ftpdata_table").colResizable({
+                        //     liveDrag: true,
+                        //     gripInnerHtml: "<div class='grip'></div>",
+                        //     draggingClass: "dragging",
+                        //     resizeMode: 'overflow',
+                        // });
                     }
                 });
             }
@@ -1919,21 +2019,21 @@ var ftpdoresult_Table = new Vue({
             vm.probedata = {};
             /*清空probedata*/
             vm.dtHandle.clear();
-            console.log("重置");
+            //console.log("重置");
             vm.dtHandle.draw();
             /*重置*/
         },
         currReset: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("当前页面重绘");
+            //console.log("当前页面重绘");
             vm.dtHandle.draw(false);
             /*当前页面重绘*/
         },
         redraw: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("页面重绘");
+            //console.log("页面重绘");
             vm.dtHandle.draw();
             /*重绘*/
         }
@@ -1982,7 +2082,7 @@ var ftpdoresult_Table = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                        console.log(result);
+                        //console.log(result);
                         // 封装返回数据
                         let returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -1993,7 +2093,7 @@ var ftpdoresult_Table = new Vue({
                         let rows = [];
                         var i = param.start + 1;
                         result.page.list.forEach(function (item) {
-                            //console.log(item);
+                            ////console.log(item);
                             let row = [];
                             row.push(i++);
                             row.push(item.probeName);
@@ -2010,16 +2110,16 @@ var ftpdoresult_Table = new Vue({
                             rows.push(row);
                         });
                         returnData.data = rows;
-                        //console.log(returnData);
+                        ////console.log(returnData);
                         //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);
-                        $("#ftpdata_table").colResizable({
-                            liveDrag: true,
-                            gripInnerHtml: "<div class='grip'></div>",
-                            draggingClass: "dragging",
-                            resizeMode: 'overflow',
-                        });
+                        // $("#ftpdata_table").colResizable({
+                        //     liveDrag: true,
+                        //     gripInnerHtml: "<div class='grip'></div>",
+                        //     draggingClass: "dragging",
+                        //     resizeMode: 'overflow',
+                        // });
                     }
                 });
             }
@@ -2060,21 +2160,21 @@ var webdownloadresult_Table = new Vue({
             vm.probedata = {};
             /*清空probedata*/
             vm.dtHandle.clear();
-            console.log("重置");
+            //console.log("重置");
             vm.dtHandle.draw();
             /*重置*/
         },
         currReset: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("当前页面重绘");
+            //console.log("当前页面重绘");
             vm.dtHandle.draw(false);
             /*当前页面重绘*/
         },
         redraw: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("页面重绘");
+            //console.log("页面重绘");
             vm.dtHandle.draw();
             /*重绘*/
         }
@@ -2123,7 +2223,7 @@ var webdownloadresult_Table = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                        console.log(result);
+                        //console.log(result);
                         // 封装返回数据
                         let returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -2134,7 +2234,7 @@ var webdownloadresult_Table = new Vue({
                         let rows = [];
                         var i = param.start + 1;
                         result.page.list.forEach(function (item) {
-                            //console.log(item);
+                            ////console.log(item);
                             let row = [];
                             row.push(i++);
                             row.push(item.probeName);
@@ -2150,16 +2250,16 @@ var webdownloadresult_Table = new Vue({
                             rows.push(row);
                         });
                         returnData.data = rows;
-                        //console.log(returnData);
+                        ////console.log(returnData);
                         //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);
-                        $("#webdownloaddata_table").colResizable({
-                            liveDrag: true,
-                            gripInnerHtml: "<div class='grip'></div>",
-                            draggingClass: "dragging",
-                            resizeMode: 'overflow',
-                        });
+                        // $("#webdownloaddata_table").colResizable({
+                        //     liveDrag: true,
+                        //     gripInnerHtml: "<div class='grip'></div>",
+                        //     draggingClass: "dragging",
+                        //     resizeMode: 'overflow',
+                        // });
                     }
                 });
             }
@@ -2204,21 +2304,21 @@ var webpageresult_Table = new Vue({
             vm.probedata = {};
             /*清空probedata*/
             vm.dtHandle.clear();
-            console.log("重置");
+            //console.log("重置");
             vm.dtHandle.draw();
             /*重置*/
         },
         currReset: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("当前页面重绘");
+            //console.log("当前页面重绘");
             vm.dtHandle.draw(false);
             /*当前页面重绘*/
         },
         redraw: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("页面重绘");
+            //console.log("页面重绘");
             vm.dtHandle.draw();
             /*重绘*/
         }
@@ -2268,7 +2368,7 @@ var webpageresult_Table = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                        console.log(result);
+                        //console.log(result);
                         //封装返回数据
                         let returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -2280,7 +2380,7 @@ var webpageresult_Table = new Vue({
                         var i = param.start + 1;
                         result.page.list.forEach(function (item) {
                              
-                            //console.log(item);
+                            ////console.log(item);
                             let row = [];
                             row.push(i++);
                             row.push(item.probeName);
@@ -2301,16 +2401,16 @@ var webpageresult_Table = new Vue({
                             rows.push(row);
                         });
                         returnData.data = rows;
-                        //console.log(returnData);
+                        ////console.log(returnData);
                         //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);
-                        $("#webpagedata_table").colResizable({
-                            liveDrag: true,
-                            gripInnerHtml: "<div class='grip'></div>",
-                            draggingClass: "dragging",
-                            resizeMode: 'overflow',
-                        });
+                        // $("#webpagedata_table").colResizable({
+                        //     liveDrag: true,
+                        //     gripInnerHtml: "<div class='grip'></div>",
+                        //     draggingClass: "dragging",
+                        //     resizeMode: 'overflow',
+                        // });
                     }
                 });
             }
@@ -2337,7 +2437,6 @@ var webvideoresult_Table = new Vue({
             {title: '<div style="width:90px">DNS时延(ms)</div>'},
             {title: '<div style="width:161px">连接WEB服务器时延(ms)</div>'},
             {title: '<div style="width:120px"> WEB页面时延(ms)</div>'},
-
             {title: '<div style="width:100px">日期</div>'},
             {title: '<div style="width:60px">时间</div>'},
         ],
@@ -2356,21 +2455,21 @@ var webvideoresult_Table = new Vue({
             vm.probedata = {};
             /*清空probedata*/
             vm.dtHandle.clear();
-            console.log("重置");
+            //console.log("重置");
             vm.dtHandle.draw();
             /*重置*/
         },
         currReset: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("当前页面重绘");
+            //console.log("当前页面重绘");
             vm.dtHandle.draw(false);
             /*当前页面重绘*/
         },
         redraw: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("页面重绘");
+            //console.log("页面重绘");
             vm.dtHandle.draw();
             /*重绘*/
         }
@@ -2419,7 +2518,7 @@ var webvideoresult_Table = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                        console.log(result);
+                        //console.log(result);
                         //封装返回数据
                         let returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -2430,38 +2529,37 @@ var webvideoresult_Table = new Vue({
                         let rows = [];
                         var i = param.start + 1;
                         result.page.list.forEach(function (item) {
-                            //console.log(item);19
+                             
                             let row = [];
                             row.push(i++);
                             row.push(item.probeName);
                             row.push(item.port);
                             row.push(item.targetName);
                             row.push(numberToIp(item.targetIp));
-                            row.push(fixed(item.headFrameDelay ));
-                            row.push(fixed(item.initBufferDelay ));
-                            row.push(fixed(item.loadDelay ));
-                            row.push(fixed(item.totalBufferDelay) );
-                            row.push(fixed(item.downloadRate ));
-                            row.push(fixed(item.bufferTime ));
-                            row.push(fixed(item.dnsDelay ));
-                            row.push(fixed(item.wsConnDelay) );
-                            row.push(fixed(item.webPageDelay) );
-
+                            row.push(item.headFrameDelay.toFixed(2));
+                            row.push(item.initBufferDelay.toFixed(2) );
+                            row.push(item.loadDelay.toFixed(2));
+                            row.push(item.totalBufferDelay.toFixed(2) );
+                            row.push(item.downloadRate.toFixed(2));
+                            row.push(item.bufferTime.toFixed(2) );
+                            row.push(item.dnsDelay .toFixed(2));
+                            row.push(item.wsConnDelay .toFixed(2));
+                            row.push(item.webPageDelay .toFixed(2));
                             row.push(item.recordDate.substr(0,10));
                             row.push(item.recordTime);
                             rows.push(row);
                         });
                         returnData.data = rows;
-                        //console.log(returnData);
+                        ////console.log(returnData);
                         //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);
-                        $("#webvideodata_table").colResizable({
-                            liveDrag: true,
-                            gripInnerHtml: "<div class='grip'></div>",
-                            draggingClass: "dragging",
-                            resizeMode: 'overflow',
-                        });
+                        // $("#webvideodata_table").colResizable({
+                        //     liveDrag: true,
+                        //     gripInnerHtml: "<div class='grip'></div>",
+                        //     draggingClass: "dragging",
+                        //     resizeMode: 'overflow',
+                        // });
                     }
                 });
             }
@@ -2501,21 +2599,21 @@ var gameresult_Table = new Vue({
             vm.probedata = {};
             /*清空probedata*/
             vm.dtHandle.clear();
-            console.log("重置");
+            //console.log("重置");
             vm.dtHandle.draw();
             /*重置*/
         },
         currReset: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("当前页面重绘");
+            //console.log("当前页面重绘");
             vm.dtHandle.draw(false);
             /*当前页面重绘*/
         },
         redraw: function () {
             let vm = this;
             vm.dtHandle.clear();
-            console.log("页面重绘");
+            //console.log("页面重绘");
             vm.dtHandle.draw();
             /*重绘*/
         }
@@ -2564,7 +2662,7 @@ var gameresult_Table = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                        console.log(result);
+                        //console.log(result);
                         //封装返回数据
                         let returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -2575,7 +2673,7 @@ var gameresult_Table = new Vue({
                         let rows = [];
                         var i = param.start + 1;
                         result.page.list.forEach(function (item) {
-                            //console.log(item);
+                            ////console.log(item);
                             let row = [];
                             row.push(i++);
                             row.push(item.probeName);
@@ -2591,16 +2689,16 @@ var gameresult_Table = new Vue({
                             rows.push(row);
                         });
                         returnData.data = rows;
-                        //console.log(returnData);
+                        ////console.log(returnData);
                         //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                         //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);
-                        $("#gamedata_table").colResizable({
-                            liveDrag: true,
-                            gripInnerHtml: "<div class='grip'></div>",
-                            draggingClass: "dragging",
-                            resizeMode: 'overflow',
-                        });
+                        // $("#gamedata_table").colResizable({
+                        //     liveDrag: true,
+                        //     gripInnerHtml: "<div class='grip'></div>",
+                        //     draggingClass: "dragging",
+                        //     resizeMode: 'overflow',
+                        // });
                     }
                 });
             }
@@ -2632,7 +2730,7 @@ $(document).ready(
  methods:{
  toExcel: function(id){
  alert(this.name);
- console.log(recordtag);
+ //console.log(recordtag);
  $("#" + id + "data_table").dataTable({
  "bJQueryUI": false,
  'bPaginate': false, //是否分页
@@ -2656,121 +2754,19 @@ $(document).ready(
  })*/
 
 function fixed(value) {
-    if(value==''||value==null){
-        return ''
-    }else{
-        return value 
-    }
+
+        return value.toFixed(2)
 }
 
 function fixedRate(value) {
     if(value==null){
         return ''
     } else{
-        return (value*100) 
+        return (value*100).toFixed(2)
     }
 }
 
 
-
-function probe() {
-    probeSelected=0;
-    $.ajax({
-        url: "../../cem/probe/list",//探针列表
-        type: "POST",
-        cache: false,  //禁用缓存
-        dataType: "json",
-        contentType: "application/json",
-        success: function (result) {
-            var probes = [];
-            for (var i = 0; i < result.page.list.length; i++) {
-                probes[i] = {message: result.page.list[i]}
-            }
-            search_data.probe = probes;
-            setTimeout(function () {
-                $('#probe .jq22').comboSelect();
-                $('.combo-dropdown').css("z-index","3");
-                $('#probe .option-item').click(function (probe) {
-                    setTimeout(function () {
-                        var a = $(probe.currentTarget)[0].innerText;
-                        probeSelected = $($(probe.currentTarget)[0]).data('value');
-                        $('#probe .combo-input').val(a);
-                        $('#probe .combo-select select').val(a);
-                    }, 30);
-                });
-                $('#probe input[type=text] ').keyup(function (probe) {
-                    if( probe.keyCode=='13'){
-                        var b = $("#probe .option-hover.option-selected").text();
-                        probeSelected=$("#probe .option-hover.option-selected")[0].dataset.value;
-                        $('#probe .combo-input').val(b);
-                        $('#probe .combo-select select').val(b);
-                    }
-                })
-            },50);
-        }
-    });
-}
-$(document).ready(function () {
-    $('#country .jq22').comboSelect();
-    $('#probe .jq22').comboSelect();
-    $('#city .jq22').comboSelect();
-    $('#target .jq22').comboSelect();
-    citySelected=0
-    $.ajax({
-        type: "POST", /*GET会乱码*/
-        url: "../../cem/city/list",//c城市列表
-        cache: false,  //禁用缓存
-        dataType: "json",
-        success: function (result) {
-            var cities = [];
-            for (var i = 0; i < result.page.list.length; i++) {
-                cities[i] = {message: result.page.list[i]}
-            }
-            search_data.city = cities;
-            setTimeout(function () {
-                $('div#city .jq22').comboSelect();
-                $('.combo-dropdown').css("z-index","3");
-                $('div#city .option-item').click(function (city) {
-                    setTimeout(function () {
-                        var a = $(city.currentTarget)[0].innerText;
-                        clearArea(a);
-                        citySelected = $($(city.currentTarget)[0]).data('value');
-                        getArea(citySelected);
-                        getProbeCity(citySelected);
-                        $('div#city .combo-input').val(a);
-                        $('div#city .combo-select select').val(a);
-                    }, 50);
-                });
-                $('#city input[type=text] ').keyup(function (city) {
-                    if( city.keyCode=='13'){
-                        var b = $("#city .option-hover.option-selected").text();
-                        clearArea(b);
-                        citySelected=$("#city .option-hover.option-selected")[0].dataset.value
-                        getArea(citySelected);
-                        getProbeCity(citySelected);
-                        $('#city .combo-input').val(b);
-                        $('#city .combo-select select').val(b);
-                    }
-                })
-            }, 100);
-        }
-    });
-
-    function clearArea(a) {
-        if(a=="所有地市"){
-            $('#country .combo-input').val("所有区县");
-            $('#country .combo-select select').val("所有区县");
-            search_data.areas = [];
-            $('#country ul').html("");
-            $("#country ul").append("<li class='option-item option-hover option-selected' data-index=='0' data-value=''>"+"所有区县"+"</li>");
-            probe()
-        }
-        if(a=="所有区县"){
-            probe()
-        }
-    }
-    probe()
-});
 
 
 //转换为ip类型
@@ -2811,7 +2807,7 @@ function loading() {
 }
 function out() {/*导出事件*/
     loading();
-    console.log(new Date())
+    //console.log(new Date())
     var data = getFormJson($('#resultsearch .selectdata'));
     /*得到查询条件*/
     /*获取表单元素的值*/
@@ -2833,13 +2829,13 @@ function out() {/*导出事件*/
     if (termtemp != "") {
         data.end_time = termtemp + ":00";
     }
-    console.log(data);
+    //console.log(data);
     if (data.interval == "" || data.interval == undefined) {
         data.queryType = "1";
     } else {
         data.queryType = "0";//统计数据
     }
-    console.log(data);
+    //console.log(data);
     var schedulepolicy = JSON.stringify(data);
 
     document.getElementById("output").href = encodeURI('../../recordhourtracert/datadownload/' + schedulepolicy);

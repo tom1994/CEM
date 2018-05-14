@@ -7,7 +7,8 @@ import java.util.List;
 import java.util.Map;
 @Component
 public interface ScoreCollectLayerDao {
-    List<ScoreCollectLayerEntity> queryList(Map<String, Object> p);
+    List<ScoreCollectLayerEntity> queryList(Map<String,Object> p);
     void save(ScoreCollectLayerEntity s);
-    void del(Map<String, Object> p);
+    void del(Map<String,Object> p);
+    void delAll();
 }

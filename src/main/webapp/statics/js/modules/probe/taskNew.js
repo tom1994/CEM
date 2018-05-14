@@ -80,6 +80,9 @@ var task_handle = new Vue({
             taskform_data.atemplates = [];
             $('#taskform_data input[type=text]').prop("disabled", false);
             $('#taskform_data select').prop("disabled", false);
+            $("#taskform_data select").removeAttr('style');
+            $(".service select").removeAttr('style');
+            $(".service input[type=text]").removeAttr('style');
             $('#taskform_data input[type=text]').prop("readonly", false);
             $('#taskname').removeAttr('unselectable');
             $('.service input[type=text]').removeAttr('unselectable');
@@ -132,7 +135,7 @@ function get_viewModal(update_data_id) {
         dataType: "json",
         contentType: "application/json", /*必须要,不可少*/
         success: function (result) {
-            debugger
+
             var param = JSON.parse(result.task.parameter);
             servicetypeid = result.task.serviceType;
             var paramforms = $('#' + stid.get(servicetypeid) + '_param' + ' .form-control');
@@ -179,12 +182,12 @@ function get_viewModal(update_data_id) {
                 paramforms[2].value = param.is_renew;
             }
             if (stid.get(servicetypeid) == "dns") {
-                 
+
                 paramforms[0].value = param.times;
                 paramforms[1].value = param.interval;
                 paramforms[2].value = param.count;
                 paramforms[3].value = param.timeout;
-                 var domains = param.domains;
+                var domains = param.domains;
                 paramforms[4].value=domains
             }
             if (stid.get(servicetypeid) == "pppoe") {
@@ -269,16 +272,18 @@ function get_viewModal(update_data_id) {
             $("#" + stid.get(servicetypeid)).removeClass("service_unselected");
             $('#newfooter').attr('style', 'display:none');
             $('#viewfooter').removeAttr('style', 'display:none');
-            // $("#taskform_data input[type=text]").removeAttr("readonly");
             $("#taskform_data select").attr('disabled', 'disabled');
+            $("#taskform_data select").css('pointer-events', 'none');
             $("#taskform_data select").attr('unselectable', 'on');
             $("#taskform_data input[type=text]").attr('readonly', 'readonly');
             $("#taskform_data input[type=text]").attr('unselectable', 'on');
-           $('#domains').attr('readonly', 'readonly');
+            $('#domains').attr('readonly', 'readonly');
             $('#domains').attr('unselectable', 'on');
             $(".service input[type=text]").attr('readonly', 'readonly');
             $(".service input[type=text]").attr('unselectable', 'on');
+            $(".service input[type=text]").css('pointer-events', 'none');
             $(".service select").attr('disabled', 'disabled');
+            $(".service select").css('pointer-events', 'none');
             $(".service select").attr('unselectable', 'on');
             $('#myModal_edit').modal('show');
         }
@@ -296,7 +301,7 @@ function delete_ajax() {
         dataType: "json",
         contentType: "application/json", /*必须要,不可少*/
         success: function (result) {
-             
+
             toastr.success("任务删除成功!");
             task_table.currReset();
             idArray = [];
@@ -381,14 +386,6 @@ function dispatch_info(obj) {
     /*获取当前行探针数据id*/
     dispatch_table.redraw();
     $('#myModal_dispatch').modal('show');
-    setTimeout(function () {
-        $("#dispatch_table").colResizable({
-            liveDrag: true,
-            gripInnerHtml: "<div class='grip'></div>",
-            draggingClass: "dragging",
-            resizeMode: 'overflow',
-        });
-    }, 300);
 }
 
 function selectOnchang(obj) {
@@ -405,12 +402,12 @@ var queryPort = function (probeid) {
         // contentType: "application/json", /*必须要,不可少*/
         success: function (result) {
             var port=JSON.parse(result.probe.portIp);
-                for(var i=0;i<port.length;i++){
-                    $('#second').append("<option value=" + port[i].port + ">" + port[i].port+ "</option>");
-                }
-
+            for(var i=0;i<port.length;i++){
+                $('#second').append("<option value=" + port[i].port + ">" + port[i].port+ "</option>");
             }
-        })
+
+        }
+    })
 }
 // $('#task_dispatch').on('hide.bs.modal',
 //     function() {
@@ -560,13 +557,13 @@ function task_assign(obj) {
 //a=1 选择探针 a=0 选择探针组 b=1 测试目标 b=0 测试目标组 a=2选择核心探针 c=0 选择
 function submit_dispatch() {
     loading()
-    debugger
+
     var a = parseInt($('input[name=chooseprobe]:checked', '#dispatch_probe').val());
     var b = parseInt($('input[name=choosetarget]:checked', '#dispatch_target').val());
-    console.log(a, b);
+    // console.log(a, b);
     var probeList = getFormJson2($('#dispatch_probe'));
     var targetList = getFormJson2($('#dispatch_target'));
-    console.log(probeList);
+    // console.log(probeList);
     if (a == 1) {
         var taskDispatch = {};
         taskDispatch.probePort = "port1";
@@ -598,7 +595,7 @@ function submit_dispatch() {
         } else {
             taskDispatch.probeIds = probeList.probeId;
         }
-        console.log(taskDispatch);
+        // console.log(taskDispatch);
         if (typeof taskDispatch.probeIds == "undefined") {
             toastr.warning("请选择探针!");
         } else if (b == 1 && typeof taskDispatch.targetIds == "undefined") {
@@ -606,7 +603,7 @@ function submit_dispatch() {
         } else if (b == 0 && typeof taskDispatch.targetGroupIds == "undefined") {
             toastr.warning("请选择测试目标组!");
         } else {
-            console.log(taskDispatch);
+            // console.log(taskDispatch);
             $.ajax({
                 type: "POST", /*GET会乱码*/
                 url: "../../cem/taskdispatch/saveAll",
@@ -616,14 +613,14 @@ function submit_dispatch() {
                 contentType: "application/json", /*必须要,不可少*/
                 success: function (result) {
                     removeLoading('test');
-                 let code=result.code;
-                 switch(code){
-                     case 404:
-                         toastr.error("任务下发失败!"); ;
-                     default:
-                         toastr.success("任务下发成功!");
-                         break;
-                 }
+                    let code=result.code;
+                    switch(code){
+                        case 404:
+                            toastr.error("任务下发失败!"); ;
+                        default:
+                            toastr.success("任务下发成功!");
+                            break;
+                    }
                     $('#task_dispatch').modal('hide');
                     task_table.currReset();
                 }
@@ -755,8 +752,8 @@ function submit_dispatch() {
         }else {
             taskDispatch.probePort = probeList.probePort;
         }
-        console.log(taskDispatch);
-        debugger
+        // console.log(taskDispatch);
+
         if (typeof taskDispatch.probeIds == "undefined") {
             toastr.warning("请选择探针!");
         } else if (b == 1 && typeof taskDispatch.targetIds == "undefined") {
@@ -764,7 +761,7 @@ function submit_dispatch() {
         } else if (b == 0 && typeof taskDispatch.targetGroupIds == "undefined") {
             toastr.warning("请选择测试目标组!");
         } else {
-            console.log(taskDispatch);
+            // console.log(taskDispatch);
             $.ajax({
                 type: "POST", /*GET会乱码*/
                 url: "../../cem/taskdispatch/saveAll",
@@ -773,7 +770,7 @@ function submit_dispatch() {
                 dataType: "json",
                 contentType: "application/json", /*必须要,不可少*/
                 success: function (result) {
-                    console.log(result);
+                    // console.log(result);
                     removeLoading('test');
                     let code=result.code;
                     switch(code){
@@ -903,11 +900,11 @@ var taskform_data = new Vue({
         submit: function () {
             var oDate = new Date();
             var tasknewJson = getFormJson($('#taskform_data'));//获取到对应的数据
-            console.log(tasknewJson)
+            // console.log(tasknewJson)
             var paramnewJson = getFormJson2($('#' + stid.get(parseInt(tasknewJson.serviceType)) + '_param'));
-            console.log(paramnewJson)
+            // console.log(paramnewJson)
             var paramnew = JSON.stringify(paramnewJson);
-            console.log(paramnew)
+            // console.log(paramnew)
             tasknewJson.parameter = paramnew;
             tasknewJson.isDeleted = "0";
             // tasknewJson.alarmTemplateId = "0";
@@ -919,12 +916,12 @@ var taskform_data = new Vue({
                 var domains=paramnewJson.domains;
                 var stringSplit=domains.split(';');
                 for (let i = 0;i<stringSplit.length;i++){
-                   var str = stringSplit[i];
-                        if(tasknewJson.serviceType== "14"&&!reg.test(str)){
-                            toastr.warning("您输入域名有误,请输入正确域名,多个域名之间用英文分号隔开!");
-                            return
+                    var str = stringSplit[i];
+                    if(tasknewJson.serviceType== "14"&&!reg.test(str)){
+                        toastr.warning("您输入域名有误,请输入正确域名,多个域名之间用英文分号隔开!");
+                        return
 
-                        }
+                    }
                 }
                 tasknewJson.domains=stringSplit;
                 let parameter = tasknewJson.parameter;
@@ -1032,7 +1029,7 @@ var taskform_data = new Vue({
                     toastr.warning("您输入的持续时长有误，请正确输入!");
                 } else {
                     var tasknew = JSON.stringify(tasknewJson);
-                    console.log(tasknew);
+                    // console.log(tasknew);
                     $.ajax({
                         type: "POST", /*GET会乱码*/
                         url: "../../cem/task/save",
@@ -1121,27 +1118,27 @@ var taskform_data = new Vue({
 });
 
 var getalarmtemplates = function (servicetypeid) {
-    console.log(servicetypeid);
+    // console.log(servicetypeid);
     $.ajax({
         type: "POST", /*GET会乱码*/
         url: "../../cem/alarmtemplate/infoByService/" + servicetypeid,
         cache: false,  //禁用缓存
         dataType: "json",
         success: function (result) {
-            console.log(result);
-            debugger
+            // console.log(result);
+
             taskform_data.atemplates = [];
             for (var i = 0; i < result.atList.length; i++) {
                 taskform_data.atemplates.push({message: result.atList[i]});
             }
-            console.log(taskform_data.atemplates);
+            // console.log(taskform_data.atemplates);
         }
     });
 }
 
 function getFormJson(form) {
     /*将表单对象变为json对象*/
-    debugger
+
     var o = {};
     var a = $(form).serializeArray();
     $.each(a, function () {
@@ -1194,7 +1191,7 @@ function getFormJson2(form) {      /*将表单对象变为json对象*/
 function cancel_task(obj) {
     var taskDispatchId = parseInt(obj.id);
     cancel_confirm.taskDispatchId = taskDispatchId;
-    console.log(taskDispatchId);
+    // console.log(taskDispatchId);
     cancel_confirm.show_deleteModal();
 }
 
@@ -1255,22 +1252,20 @@ var task_table = new Vue({
             vm.taskdata = {};
             /*清空taskdata*/
             vm.dtHandle.clear();
-            console.log("重置");
+            // console.log("重置");
             vm.dtHandle.draw();
             /*重置*/
         },
         currReset: function () {
-            debugger
+
             var vm = this;
             vm.dtHandle.clear();
-            console.log("当前页面重绘");
             vm.dtHandle.draw(false);
             /*当前页面重绘*/
         },
         redraw: function () {
             var vm = this;
             vm.dtHandle.clear();
-            console.log("页面重绘");
             vm.dtHandle.draw();
             /*重绘*/
         }
@@ -1306,7 +1301,6 @@ var task_table = new Vue({
                 param.start = data.start;//开始的记录序号
                 param.page = (data.start / data.length) + 1;//当前页码
                 param.taskdata = JSON.stringify(vm.taskdata);
-                // console.log(param);
                 //ajax请求数据
                 $.ajax({
                     type: "POST", /*GET会乱码*/
@@ -1316,7 +1310,6 @@ var task_table = new Vue({
                     dataType: "json",
                     success: function (result) {
                         //封装返回数据
-                        console.log(result)
                         var returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
                         returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
@@ -1377,7 +1370,7 @@ var dispatch_table = new Vue({
             {title: '<div style="width:130px">位置</div>'},
             {title: '<div style="width:57px">层级</div>'},
             {title: '<div style="width:57px">端口</div>'},
-            {title: '<div style="width:180px">测试目标</div>'},
+            {title: '<div style="width:200px">测试目标</div>'},
             {title: '<div style="width:120px">分配时间</div>'},
             {title: '<div style="width:67px">操作</div>'}
         ],
@@ -1393,21 +1386,18 @@ var dispatch_table = new Vue({
             vm.taskdata = {};
             /*清空taskdata*/
             vm.dtHandle.clear();
-            console.log("重置");
             vm.dtHandle.draw();
             /*重置*/
         },
         currReset: function () {
             var vm = this;
             vm.dtHandle.clear();
-            console.log("当前页面重绘");
             vm.dtHandle.draw(false);
             /*当前页面重绘*/
         },
         redraw: function () {
             var vm = this;
             vm.dtHandle.clear();
-            console.log("页面重绘");
             vm.dtHandle.draw();
             /*重绘*/
         },
@@ -1418,21 +1408,21 @@ var dispatch_table = new Vue({
     },
     mounted: function () {
         var vm = this;
-        // console.log(this.$data.taskid);
         vm.dtHandle = $(this.$el).DataTable({
             columns: vm.headers,
             data: vm.rows,
             searching: false,
             paging: true,
-            scrollY :300,
-            scrollX: true,
-            scrollCollapse: true,
+            // scrollY :300,
+            // scrollX: true,
+            // scrollCollapse: true,
             serverSide: true,
             info: false,
             ordering: false, /*禁用排序功能*/
-            scroll: false,
             oLanguage: {
                 sLengthMenu: "每页 _MENU_ 行数据",
+                sEmptyTable: "No data available in table",
+                sZeroRecords:"No data available in table",
                 oPaginate: {
                     sNext: '<i class="fa fa-chevron-right" ></i>', /*图标替换上一页,下一页*/
                     sPrevious: '<i class="fa fa-chevron-left" ></i>'
@@ -1446,7 +1436,6 @@ var dispatch_table = new Vue({
                 param.start = data.start;//开始的记录序号
                 param.page = (data.start / data.length) + 1;//当前页码
                 param.taskdata = JSON.stringify(vm.taskdata);
-                // console.log(param);
                 //ajax请求数据
                 $.ajax({
                     type: "POST", /*GET会乱码*/
@@ -1456,7 +1445,7 @@ var dispatch_table = new Vue({
                     data: param,  //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                        console.log(result);
+                        // console.log(result);
                         //封装返回数据
                         var returnData = {};
                         returnData.draw = result.page.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -1473,6 +1462,8 @@ var dispatch_table = new Vue({
                             row.push('<span title="' + item.location + '" style="white-space: nowrap">' + (item.location).substr(0, 10) + '</span>');
                             row.push(item.layerName);
                             row.push(item.probePort);
+                            // row.push('<div style="max-width: 200px;!important;overflow: visible; white-space:nowrap; word-wrap:break-word;">' +
+                            //     '<span title="'+item.target+'">'+item.target+'</span>');
                             row.push('<span title="' + item.target + '" style="white-space: nowrap;">' + (item.target).substr(0, 24) + '</span>');
                             row.push(item.createTime);
                             row.push('<a class="fontcolor" onclick="cancel_task(this)" id=' + item.id + '>取消任务</a>');
@@ -1487,17 +1478,6 @@ var dispatch_table = new Vue({
         });
     }
 });
-function resize() {
-    debugger;
-    setTimeout(function () {
-        $("#dispatch_table").colResizable({
-            liveDrag: true,
-            gripInnerHtml: "<div class='grip'></div>",
-            draggingClass: "dragging",
-            resizeMode: 'overflow',
-        });
-    }, 300);
-}
 
 $(document).on('hidden.bs.modal', '.modal', function (e) {
     $('.modal-dialog').css({'top': '0px', 'left': '0px'});

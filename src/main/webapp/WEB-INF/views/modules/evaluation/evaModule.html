@@ -114,7 +114,7 @@
                                                        size="3" onkeyup="value=value.replace(/[^0-9.]/g,'')">
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-sm-6 left" >
-                                                <a class="service-font" v-on:click="tr_tcpSet">Trace Route(TCP):</a>
+                                                <a class="service-font" v-on:click="tr_tcpSet">Trace Route():</a>
                                                 <input class="inputset" type="text" id="tr_tcp" name="tr_tcp"
                                                        size="3" onkeyup="value=value.replace(/[^0-9.]/g,'')">
                                             </div>
@@ -310,7 +310,7 @@
         <button type="button" class="btn btn-sm btn-success"
                 style="margin-right: 5px"
                 v-on:click="submit"><span
-                class="glyphicon glyphicon-save"></span>保存
+                class="glyphicon glyphicon-file"></span>保存
         </button>
         <button type="button" class="btn btn-sm btn-success"
                 v-on:click="reset"><span
@@ -1756,7 +1756,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-lg-3 col-md-3 col-sm-3">
-                            <span>解析时延(ms)</span>
+                            <span>分配时延(ms)</span>
                         </div>
                         <div class="col-lg-1 col-md-1 col-sm-1"><input id="dhcp11" name="dhcp11" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
                         <div class="col-lg-1 col-md-1 col-sm-1"><input id="dhcp12" name="dhcp12" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
@@ -1894,7 +1894,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-lg-3 col-md-3 col-sm-3">
-                            <span>时延(ms)</span>
+                            <span>认证时延(ms)</span>
                         </div>
                         <div class="col-lg-1 col-md-1 col-sm-1"><input id="radius11" name="radius11" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
                         <div class="col-lg-1 col-md-1 col-sm-1"><input id="radius12" name="radius12" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
@@ -2006,7 +2006,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-lg-3 col-md-3 col-sm-3">
-                            <span>上传速度(kB/s)</span>
+                            <span>上传速率(kB/s)</span>
                         </div>
                         <div class="col-lg-1 col-md-1 col-sm-1"><input id="ftpU51" name="ftpU51" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
                         <div class="col-lg-1 col-md-1 col-sm-1"><input id="ftpU52" name="ftpU52" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
@@ -2105,7 +2105,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-lg-3 col-md-3 col-sm-3">
-                            <span>下载速度(kB/s)</span>
+                            <span>下载速率(kB/s)</span>
                         </div>
                         <div class="col-lg-1 col-md-1 col-sm-1"><input id="ftpD51" name="ftpD51" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
                         <div class="col-lg-1 col-md-1 col-sm-1"><input id="ftpD52" name="ftpD52" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
@@ -2180,7 +2180,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-lg-3 col-md-3 col-sm-3">
-                            <span>下载速度(kB/s)</span>
+                            <span>下载速率(kB/s)</span>
                         </div>
                         <div class="col-lg-1 col-md-1 col-sm-1"><input id="webD31" name="webD31" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
                         <div class="col-lg-1 col-md-1 col-sm-1"><input id="webD32" name="webD32" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
@@ -2268,7 +2268,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-lg-3 col-md-3 col-sm-3">
-                            <span>下载速度(kB/s)</span>
+                            <span>下载速率(kB/s)</span>
                         </div>
                         <div class="col-lg-1 col-md-1 col-sm-1"><input id="webP31" name="webP31" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
                         <div class="col-lg-1 col-md-1 col-sm-1"><input id="webP32" name="webP32" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
@@ -2328,7 +2328,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-lg-3 col-md-3 col-sm-3">
-                            <span>页面元素时延(ms)</span>
+                            <span>页面加载时延(ms)</span>
                         </div>
                         <div class="col-lg-1 col-md-1 col-sm-1"><input id="webP81" name="webP81" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
                         <div class="col-lg-1 col-md-1 col-sm-1"><input id="webP82" name="webP82" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
@@ -2349,6 +2349,7 @@
         </div>
     </div>
 </div>
+
 
 <!--在线视频子业务的各项指标设置模态框-->
 <div class="modal fade" id="Modal_video" tabindex="-1" role="dialog"
@@ -2416,7 +2417,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-lg-3 col-md-3 col-sm-3">
-                            <span>总体缓冲次数</span>
+                            <span>首帧到达时延(ms)</span>
                         </div>
                         <div class="col-lg-1 col-md-1 col-sm-1"><input id="video41"  name="video41" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
                         <div class="col-lg-1 col-md-1 col-sm-1"><input id="video42"  name="video42" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
@@ -2428,7 +2429,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-lg-3 col-md-3 col-sm-3">
-                            <span>首帧到达时延(ms)</span>
+                            <span>首次缓冲时延(ms)</span>
                         </div>
                         <div class="col-lg-1 col-md-1 col-sm-1"><input id="video51"  name="video51" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
                         <div class="col-lg-1 col-md-1 col-sm-1"><input id="video52"  name="video52" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
@@ -2440,7 +2441,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-lg-3 col-md-3 col-sm-3">
-                            <span>首次缓冲时延(ms)</span>
+                            <span>视频加载时延(ms)</span>
                         </div>
                         <div class="col-lg-1 col-md-1 col-sm-1"><input id="video61"  name="video61" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
                         <div class="col-lg-1 col-md-1 col-sm-1"><input id="video62"  name="video62" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
@@ -2452,7 +2453,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-lg-3 col-md-3 col-sm-3">
-                            <span>视频加载时延(ms)</span>
+                            <span>总体缓冲时间(ms)</span>
                         </div>
                         <div class="col-lg-1 col-md-1 col-sm-1"><input id="video71"  name="video71" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
                         <div class="col-lg-1 col-md-1 col-sm-1"><input id="video72"  name="video72" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
@@ -2464,7 +2465,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-lg-3 col-md-3 col-sm-3">
-                            <span>总体缓冲时间(ms)</span>
+                            <span>总体缓冲次数</span>
                         </div>
                         <div class="col-lg-1 col-md-1 col-sm-1"><input id="video81" name="video81" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
                         <div class="col-lg-1 col-md-1 col-sm-1"><input id="video82" name="video82" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
@@ -2476,7 +2477,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-lg-3 col-md-3 col-sm-3">
-                            <span>下载速度(kB/s)</span>
+                            <span>下载速率(kB/s)</span>
                         </div>
                         <div class="col-lg-1 col-md-1 col-sm-1"><input id="video91" name="video91" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
                         <div class="col-lg-1 col-md-1 col-sm-1"><input id="video92" name="video92" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
@@ -2529,7 +2530,7 @@
 
                     <div class="form-group row">
                         <div class="col-lg-3 col-md-3 col-sm-3">
-                            <span>连接时延(ms)</span>
+                            <span>DNS时延(ms)</span>
                         </div>
                         <div class="col-lg-1 col-md-1 col-sm-1"><input id="game11" name="game11" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>
                         <div class="col-lg-1 col-md-1 col-sm-1"><input id="game12" name="game12" type="text" class="form-input" onkeyup="value=value.replace(/[^0-9.]/g,'')"></div>

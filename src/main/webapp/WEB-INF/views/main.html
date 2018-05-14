@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script type="text/javascript" src="${rc.contextPath}/statics/js/plugins/jquery/jquery-2.0.3.js"></script>
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script type="text/javascript" src="${rc.contextPath}/statics/js/plugins/dataTables/jquery.dataTables.min.js"></script>
+    #parse("cemHeader.html")  <!--导入CSS和js文件-->
+    <!--<script type="text/javascript" src="${rc.contextPath}/statics/js/plugins/jquery/jquery-2.0.3.js"></script>-->
+    <!--<script src="https://code.highcharts.com/highcharts.js"></script>-->
+    <!--<script type="text/javascript" src="${rc.contextPath}/statics/js/plugins/dataTables/jquery.dataTables.min.js"></script>-->
     <script src="${rc.contextPath}/statics/js/echarts-2.2.7/build/dist/echarts.js"></script>
+    <!--<script src="https://cdn.bootcss.com/vue/2.5.13/vue.js"></script>-->
     <!--地图-->
-    <script type="text/javascript" src="${rc.contextPath}/statics/js/main.js"></script>
+
     <!--样式-->
     <style type="text/css">
         html, body {
@@ -16,7 +18,9 @@
             margin: 0;
             padding: 0;
         }
-
+        body{
+            background: white;
+        }
         #wrap {
             position: absolute;
             margin: 0px auto;
@@ -138,5 +142,8 @@
         </div>
     </div>
 </div>
+<script type="text/javascript" src="${rc.contextPath}/statics/js/main.js"></script>
 </body>
+
+<!--<script type="text/javascript" src="${rc.contextPath}/statics/js/main.js"></script>-->
 </html>

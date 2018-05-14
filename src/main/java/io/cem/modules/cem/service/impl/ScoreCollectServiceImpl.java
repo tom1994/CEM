@@ -42,5 +42,8 @@ public class ScoreCollectServiceImpl implements ScoreCollectService {
     public List<ScoreCollectCityEntity> getCityRanking(Map<String, Object> map){
         return scoreCollectCityDao.queryList(map);
     }
+    public void delAll(){
+        scoreCollectTargetDao.delAll();
+    }
 
 }

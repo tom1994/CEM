@@ -8,6 +8,7 @@ import java.util.concurrent.ExecutionException;
 
 public interface ScoreCollectTargetService {
     void saveScore(String stime, String etime) throws ExecutionException, InterruptedException;
-    List<ScoreCollectTargetEntity> getScores(Map<String, Object> params);
+    List<ScoreCollectTargetEntity> getScores(Map<String,Object> params);
+    void delAll();
 
 }

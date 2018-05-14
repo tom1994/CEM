@@ -1,6 +1,6 @@
 $(function () {
     var url = decodeURI(location.search);//获取url中"?"符后的字串
-    console.log(url);
+    //console.log(url);
     var theRequest = new Object();
     if (url.indexOf("?") != -1) {
         var str = url.substr(1);
@@ -155,21 +155,21 @@ function PING() {
                 vm.probedata = {};
                 /*清空probedata*/
                 vm.dtHandle.clear();
-                console.log("重置");
+                //console.log("重置");
                 vm.dtHandle.draw();
                 /*重置*/
             },
             currReset: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("当前页面重绘");
+                //console.log("当前页面重绘");
                 vm.dtHandle.draw(false);
                 /*当前页面重绘*/
             },
             redraw: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("页面重绘");
+                //console.log("页面重绘");
                 vm.dtHandle.draw();
                 /*重绘*/
             }
@@ -184,16 +184,22 @@ function PING() {
                 paging: true,
                 serverSide: true,
                 info: false,
+                scrollY :350,
+                scrollX: true,
+                scrollCollapse: true,
+                autoWidth: false,
                 ordering: false, /*禁用排序功能*/
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
                 oLanguage: {
                     sLengthMenu: "每页 _MENU_ 行数据",
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
                     oPaginate: {
                         sNext: '<i class="fa fa-chevron-right" ></i>', /*图标替换上一页,下一页*/
                         sPrevious: '<i class="fa fa-chevron-left" ></i>'
-                    }
+                    },
                 },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 async: false,
@@ -207,7 +213,7 @@ function PING() {
                     //传入的id
                     let ping = RequestJson.ping;
                     param.dispatchId = dispatchId(ping, 0, 1);
-                    console.log(param.dispatchId,'ping');
+                    //console.log(param.dispatchId,'ping');
                     //ajax请求数据
                     $('.warning').text('正在处理，请稍等');
                     $.ajax({
@@ -219,10 +225,10 @@ function PING() {
                         dataType: "json",
                         contentType:"application/json",
                         success: function (result) {
-                            console.log(result);
+                            //console.log(result);
                             $('#warning1').css('display', 'none')
                             $('#loader1').hide();
-                            //  console.log(result.page.list)
+                            //  //console.log(result.page.list)
                             // //封装返回数据
                             let returnData = {};
                             returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -258,7 +264,7 @@ function PING() {
                                 rows.push(row);
                             });
                             returnData.data = rows;
-                            //console.log(returnData);
+                            ////console.log(returnData);
                             //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                             //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                             callback(returnData);
@@ -308,21 +314,21 @@ function PING() {
                 vm.probedata = {};
                 /*清空probedata*/
                 vm.dtHandle.clear();
-                console.log("重置");
+                //console.log("重置");
                 vm.dtHandle.draw();
                 /*重置*/
             },
             currReset: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("当前页面重绘");
+                //console.log("当前页面重绘");
                 vm.dtHandle.draw(false);
                 /*当前页面重绘*/
             },
             redraw: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("页面重绘");
+                //console.log("页面重绘");
                 vm.dtHandle.draw();
                 /*重绘*/
             }
@@ -337,16 +343,22 @@ function PING() {
                 paging: true,
                 serverSide: true,
                 info: false,
+                scrollY :350,
+                scrollX: true,
+                scrollCollapse: true,
+                autoWidth: false,
                 ordering: false, /*禁用排序功能*/
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
                 oLanguage: {
                     sLengthMenu: "每页 _MENU_ 行数据",
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
                     oPaginate: {
                         sNext: '<i class="fa fa-chevron-right" ></i>', /*图标替换上一页,下一页*/
                         sPrevious: '<i class="fa fa-chevron-left" ></i>'
-                    }
+                    },
                 },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 async: false,
@@ -360,7 +372,7 @@ function PING() {
                     //传入的id
                     let ping = RequestJson.ping;
                     param.dispatchId = dispatchId(ping, 1, 2);
-                    console.log(param.dispatchId,'ping');
+                    //console.log(param.dispatchId,'ping');
                     //ajax请求数据
                     $('.warning').text('正在处理，请稍等');
                     $.ajax({
@@ -372,10 +384,10 @@ function PING() {
                         dataType: "json",
                         contentType:"application/json",
                         success: function (result) {
-                            console.log(result)
+                            //console.log(result)
                             $('#warning2').css('display', 'none')
                             $('#loader2').hide();
-                            //  console.log(result.page.list)
+                            //  //console.log(result.page.list)
                             // //封装返回数据
                             let returnData = {};
                             returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -411,7 +423,7 @@ function PING() {
                                 rows.push(row);
                             });
                             returnData.data = rows;
-                            //console.log(returnData);
+                            ////console.log(returnData);
                             //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                             //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                             callback(returnData);
@@ -461,21 +473,21 @@ function PING() {
                 vm.probedata = {};
                 /*清空probedata*/
                 vm.dtHandle.clear();
-                console.log("重置");
+                //console.log("重置");
                 vm.dtHandle.draw();
                 /*重置*/
             },
             currReset: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("当前页面重绘");
+                //console.log("当前页面重绘");
                 vm.dtHandle.draw(false);
                 /*当前页面重绘*/
             },
             redraw: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("页面重绘");
+                //console.log("页面重绘");
                 vm.dtHandle.draw();
                 /*重绘*/
             }
@@ -490,16 +502,22 @@ function PING() {
                 paging: true,
                 serverSide: true,
                 info: false,
+                scrollY :350,
+                scrollX: true,
+                scrollCollapse: true,
+                autoWidth: false,
                 ordering: false, /*禁用排序功能*/
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
                 oLanguage: {
                     sLengthMenu: "每页 _MENU_ 行数据",
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
                     oPaginate: {
                         sNext: '<i class="fa fa-chevron-right" ></i>', /*图标替换上一页,下一页*/
                         sPrevious: '<i class="fa fa-chevron-left" ></i>'
-                    }
+                    },
                 },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 async: false,
@@ -513,7 +531,7 @@ function PING() {
                     //传入的id
                     let ping = RequestJson.ping;
                     param.dispatchId = dispatchId(ping, 2, 3);
-                    console.log(param.dispatchId,'ping');
+                    //console.log(param.dispatchId,'ping');
                     //ajax请求数据
                     $('.warning').text('正在处理，请稍等');
                     $.ajax({
@@ -524,10 +542,10 @@ function PING() {
                         dataType: "json",
                         contentType:"application/json",
                         success: function (result) {
-                            console.log(result)
+                            //console.log(result)
                             $('#warning3').css('display', 'none')
                             $('#loader3').hide();
-                            //  console.log(result.page.list)
+                            //  //console.log(result.page.list)
                             // //封装返回数据
                             let returnData = {};
                             returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
@@ -563,7 +581,7 @@ function PING() {
                                 rows.push(row);
                             });
                             returnData.data = rows;
-                            //console.log(returnData);
+                            ////console.log(returnData);
                             //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                             //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                             callback(returnData);
@@ -614,21 +632,21 @@ function PING() {
                 vm.probedata = {};
                 /*清空probedata*/
                 vm.dtHandle.clear();
-                console.log("重置");
+                //console.log("重置");
                 vm.dtHandle.draw();
                 /*重置*/
             },
             currReset: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("当前页面重绘");
+                //console.log("当前页面重绘");
                 vm.dtHandle.draw(false);
                 /*当前页面重绘*/
             },
             redraw: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("页面重绘");
+                //console.log("页面重绘");
                 vm.dtHandle.draw();
                 /*重绘*/
             }
@@ -643,16 +661,22 @@ function PING() {
                 paging: true,
                 serverSide: true,
                 info: false,
+                scrollY :350,
+                scrollX: true,
+                scrollCollapse: true,
+                autoWidth: false,
                 ordering: false, /*禁用排序功能*/
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
                 oLanguage: {
                     sLengthMenu: "每页 _MENU_ 行数据",
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
                     oPaginate: {
                         sNext: '<i class="fa fa-chevron-right" ></i>', /*图标替换上一页,下一页*/
                         sPrevious: '<i class="fa fa-chevron-left" ></i>'
-                    }
+                    },
                 },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
@@ -664,7 +688,7 @@ function PING() {
                     let ping = RequestJson.ping;
                     param.dispatchId = dispatchId(ping, 3,4);
                     /*用于查询probe数据*/
-                    console.log(param.dispatchId,'router');
+                    //console.log(param.dispatchId,'router');
                     //ajax请求数据
                     $('.warning').text('正在处理，请稍等');
                    
@@ -689,7 +713,7 @@ function PING() {
                             let rows = [];
                             var i = param.start + 1;
                             result.page.list.forEach(function (item) {
-                                //console.log(item);
+                                ////console.log(item);
                                 let row = [];
                                 row.push(i++);
                                 row.push(item.probeName);
@@ -727,7 +751,7 @@ function PING() {
                                 rows.push(row);
                             });
                             returnData.data = rows;
-                            // console.log(returnData);
+                            // //console.log(returnData);
                             // 调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                             // 此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                             callback(returnData);
@@ -776,21 +800,21 @@ function PING() {
                 vm.probedata = {};
                 /*清空probedata*/
                 vm.dtHandle.clear();
-                console.log("重置");
+                //console.log("重置");
                 vm.dtHandle.draw();
                 /*重置*/
             },
             currReset: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("当前页面重绘");
+                //console.log("当前页面重绘");
                 vm.dtHandle.draw(false);
                 /*当前页面重绘*/
             },
             redraw: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("页面重绘");
+                //console.log("页面重绘");
                 vm.dtHandle.draw();
                 /*重绘*/
             }
@@ -805,16 +829,22 @@ function PING() {
                 paging: true,
                 serverSide: true,
                 info: false,
+                scrollY :350,
+                scrollX: true,
+                scrollCollapse: true,
+                autoWidth: false,
                 ordering: false, /*禁用排序功能*/
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
                 oLanguage: {
                     sLengthMenu: "每页 _MENU_ 行数据",
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
                     oPaginate: {
                         sNext: '<i class="fa fa-chevron-right" ></i>', /*图标替换上一页,下一页*/
                         sPrevious: '<i class="fa fa-chevron-left" ></i>'
-                    }
+                    },
                 },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
@@ -826,7 +856,7 @@ function PING() {
                     let ping = RequestJson.ping;
                     param.dispatchId = dispatchId(ping, 4,5);
                     /*用于查询probe数据*/
-                    console.log(param.dispatchId,'router');
+                    //console.log(param.dispatchId,'router');
                     //ajax请求数据
                     $('.warning').text('正在处理，请稍等');
                     $.ajax({
@@ -851,7 +881,7 @@ function PING() {
                             var i = param.start + 1;
                             result.page.list.forEach(function (item) {
 
-                                //console.log(item);
+                                ////console.log(item);
                                 let row = [];
                                 row.push(i++);
                                 row.push(item.probeName);
@@ -890,7 +920,7 @@ function PING() {
                                 rows.push(row);
                             });
                             returnData.data = rows;
-                            // console.log(returnData);
+                            // //console.log(returnData);
                             // 调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                             // 此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                             callback(returnData);
@@ -1072,21 +1102,21 @@ function quality() {
                 vm.probedata = {};
                 /*清空probedata*/
                 vm.dtHandle.clear();
-                console.log("重置");
+                //console.log("重置");
                 vm.dtHandle.draw();
                 /*重置*/
             },
             currReset: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("当前页面重绘");
+                //console.log("当前页面重绘");
                 vm.dtHandle.draw(false);
                 /*当前页面重绘*/
             },
             redraw: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("页面重绘");
+                //console.log("页面重绘");
                 vm.dtHandle.draw();
                 /*重绘*/
             }
@@ -1101,6 +1131,10 @@ function quality() {
                 paging: true,
                 serverSide: true,
                 info: false,
+                scrollY :350,
+                scrollX: true,
+                scrollCollapse: true,
+                autoWidth: false,
                 ordering: false, /*禁用排序功能*/
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
@@ -1121,7 +1155,7 @@ function quality() {
                     param.page = (data.start / data.length) + 1;//当前页码
                     let sla = RequestJson.sla;
                     param.dispatchId = dispatchId(sla, 0, 1);
-                    console.log(param.dispatchId,'sla');
+                    //console.log(param.dispatchId,'sla');
                     //ajax请求数据
                     $('.warning').text('正在处理，请稍等');
                     $.ajax({
@@ -1144,7 +1178,7 @@ function quality() {
                             let rows = [];
                             var i = param.start + 1;
                             result.page.list.forEach(function (item) {
-                                //console.log(item);
+                                ////console.log(item);
                                 let row = [];
                                 row.push(i++);
                                 row.push(item.probeName);
@@ -1182,7 +1216,7 @@ function quality() {
                                 rows.push(row);
                             });
                             returnData.data = rows;
-                            //console.log(returnData);
+                            ////console.log(returnData);
                             //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                             //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                             callback(returnData);
@@ -1243,21 +1277,21 @@ function quality() {
                 vm.probedata = {};
                 /*清空probedata*/
                 vm.dtHandle.clear();
-                console.log("重置");
+                //console.log("重置");
                 vm.dtHandle.draw();
                 /*重置*/
             },
             currReset: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("当前页面重绘");
+                //console.log("当前页面重绘");
                 vm.dtHandle.draw(false);
                 /*当前页面重绘*/
             },
             redraw: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("页面重绘");
+                //console.log("页面重绘");
                 vm.dtHandle.draw();
                 /*重绘*/
             }
@@ -1292,7 +1326,7 @@ function quality() {
                     param.page = (data.start / data.length) + 1;//当前页码
                     let sla = RequestJson.sla;
                     param.dispatchId = dispatchId(sla, 1, 2);
-                    console.log(param.dispatchId,'sla');
+                    //console.log(param.dispatchId,'sla');
                     //ajax请求数据
                     $('.warning').text('正在处理，请稍等');
                     $.ajax({
@@ -1315,7 +1349,7 @@ function quality() {
                             let rows = [];
                             var i = param.start + 1;
                             result.page.list.forEach(function (item) {
-                                //console.log(item);
+                                ////console.log(item);
                                 let row = [];
                                 row.push(i++);
                                 row.push(item.probeName);
@@ -1353,7 +1387,7 @@ function quality() {
                                 rows.push(row);
                             });
                             returnData.data = rows;
-                            //console.log(returnData);
+                            ////console.log(returnData);
                             //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                             //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                             callback(returnData);
@@ -1397,21 +1431,21 @@ function quality() {
                 vm.probedata = {};
                 /*清空probedata*/
                 vm.dtHandle.clear();
-                console.log("重置");
+                //console.log("重置");
                 vm.dtHandle.draw();
                 /*重置*/
             },
             currReset: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("当前页面重绘");
+                //console.log("当前页面重绘");
                 vm.dtHandle.draw(false);
                 /*当前页面重绘*/
             },
             redraw: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("页面重绘");
+                //console.log("页面重绘");
                 vm.dtHandle.draw();
                 /*重绘*/
             }
@@ -1447,7 +1481,7 @@ function quality() {
                     let sla = RequestJson.sla;
                     param.dispatchId = dispatchId(sla, 3,4);//获取当前的数组
                     /*用于查询probe数据*/
-                    console.log(param.dispatchId,'DHCP');
+                    //console.log(param.dispatchId,'DHCP');
                     //ajax请求数据
                     $('.warning').text('正在处理，请稍等');
                     $.ajax({
@@ -1471,7 +1505,7 @@ function quality() {
                             let rows = [];
                             var i = param.start + 1;
                             result.page.list.forEach(function (item) {
-                                //console.log(item);
+                                ////console.log(item);
                                 let row = [];
                                 row.push(i++);
                                 row.push(item.probeName);
@@ -1491,7 +1525,7 @@ function quality() {
                                 rows.push(row);
                             });
                             returnData.data = rows;
-                            //console.log(returnData);
+                            ////console.log(returnData);
                             //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                             //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                             callback(returnData);
@@ -1535,21 +1569,21 @@ function quality() {
                 vm.probedata = {};
                 /*清空probedata*/
                 vm.dtHandle.clear();
-                console.log("重置");
+                //console.log("重置");
                 vm.dtHandle.draw();
                 /*重置*/
             },
             currReset: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("当前页面重绘");
+                //console.log("当前页面重绘");
                 vm.dtHandle.draw(false);
                 /*当前页面重绘*/
             },
             redraw: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("页面重绘");
+                //console.log("页面重绘");
                 vm.dtHandle.draw();
                 /*重绘*/
             }
@@ -1585,7 +1619,7 @@ function quality() {
                     let sla = RequestJson.sla;
                     param.dispatchId = dispatchId(sla,4, 5);
                     /*用于查询probe数据*/
-                    console.log(param.dispatchId,'DNS');
+                    //console.log(param.dispatchId,'DNS');
                     //ajax请求数据
                     $('.warning').text('正在处理，请稍等');
                     $.ajax({
@@ -1608,7 +1642,7 @@ function quality() {
                             let rows = [];
                             var i = param.start + 1;
                             result.page.list.forEach(function (item) {
-                                //console.log(item);
+                                ////console.log(item);
                                 let row = [];
                                 row.push(i++);
                                 row.push(item.probeName);
@@ -1628,7 +1662,7 @@ function quality() {
                                 rows.push(row);
                             });
                             returnData.data = rows;
-                            //console.log(returnData);
+                            ////console.log(returnData);
                             //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                             //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                             callback(returnData);
@@ -1671,21 +1705,21 @@ function quality() {
                 vm.probedata = {};
                 /*清空probedata*/
                 vm.dtHandle.clear();
-                console.log("重置");
+                //console.log("重置");
                 vm.dtHandle.draw();
                 /*重置*/
             },
             currReset: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("当前页面重绘");
+                //console.log("当前页面重绘");
                 vm.dtHandle.draw(false);
                 /*当前页面重绘*/
             },
             redraw: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("页面重绘");
+                //console.log("页面重绘");
                 vm.dtHandle.draw();
                 /*重绘*/
             }
@@ -1721,7 +1755,7 @@ function quality() {
                     let sla = RequestJson.sla;
                     param.dispatchId = dispatchId(sla, 5, 6);
                     /*用于查询probe数据*/
-                    console.log(param.dispatchId,'Radius');
+                    //console.log(param.dispatchId,'Radius');
                     //ajax请求数据
                     $('.warning').text('正在处理，请稍等');
                     $.ajax({
@@ -1763,7 +1797,7 @@ function quality() {
                                 rows.push(row);
                             });
                             returnData.data = rows;
-                            //console.log(returnData);
+                            ////console.log(returnData);
                             //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                             //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                             callback(returnData);
@@ -1813,21 +1847,21 @@ function download() {
                 vm.probedata = {};
                 /*清空probedata*/
                 vm.dtHandle.clear();
-                console.log("重置");
+                //console.log("重置");
                 vm.dtHandle.draw();
                 /*重置*/
             },
             currReset: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("当前页面重绘");
+                //console.log("当前页面重绘");
                 vm.dtHandle.draw(false);
                 /*当前页面重绘*/
             },
             redraw: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("页面重绘");
+                //console.log("页面重绘");
                 vm.dtHandle.draw();
                 /*重绘*/
             }
@@ -1842,6 +1876,10 @@ function download() {
                 paging: true,
                 serverSide: true,
                 info: false,
+                scrollY :350,
+                scrollX: true,
+                scrollCollapse: true,
+                autoWidth: false,
                 ordering: false, /*禁用排序功能*/
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
@@ -1862,9 +1900,9 @@ function download() {
                     param.page = (data.start / data.length) + 1;//当前页码
                     let download = RequestJson.download;
                     param.dispatchId = dispatchId(download, 1, 2);
-                    console.log(param.dispatchId,'FTP_download')
+                    //console.log(param.dispatchId,'FTP_download')
                     /*用于查询probe数据*/
-                    //console.log(param);
+                    ////console.log(param);
                     //ajax请求数据
                     $('.warning').text('正在处理，请稍等');
                     $.ajax({
@@ -1888,7 +1926,7 @@ function download() {
                             let rows = [];
                             var i = param.start + 1;
                             result.page.list.forEach(function (item) {
-                                //console.log(item);
+                                ////console.log(item);
                                 let row = [];
                                 row.push(i++);
                                 row.push(item.probeName);
@@ -1912,7 +1950,7 @@ function download() {
                                 rows.push(row);
                             });
                             returnData.data = rows;
-                            //console.log(returnData);
+                            ////console.log(returnData);
                             //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                             //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                             callback(returnData);
@@ -1958,21 +1996,21 @@ function download() {
                 vm.probedata = {};
                 /*清空probedata*/
                 vm.dtHandle.clear();
-                console.log("重置");
+                //console.log("重置");
                 vm.dtHandle.draw();
                 /*重置*/
             },
             currReset: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("当前页面重绘");
+                //console.log("当前页面重绘");
                 vm.dtHandle.draw(false);
                 /*当前页面重绘*/
             },
             redraw: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("页面重绘");
+                //console.log("页面重绘");
                 vm.dtHandle.draw();
                 /*重绘*/
             }
@@ -2007,9 +2045,9 @@ function download() {
                     param.page = (data.start / data.length) + 1;//当前页码
                     let download = RequestJson.download;
                     param.dispatchId = dispatchId(download, 2, 3);
-                    console.log(param.dispatchId,'FTP_download')
+                    //console.log(param.dispatchId,'FTP_download')
                     /*用于查询probe数据*/
-                    //console.log(param);
+                    ////console.log(param);
                     //ajax请求数据
                     $('.warning').text('正在处理，请稍等');
                     $.ajax({
@@ -2033,7 +2071,7 @@ function download() {
                             let rows = [];
                             var i = param.start + 1;
                             result.page.list.forEach(function (item) {
-                                //console.log(item);
+                                ////console.log(item);
                                 let row = [];
                                 row.push(i++);
                                 row.push(item.probeName);
@@ -2057,7 +2095,7 @@ function download() {
                                 rows.push(row);
                             });
                             returnData.data = rows;
-                            //console.log(returnData);
+                            ////console.log(returnData);
                             //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                             //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                             callback(returnData);
@@ -2104,21 +2142,21 @@ function download() {
                 vm.probedata = {};
                 /*清空probedata*/
                 vm.dtHandle.clear();
-                console.log("重置");
+                //console.log("重置");
                 vm.dtHandle.draw();
                 /*重置*/
             },
             currReset: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("当前页面重绘");
+                //console.log("当前页面重绘");
                 vm.dtHandle.draw(false);
                 /*当前页面重绘*/
             },
             redraw: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("页面重绘");
+                //console.log("页面重绘");
                 vm.dtHandle.draw();
                 /*重绘*/
             }
@@ -2153,9 +2191,9 @@ function download() {
                     param.page = (data.start / data.length) + 1;//当前页码
                     let download = RequestJson.download;
                     param.dispatchId = dispatchId(download, 0, 1);
-                    console.log(param.dispatchId,'webdownload')
+                    //console.log(param.dispatchId,'webdownload')
                     /*用于查询probe数据*/
-                    //console.log(param);
+                    ////console.log(param);
                     //ajax请求数据
                     $('.warning').text('正在处理，请稍等');
                     $.ajax({
@@ -2178,7 +2216,7 @@ function download() {
                             let rows = [];
                             var i = param.start + 1;
                             result.page.list.forEach(function (item) {
-                                //console.log(item);
+                                ////console.log(item);
                                 let row = [];
                                 row.push(i++);
                                 row.push(item.probeName);
@@ -2201,7 +2239,7 @@ function download() {
                                 rows.push(row);
                             });
                             returnData.data = rows;
-                            //console.log(returnData);
+                            ////console.log(returnData);
                             //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                             //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                             callback(returnData);
@@ -2254,21 +2292,21 @@ function page() {
                 vm.probedata = {};
                 /*清空probedata*/
                 vm.dtHandle.clear();
-                console.log("重置");
+                //console.log("重置");
                 vm.dtHandle.draw();
                 /*重置*/
             },
             currReset: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("当前页面重绘");
+                //console.log("当前页面重绘");
                 vm.dtHandle.draw(false);
                 /*当前页面重绘*/
             },
             redraw: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("页面重绘");
+                //console.log("页面重绘");
                 vm.dtHandle.draw();
                 /*重绘*/
             }
@@ -2285,15 +2323,21 @@ function page() {
                 //bRetrieve: true,
                 info: false,
                 ordering: false, /*禁用排序功能*/
+                scrollY :350,
+                scrollX: true,
+                scrollCollapse: true,
+                autoWidth: false,
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
                 oLanguage: {
                     sLengthMenu: "每页 _MENU_ 行数据",
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
                     oPaginate: {
                         sNext: '<i class="fa fa-chevron-right" ></i>', /*图标替换上一页,下一页*/
                         sPrevious: '<i class="fa fa-chevron-left" ></i>'
-                    }
+                    },
                 },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
@@ -2304,9 +2348,9 @@ function page() {
                     param.page = (data.start / data.length) + 1;//当前页码
                     let web = RequestJson.web;
                     param.dispatchId = dispatchId(web, 0, 1);
-                    console.log(param.dispatchId,'web')
+                    //console.log(param.dispatchId,'web')
                     /*用于查询probe数据*/
-                    //console.log(param);
+                    ////console.log(param);
                     //ajax请求数据
                     $('.warning').text('正在处理，请稍等');
                     $.ajax({
@@ -2329,7 +2373,7 @@ function page() {
                             let rows = [];
                             var i = param.start + 1;
                             result.page.list.forEach(function (item) {
-                                //console.log(item);
+                                ////console.log(item);
                                 let row = [];
                                 row.push(i++);
                                 row.push(item.probeName);
@@ -2356,7 +2400,7 @@ function page() {
                                 rows.push(row);
                             });
                             returnData.data = rows;
-                            //console.log(returnData);
+                            ////console.log(returnData);
                             //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                             //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                             callback(returnData);
@@ -2410,21 +2454,21 @@ function video() {
                 vm.probedata = {};
                 /*清空probedata*/
                 vm.dtHandle.clear();
-                console.log("重置");
+                //console.log("重置");
                 vm.dtHandle.draw();
                 /*重置*/
             },
             currReset: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("当前页面重绘");
+                //console.log("当前页面重绘");
                 vm.dtHandle.draw(false);
                 /*当前页面重绘*/
             },
             redraw: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("页面重绘");
+                //console.log("页面重绘");
                 vm.dtHandle.draw();
                 /*重绘*/
             }
@@ -2439,7 +2483,20 @@ function video() {
                 paging: true,
                 serverSide: true,
                 info: false,
+                scrollY :350,
+                scrollX: true,
+                scrollCollapse: true,
+                autoWidth: false,
                 ordering: false, /*禁用排序功能*/
+                oLanguage: {
+                    sLengthMenu: "每页 _MENU_ 行数据",
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
+                    oPaginate: {
+                        sNext: '<i class="fa fa-chevron-right" ></i>', /*图标替换上一页,下一页*/
+                        sPrevious: '<i class="fa fa-chevron-left" ></i>'
+                    },
+                },
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
@@ -2459,9 +2516,9 @@ function video() {
                     param.page = (data.start / data.length) + 1;//当前页码
                     let video = RequestJson.video;
                     param.dispatchId = dispatchId(video, 0, 1);
-                    console.log(param.dispatchId,'video')
+                    //console.log(param.dispatchId,'video')
                     /*用于查询probe数据*/
-                    //console.log(param);
+                    ////console.log(param);
                     //ajax请求数据
                     $('.warning').text('正在处理，请稍等');
                     $.ajax({
@@ -2484,7 +2541,7 @@ function video() {
                             let rows = [];
                             var i = param.start + 1;
                             result.page.list.forEach(function (item) {
-                                //console.log(item);19
+                                ////console.log(item);19
                                 let row = [];
                                 row.push(i++);
                                 row.push(item.probeName);
@@ -2512,7 +2569,7 @@ function video() {
                                 rows.push(row);
                             });
                             returnData.data = rows;
-                            //console.log(returnData);
+                            ////console.log(returnData);
                             //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                             //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                             callback(returnData);
@@ -2559,21 +2616,21 @@ function game() {
                 vm.probedata = {};
                 /*清空probedata*/
                 vm.dtHandle.clear();
-                console.log("重置");
+                //console.log("重置");
                 vm.dtHandle.draw();
                 /*重置*/
             },
             currReset: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("当前页面重绘");
+                //console.log("当前页面重绘");
                 vm.dtHandle.draw(false);
                 /*当前页面重绘*/
             },
             redraw: function () {
                 let vm = this;
                 vm.dtHandle.clear();
-                console.log("页面重绘");
+                //console.log("页面重绘");
                 vm.dtHandle.draw();
                 /*重绘*/
             }
@@ -2588,16 +2645,22 @@ function game() {
                 paging: true,
                 serverSide: true,
                 info: false,
+                scrollY :350,
+                scrollX: true,
+                scrollCollapse: true,
+                autoWidth: false,
                 ordering: false, /*禁用排序功能*/
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
                 oLanguage: {
                     sLengthMenu: "每页 _MENU_ 行数据",
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
                     oPaginate: {
                         sNext: '<i class="fa fa-chevron-right" ></i>', /*图标替换上一页,下一页*/
                         sPrevious: '<i class="fa fa-chevron-left" ></i>'
-                    }
+                    },
                 },
                 sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
@@ -2608,9 +2671,9 @@ function game() {
                     param.page = (data.start / data.length) + 1;//当前页码
                     let game = RequestJson.game;
                     param.dispatchId = dispatchId(game, 0, 1);
-                    console.log(param.dispatchId,'game');
+                    //console.log(param.dispatchId,'game');
                     /*用于查询probe数据*/
-                    //console.log(param);
+                    ////console.log(param);
                     //ajax请求数据
                     $('.warning').text('正在处理，请稍等');
                     $.ajax({
@@ -2633,7 +2696,7 @@ function game() {
                             let rows = [];
                             var i = param.start + 1;
                             result.page.list.forEach(function (item) {
-                                //console.log(item);
+                                ////console.log(item);
                                 let row = [];
                                 row.push(i++);
                                 row.push(item.probeName);
@@ -2645,7 +2708,6 @@ function game() {
                                 row.push(item.packetDelay.toFixed(2));
                                 row.push(item.packetJitter.toFixed(2));
                               row.push((item.lossRate).toFixed(2)*100.00);
-
                                 row.push(item.targetLoc);
                                 if(item.state==0){
                                     row.push("成功");
@@ -2656,7 +2718,7 @@ function game() {
                                 rows.push(row);
                             });
                             returnData.data = rows;
-                            //console.log(returnData);
+                            ////console.log(returnData);
                             //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                             //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                             callback(returnData);

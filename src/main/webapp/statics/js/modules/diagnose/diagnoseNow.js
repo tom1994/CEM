@@ -4,15 +4,15 @@ var citySelected=0;
 var countrySeleted=0;
 function probe() {
     $.ajax({
-        url: "../../cem/probe/list",//探针列表
+        url: "../../cem/probe/showlist",//探针列表
         type: "POST",
         cache: false,  //禁用缓存
         dataType: "json",
         contentType: "application/json",
         success: function (result) {
             var probes = [];
-            for (var i = 0; i < result.page.list.length; i++) {
-                probes[i] = {message: result.page.list[i]}
+            for (var i = 0; i < result.probe.length; i++) {
+                probes[i] = {message: result.probe[i]}
             }
             search_data.probe = probes;
             setTimeout(function () {
@@ -163,41 +163,78 @@ $(document).ready(function () {
     probe()
 
 });
+//获取城市的时候探针会发生改变
+var getProbeCounty = function (countyid) {
+    probeSelected = 0;
+    $.ajax({//探针信息
+        url: "../../cem/probe/info/" + countyid,
+        type: "POST",
+        cache: false,  //禁用缓存
+        dataType: "json",
+        contentType: "application/json",
+        success: function (result) {
+            var probes = [];
+            for (var i = 0; i < result.probe.length; i++) {
+                probes[i] = {message: result.probe[i]}
+            }
+            search_data.probe = probes;
+            setTimeout(function () {
+                $('#probe .jq22').comboSelect();
+                $('#probe .option-item').click(function (probe) {
+                    setTimeout(function () {
+                        var a = $(probe.currentTarget)[0].innerText;
+                        probeSelected = $($(probe.currentTarget)[0]).data('value');
+                        $('#probe .combo-input').val(a);
+                        $('#probe .combo-select select').val(a);
+                    }, 30);
+                });
+                $('#probe input[type=text] ').keyup(function (probe) {
+                    if( probe.keyCode=='13'){
+                        var b = $("#probe .option-hover.option-selected").text();
+                        probeSelected=parseInt(($("#probe .option-hover.option-selected"))[0].dataset.value);
+                        $('#probe .combo-input').val(b);
+                        $('#probe .combo-select select').val(b);
+                    }
 
-$.ajax({
-    url: "../../cem/probe/list",//探针列表
-    type: "POST",
-    cache: false,  //禁用缓存
-    dataType: "json",
-    contentType: "application/json",
-    success: function (result) {
-        var probes = [];
-        for (var i = 0; i < result.page.list.length; i++) {
-            probes[i] = {message: result.page.list[i]}
+                })
+            }, 50);
         }
-        search_data.probe = probes;
-        setTimeout(function () {
-            $('#probe .jq22').comboSelect();
-            //这个触发条件是先选择测试目标在选择探针的时候触发
-            $('#probe .option-item').click(function (probe) {
-                setTimeout(function () {
-                    var a = $(probe.currentTarget)[0].innerText;
-                    probeSelected = $($(probe.currentTarget)[0]).data('value');
-                    $('#probe .combo-input').val(a);
-                    $('#probe .combo-select select').val(a);
-                }, 30);
-            });
-            $('#probe input[type=text] ').keyup(function (probe) {
-                if( probe.keyCode=='13'){
-                    var b = $("#probe .option-hover.option-selected").text();
-                    probeSelected=parseInt(($("#probe .option-hover.option-selected"))[0].dataset.value);
-                    $('#probe .combo-input').val(b);
-                    $('#probe .combo-select select').val(b);
-                }
-            })
-            },50);
-    }
-});
+    });
+};
+// $.ajax({
+//     url: "../../cem/probe/list",//探针列表
+//     type: "POST",
+//     cache: false,  //禁用缓存
+//     dataType: "json",
+//     contentType: "application/json",
+//     success: function (result) {
+//         var probes = [];
+//         for (var i = 0; i < result.page.list.length; i++) {
+//             probes[i] = {message: result.page.list[i]}
+//         }
+//         search_data.probe = probes;
+//         setTimeout(function () {
+//             $('#probe .jq22').comboSelect();
+//             //这个触发条件是先选择测试目标在选择探针的时候触发
+//             $('#probe .option-item').click(function (probe) {
+//                 setTimeout(function () {
+//                     var a = $(probe.currentTarget)[0].innerText;
+//                     probeSelected = $($(probe.currentTarget)[0]).data('value');
+//                     $('#probe .combo-input').val(a);
+//                     $('#probe .combo-select select').val(a);
+//                 }, 30);
+//             });
+//             $('#probe input[type=text] ').keyup(function (probe) {
+//                 if( probe.keyCode=='13'){
+//                     var b = $("#probe .option-hover.option-selected").text();
+//                     probeSelected=parseInt(($("#probe .option-hover.option-selected"))[0].dataset.value);
+//                     $('#probe .combo-input').val(b);
+//                     $('#probe .combo-select select').val(b);
+//                 }
+//             })
+//             },50);
+//     }
+// });
 
 var search_data = new Vue({
     el: '#probesearch',
@@ -297,44 +334,7 @@ function clearArea(a) {
     }
 }
 
-//获取城市的时候探针会发生改变
-var getProbeCounty = function (countyid) {
-    probeSelected = 0;
-    $.ajax({//探针信息
-        url: "../../cem/probe/info/" + countyid,
-        type: "POST",
-        cache: false,  //禁用缓存
-        dataType: "json",
-        contentType: "application/json",
-        success: function (result) {
-            var probes = [];
-            for (var i = 0; i < result.probe.length; i++) {
-                probes[i] = {message: result.probe[i]}
-            }
-            search_data.probe = probes;
-            setTimeout(function () {
-                $('#probe .jq22').comboSelect();
-                $('#probe .option-item').click(function (probe) {
-                    setTimeout(function () {
-                        var a = $(probe.currentTarget)[0].innerText;
-                        probeSelected = $($(probe.currentTarget)[0]).data('value');
-                        $('#probe .combo-input').val(a);
-                        $('#probe .combo-select select').val(a);
-                    }, 30);
-                });
-                $('#probe input[type=text] ').keyup(function (probe) {
-                    if( probe.keyCode=='13'){
-                        var b = $("#probe .option-hover.option-selected").text();
-                        probeSelected=parseInt(($("#probe .option-hover.option-selected"))[0].dataset.value);
-                        $('#probe .combo-input').val(b);
-                        $('#probe .combo-select select').val(b);
-                    }
 
-                })
-                }, 50);
-        }
-    });
-};
 
 // function getFormJson(form) {      /*将表单对象变为json对象*/
 //     var o = {};
@@ -380,9 +380,7 @@ var getTarget = function (id) {
                     $('#target input[type=text] ').keyup(function (target) {
                         if( target.keyCode=='13'){
                             var b = $("#target .option-hover.option-selected").text();
-                            debugger
                             targetSelected=parseInt(($("#target .option-hover.option-selected"))[0].dataset.value);
-                            console.log(typeof targetSelected)
                             $('#target .combo-input').val(b);
                             $('#target .combo-select select').val(b);
                         }
@@ -421,7 +419,6 @@ var getTarget = function (id) {
 
 //诊断
 function diagnose() {
-    debugger
     var param = getFormJson($('#superservice'));
     var service=param.service
     switch(service){
@@ -450,11 +447,11 @@ function diagnose() {
             success: function (result) {
                 console.log(result)
                 var dispatch = result.taskdispatch;
-                console.log(JSON.stringify(dispatch));
+                //console.log(JSON.stringify(dispatch));
                 var url = "information.html";
                 var dispatchString = JSON.stringify(dispatch);
                 url = url + "?dispatch=" + dispatchString.substring(1,dispatchString.length-1);
-                console.log(url);
+                //console.log(url);
                 document.getElementById("diagnose").href = encodeURI(url);
                 document.getElementById("diagnose").click();
             }
@@ -504,6 +501,3 @@ function getFormJson(form) {
 //     });
 //
 // });
-
-
-

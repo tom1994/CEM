@@ -40,11 +40,13 @@ public class ScoreCollectController {
         Date[] p = getQueryDay();
         List<ScoreCollectTargetEntity> scoreCollects = new ArrayList<ScoreCollectTargetEntity>();
         Map<String,Object> pm = new LinkedHashMap<String,Object>();
-        pm.put("startDate",p[1]);
-        pm.put("endDate",p[0]);
+        pm.put("startDate",DateUtils.format(p[1]));
+        pm.put("endDate",DateUtils.format(p[0]));
         pm.put("startTime","00:00:00");
         pm.put("endTime","23:00:00");
         pm.put("serviceType",serviceType);
+        log.info("门户排行，传入的查询时间参数 startDate="+pm.get("startDate"));
+        log.info("门户排行，传入的查询时间参数 endDate="+pm.get("endDate"));
         scoreCollects = scoreCollectTargetService.getScores(pm);
         log.info("门户排行，计算结果："+scoreCollects);
         return  R.ok().put("scoreCollects",scoreCollects).put("startDate",pm.get("startDate")).put("endDate",pm.get("endDate"));
@@ -87,6 +89,8 @@ public class ScoreCollectController {
             pm.put("startTime","00:00:00");
             pm.put("endTime","23:00:00");
             pm.put("serviceType",serviceType);
+            log.info("/layerqoeview 层级 查询参数，开始时间："+pm.get("startDate"));
+            log.info("/layerqoeview 层级 查询参数，结束时间："+pm.get("endDate"));
             scoreCollects.addAll(scoreCollectLayerService.getScores(pm));
         }
         log.info("网络分层评测计算结果1:"+scoreCollects);
@@ -97,14 +101,15 @@ public class ScoreCollectController {
     @RequestMapping("/dayscoresview")
     @ResponseBody
     public R getDayScoresView(@RequestParam String interval){// http://localhost:8080/cem/index/dayscoresview?interval=2
-        Date[] dateParam = getQueryDay();
-        Date startTime = dateParam[1];
-        Date endTime = dateParam[0];
-        Map p = new LinkedHashMap<String,Object>();
-        p.put("startTime",startTime);
-        p.put("endTime",endTime);
-        p.put("interval",interval);
-        List<ScoreCollectDayEntity> scoreCollects = scoreCollectBusyIdleTimeService.getScores(p);
+        Date[] d = getQueryDay();
+
+        Map pm = new LinkedHashMap<String,Object>();
+        //pm.put("startDate",DateUtils.format(d[1]));
+        //pm.put("endDate",DateUtils.format(d[0]));
+        pm.put("interval",interval);
+        //log.info("忙闲时，传入的查询时间参数 startDate="+pm.get("startDate"));
+        //log.info("忙闲时，传入的查询时间参数 endDate="+pm.get("endDate"));
+        List<ScoreCollectDayEntity> scoreCollects = scoreCollectBusyIdleTimeService.getScores(pm);
         log.info("各应用感知（忙闲时）计算结果:"+scoreCollects);
         return  R.ok().put("scoreCollects",scoreCollects);
 
@@ -118,7 +123,7 @@ public class ScoreCollectController {
         Date endTime = dateParam[1];
         Map p = new LinkedHashMap<String,Object>();
         p.put("startTime",startTime);
-        p.put("endTime",endTime);
+        p.put("endTime",endTime);123456
         List<ScoreCollectCityEntity> scoreCollects = scoreCollectService.getCityRanking(p);*/
         Date[] p = getQueryDay();
         Map<String,Object> pm = new LinkedHashMap<String,Object>();
@@ -199,6 +204,13 @@ public class ScoreCollectController {
             e.printStackTrace();
         }
         return prop;
+    }
+
+    public static void main(String[] s){
+        Date[] d = new ScoreCollectController().getQueryDay();
+        System.out.println(d[0]);
+        System.out.println(d[1]);
+
     }
 
 }

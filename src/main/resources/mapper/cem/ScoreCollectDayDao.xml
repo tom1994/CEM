@@ -13,19 +13,12 @@
     <select id="queryList" resultType="io.cem.modules.cem.entity.ScoreCollectDayEntity">
         select score,service_type from score_collect_day
         <where>
-            `interval` = #{interval} and (score_date between #{startTime} and #{endTime})
+            `interval` = #{interval}
         </where>
         <if test="1==1">
             group by service_type
         </if>
-        <choose>
-            <when test="sidx != null and sidx.trim() != ''">
-                order by ${sidx} ${order}
-            </when>
-            <otherwise>
-                order by service_type
-            </otherwise>
-        </choose>
+
     </select>
     <insert id="save" parameterType="io.cem.modules.cem.entity.ScoreCollectDayEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into score_collect_day
@@ -50,5 +43,8 @@
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>
+    </delete>
+    <delete id="delAll">
+        truncate table score_collect_day
     </delete>
 </mapper>

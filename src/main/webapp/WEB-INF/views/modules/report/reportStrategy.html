@@ -61,23 +61,13 @@
                 <div class="row">
                     <form class="form-horizontal" id="spform_data" role="form">
                         <div class="form-group row">
-                            <label for="id" class="col-lg-3 col-md-3 col-sm-3 control-label form_border"
-                                   style="display: none">id</label>
-                            <div class="col-lg-8 col-md-8 col-sm-8 form_border"
-                                 style="display: none">
-                                <input type="text" class="form-control input clear" id="id" name="id"  >
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="name" class="col-lg-3 col-md-3 col-sm-3 control-label form_border"
+                            <label for="name" class="col-lg-2 col-md-2 col-sm-2 control-label form_border"
                                    style="line-height: 1.5">策略名称</label>
-                            <div class="col-lg-8 col-md-8 col-sm-8">
-                                <input type="text" class="form-control input clear" id="name" name="methodName"  >
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                <input type="text" class="form-control input clear" id="name" name="reportName"  >
                             </div>
-                        </div>
-                        <div class="form-group row">
                             <label for="city"
-                                   class="col-lg-2 col-md-2 col-sm-2 input-label form_border">所属地市</label>
+                                   class="col-lg-2 col-md-2 col-sm-2 input-label form_border">地市</label>
                             <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                 <select id="city" class="form-control input clear" name="city" v-on:change="queryArea()">  <!--VUE列表渲染-->
                                     <option v-for="item in cityNames" v-bind:value="item.message.cityId">
@@ -85,9 +75,8 @@
                                     </option>
                                 </select>
                             </div>
-
                             <label for="county"
-                                   class="col-lg-2 col-md-2 col-sm-2 input-label form_border">所属区县</label>
+                                   class="col-lg-2 col-md-2 col-sm-2 input-label form_border">区县</label>
                             <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                 <select id="county" class="form-control input clear" name="county">
                                     <!--VUE列表渲染-->
@@ -232,8 +221,14 @@
 </script>
 
 <script>
+    var date=new Date();
+    var month = date.getMonth() + 1;
+    var strDate = date.getDate();
+    var years=date.getFullYear();
+    var newdate=years+'-'+month+'-'+strDate;
     $('#startDate').flatpickr({
         enableTime: false,
+        defaultDate:newdate,
         dateFormat: "Y-m-d"
     });
 </script>
@@ -241,6 +236,7 @@
 <script>
     $('#endDate').flatpickr({
         enableTime: false,
+        defaultDate:new Date(),
         dateFormat: "Y-m-d"
     });
 </script>

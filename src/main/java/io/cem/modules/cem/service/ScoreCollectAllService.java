@@ -16,10 +16,11 @@ public interface ScoreCollectAllService {
     void saveDownLoadScore(String stime, String ntime) throws ExecutionException, InterruptedException;
     void saveWebVideoScore(String stime, String ntime) throws ExecutionException, InterruptedException;
     void saveGameScore(String stime, String ntime) throws ExecutionException, InterruptedException;
-    List<ScoreCollectAllEntity> getScores(Map<String, Object> params);
-    List<ScoreCollectAllEntity> getQoeScores(Map<String, Object> params);
-    List<ScoreCollectAllEntity> getAreaScores(Map<String, Object> params);
-    List<ScoreCollectAllEntity> getSeniorityScores(Map<String, Object> params);
-    List<ScoreCollectAllEntity> getIntervalScores(Map<String, Object> params);
+    List<ScoreCollectAllEntity> getScores(Map<String,Object> params);
+    List<ScoreCollectAllEntity> getQoeScores(Map<String,Object> params);
+    List<ScoreCollectAllEntity> getAreaScores(Map<String,Object> params);
+    List<ScoreCollectAllEntity> getSeniorityScores(Map<String,Object> params);
+    List<ScoreCollectAllEntity> getIntervalScores(Map<String,Object> params);
+    void delAll();
 
 }

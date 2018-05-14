@@ -14,11 +14,7 @@
         <result property="area_id" column="areaId"/>
     </resultMap>
     <select id="queryList" resultType="io.cem.modules.cem.entity.ScoreCollectCityEntity">
-        SELECT id,avg(score) as score,score_date,score_time,service_type,city_name,area_name FROM cem.score_collect_city
-
-        <where>
-            `score_date` between #{startDate} and #{endDate}
-        </where>
+        SELECT id,avg(score) as score,score_date,score_time,service_type,city_name,area_name FROM score_collect_city
 
         <if test="qtype == 0">
             group by `area_name`
@@ -56,5 +52,8 @@
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>
+    </delete>
+    <delete id="delAll">
+        truncate table score_collect_city
     </delete>
 </mapper>

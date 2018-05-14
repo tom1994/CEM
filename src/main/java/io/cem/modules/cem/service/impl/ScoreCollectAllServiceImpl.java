@@ -37,7 +37,7 @@ public class ScoreCollectAllServiceImpl implements ScoreCollectAllService {
         param.put("terminalTime","23:00:00");
 
         log.info("网络连通性，月度统计，调用方法：recordHourDhcpService.connectionDayHourChart");
-        List<ScoreEntity> pingScores = recordHourDhcpService.connectionDayHourChart(param);
+        List<ScoreEntity> pingScores = recordHourDhcpService.connectionDayChart(param);
         log.info("网络连通性，月度统计，计算后得分："+pingScores);
         for(ScoreEntity s : pingScores){
             ScoreCollectAllEntity e = new ScoreCollectAllEntity();
@@ -62,7 +62,7 @@ public class ScoreCollectAllServiceImpl implements ScoreCollectAllService {
         param.put("startTime","00:00:00");
         param.put("terminalTime","23:00:00");
         log.info("网络层质量，月度统计，调用方法：recordHourDhcpService.qualityDayHourChart");
-        List<ScoreEntity> scores = recordHourDhcpService.qualityDayHourChart(param);
+        List<ScoreEntity> scores = recordHourDhcpService.qualityDayChart(param);
         log.info("网络层质量，月度统计，计算后得分："+scores);
         for(ScoreEntity s : scores){
             ScoreCollectAllEntity e = new ScoreCollectAllEntity();
@@ -112,7 +112,7 @@ public class ScoreCollectAllServiceImpl implements ScoreCollectAllService {
         param.put("startTime","00:00:00");
         param.put("terminalTime","23:00:00");
         log.info("文件下载，调用方法recordHourDhcpService.downloadDayHourChart");
-        List<ScoreEntity> scores = recordHourDhcpService.downloadDayHourChart(param);
+        List<ScoreEntity> scores = recordHourDhcpService.downloadDayChart(param);
         log.info("文件下载，月度统计，计算后得分："+scores);
         for(ScoreEntity s : scores){
             ScoreCollectAllEntity e = new ScoreCollectAllEntity();
@@ -181,6 +181,10 @@ public class ScoreCollectAllServiceImpl implements ScoreCollectAllService {
 
     public List<ScoreCollectAllEntity> getScores(Map<String,Object> params){
         return scoreCollectAllDao.queryList(params);
+    }
+
+    public void delAll(){
+        scoreCollectAllDao.delAll();
     }
 
     //下面方法废弃

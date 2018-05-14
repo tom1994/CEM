@@ -19,8 +19,8 @@ function getFormJson(form) {
 /*方案2不可行，只有当submit后才能取到input输入框中的值
 function testnum(obj) {
     var testid = obj.id;
-    console.log(testid);
-    console.log($('#connectionweight').value);
+    //console.log(testid);
+    //console.log($('#connectionweight').value);
     if(! /^0+(.[0-9]{2})?$/.test($('#testid').value)){
         toastr.warning("只允许输入不大于1的至多两位小数！");
     }
@@ -103,7 +103,7 @@ var weightSet = new Vue({
                 dataType: "json",
                 contentType: "application/json", /*必须要,不可少*/
                 success: function (result) {
-                    debugger;
+                     
                     var forms = $('#tr_tcp_form .form-input');
                     for (var i = 0; i < 49; i++) {
                         forms[i].value = result.trTCP[i];
@@ -253,7 +253,6 @@ var weightSet = new Vue({
                 contentType: "application/json", /*必须要,不可少*/
                 success: function (result) {
                     var forms = $('#web_download_form .form-input');
-                    console.log(result);
                     for (var i = 0; i < 28; i++) {
                         forms[i].value = result.webDownload[i];
                     }
@@ -289,6 +288,7 @@ var weightSet = new Vue({
                 dataType: "json",
                 contentType: "application/json", /*必须要,不可少*/
                 success: function (result) {
+                    debugger
                     var forms = $('#video_form .form-input');
                     for (var i = 0; i < 63; i++) {
                         forms[i].value = result.video[i];
@@ -328,7 +328,7 @@ var weightHandle = new Vue ({
             var totalweight = parseFloat(weightJson.connectionweight) + parseFloat(weightJson.qualityweight)
                 + parseFloat(weightJson.browseweight) + parseFloat(weightJson.downloadweight)
                 + parseFloat(weightJson.videoweight) + parseFloat(weightJson.gameweight);
-            debugger;
+             
             var totalsecondweight1 = parseFloat(weightJson.ping_icmp) + parseFloat(weightJson.ping_tcp)
                 + parseFloat(weightJson.ping_udp) + parseFloat(weightJson.tr_tcp) + parseFloat(weightJson.tr_icmp);
             var totalsecondweight2 = parseFloat(weightJson.sla_tcp) + parseFloat(weightJson.sla_udp)
@@ -339,7 +339,7 @@ var weightHandle = new Vue ({
             var totalsecondweight4=parseFloat(weightJson.webpage);
             var totalsecondweight5=parseFloat(weightJson.video);
             var totalsecondweight6=parseFloat(weightJson.game);
-            console.log(weightJson);
+            //console.log(weightJson);
             for (var prop in weightJson)
             {
                 if (weightJson[prop] == "") {
@@ -347,7 +347,7 @@ var weightHandle = new Vue ({
                     break;
                 }
             }
-            console.log(totalsecondweight1);
+            //console.log(totalsecondweight1);
             if (totalweight.toFixed(5) != 1) {
                 toastr.warning("业务权重设置有误!");
             } else if (totalsecondweight1 != 1) {
@@ -366,7 +366,7 @@ var weightHandle = new Vue ({
                 var weight_new = JSON.stringify(weightJson);
                 /*封装成json数组*/
                 /*获取表单元素的值*/
-                console.log(weight_new);
+                //console.log(weight_new);
                 $.ajax({
                     type: "POST", /*GET会乱码*/
                     url: "../../cem/allweight/set",
@@ -376,7 +376,7 @@ var weightHandle = new Vue ({
                     success: function (result) {
                         let code = result.code;
                         let msg = result.msg;
-                        console.log(result);
+                        //console.log(result);
                         switch (code) {
                             case 0:
                                 toastr.success("权重设置成功!");
@@ -394,7 +394,7 @@ var weightHandle = new Vue ({
 
         },
         reset:function(){
-            debugger;
+             
             $.ajax({
                 type: "POST", /*GET会乱码*/
                 url: "../../cem/allweight/reset",
@@ -402,7 +402,7 @@ var weightHandle = new Vue ({
                 dataType: "json",
                 contentType: "application/json", /*必须要,不可少*/
                 success: function (result) {
-                    console.log(result);
+                    //console.log(result);
                     $('#connectionweight').val(result.weightdefault[0]);
                     $('#qualityweight').val(result.weightdefault[1]);
                     $('#downloadweight').val(result.weightdefault[2]);
@@ -438,11 +438,11 @@ var piform_data = new Vue ({
     methods:{
         submit: function(){
             var piJson = getFormJson($('#ping_icmp_form'));
-            console.log(piJson.pingI21);
+            //console.log(piJson.pingI21);
             var piTotalWeight = parseFloat(piJson.pingI21) + parseFloat(piJson.pingI31) + parseFloat(piJson.pingI41)
                 + parseFloat(piJson.pingI51) + parseFloat(piJson.pingI61) + parseFloat(piJson.pingI71)
                 + parseFloat(piJson.pingI81);
-            console.log(piTotalWeight.toFixed(5));
+            //console.log(piTotalWeight.toFixed(5));
             for (var prop in piJson)
             {
                 if (piJson[prop] == "") {
@@ -465,7 +465,7 @@ var piform_data = new Vue ({
                     success: function (result) {
                         let code = result.code;
                         let msg = result.msg;
-                        console.log(result);
+                        //console.log(result);
                         switch (code) {
                             case 0:
                                 toastr.success("设置成功!");
@@ -697,7 +697,7 @@ var stform_data = new Vue ({
             var stTotalWeight = parseFloat(stJson.slaT11) + parseFloat(stJson.slaT21) + parseFloat(stJson.slaT31)
                 + parseFloat(stJson.slaT41) + parseFloat(stJson.slaT51) + parseFloat(stJson.slaT61)
                 + parseFloat(stJson.slaT71);
-            debugger;
+             
             for (var prop in stJson)
             {
                 if (stJson[prop] == "") {
@@ -718,7 +718,7 @@ var stform_data = new Vue ({
                     data: {"st_new": st_new},
                     dataType: "json",
                     success: function (result) {
-                        debugger;
+                         
                         let code = result.code;
                         let msg = result.msg;
                         switch (code) {
@@ -756,7 +756,7 @@ var suform_data = new Vue ({
                     break;
                 }
             }
-            debugger;
+             
             if (suTotalWeight.toFixed(5) != 1) {
                 toastr.warning("权重设置有误!");
             } else {
@@ -770,8 +770,8 @@ var suform_data = new Vue ({
                     data: {"su_new": su_new},
                     dataType: "json",
                     success: function (result) {
-                        debugger;
-                        console.log(result);
+                         
+                        //console.log(result);
                         let code = result.code;
                         let msg = result.msg;
                         switch (code) {
@@ -1183,7 +1183,7 @@ var videoform_data = new Vue ({
             var videoTotalWeight = parseFloat(videoJson.video11) + parseFloat(videoJson.video21)
                 + parseFloat(videoJson.video31) + parseFloat(videoJson.video41) + parseFloat(videoJson.video51) +parseFloat(videoJson.video61)
                 + parseFloat(videoJson.video71) + parseFloat(videoJson.video81) +parseFloat(videoJson.video91);
-            debugger;
+             
             for (var prop in videoJson) {
                 if (videoJson[prop] == "") {
                     toastr.warning("权重及评分标准不能为空!");
@@ -1232,7 +1232,7 @@ var gameform_data = new Vue ({
             var gameJson = getFormJson($('#game_form'));
             var gameTotalWeight =  parseFloat(gameJson.game11)
                 + parseFloat(gameJson.game21) + parseFloat(gameJson.game31) +parseFloat(gameJson.game41);
-            debugger;
+             
             for (var prop in gameJson) {
                 if (gameJson[prop] == "") {
                     toastr.warning("权重及评分标准不能为空!");

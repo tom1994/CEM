@@ -3,7 +3,7 @@ $(function () {
         url: encodeURI(baseURL + 'sys/user/list'),
         datatype: "json",
         colModel: [			
-			{ label: '用户ID', name: 'userId', index: "id", width: 45, key: true },
+			{ label: '用户ID', name: 'userId', index: "id", width: 45, key: true ,hidden:true},
 			{ label: '用户名', name: 'username', width: 75 },
             { label: '所属部门', name: 'deptName', width: 75 },
 			{ label: '邮箱', name: 'email', width: 90 },
