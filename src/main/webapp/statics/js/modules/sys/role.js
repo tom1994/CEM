@@ -3,7 +3,7 @@ $(function () {
         url: baseURL + 'sys/role/list',
         datatype: "json",
         colModel: [
-            { label: '权限ID', name: 'roleId', index: "role_id", width: 45, key: true },
+            { label: '权限ID', name: 'roleId', index: "role_id", width: 45, key: true,hidden:true },
             { label: '权限名称', name: 'roleName', index: "role_name", width: 75 },
             { label: '所属部门', name: 'deptName',index: "dept_name", width: 75 },
             { label: '备注', name: 'remark', width: 100 },

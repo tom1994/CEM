@@ -4,10 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.sun.javafx.collections.MappingChange;
 import io.cem.common.annotation.SysLog;
 import io.cem.common.exception.RRException;
-import io.cem.common.utils.BypassHttps;
-import io.cem.common.utils.JSONUtils;
-import io.cem.common.utils.PageUtils;
-import io.cem.common.utils.R;
+import io.cem.common.utils.*;
 import io.cem.modules.cem.entity.TaskDispatchEntity;
 import io.cem.modules.cem.entity.TaskEntity;
 import io.cem.modules.cem.service.TaskDispatchService;
@@ -19,9 +16,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 
 @RestController
@@ -115,10 +116,17 @@ public class TaskController {
         map.put("taskid", ids[0]);
         List<TaskDispatchEntity> taskDispatchEntity = taskDispatchService.queryDispatchList(map);
         int result = 0;
+        Properties prop = new Properties();
+        try {
+            InputStream in = new BufferedInputStream(new FileInputStream(PropertiesUtils.class.getClassLoader().getResource("cem.properties").getPath()));
+            prop.load(in);
+        }catch (Exception e){
+            throw new RRException("配置文件配置有误，请重新配置");
+        }
         if (taskDispatchEntity != null && taskDispatchEntity.size() != 0) {
             try {
             for (int i = 0; i < taskDispatchEntity.size(); i++) {
-                result = BypassHttps.sendRequestIgnoreSSL("DELETE", "https://114.236.91.16:23456/web/v1/tasks/" + taskDispatchEntity.get(i).getId());
+                result = BypassHttps.sendRequestIgnoreSSL("DELETE", prop.getProperty("socketAddress") +"/tasks/" + taskDispatchEntity.get(i).getId());
             }
             }catch (Exception e){
                 return R.error(404, "该任务有误，暂时无法删除");

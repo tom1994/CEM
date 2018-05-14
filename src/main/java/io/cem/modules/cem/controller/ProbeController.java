@@ -14,9 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 
 /**
@@ -197,8 +201,11 @@ public class ProbeController {
     public R reboot(@RequestBody Integer[] ids) {
         int result;
         try{
+            Properties prop = new Properties();
+                InputStream in = new BufferedInputStream(new FileInputStream(PropertiesUtils.class.getClassLoader().getResource("cem.properties").getPath()));
+                prop.load(in);
         for (int id : ids) {
-            result = BypassHttps.sendRequestIgnoreSSL("GET", "https://114.236.91.16:23456/web/v1/probes/" + id + "/restart");
+            result = BypassHttps.sendRequestIgnoreSSL("GET", prop.getProperty("socketAddress") +"/probes/" + id + "/restart");
             if (result == 200 || result == 206) {
             } else {
                 return R.error(404, "id为"+id+"的探针重启失败，请联系管理员");
@@ -220,10 +227,16 @@ public class ProbeController {
 //		for(int id : ids){
 //			probeService.updateUpstream(id);
 //		}
-
+        Properties prop = new Properties();
+        try {
+            InputStream in = new BufferedInputStream(new FileInputStream(PropertiesUtils.class.getClassLoader().getResource("cem.properties").getPath()));
+            prop.load(in);
+        }catch (Exception e){
+            throw new RRException("配置文件配置有误，请重新配置");
+        }
         int result;
         for (int id : ids) {
-            result = BypassHttps.sendRequestIgnoreSSL("DELETE", "https://114.236.91.16:23456/web/v1/probes/" + id + "/unregister/1");
+            result = BypassHttps.sendRequestIgnoreSSL("DELETE", prop.getProperty("socketAddress") +"/probes/" + id + "/unregister/1");
             if (result == 200) {
             } else {
                 return R.error(404, "删除探针失败");
