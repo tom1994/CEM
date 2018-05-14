@@ -121,6 +121,7 @@
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>
+        order by convert(target_name USING gbk)
     </select>
 
     <insert id="save" parameterType="io.cem.modules.cem.entity.TargetEntity" useGeneratedKeys="true" keyProperty="id">

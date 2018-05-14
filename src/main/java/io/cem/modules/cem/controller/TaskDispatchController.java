@@ -15,6 +15,9 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.*;
 
 
@@ -115,6 +118,13 @@ public class TaskDispatchController {
     @RequestMapping("/save")
     @RequiresPermissions("taskdispatch:save")
     public R save(@RequestBody TaskDispatchEntity taskDispatch) {
+        Properties prop = new Properties();
+        try {
+            InputStream in = new BufferedInputStream(new FileInputStream(PropertiesUtils.class.getClassLoader().getResource("cem.properties").getPath()));
+            prop.load(in);
+        }catch (Exception e){
+            throw new RRException("配置文件配置有误，请重新配置");
+        }
         if (taskDispatch.getProbeGroupId() != null) {
             List<TaskDispatchEntity> taskDispatchEntityList = new ArrayList<>();
             List<ProbeEntity> probes = probeService.queryProbeListByGroup(taskDispatch.getProbeGroupId());
@@ -127,7 +137,7 @@ public class TaskDispatchController {
         } else {
             taskDispatchService.save(taskDispatch);
         }
-        BypassHttps.sendRequestIgnoreSSL("POST", "https://114.236.91.16:23456/web/v1/tasks/" + taskDispatch.getTaskId());
+        BypassHttps.sendRequestIgnoreSSL("POST", prop.getProperty("socketAddress") +"/tasks/"+ taskDispatch.getTaskId());
 
         return R.ok();
     }
@@ -140,11 +150,17 @@ public class TaskDispatchController {
     public R saveAndReturn(@RequestBody String param) {
         Map<String, Object> map = new HashMap<>();
         JSONObject probedata_jsonobject = JSONObject.parseObject(param);
-        System.out.println(probedata_jsonobject);
         try {
             map.putAll(JSONUtils.jsonToMap(probedata_jsonobject));
         } catch (RuntimeException e) {
             throw new RRException("内部参数错误，请重试！");
+        }
+        Properties prop = new Properties();
+        try {
+            InputStream in = new BufferedInputStream(new FileInputStream(PropertiesUtils.class.getClassLoader().getResource("cem.properties").getPath()));
+            prop.load(in);
+        }catch (Exception e){
+            throw new RRException("配置文件配置有误，请重新配置");
         }
         int probeId = Integer.parseInt(map.get("probeId").toString());
         List<ProbeEntity> probeList = probeService.queryProbeByLayer(probeId);
@@ -236,29 +252,29 @@ public class TaskDispatchController {
         if (map.containsKey("ping")) {
             int[] pingState = new int[5];
             for (int i = 1; i < 6; i++) {
-                pingState[i - 1] = BypassHttps.sendRequestIgnoreSSL("POST", "https://114.236.91.16:23456/web/v1/tasks/" + i);
+                pingState[i - 1] = BypassHttps.sendRequestIgnoreSSL("POST", prop.getProperty("socketAddress") +"/tasks/" + i);
             }
         }
         if (map.containsKey("sla")) {
             int[] slaState = new int[6];
             for (int i = 10; i < 16; i++) {
-                slaState[i - 10] = BypassHttps.sendRequestIgnoreSSL("POST", "https://114.236.91.16:23456/web/v1/tasks/" + i);
+                slaState[i - 10] = BypassHttps.sendRequestIgnoreSSL("POST", prop.getProperty("socketAddress") +"/tasks/"+ i);
             }
         }
         if (map.containsKey("web")) {
-            int webState = BypassHttps.sendRequestIgnoreSSL("POST", "https://114.236.91.16:23456/web/v1/tasks/" + 20);
+            int webState = BypassHttps.sendRequestIgnoreSSL("POST", prop.getProperty("socketAddress") +"/tasks/" + 20);
         }
         if (map.containsKey("download")) {
             int[] downloadState = new int[3];
             for (int i = 30; i < 33; i++) {
-                downloadState[i - 30] = BypassHttps.sendRequestIgnoreSSL("POST", "https://114.236.91.16:23456/web/v1/tasks/" + i);
+                downloadState[i - 30] = BypassHttps.sendRequestIgnoreSSL("POST", prop.getProperty("socketAddress") +"/tasks/"+ i);
             }
         }
         if (map.containsKey("video")) {
-            int videoState = BypassHttps.sendRequestIgnoreSSL("POST", "https://114.236.91.16:23456/web/v1/tasks/" + 40);
+            int videoState = BypassHttps.sendRequestIgnoreSSL("POST", prop.getProperty("socketAddress") +"/tasks/"+ 40);
         }
         if (map.containsKey("game")) {
-            int gameState = BypassHttps.sendRequestIgnoreSSL("POST", "https://114.236.91.16:23456/web/v1/tasks/" + 50);
+            int gameState = BypassHttps.sendRequestIgnoreSSL("POST", prop.getProperty("socketAddress") +"/tasks/" + 50);
         }
 
         return R.ok().put("taskdispatch", dispatch);
@@ -346,7 +362,7 @@ public class TaskDispatchController {
             return R.error(111, "探针或探针组格式错误");
         }
         try {
-            int result = BypassHttps.sendRequestIgnoreSSL("POST", "https://114.236.91.16:23456/web/v1/tasks/" + taskDispatch.getTaskId());
+            int result = BypassHttps.sendRequestIgnoreSSL("POST", prop.getProperty("socketAddress") +"/tasks/" + taskDispatch.getTaskId());
             if (result == 200) {
                 if (probeLimited.size() == 0) {
                     return R.ok();
@@ -371,6 +387,13 @@ public class TaskDispatchController {
     @RequiresPermissions("taskdispatch:save")
     public R saveAll(@RequestBody TaskDispatchEntity taskDispatch) {
         taskDispatch.setCreateTime(new Date());
+        Properties prop = new Properties();
+        try {
+            InputStream in = new BufferedInputStream(new FileInputStream(PropertiesUtils.class.getClassLoader().getResource("cem.properties").getPath()));
+            prop.load(in);
+        }catch (Exception e){
+            throw new RRException("配置文件配置有误，请重新配置");
+        }
         if (taskDispatch.getTargetGroupIds() != null) {
             int[] targetGroupIds = taskDispatch.getTargetGroupIds();
             ArrayList target = new ArrayList();
@@ -427,7 +450,7 @@ public class TaskDispatchController {
             return R.error(111, "探针或探针组格式错误");
         }
         try {
-            int result = BypassHttps.sendRequestIgnoreSSL("POST", "https://114.236.91.16:23456/web/v1/tasks/" + taskDispatch.getTaskId());
+            int result = BypassHttps.sendRequestIgnoreSSL("POST", prop.getProperty("socketAddress") +"/tasks/"+ taskDispatch.getTaskId());
             if(result == 200){
                 return R.ok();
             }else{
@@ -462,7 +485,14 @@ public class TaskDispatchController {
     @SysLog("取消任务")
     @RequestMapping("/cancel/{id}")
     public R cancel(@PathVariable("id") Integer id) {
-        int result = BypassHttps.sendRequestIgnoreSSL("DELETE", "https://114.236.91.16:23456/web/v1/tasks/" + id);
+        Properties prop = new Properties();
+        try {
+            InputStream in = new BufferedInputStream(new FileInputStream(PropertiesUtils.class.getClassLoader().getResource("cem.properties").getPath()));
+            prop.load(in);
+        }catch (Exception e){
+            throw new RRException("配置文件配置有误，请重新配置");
+        }
+        int result = BypassHttps.sendRequestIgnoreSSL("DELETE", prop.getProperty("socketAddress") +"/tasks/"+ id);
         if (result == 200) {
             return R.ok();
         } else {
