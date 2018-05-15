@@ -288,7 +288,6 @@ var weightSet = new Vue({
                 dataType: "json",
                 contentType: "application/json", /*必须要,不可少*/
                 success: function (result) {
-                    debugger
                     var forms = $('#video_form .form-input');
                     for (var i = 0; i < 63; i++) {
                         forms[i].value = result.video[i];

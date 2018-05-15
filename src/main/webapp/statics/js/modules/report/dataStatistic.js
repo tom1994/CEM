@@ -233,7 +233,6 @@ var getProbeCity = function (cityid) {
             dataType: "json",
             contentType: "application/json",
             success: function (result) {
-                debugger
                 var probes = [];
                 for (var i = 0; i < result.probe.length; i++) {
                     probes[i] = {message: result.probe[i]}
