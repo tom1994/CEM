@@ -36,7 +36,7 @@ public class ScoreCollectTargetServiceImpl implements ScoreCollectTargetService 
         log.info("开始时间 startTime ："+params.get("starTime"));
         log.info("结束时间 endTime ："+params.get("terminalTime"));
         log.info("开始调用recordHourRadiusService.calculateTargetDayScore方法，传入的业务类型为："+params.get("service"));
-        List<ScoreEntity> scores1 = recordHourRadiusService.calculateTargetHourScore(params);
+        List<ScoreEntity> scores1 = recordHourRadiusService.calculateTargetDayScore(params);
         log.info("结束调用recordHourRadiusService.calculateTargetDayScore方法，返回计算结果为："+JSON.toJSON(scores1));
         params.put("service",2);
         log.info("开始调用recordHourRadiusService.calculateTargetDayScore方法，传入的业务类型为："+params.get("service"));

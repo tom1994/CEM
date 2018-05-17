@@ -19,7 +19,7 @@
 
         <where>
 
-            `service_type` = #{serviceType}
+            `service_type` = #{serviceType} and `score_date` between #{stime} and #{etime}
 
         </where>
 

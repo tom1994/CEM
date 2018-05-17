@@ -451,7 +451,7 @@ function diagnose() {
                 var url = "information.html";
                 var dispatchString = JSON.stringify(dispatch);
                 url = url + "?dispatch=" + dispatchString.substring(1,dispatchString.length-1);
-                //console.log(url);
+                console.log(url);
                 document.getElementById("diagnose").href = encodeURI(url);
                 document.getElementById("diagnose").click();
             }
