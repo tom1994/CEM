@@ -1,3 +1,5 @@
+var layers = new Map();
+var layerNames = new Map();
     // 地图
   $(function () {
       require.config({
@@ -472,12 +474,13 @@
                           normal:{label:{show:true}},
                           emphasis:{label:{show:true}}
                       },
-                      data:(function(){
+                      data://[{name:'北京',value:250}]//显示正常;[{name:'北京市',value:250}]//不能正常显示 数据库 里的值就是“北京市”
+                      (function(){
                           var arr=[];
                           $.ajax({
                               type: "post",
                               async: false, //同步执行
-                              url: "../../cem/index/citymapview",
+                              url: "../../cem/collect/cityrankingview",
                               data : {serviceType:'2'},
                               dataType: "json", //返回数据形式为json
                               success: function (result) {
@@ -925,35 +928,18 @@
             title: {
                 text: '各应用网络QoE分析'
             },
+            exporting: { enabled: false },
             xAxis: {
-                // categories: (function(){
-                //     var arr=[];
-                //     $.ajax({
-                //         type: "post",
-                //         async: false, //同步执行
-                //         url: "",
-                //         data : {configId:'home_web_mix'},
-                //         dataType: "json", //返回数据形式为json
-                //         success: function (result) {
-                //             if (result) {
-                //                 for(var i=0;i<result.rows.length;i++){
-                //                     arr.push(result.rows[i].month);
-                //                 }
-                //             }
-                //         }
-                //     })
-                //     return arr;
-                // })()
                 categories:(function(){
                     var arr=[];
                     $.ajax({
                         type: "post",
                         async: false, //同步执行
-                        url: "../../cem/index/queryrange",
-                        data : {serviceType:'2'},
+                        url: "../../cem/collect/queryrange",
+                        data : {serviceType:'3'},
                         dataType: "json", //返回数据形式为json
                         success: function (result) {
-                            //debugger
+
                             mc = result.mouths.length;
                             for(var i=0;i<result.mouths.length;i++){
                                 arr[i] = result.mouths[i].mouthDay;
@@ -991,12 +977,12 @@
                     $.ajax({
                         type: "post",
                         async: false, //同步执行
-                        url: "../../cem/index/qoeview",
-                        data : {serviceType:'2'},
+                        url: "../../cem/collect/qoeview",
+                        data : {serviceType:'3'},
                         dataType: "json", //返回数据形式为json
                         success: function (result) {
+                            for(var i=0;i<result.scoreCollects.length;i++){
 
-                            for(var i=0;i<mc;i++){
                                 arr[i] = result.scoreCollects[i].score;
 
                             }
@@ -1015,12 +1001,12 @@
                     $.ajax({
                         type: "post",
                         async: false, //同步执行
-                        url: "../../cem/index/qoeview",
-                        data : {serviceType:'4'},
+                        url: "../../cem/collect/qoeview",
+                        data : {serviceType:'5'},
                         dataType: "json", //返回数据形式为json
                         success: function (result) {
                             if (result) {
-                                for(var i=0;i<mc;i++){
+                                for(var i=0;i<result.scoreCollects.length;i++){
                                     arr[i] = result.scoreCollects[i].score;
 
                                 }
@@ -1038,12 +1024,12 @@
                     $.ajax({
                         type: "post",
                         async: false, //同步执行
-                        url: "../../cem/index/qoeview",
-                        data : {serviceType:'0'},
+                        url: "../../cem/collect/qoeview",
+                        data : {serviceType:'1'},
                         dataType: "json", //返回数据形式为json
                         success: function (result) {
                             if (result) {
-                                for(var i=0;i<mc;i++){
+                                for(var i=0;i<result.scoreCollects.length;i++){
                                     arr[i] = result.scoreCollects[i].score;
 
                                 }
@@ -1061,12 +1047,12 @@
                     $.ajax({
                         type: "post",
                         async: false, //同步执行
-                        url: "../../cem/index/qoeview",
-                        data : {serviceType:'3'},
+                        url: "../../cem/collect/qoeview",
+                        data : {serviceType:'4'},
                         dataType: "json", //返回数据形式为json
                         success: function (result) {
                             if (result) {
-                                for(var i=0;i<mc;i++){
+                                for(var i=0;i<result.scoreCollects.length;i++){
                                     arr[i] = result.scoreCollects[i].score;
 
                                 }
@@ -1084,16 +1070,14 @@
                     $.ajax({
                         type: "post",
                         async: false, //同步执行
-                        url: "../../cem/index/qoeview",
-                        data : {serviceType:'5'},
+                        url: "../../cem/collect/qoeview",
+                        data : {serviceType:'6'},
                         dataType: "json", //返回数据形式为json
                         success: function (result) {
-                            if (result) {
-                                for(var i=0;i<mc;i++){
+                                for(var i=0;i<result.scoreCollects.length;i++){
                                     arr[i] = result.scoreCollects[i].score;
 
                                 }
-                            }
                         }
                     })
                     return arr;
@@ -1107,12 +1091,12 @@
                     $.ajax({
                         type: "post",
                         async: false, //同步执行
-                        url: "../../cem/index/qoeview",
-                        data : {serviceType:'1'},
+                        url: "../../cem/collect/qoeview",
+                        data : {serviceType:'2'},
                         dataType: "json", //返回数据形式为json
                         success: function (result) {
                             if (result) {
-                                for(var i=0;i<mc;i++){
+                                for(var i=0;i<result.scoreCollects.length;i++){
                                     arr[i] = result.scoreCollects[i].score;
 
                                 }
@@ -1184,12 +1168,12 @@
                                         $.ajax({
                                             type: "post",
                                             async: false, //同步执行
-                                            url: "../../cem/index/dayscoresview",
+                                            url: "../../cem/collect/dayscoresview",
                                             data: {interval: '1'},
                                             dataType: "json", //返回数据形式为json
                                             success: function (result) {
                                                 if (result) {
-                                                    for(var i=0;i<6;i++){
+                                                    for(var i=0;i<result.scoreCollects.length;i++){
                                                         arr[i] = result.scoreCollects[i].score;
                                                     }
                                                 }
@@ -1205,12 +1189,12 @@
                                         $.ajax({
                                             type: "post",
                                             async: false, //同步执行
-                                            url: "../../cem/index/dayscoresview",
+                                            url: "../../cem/collect/dayscoresview",
                                             data: {interval: '2'},
                                             dataType: "json", //返回数据形式为json
                                             success: function (result) {
                                                 if (result) {
-                                                    for(var i=0;i<6;i++){
+                                                    for(var i=0;i<result.scoreCollects.length;i++){
                                                         arr[i] = result.scoreCollects[i].score;
                                                     }
                                                 }
@@ -1239,7 +1223,7 @@
             }
         );
     })
-//柱状图
+//top10排名 柱状图
     $(function () {
         //平均qoe值
         var day = new Date();
@@ -1255,6 +1239,7 @@
         }
         indexColumn();
         function indexColumn() {
+
             $('#container4').highcharts({
                 chart: {
                     type: 'column',
@@ -1273,13 +1258,94 @@
                         $.ajax({
                             type: "post",
                             async: false, //同步执行
-                            url: "../../cem/index/targerview",
-                            data: {serviceType: '0'},
+                            url: "../../cem/collect/targetview",
+                            data: {serviceType: '1'},
+                            dataType: "json", //返回数据形式为json
+                            success: function (result) {
+                                    for(var i=0;i<result.scoreCollects.length;i++){
+                                        arr.push(result.scoreCollects[i].targetName);
+                                    }
+                            }
+                        })
+                        return arr;
+                    })(),
+                    crosshair: true
+                },
+                yAxis: {
+                    max: 100,
+                    min: 0,
+                    title: {
+                        text: ' '
+                    }
+                },
+                exporting: { enabled: false },
+                tooltip: {
+                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} Q</b></td></tr>',
+                    footerFormat: '</table>',
+                    shared: true,
+                    useHTML: true
+                },
+                plotOptions: {
+                    stickyTracking: false,
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    }
+                },
+                series: [{
+                    name: 'QoE',
+                    data: (function () {
+                        var arr = [];
+                        $.ajax({
+                            type: "post",
+                            async: false, //同步执行
+                            url: "../../cem/collect/targetview",
+                            data: {serviceType: '1'},
                             dataType: "json", //返回数据形式为json
                             success: function (result) {
                                 if (result) {
-                                    for(var i=0;i<10;i++){
-                                        arr.push(result.scoreCollects[i].targetName1);
+                                    for (var i = 0; i < result.scoreCollects.length; i++) {
+                                        arr[i] = result.scoreCollects[i].score;
+                                    }
+                                }
+                            }
+                        })
+                        return arr;
+                    })()
+                    //data:[65,88,79,84,96,75,86,66,99,76]
+                }]
+
+            });
+        }
+        //发送请求函数
+        function netColumn() {
+            $('#container4').highcharts({
+                chart: {
+                    type: 'column',
+                    backgroundColor: 'rgba(0,0,0,0)'
+                },
+                title: {
+                    text: 'TOP10网络层质量排行'
+                },
+                exporting: { enabled: false },
+                xAxis: {
+                    labels: {
+                        rotation: 0//调节倾斜角度偏移
+                    },
+                    categories:(function () {
+                        var arr = [];
+                        $.ajax({
+                            type: "post",
+                            async: false, //同步执行
+                            url: "../../cem/collect/targetview",
+                            data: {serviceType: '2'},
+                            dataType: "json", //返回数据形式为json
+                            success: function (result) {
+                                if (result) {
+                                    for(var i=0;i<result.scoreCollects.length;i++){
+                                        arr.push(result.scoreCollects[i].targetName);
                                     }
                                 }
                             }
@@ -1290,7 +1356,7 @@
                 },
                 yAxis: {
                     max: 100,
-                    min: 60,
+                    min: 0,
                     title: {
                         text: ' '
                     }
@@ -1317,12 +1383,12 @@
                         $.ajax({
                             type: "post",
                             async: false, //同步执行
-                            url: "../../cem/index/targerview",
-                            data: {serviceType: '0'},
+                            url: "../../cem/collect/targetview",
+                            data: {serviceType: '2'},
                             dataType: "json", //返回数据形式为json
                             success: function (result) {
                                 if (result) {
-                                    for(var i=0;i<10;i++){
+                                    for(var i=0;i<result.scoreCollects.length;i++){
                                         arr[i] = result.scoreCollects[i].score;
                                     }
                                 }
@@ -1335,83 +1401,8 @@
 
             });
         }
-        //发送请求函数
-        function Video_Pie() {
-            var arr = ['2017-11','2017-12','2018-01','2018-02','2018-03'];
-            var arr1 = [80,75,50,99,88];
 
-            $('#container4').highcharts({
-                chart: {
-                    plotBackgroundColor: null,
-                    plotBorderWidth: null,
-                    plotShadow: false
-                },
-                title: {
-                    text: 'TOP10网络层质量排行'
-                },
-                tooltip: {
-                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                    '<td style="padding:0"><b>{point.y:.1f} Q</b></td></tr>',
-                    footerFormat: '</table>',
-                    shared: true,
-                    useHTML: true
-                },
-                plotOptions: {
-
-                    pie: {
-                        allowPointSelect: true,
-                        cursor: 'pointer',
-                        dataLabels: {
-                            enabled: true,
-                            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-                            style: {
-                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-                            }
-                        },
-                        states: {
-                            hover: {
-                                enabled: false
-                            }
-                        },
-                        slicedOffset: 20,         // 突出间距
-                        point: {                  // 每个扇区是数据点对象，所以事件应该写在 point 下面
-                            events: {
-                                // 鼠标滑过是，突出当前扇区
-                                mouseOver: function() {
-                                    this.slice();
-                                },
-                                // 鼠标移出时，收回突出显示
-                                mouseOut: function() {
-                                    this.slice();
-                                },
-                                // 默认是点击突出，这里屏蔽掉
-                                click: function() {
-                                    return false;
-                                }
-                            }
-                        }
-                    }
-                },
-                series: [{
-                    type:'pie',
-                    name: 'TOP10网络层质量排行',
-                    data: [
-                        ['爱奇艺',   45.0],
-                        ['优酷',       26.8],
-                        {
-                            name: '腾讯',
-                            y: 12.8,
-                            sliced: true, // 突出显示这个点（扇区），用于强调。
-                        },
-                        ['乐视',    8.5],
-                        ['百度',     6.2],
-                        ['芒果tv',   0.7]
-                    ]
-                }]
-            });
-        }
-        function DownLoadColumn() {
+        function httpColumn() {
             $('#container4').highcharts({
                 chart: {
                     type: 'column',
@@ -1420,7 +1411,7 @@
                 title: {
                     text: 'TOP10网页浏览排行'
                 },
-
+                exporting: { enabled: false },
                 xAxis: {
                     labels: {
                         rotation: 0//调节倾斜角度偏移
@@ -1430,14 +1421,13 @@
                         $.ajax({
                             type: "post",
                             async: false, //同步执行
-                            url: "../../cem/index/targerview",
-                            data: {serviceType: '2'},
+                            url: "../../cem/collect/targetview",
+                            data: {serviceType: '3'},
                             dataType: "json", //返回数据形式为json
                             success: function (result) {
                                 if (result) {
-                                    //debugger
-                                    for(var i=0;i<10;i++){
-                                        arr.push(result.scoreCollects[i].targetName1);
+                                    for(var i=0;i<result.scoreCollects.length;i++){
+                                        arr.push(result.scoreCollects[i].targetName);
                                     }
                                 }
                             }
@@ -1448,7 +1438,7 @@
                 },
                 yAxis: {
                     max: 100,
-                    min: 60,
+                    min: 0,
                     title: {
                         text: ' '
                     }
@@ -1475,197 +1465,12 @@
                         $.ajax({
                             type: "post",
                             async: false, //同步执行
-                            url: "../../cem/index/targerview",
-                            data: {serviceType: '2'},
+                            url: "../../cem/collect/targetview",
+                            data: {serviceType: '3'},
                             dataType: "json", //返回数据形式为json
                             success: function (result) {
                                 if (result) {
-                                    for(var i=0;i<10;i++){
-                                        arr[i] = result.scoreCollects[i].score;
-                                    }
-                                }
-                            }
-                        })
-                        return arr;
-                    })()
-                }]
-
-            });
-        }
-        function PING_Pie() {
-            var arr = ['2017-11','2017-12','2018-01','2018-02','2018-03'];
-            var arr1 = [80,75,50,99,88];
-            // $.ajax({
-            //     type: "post",
-            //     url: "",
-            //     data: {configId: 'home_web_mix'},
-            //     dataType: "json", //返回数据形式为json
-            //     success: function (result) {
-            //         if (result) {
-            //             for (var i = 0; i < result.rows.length; i++) {
-            //                 if (result.rows[i].month >= CurrentDate)
-            //                     arr.push(result.rows[i].month);
-            //             }
-            //         }
-            //         $.ajax({
-            //             type: "post",
-            //             url: "",
-            //             data: {configId: 'home_web_mix'},
-            //             dataType: "json", //返回数据形式为json
-            //             success: function (result) {
-            //                 if (result) {
-            //                     for (var i = 0; i < result.rows.length; i++) {
-            //                         if (result.rows[i].month >= CurrentDate)
-            //                             arr1.push(parseFloat(result.rows[i][sel]));
-            //                     }
-            //                 }
-            //             }
-            //         })
-            //
-            //     }
-            // });
-            $('#container4').highcharts({
-                chart: {
-                    plotBackgroundColor: null,
-                    plotBorderWidth: null,
-                    plotShadow: false
-                },
-                title: {
-                    text: 'TOP10在线视频排行'
-                },
-                tooltip: {
-                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                    '<td style="padding:0"><b>{point.y:.1f} Q</b></td></tr>',
-                    footerFormat: '</table>',
-                    shared: true,
-                    useHTML: true
-                },
-                plotOptions: {
-
-                    pie: {
-                        allowPointSelect: true,
-                        cursor: 'pointer',
-                        dataLabels: {
-                            enabled: true,
-                            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-                            style: {
-                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-                            }
-                        },
-                        states: {
-                            hover: {
-                                enabled: false
-                            }
-                        },
-                        slicedOffset: 20,         // 突出间距
-                        point: {                  // 每个扇区是数据点对象，所以事件应该写在 point 下面
-                            events: {
-                                // 鼠标滑过是，突出当前扇区
-                                mouseOver: function() {
-                                    this.slice();
-                                },
-                                // 鼠标移出时，收回突出显示
-                                mouseOut: function() {
-                                    this.slice();
-                                },
-                                // 默认是点击突出，这里屏蔽掉
-                                click: function() {
-                                    return false;
-                                }
-                            }
-                        }
-                    }
-                },
-                series: [{
-                    type:'pie',
-                    name: 'TOP10在线视频排行',
-                    data: [
-                        ['爱奇艺',   45.0],
-                        ['优酷',       26.8],
-                        {
-                            name: '腾讯',
-                            y: 12.8,
-                            sliced: true, // 突出显示这个点（扇区），用于强调。
-                        },
-                        ['乐视',    8.5],
-                        ['百度',     6.2],
-                        ['芒果tv',   0.7]
-                    ]
-                }]
-            });
-        }
-        function Game_line() {
-            $('#container4').highcharts({
-                chart: {
-                    type: 'column',
-                    backgroundColor: 'rgba(0,0,0,0)'
-                },
-                title: {
-                    text: 'TOP10网络游戏排行'
-                },
-
-                xAxis: {
-                    labels: {
-                        rotation: 0//调节倾斜角度偏移
-                    },
-                    categories:(function () {
-                        var arr = [];
-                        $.ajax({
-                            type: "post",
-                            async: false, //同步执行
-                            url: "../../cem/index/targerview",
-                            data: {serviceType: '5'},
-                            dataType: "json", //返回数据形式为json
-                            success: function (result) {
-                                if (result) {
-                                    //debugger
-                                    for(var i=0;i<10;i++){
-                                        arr.push(result.scoreCollects[i].targetName1);
-                                    }
-                                }
-                            }
-                        })
-                        return arr;
-                    })(),
-                    crosshair: true
-                },
-                yAxis: {
-                    max: 100,
-                    min: 60,
-                    title: {
-                        text: ' '
-                    }
-                },
-                tooltip: {
-                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                    '<td style="padding:0"><b>{point.y:.1f} Q</b></td></tr>',
-                    footerFormat: '</table>',
-                    shared: true,
-                    useHTML: true
-                },
-                plotOptions: {
-                    stickyTracking: false,
-                    column: {
-                        pointPadding: 0.2,
-                        borderWidth: 0
-                    }
-                },
-                series: [{
-                    name: 'QoE',
-
-                    data:(function () {
-                        var arr = [];
-                        $.ajax({
-                            type: "post",
-                            async: false, //同步执行
-                            url: "../../cem/index/targerview",
-                            data: {serviceType: '5'},
-                            dataType: "json", //返回数据形式为json
-                            success: function (result) {
-                                if (result) {
-                                    for(var i=0;i<10;i++){
+                                    for(var i=0;i<result.scoreCollects.length;i++){
                                         arr[i] = result.scoreCollects[i].score;
                                     }
                                 }
@@ -1686,7 +1491,7 @@
                 title: {
                     text: 'TOP10文件下载排行'
                 },
-
+                exporting: { enabled: false },
                 xAxis: {
                     labels: {
                         rotation: 0//调节倾斜角度偏移
@@ -1696,14 +1501,14 @@
                         $.ajax({
                             type: "post",
                             async: false, //同步执行
-                            url: "../../cem/index/targerview",
-                            data: {serviceType: '3'},
+                            url: "../../cem/collect/targetview",
+                            data: {serviceType: '4'},
                             dataType: "json", //返回数据形式为json
                             success: function (result) {
                                 if (result) {
-                                    //debugger
-                                    for(var i=0;i<10;i++){
-                                        arr.push(result.scoreCollects[i].targetName1);
+
+                                    for(var i=0;i<result.scoreCollects.length;i++){
+                                        arr.push(result.scoreCollects[i].targetName);
                                     }
                                 }
                             }
@@ -1714,7 +1519,7 @@
                 },
                 yAxis: {
                     max: 100,
-                    min: 60,
+                    min: 0,
                     title: {
                         text: ' '
                     }
@@ -1742,12 +1547,12 @@
                         $.ajax({
                             type: "post",
                             async: false, //同步执行
-                            url: "../../cem/index/targerview",
-                            data: {serviceType: '3'},
+                            url: "../../cem/collect/targetview",
+                            data: {serviceType: '4'},
                             dataType: "json", //返回数据形式为json
                             success: function (result) {
                                 if (result) {
-                                    for(var i=0;i<10;i++){
+                                    for(var i=0;i<result.scoreCollects.length;i++){
                                         arr[i] = result.scoreCollects[i].score;
                                     }
                                 }
@@ -1759,15 +1564,183 @@
 
             });
         }
+
+
+
+
+        function PING_Pie() {
+            $('#container4').highcharts({
+                chart: {
+                    type: 'column',
+                    backgroundColor: 'rgba(0,0,0,0)'
+                },
+                title: {
+                    text: 'TOP10在线视频排行'
+                },
+                exporting: { enabled: false },
+                xAxis: {
+                    labels: {
+                        rotation: 0//调节倾斜角度偏移
+                    },
+                    categories:(function () {
+                        var arr = [];
+                        $.ajax({
+                            type: "post",
+                            async: false, //同步执行
+                            url: "../../cem/collect/targetview",
+                            data: {serviceType: '5'},
+                            dataType: "json", //返回数据形式为json
+                            success: function (result) {
+                                if (result) {
+                                    for(var i=0;i<result.scoreCollects.length;i++){
+                                        arr.push(result.scoreCollects[i].targetName);
+                                    }
+                                }
+                            }
+                        })
+                        return arr;
+                    })(),
+                    crosshair: true
+                },
+                yAxis: {
+                    max: 100,
+                    min: 0,
+                    title: {
+                        text: ' '
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} Q</b></td></tr>',
+                    footerFormat: '</table>',
+                    shared: true,
+                    useHTML: true
+                },
+                plotOptions: {
+                    stickyTracking: false,
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    }
+                },
+                series: [{
+                    name: 'QoE',
+                    data: (function () {
+                        var arr = [];
+                        $.ajax({
+                            type: "post",
+                            async: false, //同步执行
+                            url: "../../cem/collect/targetview",
+                            data: {serviceType: '5'},
+                            dataType: "json", //返回数据形式为json
+                            success: function (result) {
+                                if (result) {
+                                    for(var i=0;i<result.scoreCollects.length;i++){
+                                        arr[i] = result.scoreCollects[i].score;
+                                    }
+                                }
+                            }
+                        })
+                        return arr;
+                    })()
+                    //data:[65,88,79,84,96,75,86,66,99,76]
+                }]
+
+            });
+        }
+        function Game_line() {
+            $('#container4').highcharts({
+                chart: {
+                    type: 'column',
+                    backgroundColor: 'rgba(0,0,0,0)'
+                },
+                title: {
+                    text: 'TOP10网络游戏排行'
+                },
+                exporting: { enabled: false },
+                xAxis: {
+                    labels: {
+                        rotation: 0//调节倾斜角度偏移
+                    },
+                    categories:(function () {
+                        var arr = [];
+                        $.ajax({
+                            type: "post",
+                            async: false, //同步执行
+                            url: "../../cem/collect/targetview",
+                            data: {serviceType: '6'},
+                            dataType: "json", //返回数据形式为json
+                            success: function (result) {
+                                if (result) {
+
+                                    for(var i=0;i<result.scoreCollects.length;i++){
+                                        arr.push(result.scoreCollects[i].targetName);
+                                    }
+                                }
+                            }
+                        })
+                        return arr;
+                    })(),
+                    crosshair: true
+                },
+                yAxis: {
+                    max: 100,
+                    min: 0,
+                    title: {
+                        text: ' '
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} Q</b></td></tr>',
+                    footerFormat: '</table>',
+                    shared: true,
+                    useHTML: true
+                },
+                plotOptions: {
+                    stickyTracking: false,
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    }
+                },
+                series: [{
+                    name: 'QoE',
+
+                    data:(function () {
+                        var arr = [];
+                        $.ajax({
+                            type: "post",
+                            async: false, //同步执行
+                            url: "../../cem/collect/targetview",
+                            data: {serviceType: '6'},
+                            dataType: "json", //返回数据形式为json
+                            success: function (result) {
+                                if (result) {
+                                    for(var i=0;i<result.scoreCollects.length;i++){
+                                        arr[i] = result.scoreCollects[i].score;
+                                    }
+                                }
+                            }
+                        })
+                        return arr;
+                    })()
+                }]
+
+            });
+        }
+
         $('#TopId').change(function () {
                 var Top_name = $('#TopId').find('option:selected').attr('lev');
                 if(Top_name=="ping_top"){
                     indexColumn();
                 }
                 if(Top_name=='sla_top'){
-                    Video_Pie();
+                    netColumn();
                 }if(Top_name=='http_top'){
-                    DownLoadColumn()
+                    httpColumn()
                 }if(Top_name=='youku_top'){
                     PING_Pie();
                 }if(Top_name=='xunlei_top'){
@@ -1779,7 +1752,7 @@
 
         });
     });
-//    折线图
+//   层级 折线图
     $(function () {
         //平均qoe值
         var day = new Date();
@@ -1793,11 +1766,11 @@
         else {
             CurrentDate += '-' + "0" + Month;
         }
-        Index_qoe();
-       function Index_qoe() {
+
+        function Index_qoe() {
            $('#container5').highcharts({
                chart: {
-                   type: 'line',
+                   type: 'spline',
                    backgroundColor: 'rgba(0,0,0,0)'
                },
                title: {
@@ -1807,657 +1780,665 @@
                    enabled: false // 禁用版权信息
                },
                xAxis: {
+                   type: 'datetime',
+                   dateTimeLabelFormats: {
+                       day: '%Y-%m-%d',
+                       week: '%Y-%m-%d',
+                       month: '%Y-%m-%d',
+                       year: '%Y-%m-%d'
+                   },
+                   title: {
+                       text: 'Date'
+                   },
                    categories:(function(){
                        var arr=[];
                        $.ajax({
                            type: "post",
                            async: false, //同步执行
-                           url: "../../cem/index/queryrange",
-                           data : {serviceType:'2',accessLayer:'3000'},
+                           url: "../../cem/index/querydayrange",
+                           data : {serviceType:'0'},
                            dataType: "json", //返回数据形式为json
                            success: function (result) {
-                               //debugger
-                               mc1 = result.mouths.length;
-                               for(var i=0;i<result.mouths.length;i++){
-                                   arr[i] = result.mouths[i].mouthDay;
+
+                               for(var i=0;i<result.days.length;i++){
+                                   arr[i] = result.days[i].day;
                                }
                            }
                        })
 
                        return arr;
 
-                   })(),
-                   crosshair: true,
+                   })()
+                   //crosshair: true,
                },
                yAxis: {
                    max: 100,
                    min: 0,
                    title: {
-                       text: ' '
+                       text: '结果(分)'
                    }
                },
                tooltip: {
-                   headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                   /*headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
                    '<td style="padding:0"><b>{point.y:.1f} Q</b></td></tr>',
                    footerFormat: '</table>',
                    shared: true,
                    shadow: false,
-                   useHTML: true,
+                   useHTML: true,*/
+                   crosshairs: true,
+                   headerFormat: '<b>{series.name}</b><br>',
+                   pointFormat: '分数:{point.y:.2f}分'
                },
                plotOptions: {
-                   series: {
-                       stickyTracking: false
+                   spline: {
+                       marker: {
+                           enabled: false
+                       }
                    }
                },
-               series: [{
-                   name: '楼道',
-                   data: (function () {
-                       var arr = [];
-                       $.ajax({
-                           type: "post",
-                           async: false, //同步执行
-                           url: "../../cem/index/layerqoeview",
-                           data: {accessLayer: '2000',serviceType:'0'},
-                           dataType: "json", //返回数据形式为json
-                           success: function (result) {
-                               if (result) {
-                                   for(var i=0;i<mc1;i++){
-                                       arr[i] = result.scoreCollects[i].score;
-                                   }
-                               }
-                           }
-                       })
-                       return arr;
-                   })()
-                   //data:[66,87,22,55,33]
-               },{
-                   name: '小区',
-                   data:(function () {
-                       var arr = [];
-                       $.ajax({
-                           type: "post",
-                           async: false, //同步执行
-                           url: "../../cem/index/layerqoeview",
-                           data: {accessLayer: '3000',serviceType:'0'},
-                           dataType: "json", //返回数据形式为json
-                           success: function (result) {
-                               if (result) {
-
-                                   for(var i=0;i<mc1;i++){
-                                       arr[i] = result.scoreCollects[i].score;
-                                   }
-                               }
-                           }
-                       })
-                       return arr;
-                   })()
-               }]
+               series:(function () {
+                   var arr = [];
+                   $.ajax({
+                       type: "post",
+                       async: false, //同步执行
+                       url: "../../cem/index/layerqoeview",
+                       data: {accessLayer: '2000',serviceType:'5'},
+                       dataType: "json", //返回数据形式为json
+                       success: function (result) {
+                           arr = result.scoreCollects;
+                       }
+                   })
+                   return arr;
+               })()
 
            });
        }
 
-        function second() {
-            document.getElementById("loading").style.display = "block";
-            var sel = $('#lev').find('option:selected').attr('lev');
-            var arr1 = [1,1,1,2,4];
-            var mc1=0;
-            $('#container5').highcharts({
+       // layerShow();
+        //Index_qoe();
 
-                chart: {
-                    type: 'line',
-                    backgroundColor: 'rgba(0,0,0,0)'
-                },
-                title: {
-                    text: '网络分层评测'
-                },
 
-                xAxis: {
-                    categories: (function(){
-                        var arr=[];
-                        $.ajax({
-                            type: "post",
-                            async: false, //同步执行
-                            url: "../../cem/index/queryrange",
-                            data : {serviceType:'2'},
-                            dataType: "json", //返回数据形式为json
-                            success: function (result) {
-                                //debugger
-                                mc1 = result.mouths.length;
-                                for(var i=0;i<result.mouths.length;i++){
-                                    arr[i] = result.mouths[i].mouthDay;
-                                }
-                            }
-                        })
+        // function second() {
+        //
+        //     $('#container5').highcharts({
+        //
+        //         chart: {
+        //             type: 'spline',
+        //             backgroundColor: 'rgba(0,0,0,0)'
+        //         },
+        //         title: {
+        //             text: '网络分层评测'
+        //         },
+        //
+        //         xAxis: {
+        //             type: 'datetime',
+        //             dateTimeLabelFormats: {
+        //                 day: '%Y-%m-%d',
+        //                 week: '%Y-%m-%d',
+        //                 month: '%Y-%m-%d',
+        //                 year: '%Y-%m-%d'
+        //             },
+        //             title: {
+        //                 text: 'Date'
+        //             },
+        //             categories: (function(){
+        //                 var arr=[];
+        //                 $.ajax({
+        //                     type: "post",
+        //                     async: false, //同步执行
+        //                     url: "../../cem/index/querydayrange",
+        //                     data : {serviceType:'1'},
+        //                     dataType: "json", //返回数据形式为json
+        //                     success: function (result) {
+        //
+        //                         for(var i=0;i<result.days.length;i++){
+        //                             arr[i] = result.days[i].day;
+        //                         }
+        //                     }
+        //                 })
+        //
+        //                 return arr;
+        //
+        //             })()
+        //             //crosshair: true
+        //         },
+        //         yAxis: {
+        //             max: 100,
+        //             min: 0,
+        //             title: {
+        //                 text: ' '
+        //             }
+        //         },
+        //         tooltip: {
+        //             /*headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        //            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+        //            '<td style="padding:0"><b>{point.y:.1f} Q</b></td></tr>',
+        //            footerFormat: '</table>',
+        //            shared: true,
+        //            shadow: false,
+        //            useHTML: true,*/
+        //             crosshairs: true,
+        //             headerFormat: '<b>{series.name}</b><br>',
+        //             pointFormat: '分数:{point.y:.2f}分'
+        //         },
+        //         plotOptions: {
+        //             spline: {
+        //                 marker: {
+        //                     enabled: false
+        //                 }
+        //
+        //             }
+        //         },
+        //         series: (function () {
+        //             var arr = [];
+        //             $.ajax({
+        //                 type: "post",
+        //                 async: false, //同步执行
+        //                 url: "../../cem/index/layerqoeview",
+        //                 data: {accessLayer: '2000',serviceType:'1'},
+        //                 dataType: "json", //返回数据形式为json
+        //                 success: function (result) {
+        //                     arr = result.scoreCollects;
+        //                 }
+        //             })
+        //             return arr;
+        //         })()
+        //     });
+        //     document.getElementById("loading").style.display = "none";
+        // }
+        //
+        // function showHttpLine() {
+        //
+        //     $('#container5').highcharts({
+        //
+        //         chart: {
+        //             type: 'spline',
+        //             backgroundColor: 'rgba(0,0,0,0)'
+        //         },
+        //         title: {
+        //             text: '网络分层评测'
+        //         },
+        //         credits:{
+        //             enabled: false // 禁用版权信息
+        //         },
+        //         xAxis: {
+        //             type: 'datetime',
+        //             dateTimeLabelFormats: {
+        //                 day: '%Y-%m-%d',
+        //                 week: '%Y-%m-%d',
+        //                 month: '%Y-%m-%d',
+        //                 year: '%Y-%m-%d'
+        //             },
+        //             title: {
+        //                 text: 'Date'
+        //             },
+        //             categories: (function(){
+        //                 var arr=[];
+        //                 $.ajax({
+        //                     type: "post",
+        //                     async: false, //同步执行
+        //                     url: "../../cem/index/querydayrange",
+        //                     data : {serviceType:'2'},
+        //                     dataType: "json", //返回数据形式为json
+        //                     success: function (result) {
+        //
+        //                         for(var i=0;i<result.days.length;i++){
+        //                             arr[i] = result.days[i].day;
+        //                         }
+        //                     }
+        //                 })
+        //
+        //                 return arr;
+        //
+        //             })()
+        //             //crosshair: true
+        //         },
+        //         yAxis: {
+        //             max: 100,
+        //             min: 0,
+        //             title: {
+        //                 text: '结果(分) '
+        //             }
+        //         },
+        //         tooltip: {
+        //             /*headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        //             pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+        //             '<td style="padding:0"><b>{point.y:.1f} Q</b></td></tr>',
+        //             footerFormat: '</table>',
+        //             shared: true,
+        //             useHTML: true*/
+        //             crosshairs: true,
+        //             headerFormat: '<b>{series.name}</b><br>',
+        //             pointFormat: '分数:{point.y:.2f}分'
+        //         },
+        //         plotOptions: {
+        //             spline: {
+        //                 marker: {
+        //                     enabled: false
+        //                 }
+        //             }
+        //
+        //         },
+        //         series: (function () {
+        //             var arr = [];
+        //             $.ajax({
+        //                 type: "post",
+        //                 async: false, //同步执行
+        //                 url: "../../cem/index/layerqoeview",
+        //                 data: {accessLayer: '2000',serviceType:'2'},
+        //                 dataType: "json", //返回数据形式为json
+        //                 success: function (result) {
+        //                     arr = result.scoreCollects;
+        //                 }
+        //             })
+        //             return arr;
+        //         })()
+        //     });
+        //     document.getElementById("loading").style.display = "none";
+        // }
+        //
+        // function showVedioLine() {
+        //
+        //     $('#container5').highcharts({
+        //
+        //         chart: {
+        //             type: 'spline',
+        //             backgroundColor: 'rgba(0,0,0,0)'
+        //         },
+        //         title: {
+        //             text: '网络分层评测'
+        //         },
+        //         credits:{
+        //             enabled: false // 禁用版权信息
+        //         },
+        //         xAxis: {
+        //             type: 'datetime',
+        //             dateTimeLabelFormats: {
+        //                 day: '%Y-%m-%d',
+        //                 week: '%Y-%m-%d',
+        //                 month: '%Y-%m-%d',
+        //                 year: '%Y-%m-%d'
+        //             },
+        //             title: {
+        //                 text: 'Date'
+        //             },
+        //             categories: (function(){
+        //                 var arr=[];
+        //                 $.ajax({
+        //                     type: "post",
+        //                     async: false, //同步执行
+        //                     url: "../../cem/index/querydayrange",
+        //                     data : {serviceType:'4'},
+        //                     dataType: "json", //返回数据形式为json
+        //                     success: function (result) {
+        //
+        //                         for(var i=0;i<result.days.length;i++){
+        //                             arr[i] = result.days[i].day;
+        //                         }
+        //                     }
+        //                 })
+        //
+        //                 return arr;
+        //
+        //             })(),
+        //             crosshair: true
+        //         },
+        //         yAxis: {
+        //             max: 100,
+        //             min: 0,
+        //             title: {
+        //                 text: ' '
+        //             }
+        //         },
+        //         tooltip: {
+        //             /*headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        //             pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+        //             '<td style="padding:0"><b>{point.y:.1f} Q</b></td></tr>',
+        //             footerFormat: '</table>',
+        //             shared: true,
+        //             useHTML: true*/
+        //             crosshairs: true,
+        //             headerFormat: '<b>{series.name}</b><br>',
+        //             pointFormat: '分数:{point.y:.2f}分'
+        //         },
+        //         plotOptions: {
+        //             spline: {
+        //                 marker: {
+        //                     enabled: false
+        //                 }
+        //             }
+        //         },
+        //         series: (function () {
+        //             var arr = [];
+        //             $.ajax({
+        //                 type: "post",
+        //                 async: false, //同步执行
+        //                 url: "../../cem/index/layerqoeview",
+        //                 data: {accessLayer: '2000',serviceType:'4'},
+        //                 dataType: "json", //返回数据形式为json
+        //                 success: function (result) {
+        //                     arr = result.scoreCollects;
+        //                 }
+        //             })
+        //             return arr;
+        //         })()
+        //     });
+        //     document.getElementById("loading").style.display = "none";
+        // }
+        //
+        // function showDownLine() {
+        //
+        //     $('#container5').highcharts({
+        //
+        //         chart: {
+        //             type: 'spline',
+        //             backgroundColor: 'rgba(0,0,0,0)'
+        //         },
+        //         title: {
+        //             text: '网络分层评测'
+        //         },
+        //         credits:{
+        //             enabled: false // 禁用版权信息
+        //         },
+        //         xAxis: {
+        //             type: 'datetime',
+        //             dateTimeLabelFormats: {
+        //                 day: '%Y-%m-%d',
+        //                 week: '%Y-%m-%d',
+        //                 month: '%Y-%m-%d',
+        //                 year: '%Y-%m-%d'
+        //             },
+        //             title: {
+        //                 text: 'Date'
+        //             },
+        //             categories: (function(){
+        //                 var arr=[];
+        //                 $.ajax({
+        //                     type: "post",
+        //                     async: false, //同步执行
+        //                     url: "../../cem/index/querydayrange",
+        //                     data : {serviceType:'3'},
+        //                     dataType: "json", //返回数据形式为json
+        //                     success: function (result) {
+        //
+        //                         for(var i=0;i<result.days.length;i++){
+        //                             arr[i] = result.days[i].day;
+        //                         }
+        //                     }
+        //                 })
+        //
+        //                 return arr;
+        //
+        //             })(),
+        //             crosshair: true
+        //         },
+        //         yAxis: {
+        //             max: 100,
+        //             min: 0,
+        //             title: {
+        //                 text: ' '
+        //             }
+        //         },
+        //         tooltip: {
+        //             /*headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        //             pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+        //             '<td style="padding:0"><b>{point.y:.1f} Q</b></td></tr>',
+        //             footerFormat: '</table>',
+        //             shared: true,
+        //             useHTML: true*/
+        //             crosshairs: true,
+        //             headerFormat: '<b>{series.name}</b><br>',
+        //             pointFormat: '分数:{point.y:.2f}分'
+        //         },
+        //         plotOptions: {
+        //             spline: {
+        //                 marker: {
+        //                     enabled: false
+        //                 }
+        //             }
+        //         },
+        //         series: (function () {
+        //             var arr = [];
+        //             $.ajax({
+        //                 type: "post",
+        //                 async: false, //同步执行
+        //                 url: "../../cem/index/layerqoeview",
+        //                 data: {accessLayer: '2000',serviceType:'3'},
+        //                 dataType: "json", //返回数据形式为json
+        //                 success: function (result) {
+        //                     arr = result.scoreCollects;
+        //                 }
+        //             })
+        //             return arr;
+        //         })()
+        //     });
+        //     document.getElementById("loading").style.display = "none";
+        // }
 
-                        return arr;
+        //
+        // function showGameLine() {
+        //
+        //     $('#container5').highcharts({
+        //
+        //         chart: {
+        //             type: 'spline',
+        //             backgroundColor: 'rgba(0,0,0,0)'
+        //         },
+        //         title: {
+        //             text: '网络游戏评测'
+        //         },
+        //
+        //         xAxis: {
+        //             type: 'datetime',
+        //             dateTimeLabelFormats: {
+        //                 day: '%Y-%m-%d',
+        //                 week: '%Y-%m-%d',
+        //                 month: '%Y-%m-%d',
+        //                 year: '%Y-%m-%d'
+        //             },
+        //             title: {
+        //                 text: 'Date'
+        //             },
+        //             categories: (function(){
+        //                 var arr=[];
+        //                 $.ajax({
+        //                     type: "post",
+        //                     async: false, //同步执行
+        //                     url: "../../cem/index/querydayrange",
+        //                     data : {serviceType:'5'},
+        //                     dataType: "json", //返回数据形式为json
+        //                     success: function (result) {
+        //
+        //                         for(var i=0;i<result.days.length;i++){
+        //                             arr[i] = result.days[i].day;
+        //                         }
+        //                     }
+        //                 })
+        //
+        //                 return arr;
+        //
+        //             })(),
+        //             crosshair: true
+        //         },
+        //         yAxis: {
+        //             max: 100,
+        //             min: 0,
+        //             title: {
+        //                 text: ' '
+        //             }
+        //         },
+        //         tooltip: {
+        //             /*headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        //             pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+        //             '<td style="padding:0"><b>{point.y:.1f} Q</b></td></tr>',
+        //             footerFormat: '</table>',
+        //             shared: true,
+        //             useHTML: true*/
+        //             crosshairs: true,
+        //             headerFormat: '<b>{series.name}</b><br>',
+        //             pointFormat: '分数:{point.y:.2f}分'
+        //         },
+        //         plotOptions: {
+        //             spline: {
+        //                 marker: {
+        //                     enabled: false
+        //                 }
+        //             }
+        //         },
+        //         series: (function () {
+        //             var arr = [];
+        //             $.ajax({
+        //                 type: "post",
+        //                 async: false, //同步执行
+        //                 url: "../../cem/index/layerqoeview",
+        //                 data: {accessLayer: '2000',serviceType:'5'},
+        //                 dataType: "json", //返回数据形式为json
+        //                 success: function (result) {
+        //                     arr = result.scoreCollects;
+        //                 }
+        //             })
+        //             return arr;
+        //         })()
+        //     });
+        //     document.getElementById("loading").style.display = "none";
+        // }
 
-                    })(),
-                    crosshair: true
-                },
-                yAxis: {
-                    max: 100,
-                    min: 0,
-                    title: {
-                        text: ' '
-                    }
-                },
-                tooltip: {
-                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                    '<td style="padding:0"><b>{point.y:.1f} Q</b></td></tr>',
-                    footerFormat: '</table>',
-                    shared: true,
-                    useHTML: true
-                },
-                plotOptions: {
-                    series: {
-                        stickyTracking: false
-                    },
-                    column: {
-                        pointPadding: 0.2,
-                        borderWidth: 0
-                    }
-                },
-                series: [{
-                    name: '楼道',
-                    data: (function () {
-                        var arr = [];
-                        $.ajax({
-                            type: "post",
-                            async: false, //同步执行
-                            url: "../../cem/index/layerqoeview",
-                            data: {accessLayer: '2000',serviceType:'1'},
-                            dataType: "json", //返回数据形式为json
-                            success: function (result) {
-                                if (result) {
-                                    for(var i=0;i<mc1;i++){
-                                        arr[i] = result.scoreCollects[i].score;
-                                    }
-                                }
-                            }
-                        })
-                        return arr;
-                    })()
-                },{
-                    name: '小区',
-                    data:(function () {
-                        var arr = [];
-                        $.ajax({
-                            type: "post",
-                            async: false, //同步执行
-                            url: "../../cem/index/layerqoeview",
-                            data: {accessLayer: '3000',serviceType:'1'},
-                            dataType: "json", //返回数据形式为json
-                            success: function (result) {
-                                if (result) {
-
-                                    for(var i=0;i<mc1;i++){
-                                        arr[i] = result.scoreCollects[i].score;
-                                    }
-                                }
-                            }
-                        })
-                        return arr;
-                    })()
-                }]
-            });
-            document.getElementById("loading").style.display = "none";
-        }
-
-        function showHttpLine() {
-            document.getElementById("loading").style.display = "block";
-            var sel = $('#lev').find('option:selected').attr('lev');
-            var arr1 = [1,1,1,2,4];
-            var mc1=0;
-            $('#container5').highcharts({
-
-                chart: {
-                    type: 'line',
-                    backgroundColor: 'rgba(0,0,0,0)'
-                },
-                title: {
-                    text: '网络分层评测'
-                },
-
-                xAxis: {
-                    categories: (function(){
-                        var arr=[];
-                        $.ajax({
-                            type: "post",
-                            async: false, //同步执行
-                            url: "../../cem/index/queryrange",
-                            data : {serviceType:'2'},
-                            dataType: "json", //返回数据形式为json
-                            success: function (result) {
-                                //debugger
-                                mc1 = result.mouths.length;
-                                for(var i=0;i<result.mouths.length;i++){
-                                    arr[i] = result.mouths[i].mouthDay;
-                                }
-                            }
-                        })
-
-                        return arr;
-
-                    })(),
-                    crosshair: true
-                },
-                yAxis: {
-                    max: 100,
-                    min: 0,
-                    title: {
-                        text: ' '
-                    }
-                },
-                tooltip: {
-                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                    '<td style="padding:0"><b>{point.y:.1f} Q</b></td></tr>',
-                    footerFormat: '</table>',
-                    shared: true,
-                    useHTML: true
-                },
-                plotOptions: {
-                    series: {
-                        stickyTracking: false
-                    },
-                    column: {
-                        pointPadding: 0.2,
-                        borderWidth: 0
-                    }
-                },
-                series: [{
-                    name: '楼道',
-                    data: (function () {
-                        var arr = [];
-                        $.ajax({
-                            type: "post",
-                            async: false, //同步执行
-                            url: "../../cem/index/layerqoeview",
-                            data: {accessLayer: '2000',serviceType:'2'},
-                            dataType: "json", //返回数据形式为json
-                            success: function (result) {
-                                if (result) {
-                                    for(var i=0;i<mc1;i++){
-                                        arr[i] = result.scoreCollects[i].score;
-                                    }
-                                }
-                            }
-                        })
-                        return arr;
-                    })()
-                },{
-                    name: '小区',
-                    data:(function () {
-                        var arr = [];
-                        $.ajax({
-                            type: "post",
-                            async: false, //同步执行
-                            url: "../../cem/index/layerqoeview",
-                            data: {accessLayer: '3000',serviceType:'2'},
-                            dataType: "json", //返回数据形式为json
-                            success: function (result) {
-                                if (result) {
-
-                                    for(var i=0;i<mc1;i++){
-                                        arr[i] = result.scoreCollects[i].score;
-                                    }
-                                }
-                            }
-                        })
-                        return arr;
-                    })()
-                }]
-            });
-            document.getElementById("loading").style.display = "none";
-        }
-
-        function showVedioLine() {
-            document.getElementById("loading").style.display = "block";
-            var sel = $('#lev').find('option:selected').attr('lev');
-            var arr1 = [1,1,1,2,4];
-            var mc1=0;
-            $('#container5').highcharts({
-
-                chart: {
-                    type: 'line',
-                    backgroundColor: 'rgba(0,0,0,0)'
-                },
-                title: {
-                    text: '网络分层评测'
-                },
-
-                xAxis: {
-                    categories: (function(){
-                        var arr=[];
-                        $.ajax({
-                            type: "post",
-                            async: false, //同步执行
-                            url: "../../cem/index/queryrange",
-                            data : {serviceType:'2'},
-                            dataType: "json", //返回数据形式为json
-                            success: function (result) {
-                                //debugger
-                                mc1 = result.mouths.length;
-                                for(var i=0;i<result.mouths.length;i++){
-                                    arr[i] = result.mouths[i].mouthDay;
-                                }
-                            }
-                        })
-
-                        return arr;
-
-                    })(),
-                    crosshair: true
-                },
-                yAxis: {
-                    max: 100,
-                    min: 0,
-                    title: {
-                        text: ' '
-                    }
-                },
-                tooltip: {
-                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                    '<td style="padding:0"><b>{point.y:.1f} Q</b></td></tr>',
-                    footerFormat: '</table>',
-                    shared: true,
-                    useHTML: true
-                },
-                plotOptions: {
-                    series: {
-                        stickyTracking: false
-                    },
-                    column: {
-                        pointPadding: 0.2,
-                        borderWidth: 0
-                    }
-                },
-                series: [{
-                    name: '楼道',
-                    data: (function () {
-                        var arr = [];
-                        $.ajax({
-                            type: "post",
-                            async: false, //同步执行
-                            url: "../../cem/index/layerqoeview",
-                            data: {accessLayer: '2000',serviceType:'3'},
-                            dataType: "json", //返回数据形式为json
-                            success: function (result) {
-                                if (result) {
-                                    for(var i=0;i<mc1;i++){
-                                        arr[i] = result.scoreCollects[i].score;
-                                    }
-                                }
-                            }
-                        })
-                        return arr;
-                    })()
-                },{
-                    name: '小区',
-                    data:(function () {
-                        var arr = [];
-                        $.ajax({
-                            type: "post",
-                            async: false, //同步执行
-                            url: "../../cem/index/layerqoeview",
-                            data: {accessLayer: '3000',serviceType:'3'},
-                            dataType: "json", //返回数据形式为json
-                            success: function (result) {
-                                if (result) {
-
-                                    for(var i=0;i<mc1;i++){
-                                        arr[i] = result.scoreCollects[i].score;
-                                    }
-                                }
-                            }
-                        })
-                        return arr;
-                    })()
-                }]
-            });
-            document.getElementById("loading").style.display = "none";
-        }
-
-        function showDownLine() {
-            document.getElementById("loading").style.display = "block";
-            var sel = $('#lev').find('option:selected').attr('lev');
-            var arr1 = [1,1,1,2,4];
-            var mc1=0;
-            $('#container5').highcharts({
-
-                chart: {
-                    type: 'line',
-                    backgroundColor: 'rgba(0,0,0,0)'
-                },
-                title: {
-                    text: '网络分层评测'
-                },
-
-                xAxis: {
-                    categories: (function(){
-                        var arr=[];
-                        $.ajax({
-                            type: "post",
-                            async: false, //同步执行
-                            url: "../../cem/index/queryrange",
-                            data : {serviceType:'2'},
-                            dataType: "json", //返回数据形式为json
-                            success: function (result) {
-                                //debugger
-                                mc1 = result.mouths.length;
-                                for(var i=0;i<result.mouths.length;i++){
-                                    arr[i] = result.mouths[i].mouthDay;
-                                }
-                            }
-                        })
-
-                        return arr;
-
-                    })(),
-                    crosshair: true
-                },
-                yAxis: {
-                    max: 100,
-                    min: 0,
-                    title: {
-                        text: ' '
-                    }
-                },
-                tooltip: {
-                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                    '<td style="padding:0"><b>{point.y:.1f} Q</b></td></tr>',
-                    footerFormat: '</table>',
-                    shared: true,
-                    useHTML: true
-                },
-                plotOptions: {
-                    series: {
-                        stickyTracking: false
-                    },
-                    column: {
-                        pointPadding: 0.2,
-                        borderWidth: 0
-                    }
-                },
-                series: [{
-                    name: '楼道',
-                    data: (function () {
-                        var arr = [];
-                        $.ajax({
-                            type: "post",
-                            async: false, //同步执行
-                            url: "../../cem/index/layerqoeview",
-                            data: {accessLayer: '2000',serviceType:'4'},
-                            dataType: "json", //返回数据形式为json
-                            success: function (result) {
-                                if (result) {
-                                    for(var i=0;i<mc1;i++){
-                                        arr[i] = result.scoreCollects[i].score;
-                                    }
-                                }
-                            }
-                        })
-                        return arr;
-                    })()
-                },{
-                    name: '小区',
-                    data:(function () {
-                        var arr = [];
-                        $.ajax({
-                            type: "post",
-                            async: false, //同步执行
-                            url: "../../cem/index/layerqoeview",
-                            data: {accessLayer: '3000',serviceType:'4'},
-                            dataType: "json", //返回数据形式为json
-                            success: function (result) {
-                                if (result) {
-
-                                    for(var i=0;i<mc1;i++){
-                                        arr[i] = result.scoreCollects[i].score;
-                                    }
-                                }
-                            }
-                        })
-                        return arr;
-                    })()
-                }]
-            });
-            document.getElementById("loading").style.display = "none";
-        }
-
-        function showGameLine() {
-            document.getElementById("loading").style.display = "block";
-            var sel = $('#lev').find('option:selected').attr('lev');
-            var arr1 = [1,1,1,2,4];
-            var mc1=0;
-            $('#container5').highcharts({
-
-                chart: {
-                    type: 'line',
-                    backgroundColor: 'rgba(0,0,0,0)'
-                },
-                title: {
-                    text: '网络分层评测'
-                },
-
-                xAxis: {
-                    categories: (function(){
-                        var arr=[];
-                        $.ajax({
-                            type: "post",
-                            async: false, //同步执行
-                            url: "../../cem/index/queryrange",
-                            data : {serviceType:'2'},
-                            dataType: "json", //返回数据形式为json
-                            success: function (result) {
-                                //debugger
-                                mc1 = result.mouths.length;
-                                for(var i=0;i<result.mouths.length;i++){
-                                    arr[i] = result.mouths[i].mouthDay;
-                                }
-                            }
-                        })
-
-                        return arr;
-
-                    })(),
-                    crosshair: true
-                },
-                yAxis: {
-                    max: 100,
-                    min: 0,
-                    title: {
-                        text: ' '
-                    }
-                },
-                tooltip: {
-                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                    '<td style="padding:0"><b>{point.y:.1f} Q</b></td></tr>',
-                    footerFormat: '</table>',
-                    shared: true,
-                    useHTML: true
-                },
-                plotOptions: {
-                    series: {
-                        stickyTracking: false
-                    },
-                    column: {
-                        pointPadding: 0.2,
-                        borderWidth: 0
-                    }
-                },
-                series: [{
-                    name: '楼道',
-                    data: (function () {
-                        var arr = [];
-                        $.ajax({
-                            type: "post",
-                            async: false, //同步执行
-                            url: "../../cem/index/layerqoeview",
-                            data: {accessLayer: '2000',serviceType:'5'},
-                            dataType: "json", //返回数据形式为json
-                            success: function (result) {
-                                if (result) {
-                                    for(var i=0;i<mc1;i++){
-                                        arr[i] = result.scoreCollects[i].score;
-                                    }
-                                }
-                            }
-                        })
-                        return arr;
-                    })()
-                },{
-                    name: '小区',
-                    data:(function () {
-                        var arr = [];
-                        $.ajax({
-                            type: "post",
-                            async: false, //同步执行
-                            url: "../../cem/index/layerqoeview",
-                            data: {accessLayer: '3000',serviceType:'5'},
-                            dataType: "json", //返回数据形式为json
-                            success: function (result) {
-                                if (result) {
-
-                                    for(var i=0;i<mc1;i++){
-                                        arr[i] = result.scoreCollects[i].score;
-                                    }
-                                }
-                            }
-                        })
-                        return arr;
-                    })()
-                }]
-            });
-            document.getElementById("loading").style.display = "none";
-        }
 
         $('#lev').change(function () {
             var Top_name = $('#lev').find('option:selected').attr('lev');
             if(Top_name=="ping_line"){
-                Index_qoe();
+                connection_layer_show(1);
             }
 
             if(Top_name=="sla_line"){
-                second();
+                connection_layer_show(2);
             }
             if(Top_name=="http_line"){
-                showHttpLine();
-            }
-            if(Top_name=="video_line"){
-                showVedioLine();
+                connection_layer_show(3);
             }
             if(Top_name=="down_line"){
-                showDownLine();
+                connection_layer_show(4);
+            }
+            if(Top_name=="video_line"){
+                connection_layer_show(5);
             }
             if(Top_name=="game_line"){
-                showGameLine();
+                connection_layer_show(6);
             }
-            console.log(Top_name);
         });
     });
+
+
+
+    var options = {
+        chart: {
+            type: 'spline',
+        },
+        title: {
+            text: ''
+        },
+        xAxis: {
+            type: 'datetime',
+            dateTimeLabelFormats: {
+                day: '%Y-%m-%d',
+                week: '%Y-%m-%d',
+                month: '%Y-%m-%d',
+                year: '%Y-%m-%d'
+            },
+        },
+        yAxis: {
+            title: {
+                text: '结果(分)'
+            },
+            min: 0,
+            max: 100
+        },
+
+        tooltip: {
+            crosshairs: true,
+            headerFormat: '<b>{series.name}</b><br>',
+            pointFormat: '日期:{point.x:%Y-%m-%d %H:00:00} 分数:{point.y:.2f}分',
+        },
+        plotOptions: {
+            spline: {
+                marker: {
+                    enabled: false
+                }
+            },
+            series: {
+                stickyTracking: false,
+            }
+        },
+        series: []
+    };
+
+    function connection_layer_show(stype) {
+        new Vue({
+            el: '#container5',
+
+            mounted:function () {
+                $.ajax({
+                    type: "POST",
+                    url: "../../cem/collect/layerqoeview",
+                    cache: false,  //禁用缓存
+                    data: {serviceType:stype},  //传入组装的参数
+                    dataType: "json",
+                    success: function (result) {
+                        score_list=result.scoreCollects;
+                        for (let i = 0; i < options.series.length; i++) {
+                            options.series[i].data = [];
+                        }
+                        for (let i = 0; i < options.series.length; i++) {
+                            for (let j = 0; j < score_list.length; j++) {
+                                if (parseInt(layers.get(options.series[i].name)) == parseInt(score_list[j].accessLayer)) {
+                                    let date_token = score_list[j].scoreDate.split("-");
+                                    let year = parseInt(date_token[0]);
+                                    let month = parseInt(date_token[1]) - 1;
+                                    let day = parseInt(date_token[2]);
+                                    //let hour = parseInt(score_list[j].recordTime);
+                                    if (isNaN(year) || isNaN(month) || isNaN(day)) {
+                                        continue;
+                                    }
+                                    options.series[i].data[j] = [Date.UTC(year, month, day), score_list[j].score];
+                                    options.series[i].data.sort(compare("0"));
+                                }
+
+                            }
+
+                        }
+                        var chart = new Highcharts.Chart('container5', options);
+
+                    }
+                })
+
+                $.ajax({
+                    type: "POST", /*GET会乱码*/
+                    url: "../../cem/layer/searchlist",
+                    cache: false,  //禁用缓存
+                    dataType: "json",
+                    success: function (result) {
+                        for (let i = 0; i < result.page.list.length; i++) {
+                            // layers.set(result.page.list[i].layerTag, result.page.list[i].layerName);
+                            layers.set(result.page.list[i].layerName, result.page.list[i].layerTag);
+                            layerNames.set(result.page.list[i].layerTag, result.page.list[i].layerName);
+                            let newlayer = {};
+                            newlayer.name = result.page.list[i].layerName;
+                            newlayer.data = [];
+                            options.series[i] = newlayer;
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    connection_layer_show(1);
+
+    function compare(property) {
+        return function (obj1, obj2) {
+            let value1 = obj1[property];
+            let value2 = obj2[property];
+            return value1 - value2;     // 升序
+        }
+    }

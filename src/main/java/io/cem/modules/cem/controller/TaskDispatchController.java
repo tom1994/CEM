@@ -122,7 +122,7 @@ public class TaskDispatchController {
         try {
             InputStream in = new BufferedInputStream(new FileInputStream(PropertiesUtils.class.getClassLoader().getResource("cem.properties").getPath()));
             prop.load(in);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new RRException("配置文件配置有误，请重新配置");
         }
         if (taskDispatch.getProbeGroupId() != null) {
@@ -137,7 +137,7 @@ public class TaskDispatchController {
         } else {
             taskDispatchService.save(taskDispatch);
         }
-        BypassHttps.sendRequestIgnoreSSL("POST", prop.getProperty("socketAddress") +"/tasks/"+ taskDispatch.getTaskId());
+        BypassHttps.sendRequestIgnoreSSL("POST", prop.getProperty("socketAddress") + "/web/v1/tasks/" + taskDispatch.getTaskId());
 
         return R.ok();
     }
@@ -159,7 +159,7 @@ public class TaskDispatchController {
         try {
             InputStream in = new BufferedInputStream(new FileInputStream(PropertiesUtils.class.getClassLoader().getResource("cem.properties").getPath()));
             prop.load(in);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new RRException("配置文件配置有误，请重新配置");
         }
         int probeId = Integer.parseInt(map.get("probeId").toString());
@@ -170,11 +170,10 @@ public class TaskDispatchController {
         TargetEntity targetEntity = targetService.queryObject(Integer.parseInt(map.get("target").toString()));
         targetjson.put("target_value", targetEntity.getValue());
         targetjson.put("target_id", map.get("target"));
-//定义用于存储的任务Entity
+        //定义用于存储的任务Entity
         TaskDispatchEntity taskDispatch = new TaskDispatchEntity();
         taskDispatch.setIsOndemand(1);
         taskDispatch.setStatus(0);
-//        taskDispatch.setProbePort("port1");
         taskDispatch.setTarget("[" + JSON.toJSONString(targetjson) + "]");
         int size = probeList.size();
         int ping[][] = new int[5][size];
@@ -248,42 +247,35 @@ public class TaskDispatchController {
             }
         }
         /*调用接口通知探针*/
-        //TODO:增加下发失败的提醒
         if (map.containsKey("ping")) {
-            int[] pingState = new int[5];
             for (int i = 1; i < 6; i++) {
-                pingState[i - 1] = BypassHttps.sendRequestIgnoreSSL("POST", prop.getProperty("socketAddress") +"/tasks/" + i);
+                BypassHttps.sendRequestIgnoreSSL("POST", prop.getProperty("socketAddress") + "/web/v1/tasks/" + i);
             }
         }
         if (map.containsKey("sla")) {
-            int[] slaState = new int[6];
             for (int i = 10; i < 16; i++) {
-                slaState[i - 10] = BypassHttps.sendRequestIgnoreSSL("POST", prop.getProperty("socketAddress") +"/tasks/"+ i);
+                BypassHttps.sendRequestIgnoreSSL("POST", prop.getProperty("socketAddress") + "/web/v1/tasks/" + i);
             }
         }
         if (map.containsKey("web")) {
-            int webState = BypassHttps.sendRequestIgnoreSSL("POST", prop.getProperty("socketAddress") +"/tasks/" + 20);
+            BypassHttps.sendRequestIgnoreSSL("POST", prop.getProperty("socketAddress") + "/web/v1/tasks/" + 20);
         }
         if (map.containsKey("download")) {
-            int[] downloadState = new int[3];
             for (int i = 30; i < 33; i++) {
-                downloadState[i - 30] = BypassHttps.sendRequestIgnoreSSL("POST", prop.getProperty("socketAddress") +"/tasks/"+ i);
+                BypassHttps.sendRequestIgnoreSSL("POST", prop.getProperty("socketAddress") + "/web/v1/tasks/" + i);
             }
         }
         if (map.containsKey("video")) {
-            int videoState = BypassHttps.sendRequestIgnoreSSL("POST", prop.getProperty("socketAddress") +"/tasks/"+ 40);
+            int videoState = BypassHttps.sendRequestIgnoreSSL("POST", prop.getProperty("socketAddress") + "/web/v1/tasks/" + 40);
         }
         if (map.containsKey("game")) {
-            int gameState = BypassHttps.sendRequestIgnoreSSL("POST", prop.getProperty("socketAddress") +"/tasks/" + 50);
+            int gameState = BypassHttps.sendRequestIgnoreSSL("POST", prop.getProperty("socketAddress") + "/web/v1/tasks/" + 50);
         }
 
         return R.ok().put("taskdispatch", dispatch);
-
-       
-
     }
 
-    /*@SysLog("下发任务")
+/*    //增加校验任务是否重复的方法，未完成，已经弃用
     @RequestMapping("/saveAll")
     @RequiresPermissions("taskdispatch:save")
     public R saveAll(@RequestBody TaskDispatchEntity taskDispatch) {
@@ -391,7 +383,7 @@ public class TaskDispatchController {
         try {
             InputStream in = new BufferedInputStream(new FileInputStream(PropertiesUtils.class.getClassLoader().getResource("cem.properties").getPath()));
             prop.load(in);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new RRException("配置文件配置有误，请重新配置");
         }
         if (taskDispatch.getTargetGroupIds() != null) {
@@ -450,14 +442,16 @@ public class TaskDispatchController {
             return R.error(111, "探针或探针组格式错误");
         }
         try {
-            int result = BypassHttps.sendRequestIgnoreSSL("POST", prop.getProperty("socketAddress") +"/tasks/"+ taskDispatch.getTaskId());
-            if(result == 200){
+            int result = BypassHttps.sendRequestIgnoreSSL("POST", prop.getProperty("socketAddress") + "/web/v1/tasks/" + taskDispatch.getTaskId());
+            if (result == 200) {
                 return R.ok();
-            }else{
+            } else if (result == 401) {
+                return R.error(404, "token失效，系统已重新获取，请重试");
+            } else {
                 taskDispatchService.cancelSave(taskDispatch.getTaskId());
-                return R.error(404,"任务下发失败，错误代码"+result);
+                return R.error(404, "任务下发失败");
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             return R.error("网络故障，下发失败");
         }
     }
@@ -489,14 +483,16 @@ public class TaskDispatchController {
         try {
             InputStream in = new BufferedInputStream(new FileInputStream(PropertiesUtils.class.getClassLoader().getResource("cem.properties").getPath()));
             prop.load(in);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new RRException("配置文件配置有误，请重新配置");
         }
-        int result = BypassHttps.sendRequestIgnoreSSL("DELETE", prop.getProperty("socketAddress") +"/tasks/"+ id);
+        int result = BypassHttps.sendRequestIgnoreSSL("DELETE", prop.getProperty("socketAddress") + "/web/v1/tasks/" + id);
         if (result == 200) {
             return R.ok();
+        } else if (result == 401) {
+            return R.error(404, "token失效，系统已重新获取，请重试");
         } else {
-            return R.error(404, "取消任务失败,错误代码" + result);
+            return R.error(404, "取消任务失败");
         }
     }
 }

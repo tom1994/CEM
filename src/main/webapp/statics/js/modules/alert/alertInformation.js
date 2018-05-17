@@ -180,7 +180,7 @@ var search_service = new Vue({
     // 在 `methods` 对象中定义方法
     methods: {
         testagentListsearch: function () {
-             
+              
             var searchJson = getFormJson($('#probesearch'));
 
             if((searchJson.startDate)>(searchJson.terminalDate)){
@@ -465,8 +465,9 @@ var alerttable = new Vue({
                             info.map((e,index)=>{
                                 Object.assign(newObj,e);
                             })
-                            //console.log(newObj,item.trigger)
+                            // console.log(newObj,item.trigger)
                            if(st.get(item.type)=='阈值告警'){
+                                 
                                if(item.serviceType==1||item.serviceType==2|| item.serviceType==3 ||item.serviceType==4||item.serviceType==5){
                                    var b="",c="",d="" ,e='',f='',g='',h='';
 
@@ -503,7 +504,7 @@ var alerttable = new Vue({
                                        ' white-space:nowrap; word-wrap:break-word;"<span title="'+tool+'">';
                                    var a1='</span></div>';
                                    var total=a+b+' '+c+' '+d+' '+e+' '+f+' '+g+' '+h+a1;
-                                   row.push(total.substr(0,24));
+                                   row.push(total);
 
 
                                } else if(item.serviceType==10||item.serviceType==11){
@@ -592,7 +593,6 @@ var alerttable = new Vue({
                                        ' white-space:nowrap; word-wrap:break-word;"<span title="'+tool+'">';
                                    var a1='</span></div>';
                                    var total=a+b+'  '+b1+' '+b2+' '+c+' '+c1+' '+c2+' '+d+'  '+d1+' '+d2+' '+e+' '+e1+' '+e2+' '+f+' '+f1+' '+f2+' '+g+' '+g1+' '+g2+'  '+h+a1;
-
                                    row.push(total);
 
                                }else if (item.serviceType==12){
@@ -858,17 +858,16 @@ var alerttable = new Vue({
 
                                    }
                                    if(newObj.packet_delay){
-                                       c="网络时延(ms)："+newObj.packet_delay.toFixed(2)+'(ms)'
+                                       c="网络时延(ms)："+newObj.packet_delay.toFixed(2)
 
                                    }
 
                                    if(newObj.packet_jitter){
-                                       d="网络抖动(ms)："+newObj.packet_jitter.toFixed(2)+'(ms)'
+                                       d="网络抖动(ms)："+newObj.packet_jitter.toFixed(2)
 
                                    }
                                    if(newObj.loss_rate){
-                                       e="丢包率(%)："+newObj.loss_rate.toFixed(2) + ''
-
+                                       e="丢包率(%)："+newObj.loss_rate.toFixed(2)
                                    }
                                    var tool=b+' '+c+' '+d+' '+e;
                                    var a='<div style="max-width: 200px;!important;overflow: visible;' +

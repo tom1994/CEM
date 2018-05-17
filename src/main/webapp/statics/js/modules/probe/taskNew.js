@@ -106,6 +106,7 @@ var task_handle = new Vue({
 function view_this(obj) {     /*监听详情触发事件*/
     $('#title').hide();
     $('#title2').show();
+    $('.Range').css('visibility','hidden');
     var update_data_id = parseInt(obj.id);
     status = 0;
     $.ajax({
@@ -135,7 +136,6 @@ function get_viewModal(update_data_id) {
         dataType: "json",
         contentType: "application/json", /*必须要,不可少*/
         success: function (result) {
-
             var param = JSON.parse(result.task.parameter);
             servicetypeid = result.task.serviceType;
             var paramforms = $('#' + stid.get(servicetypeid) + '_param' + ' .form-control');
@@ -899,6 +899,7 @@ var taskform_data = new Vue({
     methods: {
         submit: function () {
             var oDate = new Date();
+            $('.Range').css('visibility','visible');
             var tasknewJson = getFormJson($('#taskform_data'));//获取到对应的数据
             // console.log(tasknewJson)
             var paramnewJson = getFormJson2($('#' + stid.get(parseInt(tasknewJson.serviceType)) + '_param'));
