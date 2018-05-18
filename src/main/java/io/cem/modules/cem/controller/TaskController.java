@@ -130,8 +130,9 @@ public class TaskController {
                 result = BypassHttps.sendRequestIgnoreSSL("DELETE", prop.getProperty("socketAddress") +"/web/v1/tasks/" + taskDispatchEntity.get(i).getId());
                 if(result ==401){
                     return R.error(404,"token失效，系统已重新获取，请重试");
+                }else if(result != 200){
+                    flag = 1;
                 }
-                flag += result;
             }
             }catch (Exception e){
                 return R.error(404, "删除失败");
