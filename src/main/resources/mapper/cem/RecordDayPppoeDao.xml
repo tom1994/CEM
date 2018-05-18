@@ -61,7 +61,9 @@
 			`delay`, 
 			`drop_rate`, 
 			`success_rate`, 
-			`remark`
+			`remark`,
+			`fail`,
+			`total`
 		)
 		values
 		(
@@ -78,7 +80,9 @@
 			#{delay}, 
 			#{dropRate}, 
 			#{successRate}, 
-			#{remark}
+			#{remark},
+			#{fail},
+			#{total}
 		)
 	</insert>
 	 

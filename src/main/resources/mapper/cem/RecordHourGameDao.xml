@@ -546,7 +546,9 @@
 			`packet_delay`, 
 			`packet_jitter`, 
 			`loss_rate`, 
-			`remark`
+			`remark`,
+			`fail`,
+			`total`
 		)
 		values
 		(
@@ -565,7 +567,9 @@
 			#{packetDelay}, 
 			#{packetJitter}, 
 			#{lossRate}, 
-			#{remark}
+			#{remark},
+			#{fail},
+			#{total}
 		)
 	</insert>
 
