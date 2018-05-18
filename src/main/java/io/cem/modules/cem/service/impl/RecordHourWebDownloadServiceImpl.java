@@ -624,7 +624,7 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 				scoreBase.setWebDownloadConnDelay(webDownload.get(i).getWebDownloadConnDelay());
 				scoreBase.setWebDownloadHeadbyteDelay(webDownload.get(i).getWebDownloadHeadbyteDelay());
 				scoreBase.setWebDownloadDownloadRate(webDownload.get(i).getWebDownloadDownloadRate());
-				scoreBase.setScore((webDownload.get(i).getScore()) * (webDownload.get(i).getBase()));
+				scoreBase.setScore(webDownload.get(i).getScore());
 				scoreBase.setBase(webDownload.get(i).getBase());
 				Map<String,ScoreBaseEntity> webdownload = new HashMap<>();
 				webdownload.put("webDownload",scoreBase);
@@ -724,7 +724,7 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 				scoreBase.setWebDownloadConnDelay(webDownload.get(i).getWebDownloadConnDelay());
 				scoreBase.setWebDownloadHeadbyteDelay(webDownload.get(i).getWebDownloadHeadbyteDelay());
 				scoreBase.setWebDownloadDownloadRate(webDownload.get(i).getWebDownloadDownloadRate());
-				scoreBase.setScore((webDownload.get(i).getScore()) * (webDownload.get(i).getBase()));
+				scoreBase.setScore(webDownload.get(i).getScore());
 				scoreBase.setBase(webDownload.get(i).getBase());
 				Map<String,ScoreBaseEntity> webdownload = new HashMap<>();
 				webdownload.put("webDownload",scoreBase);
@@ -830,7 +830,7 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 				scoreBase.setWebDownloadConnDelay(webDownload.get(i).getWebDownloadConnDelay());
 				scoreBase.setWebDownloadHeadbyteDelay(webDownload.get(i).getWebDownloadHeadbyteDelay());
 				scoreBase.setWebDownloadDownloadRate(webDownload.get(i).getWebDownloadDownloadRate());
-				scoreBase.setScore((webDownload.get(i).getScore()) * (webDownload.get(i).getBase()));
+				scoreBase.setScore(webDownload.get(i).getScore());
 				scoreBase.setBase(webDownload.get(i).getBase());
 				Map<String,ScoreBaseEntity> webdownload = new HashMap<>();
 				webdownload.put("webDownload",scoreBase);
@@ -933,7 +933,7 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 				scoreBase.setWebDownloadConnDelay(webDownload.get(i).getWebDownloadConnDelay());
 				scoreBase.setWebDownloadHeadbyteDelay(webDownload.get(i).getWebDownloadHeadbyteDelay());
 				scoreBase.setWebDownloadDownloadRate(webDownload.get(i).getWebDownloadDownloadRate());
-				scoreBase.setScore((webDownload.get(i).getScore()) * (webDownload.get(i).getBase()));
+				scoreBase.setScore(webDownload.get(i).getScore());
 				scoreBase.setBase(webDownload.get(i).getBase());
 				Map<String,ScoreBaseEntity> webdownload = new HashMap<>();
 				webdownload.put("webDownload",scoreBase);
@@ -1033,7 +1033,7 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 				scoreBase.setWebDownloadConnDelay(webDownload.get(i).getWebDownloadConnDelay());
 				scoreBase.setWebDownloadHeadbyteDelay(webDownload.get(i).getWebDownloadHeadbyteDelay());
 				scoreBase.setWebDownloadDownloadRate(webDownload.get(i).getWebDownloadDownloadRate());
-				scoreBase.setScore((webDownload.get(i).getScore()) * (webDownload.get(i).getBase()));
+				scoreBase.setScore(webDownload.get(i).getScore());
 				scoreBase.setBase(webDownload.get(i).getBase());
 				Map<String,ScoreBaseEntity> webdownload = new HashMap<>();
 				webdownload.put("webDownload",scoreBase);

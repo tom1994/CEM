@@ -70,7 +70,9 @@
 			`jitter_std`, 
 			`jitter_var`, 
 			`loss_rate`, 
-			`remark`
+			`remark`,
+			`fail`,
+			`total`
 		)
 		values
 		(
@@ -91,7 +93,9 @@
 			#{jitterStd}, 
 			#{jitterVar}, 
 			#{lossRate}, 
-			#{remark}
+			#{remark},
+			#{fail},
+			#{total}
 		)
 	</insert>
 	 

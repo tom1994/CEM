@@ -79,7 +79,9 @@
 			`total_buffer_delay`, 
 			`download_rate`, 
 			`buffer_time`, 
-			`remark`
+			`remark`,
+			`fail`,
+			`total`
 		)
 		values
 		(
@@ -105,7 +107,9 @@
 			#{totalBufferDelay}, 
 			#{downloadRate}, 
 			#{bufferTime}, 
-			#{remark}
+			#{remark},
+			#{fail},
+			#{total}
 		)
 	</insert>
 	 

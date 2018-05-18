@@ -27,15 +27,18 @@ import java.util.Map;
 public class TargetController {
 	@Autowired
 	private TargetService targetService;
-	
+
 	/**
-	 * 列表
+	 * 目标地址列表
+	 * @param targetdata
+	 * @param page
+	 * @param limit
+	 * @return R
+	 * @throws Exception
 	 */
 	@RequestMapping("/list")
 	@RequiresPermissions("target:list")
 	public R list(String targetdata, Integer page, Integer limit) throws Exception {
-		//查询列表数据
-
 		Map<String, Object> map = new HashMap<>();
 		JSONObject targetdata_jsonobject = JSONObject.parseObject(targetdata);
 		try {
@@ -55,14 +58,15 @@ public class TargetController {
 			total = targetService.queryTotal(map);
 		}
 		List<TargetEntity> targetList = targetService.queryTgByTList(map);
-		//int total = targetService.queryTotal(map);
 		PageUtils pageUtil = new PageUtils(targetList, total, limit, page);
 		return R.ok().put("page", pageUtil);
 	}
-	
-	
+
+
 	/**
-	 * 信息
+	 * 目标地址详情
+	 * @param id
+	 * @return R
 	 */
 	@RequestMapping("/info/{id}")
 	@RequiresPermissions("target:info")
@@ -73,7 +77,9 @@ public class TargetController {
 	}
 
 	/**
-	 * 按条件显示目标地址
+	 * 按业务类型显示目标地址
+	 * @param serviceId
+	 * @return R
 	 */
 	@RequestMapping("/infobat/{id}")
 	@RequiresPermissions("target:infobat")
@@ -81,11 +87,14 @@ public class TargetController {
 		List<TargetEntity> target = targetService.infoBatch(serviceId);
 		System.out.println(target);
 		return R.ok().put("target", target);
-
-		//return R.ok();
 	}
 
 
+	/**
+	 * 按照子业务类型筛选地址
+	 * @param spId
+	 * @return R
+	 */
 	@RequestMapping("/infoList/{spid}")
 	@RequiresPermissions("target:info")
 	public R infoList(@PathVariable("spid") Integer spId){
@@ -95,6 +104,8 @@ public class TargetController {
 
 	/**
 	 * 保存
+	 * @param target
+	 * @return R
 	 */
 	@SysLog("新建测试目标")
 	@RequestMapping("/save")
@@ -107,9 +118,11 @@ public class TargetController {
 			return R.ok();
 		}
 	}
-	
+
 	/**
 	 * 修改
+	 * @param target
+	 * @return R
 	 */
 	@SysLog("修改测试目标")
 	@RequestMapping("/update")
@@ -122,9 +135,11 @@ public class TargetController {
 			return R.ok();
 		}
 	}
-	
+
 	/**
 	 * 删除
+	 * @param ids
+	 * @return
 	 */
 	@SysLog("删除测试目标")
 	@RequestMapping("/delete")

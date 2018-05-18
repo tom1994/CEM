@@ -24,9 +24,13 @@ import java.util.Map;
 public class AlarmTemplateController {
 	@Autowired
 	private AlarmTemplateService alarmTemplateService;
-	
+
 	/**
-	 * 列表
+	 *告警模版列表
+	 * @param page
+	 * @param limit
+	 * @return R
+	 * @throws Exception
 	 */
 	@RequestMapping("/list")
 	@RequiresPermissions("alarmtemplate:list")
@@ -47,10 +51,12 @@ public class AlarmTemplateController {
 		PageUtils pageUtil = new PageUtils(alarmTemplateList, total, limit, page);
 		return R.ok().put("page", pageUtil);
 	}
-	
-	
+
+
 	/**
 	 * 信息
+	 * @param id
+	 * @return R
 	 */
 	@RequestMapping("/info/{id}")
 	@RequiresPermissions("alarmtemplate:info")
@@ -60,7 +66,9 @@ public class AlarmTemplateController {
 	}
 
 	/**
-	 * miao根据servicetype的id来list出符合条件的告警模板
+	 * 根据servicetype的id来列出符合条件的告警模板
+	 * @param id
+	 * @return R
 	 */
 	@RequestMapping("/infoByService/{id}")
 	@RequiresPermissions("alarmtemplate:info")
@@ -68,9 +76,11 @@ public class AlarmTemplateController {
 		List<AlarmTemplateEntity> atList = alarmTemplateService.queryAtByService(id);
 		return R.ok().put("atList", atList);
 	}
-	
+
 	/**
 	 * 保存
+	 * @param alarmTemplate
+	 * @return R
 	 */
 	@RequestMapping("/save")
 	@RequiresPermissions("alarmtemplate:save")

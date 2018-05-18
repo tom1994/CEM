@@ -14,12 +14,32 @@ public interface RecordFtpService {
 	
 	List<RecordFtpEntity> queryList(Map<String, Object> map);
 
+	/**
+	 * 实时诊断
+	 * @param map
+	 * @return List<RecordFtpEntity>
+	 */
 	List<RecordFtpEntity> queryFtpTest(Map<String, Object> map);
 
+	/**
+	 * 结果列表
+	 * @param map
+	 * @return List<RecordFtpEntity>
+	 */
 	List<RecordFtpEntity> queryFtpList(Map<String, Object> map);
 
+	/**
+	 * 数据统计
+	 * @param map
+	 * @return List<RecordFtpEntity>
+	 */
 	List<RecordHourFtpEntity> queryIntervalList(Map<String, Object> map);
 
+	/**
+	 * 数据统计总数
+	 * @param map
+	 * @return int
+	 */
 	int queryIntervalTotal(Map<String, Object> map);
 
 	int queryTotal(Map<String, Object> map);

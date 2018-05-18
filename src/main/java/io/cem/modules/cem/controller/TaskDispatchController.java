@@ -36,7 +36,9 @@ public class TaskDispatchController {
     private TargetService targetService;
 
     /**
-     * 列表
+     * 下发任务列表
+     * @param params
+     * @return R
      */
     @RequestMapping("/list")
     @RequiresPermissions("taskdispatch:list")
@@ -54,7 +56,12 @@ public class TaskDispatchController {
 
 
     /**
-     * 信息
+     * 根据id筛选
+     * @param id
+     * @param page
+     * @param limit
+     * @return R
+     * @throws Exception
      */
     @RequestMapping("/info/{id}")
     @RequiresPermissions("taskdispatch:info")
@@ -74,19 +81,17 @@ public class TaskDispatchController {
         }
         List<TaskDispatchEntity> dispatchList = taskDispatchService.queryDispatchList(map);
         dispatchList = taskDispatchService.transformTarget(dispatchList);
-
-        //        String[] targetList = new String[dispatchList.size()];
-//        for (int i = 0; i < dispatchList.size(); i++) {
-//            targetList[i] = dispatchList.get(i).getTarget();
-//            String targetName = taskDispatchService.queryTargetBatch(targetList[i].split(",|\""));
-//            dispatchList.get(i).setTargetName(targetName);
-//        }
         PageUtils pageUtil = new PageUtils(dispatchList, total, limit, page);
         return R.ok().put("page", pageUtil);
     }
 
     /**
-     * ZTY用于显示探针界面的显示任务
+     * 探针显示任务
+     * @param id
+     * @param page
+     * @param limit
+     * @return R
+     * @throws Exception
      */
     @RequestMapping("/infoTask/{id}")
     @RequiresPermissions("taskdispatch:infoTask")
@@ -112,7 +117,9 @@ public class TaskDispatchController {
     }
 
     /**
-     * 保存
+     * 下发任务
+     * @param taskDispatch
+     * @return R
      */
     @SysLog("下发任务")
     @RequestMapping("/save")
@@ -144,6 +151,8 @@ public class TaskDispatchController {
 
     /**
      * 下发实时诊断任务
+     * @param param
+     * @return R
      */
     @RequestMapping("/saveAndReturn")
     @RequiresPermissions("taskdispatch:save")
@@ -275,105 +284,11 @@ public class TaskDispatchController {
         return R.ok().put("taskdispatch", dispatch);
     }
 
-/*    //增加校验任务是否重复的方法，未完成，已经弃用
-    @RequestMapping("/saveAll")
-    @RequiresPermissions("taskdispatch:save")
-    public R saveAll(@RequestBody TaskDispatchEntity taskDispatch) {
-        taskDispatch.setCreateTime(new Date());
-        List<String> probeLimited = new ArrayList<>();
-        if (taskDispatch.getTargetGroupIds() != null) {
-            int[] targetGroupIds = taskDispatch.getTargetGroupIds();
-            ArrayList target = new ArrayList();
-            JSONObject targetjson = new JSONObject();
-            targetjson.put("target_port", "");
-            targetjson.put("target_type", 1);
-            for (int i = 0; i < targetGroupIds.length; i++) {
-                List<TargetEntity> targetEntities = targetService.queryTargetListByGroup(targetGroupIds[i]);
-                for (int j = 0; j < targetEntities.size(); j++) {
-                    JSONObject targetObject = CloneUtils.clone(targetjson);
-                    targetObject.put("target_id", targetEntities.get(j).getId());
-                    targetObject.put("target_value", targetEntities.get(j).getValue());
-                    target.add(JSON.toJSONString(targetObject));
-                }
-            }
-            taskDispatch.setTarget(target.toString());
-        } else {
-            ArrayList target = new ArrayList();
-            int[] targetIds = taskDispatch.getTargetIds();
-            JSONObject targetjson = new JSONObject();
-            targetjson.put("target_port", "");
-            targetjson.put("target_type", 1);
-            for (int targetId : targetIds) {
-                JSONObject targetObject = CloneUtils.clone(targetjson);
-                TargetEntity targetEntity = targetService.queryObject(targetId);
-                targetObject.put("target_id", targetEntity.getId());
-                targetObject.put("target_value", targetEntity.getValue());
-                target.add(JSON.toJSON(targetObject));
-            }
-            taskDispatch.setTarget(target.toString());
-        }
-        if (taskDispatch.getProbeIds() == null && taskDispatch.getProbeGroupIds() != null) {
-            int[] probeGroupIds = taskDispatch.getProbeGroupIds();
-            List<TaskDispatchEntity> taskDispatchEntityList = new ArrayList<>();
-            for (int probeGroupId : probeGroupIds) {
-                List<ProbeEntity> probes = probeService.queryProbeListByGroup(probeGroupId);
-                for (ProbeEntity probe : probes) {
-                    if (probe.getConcurrentTask() > taskDispatchService.queryCurrentDispatch(probe.getId())) {
-                        TaskDispatchEntity taskDispatchEntity = CloneUtils.clone(taskDispatch);
-                        taskDispatchEntity.setProbeId(probe.getId());
-                        taskDispatchEntityList.add(taskDispatchEntity);
-                    } else {
-                        probeLimited.add(probe.getName());
-                    }
-                }
-            }
-            taskDispatchService.saveAll(taskDispatchEntityList);
-        } else if (taskDispatch.getProbeIds() != null && taskDispatch.getProbeGroupIds() == null) {
-            int[] probeIdsList = taskDispatch.getProbeIds();
-            List<TaskDispatchEntity> taskDispatchEntityList = new ArrayList<>();
-            Map mapEmpty = new HashMap();
-            List<ProbeEntity> probeEntityList = probeService.queryList(mapEmpty);
-            Map map = new HashMap();
-            Map outMap = new HashMap();
-            for (ProbeEntity probeEntity : probeEntityList) {
-                map.put(probeEntity.getId(), probeEntity.getConcurrentTask());
-                outMap.put(probeEntity.getId(), probeEntity.getName());
-            }
-            for (int j = 0; j < probeIdsList.length; j++) {
-                int CurrentTask = taskDispatchService.queryCurrentDispatch(probeIdsList[j]);
-                if (Integer.parseInt(map.get(probeIdsList[j]).toString()) > taskDispatchService.queryCurrentDispatch(probeIdsList[j])) {
-                    TaskDispatchEntity taskDispatchEntity = CloneUtils.clone(taskDispatch);
-                    taskDispatchEntity.setProbeId(probeIdsList[j]);
-                    taskDispatchEntityList.add(taskDispatchEntity);
-                    taskDispatchService.saveAll(taskDispatchEntityList);
-                } else {
-                    probeLimited.add(outMap.get(probeIdsList[j]).toString());
-                }
-            }
-        } else {
-            return R.error(111, "探针或探针组格式错误");
-        }
-        try {
-            int result = BypassHttps.sendRequestIgnoreSSL("POST", prop.getProperty("socketAddress") +"/tasks/" + taskDispatch.getTaskId());
-            if (result == 200) {
-                if (probeLimited.size() == 0) {
-                    return R.ok();
-                } else {
-                    return R.error(600, probeLimited.get(0) + "任务数量已经超出最大限制");
-                }
-            } else {
-                taskDispatchService.cancelSave(taskDispatch.getTaskId());
-                if (probeLimited.size()==0) {
-                    return R.error(404, "任务下发失败，错误代码" + result);
-                }else {
-                    return R.error(600, probeLimited.get(0) + "任务数量已经超出最大限制");
-                }
-            }
-        } catch (Exception e) {
-            return R.error("网络故障，下发失败");
-        }
-    }*/
-
+    /**
+     * 下发任务
+     * @param taskDispatch
+     * @return
+     */
     @SysLog("下发任务")
     @RequestMapping("/saveAll")
     @RequiresPermissions("taskdispatch:save")
@@ -458,6 +373,8 @@ public class TaskDispatchController {
 
     /**
      * 修改
+     * @param taskDispatch
+     * @return R
      */
     @RequestMapping("/update")
     @RequiresPermissions("taskdispatch:update")
@@ -468,6 +385,8 @@ public class TaskDispatchController {
 
     /**
      * 删除
+     * @param ids
+     * @return R
      */
     @RequestMapping("/delete")
     @RequiresPermissions("taskdispatch:delete")
@@ -476,6 +395,11 @@ public class TaskDispatchController {
         return R.ok();
     }
 
+    /**
+     * 取消任务
+     * @param id
+     * @return R
+     */
     @SysLog("取消任务")
     @RequestMapping("/cancel/{id}")
     public R cancel(@PathVariable("id") Integer id) {

@@ -34,7 +34,12 @@ public class ProbeController {
     private ProbeService probeService;
 
     /**
-     * 列表
+     *探针列表
+     * @param probedata
+     * @param page
+     * @param limit
+     * @return R
+     * @throws Exception
      */
     @RequestMapping("/list")
     @RequiresPermissions("probe:list")
@@ -57,13 +62,18 @@ public class ProbeController {
             map.put("limit", limit);
             total = probeService.queryTotal(map);
         }
-//		List<ProbeEntity> probeList = probeService.queryList(map);
         List<ProbeEntity> probeList = probeService.queryProbeList(map);
         PageUtils pageUtil = new PageUtils(probeList, total, limit, page);
         return R.ok().put("page", pageUtil);
     }
 
 
+    /**
+     * 显示所有探针
+     * @param probedata
+     * @return R
+     * @throws Exception
+     */
     @RequestMapping("/showlist")
     public R showList(String probedata) throws Exception {
         List<ProbeEntity> probeList = probeService.queryShowList();
@@ -72,6 +82,8 @@ public class ProbeController {
 
     /**
      * 查看在线探针
+     * @param taskId
+     * @return R
      */
     @RequestMapping("/listOnline/{id}")
     @RequiresPermissions("probe:list")
@@ -82,6 +94,8 @@ public class ProbeController {
 
     /**
      * 查看核心探针
+     * @param taskId
+     * @return R
      */
     @RequestMapping("/listCenter/{id}")
     @RequiresPermissions("probe:list")
@@ -90,6 +104,12 @@ public class ProbeController {
         return R.ok().put("probe", probeList);
     }
 
+    /**
+     * 下载探针表格
+     * @param response
+     * @param probedata
+     * @throws RRException
+     */
     @RequestMapping("/download/{probedata}")
     @RequiresPermissions("probe:download")
     public void downloadProbe(HttpServletResponse response, @PathVariable String probedata) throws RRException {
@@ -106,6 +126,8 @@ public class ProbeController {
 
     /**
      * 按区县信息搜索探针信息
+     * @param id
+     * @return R
      */
     @RequestMapping("/info/{id}")
     public R info(@PathVariable("id") Integer id) {
@@ -116,6 +138,8 @@ public class ProbeController {
 
     /**
      * 按地市信息搜索探针信息
+     * @param id
+     * @return R
      */
     @RequestMapping("/infoByCity/{id}")
     public R infoByCity(@PathVariable("id") Integer id) {
@@ -125,6 +149,11 @@ public class ProbeController {
 
     /**
      * 按出口筛选探针
+     * @param probedata
+     * @param page
+     * @param limit
+     * @return R
+     * @throws Exception
      */
     @RequestMapping("/exitlist")
     @RequiresPermissions("probe:exitlist")
@@ -147,7 +176,6 @@ public class ProbeController {
             map.put("limit", limit);
             total = probeService.queryTotal(map);
         }
-//		List<ProbeEntity> probeList = probeService.queryList(map);
         List<ProbeEntity> probeList = probeService.queryExitList(map);
         PageUtils pageUtil = new PageUtils(probeList, total, limit, page);
         return R.ok().put("page", pageUtil);
@@ -156,10 +184,11 @@ public class ProbeController {
 
     /**
      * 详细信息
+     * @param id
+     * @return R
      */
     @RequestMapping("/detail/{id}")
     public R detail(@PathVariable("id") Integer id) {
-//		ProbeEntity probeList = probeService.queryDetail(id);
         ProbeEntity probeList = probeService.queryObject(id);
         System.out.println(probeList);
         return R.ok().put("probe", probeList);
@@ -168,6 +197,8 @@ public class ProbeController {
 
     /**
      * 保存
+     * @param probe
+     * @return R
      */
     @RequestMapping("/save")
     @RequiresPermissions("probe:save")
@@ -182,6 +213,8 @@ public class ProbeController {
 
     /**
      * 修改
+     * @param probe
+     * @return R
      */
     @SysLog("修改探针信息")
     @RequestMapping("/update")
@@ -195,6 +228,11 @@ public class ProbeController {
         }
     }
 
+    /**
+     * 重启探针
+     * @param ids
+     * @return R
+     */
     @SysLog("重启探针")
     @RequestMapping("/reboot")
     @RequiresPermissions("probe:reboot")
@@ -221,6 +259,8 @@ public class ProbeController {
 
     /**
      * 删除
+     * @param ids
+     * @return R
      */
     @SysLog("删除探针")
     @RequestMapping("/delete")
@@ -248,7 +288,9 @@ public class ProbeController {
 
 
     /**
-     * 信息
+     * 端口信息
+     * @param id
+     * @return R
      */
     @RequestMapping("/port/{id}")
     public R port(@PathVariable("id") Integer id) {

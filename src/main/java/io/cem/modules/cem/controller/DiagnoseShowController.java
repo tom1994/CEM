@@ -1,6 +1,5 @@
 package io.cem.modules.cem.controller;
 
-import javafx.beans.property.adapter.ReadOnlyJavaBeanBooleanProperty;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,6 +11,15 @@ import java.util.Map;
 @RequestMapping("diagnoseshow")
 public class DiagnoseShowController {
 
+    /**
+     * 实时检测
+     * @param probeId
+     * @param serviceType
+     * @param targetId
+     * @param targetName
+     * @param v
+     * @return ModelAndView
+     */
     @RequestMapping("/setting")
     public ModelAndView show(@RequestParam Integer probeId,@RequestParam Integer serviceType,@RequestParam Integer targetId,@RequestParam String targetName, ModelAndView v) {
         Map<String,Object> m = v.getModel();

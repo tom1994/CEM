@@ -1,7 +1,6 @@
 package io.cem.modules.cem.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.sun.javafx.collections.MappingChange;
 import io.cem.common.annotation.SysLog;
 import io.cem.common.exception.RRException;
 import io.cem.common.utils.*;
@@ -35,7 +34,12 @@ public class TaskController {
     private TaskDispatchService taskDispatchService;
 
     /**
-     * 列表
+     * 任务列表
+     * @param taskdata
+     * @param page
+     * @param limit
+     * @return R
+     * @throws Exception
      */
     @RequestMapping("/list")
     @RequiresPermissions("task:list")
@@ -57,7 +61,9 @@ public class TaskController {
 
 
     /**
-     * 根据servicetype查询task
+     * 根据业务查任务
+     * @param servicetype
+     * @return R
      */
     @RequestMapping("/infoByService/{id}")
     @RequiresPermissions("task:info")
@@ -69,7 +75,9 @@ public class TaskController {
     }
 
     /**
-     * 信息
+     * 根据id查任务
+     * @param id
+     * @return R
      */
     @RequestMapping("/info/{id}")
     @RequiresPermissions("task:info")
@@ -81,6 +89,8 @@ public class TaskController {
 
     /**
      * 保存
+     * @param task
+     * @return R
      */
     @SysLog("新建任务")
     @RequestMapping("/save")
@@ -96,6 +106,8 @@ public class TaskController {
 
     /**
      * 修改
+     * @param task
+     * @return R
      */
     @RequestMapping("/update")
     @RequiresPermissions("task:update")
@@ -107,6 +119,8 @@ public class TaskController {
 
     /**
      * 删除
+     * @param ids
+     * @return R
      */
     @SysLog("删除任务")
     @RequestMapping("/delete")

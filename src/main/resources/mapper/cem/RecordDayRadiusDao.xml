@@ -59,7 +59,9 @@
 			`record_time`, 
 			`delay`, 
 			`success_rate`, 
-			`remark`
+			`remark`,
+			`fail`,
+			`total`
 		)
 		values
 		(
@@ -75,7 +77,9 @@
 			#{recordTime}, 
 			#{delay}, 
 			#{successRate}, 
-			#{remark}
+			#{remark},
+			#{fail},
+			#{total}
 		)
 	</insert>
 	 

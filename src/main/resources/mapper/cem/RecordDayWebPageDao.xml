@@ -72,7 +72,9 @@
 			`load_delay`,
 			`page_element_delay`, 
 			`download_rate`, 
-			`remark`
+			`remark`,
+			`fail`,
+			`total`
 		)
 		values
 		(
@@ -95,7 +97,9 @@
 			#{loadDelay},
 			#{pageElementDelay}, 
 			#{downloadRate}, 
-			#{remark}
+			#{remark},
+			#{fail},
+			#{total}
 		)
 	</insert>
 	 

@@ -67,7 +67,9 @@
 			`headbyte_delay`, 
 			`download_rate`, 
 			`upload_rate`, 
-			`remark`
+			`remark`,
+			`fail`,
+			`total`
 		)
 		values
 		(
@@ -87,7 +89,9 @@
 			#{headbyteDelay}, 
 			#{downloadRate}, 
 			#{uploadRate}, 
-			#{remark}
+			#{remark},
+			#{fail},
+			#{total}
 		)
 	</insert>
 	 

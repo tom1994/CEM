@@ -27,9 +27,14 @@ import java.util.Map;
 public class SchedulePolicyController {
 	@Autowired
 	private SchedulePolicyService schedulePolicyService;
-	
+
 	/**
-	 * 列表
+	 * 调度策略列表
+	 * @param schedulepolicydata
+	 * @param page
+	 * @param limit
+	 * @return R
+	 * @throws Exception
 	 */
 	@RequestMapping("/list")
 	@RequiresPermissions("schedulepolicy:list")
@@ -56,10 +61,12 @@ public class SchedulePolicyController {
 		PageUtils pageUtil = new PageUtils(schedulePolicyList, total, limit, page);
 		return R.ok().put("page", pageUtil);
 	}
-	
-	
+
+
 	/**
-	 * 信息
+	 * 查询详情
+	 * @param id
+	 * @return R
 	 */
 	@RequestMapping("/info/{id}")
 	@RequiresPermissions("schedulepolicy:info")
@@ -68,9 +75,11 @@ public class SchedulePolicyController {
 		
 		return R.ok().put("schedulePolicy", schedulePolicy);
 	}
-	
+
 	/**
 	 * 保存
+	 * @param schedulePolicy
+	 * @return R
 	 */
 	@SysLog("新建调度策略")
 	@RequestMapping("/save")
@@ -83,9 +92,11 @@ public class SchedulePolicyController {
 			return R.ok();
 		}
 	}
-	
+
 	/**
 	 * 修改
+	 * @param schedulePolicy
+	 * @return R
 	 */
 	@SysLog("修改调度策略")
 	@RequestMapping("/update")
@@ -98,9 +109,11 @@ public class SchedulePolicyController {
 			return R.ok();
 		}
 	}
-	
+
 	/**
 	 * 删除
+	 * @param ids
+	 * @return R
 	 */
 	@SysLog("删除调度策略")
 	@RequestMapping("/delete")

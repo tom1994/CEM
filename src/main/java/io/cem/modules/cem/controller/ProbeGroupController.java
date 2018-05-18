@@ -28,9 +28,14 @@ import java.util.Map;
 public class ProbeGroupController {
 	@Autowired
 	private ProbeGroupService ProbeGroupService;
-	
+
 	/**
-	 * 列表
+	 * 探针组列表
+	 * @param groupdata
+	 * @param page
+	 * @param limit
+	 * @return R
+	 * @throws Exception
 	 */
 	@RequestMapping("/list")
 	@RequiresPermissions("probegroup:list")
@@ -60,6 +65,11 @@ public class ProbeGroupController {
 
 	/**
 	 * 查询列表
+	 * @param groupdata
+	 * @param page
+	 * @param limit
+	 * @return R
+	 * @throws Exception
 	 */
 	@RequestMapping("/searchlist")
 	@RequiresPermissions("probegroup:list")
@@ -88,9 +98,10 @@ public class ProbeGroupController {
 	}
 
 
-
 	/**
-	 * 信息
+	 * 根据ID筛选信息
+	 * @param id
+	 * @return R
 	 */
 	@RequestMapping("/info/{id}")
 	@RequiresPermissions("probegroup:info")
@@ -99,9 +110,11 @@ public class ProbeGroupController {
 		
 		return R.ok().put("probeGroup", probeGroup);
 	}
-	
+
 	/**
 	 * 保存
+	 * @param probeGroup
+	 * @return R
 	 */
 	@RequestMapping("/save")
 	@RequiresPermissions("probegroup:save")
@@ -113,9 +126,11 @@ public class ProbeGroupController {
 			return R.ok();
 		}
 	}
-	
+
 	/**
 	 * 修改
+	 * @param probeGroup
+	 * @return R
 	 */
 	@RequestMapping("/update")
 	@RequiresPermissions("probegroup:update")
@@ -127,9 +142,11 @@ public class ProbeGroupController {
 			return R.ok();
 		}
 	}
-	
+
 	/**
 	 * 删除
+	 * @param ids
+	 * @return R
 	 */
 	@RequestMapping("/delete")
 	@RequiresPermissions("probegroup:delete")

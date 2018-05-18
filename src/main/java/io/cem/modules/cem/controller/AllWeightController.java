@@ -3,7 +3,6 @@ package io.cem.modules.cem.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import io.cem.common.utils.PropertiesUtils;
-import io.cem.common.utils.*;
 import io.cem.common.utils.R;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +12,10 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/cem/allweight")
 public class AllWeightController {
+    /**
+     * 获取evaluation.properties里面的内容
+     * @return R
+     */
     @RequestMapping("/get")
     public R getWeight(){
         String[] weight = new String[23];
@@ -905,6 +908,11 @@ public class AllWeightController {
     }
 
 
+    /**
+     * 写入evaluation.properites
+     * @param weight_new
+     * @return R
+     */
     @RequestMapping("/set")
     public R setWeight(String weight_new) {
         System.out.println("weight"+weight_new);
@@ -939,6 +947,7 @@ public class AllWeightController {
         }
         return R.ok();
     }
+
 
     @RequestMapping("/setpingICMP")
     public R setpingICMP(String pi_new) {

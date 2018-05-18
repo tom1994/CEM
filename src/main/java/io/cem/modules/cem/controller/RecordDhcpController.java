@@ -1,30 +1,26 @@
 package io.cem.modules.cem.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.alibaba.fastjson.JSONObject;
 import io.cem.common.exception.RRException;
 import io.cem.common.utils.JSONUtils;
+import io.cem.common.utils.PageUtils;
+import io.cem.common.utils.R;
 import io.cem.modules.cem.entity.DiagnoseEntity;
-import io.cem.modules.cem.entity.RecordDnsEntity;
+import io.cem.modules.cem.entity.RecordDhcpEntity;
 import io.cem.modules.cem.entity.RecordHourDhcpEntity;
+import io.cem.modules.cem.service.RecordDhcpService;
 import io.cem.modules.cem.service.TaskDispatchService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.cem.modules.cem.entity.RecordDhcpEntity;
-import io.cem.modules.cem.service.RecordDhcpService;
-import io.cem.common.utils.PageUtils;
-import io.cem.common.utils.Query;
-import io.cem.common.utils.R;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static java.lang.Thread.sleep;
 
@@ -39,8 +35,14 @@ public class RecordDhcpController {
 
 	@Autowired
 	private TaskDispatchService taskDispatchService;
+
 	/**
-	 * 列表
+	 * 结果列表
+	 * @param resultdata
+	 * @param page
+	 * @param limit
+	 * @return R
+	 * @throws Exception
 	 */
 	@RequestMapping("/list")
 	public R list(String resultdata, Integer page, Integer limit) throws Exception {
@@ -75,10 +77,12 @@ public class RecordDhcpController {
 			return R.ok().put("page", pageUtil);
 		}
 	}
-	
-	
+
+
 	/**
-	 * 信息
+	 * 根据id查询结果
+	 * @param id
+	 * @return
 	 */
 	@RequestMapping("/info/{id}")
 	@RequiresPermissions("recorddhcp:info")
@@ -88,17 +92,18 @@ public class RecordDhcpController {
 		return R.ok().put("recordDhcp", recordDhcp);
 	}
 
+	/**
+	 * 实时诊断
+	 * @param diagnoseEntity
+	 * @return R
+	 * @throws Exception
+	 */
 	@RequestMapping("/diagnose")
 	public R diagnose(@RequestBody DiagnoseEntity diagnoseEntity) throws Exception{
 		Map<String, Object> map = new HashMap<>();
 		Integer[] dispatchId = diagnoseEntity.getDispatchId();
 		int page = diagnoseEntity.getPage();
 		int limit = diagnoseEntity.getLimit();
-//        try {
-////            map.putAll(JSONUtils.jsonToMap(resultdata_jsonobject));
-//        } catch (RuntimeException e) {
-//            throw new RRException("内部参数错误，请重试！");
-//        }
 		map.put("offset", (page - 1) * limit);
 		map.put("limit", limit);
 		int total = dispatchId.length;
@@ -119,37 +124,4 @@ public class RecordDhcpController {
 		return R.ok().put("page", pageUtil);
 	}
 
-	/**
-	 * 保存
-	 */
-	@RequestMapping("/save")
-	@RequiresPermissions("recorddhcp:save")
-	public R save(@RequestBody RecordDhcpEntity recordDhcp){
-		recordDhcpService.save(recordDhcp);
-		
-		return R.ok();
-	}
-	
-	/**
-	 * 修改
-	 */
-	@RequestMapping("/update")
-	@RequiresPermissions("recorddhcp:update")
-	public R update(@RequestBody RecordDhcpEntity recordDhcp){
-		recordDhcpService.update(recordDhcp);
-		
-		return R.ok();
-	}
-	
-	/**
-	 * 删除
-	 */
-	@RequestMapping("/delete")
-	@RequiresPermissions("recorddhcp:delete")
-	public R delete(@RequestBody Integer[] ids){
-		recordDhcpService.deleteBatch(ids);
-		
-		return R.ok();
-	}
-	
 }

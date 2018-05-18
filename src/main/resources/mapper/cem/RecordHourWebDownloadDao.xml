@@ -335,7 +335,9 @@
 			`conn_delay`, 
 			`headbyte_delay`, 
 			`download_rate`, 
-			`remark`
+			`remark`,
+			`fail`,
+			`total`
 		)
 		values
 		(
@@ -353,7 +355,9 @@
 			#{connDelay}, 
 			#{headbyteDelay}, 
 			#{downloadRate}, 
-			#{remark}
+			#{remark},
+			#{fail},
+			#{total}
 		)
 	</insert>
 	 

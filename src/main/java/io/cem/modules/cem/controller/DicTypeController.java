@@ -22,11 +22,15 @@ public class DicTypeController {
 	@Autowired
 	private DicTypeService dicTypeService;
 
+	/**
+	 * 根据id获取字典表某项的名称
+	 * @param id
+	 * @return R
+	 */
 	@RequestMapping("/diclist")
 	@RequiresPermissions("dictype:diclist")
 	public R getType(Integer id){
 		DicTypeEntity dicTypeEntity =  dicTypeService.queryObject(id);
-
 		System.out.print(dicTypeEntity.getDicName());
 		return R.ok();
 	}
@@ -38,33 +42,12 @@ public class DicTypeController {
 	public R list(@RequestParam Map<String, Object> params){
 		//查询列表数据
         Query query = new Query(params);
-
 		List<DicTypeEntity> dicTypeList = dicTypeService.queryList(query);
 		int total = dicTypeService.queryTotal(query);
-		
 		PageUtils pageUtil = new PageUtils(dicTypeList, total, query.getLimit(), query.getPage());
-		
 		return R.ok().put("page", pageUtil);
 	}
 
-	/*public R list(String dictypedata, Integer page, Integer limit) throws Exception {
-		Map<String, Object> map = new HashMap<>();
-		int total = 0;
-		if(page==null) {              *//*没有传入page,则取全部值*//*
-			map.put("offset", null);
-			map.put("limit", null);
-			page = 0;
-			limit = 0;
-		}else {
-			map.put("offset", (page - 1) * limit);
-			map.put("limit", limit);
-			total = dicTypeService.queryTotal(map);
-		}
-		List<DicTypeEntity> dicTypeList = dicTypeService.queryList(map);
-		PageUtils pageUtil = new PageUtils(dicTypeList, total, limit, page);
-		return R.ok().put("page", pageUtil);
-	}*/
-	
 	
 	/**
 	 * 信息
@@ -73,7 +56,6 @@ public class DicTypeController {
 	@RequiresPermissions("dictype:info")
 	public R info(@PathVariable("id") Integer id){
 		DicTypeEntity dicType = dicTypeService.queryObject(id);
-		
 		return R.ok().put("dicType", dicType);
 	}
 	

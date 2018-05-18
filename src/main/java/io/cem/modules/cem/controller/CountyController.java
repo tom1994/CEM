@@ -26,7 +26,7 @@ public class CountyController {
 	private CountyService countyService;
 	
 	/**
-	 * 列表
+	 * 区县列表
 	 */
 	@RequestMapping("/list")
 	public R list(String countydata, Integer page, Integer limit) throws Exception {
@@ -48,6 +48,9 @@ public class CountyController {
 	}
 
 
+	/**
+	 * 根据区县id展示探针
+	 */
 	@RequestMapping("/infoByProbe/{id}")
 	@RequiresPermissions("county:info")
 	public R infoByProbe(@PathVariable("id") Integer id){
@@ -56,7 +59,7 @@ public class CountyController {
 	}
 	
 	/**
-	 * 信息
+	 * 根据id显示区县
 	 */
 	@RequestMapping("/info/{id}")
 	@RequiresPermissions("county:info")

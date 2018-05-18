@@ -13,6 +13,11 @@ public interface RecordDayGameService {
 	
 	List<RecordDayGameEntity> queryList(Map<String, Object> map);
 
+	/**
+	 * 定时任务
+	 * @param map
+	 * @return List<RecordDayGameEntity>
+	 */
 	List<RecordDayGameEntity> queryDay(Map<String,Object> map);
 	
 	int queryTotal(Map<String, Object> map);

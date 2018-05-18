@@ -34,9 +34,14 @@ public class ProbeExitController {
 	private ProbeExitService probeExitService;
 	@Autowired
 	private RecordHourPingService recordHourPingService;
-	
+
 	/**
-	 * 列表
+	 * 出口列表
+	 * @param reportdata
+	 * @param page
+	 * @param limit
+	 * @return R
+	 * @throws Exception
 	 */
 	@RequestMapping("/list")
 	@RequiresPermissions("probeexit:list")
@@ -68,7 +73,10 @@ public class ProbeExitController {
 	}
 
 	/**
-	 * 列表
+	 * 查询出口总数
+	 * @param probedata
+	 * @return R
+	 * @throws Exception
 	 */
 	@RequestMapping("/total")
 	@RequiresPermissions("probeexit:total")
@@ -84,10 +92,12 @@ public class ProbeExitController {
 		int total = probeExitService.queryTotal(map);
 		return R.ok().put("total", total);
 	}
-	
-	
+
+
 	/**
-	 * 信息
+	 * 根据id查询信息
+	 * @param id
+	 * @return R
 	 */
 	@RequestMapping("/info/{id}")
 	@RequiresPermissions("probeexit:info")
@@ -96,9 +106,11 @@ public class ProbeExitController {
 		
 		return R.ok().put("probeExit", probeExit);
 	}
-	
+
 	/**
 	 * 保存
+	 * @param probeExit
+	 * @return R
 	 */
 	@RequestMapping("/save")
 	@RequiresPermissions("probeexit:save")
@@ -110,9 +122,11 @@ public class ProbeExitController {
 			return R.ok();
 		}
 	}
-	
+
 	/**
 	 * 修改
+	 * @param probeExit
+	 * @return R
 	 */
 	@RequestMapping("/update/{id}")
 	@RequiresPermissions("probeexit:update")
@@ -126,7 +140,9 @@ public class ProbeExitController {
 	}
 
 	/**
-	 * 修改
+	 * 修改监控状态
+	 * @param id
+	 * @return R
 	 */
 	@RequestMapping("/operate/{id}")
 	@RequiresPermissions("probeexit:operate")
@@ -142,7 +158,12 @@ public class ProbeExitController {
 	}
 
 	/**
-	 * 分数
+	 * 出口得分
+	 * @param probedata
+	 * @param page
+	 * @param limit
+	 * @return R
+	 * @throws Exception
 	 */
 	@RequestMapping("/score")
 	@RequiresPermissions("probeexit:score")
@@ -186,6 +207,10 @@ public class ProbeExitController {
 
 	/**
 	 * 下载
+	 * @param response
+	 * @param probedata
+	 * @throws ExecutionException
+	 * @throws InterruptedException
 	 */
 	@RequestMapping("/download/{probedata}")
 	@RequiresPermissions("probeexit:download")
@@ -227,9 +252,11 @@ public class ProbeExitController {
 
 		CollectionToFile.collectionToFile(response, scoreList, ScoreEntity.class);
 	}
-	
+
 	/**
 	 * 删除
+	 * @param ids
+	 * @return R
 	 */
 	@RequestMapping("/delete")
 	@RequiresPermissions("probeexit:delete")

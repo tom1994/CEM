@@ -5,10 +5,11 @@ import io.cem.common.exception.RRException;
 import io.cem.common.utils.JSONUtils;
 import io.cem.common.utils.PageUtils;
 import io.cem.common.utils.R;
-import io.cem.modules.cem.entity.EvaluationEntity;
 import io.cem.modules.cem.entity.RecordHourPingEntity;
 import io.cem.modules.cem.entity.ScoreEntity;
-import io.cem.modules.cem.service.*;
+import io.cem.modules.cem.service.RecordHourDhcpService;
+import io.cem.modules.cem.service.RecordHourPingService;
+import io.cem.modules.cem.service.RecordHourRadiusService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -34,35 +35,19 @@ public class RecordHourPingController {
     @Autowired
     private RecordHourPingService recordHourPingService;
     @Autowired
-    private RecordHourTracertService recordHourTracertService;
-    @Autowired
-    private RecordHourSlaService recordHourSlaService;
-    @Autowired
-    private RecordHourDnsService recordHourDnsService;
-    @Autowired
     private RecordHourDhcpService recordHourDhcpService;
     @Autowired
-    private RecordHourPppoeService recordHourPppoeService;
-    @Autowired
     private RecordHourRadiusService recordHourRadiusService;
-    @Autowired
-    private RecordHourWebPageService recordHourWebPageService;
-    @Autowired
-    private RecordHourWebDownloadService recordHourWebDownloadService;
-    @Autowired
-    private RecordHourFtpService recordHourFtpService;
-    @Autowired
-    private RecordHourWebVideoService recordHourWebVideoService;
-    @Autowired
-    private RecordHourGameService recordHourGameService;
-    @Autowired
-    private ProbeService probeService;
 
     /**
-     * 质量排名界面计算分
-     */
-    /**
-     * miao进行性能优化，增加异步处理机制
+     * 探针排名
+     * @param probedata
+     * @param page
+     * @param limit
+     * @param order
+     * @return R
+     * @throws ExecutionException
+     * @throws InterruptedException
      */
     @RequestMapping("/list")
     @RequiresPermissions("recordhourping:list")
@@ -76,7 +61,6 @@ public class RecordHourPingController {
         } catch (RuntimeException e) {
             throw new RRException("内部参数错误，请重试！");
         }
-//        int service = Integer.parseInt(map.get("service").toString());
         String dateStr = map.get("ava_start").toString();
         String dateStr2 = map.get("ava_terminal").toString();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -98,20 +82,6 @@ public class RecordHourPingController {
             scoreList = recordHourRadiusService.calculateDayScore(map);
         }
 
-		/*int total = 0;
-        if(page==null) {              *//*没有传入page,则取全部值*//*
-            map.put("offset", null);
-			map.put("limit", null);
-			page = 0;
-			limit = 0;
-		}else {
-			map.put("offset", (page - 1) * limit);
-			map.put("limit", limit);
-			//total = scoreList.size();
-		}*/
-
-
-
         if (map.get("target_id") == null) {
             for (int i = 0; i < scoreList.size(); i++) {
                 scoreList.get(i).setTargetName("");
@@ -129,7 +99,6 @@ public class RecordHourPingController {
             map.put("limit", limit);
             total = scoreList.size();
         }
-     //   Collections.sort(scoreList,scoreComparator);
         if (order.equals("asc")) {
             sortStringMethod(scoreList);
         }else if(order.equals("desc")){
@@ -152,49 +121,12 @@ public class RecordHourPingController {
         return R.ok().put("page", pageUtil);
     }
 
-
     /**
-     * ZTY用于质量评分界面计算分
-     */
-    @RequestMapping("/qualityList")
-    @RequiresPermissions("recordhourping:qualityList")
-    public R qualityList(String probedata) throws ExecutionException, InterruptedException {
-        //查询列表数据
-        Map<String, Object> map = new HashMap<>();
-        JSONObject probedata_jsonobject = JSONObject.parseObject(probedata);
-        try {
-            map.putAll(JSONUtils.jsonToMap(probedata_jsonobject));
-        } catch (RuntimeException e) {
-            throw new RRException("内部参数错误，请重试！");
-        }
-        String dateStr = map.get("ava_start").toString();
-        String dateStr2 = map.get("ava_terminal").toString();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        int dateDifferent = 0;
-        try {
-            Date date2 = format.parse(dateStr2);
-            Date date = format.parse(dateStr);
-
-            dateDifferent = recordHourPingService.differentDays(date, date2);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        EvaluationEntity score;
-        if(dateDifferent==0){
-            score = recordHourFtpService.calculateDayHourQualityScore(map);
-        }else if(dateDifferent==1){
-            score = recordHourFtpService.calculateHourQualityScore(map);
-        } else{
-            score = recordHourFtpService.calculateDayQualityScore(map);
-        }
-
-
-        return R.ok().put("score", score);
-
-    }
-
-    /**
-     * ZTY用于绘制网络连通性图
+     * 质量评分-网络连通性
+     * @param chartdata
+     * @return R
+     * @throws ExecutionException
+     * @throws InterruptedException
      */
     @RequestMapping("/connection")
     @RequiresPermissions("recordhourping:connection")
@@ -236,7 +168,11 @@ public class RecordHourPingController {
     }
 
     /**
-     * ZTY用于绘制网络层质量图
+     * 质量评分-网络层质量
+     * @param chartdata
+     * @return R
+     * @throws ExecutionException
+     * @throws InterruptedException
      */
     @RequestMapping("/quality")
     @RequiresPermissions("recordhourping:quality")
@@ -281,7 +217,11 @@ public class RecordHourPingController {
     }
 
     /**
-     * ZTY用于绘制网页浏览图
+     * 质量评分-网页浏览
+     * @param chartdata
+     * @return R
+     * @throws ExecutionException
+     * @throws InterruptedException
      */
     @RequestMapping("/page")
     @RequiresPermissions("recordhourping:page")
@@ -310,10 +250,8 @@ public class RecordHourPingController {
 
         List<ScoreEntity> scoreList = new ArrayList<>();
         if (dateDifferent > 5) {
-            //查询天表
             scoreList = recordHourDhcpService.pageDayChart(map);
         } else {
-            //查询小时表
             scoreList = recordHourDhcpService.pageHourChart(map);
         }
         if(map.get("probe_id")==null){
@@ -325,7 +263,11 @@ public class RecordHourPingController {
     }
 
     /**
-     * ZTY用于绘制文件下载类图
+     * 质量评分-文件下载
+     * @param chartdata
+     * @return R
+     * @throws ExecutionException
+     * @throws InterruptedException
      */
     @RequestMapping("/download")
     @RequiresPermissions("recordhourping:download")
@@ -369,7 +311,11 @@ public class RecordHourPingController {
     }
 
     /**
-     * ZTY用于绘制在线视频类图
+     * 质量评分-在线视频
+     * @param chartdata
+     * @return R
+     * @throws ExecutionException
+     * @throws InterruptedException
      */
     @RequestMapping("/video")
     @RequiresPermissions("recordhourping:video")
@@ -398,10 +344,8 @@ public class RecordHourPingController {
 
         List<ScoreEntity> scoreList;
         if (dateDifferent > 5) {
-            //查询天表
             scoreList = recordHourDhcpService.videoDayChart(map);
         } else {
-            //查询小时表
             scoreList = recordHourDhcpService.videoHourChart(map);
         }
         System.out.println(scoreList);
@@ -414,7 +358,11 @@ public class RecordHourPingController {
     }
 
     /**
-     * ZTY用于绘制游戏类图
+     * 质量评分-网络游戏
+     * @param chartdata
+     * @return R
+     * @throws ExecutionException
+     * @throws InterruptedException
      */
     @RequestMapping("/game")
     @RequiresPermissions("recordhourping:game")
@@ -443,10 +391,8 @@ public class RecordHourPingController {
 
         List<ScoreEntity> scoreList;
         if (dateDifferent > 5) {
-            //查询天表
             scoreList = recordHourDhcpService.gameDayChart(map);
         } else {
-            //查询小时表
             scoreList = recordHourDhcpService.gameHourChart(map);
         }
         System.out.println(scoreList);
