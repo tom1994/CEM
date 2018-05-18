@@ -17,13 +17,39 @@ public interface RecordHourDnsService {
 
 	List<RecordHourDnsEntity> queryDns(Map<String,Object> map);
 
+	/**
+	 * 查询小时表
+	 * @param map
+	 * @return Future<List<RecordHourDnsEntity>>
+	 */
 	Future<List<RecordHourDnsEntity>> queryDnsList(Map<String, Object> map);
+
+	/**
+	 * 门户排名查询小时表
+	 * @param map
+	 * @return Future<List<RecordHourDnsEntity>>
+	 */
 	Future<List<RecordHourDnsEntity>> queryTargetHourList(Map<String, Object> map);
 
+	/**
+	 * 出口查询小时表
+	 * @param map
+	 * @return Future<List<RecordHourDnsEntity>>
+	 */
 	Future<List<RecordHourDnsEntity>> queryExitList(Map<String, Object> map);
 
+	/**
+	 * 出口查询天表
+	 * @param map
+	 * @return Future<List<RecordHourDnsEntity>>
+	 */
 	Future<List<RecordHourDnsEntity>> queryDayExitList(Map<String, Object> map);
 
+	/**
+	 * 查询天表
+	 * @param map
+	 * @return Future<List<RecordHourDnsEntity>>
+	 */
 	Future<List<RecordHourDnsEntity>> queryDayList(Map<String, Object> map);
 
 	int queryTotal(Map<String, Object> map);

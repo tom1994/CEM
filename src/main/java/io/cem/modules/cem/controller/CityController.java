@@ -28,7 +28,7 @@ public class CityController {
 	private CityService cityService;
 	
 	/**
-	 * 列表
+	 * 省市列表
 	 */
 	@RequestMapping("/list")
 	public R list(String citydata, Integer page, Integer limit) throws Exception {
@@ -51,7 +51,7 @@ public class CityController {
 	
 	
 	/**
-	 * 信息
+	 * 省市信息
 	 */
 	@RequestMapping("/info/{id}")
 	@RequiresPermissions("city:info")

@@ -13,6 +13,11 @@ public interface RecordDaySlaService {
 	
 	List<RecordDaySlaEntity> queryList(Map<String, Object> map);
 
+	/**
+	 * 定时任务
+	 * @param map
+	 * @return List<RecordDaySlaEntity>
+	 */
 	List<RecordDaySlaEntity> queryDay(Map<String,Object> map);
 	
 	int queryTotal(Map<String, Object> map);

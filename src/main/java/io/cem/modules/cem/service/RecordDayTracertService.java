@@ -13,6 +13,11 @@ public interface RecordDayTracertService {
 	
 	List<RecordDayTracertEntity> queryList(Map<String, Object> map);
 
+	/**
+	 * 定时任务
+	 * @param map
+	 * @return List<RecordDayTracertEntity>
+	 */
 	List<RecordDayTracertEntity> queryDay(Map<String,Object> map);
 	
 	int queryTotal(Map<String, Object> map);

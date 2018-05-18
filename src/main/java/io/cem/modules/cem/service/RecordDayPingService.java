@@ -14,6 +14,11 @@ public interface RecordDayPingService {
 
 	List<RecordDayPingEntity> queryList(Map<String, Object> map);
 
+	/**
+	 * 定时任务
+	 * @param map
+	 * @return List<RecordDayPingEntity>
+	 */
 	List<RecordDayPingEntity> queryDay(Map<String,Object> map);
 
 	int queryTotal(Map<String, Object> map);

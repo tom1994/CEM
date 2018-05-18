@@ -1,26 +1,17 @@
 package io.cem.modules.cem.controller;
 
-import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
-
-import com.alibaba.fastjson.JSONObject;
-import io.cem.common.exception.RRException;
-import io.cem.common.utils.JSONUtils;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import io.cem.modules.cem.entity.LayerEntity;
-import io.cem.modules.cem.service.LayerService;
 import io.cem.common.utils.PageUtils;
 import io.cem.common.utils.Query;
 import io.cem.common.utils.R;
-import sun.plugin.javascript.navig4.Layer;
+import io.cem.modules.cem.entity.LayerEntity;
+import io.cem.modules.cem.service.LayerService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -36,7 +27,6 @@ public class LayerController {
     /**
      * 列表
      */
-
     @RequestMapping("/list")
     @RequiresPermissions("layer:list")
     public R list(@RequestParam Map<String, Object> params) {

@@ -28,30 +28,15 @@ public class DiagnoseController {
     @Autowired
     private RecordHourPingService recordHourPingService;
     @Autowired
-    private RecordHourTracertService recordHourTracertService;
-    @Autowired
-    private RecordHourSlaService recordHourSlaService;
-    @Autowired
-    private RecordHourDnsService recordHourDnsService;
-    @Autowired
-    private RecordHourDhcpService recordHourDhcpService;
-    @Autowired
-    private RecordHourPppoeService recordHourPppoeService;
-    @Autowired
     private RecordHourRadiusService recordHourRadiusService;
-    @Autowired
-    private RecordHourWebPageService recordHourWebPageService;
-    @Autowired
-    private RecordHourWebDownloadService recordHourWebDownloadService;
-    @Autowired
-    private RecordHourFtpService recordHourFtpService;
-    @Autowired
-    private RecordHourWebVideoService recordHourWebVideoService;
-    @Autowired
-    private RecordHourGameService recordHourGameService;
 
     /**
-     * Miao 周期故障诊断分数计算
+     *周期故障诊断分数计算
+     * @param probedata
+     * @param page
+     * @param limit
+     * @return R
+     * @throws Exception
      */
     @RequestMapping("/list")
     @RequiresPermissions("recordhourping:list")
@@ -78,14 +63,14 @@ public class DiagnoseController {
         }
 
         List<ScoreEntity> scoreList = new ArrayList<>();
-        List<ProbeEntity> probeList = new ArrayList<>();
+        List<ProbeEntity> probeList;
         if (map.get("probe_id") != null && !map.get("probe_id").equals("")) {
             int probeId = Integer.parseInt(map.get("probe_id").toString());
             probeList = probeService.queryProbeByLayer(probeId);
             int start=0;
             for (int i = 0; i < probeList.size(); i++) {
                 map.put("probe_id", probeList.get(i).getId());
-                List<ScoreEntity> list= new ArrayList<>();
+                List<ScoreEntity> list;
                 if (dateDifferent > 5) {
                     list=recordHourRadiusService.diagnoseDay(map);
                 } else if (dateDifferent>=1) {
@@ -156,7 +141,6 @@ public class DiagnoseController {
     @RequiresPermissions("recordhourping:info")
     public R info(@PathVariable("id") Integer id) {
         RecordHourPingEntity recordHourPing = recordHourPingService.queryObject(id);
-
         return R.ok().put("recordHourPing", recordHourPing);
     }
 

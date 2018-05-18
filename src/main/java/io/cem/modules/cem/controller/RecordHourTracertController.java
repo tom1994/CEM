@@ -11,7 +11,6 @@ import io.cem.modules.cem.service.*;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,27 +36,9 @@ public class RecordHourTracertController {
 	@Autowired
 	private RecordHourTracertService recordHourTracertService;
 	@Autowired
-	private RecordHourSlaService recordHourSlaService;
-	@Autowired
-	private RecordHourDnsService recordHourDnsService;
-	@Autowired
-	private RecordHourDhcpService recordHourDhcpService;
-	@Autowired
-	private RecordHourPppoeService recordHourPppoeService;
-	@Autowired
 	private RecordHourRadiusService recordHourRadiusService;
 	@Autowired
-	private RecordHourWebPageService recordHourWebPageService;
-	@Autowired
-	private RecordHourWebDownloadService recordHourWebDownloadService;
-	@Autowired
 	private RecordHourFtpService recordHourFtpService;
-	@Autowired
-	private RecordHourWebVideoService recordHourWebVideoService;
-	@Autowired
-	private RecordHourGameService recordHourGameService;
-	@Autowired
-	private ProbeService probeService;
 	@Autowired
 	private RecordPingService recordPingService;
 	@Autowired
@@ -84,7 +65,14 @@ public class RecordHourTracertController {
 	private RecordGameService recordGameService;
 
 	/**
-	 * 区域排名方法
+	 * 区域排名
+	 * @param probedata
+	 * @param page
+	 * @param limit
+	 * @param order
+	 * @return R
+	 * @throws ExecutionException
+	 * @throws InterruptedException
 	 */
 	@RequestMapping("/list")
 	@RequiresPermissions("recordhourtracert:list")
@@ -97,7 +85,6 @@ public class RecordHourTracertController {
 		} catch (RuntimeException e) {
 			throw new RRException("内部参数错误，请重试！");
 		}
-		int service = Integer.parseInt(map.get("service").toString());
 		String dateStr = map.get("ava_start").toString();
 		String dateStr2 = map.get("ava_terminal").toString();
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -139,7 +126,6 @@ public class RecordHourTracertController {
 			total = scoreList.size();
 		}
 
-//		Collections.sort(scoreList,scoreComparator);
 		if (order.equals("asc")) {
 			sortStringMethod(scoreList);
 		}else if(order.equals("desc")){
@@ -156,13 +142,19 @@ public class RecordHourTracertController {
 		for(int i=start;i<=end;i++){
 			newList.add(i-start,scoreList.get(i));
 		}
-		//List<RecordHourPingEntity> probeList = recordHourPingService.queryList(map);
 		PageUtils pageUtil = new PageUtils(newList, total, limit, page);
 		return R.ok().put("page", pageUtil);
 	}
 
 	/**
-	 * 门户排名方法
+	 * 门户排名
+	 * @param probedata
+	 * @param page
+	 * @param limit
+	 * @param order
+	 * @return R
+	 * @throws ExecutionException
+	 * @throws InterruptedException
 	 */
 	@RequestMapping("/targetlist")
 	@RequiresPermissions("recordhourtracert:targetlist")
@@ -227,8 +219,6 @@ public class RecordHourTracertController {
 			map.put("limit", limit);
 			total = scoreList.size();
 		}
-
-//		Collections.sort(scoreList,scoreComparator);
 		if (order.equals("asc")) {
 			sortStringMethod(scoreList);
 		}else if(order.equals("desc")){
@@ -245,25 +235,17 @@ public class RecordHourTracertController {
 		for(int i=start;i<=end;i++){
 			newList.add(i-start,scoreList.get(i));
 		}
-		//List<RecordHourPingEntity> probeList = recordHourPingService.queryList(map);
 		PageUtils pageUtil = new PageUtils(newList, total, limit, page);
 		return R.ok().put("page", pageUtil);
 	}
 
 
 	/**
-	 * 信息
-	 */
-	@RequestMapping("/info/{id}")
-	@RequiresPermissions("recordhourtracert:info")
-	public R info(@PathVariable("id") Integer id){
-		RecordHourTracertEntity recordHourTracert = recordHourTracertService.queryObject(id);
-
-		return R.ok().put("recordHourTracert", recordHourTracert);
-	}
-
-	/**
 	 * 区域排名详情
+	 * @param probedata
+	 * @return R
+	 * @throws ExecutionException
+	 * @throws InterruptedException
 	 */
 	@RequestMapping("/areadetail/{probedata}")
 	@RequiresPermissions("recordhourtracert:areadetail")
@@ -296,53 +278,16 @@ public class RecordHourTracertController {
 			scoreList = recordHourRadiusService.calculateDayScore(map);
 		}
 		sortStringMethod(scoreList);
-//		int countyId = Integer.parseInt(map.get("county_id").toString());
-//		List<ProbeEntity> probeList = probeService.queryProbe(countyId);
-//		System.out.println(probeList);
-//		List<ScoreEntity> scoreList=new ArrayList<>();
-//		for(int i=0;i<probeList.size();i++){
-//			map.put("probe_id",probeList.get(i).getId());
-//			List<ScoreEntity> list = recordHourRadiusService.calculateDayScore(map);
-//			if(list.size()!=0) {
-//				scoreList.add(list.get(0));
-//			}
-//		}
 		return R.ok().put("scoreList", scoreList);
 	}
 
 	/**
-	 * 保存
+	 * 探针排名下载
+	 * @param response
+	 * @param probedata
+	 * @throws ExecutionException
+	 * @throws InterruptedException
 	 */
-	@RequestMapping("/save")
-	@RequiresPermissions("recordhourtracert:save")
-	public R save(@RequestBody RecordHourTracertEntity recordHourTracert){
-		recordHourTracertService.save(recordHourTracert);
-
-		return R.ok();
-	}
-
-	/**
-	 * 修改
-	 */
-	@RequestMapping("/update")
-	@RequiresPermissions("recordhourtracert:update")
-	public R update(@RequestBody RecordHourTracertEntity recordHourTracert){
-		recordHourTracertService.update(recordHourTracert);
-
-		return R.ok();
-	}
-
-	/**
-	 * 删除
-	 */
-	@RequestMapping("/delete")
-	@RequiresPermissions("recordhourtracert:delete")
-	public R delete(@RequestBody Integer[] ids){
-		recordHourTracertService.deleteBatch(ids);
-
-		return R.ok();
-	}
-
 	@RequestMapping("/download/{probedata}")
 	@RequiresPermissions("recordhourtracert:download")
 	public void downloadProbe(HttpServletResponse response, @PathVariable String probedata) throws ExecutionException, InterruptedException {
@@ -386,6 +331,13 @@ public class RecordHourTracertController {
 		CollectionToFile.collectionToFile(response, scoreList, ScoreEntity.class);
 	}
 
+	/**
+	 * 门户排名下载
+	 * @param response
+	 * @param probedata
+	 * @throws ExecutionException
+	 * @throws InterruptedException
+	 */
 	@RequestMapping("/doordownload/{probedata}")
 	@RequiresPermissions("recordhourtracert:doordownload")
 	public void downloadDoor(HttpServletResponse response, @PathVariable String probedata) throws ExecutionException, InterruptedException {
@@ -440,6 +392,13 @@ public class RecordHourTracertController {
 	}
 
 
+	/**
+	 * 区域排名下载
+	 * @param response
+	 * @param probedata
+	 * @throws ExecutionException
+	 * @throws InterruptedException
+	 */
 	@RequestMapping("/areaDownload/{probedata}")
 	@RequiresPermissions("recordhourtracert:areaDownload")
 	public void areaDownload(HttpServletResponse response, @PathVariable String probedata) throws ExecutionException, InterruptedException {
@@ -485,44 +444,13 @@ public class RecordHourTracertController {
 	}
 
 
-	@RequestMapping("/qualityDownload/{probedata}")
-	@RequiresPermissions("recordhourtracert:qualityDownload")
-	public void qualityDownload(HttpServletResponse response, @PathVariable String probedata) throws ExecutionException, InterruptedException {
-		//查询列表数据
-		Map<String, Object> map = new HashMap<>();
-		JSONObject probedata_jsonobject = JSONObject.parseObject(probedata);
-		try {
-			map.putAll(JSONUtils.jsonToMap(probedata_jsonobject));
-		} catch (RuntimeException e) {
-			throw new RRException("内部参数错误，请重试！");
-		}
-		String dateStr = map.get("ava_start").toString();
-		String dateStr2 = map.get("ava_terminal").toString();
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		int dateDifferent = 0;
-		try {
-			Date date2 = format.parse(dateStr2);
-			Date date = format.parse(dateStr);
-
-			dateDifferent = recordHourPingService.differentDays(date, date2);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		EvaluationEntity score;
-		if(dateDifferent>5){
-			score = recordHourFtpService.calculateDayQualityScore(map);
-		}else if(dateDifferent<=5 && dateDifferent>=3){
-			score = recordHourFtpService.calculateHourQualityScore(map);
-		} else{
-			score = recordHourFtpService.calculateDayHourQualityScore(map);
-		}
-
-		List<EvaluationEntity> scoreList = new ArrayList<>();
-		scoreList.add(score);
-		System.out.println(score);
-		CollectionToFile.collectionToFile(response, scoreList, EvaluationEntity.class);
-	}
-
+	/**
+	 * 数据统计下载
+	 * @param response
+	 * @param probedata
+	 * @throws ExecutionException
+	 * @throws InterruptedException
+	 */
 	@RequestMapping("/datadownload/{probedata}")
 	@RequiresPermissions("recordhourtracert:datadownload")
 	public void reportDownload(HttpServletResponse response, @PathVariable String probedata) throws ExecutionException, InterruptedException {

@@ -47,25 +47,14 @@ public class ReportPolicyController {
 	private RecordWebVideoService recordWebVideoService;
 	@Autowired
 	private RecordGameService recordGameService;
-	/**
-	 * 列表
-	 */
-	@RequestMapping("/list")
-	@RequiresPermissions("reportpolicy:list")
-	public R list(@RequestParam Map<String, Object> params){
-		//查询列表数据
-        Query query = new Query(params);
-
-		List<ReportPolicyEntity> reportPolicyList = reportPolicyService.queryList(query);
-		int total = reportPolicyService.queryTotal(query);
-		
-		PageUtils pageUtil = new PageUtils(reportPolicyList, total, query.getLimit(), query.getPage());
-		
-		return R.ok().put("page", pageUtil);
-	}
 
 	/**
-	 * 定时报表
+	 * 数据报表列表
+	 * @param reportdata
+	 * @param page
+	 * @param limit
+	 * @return R
+	 * @throws Exception
 	 */
 	@RequestMapping("/reportlist")
 	@RequiresPermissions("reportpolicy:reportlist")
@@ -93,6 +82,12 @@ public class ReportPolicyController {
 		return R.ok().put("page", pageUtil);
 	}
 
+	/**
+	 * 下载数据报表
+	 * @param response
+	 * @param probedata
+	 * @throws RRException
+	 */
 	@RequestMapping("/download/{probedata}")
 	@RequiresPermissions("reportpolicy:download")
 	public void downloadProbe(HttpServletResponse response, @PathVariable String probedata) throws RRException {
@@ -106,14 +101,6 @@ public class ReportPolicyController {
 		ReportPolicyEntity detail = reportPolicyService.queryObject(Integer.parseInt(map.get("id").toString()));
 		int service = detail.getServiceType();
 		int queryType = detail.getQueryType();
-//		String startDate = "";
-//		String terminalDate = "";
-//		try {
-//			startDate=reportPolicyService.strToDateFormat(reportdata[1].toString());
-//			terminalDate=reportPolicyService.strToDateFormat(reportdata[2].toString());
-//		}catch (Exception e) {
-//			e.printStackTrace();
-//		}
 
 		map.put("probe_id",detail.getProbeId());
 		map.put("service_type",detail.getServiceType());
@@ -205,9 +192,11 @@ public class ReportPolicyController {
 
 		}
 	}
-	
+
 	/**
-	 * 信息
+	 * 根据id筛选
+	 * @param id
+	 * @return R
 	 */
 	@RequestMapping("/info/{id}")
 	@RequiresPermissions("reportpolicy:info")
@@ -216,9 +205,11 @@ public class ReportPolicyController {
 		
 		return R.ok().put("reportPolicy", reportPolicy);
 	}
-	
+
 	/**
 	 * 保存
+	 * @param reportPolicy
+	 * @return R
 	 */
 	@RequestMapping("/save")
 	@RequiresPermissions("reportpolicy:save")
@@ -230,9 +221,11 @@ public class ReportPolicyController {
 			return R.ok();
 		}
 	}
-	
+
 	/**
 	 * 修改
+	 * @param reportPolicy
+	 * @return R
 	 */
 	@RequestMapping("/update")
 	@RequiresPermissions("reportpolicy:update")
@@ -244,15 +237,16 @@ public class ReportPolicyController {
 			return R.ok();
 		}
 	}
-	
+
 	/**
 	 * 删除
+	 * @param ids
+	 * @return R
 	 */
 	@RequestMapping("/delete")
 	@RequiresPermissions("reportpolicy:delete")
 	public R delete(@RequestBody Integer[] ids){
 		reportPolicyService.deleteBatch(ids);
-		
 		return R.ok();
 	}
 	

@@ -24,15 +24,18 @@ import java.util.Map;
 public class TargetGroupController {
 	@Autowired
 	private TargetGroupService targetGroupService;
-	
+
 	/**
-	 * 列表
+	 * 测试目标组列表
+	 * @param tgdata
+	 * @param page
+	 * @param limit
+	 * @return R
+	 * @throws Exception
 	 */
 	@RequestMapping("/list")
 	@RequiresPermissions("targetgroup:list")
 	public R list(String tgdata, Integer page, Integer limit) throws Exception {
-		//查询列表数据
-
 		Map<String, Object> map = new HashMap<>();
 		map.put("offset", (page - 1) * limit);
 		map.put("limit", limit);
@@ -49,7 +52,12 @@ public class TargetGroupController {
 	}
 
 	/**
-	 * ZTY用于查询列表显示在筛选项
+	 * 显示所有地址
+	 * @param groupdata
+	 * @param page
+	 * @param limit
+	 * @return R
+	 * @throws Exception
 	 */
 	@RequestMapping("/searchlist")
 	@RequiresPermissions("targetgroup:searchlist")
@@ -72,9 +80,10 @@ public class TargetGroupController {
 	}
 
 
-
 	/**
-	 * 信息
+	 * 根据id查询
+	 * @param id
+	 * @return
 	 */
 	@RequestMapping("/info/{id}")
 	@RequiresPermissions("targetgroup:info")
@@ -84,6 +93,11 @@ public class TargetGroupController {
 		return R.ok().put("targetGroup", targetGroup);
 	}
 
+	/**
+	 * 根据业务类型查询
+	 * @param spId
+	 * @return R
+	 */
 	@RequestMapping("/infoList/{spid}")
 	@RequiresPermissions("targetgroup:info")
 	public R infoList(@PathVariable("spid") Integer spId){
@@ -93,6 +107,8 @@ public class TargetGroupController {
 
 	/**
 	 * 保存
+	 * @param targetGroup
+	 * @return
 	 */
 	@SysLog("新建目标组")
 	@RequestMapping("/save")
@@ -105,9 +121,11 @@ public class TargetGroupController {
 			return R.ok();
 		}
 	}
-	
+
 	/**
 	 * 修改
+	 * @param targetGroup
+	 * @return R
 	 */
 	@SysLog("修改目标组")
 	@RequestMapping("/update")
@@ -120,9 +138,11 @@ public class TargetGroupController {
 			return R.ok();
 		}
 	}
-	
+
 	/**
 	 * 删除
+	 * @param ids
+	 * @return R
 	 */
 	@SysLog("删除目标组")
 	@RequestMapping("/delete")
