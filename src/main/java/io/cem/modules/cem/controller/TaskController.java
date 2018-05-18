@@ -129,7 +129,6 @@ public class TaskController {
         Map<String, Object> map = new HashMap<>();
         map.put("taskid", ids[0]);
         List<TaskDispatchEntity> taskDispatchEntity = taskDispatchService.queryDispatchList(map);
-        int result = 0;
         Properties prop = new Properties();
         try {
             InputStream in = new BufferedInputStream(new FileInputStream(PropertiesUtils.class.getClassLoader().getResource("cem.properties").getPath()));
@@ -138,14 +137,20 @@ public class TaskController {
             throw new RRException("配置文件配置有误，请重新配置");
         }
         if (taskDispatchEntity != null && taskDispatchEntity.size() != 0) {
+            int flag = 0;
+            int result;
             try {
             for (int i = 0; i < taskDispatchEntity.size(); i++) {
-                result = BypassHttps.sendRequestIgnoreSSL("DELETE", prop.getProperty("socketAddress") +"/tasks/" + taskDispatchEntity.get(i).getId());
+                result = BypassHttps.sendRequestIgnoreSSL("DELETE", prop.getProperty("socketAddress") +"/web/v1/tasks/" + taskDispatchEntity.get(i).getId());
+                if(result ==401){
+                    return R.error(404,"token失效，系统已重新获取，请重试");
+                }
+                flag += result;
             }
             }catch (Exception e){
-                return R.error(404, "该任务有误，暂时无法删除");
+                return R.error(404, "删除失败");
             }
-            if (result != 0 & result != 500) {
+            if (flag == 0) {
                 taskService.deleteBatch(ids);
             } else {
                 return R.error(404, "该任务有误，暂时无法删除");

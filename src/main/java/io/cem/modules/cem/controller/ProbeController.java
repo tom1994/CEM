@@ -238,17 +238,20 @@ public class ProbeController {
     @RequiresPermissions("probe:reboot")
     public R reboot(@RequestBody Integer[] ids) {
         int result;
-        try{
+        try {
             Properties prop = new Properties();
-                InputStream in = new BufferedInputStream(new FileInputStream(PropertiesUtils.class.getClassLoader().getResource("cem.properties").getPath()));
-                prop.load(in);
-        for (int id : ids) {
-            result = BypassHttps.sendRequestIgnoreSSL("GET", prop.getProperty("socketAddress") +"/probes/" + id + "/restart");
-            if (result == 200 || result == 206) {
-            } else {
-                return R.error(404, "id为"+id+"的探针重启失败，请联系管理员");
+            InputStream in = new BufferedInputStream(new FileInputStream(PropertiesUtils.class.getClassLoader().getResource("cem.properties").getPath()));
+            prop.load(in);
+            for (int id : ids) {
+                result = BypassHttps.sendRequestIgnoreSSL("GET", prop.getProperty("socketAddress") + "/web/v1/probes/" + id + "/restart");
+                if (result == 200 || result == 206) {
+                } else if (result == 401) {
+                    return R.error(300, "token失效，系统已重新获取，请重试");
+                } else {
+                    return R.error(404, probeService.queryObject(id).getName() + "重启失败，请联系管理员");
+                }
             }
-        }}catch (Exception e){
+        } catch (Exception e) {
             return R.error(500, "探针重启失败，未知错误");
         }
         return R.ok("探针重启成功！");
@@ -267,13 +270,15 @@ public class ProbeController {
         try {
             InputStream in = new BufferedInputStream(new FileInputStream(PropertiesUtils.class.getClassLoader().getResource("cem.properties").getPath()));
             prop.load(in);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new RRException("配置文件配置有误，请重新配置");
         }
         int result;
         for (int id : ids) {
-            result = BypassHttps.sendRequestIgnoreSSL("DELETE", prop.getProperty("socketAddress") +"/probes/" + id + "/unregister/1");
-            if (result == 200) {
+            result = BypassHttps.sendRequestIgnoreSSL("DELETE", prop.getProperty("socketAddress") + "/web/v1/probes/" + id + "/unregister/1");
+            if (result == 200 | result == 206) {
+            } else if (result == 401) {
+                return R.error(300, "token失效，系统已重新获取，请重试");
             } else {
                 return R.error(404, "删除探针失败");
             }
