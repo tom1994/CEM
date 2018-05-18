@@ -310,7 +310,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						icmpPing.setPingIcmpJitterStd(pingList.get(i).getJitterStd());
 						icmpPing.setPingIcmpJitterVar(pingList.get(i).getJitterVar());
 						icmpPing.setPingIcmpLossRate(pingList.get(i).getLossRate());
-						icmpPing.setScore(score);
+						icmpPing.setScore(score*(1-(icmpPing.getFail()/icmpPing.getTotal())));
 						icmpPing.setBase(Double.parseDouble(pros.getValue("ping_icmp")));
 
 						pingIcmp.add(icmpPing);
@@ -566,7 +566,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						tcpPing.setPingTcpJitterStd(pingList.get(i).getJitterStd());
 						tcpPing.setPingTcpJitterVar(pingList.get(i).getJitterVar());
 						tcpPing.setPingTcpLossRate(pingList.get(i).getLossRate());
-						tcpPing.setScore(score);
+						tcpPing.setScore(score*(1-(tcpPing.getFail()/tcpPing.getTotal())));
 						tcpPing.setBase(Double.parseDouble(pros.getValue("ping_tcp")));
 
 						pingTcp.add(tcpPing);
@@ -822,7 +822,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						udpPing.setPingUdpJitterStd(pingList.get(i).getJitterStd());
 						udpPing.setPingUdpJitterVar(pingList.get(i).getJitterVar());
 						udpPing.setPingUdpLossRate(pingList.get(i).getLossRate());
-						udpPing.setScore(score);
+						udpPing.setScore(score*(1-(udpPing.getFail()/udpPing.getTotal())));
 						udpPing.setBase(Double.parseDouble(pros.getValue("ping_udp")));
 
 						pingUdp.add(udpPing);
@@ -1069,7 +1069,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						icmpTracert.setRecordTime(tracertList.get(i).getRecordTime());
 						icmpTracert.setFail(tracertList.get(i).getFail());
 						icmpTracert.setTotal(tracertList.get(i).getTotal());
-						icmpTracert.setScore(score);
+						icmpTracert.setScore(score*(1-(icmpTracert.getFail()/icmpTracert.getTotal())));
 						icmpTracert.setTracertIcmpDelay(tracertList.get(i).getDelay());
 						icmpTracert.setTracertIcmpDelayStd(tracertList.get(i).getDelayStd());
 						icmpTracert.setTracertIcmpDelayVar(tracertList.get(i).getDelayVar());
@@ -1330,7 +1330,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						tcpTracert.setTracertTcpJitterStd(tracertList.get(i).getJitterStd());
 						tcpTracert.setTracertTcpJitterVar(tracertList.get(i).getJitterVar());
 						tcpTracert.setTracertTcpLossRate(tracertList.get(i).getLossRate());
-						tcpTracert.setScore(score);
+						tcpTracert.setScore(score*(1-(tcpTracert.getFail()/tcpTracert.getTotal())));
 						tcpTracert.setBase(Double.parseDouble(pros.getValue("tr_tcp")));
 
 						tracertUdp.add(tcpTracert);

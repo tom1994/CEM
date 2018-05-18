@@ -1575,7 +1575,7 @@ function broswer(val) {
                         row.push(fixed(item.webpagePageFileDelay));
                         row.push(fixed(item.webpageRedirectDelay));
                         row.push(fixed(item.webpageAboveFoldDelay));
-                        row.push(fixed(item.loadDelay));
+                        row.push(fixed(item.webpageLoadDelay));
                         row.push(fixed(item.webpageDownloadRate));
                         rows.push(row);
 

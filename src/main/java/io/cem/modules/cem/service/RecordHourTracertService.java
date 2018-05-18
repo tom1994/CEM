@@ -15,8 +15,18 @@ public interface RecordHourTracertService {
 	
 	List<RecordHourTracertEntity> queryList(Map<String, Object> map);
 
+	/**
+	 * 定时任务
+	 * @param map
+	 * @return List<RecordHourTracertEntity>
+	 */
 	List<RecordHourTracertEntity> queryTracert(Map<String,Object> map);
 
+	/**
+	 *
+	 * @param map
+	 * @return
+	 */
 	Future<List<RecordHourTracertEntity>> queryTracertList(Map<String, Object> map);
 
 	Future<List<RecordHourTracertEntity>> queryTargetHourList(Map<String, Object> map);
