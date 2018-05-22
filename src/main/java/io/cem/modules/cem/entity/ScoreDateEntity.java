@@ -4,6 +4,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+/**
+ * 时间信息
+ */
 public class ScoreDateEntity {
     //地市
     private String cityName;

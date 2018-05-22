@@ -6,7 +6,7 @@ import java.util.Date;
 
 
 /**
- *
+ * 告警模版
  */
 public class AlarmTemplateEntity implements Serializable {
 	private static final long serialVersionUID = 1L;

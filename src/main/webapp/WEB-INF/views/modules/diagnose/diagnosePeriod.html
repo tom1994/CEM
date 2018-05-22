@@ -6,6 +6,8 @@
     #parse("cemHeader.html")  <!--导入CSS和js文件-->
     <link href="${rc.contextPath}/statics/css/formStyle.css" rel="stylesheet">
     <link href="${rc.contextPath}/statics/css/loading.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/fixedheader/3.1.3/css/fixedHeader.dataTables.min.css" rel="stylesheet">
+
     <meta charset="UTF-8">
     <title>Title</title>
     <style>
@@ -220,48 +222,48 @@
                 <h4>数据明细</h4>
             </div>
             <div class="ibox-content">
-                <div class="row pre-scrollable">
+                <div class="row ">
                     <div id="table" style="margin-top: 2px !important;">
                         <data-table :scoredata="filteredData" style="display: none"></data-table>
-                        <table class="table table-bordered " id="ping_table" style="margin-top: 2px!important;"></table>
-                        <table class="table table-bordered " id="sla_table" style="margin-top: 2px!important;"></table>
-                        <table class="table table-bordered " id="web_table" style="margin-top: 2px!important;"></table>
-                        <table class="table table-bordered " id="download_table" style="margin-top: 2px!important;"></table>
-                        <table class="table table-bordered " id="video_table" style="margin-top: 2px!important;"></table>
-                        <table class="table table-bordered " id="game_table" style="margin-top: 2px!important;"></table>
-                        <!--<div class="record-table ibox-content" id="ping_record">-->
-                            <!--<div class="row" style="overflow:auto">     &lt;!&ndash;表格 verflow-x: scroll超出滚动&ndash;&gt;-->
-                                <!--<table class="table table-bordered " id="pingdata_table" style="margin-top: 2px!important;"></table>-->
-                            <!--</div>-->
-                        <!--</div>-->
+                        <!--<table class="table table-bordered " id="ping_table" style="margin-top: 2px!important;"></table>-->
+                        <!--<table class="table table-bordered " id="sla_table" style="margin-top: 2px!important;"></table>-->
+                        <!--<table class="table table-bordered " id="web_table" style="margin-top: 2px!important;"></table>-->
+                        <!--<table class="table table-bordered " id="download_table" style="margin-top: 2px!important;"></table>-->
+                        <!--<table class="table table-bordered " id="video_table" style="margin-top: 2px!important;"></table>-->
+                        <!--<table class="table table-bordered " id="game_table" style="margin-top: 2px!important;"></table>-->
+                        <div class="record-table ibox-content" id="ping_record">
+                            <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                                <table class="table table-bordered " id="pingdata_table" style="margin-top: 2px!important;"></table>
+                            </div>
+                        </div>
 
-                        <!--<div class="record-table ibox-content service_unselected" id="sla_record">-->
-                            <!--<div class="row" style="overflow:auto">     &lt;!&ndash;表格 verflow-x: scroll超出滚动&ndash;&gt;-->
-                                <!--<table class="table table-bordered " id="sladata_table" style="margin-top: 2px!important;"></table>-->
-                            <!--</div>-->
-                        <!--</div>-->
+                        <div class="record-table ibox-content service_unselected" id="sla_record">
+                            <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                                <table class="table table-bordered " id="sladata_table" style="margin-top: 2px!important;"></table>
+                            </div>
+                        </div>
 
-                        <!--<div class="record-table ibox-content service_unselected" id="webpage_record">-->
-                            <!--<div class="row" style="overflow:auto">     &lt;!&ndash;表格 verflow-x: scroll超出滚动&ndash;&gt;-->
-                                <!--<table class="table table-bordered" id="webpagedata_table"></table>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<div class="record-table ibox-content service_unselected" id="webdownload_record">-->
-                            <!--<div class="row" style="overflow:auto">     &lt;!&ndash;表格 verflow-x: scroll超出滚动&ndash;&gt;-->
-                                <!--<table class="table table-bordered " id="webdownloaddata_table" style="margin-top: 2px!important;"></table>-->
-                            <!--</div>-->
-                        <!--</div>-->
+                        <div class="record-table ibox-content service_unselected" id="webpage_record">
+                            <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                                <table class="table table-bordered" id="webpagedata_table"></table>
+                            </div>
+                        </div>
+                        <div class="record-table ibox-content service_unselected" id="webdownload_record">
+                            <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                                <table class="table table-bordered " id="webdownloaddata_table" style="margin-top: 2px!important;"></table>
+                            </div>
+                        </div>
 
-                        <!--<div class="record-table ibox-content service_unselected" id="webvideo_record">-->
-                            <!--<div class="row" style="overflow:auto">     &lt;!&ndash;表格 verflow-x: scroll超出滚动&ndash;&gt;-->
-                                <!--<table class="table table-bordered " id="webvideodata_table" style="margin-top: 2px!important;"></table>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<div class="record-table ibox-content service_unselected" id="game1_record">-->
-                            <!--<div class="row" style="overflow:auto">     &lt;!&ndash;表格 verflow-x: scroll超出滚动&ndash;&gt;-->
-                                <!--<table class="table table-bordered" id="game1data_table"></table>-->
-                            <!--</div>-->
-                        <!--</div>-->
+                        <div class="record-table ibox-content service_unselected" id="webvideo_record">
+                            <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                                <table class="table table-bordered " id="webvideodata_table" style="margin-top: 2px!important;"></table>
+                            </div>
+                        </div>
+                        <div class="record-table ibox-content service_unselected" id="game1_record">
+                            <div class="row" style="overflow:auto">     <!--表格 verflow-x: scroll超出滚动-->
+                                <table class="table table-bordered" id="game1data_table"></table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -469,8 +471,10 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
 </div>
+<script src="https://cdn.datatables.net/fixedheader/3.1.3/js/dataTables.fixedHeader.min.js"></script>
 <script type="text/javascript" src="${rc.contextPath}/statics/js/modules/diagnose/diagnosePeriod.js?_${date.systemTime}"></script>
 <script type="text/javascript" src="${rc.contextPath}/statics/js/loading.js"></script>
+
 </body>
 <script>
     /** 拖拽模态框*/

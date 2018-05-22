@@ -6,10 +6,7 @@ import java.util.Date;
 
 
 /**
- * 
- * 
- * @author Miao
- * @date 2017-10-12 17:12:46
+ * 探针组
  */
 public class ProbeGroupEntity implements Serializable {
 	private static final long serialVersionUID = 1L;

@@ -299,7 +299,7 @@
                                     <button type="button" class="btn btn-sm btn-success"
                                             onclick="delete_All()">
                                         <span
-                                                class="glyphicon glyphicon-trash Btn"></span>批量删除
+                                                class="glyphicon glyphicon-trash Btn"></span>删除
                                     </button>
                                     #end
                                     #if($shiro.hasPermission("probe:update"))
@@ -465,7 +465,7 @@
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                                     <select class="form-control input clear" name="access_layer"
                                                             id="access_layer">
-                                                        <option value="" selected>--请选择--</option>
+                                                        <option value="0" selected>--请选择--</option>
                                                         <option v-for="item in accessLayers"
                                                                 v-bind:value="item.message.layerTag">
                                                             {{ item.message.layerName }}
@@ -477,7 +477,7 @@
                                                 <div class="col-lg-2 col-md-2 col-sm-2 form_border">
                                                     <select id="upstream" class="form-control selectdata"
                                                             name="upstream">
-                                                        <option value="">--请选择--</option>
+                                                        <option value="0">--请选择--</option>
                                                         <option v-for="item in upstreams"
                                                                 v-bind:value="item.message.id">
                                                             {{item.message.name}}
@@ -820,7 +820,7 @@
                     <div class="modal fade" id="myModal_dispatch" tabindex="-1" role="dialog"
                          aria-labelledby="myModalLabel" aria-hidden="" true >
                         <div class="modal-dialog">
-                            <div class="modal-content" style="height: 100% ;overflow: auto;width: 760px">
+                            <div class="modal-content" style="height: 100% ;width: 760px">
                                 <!--position: fixed;-->
                                 <div class="modal-header" style="width: 760px; z-index:2;background: white;">
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">

@@ -66,12 +66,6 @@ public class TaskDispatchServiceImpl implements TaskDispatchService {
     }
 
     @Override
-    public int queryCurrentDispatch(Integer id) {
-        return taskDispatchDao.queryCurrentDispatch(id);
-    }
-
-
-    @Override
     public int taskQueryDispatchTotal(Map<String, Object> map) {
         return taskDispatchDao.taskQueryDispatchTotal(map);
     }
@@ -121,26 +115,12 @@ public class TaskDispatchServiceImpl implements TaskDispatchService {
         taskDispatchDao.delete(id);
     }
 
-    @Override
-    public void cancelTask(Integer id) {
-        taskDispatchDao.cancelTask(id);
-    }
 
     @Override
     public void deleteBatch(Integer[] ids) {
         taskDispatchDao.deleteBatch(ids);
     }
 
-    @Override
-    public String queryTargetBatch(String[] targetIdList) {
-        String[] targetNameList = taskDispatchDao.queryTargetBatch(targetIdList);
-        String targetName = "";
-        for (int i = 0; i < targetNameList.length - 1; i++) {
-            targetName = targetName + targetNameList[i] + ",";
-        }
-        targetName = targetName + targetNameList[targetNameList.length - 1];
-        return targetName;
-    }
 
     @Override
     public List<TaskDispatchEntity> transformTarget(List<TaskDispatchEntity> dispatchList) {

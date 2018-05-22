@@ -3,8 +3,8 @@ package io.cem.modules.cem.entity;
 import java.io.Serializable;
 
 
-
 /**
+ *层级
  */
 public class LayerEntity implements Serializable {
 	private static final long serialVersionUID = 1L;

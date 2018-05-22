@@ -2,6 +2,9 @@ package io.cem.modules.cem.entity;
 
 import java.util.Date;
 
+/**
+ * 区域信息计算
+ */
 public class ScoreAreaEntity {
     //地市
     private String cityName;

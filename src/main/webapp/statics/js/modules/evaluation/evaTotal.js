@@ -120,7 +120,9 @@ function sendAjax(param) {
         success: function (result) {
             ping_list=result.scoreList
             removeLoading('test');
-            ping(ping_list);
+             $("#pingdata_table").dataTable().fnDestroy();
+            ping_table.reset(ping_list);
+
             var arr=[]
             for(var i=0;i<ping_list.length;i++){
                 arr.push(parseFloat(ping_list[i].score));
@@ -163,7 +165,8 @@ function sendAjax(param) {
         success: function (result) {
             quality_list=result.scoreList
             removeLoading('quality');
-            quality(quality_list);
+            $("#qualitydata_table").dataTable().fnDestroy();
+            quality_table.reset(quality_list);
             var arr=[]
             for(var i=0;i<quality_list.length;i++){
                 arr.push(parseFloat(quality_list[i].score));
@@ -205,7 +208,8 @@ function sendAjax(param) {
             //console.log(result);
             page_list=result.scoreList
             removeLoading('page');
-            broswer(page_list);
+            $("#broswerdata_table").dataTable().fnDestroy();
+            broswer_table.reset(page_list);
             var arr=[]
             for(var i=0;i<page_list.length;i++){
                 arr.push(parseFloat(page_list[i].score));
@@ -245,9 +249,10 @@ function sendAjax(param) {
         data: param,  //传入组装的参数
         dataType: "json",
         success: function (result) {
-            download_list=result.scoreList
+            download_list=result.scoreList;
             removeLoading('download');
-            download(download_list)
+            $("#downloaddata_table").dataTable().fnDestroy();
+            download_table.reset(download_list);
             for (let i = 0; i < options.series.length; i++) {
                 options.series[i].data = [];
             }
@@ -288,7 +293,8 @@ function sendAjax(param) {
         success: function (result) {
             video_list=result.scoreList
             removeLoading('video');
-            video(video_list);
+            $("#videodata_table").dataTable().fnDestroy();
+            video_table.reset(video_list);
             var arr=[]
             for(var i=0;i<video_list.length;i++){
                 arr.push(parseFloat(video_list[i].score));
@@ -329,7 +335,8 @@ function sendAjax(param) {
         success: function (result) {
             game_list=result.scoreList;
             removeLoading('game');
-            game(game_list);
+            $("#gamedata_table").dataTable().fnDestroy();
+            game_table.reset(game_list);
             var arr=[]
             for(var i=0;i<game_list.length;i++){
                 arr.push(parseFloat(game_list[i].score));
@@ -634,7 +641,7 @@ var connection=new Vue({
             dataType: "json",
             success: function (result) {
                 ping_list = result.scoreList
-                ping(ping_list);
+                ping_table.reset(ping_list);
                 removeLoading('test');
                 var arr=[]
                 for(var i=0;i<ping_list.length;i++){
@@ -697,7 +704,7 @@ var quality_service = new Vue({
             success: function (result) {
                 quality_list=result.scoreList
                     removeLoading('quality');
-                quality(quality_list);
+               quality_table.reset(quality_list);
                 var arr=[]
                 for(var i=0;i<quality_list.length;i++){
                     arr.push(parseFloat(quality_list[i].score));
@@ -758,7 +765,7 @@ var download_service = new Vue({
             success: function (result) {
                 download_list=result.scoreList
                 removeLoading('download');
-                download(download_list);
+                download_table.reset(download_list);
                 var arr=[]
                 for(var i=0;i<download_list.length;i++){
                     arr.push(parseFloat(download_list[i].score));
@@ -818,7 +825,7 @@ var page_service = new Vue({
             success: function (result) {
                 page_list=result.scoreList
                     removeLoading('page');
-                broswer(page_list);
+                broswer_table.reset(page_list);
                 var arr=[]
                 for(var i=0;i<page_list.length;i++){
                     arr.push(parseFloat(page_list[i].score));
@@ -877,8 +884,8 @@ var video_service = new Vue({
             dataType: "json",
             success: function (result) {
                 video_list=result.scoreList
-                    removeLoading('video');
-                video(video_list);
+                 removeLoading('video');
+                video_table.reset(video_list);
                 var arr=[]
                 for(var i=0;i<video_list.length;i++){
                     arr.push(parseFloat(video_list[i].score));
@@ -939,7 +946,7 @@ var game_service = new Vue({
             success: function (result) {
                 game_list=result.scoreList
                     removeLoading('video');
-                game(game_list);
+                game_table.reset(game_list);
                 var arr=[]
                 for(var i=0;i<game_list.length;i++){
                     arr.push(parseFloat(game_list[i].score));
@@ -1068,98 +1075,83 @@ function   game_info() {     /*监听修改触发事件*/
     $("#myModal_game").modal('show')
 }
 
-//网络连通性表格
-function ping(val) {
-    var probeContent=val
-    var ping_table=new Vue({
-        el:'#pingdata_table',
-        data: {
-            headers: [
-                {title: '<div style="width:10px"></div>'},
-                {title: '<div style="width:110px">探针名称</div>'},
-                {title: '<div style="width:130px">时间</div>'},
-                {title: '<div style="width:70px">综合分数</div>'},
-                {title: '<div style="width:100px">往返时延(ms)</div>'},
-                {title: '<div style="width:100px">时延标准差(ms)</div>'},
-                {title: '<div style="width:100px">时延方差(ms)</div>'},
-                {title: '<div style="width:100px">抖动(ms)</div>'},
-                {title: '<div style="width:100px">抖动标准差(ms)</div>'},
-                {title: '<div style="width:100px">抖动方差(ms)</div>'},
-                {title: '<div style="width:100px">丢包率(%)</div>'},
-                {title: '<div style="width:100px">往返时延(ms)</div>'},
-                {title: '<div style="width:100px">时延标准差(ms)</div>'},
-                {title: '<div style="width:100px">时延方差(ms)</div>'},
-                {title: '<div style="width:100px">抖动(ms)</div>'},
-                {title: '<div style="width:100px">抖动标准差(ms)</div>'},
-                {title: '<div style="width:100px">抖动方差(ms)</div>'},
-                {title: '<div style="width:100px">丢包率(%)</div>'},
-                {title: '<div style="width:100px">往返时延(ms)</div>'},
-                {title: '<div style="width:100px">时延标准差(ms)</div>'},
-                {title: '<div style="width:100px">时延方差(ms)</div>'},
-                {title: '<div style="width:100px">抖动(ms)</div>'},
-                {title: '<div style="width:100px">抖动标准差(ms)</div>'},
-                {title: '<div style="width:100px">抖动方差(ms)</div>'},
-                {title: '<div style="width:100px">丢包率(%)</div>'},
-                {title: '<div style="width:100px">往返时延(ms)</div>'},
-                {title: '<div style="width:100px">时延标准差(ms)</div>'},
-                {title: '<div style="width:100px">时延方差(ms)</div>'},
-                {title: '<div style="width:100px">抖动(ms)</div>'},
-                {title: '<div style="width:100px">抖动标准差(ms)</div>'},
-                {title: '<div style="width:100px">抖动方差(ms)</div>'},
-                {title: '<div style="width:100px">丢包率(%)</div>'},
-                {title: '<div style="width:100px">往返时延(ms)</div>'},
-                {title: '<div style="width:100px">时延标准差(ms)</div>'},
-                {title: '<div style="width:100px">时延方差(ms)</div>'},
-                {title: '<div style="width:100px">抖动</div>'},
-                {title: '<div style="width:100px">抖动标准差(ms)</div>'},
-                {title: '<div style="width:100px">抖动方差(ms)</div>'},
-                {title: '<div style="width:100px">丢包率(%)</div>'},
-            ],
-            rows: [],
-            dtHandle: null,
-        },
-        methods: {
-            reset: function () {
-                let vm = this;
-                vm.probedata = {};
-                /*清空probedata*/
-                vm.dtHandle.clear();
-                //console.log("重置");
-                vm.dtHandle.draw();
-                /*重置*/
-            },
-            currReset: function () {
-                let vm = this;
-                vm.dtHandle.clear();
-                //console.log("当前页面重绘");
-                vm.dtHandle.draw(false);
-                /*当前页面重绘*/
-            },
-            redraw: function () {
-                let vm = this;
-                vm.dtHandle.clear();
-                //console.log("页面重绘");
-                vm.dtHandle.draw();
-                /*重绘*/
-            }
-        },
-        mounted: function(obj) {
+
+
+var ping_table=new Vue({
+    el:'#pingdata_table',
+    data: {
+        headers: [
+            {title: '<div style="width:10px"></div>'},
+            {title: '<div style="width:110px">探针名称</div>'},
+            {title: '<div style="width:130px">时间</div>'},
+            {title: '<div style="width:70px">综合分数</div>'},
+            {title: '<div style="width:100px">往返时延(ms)</div>'},
+            {title: '<div style="width:100px">时延标准差(ms)</div>'},
+            {title: '<div style="width:100px">时延方差(ms)</div>'},
+            {title: '<div style="width:100px">抖动(ms)</div>'},
+            {title: '<div style="width:100px">抖动标准差(ms)</div>'},
+            {title: '<div style="width:100px">抖动方差(ms)</div>'},
+            {title: '<div style="width:100px">丢包率(%)</div>'},
+            {title: '<div style="width:100px">往返时延(ms)</div>'},
+            {title: '<div style="width:100px">时延标准差(ms)</div>'},
+            {title: '<div style="width:100px">时延方差(ms)</div>'},
+            {title: '<div style="width:100px">抖动(ms)</div>'},
+            {title: '<div style="width:100px">抖动标准差(ms)</div>'},
+            {title: '<div style="width:100px">抖动方差(ms)</div>'},
+            {title: '<div style="width:100px">丢包率(%)</div>'},
+            {title: '<div style="width:100px">往返时延(ms)</div>'},
+            {title: '<div style="width:100px">时延标准差(ms)</div>'},
+            {title: '<div style="width:100px">时延方差(ms)</div>'},
+            {title: '<div style="width:100px">抖动(ms)</div>'},
+            {title: '<div style="width:100px">抖动标准差(ms)</div>'},
+            {title: '<div style="width:100px">抖动方差(ms)</div>'},
+            {title: '<div style="width:100px">丢包率(%)</div>'},
+            {title: '<div style="width:100px">往返时延(ms)</div>'},
+            {title: '<div style="width:100px">时延标准差(ms)</div>'},
+            {title: '<div style="width:100px">时延方差(ms)</div>'},
+            {title: '<div style="width:100px">抖动(ms)</div>'},
+            {title: '<div style="width:100px">抖动标准差(ms)</div>'},
+            {title: '<div style="width:100px">抖动方差(ms)</div>'},
+            {title: '<div style="width:100px">丢包率(%)</div>'},
+            {title: '<div style="width:100px">往返时延(ms)</div>'},
+            {title: '<div style="width:100px">时延标准差(ms)</div>'},
+            {title: '<div style="width:100px">时延方差(ms)</div>'},
+            {title: '<div style="width:100px">抖动</div>'},
+            {title: '<div style="width:100px">抖动标准差(ms)</div>'},
+            {title: '<div style="width:100px">抖动方差(ms)</div>'},
+            {title: '<div style="width:100px">丢包率(%)</div>'},
+        ],
+        rows: [],
+        dtHandle: null,
+    },
+    methods: {
+        reset: function (probeContent) {
             let vm = this;
-            // Instantiate the datatable and store the reference to the instance in our dtHandle element.
             vm.dtHandle = $(this.$el).DataTable({
                 columns: vm.headers,
                 data: vm.rows,
+                searching: false,
+                paging: false,
+                // serverSide: true,
+                info: false,
+                scrollY:  300,
+                scrollX:  true,
+                scrollCollapse: true,
+                oLanguage: {
+                    sEmptyTable: "No data available in table",
+                    sZeroRecords:"No data available in table",
+                },
+                sDom: 'Rfrtlip', /*显示在左下角*/
                 createdRow: function ( row, data, index ) {
 
-                    var trs=$("#pingdata_table>thead tr");
+                    var trs=$("#pingdata_table_wrapper>.dataTables_scroll>.dataTables_scrollHead>.dataTables_scrollHeadInner>table>thead>tr");
                     if(trs.length>1){
                         return
-                    }else if (index == 0) { //生成了行之后，开始生成表头>>>
+                    } else if (index == 0) { //生成了行之后，开始生成表头>>>
                         var innerTh = '<tr><th rowspan="1"></th>';
                         innerTh +='<th colspan="1"></th>';
                         innerTh +='<th colspan="1"></th>';
                         innerTh +='<th colspan="1"></th>';
-                        var columnsCount = 38;//具体情况
                         innerTh +='<th colspan="7" style="text-align: center">ping(ICMP)</th>';
                         innerTh +='<th colspan="7" style="text-align: center">ping(TCP)</th>';
                         innerTh +='<th colspan="7" style="text-align: center">ping(UDP)</th>';
@@ -1168,31 +1160,10 @@ function ping(val) {
                         innerTh += '</tr>';
                         //table的id为"id_table"
                         document.getElementById('pingdata_table').insertRow(0);
-                        var $tr = $("#pingdata_table tr").eq(0);
-                        $tr.after(innerTh);
+                        var $tr = trs.eq(0);
+                        $tr.before(innerTh);
                     }
                 },
-                searching: false,
-                paging: false,
-                // serverSide: true,
-                info: false,
-                // scrollY:  300,
-                // scrollX:  true,
-                // scrollCollapse: true,
-                // fixedColumns:   {
-                //     leftColumns: 4
-                // },
-                // ordering: false, /*禁用排序功能*/
-                /*bInfo: false,*/
-                /*bLengthChange: false,*/    /*禁用Show entries*/
-                // scroll: false,
-                // scrollY: 200,
-                // scrollX: true,
-                oLanguage: {
-                    sEmptyTable: "No data available in table",
-                    sZeroRecords:"No data available in table",
-                },
-                sDom: 'Rfrtlip', /*显示在左下角*/
                 ajax: function (data, callback, settings) {
                     //封装请求参数
                     //ajax请求数据
@@ -1201,14 +1172,17 @@ function ping(val) {
                     // returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
                     // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
                     returnData.data = probeContent;//返回的数据列表
+                    if(probeContent.length==0){
+                        return
+                    }
                     // // 重新整理返回数据以匹配表格
                     var temp = cloneObj(probeContent);
                     for (let i = 0; i < temp.length; i++) {
-                        let date_token = val[i].recordDate.split("-");
+                        let date_token = probeContent[i].recordDate.split("-");
                         let year = parseInt(date_token[0]);
                         let month = parseInt(date_token[1]) - 1;
                         let day = parseInt(date_token[2]);
-                        let hour = parseInt(val[i].recordTime);
+                        let hour = parseInt(probeContent[i].recordTime);
                         if (isNaN(year) || isNaN(month) || isNaN(day)) {
                             continue;
                         }
@@ -1275,87 +1249,86 @@ function ping(val) {
                     });
                 }
             });
-        }
-
-    });
-}
-//网络质量表格
-function quality(val) {
-    var probeContent=val
-    var quality_table=new Vue({
-        el:'#qualitydata_table',
-        data: {
-            headers: [
-                {title: '<div style="width:10px"></div>'},
-                {title: '<div style="width:110px">探针名称</div>'},
-                {title: '<div style="width:130px">时间</div>'},
-                {title: '<div style="width:70px">综合分数</div>'},
-                {title: '<div style="width:100px">解析时延(ms)</div>'},
-                {title: '<div style="width:100px">成功率(%)</div>'},
-                {title: '<div style="width:100px">时延(ms)</div>'},
-                {title: '<div style="width:100px">往向时延(ms)</div>'},
-                {title: '<div style="width:100px">返向时延(ms)</div>'},
-                {title: '<div style="width:100px">抖动</div>'},
-                {title: '<div style="width:100px">往向抖动</div>'},
-                {title: '<div style="width:100px">返向抖动</div>'},
-                {title: '<div style="width:100px">丢包率</div>'},
-                {title: '<div style="width:100px">时延(ms)</div>'},
-                {title: '<div style="width:100px">往向时延(ms)</div>'},
-                {title: '<div style="width:100px">返向时延(ms)</div>'},
-                {title: '<div style="width:100px">抖动(ms)</div>'},
-                {title: '<div style="width:100px">往向抖动(ms)</div>'},
-                {title: '<div style="width:100px">返向抖动(ms)</div>'},
-                {title: '<div style="width:100px">丢包率(%)</div>'},
-
-
-
-                {title: '<div style="width:100px">分配时延(ms)</div>'},
-                {title: '<div style="width:100px">成功率(%)</div>'},
-
-                {title: '<div style="width:100px">解析时延(ms)</div>'},
-                {title: '<div style="width:100px">掉线率(%)</div>'},
-                {title: '<div style="width:100px">成功率(%)</div>'},
-
-                {title: '<div style="width:100px">认证时延(ms)</div>'},
-                {title: '<div style="width:100px">认证成功率(%)</div>'},
-
-            ],
-            rows: [],
-            dtHandle: null,
         },
-        methods: {
-            reset: function () {
-                let vm = this;
-                vm.probedata = {};
-                /*清空probedata*/
-                vm.dtHandle.clear();
-                //console.log("重置");
-                vm.dtHandle.draw();
-                /*重置*/
-            },
-            currReset: function () {
-                let vm = this;
-                vm.dtHandle.clear();
-                //console.log("当前页面重绘");
-                vm.dtHandle.draw(false);
-                /*当前页面重绘*/
-            },
-            redraw: function () {
-                let vm = this;
-                vm.dtHandle.clear();
-                //console.log("页面重绘");
-                vm.dtHandle.draw();
-                /*重绘*/
-            }
-        },
-        mounted: function(obj) {
+        currReset: function () {
             let vm = this;
-            // Instantiate the datatable and store the reference to the instance in our dtHandle element.
+            vm.dtHandle.clear();
+            //console.log("当前页面重绘");
+            vm.dtHandle.draw(false);
+            /*当前页面重绘*/
+        },
+        redraw: function () {
+            let vm = this;
+            vm.dtHandle.clear();
+            //console.log("页面重绘");
+            vm.dtHandle.draw();
+            /*重绘*/
+        }
+    },
+    mounted: function(obj) {
+        let vm = this;
+        // Instantiate the datatable and store the reference to the instance in our dtHandle element.
+
+    }
+
+});
+
+var quality_table=new Vue({
+    el:'#qualitydata_table',
+    data: {
+        headers: [
+            {title: '<div style="width:10px"></div>'},
+            {title: '<div style="width:110px">探针名称</div>'},
+            {title: '<div style="width:130px">时间</div>'},
+            {title: '<div style="width:70px">综合分数</div>'},
+            {title: '<div style="width:100px">解析时延(ms)</div>'},
+            {title: '<div style="width:100px">成功率(%)</div>'},
+            {title: '<div style="width:100px">时延(ms)</div>'},
+            {title: '<div style="width:100px">往向时延(ms)</div>'},
+            {title: '<div style="width:100px">返向时延(ms)</div>'},
+            {title: '<div style="width:100px">抖动</div>'},
+            {title: '<div style="width:100px">往向抖动</div>'},
+            {title: '<div style="width:100px">返向抖动</div>'},
+            {title: '<div style="width:100px">丢包率</div>'},
+            {title: '<div style="width:100px">时延(ms)</div>'},
+            {title: '<div style="width:100px">往向时延(ms)</div>'},
+            {title: '<div style="width:100px">返向时延(ms)</div>'},
+            {title: '<div style="width:100px">抖动(ms)</div>'},
+            {title: '<div style="width:100px">往向抖动(ms)</div>'},
+            {title: '<div style="width:100px">返向抖动(ms)</div>'},
+            {title: '<div style="width:100px">丢包率(%)</div>'},
+
+
+
+            {title: '<div style="width:100px">分配时延(ms)</div>'},
+            {title: '<div style="width:100px">成功率(%)</div>'},
+
+            {title: '<div style="width:100px">解析时延(ms)</div>'},
+            {title: '<div style="width:100px">掉线率(%)</div>'},
+            {title: '<div style="width:100px">成功率(%)</div>'},
+
+            {title: '<div style="width:100px">认证时延(ms)</div>'},
+            {title: '<div style="width:100px">认证成功率(%)</div>'},
+
+        ],
+        rows: [],
+        dtHandle: null,
+    },
+    methods: {
+        reset: function (probeContent) {
+            let vm = this;
+            // vm.probedata = {};
+            // /*清空probedata*/
+            // vm.dtHandle.clear();
+            // //console.log("重置");
+            // vm.dtHandle.draw();
+            /*重置*/
             vm.dtHandle = $(this.$el).DataTable({
                 columns: vm.headers,
                 data: vm.rows,
                 createdRow: function ( row, data, index ) {
-                    var trs=$("#qualitydata_table>thead tr");
+                    var trs=$("#qualitydata_table_wrapper>.dataTables_scroll>.dataTables_scrollHead>.dataTables_scrollHeadInner>table>thead>tr");
+
                     if(trs.length>1){
                         return
                     }else if (index == 0) {
@@ -1374,8 +1347,8 @@ function quality(val) {
                         innerTh += '</tr>';
                         //table的id为"id_table"
                         document.getElementById('qualitydata_table').insertRow(0);
-                        var $tr = $("#qualitydata_table tr").eq(0);
-                        $tr.after(innerTh);
+                        var $tr = trs.eq(0);
+                        $tr.before(innerTh);
                     }
                 },
                 searching: false,
@@ -1386,7 +1359,9 @@ function quality(val) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
-
+                scrollY:  300,
+                scrollX:  true,
+                scrollCollapse: true,
                 oLanguage: {
                     sEmptyTable: "No data available in table",
                     sZeroRecords:"No data available in table",
@@ -1400,14 +1375,17 @@ function quality(val) {
                     // returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
                     // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
                     returnData.data = probeContent;//返回的数据列表
+                    if(probeContent.length==0){
+                        return
+                    }
                     // // 重新整理返回数据以匹配表格
                     var temp = cloneObj(probeContent);
                     for (let i = 0; i < temp.length; i++) {
-                        let date_token = val[i].recordDate.split("-");
+                        let date_token = probeContent[i].recordDate.split("-");
                         let year = parseInt(date_token[0]);
                         let month = parseInt(date_token[1]) - 1;
                         let day = parseInt(date_token[2]);
-                        let hour = parseInt(val[i].recordTime);
+                        let hour = parseInt(probeContent[i].recordTime);
                         if (isNaN(year) || isNaN(month) || isNaN(day)) {
                             continue;
                         }
@@ -1462,62 +1440,53 @@ function quality(val) {
                     });
                 }
             });
-        }
-
-    });
-}
-
-//网页浏览表格
-function broswer(val) {
-    var probeContent=val
-    var broswer_table=new Vue({
-        el:'#broswerdata_table',
-        data: {
-            headers: [
-                {title: '<div style="width:10px"></div>'},
-                {title: '<div style="width:110px">探针名称</div>'},
-                {title: '<div style="width:130px">时间</div>'},
-                {title: '<div style="width:70px">综合分数</div>'},
-                {title: '<div style="width:100px">DNS时延(ms)</div>'},
-                {title: '<div style="width:100px">连接时延(ms)</div>'},
-                {title: '<div style="width:100px">首字节时延(ms)</div>'},
-                {title: '<div style="width:120px">页面文件时延(ms)</div>'},
-                {title: '<div style="width:100px">重定向时延(ms)</div>'},
-                {title: '<div style="width:100px">首屏时延(ms)</div>'},
-                {title: '<div style="width:115px">页面加载时延(ms)</div>'},
-                {title: '<div style="width:100px">下载速率(KB/s)</div>'},
-            ],
-            rows: [],
-            dtHandle: null,
         },
-        methods: {
-            reset: function () {
-                let vm = this;
-                vm.probedata = {};
-                /*清空probedata*/
-                vm.dtHandle.clear();
-                //console.log("重置");
-                vm.dtHandle.draw();
-                /*重置*/
-            },
-            currReset: function () {
-                let vm = this;
-                vm.dtHandle.clear();
-                //console.log("当前页面重绘");
-                vm.dtHandle.draw(false);
-                /*当前页面重绘*/
-            },
-            redraw: function () {
-                let vm = this;
-                vm.dtHandle.clear();
-                //console.log("页面重绘");
-                vm.dtHandle.draw();
-                /*重绘*/
-            }
-        },
-        mounted: function(obj) {
+        currReset: function () {
             let vm = this;
-            // Instantiate the datatable and store the reference to the instance in our dtHandle element.
+            vm.dtHandle.clear();
+            //console.log("当前页面重绘");
+            vm.dtHandle.draw(false);
+            /*当前页面重绘*/
+        },
+        redraw: function () {
+            let vm = this;
+            vm.dtHandle.clear();
+            //console.log("页面重绘");
+            vm.dtHandle.draw();
+            /*重绘*/
+        }
+    },
+    mounted: function(obj) {
+        let vm = this;
+        // Instantiate the datatable and store the reference to the instance in our dtHandle element.
+
+    }
+
+});
+
+var broswer_table=new Vue({
+    el:'#broswerdata_table',
+    data: {
+        headers: [
+            {title: '<div style="width:10px"></div>'},
+            {title: '<div style="width:110px">探针名称</div>'},
+            {title: '<div style="width:130px">时间</div>'},
+            {title: '<div style="width:70px">综合分数</div>'},
+            {title: '<div style="width:100px">DNS时延(ms)</div>'},
+            {title: '<div style="width:100px">连接时延(ms)</div>'},
+            {title: '<div style="width:100px">首字节时延(ms)</div>'},
+            {title: '<div style="width:120px">页面文件时延(ms)</div>'},
+            {title: '<div style="width:100px">重定向时延(ms)</div>'},
+            {title: '<div style="width:100px">首屏时延(ms)</div>'},
+            {title: '<div style="width:115px">页面加载时延(ms)</div>'},
+            {title: '<div style="width:100px">下载速率(KB/s)</div>'},
+        ],
+        rows: [],
+        dtHandle: null,
+    },
+    methods: {
+        reset: function (probeContent) {
+            let vm = this;
             vm.dtHandle = $(this.$el).DataTable({
                 columns: vm.headers,
                 data: vm.rows,
@@ -1525,7 +1494,9 @@ function broswer(val) {
                 paging: false,
                 // serverSide: true,
                 info: false,
-
+                scrollY:  300,
+                scrollX:  true,
+                scrollCollapse: true,
                 // ordering: false, /*禁用排序功能*/
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
@@ -1543,14 +1514,17 @@ function broswer(val) {
                     // returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
                     // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
                     returnData.data = probeContent;//返回的数据列表
+                    if(probeContent.length==0){
+                        return
+                    }
                     // // 重新整理返回数据以匹配表格
                     var temp = cloneObj(probeContent);
                     for (let i = 0; i < temp.length; i++) {
-                        let date_token = val[i].recordDate.split("-");
+                        let date_token = probeContent[i].recordDate.split("-");
                         let year = parseInt(date_token[0]);
                         let month = parseInt(date_token[1]) - 1;
                         let day = parseInt(date_token[2]);
-                        let hour = parseInt(val[i].recordTime);
+                        let hour = parseInt(probeContent[i].recordTime);
                         if (isNaN(year) || isNaN(month) || isNaN(day)) {
                             continue;
                         }
@@ -1558,12 +1532,11 @@ function broswer(val) {
                     }
                     var sortTemp = temp.sort(compare("datetime"));
 
-                    if(probeContent==undefined){
-                        return
-                    }
+
                     let rows = [];
                     var i = 1;
                     sortTemp.forEach(function (item) {
+                        debugger
                         let row = [];
                         row.push(i++);
                         row.push(item.probeName);
@@ -1593,73 +1566,66 @@ function broswer(val) {
                     });
                 }
             });
-        }
-    });
-}
-//下载
-function download(val) {
-    var probeContent=val
-    //网页下载
-    var download_table=new Vue({
-        el:'#downloaddata_table',
-        data: {
-            headers: [
-                {title: '<div style="width:10px"></div>'},
-                {title: '<div style="width:110px">探针名称</div>'},
-                {title: '<div style="width:130px">时间</div>'},
-                {title: '<div style="width:70px">综合分数</div>'},
-                {title: '<div style="width:100px">DNS时延(ms)</div>'},
-                {title: '<div style="width:100px">连接时延(ms)</div>'},
-                {title: '<div style="width:100px">首字节时延(ms)</div>'},
-                {title: '<div style="width:100px">下载速率(KB/s)</div>'},
-                {title: '<div style="width:100px">DNS时延(ms)</div>'},
-                {title: '<div style="width:100px">连接时延(ms)</div>'},
-                {title: '<div style="width:100px">登录时延(ms)</div>'},
-                {title: '<div style="width:100px">首字节时延(ms)</div>'},
-                {title: '<div style="width:100px">下载速率(KB/s)</div>'},
-                {title: '<div style="width:100px">DNS时延(ms)</div>'},
-                {title: '<div style="width:100px">连接时延(ms)</div>'},
-                {title: '<div style="width:100px">登录时延(ms)</div>'},
-                {title: '<div style="width:100px">首字节时延(ms)</div>'},
-                {title: '<div style="width:100px">上传速率(KB/s)</div>'},
-            ],
-            rows: [],
-            dtHandle: null,
+            /*重置*/
         },
-        methods: {
-            reset: function () {
-                let vm = this;
-                vm.probedata = {};
-                /*清空probedata*/
-                vm.dtHandle.clear();
-                //console.log("重置");
-                vm.dtHandle.draw();
-                /*重置*/
-            },
-            currReset: function () {
-                let vm = this;
-                vm.dtHandle.clear();
-                //console.log("当前页面重绘");
-                vm.dtHandle.draw(false);
-                /*当前页面重绘*/
-            },
-            redraw: function () {
-                let vm = this;
-                vm.dtHandle.clear();
-                //console.log("页面重绘");
-                vm.dtHandle.draw();
-                /*重绘*/
-            }
-        },
-        mounted: function(obj) {
+        currReset: function () {
             let vm = this;
-            // Instantiate the datatable and store the reference to the instance in our dtHandle element.
+            vm.dtHandle.clear();
+            //console.log("当前页面重绘");
+            vm.dtHandle.draw(false);
+            /*当前页面重绘*/
+        },
+        redraw: function () {
+            let vm = this;
+            vm.dtHandle.clear();
+            //console.log("页面重绘");
+            vm.dtHandle.draw();
+            /*重绘*/
+        }
+    },
+    mounted: function(obj) {
+        let vm = this;
+        // Instantiate the datatable and store the reference to the instance in our dtHandle element.
+
+    }
+});
+
+var download_table=new Vue({
+    el:'#downloaddata_table',
+    data: {
+        headers: [
+            {title: '<div style="width:10px"></div>'},
+            {title: '<div style="width:110px">探针名称</div>'},
+            {title: '<div style="width:130px">时间</div>'},
+            {title: '<div style="width:70px">综合分数</div>'},
+            {title: '<div style="width:100px">DNS时延(ms)</div>'},
+            {title: '<div style="width:100px">连接时延(ms)</div>'},
+            {title: '<div style="width:100px">首字节时延(ms)</div>'},
+            {title: '<div style="width:100px">下载速率(KB/s)</div>'},
+            {title: '<div style="width:100px">DNS时延(ms)</div>'},
+            {title: '<div style="width:100px">连接时延(ms)</div>'},
+            {title: '<div style="width:100px">登录时延(ms)</div>'},
+            {title: '<div style="width:100px">首字节时延(ms)</div>'},
+            {title: '<div style="width:100px">下载速率(KB/s)</div>'},
+            {title: '<div style="width:100px">DNS时延(ms)</div>'},
+            {title: '<div style="width:100px">连接时延(ms)</div>'},
+            {title: '<div style="width:100px">登录时延(ms)</div>'},
+            {title: '<div style="width:100px">首字节时延(ms)</div>'},
+            {title: '<div style="width:100px">上传速率(KB/s)</div>'},
+        ],
+        rows: [],
+        dtHandle: null,
+    },
+    methods: {
+        reset: function (probeContent) {
+            let vm = this;
             vm.dtHandle = $(this.$el).DataTable({
                 columns: vm.headers,
                 data: vm.rows,
                 createdRow: function ( row, data, index ) {
                     //生成了行之后，开始生成表头>>>
-                    var trs=$("#downloaddata_table>thead tr");
+                    var trs=$("#downloaddata_table_wrapper>.dataTables_scroll>.dataTables_scrollHead>.dataTables_scrollHeadInner>table>thead>tr");
+
                     if(trs.length>1){
                         return
                     }if (index == 0) {
@@ -1675,15 +1641,17 @@ function download(val) {
                         innerTh += '</tr>';
                         //table的id为"id_table"
                         document.getElementById('downloaddata_table').insertRow(0);
-                        var $tr = $("#downloaddata_table tr").eq(0);
-                        $tr.after(innerTh);
+                        var $tr = trs.eq(0);
+                        $tr.before(innerTh);
                     }
                 },
                 searching: false,
                 paging: false,
                 // serverSide: true,
                 info: false,
-
+                scrollY:  300,
+                scrollX:  true,
+                scrollCollapse: true,
                 // ordering: false, /*禁用排序功能*/
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
@@ -1701,14 +1669,17 @@ function download(val) {
                     // returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
                     // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
                     returnData.data = probeContent;//返回的数据列表
+                    if(probeContent.length==0){
+                        return
+                    }
                     // // 重新整理返回数据以匹配表格
                     var temp = cloneObj(probeContent);
                     for (let i = 0; i < temp.length; i++) {
-                        let date_token = val[i].recordDate.split("-");
+                        let date_token = probeContent[i].recordDate.split("-");
                         let year = parseInt(date_token[0]);
                         let month = parseInt(date_token[1]) - 1;
                         let day = parseInt(date_token[2]);
-                        let hour = parseInt(val[i].recordTime);
+                        let hour = parseInt(probeContent[i].recordTime);
                         if (isNaN(year) || isNaN(month) || isNaN(day)) {
                             continue;
                         }
@@ -1756,62 +1727,54 @@ function download(val) {
                     });
                 }
             });
-        }
-
-    })
-}
-// /在线视频
-function video(val) {
-    var probeContent=val
-    var video_table=new Vue({
-        el:'#videodata_table',
-        data: {
-            headers: [
-                {title: '<div style="width:10px"></div>'},
-                {title: '<div style="width:110px">探针名称</div>'},
-                {title: '<div style="width:130px">时间</div>'},
-                {title: '<div style="width:70px">综合分数</div>'},
-                {title: '<div style="width:100px">DNS时延(ms)</div>'},
-                {title: '<div style="width:150px">连接WEB服务器时延(ms)</div>'},
-                {title: '<div style="width:120px">web页面时延(ms)</div>'},
-                {title: '<div style="width:110px">首帧到达时延(ms)</div>'},
-                {title: '<div style="width:120px">首次缓冲时延(ms)</div>'},
-                {title: '<div style="width:120px">视频加载时延(ms)</div>'},
-                {title: '<div style="width:120px">总体缓冲时间(ms)</div>'},
-                {title: '<div style="width:105px">下载速率(KB/s)</div>'},
-                {title: '<div style="width:100px">缓冲次数</div>'},
-            ],
-            rows: [],
-            dtHandle: null,
         },
-        methods: {
-            reset: function () {
-                let vm = this;
-                vm.probedata = {};
-                /*清空probedata*/
-                vm.dtHandle.clear();
-                //console.log("重置");
-                vm.dtHandle.draw();
-                /*重置*/
-            },
-            currReset: function () {
-                let vm = this;
-                vm.dtHandle.clear();
-                //console.log("当前页面重绘");
-                vm.dtHandle.draw(false);
-                /*当前页面重绘*/
-            },
-            redraw: function () {
-                let vm = this;
-                vm.dtHandle.clear();
-                //console.log("页面重绘");
-                vm.dtHandle.draw();
-                /*重绘*/
-            }
-        },
-        mounted: function() {
+        currReset: function () {
             let vm = this;
-            // Instantiate the datatable and store the reference to the instance in our dtHandle element.
+            vm.dtHandle.clear();
+            //console.log("当前页面重绘");
+            vm.dtHandle.draw(false);
+            /*当前页面重绘*/
+        },
+        redraw: function () {
+            let vm = this;
+            vm.dtHandle.clear();
+            //console.log("页面重绘");
+            vm.dtHandle.draw();
+            /*重绘*/
+        }
+    },
+    mounted: function(obj) {
+        let vm = this;
+        // Instantiate the datatable and store the reference to the instance in our dtHandle element.
+
+    }
+
+});
+
+var video_table=new Vue({
+    el:'#videodata_table',
+    data: {
+        headers: [
+            {title: '<div style="width:10px"></div>'},
+            {title: '<div style="width:110px">探针名称</div>'},
+            {title: '<div style="width:130px">时间</div>'},
+            {title: '<div style="width:70px">综合分数</div>'},
+            {title: '<div style="width:100px">DNS时延(ms)</div>'},
+            {title: '<div style="width:150px">连接WEB服务器时延(ms)</div>'},
+            {title: '<div style="width:120px">web页面时延(ms)</div>'},
+            {title: '<div style="width:110px">首帧到达时延(ms)</div>'},
+            {title: '<div style="width:120px">首次缓冲时延(ms)</div>'},
+            {title: '<div style="width:120px">视频加载时延(ms)</div>'},
+            {title: '<div style="width:120px">总体缓冲时间(ms)</div>'},
+            {title: '<div style="width:105px">下载速率(KB/s)</div>'},
+            {title: '<div style="width:100px">缓冲次数</div>'},
+        ],
+        rows: [],
+        dtHandle: null,
+    },
+    methods: {
+        reset: function (probeContent) {
+            let vm = this;
             vm.dtHandle = $(this.$el).DataTable({
                 columns: vm.headers,
                 data: vm.rows,
@@ -1819,7 +1782,9 @@ function video(val) {
                 paging: false,
                 // serverSide: true,
                 info: false,
-
+                scrollY:  300,
+                scrollX:  true,
+                scrollCollapse: true,
                 // ordering: false, /*禁用排序功能*/
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
@@ -1837,14 +1802,17 @@ function video(val) {
                     // returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
                     // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
                     returnData.data = probeContent;//返回的数据列表
+                    if(probeContent.length==0){
+                        return
+                    }
                     // // 重新整理返回数据以匹配表格
                     var temp = cloneObj(probeContent);
                     for (let i = 0; i < temp.length; i++) {
-                        let date_token = val[i].recordDate.split("-");
+                        let date_token = probeContent[i].recordDate.split("-");
                         let year = parseInt(date_token[0]);
                         let month = parseInt(date_token[1]) - 1;
                         let day = parseInt(date_token[2]);
-                        let hour = parseInt(val[i].recordTime);
+                        let hour = parseInt(probeContent[i].recordTime);
                         if (isNaN(year) || isNaN(month) || isNaN(day)) {
                             continue;
                         }
@@ -1884,57 +1852,49 @@ function video(val) {
                     });
                 }
             });
-        }
-
-    })
-}
-//在线游戏
-function game(val) {
-    var probeContent=val
-    var download_table=new Vue({
-        el:'#gamedata_table',
-        data: {
-            headers: [
-                {title: '<div style="width:10px"></div>'},
-                {title: '<div style="width:110px">探针名称</div>'},
-                {title: '<div style="width:130px">时间</div>'},
-                {title: '<div style="width:70px">综合分数</div>'},
-                {title: '<div style="width:100px">DNS时延(ms)</div>'},
-                {title: '<div style="width:100px">网络时延(ms)</div>'},
-                {title: '<div style="width:100px">网络抖动(ms)</div>'},
-                {title: '<div style="width:100px">丢包率(%)</div>'},
-            ],
-            rows: [],
-            dtHandle: null,
         },
-        methods: {
-            reset: function () {
-                let vm = this;
-                vm.probedata = {};
-                /*清空probedata*/
-                vm.dtHandle.clear();
-                //console.log("重置");
-                vm.dtHandle.draw();
-                /*重置*/
-            },
-            currReset: function () {
-                let vm = this;
-                vm.dtHandle.clear();
-                //console.log("当前页面重绘");
-                vm.dtHandle.draw(false);
-                /*当前页面重绘*/
-            },
-            redraw: function () {
-                let vm = this;
-                vm.dtHandle.clear();
-                //console.log("页面重绘");
-                vm.dtHandle.draw();
-                /*重绘*/
-            }
-        },
-        mounted: function(obj) {
+        currReset: function () {
             let vm = this;
-            // Instantiate the datatable and store the reference to the instance in our dtHandle element.
+            vm.dtHandle.clear();
+            //console.log("当前页面重绘");
+            vm.dtHandle.draw(false);
+            /*当前页面重绘*/
+        },
+        redraw: function () {
+            let vm = this;
+            vm.dtHandle.clear();
+            //console.log("页面重绘");
+            vm.dtHandle.draw();
+            /*重绘*/
+        }
+    },
+    mounted: function() {
+        let vm = this;
+        // Instantiate the datatable and store the reference to the instance in our dtHandle element.
+
+    }
+
+});
+
+var game_table=new Vue({
+    el:'#gamedata_table',
+    data: {
+        headers: [
+            {title: '<div style="width:10px"></div>'},
+            {title: '<div style="width:110px">探针名称</div>'},
+            {title: '<div style="width:130px">时间</div>'},
+            {title: '<div style="width:70px">综合分数</div>'},
+            {title: '<div style="width:100px">DNS时延(ms)</div>'},
+            {title: '<div style="width:100px">网络时延(ms)</div>'},
+            {title: '<div style="width:100px">网络抖动(ms)</div>'},
+            {title: '<div style="width:100px">丢包率(%)</div>'},
+        ],
+        rows: [],
+        dtHandle: null,
+    },
+    methods: {
+        reset: function (probeContent) {
+            let vm = this;
             vm.dtHandle = $(this.$el).DataTable({
                 columns: vm.headers,
                 data: vm.rows,
@@ -1946,6 +1906,9 @@ function game(val) {
                 /*bInfo: false,*/
                 /*bLengthChange: false,*/    /*禁用Show entries*/
                 scroll: false,
+                scrollY:  300,
+                scrollX:  true,
+                scrollCollapse: true,
                 oLanguage: {
                     sEmptyTable: "No data available in table",
                     sZeroRecords:"No data available in table",
@@ -1959,14 +1922,17 @@ function game(val) {
                     // returnData.recordsTotal = result.page.totalCount;//返回数据全部记录
                     // returnData.recordsFiltered = result.page.totalCount;//后台不实现过滤功能，每次查询均视作全部结果
                     returnData.data = probeContent;//返回的数据列表
+                    if(probeContent.length==0){
+                        return
+                    }
                     // // 重新整理返回数据以匹配表格
                     var temp = cloneObj(probeContent);
                     for (let i = 0; i < temp.length; i++) {
-                        let date_token = val[i].recordDate.split("-");
+                        let date_token = probeContent[i].recordDate.split("-");
                         let year = parseInt(date_token[0]);
                         let month = parseInt(date_token[1]) - 1;
                         let day = parseInt(date_token[2]);
-                        let hour = parseInt(val[i].recordTime);
+                        let hour = parseInt(probeContent[i].recordTime);
                         if (isNaN(year) || isNaN(month) || isNaN(day)) {
                             continue;
                         }
@@ -2000,9 +1966,55 @@ function game(val) {
                     });
                 }
             });
+        },
+        currReset: function () {
+            let vm = this;
+            vm.dtHandle.clear();
+            //console.log("当前页面重绘");
+            vm.dtHandle.draw(false);
+            /*当前页面重绘*/
+        },
+        redraw: function () {
+            let vm = this;
+            vm.dtHandle.clear();
+            //console.log("页面重绘");
+            vm.dtHandle.draw();
+            /*重绘*/
         }
-    })
-}
+    },
+    mounted: function(obj) {
+        let vm = this;
+        // Instantiate the datatable and store the reference to the instance in our dtHandle element.
+
+    }
+});
+// //网络质量表格
+// function quality(val) {
+//     var probeContent=val
+//
+// }
+//
+// //网页浏览表格
+// function broswer(val) {
+//     var probeContent=val
+//
+// }
+// //下载
+// function download(val) {
+//     var probeContent=val
+//     //网页下载
+//
+// }
+// // /在线视频
+// function video(val) {
+//     var probeContent=val
+//
+// }
+// //在线游戏
+// function game(val) {
+//     var probeContent=val
+//
+// }
 
 
 function loading() {
