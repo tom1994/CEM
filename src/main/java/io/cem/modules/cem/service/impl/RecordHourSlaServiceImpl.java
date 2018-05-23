@@ -1013,7 +1013,7 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				scoreBase.setSlaTcpGJitter(slaTcp.get(i).getSlaTcpGJitter());
 				scoreBase.setSlaTcpRJitter(slaTcp.get(i).getSlaTcpRJitter());
 				scoreBase.setSlaTcpLossRate(slaTcp.get(i).getSlaTcpLossRate());
-				scoreBase.setScore((slaTcp.get(i).getScore());
+				scoreBase.setScore((slaTcp.get(i).getScore()));
 				scoreBase.setBase(slaTcp.get(i).getBase());
 				Map<String,ScoreBaseEntity> sla1 = new HashMap<>();
 				sla1.put("slaTcp",scoreBase);
