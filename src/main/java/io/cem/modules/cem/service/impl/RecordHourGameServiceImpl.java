@@ -247,7 +247,8 @@ public class RecordHourGameServiceImpl implements RecordHourGameService {
 				finalScore.setGameLossRate(gameList.get(i).getLossRate());
 				finalScore.setFail(gameList.get(i).getFail());
 				finalScore.setTotal(gameList.get(i).getTotal());
-				finalScore.setScore(score*(1-(gameList.get(i).getFail()/gameList.get(i).getTotal())));
+				double fail = (double) finalScore.getFail()/finalScore.getTotal();
+				finalScore.setScore(score*(1-fail));
 				finalScore.setBase(Double.parseDouble(pros.getValue("gameweight")));
 				connectionScore.add(finalScore);
 				

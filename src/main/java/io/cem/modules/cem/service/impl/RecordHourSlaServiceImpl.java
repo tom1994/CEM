@@ -1,6 +1,7 @@
 package io.cem.modules.cem.service.impl;
 
 import io.cem.common.utils.PropertiesUtils;
+import io.cem.common.utils.R;
 import io.cem.modules.cem.dao.RecordSlaDao;
 import io.cem.modules.cem.entity.*;
 import io.cem.modules.cem.service.RecordHourPingService;
@@ -303,7 +304,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 					tcpSla.setSlaTcpLossRate(slaList.get(i).getLossRate());
 					tcpSla.setFail(slaList.get(i).getFail());
 					tcpSla.setTotal(slaList.get(i).getTotal());
-					tcpSla.setScore(score);
+					double fail = (double) tcpSla.getFail()/tcpSla.getTotal();
+					tcpSla.setScore(score*(1-fail));
 					tcpSla.setBase(Double.parseDouble(pros.getValue("sla_tcp")));
 
 					slaTcp.add(tcpSla);
@@ -552,7 +554,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 					udpSla.setSlaUdpLossRate(slaList.get(i).getLossRate());
 					udpSla.setFail(slaList.get(i).getFail());
 					udpSla.setTotal(slaList.get(i).getTotal());
-					udpSla.setScore(score);
+					double fail = (double) udpSla.getFail()/udpSla.getTotal();
+					udpSla.setScore(score*(1-fail));
 					udpSla.setBase(Double.parseDouble(pros.getValue("sla_udp")));
 
 					slaUdp.add(udpSla);
@@ -649,7 +652,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				DNS.setDnsSuccessRate(dnsList.get(i).getSuccessRate());
 				DNS.setFail(dnsList.get(i).getFail());
 				DNS.setTotal(dnsList.get(i).getTotal());
-				DNS.setScore(score);
+				double fail = (double) DNS.getFail()/DNS.getTotal();
+				DNS.setScore(score*(1-fail));
 				DNS.setBase(Double.parseDouble(pros.getValue("dns")));
 
 				dns.add(DNS);
@@ -747,7 +751,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				DHCP.setDhcpSuccessRate(dhcpList.get(i).getSuccessRate());
 				DHCP.setFail(dhcpList.get(i).getFail());
 				DHCP.setTotal(dhcpList.get(i).getTotal());
-				DHCP.setScore(score);
+				double fail = (double) DHCP.getFail()/DHCP.getTotal();
+				DHCP.setScore(score*(1-fail));
 				DHCP.setBase(Double.parseDouble(pros.getValue("dhcp")));
 
 				dhcp.add(DHCP);
@@ -875,7 +880,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				PPPOE.setPppoeSuccessRate(pppoeList.get(i).getSuccessRate());
 				PPPOE.setFail(pppoeList.get(i).getFail());
 				PPPOE.setTotal(pppoeList.get(i).getTotal());
-				PPPOE.setScore(score);
+				double fail = (double) PPPOE.getFail()/PPPOE.getTotal();
+				PPPOE.setScore(score*(1-fail));
 				PPPOE.setBase(Double.parseDouble(pros.getValue("adsl")));
 
 				pppoe.add(PPPOE);
@@ -972,7 +978,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				RADIUS.setRadiusSuccessRate(radiusList.get(i).getSuccessRate());
 				RADIUS.setFail(radiusList.get(i).getFail());
 				RADIUS.setTotal(radiusList.get(i).getTotal());
-				RADIUS.setScore(score);
+				double fail = (double) RADIUS.getFail()/RADIUS.getTotal();
+				RADIUS.setScore(score*(1-fail));
 				RADIUS.setBase(Double.parseDouble(pros.getValue("radius")));
 
 				radius.add(RADIUS);
@@ -1013,7 +1020,7 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				scoreBase.setSlaTcpGJitter(slaTcp.get(i).getSlaTcpGJitter());
 				scoreBase.setSlaTcpRJitter(slaTcp.get(i).getSlaTcpRJitter());
 				scoreBase.setSlaTcpLossRate(slaTcp.get(i).getSlaTcpLossRate());
-				scoreBase.setScore((slaTcp.get(i).getScore()));
+				scoreBase.setScore(slaTcp.get(i).getScore());
 				scoreBase.setBase(slaTcp.get(i).getBase());
 				Map<String,ScoreBaseEntity> sla1 = new HashMap<>();
 				sla1.put("slaTcp",scoreBase);

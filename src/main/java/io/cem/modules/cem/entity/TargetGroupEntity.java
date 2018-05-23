@@ -6,6 +6,7 @@ import java.util.Date;
 
 
 /**
+ * 测试目标组
  */
 public class TargetGroupEntity implements Serializable {
 	private static final long serialVersionUID = 1L;

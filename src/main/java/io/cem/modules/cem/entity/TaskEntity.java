@@ -6,6 +6,7 @@ import java.util.Date;
 
 
 /**
+ * 任务
  */
 public class TaskEntity implements Serializable {
 	private static final long serialVersionUID = 1L;

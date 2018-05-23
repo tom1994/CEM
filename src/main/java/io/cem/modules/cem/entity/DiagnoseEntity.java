@@ -1,6 +1,4 @@
 package io.cem.modules.cem.entity;
-import java.io.Serializable;
-
 public class DiagnoseEntity {
     private static final long serialVersionUID = 1L;
 

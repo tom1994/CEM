@@ -2,6 +2,9 @@ package io.cem.modules.cem.entity;
 
 import io.cem.common.utils.excel.annotation.ExcelIgnore;
 
+/**
+ * 分数+详情
+ */
 public class ScoreBaseEntity {
     //分数
     private Double score;

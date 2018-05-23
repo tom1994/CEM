@@ -10,12 +10,12 @@ var cityNames = new Array();
 var typeNames = new Array();
 var statusNames = new Array();
 var probegroup_names = new Array();
-var citySelected = 0
-var countrySelected = 0
+var citySelected = 0;
+var countrySelected = 0;
 var groupSelected = 0;
 var accessSelected = 0;
 var typeSelected = 0;
-var statusSelected = 0
+var statusSelected = 0;
 
 function getFormJson(form) {      /*将表单对象变为json对象*/
     var o = {};
@@ -51,6 +51,10 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
         a[7].name = "city_id";
         a[7].value =  parseInt(citySelected)
 
+    }else {
+        a[7] = {};
+        a[7].name = "city_id";
+        a[7].value =  370900
     }
     $.each(a, function () {
         if (o[this.name] !== undefined) {
@@ -67,6 +71,7 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
 function getFormJson2(form) {      /*将表单对象变为json对象*/
     var o = {};
     var a = $(form).serializeArray();
+    debugger
     $.each(a, function () {
         if (o[this.name] !== undefined) {
             if (!o[this.name].push) {
@@ -127,9 +132,13 @@ var probedata_handle = new Vue({
                 }
                 search_data.cities = cityNames;
                 probeform_data.cityNames = cityNames;
+
                 setTimeout(function () {
                     $('div#cities .jq22').comboSelect();
                     $('.combo-dropdown').css("z-index", "3");
+                    $('#cities .combo-input').attr('placeholder','泰安市');
+                    $('#cities .combo-select select').val('泰安市');
+                    getArea(370900);
                     $('div#cities .option-item').click(function (city) {
                         setTimeout(function () {
                             var a = $(city.currentTarget)[0].innerText;
@@ -170,7 +179,6 @@ var probedata_handle = new Vue({
                 probeform_data.upstreams = probeNames;
                 probeform_data.iptypeNames = probeNames;
                 probeform_data.statusNames = probeNames;
-
             }
         });
         $.ajax({
@@ -223,7 +231,7 @@ var probedata_handle = new Vue({
                     var tds = trs.eq(i).find("td");
                     idArray[i] = parseInt(tds.eq(2).text());
                     /*将id加入数组中*/
-                    console.log(tds.eq(2).text())
+                    // console.log(tds.eq(2).text())
                 }
                 delete_ajax();
                 /*ajax传输*/
@@ -304,9 +312,17 @@ function submit_port() {
             dataType: "json",
             contentType: "application/json", /*必须要,不可少*/
             success: function (result) {
-                toastr.success("探针重启成功!");
-                idArray = [];
-                $('#myModal_Restart').modal('hide');
+                let code=result.code;
+                switch(code){
+                    case 0:toastr.success("探针重启成功!");
+                        idArray = [];
+                        $('#myModal_Restart').modal('hide');
+                        break;
+                    case 404:toastr.error(result.msg);
+                        break;
+                    default:toastr.error(result.msg);
+                        break;
+                }
 
             }
         });
@@ -398,6 +414,9 @@ var search_list = new Vue({
             statusSelected = 0
             // probetable.probedata=data
             probetable.reset();
+           setTimeout(function () {
+
+           })
         }
     }
 });
@@ -447,7 +466,7 @@ var probegroup_handle = new Vue({
             /*find被选中的行*/
             var forms = $('#groupform_data .form-control');
             var id = trs.find("td").eq(2).text();//parseInt(obj.id)
-            console.log(trs.length + "表单对象:" + forms.length);
+            // console.log(trs.length + "表单对象:" + forms.length);
 
             if (trs.length == 0) {
                 toastr.warning('请选择编辑项目！');
@@ -502,13 +521,18 @@ var cancel_confirm = new Vue({
                 cache: false,  //禁用缓存
                 dataType: "json",
                 success: function (result) {
-                    if(result.code == 404){
-                        dispatch_table.currReset();
-                        toastr.error(result.msg)
-                    }else {
-                        dispatch_table.currReset();
-                        toastr.success("任务已取消!");
-                        cancel_confirm.close_modal();
+                    let code =result.code
+                    switch (code){
+                        case 0:
+                            dispatch_table.currReset();
+                            toastr.success("任务已取消!");
+                            cancel_confirm.close_modal();
+                            break;
+                        case 404:
+                            dispatch_table.currReset();
+                            toastr.error(result.msg);break;
+                        default:
+                            toastr.error(result.msg);break;
                     }
                 }
             });
@@ -644,7 +668,7 @@ var dispatch_table = new Vue({
 function cancel_task(obj) {
     var taskDispatchId = parseInt(obj.id);
     cancel_confirm.taskDispatchId = taskDispatchId;
-    console.log(taskDispatchId);
+    // console.log(taskDispatchId);
     cancel_confirm.show_deleteModal();
 }
 /*探针列表详情功能*/
@@ -706,7 +730,7 @@ function update_this(obj) {     /*监听修改触发事件*/
                     forms[23].value = result.probe.updateInterval;
                     forms[24].value = result.probe.lastUpdateTime;
                     portIP = JSON.parse(result.probe.portIp);
-                    console.log(portIP);
+                    // console.log(portIP);
                     if (portIP.length == "1") {
                         $('#con').css('display', 'none')
                         $('#portIP').removeAttr('style')
@@ -857,7 +881,7 @@ function update_this(obj) {     /*监听修改触发事件*/
                     forms[23].value = result.probe.updateInterval;
                     forms[24].value = result.probe.lastUpdateTime;
                     portIP = JSON.parse(result.probe.portIp);
-                    console.log(portIP);
+                    // console.log(portIP);
                     if (portIP.length == "1") {
                         $('#con').css('display', 'none')
                         $('#portIP').removeAttr('style')
@@ -1007,14 +1031,26 @@ function delete_ajax(idArray) {
         dataType: "json",
         contentType: "application/json", /*必须要,不可少*/
         success: function (result) {
+            let code=result.code;
+            switch(code){
+                case 0:
+                    toastr.success("探针删除成功!");
+                    $('#myModal_deleteall').modal('hide');
+                    probetable.currReset();
+                    idArray = [];
+                    /*清空id数组*/
+                    delete_data.close_modal();
+                    /*关闭模态框*/
+                    break;
+                case 404:
+                    toastr.error(result.msg);
+                    break;
+                default:
+                    toastr.error(result.msg);
+                    break;
+            }
 
-            toastr.success("探针删除成功!");
-            probetable.currReset();
-            $('#myModal_deleteall').modal('hide');
-            idArray = [];
-            /*清空id数组*/
-            delete_data.close_modal();
-            /*关闭模态框*/
+
         }
     });
 }
@@ -1068,12 +1104,23 @@ function deletegroup_ajax() {
         dataType: "json",
         contentType: "application/json", /*必须要,不可少*/
         success: function (result) {
-            toastr.success("业务信息删除成功!");
-            grouptable.currReset();
-            idArray = [];
-            /*清空id数组*/
-            deletegroup_data.close_modal();
-            /*关闭模态框*/
+            let code=result.code;
+            switch(code){
+                case 0:
+                    toastr.success("探针组删除成功!");
+                    grouptable.currReset();
+                    idArray = [];
+                    /*清空id数组*/
+                    deletegroup_data.close_modal();
+                    /*关闭模态框*/
+                    break;
+                case 404:
+                    toastr.error(result.msg);
+                    break;
+                default:
+                    toastr.error(result.msg);
+                    break
+            }
         }
     });
 }
@@ -1137,6 +1184,9 @@ var probeform_data = new Vue({
         submit: function () {
 
             var probeJson = getFormJson2($('#probeform_data'));
+          //   probeJson.upstream=$('#upstream').val()
+          // console.log( $('#upstream').val() )
+            debugger
             if (typeof(probeJson["name"]) == "undefined") {
                 toastr.warning("请录入探针名!");
             } else {
@@ -1156,7 +1206,7 @@ var probeform_data = new Vue({
                     dataType: "json",
                     contentType: "application/json", /*必须要,不可少*/
                     success: function (result) {
-                         
+
                         let code = result.code;
                         let msg = result.msg;
                         // console.log(result);
@@ -1167,13 +1217,13 @@ var probeform_data = new Vue({
                                     $('#myModal_update').modal('hide');
                                     break;
                                 case 300:
-                                    toastr.error(msg);
+                                    toastr.warning(msg);
                                     break;
-                                case 403:
+                                case 404:
                                     toastr.error(msg);
                                     break;
                                 default:
-                                    toastr.error("未知错误");
+                                    toastr.error(msg);
                                     break
                             }
                         } else if (status == 1) {
@@ -1183,13 +1233,13 @@ var probeform_data = new Vue({
                                     $('#myModal_update').modal('hide');
                                     break;
                                 case 300:
-                                    toastr.error(msg);
+                                    toastr.warning(msg);
                                     break;
-                                case 403:
+                                case 404:
                                     toastr.error(msg);
                                     break;
                                 default:
-                                    toastr.error("未知错误");
+                                    toastr.error(msg);
                                     break
                             }
                         }
@@ -1272,13 +1322,13 @@ var groupform_data = new Vue({
                                     $('#groupModal').modal('hide');
                                     break;
                                 case 300:
-                                    toastr.error(msg);
+                                    toastr.warning(msg);
                                     break;
-                                case 403:
+                                case 404:
                                     toastr.error(msg);
                                     break;
                                 default:
-                                    toastr.error("未知错误");
+                                    toastr.error(msg);
                                     break
                             }
                         } else if (status == 1) {
@@ -1288,13 +1338,13 @@ var groupform_data = new Vue({
                                     $('#groupModal').modal('hide');
                                     break;
                                 case 300:
-                                    toastr.error(msg);
+                                    toastr.warning(msg);
                                     break;
-                                case 403:
+                                case 404:
                                     toastr.error(msg);
                                     break;
                                 default:
-                                    toastr.error("未知错误");
+                                    toastr.error(msg);
                                     break
                             }
                         }
@@ -1559,7 +1609,6 @@ var probetable = new Vue({
                             row.push('<span title="' + item.lastHbTime + '" style="white-space: nowrap">' + transString(item.lastHbTime, 0, 10) + '</span>');
                             row.push('<span title="' + item.lastReportTime + '" style="white-space: nowrap">' + transString(item.lastReportTime, 0, 10) + '</span>');
                             row.push('<a class="fontcolor" style="white-space: nowrap" onclick="update_this(this)" id=' + item.id + '>详情</a>&nbsp;' +
-                                '<a class="fontcolor" style="white-space: nowrap" onclick="delete_this(this)" id=' + item.id + '>删除</a>&nbsp;' +
                                 '<a class="fontcolor" style="white-space: nowrap" onclick="dispatch_info(this)" id=' + item.id + '>查看任务</a>');
                             rows.push(row);
                         });
@@ -1686,7 +1735,7 @@ var grouptable = new Vue({
                             row.push(i++);
                             row.push(item.name);
                             row.push(item.remark);
-                            row.push('<a class="fontcolor" onclick="updategroup_this(this)" id=' + item.id + '>编辑</a>&nbsp&nbsp;<a class="fontcolor" onclick="deletegroup_this(this)" id=' + item.id + '>删除</a>');
+                            row.push('<a class="fontcolor" onclick="updategroup_this(this)" id=' + item.id + '>编辑</a>&nbsp;&nbsp;<a class="fontcolor" onclick="deletegroup_this(this)" id=' + item.id + '>删除</a>');
                             rows.push(row);
                         });
                         returnData.data = rows;

@@ -2,6 +2,9 @@ package io.cem.modules.cem.entity;
 
 import java.util.Date;
 
+/**
+ * 门户信息
+ */
 public class ScoreTargetRankEntity {
     //地市
     private String cityName;

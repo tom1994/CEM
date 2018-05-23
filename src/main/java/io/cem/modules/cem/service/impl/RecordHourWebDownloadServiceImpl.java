@@ -214,7 +214,8 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 				WEBDL.setWebDownloadDownloadRate(webDownloadList.get(i).getDownloadRate());
 				WEBDL.setFail(webDownloadList.get(i).getFail());
 				WEBDL.setTotal(webDownloadList.get(i).getTotal());
-				WEBDL.setScore(score);
+				double fail = (double) WEBDL.getFail()/WEBDL.getTotal();
+				WEBDL.setScore(score*(1-fail));
 				WEBDL.setBase(Double.parseDouble(pros.getValue("web_download")));
 
 				webDownload.add(WEBDL);
@@ -400,7 +401,8 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 					FTPD.setFtpDownloadDownloadRate(ftpList.get(i).getDownloadRate());
 					FTPD.setFail(ftpList.get(i).getFail());
 					FTPD.setTotal(ftpList.get(i).getTotal());
-					FTPD.setScore(score);
+					double fail = (double) FTPD.getFail()/FTPD.getTotal();
+					FTPD.setScore(score*(1-fail));
 					FTPD.setBase(Double.parseDouble(pros.getValue("ftp_download")));
 
 					ftpDownload.add(FTPD);
@@ -586,7 +588,8 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 					FTPU.setPort(ftpList.get(i).getPort());
 					FTPU.setFail(ftpList.get(i).getFail());
 					FTPU.setTotal(ftpList.get(i).getTotal());
-					FTPU.setScore(score);
+					double fail = (double) FTPU.getFail()/FTPU.getTotal();
+					FTPU.setScore(score*(1-fail));
 					FTPU.setBase(Double.parseDouble(pros.getValue("ftp_upload")));
 
 					ftpUpload.add(FTPU);

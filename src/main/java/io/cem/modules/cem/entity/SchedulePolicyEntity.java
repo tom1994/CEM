@@ -6,6 +6,7 @@ import java.util.Date;
 
 
 /**
+ * 调度策略
  */
 public class SchedulePolicyEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
