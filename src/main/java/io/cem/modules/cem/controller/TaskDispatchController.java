@@ -361,6 +361,7 @@ public class TaskDispatchController {
             if (result == 200) {
                 return R.ok();
             } else if (result == 401) {
+                taskDispatchService.cancelSave(taskDispatch.getTaskId());
                 return R.error(404, "token失效，系统已重新获取，请重试");
             } else {
                 taskDispatchService.cancelSave(taskDispatch.getTaskId());
