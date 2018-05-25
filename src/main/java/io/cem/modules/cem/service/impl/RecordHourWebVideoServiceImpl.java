@@ -1,9 +1,11 @@
 package io.cem.modules.cem.service.impl;
 
 import io.cem.common.utils.PropertiesUtils;
+import io.cem.common.utils.SpringContextUtils;
 import io.cem.modules.cem.dao.RecordHourWebVideoDao;
 import io.cem.modules.cem.dao.RecordWebVideoDao;
 import io.cem.modules.cem.entity.*;
+import io.cem.modules.cem.service.RecordFailService;
 import io.cem.modules.cem.service.RecordHourWebVideoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -105,7 +107,8 @@ public class RecordHourWebVideoServiceImpl implements RecordHourWebVideoService 
 
 
 	@Override
-	public List<ScoreEntity> calculateService5 (List<RecordHourWebVideoEntity> videoList){
+	public List<ScoreEntity> calculateService5 (List<RecordHourWebVideoEntity> videoList,Map<String,Object> map){
+		RecordFailService recordFailService= (RecordFailService) SpringContextUtils.getBean("recordFailService");
 		List<ScoreEntity> connectionScore = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
@@ -402,7 +405,9 @@ public class RecordHourWebVideoServiceImpl implements RecordHourWebVideoService 
 				finalScore.setWebVideoBufferTime(videoList.get(i).getBufferTime());
 				finalScore.setFail(videoList.get(i).getFail());
 				finalScore.setTotal(videoList.get(i).getTotal());
-				double fail = (double) finalScore.getFail()/finalScore.getTotal();
+				map.put("service_type",40);
+				RecordFailEntity recordFail = recordFailService.queryFail(map);
+				double fail = (double)recordFail.getFail()/recordFail.getTotal();
 				finalScore.setScore(score*(1-fail));
 				finalScore.setBase(Double.parseDouble(pros.getValue("videoweight")));
 				connectionScore.add(finalScore);

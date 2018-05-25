@@ -3,7 +3,6 @@ package io.cem.modules.cem.service.impl;
 import io.cem.common.utils.CalcUtils;
 import io.cem.common.utils.DateUtils;
 import io.cem.modules.cem.dao.ScoreCollectDayDao;
-import io.cem.modules.cem.dao.ScoreCollectTargetDao;
 import io.cem.modules.cem.entity.*;
 import io.cem.modules.cem.service.*;
 import org.apache.commons.logging.Log;
@@ -53,12 +52,12 @@ public class IndexRadaViewServiceImpl implements IndexRadaViewService {
         param.put("interval",interval);
         List<RecordHourPingEntity> pings = recordHourPingService.queryDayList(param).get();
         List<RecordHourTracertEntity> tracerts = recordHourTracertService.queryDayList(param).get();
-        List<ScoreEntity> pingIcmpScores = recordHourPingService.calculatePingIcmp(pings);
-        List<ScoreEntity> pingTcpScores = recordHourPingService.calculatePingTcp(pings);
-        List<ScoreEntity> pingUdpScores = recordHourPingService.calculatePingUdp(pings);
+        List<ScoreEntity> pingIcmpScores = recordHourPingService.calculatePingIcmp(pings,param);
+        List<ScoreEntity> pingTcpScores = recordHourPingService.calculatePingTcp(pings,param);
+        List<ScoreEntity> pingUdpScores = recordHourPingService.calculatePingUdp(pings,param);
 
-        List<ScoreEntity> tracertIcmpScores = recordHourPingService.calculateTracertIcmp(tracerts);
-        List<ScoreEntity> tracertUdpScores = recordHourPingService.calculateTracertUdp(tracerts);
+        List<ScoreEntity> tracertIcmpScores = recordHourPingService.calculateTracertIcmp(tracerts,param);
+        List<ScoreEntity> tracertUdpScores = recordHourPingService.calculateTracertUdp(tracerts,param);
 
         List<ScoreEntity> pingScores = recordHourPingService.calculateService1(pingIcmpScores,pingTcpScores,pingUdpScores,tracertIcmpScores,tracertUdpScores);
         if(pingScores.size()>0){
@@ -86,12 +85,12 @@ public class IndexRadaViewServiceImpl implements IndexRadaViewService {
             List<RecordHourPppoeEntity> pppoes = recordHourPppoeService.queryDayList(param).get();
             List<RecordHourRadiusEntity> radius = recordHourRadiusService.queryDayList(param).get();
 
-            List<ScoreEntity> slaTcpScore = recordHourSlaService.calculateSlaTcp(slas);
-            List<ScoreEntity> slaUdpScore = recordHourSlaService.calculateSlaUdp(slas);
-            List<ScoreEntity> dnsScore = recordHourSlaService.calculateDns(dns);
-            List<ScoreEntity> dbcpScore = recordHourSlaService.calculateDhcp(dhcps);
-            List<ScoreEntity> radiusScore = recordHourSlaService.calculateRadius(radius);
-            List<ScoreEntity> pppoeScore = recordHourSlaService.calculatePppoe(pppoes);
+            List<ScoreEntity> slaTcpScore = recordHourSlaService.calculateSlaTcp(slas,param);
+            List<ScoreEntity> slaUdpScore = recordHourSlaService.calculateSlaUdp(slas,param);
+            List<ScoreEntity> dnsScore = recordHourSlaService.calculateDns(dns,param);
+            List<ScoreEntity> dbcpScore = recordHourSlaService.calculateDhcp(dhcps,param);
+            List<ScoreEntity> radiusScore = recordHourSlaService.calculateRadius(radius,param);
+            List<ScoreEntity> pppoeScore = recordHourSlaService.calculatePppoe(pppoes,param);
 //List<ScoreEntity> calculateService2(List<ScoreEntity> slaTcp,List<ScoreEntity> slaUdp,List<ScoreEntity> dns,List<ScoreEntity> dhcp,List<ScoreEntity> pppoe,List<ScoreEntity> radius);
             List<ScoreEntity> netScores = recordHourSlaService.calculateService2(slaTcpScore,slaUdpScore,dnsScore,dbcpScore,pppoeScore,radiusScore);
             if(netScores.size()>0){
@@ -113,7 +112,7 @@ public class IndexRadaViewServiceImpl implements IndexRadaViewService {
         param.put("ava_terminal",endDate);
         param.put("interval",interval);
         List<RecordHourWebPageEntity> wbePages = recordHourWebPageService.queryDayList(param).get();
-        List<ScoreEntity> wbePageScores = recordHourWebPageService.calculateService3(wbePages);
+        List<ScoreEntity> wbePageScores = recordHourWebPageService.calculateService3(wbePages,param);
         if(wbePageScores.size()>0){
             ScoreEntity sceAllAvg = CalcUtils.getAvgScoreEntity(wbePageScores);
             ScoreCollectDayEntity sce = new ScoreCollectDayEntity();
@@ -132,9 +131,9 @@ public class IndexRadaViewServiceImpl implements IndexRadaViewService {
         param.put("interval",interval);
         List<RecordHourWebDownloadEntity> webdownloads = recordHourWebDownloadService.queryDayList(param).get();
         List<RecordHourFtpEntity> ftps = recordHourFtpService.queryDayList(param).get();
-        List<ScoreEntity> webDownload = recordHourWebDownloadService.calculateWebDownload(webdownloads);
-        List<ScoreEntity> ftpDownload = recordHourWebDownloadService.calculateFtpDownload(ftps);
-        List<ScoreEntity> ftpUpload = recordHourWebDownloadService.calculateFtpUpload(ftps);
+        List<ScoreEntity> webDownload = recordHourWebDownloadService.calculateWebDownload(webdownloads,param);
+        List<ScoreEntity> ftpDownload = recordHourWebDownloadService.calculateFtpDownload(ftps,param);
+        List<ScoreEntity> ftpUpload = recordHourWebDownloadService.calculateFtpUpload(ftps,param);
         List<ScoreEntity> downLoadScores = recordHourWebDownloadService.calculateService4(webDownload,ftpDownload,ftpUpload);
         if(downLoadScores.size()>0){
             ScoreEntity sceAllAvg = CalcUtils.getAvgScoreEntity(downLoadScores);
@@ -155,7 +154,7 @@ public class IndexRadaViewServiceImpl implements IndexRadaViewService {
         param.put("ava_terminal",endDate);
         param.put("interval",interval);
         List<RecordHourWebVideoEntity> webVideos = recordHourWebVideoService.queryDayList(param).get();
-        List<ScoreEntity> webVideoScores = recordHourWebVideoService.calculateService5(webVideos);
+        List<ScoreEntity> webVideoScores = recordHourWebVideoService.calculateService5(webVideos,param);
         if(webVideoScores.size()>0){
             ScoreEntity sceAllAvg = CalcUtils.getAvgScoreEntity(webVideoScores);
             ScoreCollectDayEntity sce = new ScoreCollectDayEntity();
@@ -176,7 +175,7 @@ public class IndexRadaViewServiceImpl implements IndexRadaViewService {
         param.put("interval",interval);
 
         List<RecordHourGameEntity> games = recordHourGameService.queryDayList(param).get();
-        List<ScoreEntity> gameScores = recordHourGameService.calculateService6(games);
+        List<ScoreEntity> gameScores = recordHourGameService.calculateService6(games,param);
         if(gameScores.size()>0){
             ScoreEntity sceAllAvg = CalcUtils.getAvgScoreEntity(gameScores);
             ScoreCollectDayEntity sce = new ScoreCollectDayEntity();

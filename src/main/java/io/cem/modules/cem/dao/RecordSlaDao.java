@@ -1,6 +1,7 @@
 package io.cem.modules.cem.dao;
 
 import io.cem.modules.cem.entity.RecordDaySlaEntity;
+import io.cem.modules.cem.entity.RecordFailEntity;
 import io.cem.modules.cem.entity.RecordHourSlaEntity;
 import io.cem.modules.cem.entity.RecordSlaEntity;
 import io.cem.modules.sys.dao.BaseDao;
@@ -15,4 +16,5 @@ public interface RecordSlaDao extends BaseDao<RecordSlaEntity> {
     List<RecordHourSlaEntity> querySla(Map<String, Object> map);
     List<RecordDaySlaEntity> queryDay(Map<String, Object> map);
     List<RecordSlaEntity> querySlaList(Map<String, Object> map);
+    List<RecordFailEntity> querySlaFail(Map<String, Object> map);
 }

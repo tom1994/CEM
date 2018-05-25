@@ -1,8 +1,10 @@
 package io.cem.modules.cem.service.impl;
 
 import io.cem.common.utils.PropertiesUtils;
+import io.cem.common.utils.SpringContextUtils;
 import io.cem.modules.cem.dao.RecordWebDownloadDao;
 import io.cem.modules.cem.entity.*;
+import io.cem.modules.cem.service.RecordFailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
@@ -70,7 +72,8 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 	}
 
 	@Override
-	public List<ScoreEntity> calculateWebDownload(List<RecordHourWebDownloadEntity> webDownloadList){
+	public List<ScoreEntity> calculateWebDownload(List<RecordHourWebDownloadEntity> webDownloadList,Map<String,Object> map){
+		RecordFailService recordFailService= (RecordFailService) SpringContextUtils.getBean("recordFailService");
 		List<ScoreEntity> webDownload = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
@@ -214,7 +217,9 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 				WEBDL.setWebDownloadDownloadRate(webDownloadList.get(i).getDownloadRate());
 				WEBDL.setFail(webDownloadList.get(i).getFail());
 				WEBDL.setTotal(webDownloadList.get(i).getTotal());
-				double fail = (double) WEBDL.getFail()/WEBDL.getTotal();
+				map.put("service_type",30);
+				RecordFailEntity recordFail = recordFailService.queryFail(map);
+				double fail = (double)recordFail.getFail()/recordFail.getTotal();
 				WEBDL.setScore(score*(1-fail));
 				WEBDL.setBase(Double.parseDouble(pros.getValue("web_download")));
 
@@ -226,7 +231,8 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 	} 
 	
 	@Override
-	public List<ScoreEntity> calculateFtpDownload(List<RecordHourFtpEntity> ftpList){
+	public List<ScoreEntity> calculateFtpDownload(List<RecordHourFtpEntity> ftpList,Map<String,Object> map){
+		RecordFailService recordFailService= (RecordFailService) SpringContextUtils.getBean("recordFailService");
 		List<ScoreEntity> ftpDownload = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
@@ -401,7 +407,9 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 					FTPD.setFtpDownloadDownloadRate(ftpList.get(i).getDownloadRate());
 					FTPD.setFail(ftpList.get(i).getFail());
 					FTPD.setTotal(ftpList.get(i).getTotal());
-					double fail = (double) FTPD.getFail()/FTPD.getTotal();
+					map.put("service_type",31);
+					RecordFailEntity recordFail = recordFailService.queryFail(map);
+					double fail = (double)recordFail.getFail()/recordFail.getTotal();
 					FTPD.setScore(score*(1-fail));
 					FTPD.setBase(Double.parseDouble(pros.getValue("ftp_download")));
 
@@ -414,7 +422,8 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 	}
 
 	@Override
-	public List<ScoreEntity> calculateFtpUpload(List<RecordHourFtpEntity> ftpList){
+	public List<ScoreEntity> calculateFtpUpload(List<RecordHourFtpEntity> ftpList,Map<String,Object> map){
+		RecordFailService recordFailService= (RecordFailService) SpringContextUtils.getBean("recordFailService");
 		List<ScoreEntity> ftpUpload = new ArrayList<>();
 		try{
 			PropertiesUtils pros = new PropertiesUtils();
@@ -588,7 +597,9 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 					FTPU.setPort(ftpList.get(i).getPort());
 					FTPU.setFail(ftpList.get(i).getFail());
 					FTPU.setTotal(ftpList.get(i).getTotal());
-					double fail = (double) FTPU.getFail()/FTPU.getTotal();
+					map.put("service_type",32);
+					RecordFailEntity recordFail = recordFailService.queryFail(map);
+					double fail = (double)recordFail.getFail()/recordFail.getTotal();
 					FTPU.setScore(score*(1-fail));
 					FTPU.setBase(Double.parseDouble(pros.getValue("ftp_upload")));
 

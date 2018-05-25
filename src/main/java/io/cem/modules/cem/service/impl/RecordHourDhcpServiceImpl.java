@@ -111,11 +111,11 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 			if (pingList_future.isDone() && tracertList_future.isDone()) {
 				List<RecordHourPingEntity> pingList = pingList_future.get();
 				List<RecordHourTracertEntity> tracertList = tracertList_future.get();
-				List<ScoreEntity> pingIcmp = recordHourPingService.calculatePingIcmp(pingList);
-				List<ScoreEntity> pingTcp = recordHourPingService.calculatePingTcp(pingList);
-				List<ScoreEntity> pingUdp = recordHourPingService.calculatePingUdp(pingList);
-				List<ScoreEntity> tracertIcmp = recordHourPingService.calculateTracertIcmp(tracertList);
-				List<ScoreEntity> tracertUdp = recordHourPingService.calculateTracertUdp(tracertList);
+				List<ScoreEntity> pingIcmp = recordHourPingService.calculatePingIcmp(pingList,map);
+				List<ScoreEntity> pingTcp = recordHourPingService.calculatePingTcp(pingList,map);
+				List<ScoreEntity> pingUdp = recordHourPingService.calculatePingUdp(pingList,map);
+				List<ScoreEntity> tracertIcmp = recordHourPingService.calculateTracertIcmp(tracertList,map);
+				List<ScoreEntity> tracertUdp = recordHourPingService.calculateTracertUdp(tracertList,map);
 				scoreList = recordHourPingService.calculateDate1(pingIcmp, pingTcp, pingUdp, tracertIcmp, tracertUdp);
 				break;
 			}
@@ -183,11 +183,11 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 				List<RecordHourTracertEntity> tracertList = tracertList_future.get();
 				tracertList.addAll(tracertList_future1.get());
 				tracertList.addAll(tracertList_future2.get());
-				List<ScoreEntity> pingIcmp = recordHourPingService.calculatePingIcmp(pingList);
-				List<ScoreEntity> pingTcp = recordHourPingService.calculatePingTcp(pingList);
-				List<ScoreEntity> pingUdp = recordHourPingService.calculatePingUdp(pingList);
-				List<ScoreEntity> tracertIcmp = recordHourPingService.calculateTracertIcmp(tracertList);
-				List<ScoreEntity> tracertUdp = recordHourPingService.calculateTracertUdp(tracertList);
+				List<ScoreEntity> pingIcmp = recordHourPingService.calculatePingIcmp(pingList,map);
+				List<ScoreEntity> pingTcp = recordHourPingService.calculatePingTcp(pingList,map);
+				List<ScoreEntity> pingUdp = recordHourPingService.calculatePingUdp(pingList,map);
+				List<ScoreEntity> tracertIcmp = recordHourPingService.calculateTracertIcmp(tracertList,map);
+				List<ScoreEntity> tracertUdp = recordHourPingService.calculateTracertUdp(tracertList,map);
 				scoreList = recordHourPingService.calculateDate1(pingIcmp, pingTcp, pingUdp, tracertIcmp, tracertUdp);
 				break;
 			}
@@ -242,11 +242,11 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 				pingList.addAll(pingList_future1.get());
 				List<RecordHourTracertEntity> tracertList = tracertList_future.get();
 				tracertList.addAll(tracertList_future1.get());
-				List<ScoreEntity> pingIcmp = recordHourPingService.calculatePingIcmp(pingList);
-				List<ScoreEntity> pingTcp = recordHourPingService.calculatePingTcp(pingList);
-				List<ScoreEntity> pingUdp = recordHourPingService.calculatePingUdp(pingList);
-				List<ScoreEntity> tracertIcmp = recordHourPingService.calculateTracertIcmp(tracertList);
-				List<ScoreEntity> tracertUdp = recordHourPingService.calculateTracertUdp(tracertList);
+				List<ScoreEntity> pingIcmp = recordHourPingService.calculatePingIcmp(pingList,map);
+				List<ScoreEntity> pingTcp = recordHourPingService.calculatePingTcp(pingList,map);
+				List<ScoreEntity> pingUdp = recordHourPingService.calculatePingUdp(pingList,map);
+				List<ScoreEntity> tracertIcmp = recordHourPingService.calculateTracertIcmp(tracertList,map);
+				List<ScoreEntity> tracertUdp = recordHourPingService.calculateTracertUdp(tracertList,map);
 				scoreList = recordHourPingService.calculateDate1(pingIcmp, pingTcp, pingUdp, tracertIcmp, tracertUdp);
 				break;
 			}
@@ -276,12 +276,12 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 				List<RecordHourDhcpEntity> dhcpList = dhcpList_future.get();
 				List<RecordHourPppoeEntity> pppoeList = pppoeList_future.get();
 				List<RecordHourRadiusEntity> radiusList = radiusList_future.get();
-				List<ScoreEntity> slaTcp = recordHourSlaService.calculateSlaTcp(slaList);
-				List<ScoreEntity> slaUdp = recordHourSlaService.calculateSlaUdp(slaList);
-				List<ScoreEntity> dns = recordHourSlaService.calculateDns(dnsList);
-				List<ScoreEntity> dhcp = recordHourSlaService.calculateDhcp(dhcpList);
-				List<ScoreEntity> pppoe = recordHourSlaService.calculatePppoe(pppoeList);
-				List<ScoreEntity> radius = recordHourSlaService.calculateRadius(radiusList);
+				List<ScoreEntity> slaTcp = recordHourSlaService.calculateSlaTcp(slaList,map);
+				List<ScoreEntity> slaUdp = recordHourSlaService.calculateSlaUdp(slaList,map);
+				List<ScoreEntity> dns = recordHourSlaService.calculateDns(dnsList,map);
+				List<ScoreEntity> dhcp = recordHourSlaService.calculateDhcp(dhcpList,map);
+				List<ScoreEntity> pppoe = recordHourSlaService.calculatePppoe(pppoeList,map);
+				List<ScoreEntity> radius = recordHourSlaService.calculateRadius(radiusList,map);
 				scoreList = recordHourSlaService.calculateDate2(slaTcp, slaUdp, dns, dhcp, pppoe, radius);
 				break;
 			}
@@ -371,12 +371,12 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 				List<RecordHourRadiusEntity> radiusList = radiusList_future.get();
 				radiusList.addAll(radiusList_future1.get());
 				radiusList.addAll(radiusList_future2.get());
-				List<ScoreEntity> slaTcp = recordHourSlaService.calculateSlaTcp(slaList);
-				List<ScoreEntity> slaUdp = recordHourSlaService.calculateSlaUdp(slaList);
-				List<ScoreEntity> dns = recordHourSlaService.calculateDns(dnsList);
-				List<ScoreEntity> dhcp = recordHourSlaService.calculateDhcp(dhcpList);
-				List<ScoreEntity> pppoe = recordHourSlaService.calculatePppoe(pppoeList);
-				List<ScoreEntity> radius = recordHourSlaService.calculateRadius(radiusList);
+				List<ScoreEntity> slaTcp = recordHourSlaService.calculateSlaTcp(slaList,map);
+				List<ScoreEntity> slaUdp = recordHourSlaService.calculateSlaUdp(slaList,map);
+				List<ScoreEntity> dns = recordHourSlaService.calculateDns(dnsList,map);
+				List<ScoreEntity> dhcp = recordHourSlaService.calculateDhcp(dhcpList,map);
+				List<ScoreEntity> pppoe = recordHourSlaService.calculatePppoe(pppoeList,map);
+				List<ScoreEntity> radius = recordHourSlaService.calculateRadius(radiusList,map);
 				scoreList = recordHourSlaService.calculateDate2(slaTcp, slaUdp, dns, dhcp, pppoe, radius);
 				break;
 			}
@@ -448,12 +448,12 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 				pppoeList.addAll(pppoeList_future1.get());
 				List<RecordHourRadiusEntity> radiusList = radiusList_future.get();
 				radiusList.addAll(radiusList_future1.get());
-				List<ScoreEntity> slaTcp = recordHourSlaService.calculateSlaTcp(slaList);
-				List<ScoreEntity> slaUdp = recordHourSlaService.calculateSlaUdp(slaList);
-				List<ScoreEntity> dns = recordHourSlaService.calculateDns(dnsList);
-				List<ScoreEntity> dhcp = recordHourSlaService.calculateDhcp(dhcpList);
-				List<ScoreEntity> pppoe = recordHourSlaService.calculatePppoe(pppoeList);
-				List<ScoreEntity> radius = recordHourSlaService.calculateRadius(radiusList);
+				List<ScoreEntity> slaTcp = recordHourSlaService.calculateSlaTcp(slaList,map);
+				List<ScoreEntity> slaUdp = recordHourSlaService.calculateSlaUdp(slaList,map);
+				List<ScoreEntity> dns = recordHourSlaService.calculateDns(dnsList,map);
+				List<ScoreEntity> dhcp = recordHourSlaService.calculateDhcp(dhcpList,map);
+				List<ScoreEntity> pppoe = recordHourSlaService.calculatePppoe(pppoeList,map);
+				List<ScoreEntity> radius = recordHourSlaService.calculateRadius(radiusList,map);
 				scoreList = recordHourSlaService.calculateDate2(slaTcp, slaUdp, dns, dhcp, pppoe, radius);
 				break;
 			}
@@ -473,7 +473,7 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 		while (true) {
 			if (webPageList_future.isDone()) {
 				List<RecordHourWebPageEntity> webPageList = webPageList_future.get();
-				scoreList = recordHourWebPageService.calculateService3(webPageList);
+				scoreList = recordHourWebPageService.calculateService3(webPageList,map);
 				scoreList = recordHourWebPageService.calculateDate3(scoreList);
 				break;
 			}
@@ -501,7 +501,7 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 		while (true) {
 			if (webPageList_future.isDone()) {
 				List<RecordHourWebPageEntity> webPageList = webPageList_future.get();
-				scoreList = recordHourWebPageService.calculateService3(webPageList);
+				scoreList = recordHourWebPageService.calculateService3(webPageList,map);
 				scoreList = recordHourWebPageService.calculateDate3(scoreList);
 				break;
 			}
@@ -523,9 +523,9 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 			if (webDownloadList_future.isDone() && ftpList_future.isDone()) {
 				List<RecordHourWebDownloadEntity> webDownloadList = webDownloadList_future.get();
 				List<RecordHourFtpEntity> ftpList = ftpList_future.get();
-				List<ScoreEntity> webDownload = recordHourWebDownloadService.calculateWebDownload(webDownloadList);
-				List<ScoreEntity> ftpDownload = recordHourWebDownloadService.calculateFtpDownload(ftpList);
-				List<ScoreEntity> ftpUpload = recordHourWebDownloadService.calculateFtpUpload(ftpList);
+				List<ScoreEntity> webDownload = recordHourWebDownloadService.calculateWebDownload(webDownloadList,map);
+				List<ScoreEntity> ftpDownload = recordHourWebDownloadService.calculateFtpDownload(ftpList,map);
+				List<ScoreEntity> ftpUpload = recordHourWebDownloadService.calculateFtpUpload(ftpList,map);
 				scoreList = recordHourWebDownloadService.calculateDate4(webDownload, ftpDownload, ftpUpload);
 				break;
 			}
@@ -593,9 +593,9 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 				List<RecordHourFtpEntity> ftpList = ftpList_future.get();
 				ftpList.addAll(ftpList_future1.get());
 				ftpList.addAll(ftpList_future2.get());
-				List<ScoreEntity> webDownload = recordHourWebDownloadService.calculateWebDownload(webDownloadList);
-				List<ScoreEntity> ftpDownload = recordHourWebDownloadService.calculateFtpDownload(ftpList);
-				List<ScoreEntity> ftpUpload = recordHourWebDownloadService.calculateFtpUpload(ftpList);
+				List<ScoreEntity> webDownload = recordHourWebDownloadService.calculateWebDownload(webDownloadList,map);
+				List<ScoreEntity> ftpDownload = recordHourWebDownloadService.calculateFtpDownload(ftpList,map);
+				List<ScoreEntity> ftpUpload = recordHourWebDownloadService.calculateFtpUpload(ftpList,map);
 				scoreList = recordHourWebDownloadService.calculateDate4(webDownload, ftpDownload, ftpUpload);
 				break;
 			}
@@ -654,9 +654,9 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 				webDownloadList.addAll(webDownloadList_future1.get());
 				List<RecordHourFtpEntity> ftpList = ftpList_future.get();
 				ftpList.addAll(ftpList_future1.get());
-				List<ScoreEntity> webDownload = recordHourWebDownloadService.calculateWebDownload(webDownloadList);
-				List<ScoreEntity> ftpDownload = recordHourWebDownloadService.calculateFtpDownload(ftpList);
-				List<ScoreEntity> ftpUpload = recordHourWebDownloadService.calculateFtpUpload(ftpList);
+				List<ScoreEntity> webDownload = recordHourWebDownloadService.calculateWebDownload(webDownloadList,map);
+				List<ScoreEntity> ftpDownload = recordHourWebDownloadService.calculateFtpDownload(ftpList,map);
+				List<ScoreEntity> ftpUpload = recordHourWebDownloadService.calculateFtpUpload(ftpList,map);
 				scoreList = recordHourWebDownloadService.calculateDate4(webDownload, ftpDownload, ftpUpload);
 				break;
 			}
@@ -675,7 +675,7 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 		while (true) {
 			if (videoList_future.isDone()) {
 				List<RecordHourWebVideoEntity> videoList = videoList_future.get();
-				scoreList = recordHourWebVideoService.calculateService5(videoList);
+				scoreList = recordHourWebVideoService.calculateService5(videoList,map);
 				scoreList = recordHourWebVideoService.calculateDate5(scoreList);
 				break;
 			}
@@ -703,7 +703,7 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 		while (true) {
 			if (videoList_future.isDone()) {
 				List<RecordHourWebVideoEntity> videoList = videoList_future.get();
-				scoreList = recordHourWebVideoService.calculateService5(videoList);
+				scoreList = recordHourWebVideoService.calculateService5(videoList,map);
 				scoreList = recordHourWebVideoService.calculateDate5(scoreList);
 				break;
 			}
@@ -723,7 +723,7 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 		while (true) {
 			if (gameList_future.isDone()) {
 				List<RecordHourGameEntity> gameList = gameList_future.get();
-				scoreList = recordHourGameService.calculateService6(gameList);
+				scoreList = recordHourGameService.calculateService6(gameList,map);
 				scoreList = recordHourGameService.calculateDate6(scoreList);
 				break;
 			}
@@ -751,7 +751,7 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 		while (true) {
 			if (gameList_future.isDone()) {
 				List<RecordHourGameEntity> gameList = gameList_future.get();
-				scoreList = recordHourGameService.calculateService6(gameList);
+				scoreList = recordHourGameService.calculateService6(gameList,map);
 				scoreList = recordHourGameService.calculateDate6(scoreList);
 				break;
 			}

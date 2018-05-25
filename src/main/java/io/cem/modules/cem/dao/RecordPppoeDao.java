@@ -1,6 +1,7 @@
 package io.cem.modules.cem.dao;
 
 import io.cem.modules.cem.entity.RecordDayPppoeEntity;
+import io.cem.modules.cem.entity.RecordFailEntity;
 import io.cem.modules.cem.entity.RecordHourPppoeEntity;
 import io.cem.modules.cem.entity.RecordPppoeEntity;
 import io.cem.modules.sys.dao.BaseDao;
@@ -15,4 +16,5 @@ public interface RecordPppoeDao extends BaseDao<RecordPppoeEntity> {
     List<RecordHourPppoeEntity> queryPppoe(Map<String, Object> map);
     List<RecordDayPppoeEntity> queryDay(Map<String, Object> map);
     List<RecordPppoeEntity> queryPppoeList(Map<String, Object> map);
+    List<RecordFailEntity> queryPppoeFail(Map<String, Object> map);
 }

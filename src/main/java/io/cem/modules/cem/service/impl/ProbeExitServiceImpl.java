@@ -148,11 +148,11 @@ public class ProbeExitServiceImpl implements ProbeExitService {
 					if (pingList_future.isDone() && tracertList_future.isDone()) {
 						List<RecordHourPingEntity> pingList = pingList_future.get();
 						List<RecordHourTracertEntity> tracertList = tracertList_future.get();
-						List<ScoreEntity> pingIcmp = recordHourPingService.calculatePingIcmp(pingList);
-						List<ScoreEntity> pingTcp = recordHourPingService.calculatePingTcp(pingList);
-						List<ScoreEntity> pingUdp = recordHourPingService.calculatePingUdp(pingList);
-						List<ScoreEntity> tracertIcmp = recordHourPingService.calculateTracertIcmp(tracertList);
-						List<ScoreEntity> tracertUdp = recordHourPingService.calculateTracertUdp(tracertList);
+						List<ScoreEntity> pingIcmp = recordHourPingService.calculatePingIcmp(pingList,map);
+						List<ScoreEntity> pingTcp = recordHourPingService.calculatePingTcp(pingList,map);
+						List<ScoreEntity> pingUdp = recordHourPingService.calculatePingUdp(pingList,map);
+						List<ScoreEntity> tracertIcmp = recordHourPingService.calculateTracertIcmp(tracertList,map);
+						List<ScoreEntity> tracertUdp = recordHourPingService.calculateTracertUdp(tracertList,map);
 						connection = recordHourPingService.calculateService1(pingIcmp, pingTcp, pingUdp, tracertIcmp, tracertUdp);
 						break;
 					}
@@ -165,12 +165,12 @@ public class ProbeExitServiceImpl implements ProbeExitService {
 						List<RecordHourDhcpEntity> dhcpList = dhcpList_future.get();
 						List<RecordHourPppoeEntity> pppoeList = pppoeList_future.get();
 						List<RecordHourRadiusEntity> radiusList = radiusList_future.get();
-						List<ScoreEntity> slaTcp = recordHourSlaService.calculateSlaTcp(slaList);
-						List<ScoreEntity> slaUdp = recordHourSlaService.calculateSlaUdp(slaList);
-						List<ScoreEntity> dns = recordHourSlaService.calculateDns(dnsList);
-						List<ScoreEntity> dhcp = recordHourSlaService.calculateDhcp(dhcpList);
-						List<ScoreEntity> pppoe = recordHourSlaService.calculatePppoe(pppoeList);
-						List<ScoreEntity> radius = recordHourSlaService.calculateRadius(radiusList);
+						List<ScoreEntity> slaTcp = recordHourSlaService.calculateSlaTcp(slaList,map);
+						List<ScoreEntity> slaUdp = recordHourSlaService.calculateSlaUdp(slaList,map);
+						List<ScoreEntity> dns = recordHourSlaService.calculateDns(dnsList,map);
+						List<ScoreEntity> dhcp = recordHourSlaService.calculateDhcp(dhcpList,map);
+						List<ScoreEntity> pppoe = recordHourSlaService.calculatePppoe(pppoeList,map);
+						List<ScoreEntity> radius = recordHourSlaService.calculateRadius(radiusList,map);
 						quality = recordHourSlaService.calculateService2(slaTcp, slaUdp, dns, dhcp, pppoe, radius);
 						break;
 					}
@@ -180,9 +180,9 @@ public class ProbeExitServiceImpl implements ProbeExitService {
 					if (webDownloadList_future.isDone() && ftpList_future.isDone()) {
 						List<RecordHourWebDownloadEntity> webDownloadList = webDownloadList_future.get();
 						List<RecordHourFtpEntity> ftpList = ftpList_future.get();
-						List<ScoreEntity> webDownload = recordHourWebDownloadService.calculateWebDownload(webDownloadList);
-						List<ScoreEntity> ftpDownload = recordHourWebDownloadService.calculateFtpDownload(ftpList);
-						List<ScoreEntity> ftpUpload = recordHourWebDownloadService.calculateFtpUpload(ftpList);
+						List<ScoreEntity> webDownload = recordHourWebDownloadService.calculateWebDownload(webDownloadList,map);
+						List<ScoreEntity> ftpDownload = recordHourWebDownloadService.calculateFtpDownload(ftpList,map);
+						List<ScoreEntity> ftpUpload = recordHourWebDownloadService.calculateFtpUpload(ftpList,map);
 						download = recordHourWebDownloadService.calculateService4(webDownload, ftpDownload, ftpUpload);
 						break;
 					}
@@ -191,7 +191,7 @@ public class ProbeExitServiceImpl implements ProbeExitService {
 				while (true) {
 					if (webPageList_future.isDone()) {
 						List<RecordHourWebPageEntity> webPageList = webPageList_future.get();
-						broswer = recordHourWebPageService.calculateService3(webPageList);
+						broswer = recordHourWebPageService.calculateService3(webPageList,map);
 						break;
 					}
 					Thread.sleep(1000);
@@ -199,7 +199,7 @@ public class ProbeExitServiceImpl implements ProbeExitService {
 				while (true) {
 					if (videoList_future.isDone()) {
 						List<RecordHourWebVideoEntity> videoList = videoList_future.get();
-						video = recordHourWebVideoService.calculateService5(videoList);
+						video = recordHourWebVideoService.calculateService5(videoList,map);
 						break;
 					}
 					Thread.sleep(1000);
@@ -208,7 +208,7 @@ public class ProbeExitServiceImpl implements ProbeExitService {
 				while (true) {
 					if (gameList_future.isDone()) {
 						List<RecordHourGameEntity> gameList = gameList_future.get();
-						game = recordHourGameService.calculateService6(gameList);
+						game = recordHourGameService.calculateService6(gameList,map);
 						break;
 					}
 					Thread.sleep(1000);
@@ -222,11 +222,11 @@ public class ProbeExitServiceImpl implements ProbeExitService {
 					if (pingList_future.isDone() && tracertList_future.isDone()) {
 						List<RecordHourPingEntity> pingList = pingList_future.get();
 						List<RecordHourTracertEntity> tracertList = tracertList_future.get();
-						List<ScoreEntity> pingIcmp = recordHourPingService.calculatePingIcmp(pingList);
-						List<ScoreEntity> pingTcp = recordHourPingService.calculatePingTcp(pingList);
-						List<ScoreEntity> pingUdp = recordHourPingService.calculatePingUdp(pingList);
-						List<ScoreEntity> tracertIcmp = recordHourPingService.calculateTracertIcmp(tracertList);
-						List<ScoreEntity> tracertUdp = recordHourPingService.calculateTracertUdp(tracertList);
+						List<ScoreEntity> pingIcmp = recordHourPingService.calculatePingIcmp(pingList,map);
+						List<ScoreEntity> pingTcp = recordHourPingService.calculatePingTcp(pingList,map);
+						List<ScoreEntity> pingUdp = recordHourPingService.calculatePingUdp(pingList,map);
+						List<ScoreEntity> tracertIcmp = recordHourPingService.calculateTracertIcmp(tracertList,map);
+						List<ScoreEntity> tracertUdp = recordHourPingService.calculateTracertUdp(tracertList,map);
 						scoreList = recordHourPingService.calculateService1(pingIcmp, pingTcp, pingUdp, tracertIcmp, tracertUdp);
 						break;
 					}
@@ -246,12 +246,12 @@ public class ProbeExitServiceImpl implements ProbeExitService {
 						List<RecordHourDhcpEntity> dhcpList = dhcpList_future.get();
 						List<RecordHourPppoeEntity> pppoeList = pppoeList_future.get();
 						List<RecordHourRadiusEntity> radiusList = radiusList_future.get();
-						List<ScoreEntity> slaTcp = recordHourSlaService.calculateSlaTcp(slaList);
-						List<ScoreEntity> slaUdp = recordHourSlaService.calculateSlaUdp(slaList);
-						List<ScoreEntity> dns = recordHourSlaService.calculateDns(dnsList);
-						List<ScoreEntity> dhcp = recordHourSlaService.calculateDhcp(dhcpList);
-						List<ScoreEntity> pppoe = recordHourSlaService.calculatePppoe(pppoeList);
-						List<ScoreEntity> radius = recordHourSlaService.calculateRadius(radiusList);
+						List<ScoreEntity> slaTcp = recordHourSlaService.calculateSlaTcp(slaList,map);
+						List<ScoreEntity> slaUdp = recordHourSlaService.calculateSlaUdp(slaList,map);
+						List<ScoreEntity> dns = recordHourSlaService.calculateDns(dnsList,map);
+						List<ScoreEntity> dhcp = recordHourSlaService.calculateDhcp(dhcpList,map);
+						List<ScoreEntity> pppoe = recordHourSlaService.calculatePppoe(pppoeList,map);
+						List<ScoreEntity> radius = recordHourSlaService.calculateRadius(radiusList,map);
 						scoreList = recordHourSlaService.calculateService2(slaTcp, slaUdp, dns, dhcp, pppoe, radius);
 						break;
 					}
@@ -262,7 +262,7 @@ public class ProbeExitServiceImpl implements ProbeExitService {
 				while (true) {
 					if (webPageList_future.isDone()) {
 						List<RecordHourWebPageEntity> webPageList = webPageList_future.get();
-						scoreList = recordHourWebPageService.calculateService3(webPageList);
+						scoreList = recordHourWebPageService.calculateService3(webPageList,map);
 						break;
 					}
 					Thread.sleep(1000);
@@ -275,9 +275,9 @@ public class ProbeExitServiceImpl implements ProbeExitService {
 					if (webDownloadList_future.isDone() && ftpList_future.isDone()) {
 						List<RecordHourWebDownloadEntity> webDownloadList = webDownloadList_future.get();
 						List<RecordHourFtpEntity> ftpList = ftpList_future.get();
-						List<ScoreEntity> webDownload = recordHourWebDownloadService.calculateWebDownload(webDownloadList);
-						List<ScoreEntity> ftpDownload = recordHourWebDownloadService.calculateFtpDownload(ftpList);
-						List<ScoreEntity> ftpUpload = recordHourWebDownloadService.calculateFtpUpload(ftpList);
+						List<ScoreEntity> webDownload = recordHourWebDownloadService.calculateWebDownload(webDownloadList,map);
+						List<ScoreEntity> ftpDownload = recordHourWebDownloadService.calculateFtpDownload(ftpList,map);
+						List<ScoreEntity> ftpUpload = recordHourWebDownloadService.calculateFtpUpload(ftpList,map);
 						scoreList = recordHourWebDownloadService.calculateService4(webDownload, ftpDownload, ftpUpload);
 						break;
 					}
@@ -288,7 +288,7 @@ public class ProbeExitServiceImpl implements ProbeExitService {
 				while (true) {
 					if (videoList_future.isDone()) {
 						List<RecordHourWebVideoEntity> videoList = videoList_future.get();
-						scoreList = recordHourWebVideoService.calculateService5(videoList);
+						scoreList = recordHourWebVideoService.calculateService5(videoList,map);
 						break;
 					}
 					Thread.sleep(1000);
@@ -298,7 +298,7 @@ public class ProbeExitServiceImpl implements ProbeExitService {
 				while (true) {
 					if (gameList_future.isDone()) {
 						List<RecordHourGameEntity> gameList = gameList_future.get();
-						scoreList = recordHourGameService.calculateService6(gameList);
+						scoreList = recordHourGameService.calculateService6(gameList,map);
 						break;
 					}
 					Thread.sleep(1000);
@@ -334,11 +334,11 @@ public class ProbeExitServiceImpl implements ProbeExitService {
 					if (pingList_future.isDone() && tracertList_future.isDone()) {
 						List<RecordHourPingEntity> pingList = pingList_future.get();
 						List<RecordHourTracertEntity> tracertList = tracertList_future.get();
-						List<ScoreEntity> pingIcmp = recordHourPingService.calculatePingIcmp(pingList);
-						List<ScoreEntity> pingTcp = recordHourPingService.calculatePingTcp(pingList);
-						List<ScoreEntity> pingUdp = recordHourPingService.calculatePingUdp(pingList);
-						List<ScoreEntity> tracertIcmp = recordHourPingService.calculateTracertIcmp(tracertList);
-						List<ScoreEntity> tracertUdp = recordHourPingService.calculateTracertUdp(tracertList);
+						List<ScoreEntity> pingIcmp = recordHourPingService.calculatePingIcmp(pingList,map);
+						List<ScoreEntity> pingTcp = recordHourPingService.calculatePingTcp(pingList,map);
+						List<ScoreEntity> pingUdp = recordHourPingService.calculatePingUdp(pingList,map);
+						List<ScoreEntity> tracertIcmp = recordHourPingService.calculateTracertIcmp(tracertList,map);
+						List<ScoreEntity> tracertUdp = recordHourPingService.calculateTracertUdp(tracertList,map);
 						connection = recordHourPingService.calculateService1(pingIcmp, pingTcp, pingUdp, tracertIcmp, tracertUdp);
 						break;
 					}
@@ -351,12 +351,12 @@ public class ProbeExitServiceImpl implements ProbeExitService {
 						List<RecordHourDhcpEntity> dhcpList = dhcpList_future.get();
 						List<RecordHourPppoeEntity> pppoeList = pppoeList_future.get();
 						List<RecordHourRadiusEntity> radiusList = radiusList_future.get();
-						List<ScoreEntity> slaTcp = recordHourSlaService.calculateSlaTcp(slaList);
-						List<ScoreEntity> slaUdp = recordHourSlaService.calculateSlaUdp(slaList);
-						List<ScoreEntity> dns = recordHourSlaService.calculateDns(dnsList);
-						List<ScoreEntity> dhcp = recordHourSlaService.calculateDhcp(dhcpList);
-						List<ScoreEntity> pppoe = recordHourSlaService.calculatePppoe(pppoeList);
-						List<ScoreEntity> radius = recordHourSlaService.calculateRadius(radiusList);
+						List<ScoreEntity> slaTcp = recordHourSlaService.calculateSlaTcp(slaList,map);
+						List<ScoreEntity> slaUdp = recordHourSlaService.calculateSlaUdp(slaList,map);
+						List<ScoreEntity> dns = recordHourSlaService.calculateDns(dnsList,map);
+						List<ScoreEntity> dhcp = recordHourSlaService.calculateDhcp(dhcpList,map);
+						List<ScoreEntity> pppoe = recordHourSlaService.calculatePppoe(pppoeList,map);
+						List<ScoreEntity> radius = recordHourSlaService.calculateRadius(radiusList,map);
 						quality = recordHourSlaService.calculateService2(slaTcp, slaUdp, dns, dhcp, pppoe, radius);
 						break;
 					}
@@ -366,9 +366,9 @@ public class ProbeExitServiceImpl implements ProbeExitService {
 					if (webDownloadList_future.isDone() && ftpList_future.isDone()) {
 						List<RecordHourWebDownloadEntity> webDownloadList = webDownloadList_future.get();
 						List<RecordHourFtpEntity> ftpList = ftpList_future.get();
-						List<ScoreEntity> webDownload = recordHourWebDownloadService.calculateWebDownload(webDownloadList);
-						List<ScoreEntity> ftpDownload = recordHourWebDownloadService.calculateFtpDownload(ftpList);
-						List<ScoreEntity> ftpUpload = recordHourWebDownloadService.calculateFtpUpload(ftpList);
+						List<ScoreEntity> webDownload = recordHourWebDownloadService.calculateWebDownload(webDownloadList,map);
+						List<ScoreEntity> ftpDownload = recordHourWebDownloadService.calculateFtpDownload(ftpList,map);
+						List<ScoreEntity> ftpUpload = recordHourWebDownloadService.calculateFtpUpload(ftpList,map);
 						download = recordHourWebDownloadService.calculateService4(webDownload, ftpDownload, ftpUpload);
 						break;
 					}
@@ -377,7 +377,7 @@ public class ProbeExitServiceImpl implements ProbeExitService {
 				while (true) {
 					if (webPageList_future.isDone()) {
 						List<RecordHourWebPageEntity> webPageList = webPageList_future.get();
-						broswer = recordHourWebPageService.calculateService3(webPageList);
+						broswer = recordHourWebPageService.calculateService3(webPageList,map);
 						break;
 					}
 					Thread.sleep(1000);
@@ -385,7 +385,7 @@ public class ProbeExitServiceImpl implements ProbeExitService {
 				while (true) {
 					if (videoList_future.isDone()) {
 						List<RecordHourWebVideoEntity> videoList = videoList_future.get();
-						video = recordHourWebVideoService.calculateService5(videoList);
+						video = recordHourWebVideoService.calculateService5(videoList,map);
 						break;
 					}
 					Thread.sleep(1000);
@@ -394,7 +394,7 @@ public class ProbeExitServiceImpl implements ProbeExitService {
 				while (true) {
 					if (gameList_future.isDone()) {
 						List<RecordHourGameEntity> gameList = gameList_future.get();
-						game = recordHourGameService.calculateService6(gameList);
+						game = recordHourGameService.calculateService6(gameList,map);
 						break;
 					}
 					Thread.sleep(1000);
@@ -408,11 +408,11 @@ public class ProbeExitServiceImpl implements ProbeExitService {
 					if (pingList_future.isDone() && tracertList_future.isDone()) {
 						List<RecordHourPingEntity> pingList = pingList_future.get();
 						List<RecordHourTracertEntity> tracertList = tracertList_future.get();
-						List<ScoreEntity> pingIcmp = recordHourPingService.calculatePingIcmp(pingList);
-						List<ScoreEntity> pingTcp = recordHourPingService.calculatePingTcp(pingList);
-						List<ScoreEntity> pingUdp = recordHourPingService.calculatePingUdp(pingList);
-						List<ScoreEntity> tracertIcmp = recordHourPingService.calculateTracertIcmp(tracertList);
-						List<ScoreEntity> tracertUdp = recordHourPingService.calculateTracertUdp(tracertList);
+						List<ScoreEntity> pingIcmp = recordHourPingService.calculatePingIcmp(pingList,map);
+						List<ScoreEntity> pingTcp = recordHourPingService.calculatePingTcp(pingList,map);
+						List<ScoreEntity> pingUdp = recordHourPingService.calculatePingUdp(pingList,map);
+						List<ScoreEntity> tracertIcmp = recordHourPingService.calculateTracertIcmp(tracertList,map);
+						List<ScoreEntity> tracertUdp = recordHourPingService.calculateTracertUdp(tracertList,map);
 						scoreList = recordHourPingService.calculateService1(pingIcmp, pingTcp, pingUdp, tracertIcmp, tracertUdp);
 						break;
 					}
@@ -432,12 +432,12 @@ public class ProbeExitServiceImpl implements ProbeExitService {
 						List<RecordHourDhcpEntity> dhcpList = dhcpList_future.get();
 						List<RecordHourPppoeEntity> pppoeList = pppoeList_future.get();
 						List<RecordHourRadiusEntity> radiusList = radiusList_future.get();
-						List<ScoreEntity> slaTcp = recordHourSlaService.calculateSlaTcp(slaList);
-						List<ScoreEntity> slaUdp = recordHourSlaService.calculateSlaUdp(slaList);
-						List<ScoreEntity> dns = recordHourSlaService.calculateDns(dnsList);
-						List<ScoreEntity> dhcp = recordHourSlaService.calculateDhcp(dhcpList);
-						List<ScoreEntity> pppoe = recordHourSlaService.calculatePppoe(pppoeList);
-						List<ScoreEntity> radius = recordHourSlaService.calculateRadius(radiusList);
+						List<ScoreEntity> slaTcp = recordHourSlaService.calculateSlaTcp(slaList,map);
+						List<ScoreEntity> slaUdp = recordHourSlaService.calculateSlaUdp(slaList,map);
+						List<ScoreEntity> dns = recordHourSlaService.calculateDns(dnsList,map);
+						List<ScoreEntity> dhcp = recordHourSlaService.calculateDhcp(dhcpList,map);
+						List<ScoreEntity> pppoe = recordHourSlaService.calculatePppoe(pppoeList,map);
+						List<ScoreEntity> radius = recordHourSlaService.calculateRadius(radiusList,map);
 						scoreList = recordHourSlaService.calculateService2(slaTcp, slaUdp, dns, dhcp, pppoe, radius);
 						break;
 					}
@@ -448,7 +448,7 @@ public class ProbeExitServiceImpl implements ProbeExitService {
 				while (true) {
 					if (webPageList_future.isDone()) {
 						List<RecordHourWebPageEntity> webPageList = webPageList_future.get();
-						scoreList = recordHourWebPageService.calculateService3(webPageList);
+						scoreList = recordHourWebPageService.calculateService3(webPageList,map);
 						break;
 					}
 					Thread.sleep(1000);
@@ -461,9 +461,9 @@ public class ProbeExitServiceImpl implements ProbeExitService {
 					if (webDownloadList_future.isDone() && ftpList_future.isDone()) {
 						List<RecordHourWebDownloadEntity> webDownloadList = webDownloadList_future.get();
 						List<RecordHourFtpEntity> ftpList = ftpList_future.get();
-						List<ScoreEntity> webDownload = recordHourWebDownloadService.calculateWebDownload(webDownloadList);
-						List<ScoreEntity> ftpDownload = recordHourWebDownloadService.calculateFtpDownload(ftpList);
-						List<ScoreEntity> ftpUpload = recordHourWebDownloadService.calculateFtpUpload(ftpList);
+						List<ScoreEntity> webDownload = recordHourWebDownloadService.calculateWebDownload(webDownloadList,map);
+						List<ScoreEntity> ftpDownload = recordHourWebDownloadService.calculateFtpDownload(ftpList,map);
+						List<ScoreEntity> ftpUpload = recordHourWebDownloadService.calculateFtpUpload(ftpList,map);
 						scoreList = recordHourWebDownloadService.calculateService4(webDownload, ftpDownload, ftpUpload);
 						break;
 					}
@@ -474,7 +474,7 @@ public class ProbeExitServiceImpl implements ProbeExitService {
 				while (true) {
 					if (videoList_future.isDone()) {
 						List<RecordHourWebVideoEntity> videoList = videoList_future.get();
-						scoreList = recordHourWebVideoService.calculateService5(videoList);
+						scoreList = recordHourWebVideoService.calculateService5(videoList,map);
 						break;
 					}
 					Thread.sleep(1000);
@@ -484,7 +484,7 @@ public class ProbeExitServiceImpl implements ProbeExitService {
 				while (true) {
 					if (gameList_future.isDone()) {
 						List<RecordHourGameEntity> gameList = gameList_future.get();
-						scoreList = recordHourGameService.calculateService6(gameList);
+						scoreList = recordHourGameService.calculateService6(gameList,map);
 						break;
 					}
 					Thread.sleep(1000);

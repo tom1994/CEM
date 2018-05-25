@@ -97,7 +97,7 @@ public interface RecordHourWebVideoService {
 	 * @param videoList
 	 * @return List<ScoreEntity>
 	 */
-	List<ScoreEntity> calculateService5 (List<RecordHourWebVideoEntity> videoList);
+	List<ScoreEntity> calculateService5 (List<RecordHourWebVideoEntity> videoList,Map<String, Object> map);
 
 	/**
 	 * 在线视频业务-层级

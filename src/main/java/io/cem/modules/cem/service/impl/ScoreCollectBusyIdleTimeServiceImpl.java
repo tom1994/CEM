@@ -2,7 +2,6 @@ package io.cem.modules.cem.service.impl;
 
 import io.cem.common.utils.DateUtils;
 import io.cem.common.utils.PropertiesUtils;
-import io.cem.modules.cem.dao.ScoreCollectAllDao;
 import io.cem.modules.cem.dao.ScoreCollectDayDao;
 import io.cem.modules.cem.entity.*;
 import io.cem.modules.cem.service.*;
@@ -213,12 +212,12 @@ public class ScoreCollectBusyIdleTimeServiceImpl implements ScoreCollectBusyIdle
         List<RecordHourPppoeEntity> pppoes = recordHourPppoeService.queryPppoeList(param).get();
         List<RecordHourRadiusEntity> radius = recordHourRadiusService.queryRadiusList(param).get();
 
-        List<ScoreEntity> slaTcpScore = recordHourSlaService.calculateSlaTcp(slas);
-        List<ScoreEntity> slaUdpScore = recordHourSlaService.calculateSlaUdp(slas);
-        List<ScoreEntity> dnsScore = recordHourSlaService.calculateDns(dns);
-        List<ScoreEntity> dbcpScore = recordHourSlaService.calculateDhcp(dhcps);
-        List<ScoreEntity> radiusScore = recordHourSlaService.calculateRadius(radius);
-        List<ScoreEntity> pppoeScore = recordHourSlaService.calculatePppoe(pppoes);
+        List<ScoreEntity> slaTcpScore = recordHourSlaService.calculateSlaTcp(slas,param);
+        List<ScoreEntity> slaUdpScore = recordHourSlaService.calculateSlaUdp(slas,param);
+        List<ScoreEntity> dnsScore = recordHourSlaService.calculateDns(dns,param);
+        List<ScoreEntity> dbcpScore = recordHourSlaService.calculateDhcp(dhcps,param);
+        List<ScoreEntity> radiusScore = recordHourSlaService.calculateRadius(radius,param);
+        List<ScoreEntity> pppoeScore = recordHourSlaService.calculatePppoe(pppoes,param);
         List<ScoreEntity> netScores = recordHourSlaService.calculateService2(slaTcpScore,slaUdpScore,dnsScore,dbcpScore,pppoeScore,radiusScore);
 
         for(ScoreEntity s : netScores){
@@ -251,12 +250,12 @@ public class ScoreCollectBusyIdleTimeServiceImpl implements ScoreCollectBusyIdle
         pppoes_idle.addAll(recordHourPppoeService.queryPppoeList(param).get());
         radius_idle.addAll(recordHourRadiusService.queryRadiusList(param).get());
 
-        List<ScoreEntity> slaTcpScore_idle = recordHourSlaService.calculateSlaTcp(slas_idle);
-        List<ScoreEntity> slaUdpScore_idle = recordHourSlaService.calculateSlaUdp(slas_idle);
-        List<ScoreEntity> dnsScore_idle = recordHourSlaService.calculateDns(dns_idle);
-        List<ScoreEntity> dbcpScore_idle = recordHourSlaService.calculateDhcp(dhcps_idle);
-        List<ScoreEntity> radiusScore_idle = recordHourSlaService.calculateRadius(radius_idle);
-        List<ScoreEntity> pppoeScore_idle = recordHourSlaService.calculatePppoe(pppoes_idle);
+        List<ScoreEntity> slaTcpScore_idle = recordHourSlaService.calculateSlaTcp(slas_idle,param);
+        List<ScoreEntity> slaUdpScore_idle = recordHourSlaService.calculateSlaUdp(slas_idle,param);
+        List<ScoreEntity> dnsScore_idle = recordHourSlaService.calculateDns(dns_idle,param);
+        List<ScoreEntity> dbcpScore_idle = recordHourSlaService.calculateDhcp(dhcps_idle,param);
+        List<ScoreEntity> radiusScore_idle = recordHourSlaService.calculateRadius(radius_idle,param);
+        List<ScoreEntity> pppoeScore_idle = recordHourSlaService.calculatePppoe(pppoes_idle,param);
         List<ScoreEntity> netScores_idle = recordHourSlaService.calculateService2(slaTcpScore_idle,slaUdpScore_idle,dnsScore_idle,dbcpScore_idle,pppoeScore_idle,radiusScore_idle);
 
         for(ScoreEntity s : netScores_idle){

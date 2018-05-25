@@ -2,9 +2,11 @@ package io.cem.modules.cem.service.impl;
 
 
 import io.cem.common.utils.PropertiesUtils;
+import io.cem.common.utils.SpringContextUtils;
 import io.cem.modules.cem.dao.RecordHourPingDao;
 import io.cem.modules.cem.dao.RecordPingDao;
 import io.cem.modules.cem.entity.*;
+import io.cem.modules.cem.service.RecordFailService;
 import io.cem.modules.cem.service.RecordHourPingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -68,7 +70,9 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 	public Future<List<RecordHourPingEntity>> queryDayList(Map<String, Object> map){ return new AsyncResult<> (recordHourPingDao.queryDayList(map)); }
 
 	@Override
-	public List<ScoreEntity> calculatePingIcmp(List<RecordHourPingEntity> pingList){
+	public List<ScoreEntity> calculatePingIcmp(List<RecordHourPingEntity> pingList,Map<String,Object> map){
+		RecordFailService recordFailService= (RecordFailService) SpringContextUtils.getBean("recordFailService");
+
 		List<ScoreEntity> pingIcmp = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
@@ -310,7 +314,9 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						icmpPing.setPingIcmpJitterStd(pingList.get(i).getJitterStd());
 						icmpPing.setPingIcmpJitterVar(pingList.get(i).getJitterVar());
 						icmpPing.setPingIcmpLossRate(pingList.get(i).getLossRate());
-						double fail = (double) icmpPing.getFail()/icmpPing.getTotal();
+						map.put("service_type",1);
+						RecordFailEntity recordFail = recordFailService.queryFail(map);
+						double fail = (double)recordFail.getFail()/recordFail.getTotal();
 						icmpPing.setScore(score*(1-fail));
 						icmpPing.setBase(Double.parseDouble(pros.getValue("ping_icmp")));
 
@@ -326,7 +332,8 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 	}
 
 	@Override
-	public List<ScoreEntity> calculatePingTcp(List<RecordHourPingEntity> pingList){
+	public List<ScoreEntity> calculatePingTcp(List<RecordHourPingEntity> pingList,Map<String,Object> map){
+		RecordFailService recordFailService= (RecordFailService) SpringContextUtils.getBean("recordFailService");
 		List<ScoreEntity> pingTcp = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
@@ -567,7 +574,9 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						tcpPing.setPingTcpJitterStd(pingList.get(i).getJitterStd());
 						tcpPing.setPingTcpJitterVar(pingList.get(i).getJitterVar());
 						tcpPing.setPingTcpLossRate(pingList.get(i).getLossRate());
-						double fail = (double) tcpPing.getFail()/tcpPing.getTotal();
+						map.put("service_type",2);
+						RecordFailEntity recordFail = recordFailService.queryFail(map);
+						double fail = (double)recordFail.getFail()/recordFail.getTotal();
 						tcpPing.setScore(score*(1-fail));
 						tcpPing.setBase(Double.parseDouble(pros.getValue("ping_tcp")));
 
@@ -583,7 +592,9 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 	}
 
 	@Override
-	public List<ScoreEntity> calculatePingUdp(List<RecordHourPingEntity> pingList){
+	public List<ScoreEntity> calculatePingUdp(List<RecordHourPingEntity> pingList,Map<String,Object> map){
+		RecordFailService recordFailService= (RecordFailService) SpringContextUtils.getBean("recordFailService");
+
 		List<ScoreEntity> pingUdp = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
@@ -824,7 +835,9 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						udpPing.setPingUdpJitterStd(pingList.get(i).getJitterStd());
 						udpPing.setPingUdpJitterVar(pingList.get(i).getJitterVar());
 						udpPing.setPingUdpLossRate(pingList.get(i).getLossRate());
-						double fail = (double) udpPing.getFail()/udpPing.getTotal();
+						map.put("service_type",3);
+						RecordFailEntity recordFail = recordFailService.queryFail(map);
+						double fail = (double)recordFail.getFail()/recordFail.getTotal();
 						udpPing.setScore(score*(1-fail));
 						udpPing.setBase(Double.parseDouble(pros.getValue("ping_udp")));
 
@@ -838,7 +851,8 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 	}
 
 	@Override
-	public List<ScoreEntity> calculateTracertIcmp(List<RecordHourTracertEntity> tracertList){
+	public List<ScoreEntity> calculateTracertIcmp(List<RecordHourTracertEntity> tracertList,Map<String,Object> map){
+		RecordFailService recordFailService= (RecordFailService) SpringContextUtils.getBean("recordFailService");
 		List<ScoreEntity> tracertIcmp = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
@@ -1072,7 +1086,9 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						icmpTracert.setRecordTime(tracertList.get(i).getRecordTime());
 						icmpTracert.setFail(tracertList.get(i).getFail());
 						icmpTracert.setTotal(tracertList.get(i).getTotal());
-						double fail = (double) icmpTracert.getFail()/icmpTracert.getTotal();
+						map.put("service_type",4);
+						RecordFailEntity recordFail = recordFailService.queryFail(map);
+						double fail = (double)recordFail.getFail()/recordFail.getTotal();
 						icmpTracert.setScore(score*(1-fail));
 						icmpTracert.setTracertIcmpDelay(tracertList.get(i).getDelay());
 						icmpTracert.setTracertIcmpDelayStd(tracertList.get(i).getDelayStd());
@@ -1093,7 +1109,8 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 	}
 
 	@Override
-	public List<ScoreEntity> calculateTracertUdp(List<RecordHourTracertEntity> tracertList){
+	public List<ScoreEntity> calculateTracertUdp(List<RecordHourTracertEntity> tracertList,Map<String,Object> map){
+		RecordFailService recordFailService= (RecordFailService) SpringContextUtils.getBean("recordFailService");
 		List<ScoreEntity> tracertUdp = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
@@ -1334,7 +1351,9 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						tcpTracert.setTracertTcpJitterStd(tracertList.get(i).getJitterStd());
 						tcpTracert.setTracertTcpJitterVar(tracertList.get(i).getJitterVar());
 						tcpTracert.setTracertTcpLossRate(tracertList.get(i).getLossRate());
-						double fail = (double) tcpTracert.getFail()/tcpTracert.getTotal();
+						map.put("service_type",5);
+						RecordFailEntity recordFail = recordFailService.queryFail(map);
+						double fail = (double)recordFail.getFail()/recordFail.getTotal();
 						tcpTracert.setScore(score*(1-fail));
 						tcpTracert.setBase(Double.parseDouble(pros.getValue("tr_tcp")));
 

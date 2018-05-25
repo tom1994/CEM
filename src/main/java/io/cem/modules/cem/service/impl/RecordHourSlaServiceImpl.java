@@ -2,8 +2,10 @@ package io.cem.modules.cem.service.impl;
 
 import io.cem.common.utils.PropertiesUtils;
 import io.cem.common.utils.R;
+import io.cem.common.utils.SpringContextUtils;
 import io.cem.modules.cem.dao.RecordSlaDao;
 import io.cem.modules.cem.entity.*;
+import io.cem.modules.cem.service.RecordFailService;
 import io.cem.modules.cem.service.RecordHourPingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -67,7 +69,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 	public Future<List<RecordHourSlaEntity>> queryDayList(Map<String, Object> map){return new AsyncResult<> (recordHourSlaDao.queryDayList(map));}
 
 	@Override
-	public List<ScoreEntity> calculateSlaTcp(List<RecordHourSlaEntity> slaList){
+	public List<ScoreEntity> calculateSlaTcp(List<RecordHourSlaEntity> slaList,Map<String,Object> map){
+		RecordFailService recordFailService= (RecordFailService) SpringContextUtils.getBean("recordFailService");
 		List<ScoreEntity> slaTcp = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
@@ -304,7 +307,9 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 					tcpSla.setSlaTcpLossRate(slaList.get(i).getLossRate());
 					tcpSla.setFail(slaList.get(i).getFail());
 					tcpSla.setTotal(slaList.get(i).getTotal());
-					double fail = (double) tcpSla.getFail()/tcpSla.getTotal();
+					map.put("service_type",10);
+					RecordFailEntity recordFail = recordFailService.queryFail(map);
+					double fail = (double)recordFail.getFail()/recordFail.getTotal();
 					tcpSla.setScore(score*(1-fail));
 					tcpSla.setBase(Double.parseDouble(pros.getValue("sla_tcp")));
 
@@ -317,7 +322,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 	}
 
 	@Override
-	public List<ScoreEntity> calculateSlaUdp(List<RecordHourSlaEntity> slaList) {
+	public List<ScoreEntity> calculateSlaUdp(List<RecordHourSlaEntity> slaList,Map<String,Object> map){
+		RecordFailService recordFailService= (RecordFailService) SpringContextUtils.getBean("recordFailService");
 		List<ScoreEntity> slaUdp = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
@@ -554,7 +560,9 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 					udpSla.setSlaUdpLossRate(slaList.get(i).getLossRate());
 					udpSla.setFail(slaList.get(i).getFail());
 					udpSla.setTotal(slaList.get(i).getTotal());
-					double fail = (double) udpSla.getFail()/udpSla.getTotal();
+					map.put("service_type",11);
+					RecordFailEntity recordFail = recordFailService.queryFail(map);
+					double fail = (double)recordFail.getFail()/recordFail.getTotal();
 					udpSla.setScore(score*(1-fail));
 					udpSla.setBase(Double.parseDouble(pros.getValue("sla_udp")));
 
@@ -567,7 +575,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 	}
 
 	@Override
-	public List<ScoreEntity> calculateDns(List<RecordHourDnsEntity> dnsList) {
+	public List<ScoreEntity> calculateDns(List<RecordHourDnsEntity> dnsList,Map<String,Object> map){
+		RecordFailService recordFailService= (RecordFailService) SpringContextUtils.getBean("recordFailService");
 		List<ScoreEntity> dns = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
@@ -652,7 +661,9 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				DNS.setDnsSuccessRate(dnsList.get(i).getSuccessRate());
 				DNS.setFail(dnsList.get(i).getFail());
 				DNS.setTotal(dnsList.get(i).getTotal());
-				double fail = (double) DNS.getFail()/DNS.getTotal();
+				map.put("service_type",14);
+				RecordFailEntity recordFail = recordFailService.queryFail(map);
+				double fail = (double)recordFail.getFail()/recordFail.getTotal();
 				DNS.setScore(score*(1-fail));
 				DNS.setBase(Double.parseDouble(pros.getValue("dns")));
 
@@ -665,7 +676,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 	}
 
 	@Override
-	public List<ScoreEntity> calculateDhcp(List<RecordHourDhcpEntity> dhcpList) {
+	public List<ScoreEntity> calculateDhcp(List<RecordHourDhcpEntity> dhcpList,Map<String,Object> map){
+		RecordFailService recordFailService= (RecordFailService) SpringContextUtils.getBean("recordFailService");
 		List<ScoreEntity> dhcp = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
@@ -751,7 +763,9 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				DHCP.setDhcpSuccessRate(dhcpList.get(i).getSuccessRate());
 				DHCP.setFail(dhcpList.get(i).getFail());
 				DHCP.setTotal(dhcpList.get(i).getTotal());
-				double fail = (double) DHCP.getFail()/DHCP.getTotal();
+				map.put("service_type",13);
+				RecordFailEntity recordFail = recordFailService.queryFail(map);
+				double fail = (double)recordFail.getFail()/recordFail.getTotal();
 				DHCP.setScore(score*(1-fail));
 				DHCP.setBase(Double.parseDouble(pros.getValue("dhcp")));
 
@@ -763,7 +777,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 	}
 
 	@Override
-	public List<ScoreEntity> calculatePppoe(List<RecordHourPppoeEntity> pppoeList) {
+	public List<ScoreEntity> calculatePppoe(List<RecordHourPppoeEntity> pppoeList,Map<String,Object> map){
+		RecordFailService recordFailService= (RecordFailService) SpringContextUtils.getBean("recordFailService");
 		List<ScoreEntity> pppoe = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
@@ -880,7 +895,9 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				PPPOE.setPppoeSuccessRate(pppoeList.get(i).getSuccessRate());
 				PPPOE.setFail(pppoeList.get(i).getFail());
 				PPPOE.setTotal(pppoeList.get(i).getTotal());
-				double fail = (double) PPPOE.getFail()/PPPOE.getTotal();
+				map.put("service_type",12);
+				RecordFailEntity recordFail = recordFailService.queryFail(map);
+				double fail = (double)recordFail.getFail()/recordFail.getTotal();
 				PPPOE.setScore(score*(1-fail));
 				PPPOE.setBase(Double.parseDouble(pros.getValue("adsl")));
 
@@ -892,7 +909,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 	}
 
 	@Override
-	public List<ScoreEntity> calculateRadius(List<RecordHourRadiusEntity> radiusList) {
+	public List<ScoreEntity> calculateRadius(List<RecordHourRadiusEntity> radiusList,Map<String,Object> map){
+		RecordFailService recordFailService= (RecordFailService) SpringContextUtils.getBean("recordFailService");
 		List<ScoreEntity> radius = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
@@ -978,7 +996,9 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				RADIUS.setRadiusSuccessRate(radiusList.get(i).getSuccessRate());
 				RADIUS.setFail(radiusList.get(i).getFail());
 				RADIUS.setTotal(radiusList.get(i).getTotal());
-				double fail = (double) RADIUS.getFail()/RADIUS.getTotal();
+				map.put("service_type",15);
+				RecordFailEntity recordFail = recordFailService.queryFail(map);
+				double fail = (double)recordFail.getFail()/recordFail.getTotal();
 				RADIUS.setScore(score*(1-fail));
 				RADIUS.setBase(Double.parseDouble(pros.getValue("radius")));
 

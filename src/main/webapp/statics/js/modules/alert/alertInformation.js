@@ -38,7 +38,8 @@ var TypeSelected=0;
 var LevelSelected=0;
 var StatusSeleted=0;
 var probeSelected=0;
-var serviceSelected=0
+var serviceSelected=0;
+var targetSelected=0;
 $(document).ready(function () {
     $('#probe .jq22').comboSelect();
     probe();
@@ -49,6 +50,7 @@ $(document).ready(function () {
     $('#service .option-item').click(function (service) {
         var a = $(service.currentTarget)[0].innerText;
         serviceSelected = $($(service.currentTarget)[0]).data('value');
+        getService(serviceSelected)
         setTimeout(function () {
             $('#service .combo-input').val(a);
         }, 20);
@@ -61,6 +63,7 @@ $(document).ready(function () {
             var c = ($("#service .option-hover.option-selected"));
             var c = c[0].dataset
             serviceSelected = c.value;
+            getService(serviceSelected)
             $('#service .combo-input').val(b);
             $('#service .combo-select select').val(b);
         }
@@ -122,8 +125,47 @@ $(document).ready(function () {
             $('#selectstatus1 .combo-select select').val(b);
         }
     });
+    $.ajax({
+        type: "POST", /*GET会乱码*/
+        url: "../../target/list/" ,
+        cache: false,  //禁用缓存
+        dataType: "json",
+        success: function (result) {
+            var targets = [];
+            for (var i = 0; i < result.page.list.length; i++) {
+                targets[i] = {message:  result.page.list[i]}
+            }
+            search_data.target = targets;
+            setTimeout(function () {
+                $('#target .jq22').comboSelect();
+                $('.combo-dropdown').css("z-index", "3");
+                $('div#target input[type=text]').attr('placeholder', '所有目标地址');
+                $('div#target .option-item').click(function (target) {
+                    setTimeout(function () {
+                        var a = $(target.currentTarget)[0].innerText;
+                        targetSelected = $($(target.currentTarget)[0]).data('value');
+                        $('div#target .combo-input').val(a);
+                        $('div#target .combo-select select').val(a);
+                    }, 30);
+                });
+                $('#target input[type=text] ').keyup(function (target) {
+                    if (target.keyCode == '13') {
+                        var b = $("#target .option-hover.option-selected").text();
+                        targetSelected = $("#target .option-hover.option-selected")[0].dataset.value;
+                        $('#target .combo-input').val(b);
+                        $('#target .combo-select select').val(b);
+                    }
+                })
+            }, 50);
+        }
+    });
+
     $('.combo-select  input[type=text]').css('height','28px')
+
+
+
 })
+
 function probe() {
     probeSelected = 0;
     $.ajax({
@@ -161,10 +203,65 @@ function probe() {
         }
     });
 }
+
+var getService = function (serviceId) {
+
+    if(serviceId==1||serviceId==2||serviceId==3||serviceId==4||serviceId==5){
+        serviceId=1
+    }else if(serviceId==10||serviceId==11||serviceId==12||serviceId==13||serviceId==14||serviceId==15){
+        serviceId=2
+    }else if(serviceId==20){
+        serviceId=3
+    }else if(serviceId==30||serviceId==31||serviceId==32){
+        serviceId=4
+    }else if(serviceId==40){
+        serviceId=5
+    }else if(serviceId==50){
+        serviceId=6
+    }
+    targetSelected = 0
+    $.ajax({
+        url: "../../target/infobat/" + serviceId,
+        type: "POST", /*GET会乱码*/
+        cache: false,  //禁用缓存
+        dataType: "json",
+        contentType: "application/json", /*必须要,不可少*/
+        success: function (result) {
+            search_data.target = [];
+            targetNames = [];
+            for (var i = 0; i < result.target.length; i++) {
+                targetNames[i] = {message: result.target[i]}
+            }
+            search_data.target = targetNames;
+            setTimeout(function () {
+                $('#target  .jq22').comboSelect();
+                $('#target  .option-item').click(function (target) {
+                    setTimeout(function () {
+                        var a = $(target.currentTarget)[0].innerText;
+                        targetSelected = $($(target.currentTarget)[0]).data('value');
+                        $('#target .combo-input').val(a);
+                        $('#target .combo-select select').val(a);
+                    }, 30);
+                });
+                $('#target input[type=text] ').keyup(function (target) {
+                    if (target.keyCode == '13') {
+                        var b = $("#target  .option-hover.option-selected").text();
+                        targetSelected = $("#target .option-hover.option-selected")[0].dataset.value;
+                        $('#target .combo-input').val(b);
+                        $('#target .combo-select select').val(b);
+                    }
+                })
+            }, 50);
+
+        }
+    });
+}
+
 var search_data = new Vue({
     el: '#probesearch',
     data: {
         probe: [],
+        target:[],
     },
     methods: {
 
@@ -180,7 +277,7 @@ var search_service = new Vue({
     // 在 `methods` 对象中定义方法
     methods: {
         testagentListsearch: function () {
-              
+
             var searchJson = getFormJson($('#probesearch'));
 
             if((searchJson.startDate)>(searchJson.terminalDate)){
@@ -195,6 +292,12 @@ var search_service = new Vue({
         reset:function () {
             document.getElementById('probesearch').reset();
             alerttable.reset();
+            TypeSelected=0;
+            LevelSelected=0;
+            StatusSeleted=0;
+            probeSelected=0;
+            serviceSelected=0;
+            targetSelected=0;
         },
 
     }
@@ -203,7 +306,7 @@ var search_service = new Vue({
 function getFormJson(form) {      /*将表单对象变为json对象*/
     var o = {};
     var a = $(form).serializeArray();
-     
+     debugger
     if(TypeSelected!=0){
         a[2]={}
         a[2].name='type'
@@ -216,22 +319,27 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
     }
     if(StatusSeleted==0){
         a[4]={}
-        a[4].name='status'
+        a[4].name='status';
         a[4].value=0
     }else{
         a[4]={}
-        a[4].name='status'
+        a[4].name='status';
         a[4].value=1
     }
     if(probeSelected!=0){
         a[5]={}
-        a[5].name='probe_id'
+        a[5].name='probe_id';
         a[5].value=parseInt(probeSelected)
     }
     if(serviceSelected!=0){
         a[6]={}
-        a[6].name='service_type'
+        a[6].name='service_type';
         a[6].value=parseInt(serviceSelected)
+    }
+    if(targetSelected!=0){
+        a[7]={}
+        a[7].name='target_id';
+        a[7].value=parseInt(targetSelected)
     }
     $.each(a, function () {
         if (o[this.name] !== undefined) {
@@ -909,7 +1017,6 @@ var endDate = date.getDate();
 var years=date.getFullYear();
 var newdate=years+'-'+month+'-'+strDate;
 var hours=date.getHours();
-var endday=years+'-'+month+'-'+endDate+' '+hours;
 $('#start_date').flatpickr({
     enableTime: true,
     dateFormat: "Y-m-d H:i",
@@ -920,7 +1027,7 @@ $('#start_date').flatpickr({
 $('#terminal_date').flatpickr({
     enableTime: true,
     dateFormat: "Y-m-d H:i",
-    defaultDate:endday,
+    defaultDate:new Date(),
     time_24hr: true
 });
 

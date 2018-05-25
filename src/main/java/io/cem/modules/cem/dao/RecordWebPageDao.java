@@ -1,9 +1,6 @@
 package io.cem.modules.cem.dao;
 
-import io.cem.modules.cem.entity.RecordDayPingEntity;
-import io.cem.modules.cem.entity.RecordDayWebPageEntity;
-import io.cem.modules.cem.entity.RecordHourWebPageEntity;
-import io.cem.modules.cem.entity.RecordWebPageEntity;
+import io.cem.modules.cem.entity.*;
 import io.cem.modules.sys.dao.BaseDao;
 
 import java.util.List;
@@ -16,4 +13,5 @@ public interface RecordWebPageDao extends BaseDao<RecordWebPageEntity> {
     List<RecordHourWebPageEntity> queryWebPage(Map<String, Object> map);
     List<RecordDayWebPageEntity> queryDay(Map<String, Object> map);
     List<RecordWebPageEntity> queryWebPageList(Map<String, Object> map);
+    List<RecordFailEntity> queryWebPageFail(Map<String, Object> map);
 }

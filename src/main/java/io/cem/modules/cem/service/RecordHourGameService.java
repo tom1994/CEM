@@ -97,7 +97,7 @@ public interface RecordHourGameService {
 	 * @param gameList
 	 * @return List<ScoreEntity>
 	 */
-	List<ScoreEntity> calculateService6(List<RecordHourGameEntity> gameList);
+	List<ScoreEntity> calculateService6(List<RecordHourGameEntity> gameList,Map<String, Object> map);
 
 	/**
 	 * 网络游戏-层级

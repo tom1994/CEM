@@ -46,40 +46,40 @@ public class IndexMapViewServiceImpl implements IndexMapViewService {
         param.put("interval",cityId);
         List<RecordHourPingEntity> pings = recordHourPingService.queryDayList(param).get();
         List<RecordHourTracertEntity> tracerts = recordHourTracertService.queryDayList(param).get();
-        List<ScoreEntity> pingIcmpScores = recordHourPingService.calculatePingIcmp(pings);
-        List<ScoreEntity> pingTcpScores = recordHourPingService.calculatePingTcp(pings);
-        List<ScoreEntity> pingUdpScores = recordHourPingService.calculatePingUdp(pings);
-        List<ScoreEntity> tracertIcmpScores = recordHourPingService.calculateTracertIcmp(tracerts);
-        List<ScoreEntity> tracertUdpScores = recordHourPingService.calculateTracertUdp(tracerts);
+        List<ScoreEntity> pingIcmpScores = recordHourPingService.calculatePingIcmp(pings,param);
+        List<ScoreEntity> pingTcpScores = recordHourPingService.calculatePingTcp(pings,param);
+        List<ScoreEntity> pingUdpScores = recordHourPingService.calculatePingUdp(pings,param);
+        List<ScoreEntity> tracertIcmpScores = recordHourPingService.calculateTracertIcmp(tracerts,param);
+        List<ScoreEntity> tracertUdpScores = recordHourPingService.calculateTracertUdp(tracerts,param);
         List<ScoreEntity> pingScores = recordHourPingService.calculateService1(pingIcmpScores,pingTcpScores,pingUdpScores,tracertIcmpScores,tracertUdpScores);
 
         List<RecordHourWebPageEntity> wbePages = recordHourWebPageService.queryDayList(param).get();
-        List<ScoreEntity> wbePageScores = recordHourWebPageService.calculateService3(wbePages);
+        List<ScoreEntity> wbePageScores = recordHourWebPageService.calculateService3(wbePages,param);
 
         List<RecordHourWebVideoEntity> webVideos = recordHourWebVideoService.queryDayList(param).get();
-        List<ScoreEntity> webVideoScores = recordHourWebVideoService.calculateService5(webVideos);
+        List<ScoreEntity> webVideoScores = recordHourWebVideoService.calculateService5(webVideos,param);
 
         List<RecordHourWebDownloadEntity> webdownloads = recordHourWebDownloadService.queryDayList(param).get();
         List<RecordHourFtpEntity> ftps = recordHourFtpService.queryFtp(param);
-        List<ScoreEntity> webDownload = recordHourWebDownloadService.calculateWebDownload(webdownloads);
-        List<ScoreEntity> ftpDownload = recordHourWebDownloadService.calculateFtpDownload(ftps);
-        List<ScoreEntity> ftpUpload = recordHourWebDownloadService.calculateFtpUpload(ftps);
+        List<ScoreEntity> webDownload = recordHourWebDownloadService.calculateWebDownload(webdownloads,param);
+        List<ScoreEntity> ftpDownload = recordHourWebDownloadService.calculateFtpDownload(ftps,param);
+        List<ScoreEntity> ftpUpload = recordHourWebDownloadService.calculateFtpUpload(ftps,param);
         List<ScoreEntity> downLoadScores = recordHourWebDownloadService.calculateService4(webDownload,ftpDownload,ftpUpload);
 
         List<RecordHourGameEntity> games = recordHourGameService.queryDayList(param).get();
-        List<ScoreEntity> gameScores = recordHourGameService.calculateService6(games);
+        List<ScoreEntity> gameScores = recordHourGameService.calculateService6(games,param);
 
         List<RecordHourSlaEntity> slas = recordHourSlaService.queryDayList(param).get();
         List<RecordHourDnsEntity> dns = recordHourDnsService.queryDayList(param).get();
         List<RecordHourDhcpEntity> dhcps = recordHourDhcpService.queryDayList(param).get();
         List<RecordHourPppoeEntity> pppoes = recordHourPppoeService.queryDayList(param).get();
         List<RecordHourRadiusEntity> radius = recordHourRadiusService.queryDayList(param).get();
-        List<ScoreEntity> slaTcpScore = recordHourSlaService.calculateSlaTcp(slas);
-        List<ScoreEntity> slaUdpScore = recordHourSlaService.calculateSlaUdp(slas);
-        List<ScoreEntity> dnsScore = recordHourSlaService.calculateDns(dns);
-        List<ScoreEntity> dbcpScore = recordHourSlaService.calculateDhcp(dhcps);
-        List<ScoreEntity> radiusScore = recordHourSlaService.calculateRadius(radius);
-        List<ScoreEntity> pppoeScore = recordHourSlaService.calculatePppoe(pppoes);
+        List<ScoreEntity> slaTcpScore = recordHourSlaService.calculateSlaTcp(slas,param);
+        List<ScoreEntity> slaUdpScore = recordHourSlaService.calculateSlaUdp(slas,param);
+        List<ScoreEntity> dnsScore = recordHourSlaService.calculateDns(dns,param);
+        List<ScoreEntity> dbcpScore = recordHourSlaService.calculateDhcp(dhcps,param);
+        List<ScoreEntity> radiusScore = recordHourSlaService.calculateRadius(radius,param);
+        List<ScoreEntity> pppoeScore = recordHourSlaService.calculatePppoe(pppoes,param);
         List<ScoreEntity> netScores = recordHourSlaService.calculateService2(slaTcpScore,slaUdpScore,dnsScore,dbcpScore,pppoeScore,radiusScore);
 
         List<ScoreEntity> allScore = new ArrayList<ScoreEntity>();

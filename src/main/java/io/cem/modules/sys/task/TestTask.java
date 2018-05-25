@@ -84,6 +84,8 @@ public class TestTask {
 	private IndexRadaViewService indexRadaViewService;
 	@Autowired
 	private IndexRankingViewService indexRankingViewService;
+	@Autowired
+	private RecordFailService recordFailService;
 
 	public void calculateHour(){
 		Map<String,Object> map = recordHourPingService.queryTime();
@@ -92,50 +94,102 @@ public class TestTask {
 		for(int i=0;i<pingList.size();i++){
 			recordHourPingService.save(pingList.get(i));
 		}
+		List<RecordFailEntity> pingFailList = recordFailService.queryPingFail(map);
+		for(int i=0;i<pingFailList.size();i++){
+			recordFailService.save(pingFailList.get(i));
+		}
 		List<RecordHourTracertEntity> tracertList = recordHourTracertService.queryTracert(map);
 		for(int i=0;i<tracertList.size();i++){
 			recordHourTracertService.save(tracertList.get(i));
+		}
+		List<RecordFailEntity> tracertFailList = recordFailService.queryTracertFail(map);
+		for(int i=0;i<tracertFailList.size();i++){
+			recordFailService.save(tracertFailList.get(i));
 		}
 		List<RecordHourSlaEntity> slaList = recordHourSlaService.querySla(map);
 		for(int i=0;i<slaList.size();i++){
 			recordHourSlaService.save(slaList.get(i));
 		}
+		List<RecordFailEntity> slaFailList = recordFailService.querySlaFail(map);
+		for(int i=0;i<slaFailList.size();i++){
+			recordFailService.save(slaFailList.get(i));
+		}
 		List<RecordHourDnsEntity> dnsList = recordHourDnsService.queryDns(map);
 		for(int i=0;i<dnsList.size();i++){
 			recordHourDnsService.save(dnsList.get(i));
+		}
+		List<RecordFailEntity> dnsFailList = recordFailService.queryDnsFail(map);
+		for(int i=0;i<dnsFailList.size();i++){
+			recordFailService.save(dnsFailList.get(i));
 		}
 		List<RecordHourDhcpEntity> dhcplist = recordHourDhcpService.queryDhcp(map);
 		for(int i=0;i<dhcplist.size();i++){
 			recordHourDhcpService.save(dhcplist.get(i));
 		}
+		List<RecordFailEntity> dhcpFailList = recordFailService.queryDhcpFail(map);
+		for(int i=0;i<dhcpFailList.size();i++){
+			recordFailService.save(dhcpFailList.get(i));
+		}
 		List<RecordHourPppoeEntity> pppoeList = recordHourPppoeService.queryPppoe(map);
 		for(int i=0;i<pppoeList.size();i++){
 			recordHourPppoeService.save(pppoeList.get(i));
+		}
+		List<RecordFailEntity> pppoeFailList = recordFailService.queryPppoeFail(map);
+		for(int i=0;i<pppoeFailList.size();i++){
+			recordFailService.save(pppoeFailList.get(i));
 		}
 		List<RecordHourRadiusEntity> radiusList = recordHourRadiusService.queryRadius(map);
 		for(int i=0;i<radiusList.size();i++){
 			recordHourRadiusService.save(radiusList.get(i));
 		}
+		List<RecordFailEntity> radiusFailList = recordFailService.queryRadiusFail(map);
+		for(int i=0;i<radiusFailList.size();i++){
+			recordFailService.save(radiusFailList.get(i));
+		}
 		List<RecordHourWebPageEntity> webpageList = recordHourWebPageService.queryWebPage(map);
 		for(int i=0;i<webpageList.size();i++){
 			recordHourWebPageService.save(webpageList.get(i));
 		}
+
+		List<RecordFailEntity> webpageFailList = recordFailService.queryWebPageFail(map);
+		for(int i=0;i<webpageFailList.size();i++){
+			recordFailService.save(webpageFailList.get(i));
+		}
+
 		List<RecordHourFtpEntity> ftpList = recordHourFtpService.queryFtp(map);
 		for(int i=0;i<ftpList.size();i++){
 			recordHourFtpService.save(ftpList.get(i));
+		}
+		List<RecordFailEntity> ftpFailList = recordFailService.queryFtpFail(map);
+		for(int i=0;i<ftpFailList.size();i++){
+			recordFailService.save(ftpFailList.get(i));
 		}
 		List<RecordHourWebDownloadEntity> webdownloadList = recordHourWebDownloadService.queryWebDownload(map);
 		for(int i=0;i<webdownloadList.size();i++){
 			recordHourWebDownloadService.save(webdownloadList.get(i));
 		}
+		List<RecordFailEntity> webdownloadFailList = recordFailService.queryWebDownloadFail(map);
+		for(int i=0;i<webdownloadFailList.size();i++){
+			recordFailService.save(webdownloadFailList.get(i));
+		}
 		List<RecordHourWebVideoEntity> videoList = recordHourWebVideoService.queryWebVideo(map);
 		for(int i=0;i<videoList.size();i++){
 			recordHourWebVideoService.save(videoList.get(i));
+		}
+		List<RecordFailEntity> videoFailList = recordFailService.queryVideoFail(map);
+		for(int i=0;i<videoFailList.size();i++){
+			recordFailService.save(videoFailList.get(i));
 		}
 		List<RecordHourGameEntity> gameList = recordHourGameService.queryGame(map);
 		for(int i=0;i<gameList.size();i++){
 			recordHourGameService.save(gameList.get(i));
 		}
+		List<RecordFailEntity> gameFailList = recordFailService.queryGameFail(map);
+		for(int i=0;i<gameFailList.size();i++){
+			recordFailService.save(gameFailList.get(i));
+		}
+
+
 
 	}
 
