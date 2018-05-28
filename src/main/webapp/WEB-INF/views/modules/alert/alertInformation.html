@@ -38,6 +38,10 @@
         }
         .combo-dropdown{
             max-height: 170px!important;
+            white-space:nowrap;
+            max-width: 115px;
+            overflow-x: hidden;
+
         }
         .combo-dropdown li{
             padding: 5px;
@@ -57,6 +61,9 @@
         .combo-focus{
             border-color: #0EB690;
             box-shadow: none
+        }
+        .combo-input {
+            text-overflow: clip;
         }
         input:focus {
             border-color: #0EB690;
@@ -128,6 +135,20 @@
                                     </div>
                                 </div>
                                 <div style="display: inline-block;">
+                                    <span class="searchname search " title="探针" style="width: 71px;">探针</span>
+                                    <div class="input-group searchspan" id="probe" >
+                                        <div class="jq22" style="top: -10px;">
+                                            <select id="selectprobe" class="form-control"   style="display: none">
+                                                <option value="">所有探针</option>
+                                                <option v-for="item in probe" v-bind:value="item.message.id">{{ item.message.name}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row" style="margin-bottom: -5px!important;">
+                                <div style="display: inline-block;">
                                     <span class="searchname search left" title="业务类型" style="width: 60px;text-align: center; ">业务类型</span>
                                     <div class="input-group searchspan" id="service" >
                                         <div class="jq22" style="top:-10px">
@@ -166,32 +187,31 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="form-group row" style="margin-bottom: -5px!important;">
-                                <div style="display: inline-block;">
-                                    <span class="searchname search " title="探针" style="width: 60px;">探针</span>
-                                    <div class="input-group searchspan" id="probe" >
-                                        <div class="jq22" style="top: -10px;">
-                                            <select id="selectprobe" class="form-control"   style="display: none">
-                                                <option value="">所有探针</option>
-                                                <option v-for="item in probe" v-bind:value="item.message.id">{{ item.message.name}}</option>
+                                <div style="display:inline-block;">
+                                    <span class="searchname" title="目标地址" style="width:60px; text-align: center;line-height: 30px">目标地址</span>
+                                    <div class="input-group searchspan" id="target" style="top: -10px;">
+                                        <div class="jq22">
+                                            <select  class="form-control"    style="display: none">
+                                                <option value="">所有目标地址</option>
+                                                <option v-for="item in target"
+                                                        v-bind:value="item.message.id">{{item.message.targetName}}
+                                                </option>
                                             </select>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="input-group searchspan">
-                                    <span class="searchname search left" title="起始时间" style="width: 60px">起始时间</span>
+                                    <span class="searchname search left" title="起始时间" style="width: 60px;margin-left: 13px">起始时间</span>
                                     <input type="text" id="start_date" class="form-control  input"
                                            name="startDate"
-                                           style="width: 137px"
+                                           style="width: 137px;    height: 32px;"
                                            value="">
                                 </div>
                                 <div class="input-group searchspan">
                                     <span class="searchname  search left" title="结束时间" style="width: 60px">结束时间</span>
                                     <input type="text" id="terminal_date" class="form-control  input"
                                            name="terminalDate"
-                                           style="width: 137px"
+                                           style="width: 137px;  height: 32px;"
                                            value="">
                                 </div>
                             </div>

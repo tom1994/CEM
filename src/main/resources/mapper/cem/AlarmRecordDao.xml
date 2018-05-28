@@ -80,6 +80,9 @@
 		<if test="level != null and level != ''">
 			AND alarm_record.level = #{level}
 		</if>
+		<if test="target_id != null and target_id != ''">
+			AND alarm_record.target_id = #{target_id}
+		</if>
 		<if test="status != null and (status == 0 or status ==1)">
 			AND alarm_record.status = #{status}
 		</if>
@@ -113,6 +116,9 @@
 		</if>
 		<if test="service_type != null and service_type!= ''">
 			AND alarm_record.service_type = #{service_type}
+		</if>
+		<if test="target_id != null and target_id != ''">
+			AND alarm_record.target_id = #{target_id}
 		</if>
 		<if test="level != null and level != ''">
 			AND alarm_record.level = #{level}

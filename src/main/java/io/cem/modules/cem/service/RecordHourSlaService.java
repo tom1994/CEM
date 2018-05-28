@@ -61,42 +61,42 @@ public interface RecordHourSlaService {
 	 * @param slaList
 	 * @return List<ScoreEntity>
 	 */
-	List<ScoreEntity> calculateSlaTcp(List<RecordHourSlaEntity> slaList);
+	List<ScoreEntity> calculateSlaTcp(List<RecordHourSlaEntity> slaList,Map<String,Object> map);
 
 	/**
 	 * 业务2得分
 	 * @param slaList
 	 * @return List<ScoreEntity>
 	 */
-	List<ScoreEntity> calculateSlaUdp(List<RecordHourSlaEntity> slaList);
+	List<ScoreEntity> calculateSlaUdp(List<RecordHourSlaEntity> slaList,Map<String,Object> map);
 
 	/**
 	 * 业务3得分
 	 * @param dnsList
 	 * @return List<ScoreEntity>
 	 */
-	List<ScoreEntity> calculateDns(List<RecordHourDnsEntity> dnsList);
+	List<ScoreEntity> calculateDns(List<RecordHourDnsEntity> dnsList,Map<String,Object> map);
 
 	/**
 	 * 业务4得分
 	 * @param dhcpList
 	 * @return List<ScoreEntity>
 	 */
-	List<ScoreEntity> calculateDhcp(List<RecordHourDhcpEntity> dhcpList);
+	List<ScoreEntity> calculateDhcp(List<RecordHourDhcpEntity> dhcpList,Map<String,Object> map);
 
 	/**
 	 * 业务5得分
 	 * @param pppoeList
 	 * @return List<ScoreEntity>
 	 */
-	List<ScoreEntity> calculatePppoe(List<RecordHourPppoeEntity> pppoeList);
+	List<ScoreEntity> calculatePppoe(List<RecordHourPppoeEntity> pppoeList,Map<String,Object> map);
 
 	/**
 	 * 业务6得分
 	 * @param radiusList
 	 * @return List<ScoreEntity>
 	 */
-	List<ScoreEntity> calculateRadius(List<RecordHourRadiusEntity> radiusList);
+	List<ScoreEntity> calculateRadius(List<RecordHourRadiusEntity> radiusList,Map<String,Object> map);
 
 	/**
 	 * 网络层质量业务--探针维度

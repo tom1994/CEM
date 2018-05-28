@@ -13,6 +13,7 @@ import io.cem.modules.cem.service.CityService;
 
 
 @Service("cityService")
+
 public class CityServiceImpl implements CityService {
 	@Autowired
 	private CityDao cityDao;

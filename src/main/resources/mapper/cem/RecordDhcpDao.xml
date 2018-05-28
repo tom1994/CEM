@@ -65,6 +65,22 @@
 		<result property="total" column="total"/>
 	</resultMap>
 
+	<resultMap type="io.cem.modules.cem.entity.RecordFailEntity" id="recordFailMap">
+		<result property="id" column="id"/>
+		<result property="cityId" column="city_id"/>
+		<result property="countyId" column="county_id"/>
+		<result property="probeId" column="probe_id"/>
+		<result property="port" column="port"/>
+		<result property="taskId" column="task_id"/>
+		<result property="serviceType" column="service_type"/>
+		<result property="targetId" column="target_id"/>
+		<result property="targetIp" column="target_ip"/>
+		<result property="recordDate" column="record_date"/>
+		<result property="recordTime" column="record_time"/>
+		<result property="fail" column="fail"/>
+		<result property="total" column="total"/>
+	</resultMap>
+
 	<select id="queryObject" resultType="io.cem.modules.cem.entity.RecordDhcpEntity">
 		select * from record_dhcp where id = #{value}
 	</select>
@@ -146,6 +162,28 @@ WHERE rp.record_date = #{record_date}
       AND rp.state = 0
       AND rp.task_type = 0
 GROUP BY rp.port,rp.service_type,rp.target_id,rp.task_id,rp.probe_id
+	</select>
+
+	<select id="queryDhcpFail" resultType="io.cem.modules.cem.entity.RecordFailEntity">
+		SELECT rp.probe_id AS probe_id,
+		rp.port AS port,
+		rp.task_id AS task_id,
+		rp.service_type AS service_type,
+		rp.target_id AS target_id,
+		rp.target_ip AS target_ip,
+		time_format(rp.record_time,'%H:%30:%00') AS record_time,
+		rp.record_date AS record_date,
+		probe.city_id AS city_id,
+		probe.county_id AS county_id,
+		count(rp.id)  AS total,
+		sum(state) AS fail
+		FROM record_dhcp rp
+		INNER JOIN probe
+		ON  rp.probe_id =probe.id
+		WHERE rp.record_date = #{record_date}
+		AND record_time BETWEEN #{start_time} AND #{terminal_time}
+		AND rp.task_type = 0
+		GROUP BY rp.port,rp.service_type,rp.target_id,rp.task_id,rp.probe_id
 	</select>
 
 	<select id="queryList" resultType="io.cem.modules.cem.entity.RecordDhcpEntity">

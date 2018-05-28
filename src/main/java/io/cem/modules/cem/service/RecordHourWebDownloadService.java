@@ -63,21 +63,21 @@ public interface RecordHourWebDownloadService {
 	 * @param webDownloadList
 	 * @return List<ScoreEntity>
 	 */
-	List<ScoreEntity> calculateWebDownload(List<RecordHourWebDownloadEntity> webDownloadList);
+	List<ScoreEntity> calculateWebDownload(List<RecordHourWebDownloadEntity> webDownloadList,Map<String, Object> map);
 
 	/**
 	 * 计算业务2
 	 * @param ftpList
 	 * @return List<ScoreEntity>
 	 */
-	List<ScoreEntity> calculateFtpDownload(List<RecordHourFtpEntity> ftpList);
+	List<ScoreEntity> calculateFtpDownload(List<RecordHourFtpEntity> ftpList,Map<String, Object> map);
 
 	/**
 	 * 计算业务3
 	 * @param ftpList
 	 * @return
 	 */
-	List<ScoreEntity> calculateFtpUpload(List<RecordHourFtpEntity> ftpList);
+	List<ScoreEntity> calculateFtpUpload(List<RecordHourFtpEntity> ftpList,Map<String, Object> map);
 
 	/**
 	 * 文件下载类业务（探针）

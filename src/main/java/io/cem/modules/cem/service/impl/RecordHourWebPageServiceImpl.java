@@ -1,9 +1,11 @@
 package io.cem.modules.cem.service.impl;
 
 import io.cem.common.utils.PropertiesUtils;
+import io.cem.common.utils.SpringContextUtils;
 import io.cem.modules.cem.dao.RecordHourWebPageDao;
 import io.cem.modules.cem.dao.RecordWebPageDao;
 import io.cem.modules.cem.entity.*;
+import io.cem.modules.cem.service.RecordFailService;
 import io.cem.modules.cem.service.RecordHourWebPageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -103,7 +105,9 @@ public class RecordHourWebPageServiceImpl implements RecordHourWebPageService {
 	}
 	
 	@Override
-	public List<ScoreEntity> calculateService3(List<RecordHourWebPageEntity> webPageList){
+	public List<ScoreEntity> calculateService3(List<RecordHourWebPageEntity> webPageList,Map<String,Object> map){
+		RecordFailService recordFailService= (RecordFailService) SpringContextUtils.getBean("recordFailService");
+
 		List<ScoreEntity> connectionScore = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
@@ -368,7 +372,9 @@ public class RecordHourWebPageServiceImpl implements RecordHourWebPageService {
 				finalScore.setWebpageDownloadRate(webPageList.get(i).getDownloadRate());
 				finalScore.setFail(webPageList.get(i).getFail());
 				finalScore.setTotal(webPageList.get(i).getTotal());
-				double fail = (double)finalScore.getFail()/finalScore.getTotal();
+				map.put("service_type",20);
+				RecordFailEntity recordFail = recordFailService.queryFail(map);
+				double fail = (double)recordFail.getFail()/recordFail.getTotal();
 				finalScore.setScore(score*(1-fail));
 				finalScore.setBase(Double.parseDouble(pros.getValue("browseweight")));
 				connectionScore.add(finalScore);

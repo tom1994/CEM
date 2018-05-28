@@ -1,6 +1,7 @@
 package io.cem.modules.cem.dao;
 
 import io.cem.modules.cem.entity.RecordDayWebVideoEntity;
+import io.cem.modules.cem.entity.RecordFailEntity;
 import io.cem.modules.cem.entity.RecordHourWebVideoEntity;
 import io.cem.modules.cem.entity.RecordWebVideoEntity;
 import io.cem.modules.sys.dao.BaseDao;
@@ -15,4 +16,5 @@ public interface RecordWebVideoDao extends BaseDao<RecordWebVideoEntity> {
     List<RecordHourWebVideoEntity> queryWebVideo(Map<String, Object> map);
     List<RecordDayWebVideoEntity> queryDay(Map<String, Object> map);
     List<RecordWebVideoEntity> queryWebVideoList(Map<String, Object> map);
+    List<RecordFailEntity> queryVideoFail(Map<String, Object> map);
 }

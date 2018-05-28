@@ -305,7 +305,6 @@ var search_service = new Vue({
 function getFormJson(form) {      /*将表单对象变为json对象*/
     var o = {};
     var a = $(form).serializeArray();
-
     if(TypeSelected!=0){
         a[2]={}
         a[2].name='type'

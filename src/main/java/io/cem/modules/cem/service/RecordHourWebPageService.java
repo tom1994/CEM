@@ -97,7 +97,7 @@ public interface RecordHourWebPageService {
 	 * @param webPageList
 	 * @return List<ScoreEntity>
 	 */
-	List<ScoreEntity> calculateService3(List<RecordHourWebPageEntity> webPageList);
+	List<ScoreEntity> calculateService3(List<RecordHourWebPageEntity> webPageList,Map<String,Object> map);
 
 	/**
 	 * 网页浏览类业务-层级

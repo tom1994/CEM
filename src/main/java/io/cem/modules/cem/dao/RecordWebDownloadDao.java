@@ -1,6 +1,7 @@
 package io.cem.modules.cem.dao;
 
 import io.cem.modules.cem.entity.RecordDayWebDownloadEntity;
+import io.cem.modules.cem.entity.RecordFailEntity;
 import io.cem.modules.cem.entity.RecordHourWebDownloadEntity;
 import io.cem.modules.cem.entity.RecordWebDownloadEntity;
 import io.cem.modules.sys.dao.BaseDao;
@@ -15,4 +16,5 @@ public interface RecordWebDownloadDao extends BaseDao<RecordWebDownloadEntity> {
     List<RecordHourWebDownloadEntity> queryWebDownload(Map<String, Object> map);
     List<RecordDayWebDownloadEntity> queryDay(Map<String, Object> map);
     List<RecordWebDownloadEntity> queryWebDownloadList(Map<String, Object> map);
+    List<RecordFailEntity> queryWebDownloadFail(Map<String, Object> map);
 }

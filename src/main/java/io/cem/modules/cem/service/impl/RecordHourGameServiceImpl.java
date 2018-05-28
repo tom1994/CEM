@@ -1,9 +1,11 @@
 package io.cem.modules.cem.service.impl;
 
 import io.cem.common.utils.PropertiesUtils;
+import io.cem.common.utils.SpringContextUtils;
 import io.cem.modules.cem.dao.RecordGameDao;
 import io.cem.modules.cem.dao.RecordHourGameDao;
 import io.cem.modules.cem.entity.*;
+import io.cem.modules.cem.service.RecordFailService;
 import io.cem.modules.cem.service.RecordHourGameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -101,7 +103,8 @@ public class RecordHourGameServiceImpl implements RecordHourGameService {
 	}
 	
 	@Override
-	public List<ScoreEntity> calculateService6(List<RecordHourGameEntity> gameList){
+	public List<ScoreEntity> calculateService6(List<RecordHourGameEntity> gameList,Map<String,Object> map){
+		RecordFailService recordFailService= (RecordFailService) SpringContextUtils.getBean("recordFailService");
 		List<ScoreEntity> connectionScore = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
@@ -247,7 +250,9 @@ public class RecordHourGameServiceImpl implements RecordHourGameService {
 				finalScore.setGameLossRate(gameList.get(i).getLossRate());
 				finalScore.setFail(gameList.get(i).getFail());
 				finalScore.setTotal(gameList.get(i).getTotal());
-				double fail = (double) finalScore.getFail()/finalScore.getTotal();
+				map.put("service_type",50);
+				RecordFailEntity recordFail = recordFailService.queryFail(map);
+				double fail = (double)recordFail.getFail()/recordFail.getTotal();
 				finalScore.setScore(score*(1-fail));
 				finalScore.setBase(Double.parseDouble(pros.getValue("gameweight")));
 				connectionScore.add(finalScore);

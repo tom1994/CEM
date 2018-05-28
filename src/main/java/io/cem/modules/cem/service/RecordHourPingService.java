@@ -90,35 +90,35 @@ public interface RecordHourPingService {
 	 * @param pingList
 	 * @return List<ScoreEntity>
 	 */
-	List<ScoreEntity> calculatePingIcmp(List<RecordHourPingEntity> pingList);
+	List<ScoreEntity> calculatePingIcmp(List<RecordHourPingEntity> pingList,Map<String, Object> map);
 
 	/**
 	 * 子业务2得分
 	 * @param pingList
 	 * @return List<ScoreEntity>
 	 */
-	List<ScoreEntity> calculatePingTcp(List<RecordHourPingEntity> pingList);
+	List<ScoreEntity> calculatePingTcp(List<RecordHourPingEntity> pingList,Map<String, Object> map);
 
 	/**
 	 * 子业务3得分
 	 * @param pingList
 	 * @return List<ScoreEntity>
 	 */
-	List<ScoreEntity> calculatePingUdp(List<RecordHourPingEntity> pingList);
+	List<ScoreEntity> calculatePingUdp(List<RecordHourPingEntity> pingList,Map<String, Object> map);
 
 	/**
 	 * 子业务4得分
 	 * @param tracertList
 	 * @return List<ScoreEntity>
 	 */
-	List<ScoreEntity> calculateTracertIcmp(List<RecordHourTracertEntity> tracertList);
+	List<ScoreEntity> calculateTracertIcmp(List<RecordHourTracertEntity> tracertList,Map<String, Object> map);
 
 	/**
 	 * 子业务5得分
 	 * @param tracertList
 	 * @return List<ScoreEntity>
 	 */
-	List<ScoreEntity> calculateTracertUdp(List<RecordHourTracertEntity> tracertList);
+	List<ScoreEntity> calculateTracertUdp(List<RecordHourTracertEntity> tracertList,Map<String, Object> map);
 
 	/**
 	 * 网络连通性业务
