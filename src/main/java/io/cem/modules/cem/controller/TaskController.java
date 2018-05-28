@@ -35,6 +35,7 @@ public class TaskController {
 
     /**
      * 任务列表
+     *
      * @param taskdata
      * @param page
      * @param limit
@@ -62,6 +63,7 @@ public class TaskController {
 
     /**
      * 根据业务查任务
+     *
      * @param servicetype
      * @return R
      */
@@ -76,6 +78,7 @@ public class TaskController {
 
     /**
      * 根据id查任务
+     *
      * @param id
      * @return R
      */
@@ -89,6 +92,7 @@ public class TaskController {
 
     /**
      * 保存
+     *
      * @param task
      * @return R
      */
@@ -106,6 +110,7 @@ public class TaskController {
 
     /**
      * 修改
+     *
      * @param task
      * @return R
      */
@@ -119,6 +124,7 @@ public class TaskController {
 
     /**
      * 删除
+     *
      * @param ids
      * @return R
      */
@@ -133,22 +139,22 @@ public class TaskController {
         try {
             InputStream in = new BufferedInputStream(new FileInputStream(PropertiesUtils.class.getClassLoader().getResource("cem.properties").getPath()));
             prop.load(in);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new RRException("配置文件配置有误，请重新配置");
         }
         if (taskDispatchEntity != null && taskDispatchEntity.size() != 0) {
             int flag = 0;
             int result;
             try {
-            for (int i = 0; i < taskDispatchEntity.size(); i++) {
-                result = BypassHttps.sendRequestIgnoreSSL("DELETE", prop.getProperty("socketAddress") +"/web/v1/tasks/" + taskDispatchEntity.get(i).getId());
-                if(result ==401){
-                    return R.error(404,"token失效，系统已重新获取，请重试");
-                }else if(result != 200){
-                    flag = 1;
+                for (int i = 0; i < taskDispatchEntity.size(); i++) {
+                    result = BypassHttps.sendRequestIgnoreSSL("DELETE", prop.getProperty("socketAddress") + "/web/v1/tasks/" + taskDispatchEntity.get(i).getId());
+                    if (result == 401) {
+                        return R.error(404, "token失效，系统已重新获取，请重试");
+                    } else if (result != 200) {
+                        flag = 1;
+                    }
                 }
-            }
-            }catch (Exception e){
+            } catch (Exception e) {
                 return R.error(404, "删除失败");
             }
             if (flag == 0) {

@@ -62,7 +62,7 @@
 		FROM alarm_record
 		INNER JOIN probe
 		ON alarm_record.probe_id = probe.id
-		INNER JOIN target
+		LEFT JOIN target
 		ON alarm_record.target_id = target.id
 		WHERE 1=1
 		<if test="startDate != null and startDate != '' and terminalDate != null and terminalDate != '' ">
@@ -102,7 +102,6 @@
 		select count(*) from alarm_record
 		WHERE
 		probe_id IN (SELECT id FROM probe)
-		AND target_id IN (SELECT id FROM target)
 		<if test="startDate != null and startDate != '' and terminalDate != null and terminalDate != '' ">
 			AND alarm_record.record_time BETWEEN #{startDate} AND #{terminalDate}
 		</if>

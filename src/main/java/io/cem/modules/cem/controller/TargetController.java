@@ -77,7 +77,7 @@ public class TargetController {
 	}
 
 	/**
-	 * 按业务类型显示目标地址
+	 * 按业务类型显示目标地址(原用于按子业务类型查询，后取消了目标的子业务类型概念）
 	 * @param serviceId
 	 * @return R
 	 */
@@ -85,13 +85,12 @@ public class TargetController {
 	@RequiresPermissions("target:infobat")
 	public R infobat(@PathVariable("id") Integer serviceId){
 		List<TargetEntity> target = targetService.infoBatch(serviceId);
-		System.out.println(target);
 		return R.ok().put("target", target);
 	}
 
 
 	/**
-	 * 按照子业务类型筛选地址
+	 * 按照业务类型筛选地址
 	 * @param spId
 	 * @return R
 	 */
