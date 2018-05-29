@@ -8,6 +8,7 @@
     <link href="${rc.contextPath}/statics/css/formStyle.css" rel="stylesheet">
     <link href="${rc.contextPath}/statics/css/loading.css" rel="stylesheet">
     <script type="text/javascript" src="${rc.contextPath}/statics/js/loading.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/3.2.4/css/fixedColumns.dataTables.min.css">
     <meta charset="UTF-8">
     <title>数据统计</title>
     <style>
@@ -44,7 +45,10 @@
             left:4px
         }
         .combo-dropdown{
-            max-height: 200px!important;
+            max-height: 170px!important;
+            white-space:nowrap;
+            max-width: 115px;
+            overflow-x: hidden;
         }
         .combo-dropdown li{
             padding: 5px;
@@ -81,6 +85,21 @@
         .dataTable td {
             overflow: visible; !important;
             white-space: nowrap !important;
+        }
+        .DTFC_LeftBodyLiner{
+            background: white;
+        }
+        .DTFC_LeftHeadWrapper{
+            height:33px;
+        }
+        .DTFC_LeftBodyLiner>table{
+            margin-top: -1px !important;
+        }
+        .table-bordered{
+           border-top: 0px ;
+        }
+        #pingdata_table_processing{
+            z-index:5;
         }
     </style>
 </head>
@@ -394,9 +413,10 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
 </div>
+<script type="text/javascript "
+        src="https://cdn.datatables.net/fixedcolumns/3.2.4/js/dataTables.fixedColumns.min.js"></script>
 <script type="text/javascript"
         src="${rc.contextPath}/statics/js/modules/report/dataStatistic.js?_${date.systemTime}"></script>
-<script src="https://cdn.datatables.net/fixedcolumns/3.2.2/js/dataTables.fixedColumns.min.js"></script>
 <script>
     var date=new Date();
     var month = date.getMonth() + 1;
@@ -572,6 +592,7 @@
     })
 
 </script>
+
 <!--<script>-->
 <!--$(document).ready(function(){-->
 <!--document.getElementById('start_date').valueAsDate = new Date().setDate(new Date().getDate()-4);-->

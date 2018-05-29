@@ -52,7 +52,7 @@ public class IndexController {
         pm.put("startDate",p[1]);
         pm.put("startDate",p[0]);
         pm.put("startTime","00:00:00");
-        pm.put("endTime","23:00:00");
+        pm.put("endTime","23:59:59");
         pm.put("serviceType",serviceType);
         scoreCollects = scoreCollectTargetService.getScores(pm);
         log.info("门户排行，计算结果："+scoreCollects);

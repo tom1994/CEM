@@ -31,7 +31,7 @@ public class ScoreCollectCityServiceImpl implements ScoreCollectCityService {
         param.put("ava_start",stime);
         param.put("ava_terminal",etime);
         param.put("startTime","00:00:00");
-        param.put("terminalTime","23:00:00");
+        param.put("terminalTime","23:59:59");
         param.put("service",1);
         log.info("开始计算各地区统计分数，调用recordHourRadiusService.calculateAreaDayScore方法");
         List<ScoreEntity> scores = recordHourRadiusService.calculateAreaDayScore(param);

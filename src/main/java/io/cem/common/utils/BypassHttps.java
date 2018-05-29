@@ -66,13 +66,84 @@ public class BypassHttps {
                 if (con != null && con.getResponseCode() == 401) {
                     getNewToken();
                     return 401;
-                } if (con != null) {
+                }
+                if (con != null) {
                     return con.getResponseCode();
                 }
             } catch (IOException e1) {
                 return 500;
             }
             return 404;
+        }
+    }
+
+    public static String taskDispatch(String type, String url) {
+        HttpsURLConnection con = null;
+        TrustManager[] trustAllCerts = new TrustManager[]{
+                new X509TrustManager() {
+                    public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                        return null;
+                    }
+
+                    public void checkClientTrusted(
+                            java.security.cert.X509Certificate[] certs, String authType) {
+                    }
+
+                    public void checkServerTrusted(
+                            java.security.cert.X509Certificate[] certs, String authType) {
+                    }
+                }
+        };
+        Properties prop = new Properties();
+        try {
+            InputStream in = new BufferedInputStream(new FileInputStream(PropertiesUtils.class.getClassLoader().getResource("cem.properties").getPath()));
+            prop.load(in);
+        } catch (Exception e) {
+            throw new RRException("配置文件配置有误，请重新配置");
+        }
+        try {
+            SSLContext sc = SSLContext.getInstance("SSL");
+            sc.init(null, trustAllCerts, new java.security.SecureRandom());
+            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+            HostnameVerifier allHostsValid = new HostnameVerifier() {
+                public boolean verify(String hostname, SSLSession session) {
+                    return true;
+                }
+            };
+            HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
+            URL myurl = new URL(url);
+            con = (HttpsURLConnection) myurl.openConnection();
+            con.setDoOutput(true);
+            con.setRequestMethod(type);
+            con.setRequestProperty("Authorization", "Bearer " + prop.getProperty("token"));
+            OutputStream os = con.getOutputStream();
+            os.flush();
+            os.close();
+            StringBuilder stringBuilder = new StringBuilder();
+            DataInputStream input = new DataInputStream(con.getInputStream());
+            for (int c = input.read(); c != -1; c = input.read())
+                stringBuilder.append((char) c);
+            input.close();
+            String failIds = JSONObject.parseObject(stringBuilder.toString()).getString("extra");
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("code", con.getResponseCode());
+            jsonObject.put("msg", failIds);
+            return jsonObject.toJSONString();
+        } catch (Exception e) {
+            e.printStackTrace();
+            JSONObject jsonObject = new JSONObject();
+            try {
+                if (con != null && con.getResponseCode() == 401) {
+                    getNewToken();
+                    jsonObject.put("code", 401);
+                }
+                else if (con != null) {
+                    jsonObject.put("code", con.getResponseCode());
+                }
+            } catch (IOException e1) {
+                jsonObject.put("code", 500);
+            }
+            return jsonObject.toJSONString();
         }
     }
 

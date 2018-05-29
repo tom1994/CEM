@@ -158,8 +158,8 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 		}
 		map1.put("ava_start",map.get("ava_start"));
 		map1.put("ava_terminal",map.get("ava_start"));
-		map1.put("startTime",map.get("starTime"));
-		map1.put("terminalTime","23:00:00");
+		map1.put("startTime",map.get("startTime"));
+		map1.put("terminalTime","23:59:59");
 		map2.put("ava_start",map.get("ava_terminal"));
 		map2.put("ava_terminal",map.get("ava_terminal"));
 		map2.put("startTime","00:00:00");
@@ -222,16 +222,21 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 			map1.put("probe_id",map.get("probe_id"));
 			map2.put("probe_id",map.get("probe_id"));
 		}
-		map1.put("ava_start",map.get("ava_start"));
-		map1.put("ava_terminal",map.get("ava_start"));
-		map1.put("startTime",map.get("starTime"));
-		map1.put("terminalTime","23:00:00");
-		map2.put("ava_start",map.get("ava_terminal"));
-		map2.put("ava_terminal",map.get("ava_terminal"));
-		map2.put("startTime","00:00:00");
-		map2.put("terminalTime",map.get("terminalTime"));
-
-
+		map1.put("ava_start", map.get("ava_start"));
+		map1.put("ava_terminal", map.get("ava_start"));
+		map2.put("ava_start", map.get("ava_terminal"));
+		map2.put("ava_terminal", map.get("ava_terminal"));
+		if (map.get("ava_start").equals(map.get("ava_terminal"))) {
+			map1.put("startTime", map.get("startTime"));
+			map1.put("terminalTime", "23:59:59");
+			map2.put("startTime", map.get("startTime"));
+			map2.put("terminalTime", "23:59:59");
+		}else{
+			map1.put("startTime", map.get("startTime"));
+			map1.put("terminalTime", "23:59:59");
+			map2.put("startTime", "00:00:00");
+			map2.put("terminalTime", map.get("terminalTime"));
+		}
 		Future<List<RecordHourPingEntity>> pingList_future = recordHourPingService.queryPingList(map1);
 		Future<List<RecordHourTracertEntity>> tracertList_future = recordHourTracertService.queryTracertList(map1);
 		Future<List<RecordHourPingEntity>> pingList_future1 = recordHourPingService.queryPingList(map2);
@@ -327,8 +332,8 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 		}
 		map1.put("ava_start",map.get("ava_start"));
 		map1.put("ava_terminal",map.get("ava_start"));
-		map1.put("startTime",map.get("starTime"));
-		map1.put("terminalTime","23:00:00");
+		map1.put("startTime",map.get("startTime"));
+		map1.put("terminalTime","23:59:59");
 		map2.put("ava_start",map.get("ava_terminal"));
 		map2.put("ava_terminal",map.get("ava_terminal"));
 		map2.put("startTime","00:00:00");
@@ -415,14 +420,21 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 			map1.put("probe_id",map.get("probe_id"));
 			map2.put("probe_id",map.get("probe_id"));
 		}
-		map1.put("ava_start",map.get("ava_start"));
-		map1.put("ava_terminal",map.get("ava_start"));
-		map1.put("startTime",map.get("starTime"));
-		map1.put("terminalTime","23:00:00");
-		map2.put("ava_start",map.get("ava_terminal"));
-		map2.put("ava_terminal",map.get("ava_terminal"));
-		map2.put("startTime","00:00:00");
-		map2.put("terminalTime",map.get("terminalTime"));
+		map1.put("ava_start", map.get("ava_start"));
+		map1.put("ava_terminal", map.get("ava_start"));
+		map2.put("ava_start", map.get("ava_terminal"));
+		map2.put("ava_terminal", map.get("ava_terminal"));
+		if (map.get("ava_start").equals(map.get("ava_terminal"))) {
+			map1.put("startTime", map.get("startTime"));
+			map1.put("terminalTime", "23:59:59");
+			map2.put("startTime", map.get("startTime"));
+			map2.put("terminalTime", "23:59:59");
+		}else{
+			map1.put("startTime", map.get("startTime"));
+			map1.put("terminalTime", "23:59:59");
+			map2.put("startTime", "00:00:00");
+			map2.put("terminalTime", map.get("terminalTime"));
+		}
 
 
 		Future<List<RecordHourSlaEntity>> slaList_future = recordHourSlaService.querySlaList(map1);
@@ -493,7 +505,7 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 			if (map.get("terminalTime").toString().equals("00:00:00")) {
 				map.put("ava_terminal", recordHourPingService.queryBeforeDay(map.get("ava_terminal").toString()));
 			}
-			if (map.get("startTime").toString().equals("23:00:00")) {
+			if (map.get("startTime").toString().equals("23:59:59")) {
 				map.put("ava_start", recordHourPingService.queryAfterDay(map.get("ava_terminal").toString()));
 			}
 		}
@@ -569,8 +581,8 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 		}
 		map1.put("ava_start",map.get("ava_start"));
 		map1.put("ava_terminal",map.get("ava_start"));
-		map1.put("startTime",map.get("starTime"));
-		map1.put("terminalTime","23:00:00");
+		map1.put("startTime",map.get("startTime"));
+		map1.put("terminalTime","23:59:59");
 		map2.put("ava_start",map.get("ava_terminal"));
 		map2.put("ava_terminal",map.get("ava_terminal"));
 		map2.put("startTime","00:00:00");
@@ -632,14 +644,21 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 			map1.put("probe_id",map.get("probe_id"));
 			map2.put("probe_id",map.get("probe_id"));
 		}
-		map1.put("ava_start",map.get("ava_start"));
-		map1.put("ava_terminal",map.get("ava_start"));
-		map1.put("startTime",map.get("starTime"));
-		map1.put("terminalTime","23:00:00");
-		map2.put("ava_start",map.get("ava_terminal"));
-		map2.put("ava_terminal",map.get("ava_terminal"));
-		map2.put("startTime","00:00:00");
-		map2.put("terminalTime",map.get("terminalTime"));
+		map1.put("ava_start", map.get("ava_start"));
+		map1.put("ava_terminal", map.get("ava_start"));
+		map2.put("ava_start", map.get("ava_terminal"));
+		map2.put("ava_terminal", map.get("ava_terminal"));
+		if (map.get("ava_start").equals(map.get("ava_terminal"))) {
+			map1.put("startTime", map.get("startTime"));
+			map1.put("terminalTime", "23:59:59");
+			map2.put("startTime", map.get("startTime"));
+			map2.put("terminalTime", "23:59:59");
+		}else{
+			map1.put("startTime", map.get("startTime"));
+			map1.put("terminalTime", "23:59:59");
+			map2.put("startTime", "00:00:00");
+			map2.put("terminalTime", map.get("terminalTime"));
+		}
 
 
 
@@ -695,7 +714,7 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 			if (map.get("terminalTime").toString().equals("00:00:00")) {
 				map.put("ava_terminal", recordHourPingService.queryBeforeDay(map.get("ava_terminal").toString()));
 			}
-			if (map.get("startTime").toString().equals("23:00:00")) {
+			if (map.get("startTime").toString().equals("23:59:59")) {
 				map.put("ava_start", recordHourPingService.queryAfterDay(map.get("ava_terminal").toString()));
 			}
 		}
@@ -743,7 +762,7 @@ public class RecordHourDhcpServiceImpl implements RecordHourDhcpService {
 			if (map.get("terminalTime").toString().equals("00:00:00")) {
 				map.put("ava_terminal", recordHourPingService.queryBeforeDay(map.get("ava_terminal").toString()));
 			}
-			if (map.get("startTime").toString().equals("23:00:00")) {
+			if (map.get("startTime").toString().equals("23:59:59")) {
 				map.put("ava_start", recordHourPingService.queryAfterDay(map.get("ava_terminal").toString()));
 			}
 		}

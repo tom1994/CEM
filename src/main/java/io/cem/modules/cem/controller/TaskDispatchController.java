@@ -37,6 +37,7 @@ public class TaskDispatchController {
 
     /**
      * 下发任务列表
+     *
      * @param params
      * @return R
      */
@@ -57,6 +58,7 @@ public class TaskDispatchController {
 
     /**
      * tooltip显示任务
+     *
      * @param id
      * @param page
      * @param limit
@@ -87,6 +89,7 @@ public class TaskDispatchController {
 
     /**
      * 探针显示任务
+     *
      * @param id
      * @param page
      * @param limit
@@ -118,6 +121,7 @@ public class TaskDispatchController {
 
     /**
      * 下发任务
+     *
      * @param taskDispatch
      * @return R
      */
@@ -151,6 +155,7 @@ public class TaskDispatchController {
 
     /**
      * 下发实时诊断任务
+     *
      * @param param
      * @return R
      */
@@ -286,6 +291,7 @@ public class TaskDispatchController {
 
     /**
      * 下发任务
+     *
      * @param taskDispatch
      * @return
      */
@@ -354,9 +360,9 @@ public class TaskDispatchController {
             }
             taskDispatchService.saveAll(taskDispatchEntityList);
         } else {
-            return R.error(111, "探针或探针组格式错误");
+            return R.error("探针或探针组格式错误");
         }
-        try {
+/*        try {
             int result = BypassHttps.sendRequestIgnoreSSL("POST", prop.getProperty("socketAddress") + "/web/v1/tasks/" + taskDispatch.getTaskId());
             if (result == 200) {
                 return R.ok();
@@ -369,11 +375,42 @@ public class TaskDispatchController {
             }
         } catch (Exception e) {
             return R.error("网络故障，下发失败");
+        }*/
+        try {
+            String result = BypassHttps.taskDispatch("POST", prop.getProperty("socketAddress") + "/web/v1/tasks/" + taskDispatch.getTaskId());
+            if (result == null || result.equals("")) {
+                return R.error(404, "任务下发失败");
+            }
+            JSONObject jsonobject = JSONObject.parseObject(result);
+            int code = Integer.parseInt(jsonobject.get("code").toString());
+            if (code == 200) {
+                return R.ok();
+            } else if (code == 401) {
+                taskDispatchService.cancelSave(taskDispatch.getTaskId());
+                return R.error(404, "token失效，系统已重新获取，请重试");
+            } else if (code == 206) {
+                taskDispatchService.cancelSave(taskDispatch.getTaskId());
+                String msg = jsonobject.get("msg").toString();
+                String[] failIds = msg.substring(1, msg.length() - 1).split(",");
+                StringBuilder stringBuilder = new StringBuilder();
+                for (String id : failIds) {
+                    stringBuilder.append(probeService.queryObject(Integer.parseInt(id)).getName()).append(",");
+                }
+                String probeName = stringBuilder.toString();
+                return R.error(404, probeName.substring(0,probeName.length()-1)+"下发失败，其它探针下发成功");
+            }else if(code == 408){
+                return R.error("获取任务超时");
+            }else{
+                return R.error("任务下发失败");
+            }
+        } catch (Exception e) {
+            return R.error("网络故障，下发失败");
         }
     }
 
     /**
      * 修改
+     *
      * @param taskDispatch
      * @return R
      */
@@ -386,6 +423,7 @@ public class TaskDispatchController {
 
     /**
      * 删除
+     *
      * @param ids
      * @return R
      */
@@ -398,6 +436,7 @@ public class TaskDispatchController {
 
     /**
      * 取消任务
+     *
      * @param id
      * @return R
      */

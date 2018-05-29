@@ -252,7 +252,7 @@ public class ProbeController {
                 }
             }
         } catch (Exception e) {
-            return R.error(500, "探针重启失败，未知错误");
+            return R.error(500, "探针重启失败");
         }
         return R.ok("探针重启成功！");
     }

@@ -34,7 +34,7 @@ public class ScoreCollectAllServiceImpl implements ScoreCollectAllService {
         param.put("ava_start",stime);
         param.put("ava_terminal",etime);
         param.put("startTime","00:00:00");
-        param.put("terminalTime","23:00:00");
+        param.put("terminalTime","23:59:59");
 
         log.info("网络连通性，月度统计，调用方法：recordHourDhcpService.connectionDayHourChart");
         List<ScoreEntity> pingScores = recordHourDhcpService.connectionDayChart(param);
@@ -60,7 +60,7 @@ public class ScoreCollectAllServiceImpl implements ScoreCollectAllService {
         param.put("ava_start",stime);
         param.put("ava_terminal",etime);
         param.put("startTime","00:00:00");
-        param.put("terminalTime","23:00:00");
+        param.put("terminalTime","23:59:59");
         log.info("网络层质量，月度统计，调用方法：recordHourDhcpService.qualityDayHourChart");
         List<ScoreEntity> scores = recordHourDhcpService.qualityDayChart(param);
         log.info("网络层质量，月度统计，计算后得分："+scores);
@@ -86,7 +86,7 @@ public class ScoreCollectAllServiceImpl implements ScoreCollectAllService {
         param.put("ava_start",stime);
         param.put("ava_terminal",etime);
         param.put("startTime","00:00:00");
-        param.put("terminalTime","23:00:00");
+        param.put("terminalTime","23:59:59");
         log.info("网页浏览，月度统计，调用方法：recordHourDhcpService.pageDayChart");
         List<ScoreEntity> scores = recordHourDhcpService.pageDayChart(param);
         log.info("网页浏览，月度统计，计算后得分："+scores);
@@ -110,7 +110,7 @@ public class ScoreCollectAllServiceImpl implements ScoreCollectAllService {
         param.put("ava_start",stime);
         param.put("ava_terminal",etime);
         param.put("startTime","00:00:00");
-        param.put("terminalTime","23:00:00");
+        param.put("terminalTime","23:59:59");
         log.info("文件下载，调用方法recordHourDhcpService.downloadDayHourChart");
         List<ScoreEntity> scores = recordHourDhcpService.downloadDayChart(param);
         log.info("文件下载，月度统计，计算后得分："+scores);
@@ -137,7 +137,7 @@ public class ScoreCollectAllServiceImpl implements ScoreCollectAllService {
         param.put("ava_start",stime);
         param.put("ava_terminal",etime);
         param.put("startTime","00:00:00");
-        param.put("terminalTime","23:00:00");
+        param.put("terminalTime","23:59:59");
         log.info("在线视频，月度统计，调用方法：recordHourDhcpService.videoDayChart");
         List<ScoreEntity> scores = recordHourDhcpService.videoDayChart(param);
         log.info("在线视频，月度统计，计算后得分："+scores);
@@ -162,7 +162,7 @@ public class ScoreCollectAllServiceImpl implements ScoreCollectAllService {
         param.put("ava_start",stime);
         param.put("ava_terminal",etime);
         param.put("startTime","00:00:00");
-        param.put("terminalTime","23:00:00");
+        param.put("terminalTime","23:59:59");
         log.info("网络游戏，月度统计，调用方法：recordHourDhcpService.gameDayChart");
         List<ScoreEntity> scores = recordHourDhcpService.gameDayChart(param);
         log.info("网络游戏，月度统计，计算后得分："+scores);

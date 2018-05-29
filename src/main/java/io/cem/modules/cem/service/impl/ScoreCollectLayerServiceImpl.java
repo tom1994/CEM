@@ -33,7 +33,7 @@ public class ScoreCollectLayerServiceImpl implements ScoreCollectLayerService {
         params.put("ava_terminal",etime);
         params.put("service",1);
         params.put("startTime","00:00:00");
-        params.put("endTime","23:00:00");
+        params.put("endTime","23:59:59");
         log.info("调用方法recordHourRadiusService.diagnoseDay");
         log.info("传入的业务类型是："+params.get("service"));
         List<ScoreEntity> scores1 = recordHourRadiusService.diagnoseDay(params);

@@ -43,7 +43,7 @@ public class ScoreCollectController {
         pm.put("startDate",DateUtils.format(p[1]));
         pm.put("endDate",DateUtils.format(p[0]));
         pm.put("startTime","00:00:00");
-        pm.put("endTime","23:00:00");
+        pm.put("endTime","23:59:59");
         pm.put("serviceType",serviceType);
         log.info("门户排行，传入的查询时间参数 startDate="+pm.get("startDate"));
         log.info("门户排行，传入的查询时间参数 endDate="+pm.get("endDate"));
@@ -63,7 +63,7 @@ public class ScoreCollectController {
             pm.put("startDate",DateUtils.setStartEndDay(d,1));
             pm.put("endDate",DateUtils.setStartEndDay(d,0));
             pm.put("startTime","00:00:00");
-            pm.put("endTime","23:00:00");
+            pm.put("endTime","23:59:59");
             pm.put("serviceType",serviceType);
             log.info("getQoEView 开始时间："+pm.get("startDate"));
             log.info("getQoEView 结束时间："+pm.get("endDate"));
@@ -87,7 +87,7 @@ public class ScoreCollectController {
             pm.put("startDate",DateUtils.setStartEndDay(d,1));
             pm.put("endDate",DateUtils.setStartEndDay(d,0));
             pm.put("startTime","00:00:00");
-            pm.put("endTime","23:00:00");
+            pm.put("endTime","23:59:59");
             pm.put("serviceType",serviceType);
             log.info("/layerqoeview 层级 查询参数，开始时间："+pm.get("startDate"));
             log.info("/layerqoeview 层级 查询参数，结束时间："+pm.get("endDate"));

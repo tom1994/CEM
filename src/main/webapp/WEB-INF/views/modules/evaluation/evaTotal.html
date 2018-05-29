@@ -86,12 +86,8 @@
             border: 0;
             border-top: 0px;
         }
-        .modal-body {
-            padding: 20px 30px 0 30px;
-        }
-        .dataTables_wrapper {
-             padding-bottom: 20px;
-        }
+
+
     </style>
 </head>
 
@@ -110,7 +106,6 @@
                                         <div class="input-group searchspan" id="city" >
                                             <div class="jq22">
                                                 <select id="selectcity" class="form-control"   v-on:change="citychange()" style="display: none">
-                                                    <option value="">所有地市</option>
                                                     <option v-for="item in cities"
                                                             v-bind:value="item.message.cityId">{{ item.message.cityName }}
                                                     </option>
@@ -437,10 +432,10 @@
                     </button>
                     <h3 class="modal-title myModalLabel">详细信息</h3>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" style="height:400px;">
                     <div class="record-table ibox-content" id="connnection">
                         <data-table :ping_list="filteredData" style="display: none"></data-table>
-                        <div class="row" >
+                        <div class="row" style="height: 350px; overflow: auto">
                             <table class="table table-bordered " id="pingdata_table" style="margin-top: 2px!important;"></table>
                         </div>
                     </div>
@@ -463,9 +458,9 @@
                     </button>
                     <h3 class="modal-title myModalLabel">详细信息</h3>
                 </div>
-                <div class="modal-body" >
+                <div class="modal-body" style="height:400px;">
                     <div class="record-table ibox-content" id="quality">
-                        <div class="row" >       <!--表格 verflow-x: scroll超出滚动-->
+                        <div class="row" style="height: 350px; overflow: auto">       <!--表格 verflow-x: scroll超出滚动-->
                             <table class="table table-bordered " id="qualitydata_table" style="margin-top: 2px!important;"></table>
                         </div>
                     </div>
@@ -487,10 +482,10 @@
                     </button>
                     <h3 class="modal-title myModalLabel">详细信息</h3>
                 </div>
-                <div class="modal-body"   >
+                <div class="modal-body" style="height:400px;"  >
 
                     <div class="record-table ibox-content" id="broswer">
-                        <div class="row" >       <!--表格 verflow-x: scroll超出滚动-->
+                        <div class="row" style="height: 350px; overflow: auto">       <!--表格 verflow-x: scroll超出滚动-->
                             <table class="table table-bordered " id="broswerdata_table" style="margin-top: 2px!important;"></table>
                         </div>
                     </div>
@@ -505,7 +500,7 @@
 
     <!--网页下载-->
     <div class="modal fade" id="myModal_download" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog"  style="width:995px"> <!--修改bootstrap modal模态框的宽度-->
+        <div class="modal-dialog" style="width:995px"> <!--修改bootstrap modal模态框的宽度-->
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
@@ -513,9 +508,9 @@
                     </button>
                     <h3 class="modal-title myModalLabel">详细信息</h3>
                 </div>
-                <div class="modal-body"   >
+                <div class="modal-body"  style="height:400px;" >
                     <div class="record-table ibox-content" id="download">
-                        <div class="row" >    <!--表格 verflow-x: scroll超出滚动-->
+                        <div class="row" style="height: 350px; overflow: auto">    <!--表格 verflow-x: scroll超出滚动-->
                             <table class="table table-bordered " id="downloaddata_table" style="margin-top: 2px!important;"></table>
                         </div>
                     </div>
@@ -538,9 +533,9 @@
                     </button>
                     <h3 class="modal-title myModalLabel">详细信息</h3>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" style="height:400px;" >
                     <div class="record-table ibox-content" id="video">
-                        <div class="row">      <!--表格 verflow-x: scroll超出滚动-->
+                        <div class="row" style="height: 350px; overflow: auto">      <!--表格 verflow-x: scroll超出滚动-->
                             <table class="table table-bordered " id="videodata_table" style="margin-top: 2px!important;"></table>
                         </div>
                     </div>
@@ -562,9 +557,9 @@
                     </button>
                     <h3 class="modal-title myModalLabel">详细信息</h3>
                 </div>
-                <div class="modal-body"   >
+                <div class="modal-body"  style="height:400px" >
                     <div class="record-table ibox-content" id="game">
-                        <div class="row" >
+                        <div class="row" style="height: 350px; overflow: auto">
                             <table class="table table-bordered " id="gamedata_table" style="margin-top: 2px!important;"></table>
                         </div>
                     </div>
