@@ -108,6 +108,8 @@ public class RecordHourGameServiceImpl implements RecordHourGameService {
 		List<ScoreEntity> connectionScore = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
+			RecordFailEntity recordFail = recordFailService.queryFail(map);
+			double fail = (double)recordFail.getFail()/recordFail.getTotal();
 			for(int i=0;i<gameList.size();i++){
 				double score=0;
 				//conn_delay 100
@@ -251,8 +253,6 @@ public class RecordHourGameServiceImpl implements RecordHourGameService {
 				finalScore.setFail(gameList.get(i).getFail());
 				finalScore.setTotal(gameList.get(i).getTotal());
 				map.put("service_type",50);
-				RecordFailEntity recordFail = recordFailService.queryFail(map);
-				double fail = (double)recordFail.getFail()/recordFail.getTotal();
 				finalScore.setScore(score*(1-fail));
 				finalScore.setBase(Double.parseDouble(pros.getValue("gameweight")));
 				connectionScore.add(finalScore);

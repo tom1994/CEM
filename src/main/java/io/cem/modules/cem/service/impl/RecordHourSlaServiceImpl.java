@@ -74,6 +74,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 		List<ScoreEntity> slaTcp = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
+			RecordFailEntity recordFail = recordFailService.queryFail(map);
+			double fail = (double)recordFail.getFail()/recordFail.getTotal();
 			for (int i = 0; i < slaList.size(); i++) {
 				double score = 0;
 				//Sla Tcp
@@ -308,8 +310,6 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 					tcpSla.setFail(slaList.get(i).getFail());
 					tcpSla.setTotal(slaList.get(i).getTotal());
 					map.put("service_type",10);
-					RecordFailEntity recordFail = recordFailService.queryFail(map);
-					double fail = (double)recordFail.getFail()/recordFail.getTotal();
 					tcpSla.setScore(score*(1-fail));
 					tcpSla.setBase(Double.parseDouble(pros.getValue("sla_tcp")));
 
@@ -327,6 +327,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 		List<ScoreEntity> slaUdp = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
+			RecordFailEntity recordFail = recordFailService.queryFail(map);
+			double fail = (double)recordFail.getFail()/recordFail.getTotal();
 			for (int i = 0; i < slaList.size(); i++) {
 				double score = 0;
 				//Sla Udp
@@ -561,8 +563,6 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 					udpSla.setFail(slaList.get(i).getFail());
 					udpSla.setTotal(slaList.get(i).getTotal());
 					map.put("service_type",11);
-					RecordFailEntity recordFail = recordFailService.queryFail(map);
-					double fail = (double)recordFail.getFail()/recordFail.getTotal();
 					udpSla.setScore(score*(1-fail));
 					udpSla.setBase(Double.parseDouble(pros.getValue("sla_udp")));
 
@@ -580,6 +580,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 		List<ScoreEntity> dns = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
+			RecordFailEntity recordFail = recordFailService.queryFail(map);
+			double fail = (double)recordFail.getFail()/recordFail.getTotal();
 			for (int i = 0; i < dnsList.size(); i++) {
 				double score=0;
 				//delay 100
@@ -662,8 +664,6 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				DNS.setFail(dnsList.get(i).getFail());
 				DNS.setTotal(dnsList.get(i).getTotal());
 				map.put("service_type",14);
-				RecordFailEntity recordFail = recordFailService.queryFail(map);
-				double fail = (double)recordFail.getFail()/recordFail.getTotal();
 				DNS.setScore(score*(1-fail));
 				DNS.setBase(Double.parseDouble(pros.getValue("dns")));
 
@@ -681,6 +681,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 		List<ScoreEntity> dhcp = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
+			RecordFailEntity recordFail = recordFailService.queryFail(map);
+			double fail = (double)recordFail.getFail()/recordFail.getTotal();
 			for (int i = 0; i < dhcpList.size(); i++) {
 				double score=0;
 				//delay 100
@@ -764,8 +766,6 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				DHCP.setFail(dhcpList.get(i).getFail());
 				DHCP.setTotal(dhcpList.get(i).getTotal());
 				map.put("service_type",13);
-				RecordFailEntity recordFail = recordFailService.queryFail(map);
-				double fail = (double)recordFail.getFail()/recordFail.getTotal();
 				DHCP.setScore(score*(1-fail));
 				DHCP.setBase(Double.parseDouble(pros.getValue("dhcp")));
 
@@ -782,6 +782,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 		List<ScoreEntity> pppoe = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
+			RecordFailEntity recordFail = recordFailService.queryFail(map);
+			double fail = (double)recordFail.getFail()/recordFail.getTotal();
 			for (int i = 0; i < pppoeList.size(); i++) {
 				double score = 0;
 				//delay 100
@@ -896,8 +898,6 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				PPPOE.setFail(pppoeList.get(i).getFail());
 				PPPOE.setTotal(pppoeList.get(i).getTotal());
 				map.put("service_type",12);
-				RecordFailEntity recordFail = recordFailService.queryFail(map);
-				double fail = (double)recordFail.getFail()/recordFail.getTotal();
 				PPPOE.setScore(score*(1-fail));
 				PPPOE.setBase(Double.parseDouble(pros.getValue("adsl")));
 
@@ -914,6 +914,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 		List<ScoreEntity> radius = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
+			RecordFailEntity recordFail = recordFailService.queryFail(map);
+			double fail = (double)recordFail.getFail()/recordFail.getTotal();
 			for (int i = 0; i < radiusList.size(); i++) {
 				double score = 0;
 				//delay 100
@@ -997,8 +999,6 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				RADIUS.setFail(radiusList.get(i).getFail());
 				RADIUS.setTotal(radiusList.get(i).getTotal());
 				map.put("service_type",15);
-				RecordFailEntity recordFail = recordFailService.queryFail(map);
-				double fail = (double)recordFail.getFail()/recordFail.getTotal();
 				RADIUS.setScore(score*(1-fail));
 				RADIUS.setBase(Double.parseDouble(pros.getValue("radius")));
 
@@ -1077,6 +1077,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 					finalScore.setPort(ite.getPort());
 					finalScore.setScore(0.0);
 					finalScore.setBase(0.0);
+					finalScore.setFail(ite.getFail());
+					finalScore.setTotal(ite.getTotal());
 					Map<String, ScoreBaseEntity> map1 = connection.get(ite);
 					Set<String> keyType = map1.keySet();
 					Iterator<String> iterator1 = keyType.iterator();
@@ -1197,6 +1199,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 					finalScore.setPort(ite.getPort());
 					finalScore.setScore(0.0);
 					finalScore.setBase(0.0);
+					finalScore.setFail(ite.getFail());
+					finalScore.setTotal(ite.getTotal());
 					Map<String, ScoreBaseEntity> map1 = connection.get(ite);
 					Set<String> keyType = map1.keySet();
 					Iterator<String> iterator1 = keyType.iterator();
@@ -1317,6 +1321,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 					finalScore.setPort(ite.getPort());
 					finalScore.setScore(0.0);
 					finalScore.setBase(0.0);
+					finalScore.setFail(ite.getFail());
+					finalScore.setTotal(ite.getTotal());
 					Map<String, ScoreBaseEntity> map1 = connection.get(ite);
 					Set<String> keyType = map1.keySet();
 					Iterator<String> iterator1 = keyType.iterator();
@@ -1437,6 +1443,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 					finalScore.setPort(ite.getPort());
 					finalScore.setScore(0.0);
 					finalScore.setBase(0.0);
+					finalScore.setFail(ite.getFail());
+					finalScore.setTotal(ite.getTotal());
 					Map<String, ScoreBaseEntity> map1 = connection.get(ite);
 					Set<String> keyType = map1.keySet();
 					Iterator<String> iterator1 = keyType.iterator();
@@ -1566,6 +1574,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 					finalScore.setPort(ite.getPort());
 					finalScore.setScore(0.0);
 					finalScore.setBase(0.0);
+					finalScore.setFail(ite.getFail());
+					finalScore.setTotal(ite.getTotal());
 					Map<String, ScoreBaseEntity> map1 = connection.get(ite);
 					Set<String> keyType = map1.keySet();
 					Iterator<String> iterator1 = keyType.iterator();

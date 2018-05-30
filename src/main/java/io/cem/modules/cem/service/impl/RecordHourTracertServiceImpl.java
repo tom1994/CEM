@@ -84,6 +84,8 @@ public class RecordHourTracertServiceImpl implements RecordHourTracertService {
 			scoreTarget.setRecordTime(connection.get(i).getRecordTime());
 			scoreTarget.setAccessLayer(connection.get(i).getAccessLayer());
 			scoreTarget.setPort(connection.get(i).getPort());
+			scoreTarget.setFail(connection.get(i).getFail());
+			scoreTarget.setTotal(connection.get(i).getTotal());
 			ScoreBaseEntity scoreBase = new ScoreBaseEntity();
 			scoreBase.setPingIcmpDelay(connection.get(i).getPingIcmpDelay());
 			scoreBase.setPingIcmpDelayStd(connection.get(i).getPingIcmpDelayStd());
@@ -123,6 +125,7 @@ public class RecordHourTracertServiceImpl implements RecordHourTracertService {
 			scoreBase.setConnectionScore(connection.get(i).getScore());
 			scoreBase.setScore(connection.get(i).getScore());
 			scoreBase.setBase(connection.get(i).getBase());
+			scoreBase.setFail(connection.get(i).getFail());
 			Map<String,ScoreBaseEntity> ping1 = new HashMap<>();
 			ping1.put("connection",scoreBase);
 			score.put(scoreTarget,ping1 );
@@ -306,6 +309,8 @@ public class RecordHourTracertServiceImpl implements RecordHourTracertService {
 			scoreTarget.setRecordDate(list.get(i).getRecordDate());
 			scoreTarget.setAccessLayer(list.get(i).getAccessLayer());
 			scoreTarget.setPort(list.get(i).getPort());
+			scoreTarget.setFail(list.get(i).getFail());
+			scoreTarget.setTotal(list.get(i).getTotal());
 			ScoreBaseEntity scoreBase = new ScoreBaseEntity();
 			if(type.equals("quality")){
 				scoreBase.setSlaTcpDelay(list.get(i).getSlaTcpDelay());

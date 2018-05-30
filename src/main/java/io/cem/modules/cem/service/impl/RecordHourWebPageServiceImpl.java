@@ -111,7 +111,8 @@ public class RecordHourWebPageServiceImpl implements RecordHourWebPageService {
 		List<ScoreEntity> connectionScore = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
-			
+			RecordFailEntity recordFail = recordFailService.queryFail(map);
+			double fail = (double)recordFail.getFail()/recordFail.getTotal();
 			for (int i=0;i<webPageList.size();i++) {
 				double score = 0;
 				//dns_delay 100
@@ -373,8 +374,6 @@ public class RecordHourWebPageServiceImpl implements RecordHourWebPageService {
 				finalScore.setFail(webPageList.get(i).getFail());
 				finalScore.setTotal(webPageList.get(i).getTotal());
 				map.put("service_type",20);
-				RecordFailEntity recordFail = recordFailService.queryFail(map);
-				double fail = (double)recordFail.getFail()/recordFail.getTotal();
 				finalScore.setScore(score*(1-fail));
 				finalScore.setBase(Double.parseDouble(pros.getValue("browseweight")));
 				connectionScore.add(finalScore);

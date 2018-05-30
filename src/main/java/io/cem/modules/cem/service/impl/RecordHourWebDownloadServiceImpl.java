@@ -77,6 +77,8 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 		List<ScoreEntity> webDownload = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
+			RecordFailEntity recordFail = recordFailService.queryFail(map);
+			double fail = (double)recordFail.getFail()/recordFail.getTotal();
 			for(int i=0;i<webDownloadList.size();i++) {
 				double score = 0;
 				//dns_delay 100
@@ -218,8 +220,6 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 				WEBDL.setFail(webDownloadList.get(i).getFail());
 				WEBDL.setTotal(webDownloadList.get(i).getTotal());
 				map.put("service_type",30);
-				RecordFailEntity recordFail = recordFailService.queryFail(map);
-				double fail = (double)recordFail.getFail()/recordFail.getTotal();
 				WEBDL.setScore(score*(1-fail));
 				WEBDL.setBase(Double.parseDouble(pros.getValue("web_download")));
 
@@ -236,6 +236,8 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 		List<ScoreEntity> ftpDownload = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
+			RecordFailEntity recordFail = recordFailService.queryFail(map);
+			double fail = (double)recordFail.getFail()/recordFail.getTotal();
 			for(int i=0;i<ftpList.size();i++){
 				double score=0;
 				//ftp download
@@ -408,8 +410,6 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 					FTPD.setFail(ftpList.get(i).getFail());
 					FTPD.setTotal(ftpList.get(i).getTotal());
 					map.put("service_type",31);
-					RecordFailEntity recordFail = recordFailService.queryFail(map);
-					double fail = (double)recordFail.getFail()/recordFail.getTotal();
 					FTPD.setScore(score*(1-fail));
 					FTPD.setBase(Double.parseDouble(pros.getValue("ftp_download")));
 
@@ -427,6 +427,8 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 		List<ScoreEntity> ftpUpload = new ArrayList<>();
 		try{
 			PropertiesUtils pros = new PropertiesUtils();
+			RecordFailEntity recordFail = recordFailService.queryFail(map);
+			double fail = (double)recordFail.getFail()/recordFail.getTotal();
 			for(int i=0;i<ftpList.size();i++) {
 				double score = 0;
 				if(ftpList.get(i).getServiceType()==32){
@@ -598,8 +600,6 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 					FTPU.setFail(ftpList.get(i).getFail());
 					FTPU.setTotal(ftpList.get(i).getTotal());
 					map.put("service_type",32);
-					RecordFailEntity recordFail = recordFailService.queryFail(map);
-					double fail = (double)recordFail.getFail()/recordFail.getTotal();
 					FTPU.setScore(score*(1-fail));
 					FTPU.setBase(Double.parseDouble(pros.getValue("ftp_upload")));
 
@@ -672,6 +672,8 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 					finalScore.setRecordDate(ite.getRecordDate());
 					finalScore.setScore(0.0);
 					finalScore.setBase(0.0);
+					finalScore.setFail(ite.getFail());
+					finalScore.setTotal(ite.getTotal());
 					Map<String, ScoreBaseEntity> map1 = connection.get(ite);
 					Set<String> keyType = map1.keySet();
 					Iterator<String> iterator1 = keyType.iterator();
@@ -772,6 +774,8 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 					finalScore.setRecordDate(ite.getRecordDate());
 					finalScore.setScore(0.0);
 					finalScore.setBase(0.0);
+					finalScore.setFail(ite.getFail());
+					finalScore.setTotal(ite.getTotal());
 					Map<String, ScoreBaseEntity> map1 = connection.get(ite);
 					Set<String> keyType = map1.keySet();
 					Iterator<String> iterator1 = keyType.iterator();
@@ -878,6 +882,8 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 					finalScore.setRecordDate(ite.getRecordDate());
 					finalScore.setScore(0.0);
 					finalScore.setBase(0.0);
+					finalScore.setFail(ite.getFail());
+					finalScore.setTotal(ite.getTotal());
 					Map<String, ScoreBaseEntity> map1 = connection.get(ite);
 					Set<String> keyType = map1.keySet();
 					Iterator<String> iterator1 = keyType.iterator();
@@ -981,6 +987,8 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 					finalScore.setRecordDate(ite.getRecordDate());
 					finalScore.setScore(0.0);
 					finalScore.setBase(0.0);
+					finalScore.setFail(ite.getFail());
+					finalScore.setTotal(ite.getTotal());
 					Map<String, ScoreBaseEntity> map1 = connection.get(ite);
 					Set<String> keyType = map1.keySet();
 					Iterator<String> iterator1 = keyType.iterator();
@@ -1081,6 +1089,8 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 					finalScore.setRecordDate(ite.getRecordDate());
 					finalScore.setScore(0.0);
 					finalScore.setBase(0.0);
+					finalScore.setFail(ite.getFail());
+					finalScore.setTotal(ite.getTotal());
 					Map<String, ScoreBaseEntity> map1 = connection.get(ite);
 					Set<String> keyType = map1.keySet();
 					Iterator<String> iterator1 = keyType.iterator();

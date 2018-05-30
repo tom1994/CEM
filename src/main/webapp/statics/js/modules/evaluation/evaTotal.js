@@ -102,7 +102,6 @@ var search_service = new Vue({ //Todo:完成查询条件框
                 let param = {};
                 param.probedata = JSON.stringify(search);
                 param.chartdata = JSON.stringify(search);
-
                 sendAjax(param);
             }
         },
@@ -120,7 +119,7 @@ function sendAjax(param) {
         success: function (result) {
             ping_list=result.scoreList
             removeLoading('test');
-            $("#pingdata_table").dataTable().fnDestroy();
+             $("#pingdata_table").dataTable().fnDestroy();
             ping_table.reset(ping_list);
 
             var arr=[]
@@ -379,10 +378,6 @@ function getFormJson(form) {      /*将表单对象变为json对象*/
         a[2] = {};
         a[2].name = "city";
         a[2].value = citySelected;
-    }else{
-        a[2] = {};
-        a[2].name = "city";
-        a[2].value = 370900;
     }
     if(citySelected!=0&&countrySelected!=0){
         a[3]={};
@@ -662,16 +657,16 @@ var connection=new Vue({
                 }
                 for (let i = 0; i < options.series.length; i++) {
                     for (let j = 0; j < ping_list.length; j++) {
-                        let date_token = ping_list[j].recordDate.split("-");
-                        let year = parseInt(date_token[0]);
-                        let month = parseInt(date_token[1]) - 1;
-                        let day = parseInt(date_token[2]);
-                        let hour = parseInt(ping_list[j].recordTime);
-                        if (isNaN(year) || isNaN(month) || isNaN(day)) {
-                            continue;
-                        }
-                        options.series[i].data[j] = [Date.UTC(year, month, day, hour), ping_list[j].score];
-                        options.series[i].data.sort(compare("0"));
+                            let date_token = ping_list[j].recordDate.split("-");
+                            let year = parseInt(date_token[0]);
+                            let month = parseInt(date_token[1]) - 1;
+                            let day = parseInt(date_token[2]);
+                            let hour = parseInt(ping_list[j].recordTime);
+                            if (isNaN(year) || isNaN(month) || isNaN(day)) {
+                                continue;
+                            }
+                            options.series[i].data[j] = [Date.UTC(year, month, day, hour), ping_list[j].score];
+                            options.series[i].data.sort(compare("0"));
                     }
 
 
@@ -707,8 +702,8 @@ var quality_service = new Vue({
             dataType: "json",
             success: function (result) {
                 quality_list=result.scoreList
-                removeLoading('quality');
-                quality_table.reset(quality_list);
+                    removeLoading('quality');
+               quality_table.reset(quality_list);
                 var arr=[]
                 for(var i=0;i<quality_list.length;i++){
                     arr.push(parseFloat(quality_list[i].score));
@@ -828,7 +823,7 @@ var page_service = new Vue({
             dataType: "json",
             success: function (result) {
                 page_list=result.scoreList
-                removeLoading('page');
+                    removeLoading('page');
                 broswer_table.reset(page_list);
                 var arr=[]
                 for(var i=0;i<page_list.length;i++){
@@ -888,7 +883,7 @@ var video_service = new Vue({
             dataType: "json",
             success: function (result) {
                 video_list=result.scoreList
-                removeLoading('video');
+                 removeLoading('video');
                 video_table.reset(video_list);
                 var arr=[]
                 for(var i=0;i<video_list.length;i++){
@@ -949,7 +944,7 @@ var game_service = new Vue({
             dataType: "json",
             success: function (result) {
                 game_list=result.scoreList
-                removeLoading('video');
+                    removeLoading('video');
                 game_table.reset(game_list);
                 var arr=[]
                 for(var i=0;i<game_list.length;i++){
@@ -1051,7 +1046,7 @@ var options = {
 
 
 function   connection_info() {     /*监听修改触发事件*/
-    $("#myModal_connection").modal('show')
+   $("#myModal_connection").modal('show')
 }
 
 
@@ -1141,6 +1136,9 @@ var ping_table=new Vue({
                 scrollY:  300,
                 scrollX:  true,
                 scrollCollapse: true,
+                // fixedColumns:   {
+                //     leftColumns:4
+                // },
                 oLanguage: {
                     sEmptyTable: "No data available in table",
                     sZeroRecords:"No data available in table",
@@ -1149,6 +1147,7 @@ var ping_table=new Vue({
                 createdRow: function ( row, data, index ) {
 
                     var trs=$("#pingdata_table_wrapper>.dataTables_scroll>.dataTables_scrollHead>.dataTables_scrollHeadInner>table>thead>tr");
+
                     if(trs.length>1){
                         return
                     } else if (index == 0) { //生成了行之后，开始生成表头>>>
@@ -1540,7 +1539,6 @@ var broswer_table=new Vue({
                     let rows = [];
                     var i = 1;
                     sortTemp.forEach(function (item) {
-                        debugger
                         let row = [];
                         row.push(i++);
                         row.push(item.probeName);
@@ -2183,10 +2181,6 @@ $(document).ready(function () {
             setTimeout(function () {
                 $('div#city .jq22').comboSelect();
                 $('.combo-dropdown').css("z-index","3");
-                $('#city .combo-input').attr('placeholder','泰安市');
-                $('#city .combo-select select').val('泰安市');
-                getArea(370900);
-                getProbeCity(370900);
                 $('div#city .option-item').click(function (city) {
                     setTimeout(function () {
                         var a = $(city.currentTarget)[0].innerText;

@@ -397,13 +397,16 @@ public class TaskDispatchController {
                     stringBuilder.append(probeService.queryObject(Integer.parseInt(id)).getName()).append(",");
                 }
                 String probeName = stringBuilder.toString();
-                return R.error(404, probeName.substring(0,probeName.length()-1)+"下发失败，其它探针下发成功");
+                return R.error(404, probeName.substring(0,probeName.length()-1)+"下发失败");
             }else if(code == 408){
+                taskDispatchService.cancelSave(taskDispatch.getTaskId());
                 return R.error("获取任务超时");
             }else{
+                taskDispatchService.cancelSave(taskDispatch.getTaskId());
                 return R.error("任务下发失败");
             }
         } catch (Exception e) {
+            taskDispatchService.cancelSave(taskDispatch.getTaskId());
             return R.error("网络故障，下发失败");
         }
     }

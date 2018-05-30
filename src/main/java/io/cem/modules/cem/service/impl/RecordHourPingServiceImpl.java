@@ -72,7 +72,8 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 	@Override
 	public List<ScoreEntity> calculatePingIcmp(List<RecordHourPingEntity> pingList,Map<String,Object> map){
 		RecordFailService recordFailService= (RecordFailService) SpringContextUtils.getBean("recordFailService");
-
+		RecordFailEntity recordFail = recordFailService.queryFail(map);
+		double fail = (double)recordFail.getFail()/recordFail.getTotal();
 		List<ScoreEntity> pingIcmp = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
@@ -315,8 +316,6 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						icmpPing.setPingIcmpJitterVar(pingList.get(i).getJitterVar());
 						icmpPing.setPingIcmpLossRate(pingList.get(i).getLossRate());
 						map.put("service_type",1);
-						RecordFailEntity recordFail = recordFailService.queryFail(map);
-						double fail = (double)recordFail.getFail()/recordFail.getTotal();
 						icmpPing.setScore(score*(1-fail));
 						icmpPing.setBase(Double.parseDouble(pros.getValue("ping_icmp")));
 
@@ -337,6 +336,8 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 		List<ScoreEntity> pingTcp = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
+			RecordFailEntity recordFail = recordFailService.queryFail(map);
+			double fail = (double)recordFail.getFail()/recordFail.getTotal();
 			for (int i = 0; i < pingList.size(); i++) {
 				double score= 0;
 				//Ping(TCP)
@@ -575,8 +576,6 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						tcpPing.setPingTcpJitterVar(pingList.get(i).getJitterVar());
 						tcpPing.setPingTcpLossRate(pingList.get(i).getLossRate());
 						map.put("service_type",2);
-						RecordFailEntity recordFail = recordFailService.queryFail(map);
-						double fail = (double)recordFail.getFail()/recordFail.getTotal();
 						tcpPing.setScore(score*(1-fail));
 						tcpPing.setBase(Double.parseDouble(pros.getValue("ping_tcp")));
 
@@ -594,7 +593,8 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 	@Override
 	public List<ScoreEntity> calculatePingUdp(List<RecordHourPingEntity> pingList,Map<String,Object> map){
 		RecordFailService recordFailService= (RecordFailService) SpringContextUtils.getBean("recordFailService");
-
+		RecordFailEntity recordFail = recordFailService.queryFail(map);
+		double fail = (double)recordFail.getFail()/recordFail.getTotal();
 		List<ScoreEntity> pingUdp = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
@@ -836,8 +836,6 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						udpPing.setPingUdpJitterVar(pingList.get(i).getJitterVar());
 						udpPing.setPingUdpLossRate(pingList.get(i).getLossRate());
 						map.put("service_type",3);
-						RecordFailEntity recordFail = recordFailService.queryFail(map);
-						double fail = (double)recordFail.getFail()/recordFail.getTotal();
 						udpPing.setScore(score*(1-fail));
 						udpPing.setBase(Double.parseDouble(pros.getValue("ping_udp")));
 
@@ -853,6 +851,8 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 	@Override
 	public List<ScoreEntity> calculateTracertIcmp(List<RecordHourTracertEntity> tracertList,Map<String,Object> map){
 		RecordFailService recordFailService= (RecordFailService) SpringContextUtils.getBean("recordFailService");
+		RecordFailEntity recordFail = recordFailService.queryFail(map);
+		double fail = (double)recordFail.getFail()/recordFail.getTotal();
 		List<ScoreEntity> tracertIcmp = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
@@ -1087,8 +1087,6 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						icmpTracert.setFail(tracertList.get(i).getFail());
 						icmpTracert.setTotal(tracertList.get(i).getTotal());
 						map.put("service_type",4);
-						RecordFailEntity recordFail = recordFailService.queryFail(map);
-						double fail = (double)recordFail.getFail()/recordFail.getTotal();
 						icmpTracert.setScore(score*(1-fail));
 						icmpTracert.setTracertIcmpDelay(tracertList.get(i).getDelay());
 						icmpTracert.setTracertIcmpDelayStd(tracertList.get(i).getDelayStd());
@@ -1114,6 +1112,8 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 		List<ScoreEntity> tracertUdp = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
+			RecordFailEntity recordFail = recordFailService.queryFail(map);
+			double fail = (double)recordFail.getFail()/recordFail.getTotal();
 			for (int i = 0; i < tracertList.size(); i++) {
 				double score = 0;
 				//Tracert(Udp)
@@ -1352,8 +1352,6 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						tcpTracert.setTracertTcpJitterVar(tracertList.get(i).getJitterVar());
 						tcpTracert.setTracertTcpLossRate(tracertList.get(i).getLossRate());
 						map.put("service_type",5);
-						RecordFailEntity recordFail = recordFailService.queryFail(map);
-						double fail = (double)recordFail.getFail()/recordFail.getTotal();
 						tcpTracert.setScore(score*(1-fail));
 						tcpTracert.setBase(Double.parseDouble(pros.getValue("tr_tcp")));
 
@@ -1435,6 +1433,8 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 					finalScore.setRecordDate(ite.getRecordDate());
 					finalScore.setScore(0.0);
 					finalScore.setBase(0.0);
+					finalScore.setFail(ite.getFail());
+					finalScore.setTotal(ite.getTotal());
 					Map<String, ScoreBaseEntity> map1 = connection.get(ite);
 					Set<String> keyType = map1.keySet();
 					Iterator<String> iterator1 = keyType.iterator();
@@ -1563,6 +1563,8 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 					finalScore.setRecordDate(ite.getRecordDate());
 					finalScore.setScore(0.0);
 					finalScore.setBase(0.0);
+					finalScore.setFail(ite.getFail());
+					finalScore.setTotal(ite.getTotal());
 					Map<String, ScoreBaseEntity> map1 = connection.get(ite);
 					Set<String> keyType = map1.keySet();
 					Iterator<String> iterator1 = keyType.iterator();
@@ -1699,6 +1701,8 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 					finalScore.setRecordDate(ite.getRecordDate());
 					finalScore.setScore(0.0);
 					finalScore.setBase(0.0);
+					finalScore.setFail(ite.getFail());
+					finalScore.setTotal(ite.getTotal());
 					Map<String, ScoreBaseEntity> map1 = connection.get(ite);
 					Set<String> keyType = map1.keySet();
 					Iterator<String> iterator1 = keyType.iterator();
@@ -1837,6 +1841,8 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 					finalScore.setRecordDate(ite.getRecordDate());
 					finalScore.setScore(0.0);
 					finalScore.setBase(0.0);
+					finalScore.setFail(ite.getFail());
+					finalScore.setTotal(ite.getTotal());
 					Map<String, ScoreBaseEntity> map1 = connection.get(ite);
 					Set<String> keyType = map1.keySet();
 					Iterator<String> iterator1 = keyType.iterator();
@@ -1968,6 +1974,8 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 					finalScore.setRecordDate(ite.getRecordDate());
 					finalScore.setScore(0.0);
 					finalScore.setBase(0.0);
+					finalScore.setFail(ite.getFail());
+					finalScore.setTotal(ite.getTotal());
 					Map<String, ScoreBaseEntity> map1 = connection.get(ite);
 					Set<String> keyType = map1.keySet();
 					Iterator<String> iterator1 = keyType.iterator();

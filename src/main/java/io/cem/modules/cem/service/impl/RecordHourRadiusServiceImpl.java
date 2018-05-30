@@ -132,7 +132,7 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 		}
 		map1.put("ava_start",map.get("ava_start"));
 		map1.put("ava_terminal",map.get("ava_start"));
-		map1.put("startTime",map.get("starTime"));
+		map1.put("startTime",map.get("startTime"));
 		map1.put("terminalTime","23:59:59");
 		map2.put("ava_start",map.get("ava_terminal"));
 		map2.put("ava_terminal",map.get("ava_terminal"));
@@ -453,7 +453,7 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 		}
 		map1.put("ava_start",map.get("ava_start"));
 		map1.put("ava_terminal",map.get("ava_start"));
-		map1.put("startTime",map.get("starTime"));
+		map1.put("startTime",map.get("startTime"));
 		map1.put("terminalTime","23:59:59");
 		map2.put("ava_start",map.get("ava_terminal"));
 		map2.put("ava_terminal",map.get("ava_terminal"));
@@ -978,7 +978,7 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 		}
 		map1.put("ava_start",map.get("ava_start"));
 		map1.put("ava_terminal",map.get("ava_start"));
-		map1.put("startTime",map.get("starTime"));
+		map1.put("startTime",map.get("startTime"));
 		map1.put("terminalTime","23:59:59");
 		map2.put("ava_start",map.get("ava_terminal"));
 		map2.put("ava_terminal",map.get("ava_terminal"));
@@ -1442,7 +1442,7 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 		}
 		map1.put("ava_start",map.get("ava_start"));
 		map1.put("ava_terminal",map.get("ava_start"));
-		map1.put("startTime",map.get("starTime"));
+		map1.put("startTime",map.get("startTime"));
 		map1.put("terminalTime","23:59:59");
 		map2.put("ava_start",map.get("ava_terminal"));
 		map2.put("ava_terminal",map.get("ava_terminal"));
@@ -1640,7 +1640,6 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 			Future<List<RecordHourFtpEntity>> ftpList_future = recordHourFtpService.queryFtpList(map1);
 			Future<List<RecordHourWebDownloadEntity>> webDownloadList_future1 = recordHourWebDownloadService.queryWebDownloadList(map2);
 			Future<List<RecordHourFtpEntity>> ftpList_future1 = recordHourFtpService.queryFtpList(map2);
-
 			while (true) {
 				if (webDownloadList_future.isDone() && ftpList_future.isDone()&&webDownloadList_future1.isDone() && ftpList_future1.isDone()) {
 					List<RecordHourWebDownloadEntity> webDownloadList = webDownloadList_future.get();
@@ -1734,7 +1733,7 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 		}
 		map1.put("ava_start",map.get("ava_start"));
 		map1.put("ava_terminal",map.get("ava_start"));
-		map1.put("startTime",map.get("starTime"));
+		map1.put("startTime",map.get("startTime"));
 		map1.put("terminalTime","23:59:59");
 		map2.put("ava_start",map.get("ava_terminal"));
 		map2.put("ava_terminal",map.get("ava_terminal"));
@@ -2243,7 +2242,7 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 		}
 		map1.put("ava_start",map.get("ava_start"));
 		map1.put("ava_terminal",map.get("ava_start"));
-		map1.put("startTime",map.get("starTime"));
+		map1.put("startTime",map.get("startTime"));
 		map1.put("terminalTime","23:59:59");
 		map2.put("ava_start",map.get("ava_terminal"));
 		map2.put("ava_terminal",map.get("ava_terminal"));

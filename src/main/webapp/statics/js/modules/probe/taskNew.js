@@ -73,19 +73,30 @@ var task_handle = new Vue({
     },
     methods: {
         newTask: function () {
-            $('#title').show()
-            $('#title2').hide()
+            $('#title').show();
+            $('#title2').hide();
+            $('.Range').css('visibility','visible');
             status = 1;
             var forms = $('#taskform_data .form-control');
             taskform_data.atemplates = [];
+            $(".service input[type=text]").removeAttr('style');
+            $('.service input[type=text]').removeAttr('unselectable');
+            $('.service input[type=text]').removeAttr('readonly');
+            $('#address').attr('readonly','readonly');
+            $('#webpage_port').attr('readonly','readonly');
+            $('#uername').attr('readonly','readonly');
+            $('#webpage_password').attr('readonly','readonly');
+            $('#ftpdown_username').attr('readonly','readonly');
+            $('#ftpdown_password').attr('readonly','readonly');
+            $('#ftpup_username').attr('readonly','readonly');
+            $('#ftpup_password').attr('readonly','readonly');
             $('#taskform_data input[type=text]').prop("disabled", false);
             $('#taskform_data select').prop("disabled", false);
             $("#taskform_data select").removeAttr('style');
             $(".service select").removeAttr('style');
-            $(".service input[type=text]").removeAttr('style');
+            $('#domains').removeAttr('readonly');
             $('#taskform_data input[type=text]').prop("readonly", false);
             $('#taskname').removeAttr('unselectable');
-            $('.service input[type=text]').removeAttr('unselectable');
             $('.service').prop("readonly", false);
             $('.service').removeAttr('unselectable');
             $('.service').prop("disabled", false);
@@ -302,11 +313,23 @@ function delete_ajax() {
         contentType: "application/json", /*必须要,不可少*/
         success: function (result) {
 
-            toastr.success("任务删除成功!");
-            task_table.currReset();
-            idArray = [];
-            /*清空id数组*/
-            delete_data.close_modal();
+            let code=result.code;
+            switch(code){
+                case 0:
+                    toastr.success("任务删除成功!");
+                    task_table.currReset();
+                    idArray = [];
+                    /*清空id数组*/
+                    delete_data.close_modal();
+                    /*关闭模态框*/
+                    break;
+                case 404:
+                    toastr.error(result.msg);
+                    break;
+                default:
+                    toastr.error(result.msg);
+                    break;
+            }
         }
     });
 }
@@ -365,15 +388,18 @@ var cancel_confirm = new Vue({
                 cache: false,  //禁用缓存
                 dataType: "json",
                 success: function (result) {
-                    if(result.code == 404){
-                        dispatch_table.currReset();
-                        task_table.currReset();
-                        toastr.error(result.msg)
-                    }else {
-                        dispatch_table.currReset();
-                        task_table.currReset();
-                        toastr.success("任务已取消!");
-                        cancel_confirm.close_modal();
+                    let code =result.code
+                    switch (code){
+                        case 0:
+                            dispatch_table.currReset();
+                            task_table.currReset();
+                            toastr.success("任务已取消!"); break;
+                            cancel_confirm.close_modal();
+                        case 404:
+                            dispatch_table.currReset();
+                            toastr.error(result.msg);break;
+                        default:
+                            toastr.error(result.msg);break;
                     }
                 }
             });
@@ -441,14 +467,6 @@ function task_assign(obj) {
                 probes[i] = {message: result.probe[i]};
                 $('#first').append("<option value=" + probes[i].message.id + ">" + probes[i].message.name + "</option>");
             }
-            // var probes = [];
-            // for(var i = 0; i < result.probe.length;i++){
-            //     probes[i] = {message:result.probe[i]};
-            // }
-            // console.log(probes)
-            // for(var i = 0;i < probes.length;i++){
-            //     $('#first').append("<option value=" + probes[i].message.id + ">" + probes[i].message.name + "</option>");
-            // }
 
         },
     })
@@ -538,12 +556,12 @@ function task_assign(obj) {
                 doubleMove: true,
             });
             $('#task_dispatch').modal('show');
-            $('.box1').removeClass(' col-md-5');
-            $('.box1').addClass(' col-md-4');
-            $('.box2').removeClass(' col-md-5');
-            $('.box2').addClass(' col-md-4');
-            $(' .col-md-4').css(' padding-right','0px');
-            $(' .col-md-4').css(' padding-left','0px');
+            // $('.box1').removeClass(' col-md-5');
+            // $('.box1').addClass(' col-md-4');
+            // $('.box2').removeClass(' col-md-5');
+            // $('.box2').addClass(' col-md-4');
+            // $(' .col-md-4').css(' padding-right','0px');
+            // $(' .col-md-4').css(' padding-left','0px');
             // $('.btn-box').removeClass(' col-md-2');
             // $('.btn-box').addClass(' col-md-3');
             $('.clear1 ').css('display','none');
@@ -556,8 +574,6 @@ function task_assign(obj) {
 
 //a=1 选择探针 a=0 选择探针组 b=1 测试目标 b=0 测试目标组 a=2选择核心探针 c=0 选择
 function submit_dispatch() {
-    loading()
-
     var a = parseInt($('input[name=chooseprobe]:checked', '#dispatch_probe').val());
     var b = parseInt($('input[name=choosetarget]:checked', '#dispatch_target').val());
     // console.log(a, b);
@@ -603,6 +619,7 @@ function submit_dispatch() {
         } else if (b == 0 && typeof taskDispatch.targetGroupIds == "undefined") {
             toastr.warning("请选择测试目标组!");
         } else {
+            loading()
             // console.log(taskDispatch);
             $.ajax({
                 type: "POST", /*GET会乱码*/
@@ -615,14 +632,19 @@ function submit_dispatch() {
                     removeLoading('test');
                     let code=result.code;
                     switch(code){
-                        case 404:
-                            toastr.error("任务下发失败!"); ;
-                        default:
+                        case 0:
                             toastr.success("任务下发成功!");
+                            $('#task_dispatch').modal('hide');
+                            task_table.currReset();
+                            break ;
+                        case 404:
+                            toastr.error(result.msg);
+                            break ;
+                        default:
+                            toastr.error(result.msg);
                             break;
                     }
-                    $('#task_dispatch').modal('hide');
-                    task_table.currReset();
+
                 }
             });
             // var invocation = new XMLHttpRequest();
@@ -681,6 +703,7 @@ function submit_dispatch() {
         } else if (b == 0 && typeof taskDispatch.targetGroupIds == "undefined") {
             toastr.warning("请选择测试目标组!");
         } else {
+            loading()
             $.ajax({
                 type: "POST", /*GET会乱码*/
                 url: "../../cem/taskdispatch/saveAll",
@@ -692,27 +715,20 @@ function submit_dispatch() {
                     removeLoading('test');
                     let code=result.code;
                     switch(code){
-                        case 404:
-                            toastr.error("任务下发失败!"); ;
-                        default:
+                        case 0:
                             toastr.success("任务下发成功!");
+                            $('#task_dispatch').modal('hide');
+                            task_table.currReset();
+                            break ;
+                        case 404:
+                            toastr.error(result.msg);
+                            break ;
+                        default:
+                            toastr.error(result.msg);
                             break;
                     }
-                    $('#task_dispatch').modal('hide');
-                    task_table.currReset();
                 }
             });
-            // $.ajax({
-            //     type: "POST", /*GET会乱码*/
-            //     url: "https://127.0.0.1:23456/web/v1/tasks/" + targetList.taskid,
-            //     cache: false,  //禁用缓存
-            //     headers: {
-            //         Authorization: "Bearer 6b7544ae-63d3-4db6-9cc8-1dc95a991d50"
-            //     },
-            //     success: function (result) {
-            //         console.log(result);
-            //     }
-            // });
         }
 
     }
@@ -761,6 +777,7 @@ function submit_dispatch() {
         } else if (b == 0 && typeof taskDispatch.targetGroupIds == "undefined") {
             toastr.warning("请选择测试目标组!");
         } else {
+            loading()
             // console.log(taskDispatch);
             $.ajax({
                 type: "POST", /*GET会乱码*/
@@ -774,14 +791,18 @@ function submit_dispatch() {
                     removeLoading('test');
                     let code=result.code;
                     switch(code){
-                        case 404:
-                            toastr.error("任务下发失败!"); ;
-                        default:
+                        case 0:
                             toastr.success("任务下发成功!");
+                            $('#task_dispatch').modal('hide');
+                            task_table.currReset();
+                            break ;
+                        case 404:
+                            toastr.error(result.msg);
+                            break ;
+                        default:
+                            toastr.error(result.msg);
                             break;
                     }
-                    $('#task_dispatch').modal('hide');
-                    task_table.currReset();
                 }
             });
             // var invocation = new XMLHttpRequest();
@@ -1051,11 +1072,11 @@ var taskform_data = new Vue({
                                     case 300:
                                         toastr.warning(result.msg);
                                         break;
-                                    case 403:
+                                    case 404:
                                         toastr.error(msg);
                                         break;
                                     default:
-                                        toastr.error("未知错误");
+                                        toastr.error(msg);
                                         break
                                 }
                             } else if (status == 1) {
@@ -1065,14 +1086,14 @@ var taskform_data = new Vue({
                                         $('#myModal_edit').modal('hide');
                                         task_table.currReset();
                                         break;
-                                    case 403:
+                                    case 404:
                                         toastr.error(msg);
                                         break;
                                     case 300:
                                         toastr.warning(result.msg);
                                         break;
                                     default:
-                                        toastr.error(result.msg);
+                                        toastr.error(msg);
                                         break
                                 }
                             }

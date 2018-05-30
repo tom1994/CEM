@@ -290,6 +290,10 @@ public class ScoreBaseEntity {
     private Double webVideoScore;
     //在线游戏分数
     private Double onlineGameScore;
+    //失败总数
+    private Integer fail;
+    //成功总数
+    private Integer total;
 
 
 
@@ -1278,5 +1282,21 @@ public class ScoreBaseEntity {
 
     public void setWebpageLoadDelay(Double webpageLoadDelay) {
         this.webpageLoadDelay = webpageLoadDelay;
+    }
+
+    public Integer getTotal() {
+        return total;
+    }
+
+    public void setTotal(Integer total) {
+        this.total = total;
+    }
+
+    public Integer getFail() {
+        return fail;
+    }
+
+    public void setFail(Integer fail) {
+        this.fail = fail;
     }
 }

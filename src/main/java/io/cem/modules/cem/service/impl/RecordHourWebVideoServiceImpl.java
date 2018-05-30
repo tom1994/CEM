@@ -112,6 +112,8 @@ public class RecordHourWebVideoServiceImpl implements RecordHourWebVideoService 
 		List<ScoreEntity> connectionScore = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
+			RecordFailEntity recordFail = recordFailService.queryFail(map);
+			double fail = (double)recordFail.getFail()/recordFail.getTotal();
 			for(int i=0;i<videoList.size();i++){
 				double score = 0;
 				//dns_delay 100
@@ -406,8 +408,6 @@ public class RecordHourWebVideoServiceImpl implements RecordHourWebVideoService 
 				finalScore.setFail(videoList.get(i).getFail());
 				finalScore.setTotal(videoList.get(i).getTotal());
 				map.put("service_type",40);
-				RecordFailEntity recordFail = recordFailService.queryFail(map);
-				double fail = (double)recordFail.getFail()/recordFail.getTotal();
 				finalScore.setScore(score*(1-fail));
 				finalScore.setBase(Double.parseDouble(pros.getValue("videoweight")));
 				connectionScore.add(finalScore);

@@ -81,7 +81,7 @@ public class SchedulePolicyController {
 	 * @param schedulePolicy
 	 * @return R
 	 */
-	@SysLog("新建调度策略")
+
 	@RequestMapping("/save")
 	@RequiresPermissions("schedulepolicy:save")
 	public R save(@RequestBody SchedulePolicyEntity schedulePolicy){
