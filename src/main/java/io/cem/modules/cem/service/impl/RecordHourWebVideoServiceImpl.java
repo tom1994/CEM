@@ -405,8 +405,8 @@ public class RecordHourWebVideoServiceImpl implements RecordHourWebVideoService 
 				finalScore.setWebVideoTotalBufferDelay(videoList.get(i).getTotalBufferDelay());
 				finalScore.setWebVideoDownloadRate(videoList.get(i).getDownloadRate());
 				finalScore.setWebVideoBufferTime(videoList.get(i).getBufferTime());
-				finalScore.setFail(videoList.get(i).getFail());
-				finalScore.setTotal(videoList.get(i).getTotal());
+				finalScore.setFail(recordFail.getFail());
+				finalScore.setTotal(recordFail.getTotal());
 				map.put("service_type",40);
 				finalScore.setScore(score*(1-fail));
 				finalScore.setBase(Double.parseDouble(pros.getValue("videoweight")));

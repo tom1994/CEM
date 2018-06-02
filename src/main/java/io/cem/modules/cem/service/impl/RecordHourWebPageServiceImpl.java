@@ -371,8 +371,8 @@ public class RecordHourWebPageServiceImpl implements RecordHourWebPageService {
 				finalScore.setWebpagePageElementDelay(webPageList.get(i).getPageElementDelay());
 				finalScore.setWebpageLoadDelay(webPageList.get(i).getLoadDelay());
 				finalScore.setWebpageDownloadRate(webPageList.get(i).getDownloadRate());
-				finalScore.setFail(webPageList.get(i).getFail());
-				finalScore.setTotal(webPageList.get(i).getTotal());
+				finalScore.setFail(recordFail.getFail());
+				finalScore.setTotal(recordFail.getTotal());
 				map.put("service_type",20);
 				finalScore.setScore(score*(1-fail));
 				finalScore.setBase(Double.parseDouble(pros.getValue("browseweight")));

@@ -307,8 +307,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 					tcpSla.setSlaTcpGJitter(slaList.get(i).getGJitter());
 					tcpSla.setSlaTcpRJitter(slaList.get(i).getRJitter());
 					tcpSla.setSlaTcpLossRate(slaList.get(i).getLossRate());
-					tcpSla.setFail(slaList.get(i).getFail());
-					tcpSla.setTotal(slaList.get(i).getTotal());
+					tcpSla.setFail(recordFail.getFail());
+					tcpSla.setTotal(recordFail.getTotal());
 					map.put("service_type",10);
 					tcpSla.setScore(score*(1-fail));
 					tcpSla.setBase(Double.parseDouble(pros.getValue("sla_tcp")));
@@ -560,8 +560,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 					udpSla.setSlaUdpGJitter(slaList.get(i).getGJitter());
 					udpSla.setSlaUdpRJitter(slaList.get(i).getRJitter());
 					udpSla.setSlaUdpLossRate(slaList.get(i).getLossRate());
-					udpSla.setFail(slaList.get(i).getFail());
-					udpSla.setTotal(slaList.get(i).getTotal());
+					udpSla.setFail(recordFail.getFail());
+					udpSla.setTotal(recordFail.getTotal());
 					map.put("service_type",11);
 					udpSla.setScore(score*(1-fail));
 					udpSla.setBase(Double.parseDouble(pros.getValue("sla_udp")));
@@ -661,8 +661,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				DNS.setRecordTime(dnsList.get(i).getRecordTime());
 				DNS.setDnsDelay(dnsList.get(i).getDelay());
 				DNS.setDnsSuccessRate(dnsList.get(i).getSuccessRate());
-				DNS.setFail(dnsList.get(i).getFail());
-				DNS.setTotal(dnsList.get(i).getTotal());
+				DNS.setFail(recordFail.getFail());
+				DNS.setTotal(recordFail.getTotal());
 				map.put("service_type",14);
 				DNS.setScore(score*(1-fail));
 				DNS.setBase(Double.parseDouble(pros.getValue("dns")));
@@ -763,8 +763,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				DHCP.setRecordTime(dhcpList.get(i).getRecordTime());
 				DHCP.setDhcpDelay(dhcpList.get(i).getDelay());
 				DHCP.setDhcpSuccessRate(dhcpList.get(i).getSuccessRate());
-				DHCP.setFail(dhcpList.get(i).getFail());
-				DHCP.setTotal(dhcpList.get(i).getTotal());
+				DHCP.setFail(recordFail.getFail());
+				DHCP.setTotal(recordFail.getTotal());
 				map.put("service_type",13);
 				DHCP.setScore(score*(1-fail));
 				DHCP.setBase(Double.parseDouble(pros.getValue("dhcp")));
@@ -895,8 +895,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				PPPOE.setPppoeDelay(pppoeList.get(i).getDelay());
 				PPPOE.setPppoeDropRate(pppoeList.get(i).getDropRate());
 				PPPOE.setPppoeSuccessRate(pppoeList.get(i).getSuccessRate());
-				PPPOE.setFail(pppoeList.get(i).getFail());
-				PPPOE.setTotal(pppoeList.get(i).getTotal());
+				PPPOE.setFail(recordFail.getFail());
+				PPPOE.setTotal(recordFail.getTotal());
 				map.put("service_type",12);
 				PPPOE.setScore(score*(1-fail));
 				PPPOE.setBase(Double.parseDouble(pros.getValue("adsl")));
@@ -996,8 +996,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				RADIUS.setRecordTime(radiusList.get(i).getRecordTime());
 				RADIUS.setRadiusDelay(radiusList.get(i).getDelay());
 				RADIUS.setRadiusSuccessRate(radiusList.get(i).getSuccessRate());
-				RADIUS.setFail(radiusList.get(i).getFail());
-				RADIUS.setTotal(radiusList.get(i).getTotal());
+				RADIUS.setFail(recordFail.getFail());
+				RADIUS.setTotal(recordFail.getTotal());
 				map.put("service_type",15);
 				RADIUS.setScore(score*(1-fail));
 				RADIUS.setBase(Double.parseDouble(pros.getValue("radius")));

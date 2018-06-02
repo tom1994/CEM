@@ -250,8 +250,8 @@ public class RecordHourGameServiceImpl implements RecordHourGameService {
 				finalScore.setGamePacketDelay(gameList.get(i).getPacketDelay());
 				finalScore.setGamePacketJitter(gameList.get(i).getPacketJitter());
 				finalScore.setGameLossRate(gameList.get(i).getLossRate());
-				finalScore.setFail(gameList.get(i).getFail());
-				finalScore.setTotal(gameList.get(i).getTotal());
+				finalScore.setFail(recordFail.getFail());
+				finalScore.setTotal(recordFail.getTotal());
 				map.put("service_type",50);
 				finalScore.setScore(score*(1-fail));
 				finalScore.setBase(Double.parseDouble(pros.getValue("gameweight")));

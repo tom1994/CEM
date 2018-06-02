@@ -306,8 +306,8 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						icmpPing.setAccessLayer(pingList.get(i).getAccessLayer());
 						icmpPing.setRecordDate(pingList.get(i).getRecordDate());
 						icmpPing.setRecordTime(pingList.get(i).getRecordTime());
-						icmpPing.setFail(pingList.get(i).getFail());
-						icmpPing.setTotal(pingList.get(i).getTotal());
+						icmpPing.setFail(recordFail.getFail());
+						icmpPing.setTotal(recordFail.getTotal());
 						icmpPing.setPingIcmpDelay(pingList.get(i).getDelay());
 						icmpPing.setPingIcmpDelayStd(pingList.get(i).getDelayStd());
 						icmpPing.setPingIcmpDelayVar(pingList.get(i).getDelayVar());
@@ -566,8 +566,8 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						tcpPing.setAccessLayer(pingList.get(i).getAccessLayer());
 						tcpPing.setRecordDate(pingList.get(i).getRecordDate());
 						tcpPing.setRecordTime(pingList.get(i).getRecordTime());
-						tcpPing.setFail(pingList.get(i).getFail());
-						tcpPing.setTotal(pingList.get(i).getTotal());
+						tcpPing.setFail(recordFail.getFail());
+						tcpPing.setTotal(recordFail.getTotal());
 						tcpPing.setPingTcpDelay(pingList.get(i).getDelay());
 						tcpPing.setPingTcpDelayStd(pingList.get(i).getDelayStd());
 						tcpPing.setPingTcpDelayVar(pingList.get(i).getDelayVar());
@@ -826,8 +826,8 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						udpPing.setAccessLayer(pingList.get(i).getAccessLayer());
 						udpPing.setRecordDate(pingList.get(i).getRecordDate());
 						udpPing.setRecordTime(pingList.get(i).getRecordTime());
-						udpPing.setFail(pingList.get(i).getFail());
-						udpPing.setTotal(pingList.get(i).getTotal());
+						udpPing.setFail(recordFail.getFail());
+						udpPing.setTotal(recordFail.getTotal());
 						udpPing.setPingUdpDelay(pingList.get(i).getDelay());
 						udpPing.setPingUdpDelayStd(pingList.get(i).getDelayStd());
 						udpPing.setPingUdpDelayVar(pingList.get(i).getDelayVar());
@@ -1084,8 +1084,8 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						icmpTracert.setAccessLayer(tracertList.get(i).getAccessLayer());
 						icmpTracert.setRecordDate(tracertList.get(i).getRecordDate());
 						icmpTracert.setRecordTime(tracertList.get(i).getRecordTime());
-						icmpTracert.setFail(tracertList.get(i).getFail());
-						icmpTracert.setTotal(tracertList.get(i).getTotal());
+						icmpTracert.setFail(recordFail.getFail());
+						icmpTracert.setTotal(recordFail.getTotal());
 						map.put("service_type",4);
 						icmpTracert.setScore(score*(1-fail));
 						icmpTracert.setTracertIcmpDelay(tracertList.get(i).getDelay());
@@ -1342,8 +1342,8 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						tcpTracert.setAccessLayer(tracertList.get(i).getAccessLayer());
 						tcpTracert.setRecordDate(tracertList.get(i).getRecordDate());
 						tcpTracert.setRecordTime(tracertList.get(i).getRecordTime());
-						tcpTracert.setFail(tracertList.get(i).getFail());
-						tcpTracert.setTotal(tracertList.get(i).getTotal());
+						tcpTracert.setFail(recordFail.getFail());
+						tcpTracert.setTotal(recordFail.getTotal());
 						tcpTracert.setTracertTcpDelay(tracertList.get(i).getDelay());
 						tcpTracert.setTracertTcpDelayStd(tracertList.get(i).getDelayStd());
 						tcpTracert.setTracertTcpDelayVar(tracertList.get(i).getDelayVar());

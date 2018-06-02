@@ -275,7 +275,7 @@ public class ProbeController {
         }
         int result;
         for (int id : ids) {
-            result = BypassHttps.sendRequestIgnoreSSL("DELETE", prop.getProperty("socketAddress") + "/web/v1/probes/" + id + "/unregister/1");
+            result = BypassHttps.sendRequestIgnoreSSL("DELETE", prop.getProperty("socketAddress") + "/web/v1/probes/" + id + "/unregister/0");
             if (result == 200 | result == 206) {
             } else if (result == 401) {
                 return R.error(300, "token失效，系统已重新获取，请重试");
