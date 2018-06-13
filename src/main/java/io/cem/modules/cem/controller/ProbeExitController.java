@@ -168,6 +168,7 @@ public class ProbeExitController {
 	@RequestMapping("/score")
 	@RequiresPermissions("probeexit:score")
 	public R scoreList(String probedata, Integer page, Integer limit) throws Exception {
+
 		//查询列表数据
 		Map<String, Object> map = new HashMap<>();
 		JSONObject probedata_jsonobject = JSONObject.parseObject(probedata);

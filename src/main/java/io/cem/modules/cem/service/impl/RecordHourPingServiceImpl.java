@@ -72,8 +72,14 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 	@Override
 	public List<ScoreEntity> calculatePingIcmp(List<RecordHourPingEntity> pingList,Map<String,Object> map){
 		RecordFailService recordFailService= (RecordFailService) SpringContextUtils.getBean("recordFailService");
-		RecordFailEntity recordFail = recordFailService.queryFail(map);
-		double fail = (double)recordFail.getFail()/recordFail.getTotal();
+		map.put("service_type",1);
+		map.put("type",1);
+		List<RecordFailEntity> recordFail = recordFailService.queryFail(map);
+		Map<RecordFailEntity,RecordFailEntity> failMap = new HashMap<>();
+		for(int i=0;i<recordFail.size();i++){
+			failMap.put(recordFail.get(i),recordFail.get(i));
+		}
+		//double fail = (double)recordFail.getFail()/recordFail.getTotal();
 		List<ScoreEntity> pingIcmp = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
@@ -306,8 +312,18 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						icmpPing.setAccessLayer(pingList.get(i).getAccessLayer());
 						icmpPing.setRecordDate(pingList.get(i).getRecordDate());
 						icmpPing.setRecordTime(pingList.get(i).getRecordTime());
-						icmpPing.setFail(recordFail.getFail());
-						icmpPing.setTotal(recordFail.getTotal());
+						RecordFailEntity failEntity = new RecordFailEntity();
+						failEntity.setCityId(pingList.get(i).getCityId());
+						failEntity.setCountyId(pingList.get(i).getCountyId());
+						failEntity.setProbeId(pingList.get(i).getProbeId());
+						failEntity.setTargetId(pingList.get(i).getTargetId());
+						failEntity.setPort(pingList.get(i).getPort());
+						failEntity.setRecordDate(pingList.get(i).getRecordDate());
+						failEntity.setRecordTime(pingList.get(i).getRecordTime());
+						if(failMap.containsKey(failEntity)){
+							icmpPing.setFail(failMap.get(failEntity).getFail());
+							icmpPing.setTotal(failMap.get(failEntity).getTotal());
+						}
 						icmpPing.setPingIcmpDelay(pingList.get(i).getDelay());
 						icmpPing.setPingIcmpDelayStd(pingList.get(i).getDelayStd());
 						icmpPing.setPingIcmpDelayVar(pingList.get(i).getDelayVar());
@@ -316,6 +332,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						icmpPing.setPingIcmpJitterVar(pingList.get(i).getJitterVar());
 						icmpPing.setPingIcmpLossRate(pingList.get(i).getLossRate());
 						map.put("service_type",1);
+						double fail = (double)icmpPing.getFail()/icmpPing.getTotal();
 						icmpPing.setScore(score*(1-fail));
 						icmpPing.setBase(Double.parseDouble(pros.getValue("ping_icmp")));
 

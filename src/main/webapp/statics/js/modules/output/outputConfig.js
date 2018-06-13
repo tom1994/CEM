@@ -280,10 +280,12 @@ function view_this (obj) {     /*监听修改触发事件*/
 function  Save() {
     var id=outId;
     var spJson = getFormJson($('#opform_data'));
+    spJson.probe_id = 61;
     //console.log(spJson);
     var sp = JSON.stringify(spJson);
+
     /*封装成json数组*/
-    //console.log(sp);
+    console.log(sp);
     $.ajax({
         type: "POST", /*GET会乱码*/
         url: "../../probeexit/update/"+id ,
@@ -301,6 +303,9 @@ function  Save() {
                         $('#myModal_output').modal('hide');
                         break;
                     case 403:
+                        toastr.error(msg);
+                        break;
+                    case 300:
                         toastr.error(msg);
                         break;
                     default:

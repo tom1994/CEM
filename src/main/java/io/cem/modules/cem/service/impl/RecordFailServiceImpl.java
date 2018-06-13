@@ -109,7 +109,7 @@ public class RecordFailServiceImpl implements RecordFailService {
 
 
     @Override
-    public RecordFailEntity queryFail(Map<String, Object> map){
+    public List<RecordFailEntity> queryFail(Map<String, Object> map){
         return recordFailDao.queryFail(map);
     }
 

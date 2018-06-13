@@ -46,7 +46,7 @@
         from record_fail r
         WHERE r.record_date BETWEEN #{ava_start} AND #{ava_terminal}
         <if test="startTime != null and terminalTime != null">
-            AND record_time BETWEEN #{startTime} AND #{terminalTime}
+            AND r.record_date >= #{ava_start}  AND record_time >= #{startTime} AND r.record_date <![CDATA[<=]]> #{ava_terminal}  AND record_time <![CDATA[<=]]> #{terminalTime}
         </if>
         <if test="city_id != null and city_id != ''">
             AND r.city_id = #{city_id}
@@ -65,6 +65,9 @@
         </if>
         <if test="port != null and port != ''">
             AND r.port = #{port}
+        </if>
+        <if test="type = 1">  -- 多业务多维度排名
+           GROUP BY record_date,probe_id,city_id,county_id,record_time
         </if>
     </select>
 

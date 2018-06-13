@@ -283,6 +283,7 @@
         SUM(rhp.fail) AS fail,
         SUM(rhp.total) AS total
         FROM record_hour_ping rhp
+        force index(idx_score)
         LEFT JOIN city
         ON rhp.city_id = city.city_id
         LEFT JOIN county
