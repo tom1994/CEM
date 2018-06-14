@@ -99,6 +99,7 @@ public class RecordHourTracertController {
 			e.printStackTrace();
 		}
 		List<ScoreEntity> scoreList;
+		map.put("type",3);
 		if(dateDifferent==0){
 			scoreList = recordHourRadiusService.calculateAreaHourScore(map);
 		}else if(dateDifferent==1){
@@ -180,6 +181,7 @@ public class RecordHourTracertController {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
+		map.put("type",4);
 		List<ScoreEntity> scoreList;
 		if(dateDifferent==0){
 			scoreList = recordHourRadiusService.calculateTargetHourScore(map);
@@ -360,6 +362,7 @@ public class RecordHourTracertController {
 			e.printStackTrace();
 		}
 		List<ScoreEntity> scoreList;
+		map.put("type",4);
 		if(dateDifferent==0){
 			scoreList = recordHourRadiusService.calculateTargetHourScore(map);
 		}else if(dateDifferent==1){
@@ -420,6 +423,7 @@ public class RecordHourTracertController {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
+		map.put("type",3);
 		List<ScoreEntity> scoreList;
 		if(dateDifferent==0){
 			scoreList = recordHourRadiusService.calculateAreaHourScore(map);

@@ -1742,6 +1742,7 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 
 		map3.put("ava_start",recordHourPingService.queryAfterDay(map.get("ava_start").toString()));
 		map3.put("ava_terminal",recordHourPingService.queryBeforeDay(map.get("ava_terminal").toString()));
+		map.put("type",2);
 
 		List<ScoreEntity> scoreList = new ArrayList<>();
 		int service = Integer.parseInt(map.get("service").toString());
@@ -2014,6 +2015,7 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 
 	@Override
 	public List<ScoreEntity> calculateHourScore(Map<String, Object> map) throws ExecutionException, InterruptedException {
+		map.put("type",2);
 		List<ScoreEntity> scoreList = new ArrayList<>();
 		RecordHourPingService recordHourPingService= (RecordHourPingService) SpringContextUtils.getBean("recordHourPingService");
 		RecordHourTracertService recordHourTracertService= (RecordHourTracertService) SpringContextUtils.getBean("recordHourTracertService");
@@ -2248,6 +2250,7 @@ public class RecordHourRadiusServiceImpl implements RecordHourRadiusService {
 		map2.put("ava_terminal",map.get("ava_terminal"));
 		map2.put("startTime","00:00:00");
 		map2.put("terminalTime",map.get("terminalTime"));
+		map.put("type",2);
 
 		List<ScoreEntity> scoreList = new ArrayList<>();
 		RecordHourPingService recordHourPingService= (RecordHourPingService) SpringContextUtils.getBean("recordHourPingService");

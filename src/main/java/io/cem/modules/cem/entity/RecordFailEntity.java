@@ -154,11 +154,25 @@ public class RecordFailEntity {
 
     @Override
     public boolean equals(Object obj) {
-        ScoreTargetEntity temp = (ScoreTargetEntity)obj;
-        String end_time = format(this.getRecordDate(), "yyyy-MM-dd", Locale.CHINA);
-        String end_time1 = format(temp.getRecordDate(), "yyyy-MM-dd", Locale.CHINA);
-        if(this.getCityId().equals(temp.getCityId())&&this.getCountyId().equals(temp.getCountyId())&&this.getProbeId().equals(temp.getProbeId())&&end_time.equals(end_time1) && this.getRecordTime().equals(temp.getRecordTime())){
-            return true;
+        RecordFailEntity temp = (RecordFailEntity) obj;
+        if(this.getCityId()!=null&&this.getCountyId()!=null&&this.getProbeId()!=null&&this.getRecordDate()!=null&&this.getRecordTime()!=null) {
+            String end_time = format(this.getRecordDate(), "yyyy-MM-dd", Locale.CHINA);
+            String end_time1 = format(temp.getRecordDate(), "yyyy-MM-dd", Locale.CHINA);
+            if (this.getCityId().equals(temp.getCityId()) && this.getCountyId().equals(temp.getCountyId()) && this.getProbeId().equals(temp.getProbeId()) && end_time.equals(end_time1) && this.getRecordTime().equals(temp.getRecordTime())) {
+                return true;
+            }
+        }else if(this.getCityId()!=null&&this.getCountyId()!=null&&this.getProbeId()!=null&&this.getRecordDate()==null&&this.getRecordTime()==null) {
+            if (this.getCityId().equals(temp.getCityId()) && this.getCountyId().equals(temp.getCountyId()) && this.getProbeId().equals(temp.getProbeId())) {
+                return true;
+            }
+        }else if(this.getCityId()!=null&&this.getCountyId()!=null&&this.getProbeId()==null&&this.getRecordDate()==null&&this.getRecordTime()==null) {
+            if (this.getCityId().equals(temp.getCityId()) && this.getCountyId().equals(temp.getCountyId())) {
+                return true;
+            }
+        }else if(this.getTargetId()!=null&&this.getCityId()==null&&this.getCountyId()==null&&this.getProbeId()==null&&this.getRecordDate()==null&&this.getRecordTime()==null) {
+            if (this.getTargetId().equals(temp.getTargetId()) && this.getCityId().equals(temp.getCityId()) && this.getCountyId().equals(temp.getCountyId())) {
+                return true;
+            }
         }
         return false;
     }
@@ -166,9 +180,16 @@ public class RecordFailEntity {
 
     @Override
     public int hashCode() {
-        String end_time = format(this.getRecordDate(), "yyyyMMdd", Locale.CHINA);
-        if(this.getCityId()!=null&&this.getCountyId()!=null&&this.getProbeId()!=null&&this.getRecordTime() != null && this.getRecordDate() != null)
+        if(this.getCityId()!=null&&this.getCountyId()!=null&&this.getProbeId()!=null&&this.getRecordTime() != null && this.getRecordDate() != null){
+            String end_time = format(this.getRecordDate(), "yyyyMMdd", Locale.CHINA);
             return this.getCityId()&this.getCountyId()&this.getProbeId()&this.recordTime.hashCode() & end_time.hashCode();
+        }else if(this.getCityId()!=null&&this.getCountyId()!=null&&this.getProbeId()!=null&&this.getRecordTime() == null && this.getRecordDate() == null){
+            return this.getCityId()&this.getCountyId()&this.getProbeId();
+        }else if(this.getCityId()!=null&&this.getCountyId()!=null&&this.getProbeId()==null&&this.getRecordTime() == null && this.getRecordDate() == null){
+            return this.getCityId()&this.getCountyId();
+        }else if(this.getTargetId()!=null&&this.getCityId()!=null&&this.getCountyId()!=null&&this.getProbeId()==null&&this.getRecordTime() == null && this.getRecordDate() == null){
+            return this.getTargetId();
+        }
         return super.hashCode();
     }
 }

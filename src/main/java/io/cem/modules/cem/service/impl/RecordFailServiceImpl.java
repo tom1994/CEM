@@ -109,8 +109,20 @@ public class RecordFailServiceImpl implements RecordFailService {
 
 
     @Override
-    public List<RecordFailEntity> queryFail(Map<String, Object> map){
-        return recordFailDao.queryFail(map);
+    public List<RecordFailEntity> queryFail1(Map<String, Object> map){
+        return recordFailDao.queryFail1(map);
+    }
+    @Override
+    public List<RecordFailEntity> queryFail2(Map<String, Object> map){
+        return recordFailDao.queryFail2(map);
+    }
+    @Override
+    public List<RecordFailEntity> queryFail3(Map<String, Object> map){
+        return recordFailDao.queryFail3(map);
+    }
+    @Override
+    public List<RecordFailEntity> queryFail4(Map<String, Object> map){
+        return recordFailDao.queryFail4(map);
     }
 
     @Override

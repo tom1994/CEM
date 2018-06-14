@@ -99,7 +99,11 @@ public interface RecordFailService {
      * @param map
      * @return  List<RecordFailEntity>
      */
-    List<RecordFailEntity> queryFail(Map<String, Object> map);
+    List<RecordFailEntity> queryFail1(Map<String, Object> map);
+
+    List<RecordFailEntity> queryFail2(Map<String, Object> map);
+    List<RecordFailEntity> queryFail3(Map<String, Object> map);
+    List<RecordFailEntity> queryFail4(Map<String, Object> map);
 
     int queryTotal(Map<String, Object> map);
 

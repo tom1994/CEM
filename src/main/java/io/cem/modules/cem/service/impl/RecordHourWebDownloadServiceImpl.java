@@ -77,8 +77,13 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 		List<ScoreEntity> webDownload = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
-			RecordFailEntity recordFail = recordFailService.queryFail(map);
-			double fail = (double)recordFail.getFail()/recordFail.getTotal();
+			map.put("service_type",30);
+			map.put("type",1);
+			List<RecordFailEntity> recordFail = recordFailService.queryFail1(map);
+			Map<RecordFailEntity,RecordFailEntity> failMap = new HashMap<>();
+			for(int i=0;i<recordFail.size();i++){
+				failMap.put(recordFail.get(i),recordFail.get(i));
+			}
 			for(int i=0;i<webDownloadList.size();i++) {
 				double score = 0;
 				//dns_delay 100
@@ -217,9 +222,22 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 				WEBDL.setWebDownloadConnDelay(webDownloadList.get(i).getConnDelay());
 				WEBDL.setWebDownloadHeadbyteDelay(webDownloadList.get(i).getHeadbyteDelay());
 				WEBDL.setWebDownloadDownloadRate(webDownloadList.get(i).getDownloadRate());
-				WEBDL.setFail(recordFail.getFail());
-				WEBDL.setTotal(recordFail.getTotal());
-				map.put("service_type",30);
+				RecordFailEntity failEntity = new RecordFailEntity();
+				failEntity.setCityId(webDownloadList.get(i).getCityId());
+				failEntity.setCountyId(webDownloadList.get(i).getCountyId());
+				failEntity.setProbeId(webDownloadList.get(i).getProbeId());
+				failEntity.setTargetId(webDownloadList.get(i).getTargetId());
+				failEntity.setPort(webDownloadList.get(i).getPort());
+				failEntity.setRecordDate(webDownloadList.get(i).getRecordDate());
+				failEntity.setRecordTime(webDownloadList.get(i).getRecordTime());
+				if(failMap.containsKey(failEntity)){
+					WEBDL.setFail(failMap.get(failEntity).getFail());
+					WEBDL.setTotal(failMap.get(failEntity).getTotal());
+				}else{
+					WEBDL.setFail(webDownloadList.get(i).getFail());
+					WEBDL.setTotal(webDownloadList.get(i).getTotal());
+				}
+				double fail = (double) WEBDL.getFail()/WEBDL.getTotal();
 				WEBDL.setScore(score*(1-fail));
 				WEBDL.setBase(Double.parseDouble(pros.getValue("web_download")));
 
@@ -236,8 +254,13 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 		List<ScoreEntity> ftpDownload = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
-			RecordFailEntity recordFail = recordFailService.queryFail(map);
-			double fail = (double)recordFail.getFail()/recordFail.getTotal();
+			map.put("service_type",31);
+			map.put("type",1);
+			List<RecordFailEntity> recordFail = recordFailService.queryFail1(map);
+			Map<RecordFailEntity,RecordFailEntity> failMap = new HashMap<>();
+			for(int i=0;i<recordFail.size();i++){
+				failMap.put(recordFail.get(i),recordFail.get(i));
+			}
 			for(int i=0;i<ftpList.size();i++){
 				double score=0;
 				//ftp download
@@ -407,9 +430,22 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 					FTPD.setFtpDownloadLoginDelay(ftpList.get(i).getLoginDelay());
 					FTPD.setFtpDownloadHeadbyteDelay(ftpList.get(i).getHeadbyteDelay());
 					FTPD.setFtpDownloadDownloadRate(ftpList.get(i).getDownloadRate());
-					FTPD.setFail(recordFail.getFail());
-					FTPD.setTotal(recordFail.getTotal());
-					map.put("service_type",31);
+					RecordFailEntity failEntity = new RecordFailEntity();
+					failEntity.setCityId(ftpList.get(i).getCityId());
+					failEntity.setCountyId(ftpList.get(i).getCountyId());
+					failEntity.setProbeId(ftpList.get(i).getProbeId());
+					failEntity.setTargetId(ftpList.get(i).getTargetId());
+					failEntity.setPort(ftpList.get(i).getPort());
+					failEntity.setRecordDate(ftpList.get(i).getRecordDate());
+					failEntity.setRecordTime(ftpList.get(i).getRecordTime());
+					if(failMap.containsKey(failEntity)){
+						FTPD.setFail(failMap.get(failEntity).getFail());
+						FTPD.setTotal(failMap.get(failEntity).getTotal());
+					}else{
+						FTPD.setFail(ftpList.get(i).getFail());
+						FTPD.setTotal(ftpList.get(i).getTotal());
+					}
+					double fail = (double) FTPD.getFail()/FTPD.getTotal();
 					FTPD.setScore(score*(1-fail));
 					FTPD.setBase(Double.parseDouble(pros.getValue("ftp_download")));
 
@@ -427,8 +463,13 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 		List<ScoreEntity> ftpUpload = new ArrayList<>();
 		try{
 			PropertiesUtils pros = new PropertiesUtils();
-			RecordFailEntity recordFail = recordFailService.queryFail(map);
-			double fail = (double)recordFail.getFail()/recordFail.getTotal();
+			map.put("service_type",32);
+			map.put("type",1);
+			List<RecordFailEntity> recordFail = recordFailService.queryFail1(map);
+			Map<RecordFailEntity,RecordFailEntity> failMap = new HashMap<>();
+			for(int i=0;i<recordFail.size();i++){
+				failMap.put(recordFail.get(i),recordFail.get(i));
+			}
 			for(int i=0;i<ftpList.size();i++) {
 				double score = 0;
 				if(ftpList.get(i).getServiceType()==32){
@@ -597,9 +638,22 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 					FTPU.setFtpUploadUploadRate(ftpList.get(i).getUploadRate());
 					FTPU.setAccessLayer(ftpList.get(i).getAccessLayer());
 					FTPU.setPort(ftpList.get(i).getPort());
-					FTPU.setFail(recordFail.getFail());
-					FTPU.setTotal(recordFail.getTotal());
-					map.put("service_type",32);
+					RecordFailEntity failEntity = new RecordFailEntity();
+					failEntity.setCityId(ftpList.get(i).getCityId());
+					failEntity.setCountyId(ftpList.get(i).getCountyId());
+					failEntity.setProbeId(ftpList.get(i).getProbeId());
+					failEntity.setTargetId(ftpList.get(i).getTargetId());
+					failEntity.setPort(ftpList.get(i).getPort());
+					failEntity.setRecordDate(ftpList.get(i).getRecordDate());
+					failEntity.setRecordTime(ftpList.get(i).getRecordTime());
+					if(failMap.containsKey(failEntity)){
+						FTPU.setFail(failMap.get(failEntity).getFail());
+						FTPU.setTotal(failMap.get(failEntity).getTotal());
+					}else{
+						FTPU.setFail(ftpList.get(i).getFail());
+						FTPU.setTotal(ftpList.get(i).getTotal());
+					}
+					double fail = (double) FTPU.getFail()/FTPU.getTotal();
 					FTPU.setScore(score*(1-fail));
 					FTPU.setBase(Double.parseDouble(pros.getValue("ftp_upload")));
 

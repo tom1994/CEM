@@ -111,8 +111,46 @@ public class RecordHourWebPageServiceImpl implements RecordHourWebPageService {
 		List<ScoreEntity> connectionScore = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
-			RecordFailEntity recordFail = recordFailService.queryFail(map);
-			double fail = (double)recordFail.getFail()/recordFail.getTotal();
+			map.put("service_type",20);
+			//map.put("type",1);
+			Map<RecordFailEntity,RecordFailEntity> failMap = new HashMap<>();
+			if(Integer.parseInt(map.get("type").toString())==1){
+				List<RecordFailEntity> recordFail = recordFailService.queryFail1(map);
+				for(int i=0;i<recordFail.size();i++){
+					RecordFailEntity failEntity = new RecordFailEntity();
+					failEntity.setCityId(recordFail.get(i).getCityId());
+					failEntity.setCountyId(recordFail.get(i).getCountyId());
+					failEntity.setProbeId(recordFail.get(i).getProbeId());
+					failEntity.setPort(recordFail.get(i).getPort());
+					failEntity.setRecordDate(recordFail.get(i).getRecordDate());
+					failEntity.setRecordTime(recordFail.get(i).getRecordTime());
+					failMap.put(failEntity,recordFail.get(i));
+				}
+			}else if(Integer.parseInt(map.get("type").toString())==2){
+				List<RecordFailEntity> recordFail = recordFailService.queryFail2(map);
+				for(int i=0;i<recordFail.size();i++){
+					RecordFailEntity failEntity = new RecordFailEntity();
+					failEntity.setCityId(recordFail.get(i).getCityId());
+					failEntity.setCountyId(recordFail.get(i).getCountyId());
+					failEntity.setProbeId(recordFail.get(i).getProbeId());
+					failMap.put(failEntity,recordFail.get(i));
+				}
+			}else if(Integer.parseInt(map.get("type").toString())==3){
+				List<RecordFailEntity> recordFail = recordFailService.queryFail3(map);
+				for(int i=0;i<recordFail.size();i++){
+					RecordFailEntity failEntity = new RecordFailEntity();
+					failEntity.setCityId(recordFail.get(i).getCityId());
+					failEntity.setCountyId(recordFail.get(i).getCountyId());
+					failMap.put(failEntity,recordFail.get(i));
+				}
+			} else if(Integer.parseInt(map.get("type").toString())==4){
+				List<RecordFailEntity> recordFail = recordFailService.queryFail4(map);
+				for(int i=0;i<recordFail.size();i++){
+					RecordFailEntity failEntity = new RecordFailEntity();
+					failEntity.setTargetId(recordFail.get(i).getTargetId());
+					failMap.put(failEntity,recordFail.get(i));
+				}
+			}
 			for (int i=0;i<webPageList.size();i++) {
 				double score = 0;
 				//dns_delay 100
@@ -371,9 +409,59 @@ public class RecordHourWebPageServiceImpl implements RecordHourWebPageService {
 				finalScore.setWebpagePageElementDelay(webPageList.get(i).getPageElementDelay());
 				finalScore.setWebpageLoadDelay(webPageList.get(i).getLoadDelay());
 				finalScore.setWebpageDownloadRate(webPageList.get(i).getDownloadRate());
-				finalScore.setFail(recordFail.getFail());
-				finalScore.setTotal(recordFail.getTotal());
-				map.put("service_type",20);
+				if(Integer.parseInt(map.get("type").toString())==1){
+					RecordFailEntity failEntity = new RecordFailEntity();
+					failEntity.setCityId(webPageList.get(i).getCityId());
+					failEntity.setCountyId(webPageList.get(i).getCountyId());
+					failEntity.setProbeId(webPageList.get(i).getProbeId());
+					failEntity.setPort(webPageList.get(i).getPort());
+					failEntity.setRecordDate(webPageList.get(i).getRecordDate());
+					failEntity.setRecordTime(webPageList.get(i).getRecordTime());
+					if(failMap.containsKey(failEntity)){
+						finalScore.setFail(failMap.get(failEntity).getFail());
+						finalScore.setTotal(failMap.get(failEntity).getTotal());
+					}else{
+						finalScore.setFail(webPageList.get(i).getFail());
+						finalScore.setTotal(webPageList.get(i).getTotal());
+					}
+				}else if(Integer.parseInt(map.get("type").toString())==2){
+					RecordFailEntity failEntity = new RecordFailEntity();
+					failEntity.setCityId(webPageList.get(i).getCityId());
+					failEntity.setCountyId(webPageList.get(i).getCountyId());
+					failEntity.setProbeId(webPageList.get(i).getProbeId());
+					if(failMap.containsKey(failEntity)){
+						finalScore.setFail(failMap.get(failEntity).getFail());
+						finalScore.setTotal(failMap.get(failEntity).getTotal());
+					}else{
+						finalScore.setFail(webPageList.get(i).getFail());
+						finalScore.setTotal(webPageList.get(i).getTotal());
+					}
+				}else if(Integer.parseInt(map.get("type").toString())==3){
+					RecordFailEntity failEntity = new RecordFailEntity();
+					failEntity.setCityId(webPageList.get(i).getCityId());
+					failEntity.setCountyId(webPageList.get(i).getCountyId());
+					if(failMap.containsKey(failEntity)){
+						finalScore.setFail(failMap.get(failEntity).getFail());
+						finalScore.setTotal(failMap.get(failEntity).getTotal());
+					}else{
+						finalScore.setFail(webPageList.get(i).getFail());
+						finalScore.setTotal(webPageList.get(i).getTotal());
+					}
+				} else if(Integer.parseInt(map.get("type").toString())==4){
+					RecordFailEntity failEntity = new RecordFailEntity();
+					failEntity.setTargetId(webPageList.get(i).getTargetId());
+					if(failMap.containsKey(failEntity)){
+						finalScore.setFail(failMap.get(failEntity).getFail());
+						finalScore.setTotal(failMap.get(failEntity).getTotal());
+					}else{
+						finalScore.setFail(webPageList.get(i).getFail());
+						finalScore.setTotal(webPageList.get(i).getTotal());
+					}
+				}else{
+					finalScore.setFail(webPageList.get(i).getFail());
+					finalScore.setTotal(webPageList.get(i).getTotal());
+				}
+				double fail = (double) finalScore.getFail()/finalScore.getTotal();
 				finalScore.setScore(score*(1-fail));
 				finalScore.setBase(Double.parseDouble(pros.getValue("browseweight")));
 				connectionScore.add(finalScore);

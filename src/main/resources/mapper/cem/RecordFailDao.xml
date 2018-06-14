@@ -39,36 +39,128 @@
         </if>
     </select>
 
-    <select id="queryFail" resultType="io.cem.modules.cem.entity.RecordFailEntity">
+    <select id="queryFail1" resultType="io.cem.modules.cem.entity.RecordFailEntity">
         select r.id,r.city_id,r.county_id,r.port,r.probe_id,r.port,r.task_id,r.service_type,r.target_id,r.target_ip,r.record_time,r.record_date,
         sum(r.fail) AS fail,
         sum(r.total) AS total
         from record_fail r
+        force index(idx_score)
         WHERE r.record_date BETWEEN #{ava_start} AND #{ava_terminal}
-        <if test="startTime != null and terminalTime != null">
-            AND r.record_date >= #{ava_start}  AND record_time >= #{startTime} AND r.record_date <![CDATA[<=]]> #{ava_terminal}  AND record_time <![CDATA[<=]]> #{terminalTime}
-        </if>
         <if test="city_id != null and city_id != ''">
             AND r.city_id = #{city_id}
-        </if>
-        <if test="service_type != null and service_type != ''">
-            AND r.service_type= #{service_type}
         </if>
         <if test="county_id != null and county_id != ''">
             AND r.county_id = #{county_id}
         </if>
-        <if test="target_id != null and target_id != ''">
-            AND r.target_id = #{target_id}
-        </if>
         <if test="probe_id != null and probe_id != ''">
             AND r.probe_id = #{probe_id}
+        </if>
+        <if test="startTime != null and terminalTime != null">
+            AND r.record_date >= #{ava_start}  AND record_time >= #{startTime} AND r.record_date <![CDATA[<=]]> #{ava_terminal}  AND record_time <![CDATA[<=]]> #{terminalTime}
+        </if>
+        <if test="service_type != null and service_type != ''">
+            AND r.service_type= #{service_type}
         </if>
         <if test="port != null and port != ''">
             AND r.port = #{port}
         </if>
-        <if test="type = 1">  -- 多业务多维度排名
-           GROUP BY record_date,probe_id,city_id,county_id,record_time
+        <if test="target_id != null and target_id != ''">
+            AND r.target_id = #{target_id}
         </if>
+        GROUP BY record_date,probe_id,city_id,county_id,record_time
+    </select>
+
+    <select id="queryFail2" resultType="io.cem.modules.cem.entity.RecordFailEntity">
+        select r.id,r.city_id,r.county_id,r.port,r.probe_id,r.port,r.task_id,r.service_type,r.target_id,r.target_ip,r.record_time,r.record_date,
+        sum(r.fail) AS fail,
+        sum(r.total) AS total
+        from record_fail r
+        force index(idx_score)
+        WHERE r.record_date BETWEEN #{ava_start} AND #{ava_terminal}
+        <if test="city_id != null and city_id != ''">
+            AND r.city_id = #{city_id}
+        </if>
+        <if test="county_id != null and county_id != ''">
+            AND r.county_id = #{county_id}
+        </if>
+        <if test="probe_id != null and probe_id != ''">
+            AND r.probe_id = #{probe_id}
+        </if>
+        <if test="startTime != null and terminalTime != null">
+            AND r.record_date >= #{ava_start}  AND record_time >= #{startTime} AND r.record_date <![CDATA[<=]]> #{ava_terminal}  AND record_time <![CDATA[<=]]> #{terminalTime}
+        </if>
+        <if test="service_type != null and service_type != ''">
+            AND r.service_type= #{service_type}
+        </if>
+        <if test="port != null and port != ''">
+            AND r.port = #{port}
+        </if>
+        <if test="target_id != null and target_id != ''">
+            AND r.target_id = #{target_id}
+        </if>
+        GROUP BY probe_id,city_id,county_id
+    </select>
+
+    <select id="queryFail3" resultType="io.cem.modules.cem.entity.RecordFailEntity">
+        select r.id,r.city_id,r.county_id,r.port,r.probe_id,r.port,r.task_id,r.service_type,r.target_id,r.target_ip,r.record_time,r.record_date,
+        sum(r.fail) AS fail,
+        sum(r.total) AS total
+        from record_fail r
+        force index(idx_score)
+        WHERE r.record_date BETWEEN #{ava_start} AND #{ava_terminal}
+        <if test="city_id != null and city_id != ''">
+            AND r.city_id = #{city_id}
+        </if>
+        <if test="county_id != null and county_id != ''">
+            AND r.county_id = #{county_id}
+        </if>
+        <if test="probe_id != null and probe_id != ''">
+            AND r.probe_id = #{probe_id}
+        </if>
+        <if test="startTime != null and terminalTime != null">
+            AND r.record_date >= #{ava_start}  AND record_time >= #{startTime} AND r.record_date <![CDATA[<=]]> #{ava_terminal}  AND record_time <![CDATA[<=]]> #{terminalTime}
+        </if>
+        <if test="service_type != null and service_type != ''">
+            AND r.service_type= #{service_type}
+        </if>
+        <if test="port != null and port != ''">
+            AND r.port = #{port}
+        </if>
+        <if test="target_id != null and target_id != ''">
+            AND r.target_id = #{target_id}
+        </if>
+        GROUP BY city_id,county_id
+    </select>
+
+    <select id="queryFail4" resultType="io.cem.modules.cem.entity.RecordFailEntity">
+        select r.id,r.city_id,r.county_id,r.port,r.probe_id,r.port,r.task_id,r.service_type,r.target_id,r.target_ip,r.record_time,r.record_date,
+        sum(r.fail) AS fail,
+        sum(r.total) AS total
+        from record_fail r
+        force index(idx_score)
+        WHERE r.record_date BETWEEN #{ava_start} AND #{ava_terminal}
+        <if test="city_id != null and city_id != ''">
+            AND r.city_id = #{city_id}
+        </if>
+        <if test="county_id != null and county_id != ''">
+            AND r.county_id = #{county_id}
+        </if>
+        <if test="probe_id != null and probe_id != ''">
+            AND r.probe_id = #{probe_id}
+        </if>
+        <if test="startTime != null and terminalTime != null">
+            AND r.record_date >= #{ava_start}  AND record_time >= #{startTime} AND r.record_date <![CDATA[<=]]> #{ava_terminal}  AND record_time <![CDATA[<=]]> #{terminalTime}
+        </if>
+        <if test="service_type != null and service_type != ''">
+            AND r.service_type= #{service_type}
+        </if>
+        <if test="port != null and port != ''">
+            AND r.port = #{port}
+        </if>
+        <if test="target_id != null and target_id != ''">
+            AND r.target_id = #{target_id}
+        </if>
+        GROUP BY target_id
     </select>
 
     <select id="queryTotal" resultType="int">

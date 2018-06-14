@@ -152,6 +152,7 @@ public class RecordHourPingController {
         }
         List<ScoreEntity> scoreList;
 
+
         if(dateDifferent>5){
             scoreList = recordHourDhcpService.connectionDayChart(map);
         }else if(dateDifferent<=5 && dateDifferent>=2){
@@ -248,6 +249,7 @@ public class RecordHourPingController {
             e.printStackTrace();
         }
 
+        map.put("type",1);
         List<ScoreEntity> scoreList = new ArrayList<>();
         if (dateDifferent > 5) {
             scoreList = recordHourDhcpService.pageDayChart(map);
@@ -342,6 +344,7 @@ public class RecordHourPingController {
             e.printStackTrace();
         }
 
+        map.put("type",1);
         List<ScoreEntity> scoreList;
         if (dateDifferent > 5) {
             scoreList = recordHourDhcpService.videoDayChart(map);
@@ -389,6 +392,7 @@ public class RecordHourPingController {
             e.printStackTrace();
         }
 
+        map.put("type",1);
         List<ScoreEntity> scoreList;
         if (dateDifferent > 5) {
             scoreList = recordHourDhcpService.gameDayChart(map);

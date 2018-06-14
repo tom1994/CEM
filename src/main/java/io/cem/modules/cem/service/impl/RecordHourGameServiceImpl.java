@@ -108,8 +108,46 @@ public class RecordHourGameServiceImpl implements RecordHourGameService {
 		List<ScoreEntity> connectionScore = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
-			RecordFailEntity recordFail = recordFailService.queryFail(map);
-			double fail = (double)recordFail.getFail()/recordFail.getTotal();
+			map.put("service_type",50);
+			//map.put("type",1);
+			Map<RecordFailEntity,RecordFailEntity> failMap = new HashMap<>();
+			if(Integer.parseInt(map.get("type").toString())==1){
+				List<RecordFailEntity> recordFail = recordFailService.queryFail1(map);
+				for(int i=0;i<recordFail.size();i++){
+					RecordFailEntity failEntity = new RecordFailEntity();
+					failEntity.setCityId(recordFail.get(i).getCityId());
+					failEntity.setCountyId(recordFail.get(i).getCountyId());
+					failEntity.setProbeId(recordFail.get(i).getProbeId());
+					failEntity.setPort(recordFail.get(i).getPort());
+					failEntity.setRecordDate(recordFail.get(i).getRecordDate());
+					failEntity.setRecordTime(recordFail.get(i).getRecordTime());
+					failMap.put(failEntity,recordFail.get(i));
+				}
+			}else if(Integer.parseInt(map.get("type").toString())==2){
+				List<RecordFailEntity> recordFail = recordFailService.queryFail2(map);
+				for(int i=0;i<recordFail.size();i++){
+					RecordFailEntity failEntity = new RecordFailEntity();
+					failEntity.setCityId(recordFail.get(i).getCityId());
+					failEntity.setCountyId(recordFail.get(i).getCountyId());
+					failEntity.setProbeId(recordFail.get(i).getProbeId());
+					failMap.put(failEntity,recordFail.get(i));
+				}
+			}else if(Integer.parseInt(map.get("type").toString())==3){
+				List<RecordFailEntity> recordFail = recordFailService.queryFail3(map);
+				for(int i=0;i<recordFail.size();i++){
+					RecordFailEntity failEntity = new RecordFailEntity();
+					failEntity.setCityId(recordFail.get(i).getCityId());
+					failEntity.setCountyId(recordFail.get(i).getCountyId());
+					failMap.put(failEntity,recordFail.get(i));
+				}
+			} else if(Integer.parseInt(map.get("type").toString())==4){
+				List<RecordFailEntity> recordFail = recordFailService.queryFail4(map);
+				for(int i=0;i<recordFail.size();i++){
+					RecordFailEntity failEntity = new RecordFailEntity();
+					failEntity.setTargetId(recordFail.get(i).getTargetId());
+					failMap.put(failEntity,recordFail.get(i));
+				}
+			}
 			for(int i=0;i<gameList.size();i++){
 				double score=0;
 				//conn_delay 100
@@ -250,9 +288,59 @@ public class RecordHourGameServiceImpl implements RecordHourGameService {
 				finalScore.setGamePacketDelay(gameList.get(i).getPacketDelay());
 				finalScore.setGamePacketJitter(gameList.get(i).getPacketJitter());
 				finalScore.setGameLossRate(gameList.get(i).getLossRate());
-				finalScore.setFail(recordFail.getFail());
-				finalScore.setTotal(recordFail.getTotal());
-				map.put("service_type",50);
+				if(Integer.parseInt(map.get("type").toString())==1){
+					RecordFailEntity failEntity = new RecordFailEntity();
+					failEntity.setCityId(gameList.get(i).getCityId());
+					failEntity.setCountyId(gameList.get(i).getCountyId());
+					failEntity.setProbeId(gameList.get(i).getProbeId());
+					failEntity.setPort(gameList.get(i).getPort());
+					failEntity.setRecordDate(gameList.get(i).getRecordDate());
+					failEntity.setRecordTime(gameList.get(i).getRecordTime());
+					if(failMap.containsKey(failEntity)){
+						finalScore.setFail(failMap.get(failEntity).getFail());
+						finalScore.setTotal(failMap.get(failEntity).getTotal());
+					}else{
+						finalScore.setFail(gameList.get(i).getFail());
+						finalScore.setTotal(gameList.get(i).getTotal());
+					}
+				}else if(Integer.parseInt(map.get("type").toString())==2){
+					RecordFailEntity failEntity = new RecordFailEntity();
+					failEntity.setCityId(gameList.get(i).getCityId());
+					failEntity.setCountyId(gameList.get(i).getCountyId());
+					failEntity.setProbeId(gameList.get(i).getProbeId());
+					if(failMap.containsKey(failEntity)){
+						finalScore.setFail(failMap.get(failEntity).getFail());
+						finalScore.setTotal(failMap.get(failEntity).getTotal());
+					}else{
+						finalScore.setFail(gameList.get(i).getFail());
+						finalScore.setTotal(gameList.get(i).getTotal());
+					}
+				}else if(Integer.parseInt(map.get("type").toString())==3){
+					RecordFailEntity failEntity = new RecordFailEntity();
+					failEntity.setCityId(gameList.get(i).getCityId());
+					failEntity.setCountyId(gameList.get(i).getCountyId());
+					if(failMap.containsKey(failEntity)){
+						finalScore.setFail(failMap.get(failEntity).getFail());
+						finalScore.setTotal(failMap.get(failEntity).getTotal());
+					}else{
+						finalScore.setFail(gameList.get(i).getFail());
+						finalScore.setTotal(gameList.get(i).getTotal());
+					}
+				} else if(Integer.parseInt(map.get("type").toString())==4){
+					RecordFailEntity failEntity = new RecordFailEntity();
+					failEntity.setTargetId(gameList.get(i).getTargetId());
+					if(failMap.containsKey(failEntity)){
+						finalScore.setFail(failMap.get(failEntity).getFail());
+						finalScore.setTotal(failMap.get(failEntity).getTotal());
+					}else{
+						finalScore.setFail(gameList.get(i).getFail());
+						finalScore.setTotal(gameList.get(i).getTotal());
+					}
+				}else{
+					finalScore.setFail(gameList.get(i).getFail());
+					finalScore.setTotal(gameList.get(i).getTotal());
+				}
+				double fail = (double) finalScore.getFail()/finalScore.getTotal();
 				finalScore.setScore(score*(1-fail));
 				finalScore.setBase(Double.parseDouble(pros.getValue("gameweight")));
 				connectionScore.add(finalScore);
@@ -267,38 +355,38 @@ public class RecordHourGameServiceImpl implements RecordHourGameService {
 
 
 	@Override
-	public List<ScoreEntity> calculateLayer6(List<ScoreEntity> webPageList){
+	public List<ScoreEntity> calculateLayer6(List<ScoreEntity> gameList){
 		List<ScoreEntity> connectionScore = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
 			Map<ScoreLayerEntity,ScoreBaseEntity> connection= new HashMap<>();
-			for (int i = 0; i < webPageList.size(); i++) {
-				if(webPageList.get(i).getAccessLayer()==null){
+			for (int i = 0; i < gameList.size(); i++) {
+				if(gameList.get(i).getAccessLayer()==null){
 					continue;
 				}
 				ScoreLayerEntity scoreLayer = new ScoreLayerEntity();
-				scoreLayer.setCityId(webPageList.get(i).getCityId());
-				scoreLayer.setCountyId(webPageList.get(i).getCountyId());
-				scoreLayer.setProbeId(webPageList.get(i).getProbeId());
-				scoreLayer.setTargetId(webPageList.get(i).getTargetId());
-				scoreLayer.setCityName(webPageList.get(i).getCityName());
-				scoreLayer.setCountyName(webPageList.get(i).getCountyName());
-				scoreLayer.setProbeName(webPageList.get(i).getProbeName());
-				scoreLayer.setTargetName(webPageList.get(i).getTargetName());
-				scoreLayer.setAccessLayer(webPageList.get(i).getAccessLayer());
-				scoreLayer.setRecordDate(webPageList.get(i).getRecordDate());
-				scoreLayer.setRecordTime(webPageList.get(i).getRecordTime());
-				scoreLayer.setPort(webPageList.get(i).getPort());
-				scoreLayer.setFail(webPageList.get(i).getFail());
-				scoreLayer.setTotal(webPageList.get(i).getTotal());
+				scoreLayer.setCityId(gameList.get(i).getCityId());
+				scoreLayer.setCountyId(gameList.get(i).getCountyId());
+				scoreLayer.setProbeId(gameList.get(i).getProbeId());
+				scoreLayer.setTargetId(gameList.get(i).getTargetId());
+				scoreLayer.setCityName(gameList.get(i).getCityName());
+				scoreLayer.setCountyName(gameList.get(i).getCountyName());
+				scoreLayer.setProbeName(gameList.get(i).getProbeName());
+				scoreLayer.setTargetName(gameList.get(i).getTargetName());
+				scoreLayer.setAccessLayer(gameList.get(i).getAccessLayer());
+				scoreLayer.setRecordDate(gameList.get(i).getRecordDate());
+				scoreLayer.setRecordTime(gameList.get(i).getRecordTime());
+				scoreLayer.setPort(gameList.get(i).getPort());
+				scoreLayer.setFail(gameList.get(i).getFail());
+				scoreLayer.setTotal(gameList.get(i).getTotal());
 				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
-				scoreBase.setGameDnsDelay(webPageList.get(i).getGameDnsDelay());
-				scoreBase.setGameConnDelay(webPageList.get(i).getGameConnDelay());
-				scoreBase.setGamePacketDelay(webPageList.get(i).getGamePacketDelay());
-				scoreBase.setGamePacketJitter(webPageList.get(i).getGamePacketJitter());
-				scoreBase.setGameLossRate(webPageList.get(i).getGameLossRate());
-				scoreBase.setScore(webPageList.get(i).getScore());
-				scoreBase.setBase(webPageList.get(i).getBase());
+				scoreBase.setGameDnsDelay(gameList.get(i).getGameDnsDelay());
+				scoreBase.setGameConnDelay(gameList.get(i).getGameConnDelay());
+				scoreBase.setGamePacketDelay(gameList.get(i).getGamePacketDelay());
+				scoreBase.setGamePacketJitter(gameList.get(i).getGamePacketJitter());
+				scoreBase.setGameLossRate(gameList.get(i).getGameLossRate());
+				scoreBase.setScore(gameList.get(i).getScore());
+				scoreBase.setBase(gameList.get(i).getBase());
 				if (!connection.containsKey(scoreLayer)) {
 
 					connection.put(scoreLayer,scoreBase);
@@ -391,35 +479,35 @@ public class RecordHourGameServiceImpl implements RecordHourGameService {
 
 
 	@Override
-	public List<ScoreEntity> calculateDate6(List<ScoreEntity> webPageList){
+	public List<ScoreEntity> calculateDate6(List<ScoreEntity> gameList){
 		List<ScoreEntity> connectionScore = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
 			Map<ScoreDateEntity,ScoreBaseEntity> connection= new HashMap<>();
-			for (int i = 0; i < webPageList.size(); i++) {
+			for (int i = 0; i < gameList.size(); i++) {
 				ScoreDateEntity scoreDate = new ScoreDateEntity();
-				scoreDate.setCityId(webPageList.get(i).getCityId());
-				scoreDate.setCountyId(webPageList.get(i).getCountyId());
-				scoreDate.setProbeId(webPageList.get(i).getProbeId());
-				scoreDate.setTargetId(webPageList.get(i).getTargetId());
-				scoreDate.setCityName(webPageList.get(i).getCityName());
-				scoreDate.setCountyName(webPageList.get(i).getCountyName());
-				scoreDate.setProbeName(webPageList.get(i).getProbeName());
-				scoreDate.setTargetName(webPageList.get(i).getTargetName());
-				scoreDate.setAccessLayer(webPageList.get(i).getAccessLayer());
-				scoreDate.setRecordDate(webPageList.get(i).getRecordDate());
-				scoreDate.setRecordTime(webPageList.get(i).getRecordTime());
-				scoreDate.setPort(webPageList.get(i).getPort());
-				scoreDate.setFail(webPageList.get(i).getFail());
-				scoreDate.setTotal(webPageList.get(i).getTotal());
+				scoreDate.setCityId(gameList.get(i).getCityId());
+				scoreDate.setCountyId(gameList.get(i).getCountyId());
+				scoreDate.setProbeId(gameList.get(i).getProbeId());
+				scoreDate.setTargetId(gameList.get(i).getTargetId());
+				scoreDate.setCityName(gameList.get(i).getCityName());
+				scoreDate.setCountyName(gameList.get(i).getCountyName());
+				scoreDate.setProbeName(gameList.get(i).getProbeName());
+				scoreDate.setTargetName(gameList.get(i).getTargetName());
+				scoreDate.setAccessLayer(gameList.get(i).getAccessLayer());
+				scoreDate.setRecordDate(gameList.get(i).getRecordDate());
+				scoreDate.setRecordTime(gameList.get(i).getRecordTime());
+				scoreDate.setPort(gameList.get(i).getPort());
+				scoreDate.setFail(gameList.get(i).getFail());
+				scoreDate.setTotal(gameList.get(i).getTotal());
 				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
-				scoreBase.setGameDnsDelay(webPageList.get(i).getGameDnsDelay());
-				scoreBase.setGameConnDelay(webPageList.get(i).getGameConnDelay());
-				scoreBase.setGamePacketDelay(webPageList.get(i).getGamePacketDelay());
-				scoreBase.setGamePacketJitter(webPageList.get(i).getGamePacketJitter());
-				scoreBase.setGameLossRate(webPageList.get(i).getGameLossRate());
-				scoreBase.setScore(webPageList.get(i).getScore());
-				scoreBase.setBase(webPageList.get(i).getBase());
+				scoreBase.setGameDnsDelay(gameList.get(i).getGameDnsDelay());
+				scoreBase.setGameConnDelay(gameList.get(i).getGameConnDelay());
+				scoreBase.setGamePacketDelay(gameList.get(i).getGamePacketDelay());
+				scoreBase.setGamePacketJitter(gameList.get(i).getGamePacketJitter());
+				scoreBase.setGameLossRate(gameList.get(i).getGameLossRate());
+				scoreBase.setScore(gameList.get(i).getScore());
+				scoreBase.setBase(gameList.get(i).getBase());
 				if (!connection.containsKey(scoreDate)) {
 
 					connection.put(scoreDate,scoreBase);

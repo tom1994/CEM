@@ -112,8 +112,46 @@ public class RecordHourWebVideoServiceImpl implements RecordHourWebVideoService 
 		List<ScoreEntity> connectionScore = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
-			RecordFailEntity recordFail = recordFailService.queryFail(map);
-			double fail = (double)recordFail.getFail()/recordFail.getTotal();
+			map.put("service_type",40);
+			//map.put("type",1);
+			Map<RecordFailEntity,RecordFailEntity> failMap = new HashMap<>();
+			if(Integer.parseInt(map.get("type").toString())==1){
+				List<RecordFailEntity> recordFail = recordFailService.queryFail1(map);
+				for(int i=0;i<recordFail.size();i++){
+					RecordFailEntity failEntity = new RecordFailEntity();
+					failEntity.setCityId(recordFail.get(i).getCityId());
+					failEntity.setCountyId(recordFail.get(i).getCountyId());
+					failEntity.setProbeId(recordFail.get(i).getProbeId());
+					failEntity.setPort(recordFail.get(i).getPort());
+					failEntity.setRecordDate(recordFail.get(i).getRecordDate());
+					failEntity.setRecordTime(recordFail.get(i).getRecordTime());
+					failMap.put(failEntity,recordFail.get(i));
+				}
+			}else if(Integer.parseInt(map.get("type").toString())==2){
+				List<RecordFailEntity> recordFail = recordFailService.queryFail2(map);
+				for(int i=0;i<recordFail.size();i++){
+					RecordFailEntity failEntity = new RecordFailEntity();
+					failEntity.setCityId(recordFail.get(i).getCityId());
+					failEntity.setCountyId(recordFail.get(i).getCountyId());
+					failEntity.setProbeId(recordFail.get(i).getProbeId());
+					failMap.put(failEntity,recordFail.get(i));
+				}
+			}else if(Integer.parseInt(map.get("type").toString())==3){
+				List<RecordFailEntity> recordFail = recordFailService.queryFail3(map);
+				for(int i=0;i<recordFail.size();i++){
+					RecordFailEntity failEntity = new RecordFailEntity();
+					failEntity.setCityId(recordFail.get(i).getCityId());
+					failEntity.setCountyId(recordFail.get(i).getCountyId());
+					failMap.put(failEntity,recordFail.get(i));
+				}
+			} else if(Integer.parseInt(map.get("type").toString())==4){
+				List<RecordFailEntity> recordFail = recordFailService.queryFail4(map);
+				for(int i=0;i<recordFail.size();i++){
+					RecordFailEntity failEntity = new RecordFailEntity();
+					failEntity.setTargetId(recordFail.get(i).getTargetId());
+					failMap.put(failEntity,recordFail.get(i));
+				}
+			}
 			for(int i=0;i<videoList.size();i++){
 				double score = 0;
 				//dns_delay 100
@@ -405,9 +443,59 @@ public class RecordHourWebVideoServiceImpl implements RecordHourWebVideoService 
 				finalScore.setWebVideoTotalBufferDelay(videoList.get(i).getTotalBufferDelay());
 				finalScore.setWebVideoDownloadRate(videoList.get(i).getDownloadRate());
 				finalScore.setWebVideoBufferTime(videoList.get(i).getBufferTime());
-				finalScore.setFail(recordFail.getFail());
-				finalScore.setTotal(recordFail.getTotal());
-				map.put("service_type",40);
+				if(Integer.parseInt(map.get("type").toString())==1){
+					RecordFailEntity failEntity = new RecordFailEntity();
+					failEntity.setCityId(videoList.get(i).getCityId());
+					failEntity.setCountyId(videoList.get(i).getCountyId());
+					failEntity.setProbeId(videoList.get(i).getProbeId());
+					failEntity.setPort(videoList.get(i).getPort());
+					failEntity.setRecordDate(videoList.get(i).getRecordDate());
+					failEntity.setRecordTime(videoList.get(i).getRecordTime());
+					if(failMap.containsKey(failEntity)){
+						finalScore.setFail(failMap.get(failEntity).getFail());
+						finalScore.setTotal(failMap.get(failEntity).getTotal());
+					}else{
+						finalScore.setFail(videoList.get(i).getFail());
+						finalScore.setTotal(videoList.get(i).getTotal());
+					}
+				}else if(Integer.parseInt(map.get("type").toString())==2){
+					RecordFailEntity failEntity = new RecordFailEntity();
+					failEntity.setCityId(videoList.get(i).getCityId());
+					failEntity.setCountyId(videoList.get(i).getCountyId());
+					failEntity.setProbeId(videoList.get(i).getProbeId());
+					if(failMap.containsKey(failEntity)){
+						finalScore.setFail(failMap.get(failEntity).getFail());
+						finalScore.setTotal(failMap.get(failEntity).getTotal());
+					}else{
+						finalScore.setFail(videoList.get(i).getFail());
+						finalScore.setTotal(videoList.get(i).getTotal());
+					}
+				}else if(Integer.parseInt(map.get("type").toString())==3){
+					RecordFailEntity failEntity = new RecordFailEntity();
+					failEntity.setCityId(videoList.get(i).getCityId());
+					failEntity.setCountyId(videoList.get(i).getCountyId());
+					if(failMap.containsKey(failEntity)){
+						finalScore.setFail(failMap.get(failEntity).getFail());
+						finalScore.setTotal(failMap.get(failEntity).getTotal());
+					}else{
+						finalScore.setFail(videoList.get(i).getFail());
+						finalScore.setTotal(videoList.get(i).getTotal());
+					}
+				} else if(Integer.parseInt(map.get("type").toString())==4){
+					RecordFailEntity failEntity = new RecordFailEntity();
+					failEntity.setTargetId(videoList.get(i).getTargetId());
+					if(failMap.containsKey(failEntity)){
+						finalScore.setFail(failMap.get(failEntity).getFail());
+						finalScore.setTotal(failMap.get(failEntity).getTotal());
+					}else{
+						finalScore.setFail(videoList.get(i).getFail());
+						finalScore.setTotal(videoList.get(i).getTotal());
+					}
+				}else{
+					finalScore.setFail(videoList.get(i).getFail());
+					finalScore.setTotal(videoList.get(i).getTotal());
+				}
+				double fail = (double) finalScore.getFail()/finalScore.getTotal();
 				finalScore.setScore(score*(1-fail));
 				finalScore.setBase(Double.parseDouble(pros.getValue("videoweight")));
 				connectionScore.add(finalScore);
@@ -421,45 +509,45 @@ public class RecordHourWebVideoServiceImpl implements RecordHourWebVideoService 
 	}
 
 	@Override
-	public List<ScoreEntity> calculateLayer5(List<ScoreEntity> webPageList){
+	public List<ScoreEntity> calculateLayer5(List<ScoreEntity> videoList){
 		List<ScoreEntity> connectionScore = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
 			Map<ScoreLayerEntity,ScoreBaseEntity> connection= new HashMap<>();
-			for (int i = 0; i < webPageList.size(); i++) {
-				if(webPageList.get(i).getAccessLayer()==null){
+			for (int i = 0; i < videoList.size(); i++) {
+				if(videoList.get(i).getAccessLayer()==null){
 					continue;
 				}
 				ScoreLayerEntity scoreLayer = new ScoreLayerEntity();
-				scoreLayer.setCityId(webPageList.get(i).getCityId());
-				scoreLayer.setCountyId(webPageList.get(i).getCountyId());
-				scoreLayer.setProbeId(webPageList.get(i).getProbeId());
-				scoreLayer.setTargetId(webPageList.get(i).getTargetId());
-				scoreLayer.setCityName(webPageList.get(i).getCityName());
-				scoreLayer.setCountyName(webPageList.get(i).getCountyName());
-				scoreLayer.setProbeName(webPageList.get(i).getProbeName());
-				scoreLayer.setTargetName(webPageList.get(i).getTargetName());
-				scoreLayer.setAccessLayer(webPageList.get(i).getAccessLayer());
-				scoreLayer.setRecordDate(webPageList.get(i).getRecordDate());
-				scoreLayer.setRecordTime(webPageList.get(i).getRecordTime());
-				scoreLayer.setPort(webPageList.get(i).getPort());
-				scoreLayer.setFail(webPageList.get(i).getFail());
-				scoreLayer.setTotal(webPageList.get(i).getTotal());
+				scoreLayer.setCityId(videoList.get(i).getCityId());
+				scoreLayer.setCountyId(videoList.get(i).getCountyId());
+				scoreLayer.setProbeId(videoList.get(i).getProbeId());
+				scoreLayer.setTargetId(videoList.get(i).getTargetId());
+				scoreLayer.setCityName(videoList.get(i).getCityName());
+				scoreLayer.setCountyName(videoList.get(i).getCountyName());
+				scoreLayer.setProbeName(videoList.get(i).getProbeName());
+				scoreLayer.setTargetName(videoList.get(i).getTargetName());
+				scoreLayer.setAccessLayer(videoList.get(i).getAccessLayer());
+				scoreLayer.setRecordDate(videoList.get(i).getRecordDate());
+				scoreLayer.setRecordTime(videoList.get(i).getRecordTime());
+				scoreLayer.setPort(videoList.get(i).getPort());
+				scoreLayer.setFail(videoList.get(i).getFail());
+				scoreLayer.setTotal(videoList.get(i).getTotal());
 				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
-				scoreBase.setWebVideoDnsDelay(webPageList.get(i).getWebVideoDnsDelay());
-				scoreBase.setWebVideoWsConnDelay(webPageList.get(i).getWebVideoWsConnDelay());
-				scoreBase.setWebVideoWebPageDelay(webPageList.get(i).getWebVideoWebPageDelay());
-				scoreBase.setWebVideoSsConnDelay(webPageList.get(i).getWebVideoSsConnDelay());
-				scoreBase.setWebVideoAddressDelay(webPageList.get(i).getWebVideoAddressDelay());
-				scoreBase.setWebVideoMsConnDelay(webPageList.get(i).getWebVideoMsConnDelay());
-				scoreBase.setWebVideoHeadFrameDelay(webPageList.get(i).getWebVideoHeadFrameDelay());
-				scoreBase.setWebVideoInitBufferDelay(webPageList.get(i).getWebVideoInitBufferDelay());
-				scoreBase.setWebVideoLoadDelay(webPageList.get(i).getWebVideoLoadDelay());
-				scoreBase.setWebVideoTotalBufferDelay(webPageList.get(i).getWebVideoTotalBufferDelay());
-				scoreBase.setWebVideoDownloadRate(webPageList.get(i).getWebVideoDownloadRate());
-				scoreBase.setWebVideoBufferTime(webPageList.get(i).getWebVideoBufferTime());
-				scoreBase.setScore(webPageList.get(i).getScore());
-				scoreBase.setBase(webPageList.get(i).getBase());
+				scoreBase.setWebVideoDnsDelay(videoList.get(i).getWebVideoDnsDelay());
+				scoreBase.setWebVideoWsConnDelay(videoList.get(i).getWebVideoWsConnDelay());
+				scoreBase.setWebVideoWebPageDelay(videoList.get(i).getWebVideoWebPageDelay());
+				scoreBase.setWebVideoSsConnDelay(videoList.get(i).getWebVideoSsConnDelay());
+				scoreBase.setWebVideoAddressDelay(videoList.get(i).getWebVideoAddressDelay());
+				scoreBase.setWebVideoMsConnDelay(videoList.get(i).getWebVideoMsConnDelay());
+				scoreBase.setWebVideoHeadFrameDelay(videoList.get(i).getWebVideoHeadFrameDelay());
+				scoreBase.setWebVideoInitBufferDelay(videoList.get(i).getWebVideoInitBufferDelay());
+				scoreBase.setWebVideoLoadDelay(videoList.get(i).getWebVideoLoadDelay());
+				scoreBase.setWebVideoTotalBufferDelay(videoList.get(i).getWebVideoTotalBufferDelay());
+				scoreBase.setWebVideoDownloadRate(videoList.get(i).getWebVideoDownloadRate());
+				scoreBase.setWebVideoBufferTime(videoList.get(i).getWebVideoBufferTime());
+				scoreBase.setScore(videoList.get(i).getScore());
+				scoreBase.setBase(videoList.get(i).getBase());
 				if (!connection.containsKey(scoreLayer)) {
 
 					connection.put(scoreLayer,scoreBase);
@@ -534,42 +622,42 @@ public class RecordHourWebVideoServiceImpl implements RecordHourWebVideoService 
 	}
 
 	@Override
-	public List<ScoreEntity> calculateDate5(List<ScoreEntity> webPageList){
+	public List<ScoreEntity> calculateDate5(List<ScoreEntity> videoList){
 		List<ScoreEntity> connectionScore = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
 			Map<ScoreDateEntity,ScoreBaseEntity> connection= new HashMap<>();
-			for (int i = 0; i < webPageList.size(); i++) {
+			for (int i = 0; i < videoList.size(); i++) {
 				ScoreDateEntity scoreDate = new ScoreDateEntity();
-				scoreDate.setCityId(webPageList.get(i).getCityId());
-				scoreDate.setCountyId(webPageList.get(i).getCountyId());
-				scoreDate.setProbeId(webPageList.get(i).getProbeId());
-				scoreDate.setTargetId(webPageList.get(i).getTargetId());
-				scoreDate.setCityName(webPageList.get(i).getCityName());
-				scoreDate.setCountyName(webPageList.get(i).getCountyName());
-				scoreDate.setProbeName(webPageList.get(i).getProbeName());
-				scoreDate.setTargetName(webPageList.get(i).getTargetName());
-				scoreDate.setAccessLayer(webPageList.get(i).getAccessLayer());
-				scoreDate.setRecordDate(webPageList.get(i).getRecordDate());
-				scoreDate.setRecordTime(webPageList.get(i).getRecordTime());
-				scoreDate.setPort(webPageList.get(i).getPort());
-				scoreDate.setFail(webPageList.get(i).getFail());
-				scoreDate.setTotal(webPageList.get(i).getTotal());
+				scoreDate.setCityId(videoList.get(i).getCityId());
+				scoreDate.setCountyId(videoList.get(i).getCountyId());
+				scoreDate.setProbeId(videoList.get(i).getProbeId());
+				scoreDate.setTargetId(videoList.get(i).getTargetId());
+				scoreDate.setCityName(videoList.get(i).getCityName());
+				scoreDate.setCountyName(videoList.get(i).getCountyName());
+				scoreDate.setProbeName(videoList.get(i).getProbeName());
+				scoreDate.setTargetName(videoList.get(i).getTargetName());
+				scoreDate.setAccessLayer(videoList.get(i).getAccessLayer());
+				scoreDate.setRecordDate(videoList.get(i).getRecordDate());
+				scoreDate.setRecordTime(videoList.get(i).getRecordTime());
+				scoreDate.setPort(videoList.get(i).getPort());
+				scoreDate.setFail(videoList.get(i).getFail());
+				scoreDate.setTotal(videoList.get(i).getTotal());
 				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
-				scoreBase.setWebVideoDnsDelay(webPageList.get(i).getWebVideoDnsDelay());
-				scoreBase.setWebVideoWsConnDelay(webPageList.get(i).getWebVideoWsConnDelay());
-				scoreBase.setWebVideoWebPageDelay(webPageList.get(i).getWebVideoWebPageDelay());
-				scoreBase.setWebVideoSsConnDelay(webPageList.get(i).getWebVideoSsConnDelay());
-				scoreBase.setWebVideoAddressDelay(webPageList.get(i).getWebVideoAddressDelay());
-				scoreBase.setWebVideoMsConnDelay(webPageList.get(i).getWebVideoMsConnDelay());
-				scoreBase.setWebVideoHeadFrameDelay(webPageList.get(i).getWebVideoHeadFrameDelay());
-				scoreBase.setWebVideoInitBufferDelay(webPageList.get(i).getWebVideoInitBufferDelay());
-				scoreBase.setWebVideoLoadDelay(webPageList.get(i).getWebVideoLoadDelay());
-				scoreBase.setWebVideoTotalBufferDelay(webPageList.get(i).getWebVideoTotalBufferDelay());
-				scoreBase.setWebVideoDownloadRate(webPageList.get(i).getWebVideoDownloadRate());
-				scoreBase.setWebVideoBufferTime(webPageList.get(i).getWebVideoBufferTime());
-				scoreBase.setScore(webPageList.get(i).getScore());
-				scoreBase.setBase(webPageList.get(i).getBase());
+				scoreBase.setWebVideoDnsDelay(videoList.get(i).getWebVideoDnsDelay());
+				scoreBase.setWebVideoWsConnDelay(videoList.get(i).getWebVideoWsConnDelay());
+				scoreBase.setWebVideoWebPageDelay(videoList.get(i).getWebVideoWebPageDelay());
+				scoreBase.setWebVideoSsConnDelay(videoList.get(i).getWebVideoSsConnDelay());
+				scoreBase.setWebVideoAddressDelay(videoList.get(i).getWebVideoAddressDelay());
+				scoreBase.setWebVideoMsConnDelay(videoList.get(i).getWebVideoMsConnDelay());
+				scoreBase.setWebVideoHeadFrameDelay(videoList.get(i).getWebVideoHeadFrameDelay());
+				scoreBase.setWebVideoInitBufferDelay(videoList.get(i).getWebVideoInitBufferDelay());
+				scoreBase.setWebVideoLoadDelay(videoList.get(i).getWebVideoLoadDelay());
+				scoreBase.setWebVideoTotalBufferDelay(videoList.get(i).getWebVideoTotalBufferDelay());
+				scoreBase.setWebVideoDownloadRate(videoList.get(i).getWebVideoDownloadRate());
+				scoreBase.setWebVideoBufferTime(videoList.get(i).getWebVideoBufferTime());
+				scoreBase.setScore(videoList.get(i).getScore());
+				scoreBase.setBase(videoList.get(i).getBase());
 				if (!connection.containsKey(scoreDate)) {
 
 					connection.put(scoreDate,scoreBase);

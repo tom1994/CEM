@@ -74,8 +74,13 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 		List<ScoreEntity> slaTcp = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
-			RecordFailEntity recordFail = recordFailService.queryFail(map);
-			double fail = (double)recordFail.getFail()/recordFail.getTotal();
+			map.put("service_type",10);
+			map.put("type",1);
+			List<RecordFailEntity> recordFail = recordFailService.queryFail1(map);
+			Map<RecordFailEntity,RecordFailEntity> failMap = new HashMap<>();
+			for(int i=0;i<recordFail.size();i++){
+				failMap.put(recordFail.get(i),recordFail.get(i));
+			}
 			for (int i = 0; i < slaList.size(); i++) {
 				double score = 0;
 				//Sla Tcp
@@ -307,9 +312,22 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 					tcpSla.setSlaTcpGJitter(slaList.get(i).getGJitter());
 					tcpSla.setSlaTcpRJitter(slaList.get(i).getRJitter());
 					tcpSla.setSlaTcpLossRate(slaList.get(i).getLossRate());
-					tcpSla.setFail(recordFail.getFail());
-					tcpSla.setTotal(recordFail.getTotal());
-					map.put("service_type",10);
+					RecordFailEntity failEntity = new RecordFailEntity();
+					failEntity.setCityId(slaList.get(i).getCityId());
+					failEntity.setCountyId(slaList.get(i).getCountyId());
+					failEntity.setProbeId(slaList.get(i).getProbeId());
+					failEntity.setTargetId(slaList.get(i).getTargetId());
+					failEntity.setPort(slaList.get(i).getPort());
+					failEntity.setRecordDate(slaList.get(i).getRecordDate());
+					failEntity.setRecordTime(slaList.get(i).getRecordTime());
+					if(failMap.containsKey(failEntity)){
+						tcpSla.setFail(failMap.get(failEntity).getFail());
+						tcpSla.setTotal(failMap.get(failEntity).getTotal());
+					}else{
+						tcpSla.setFail(slaList.get(i).getFail());
+						tcpSla.setTotal(slaList.get(i).getTotal());
+					}
+					double fail = (double) tcpSla.getFail()/tcpSla.getTotal();
 					tcpSla.setScore(score*(1-fail));
 					tcpSla.setBase(Double.parseDouble(pros.getValue("sla_tcp")));
 
@@ -327,8 +345,13 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 		List<ScoreEntity> slaUdp = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
-			RecordFailEntity recordFail = recordFailService.queryFail(map);
-			double fail = (double)recordFail.getFail()/recordFail.getTotal();
+			map.put("service_type",11);
+			map.put("type",1);
+			List<RecordFailEntity> recordFail = recordFailService.queryFail1(map);
+			Map<RecordFailEntity,RecordFailEntity> failMap = new HashMap<>();
+			for(int i=0;i<recordFail.size();i++){
+				failMap.put(recordFail.get(i),recordFail.get(i));
+			}
 			for (int i = 0; i < slaList.size(); i++) {
 				double score = 0;
 				//Sla Udp
@@ -560,9 +583,22 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 					udpSla.setSlaUdpGJitter(slaList.get(i).getGJitter());
 					udpSla.setSlaUdpRJitter(slaList.get(i).getRJitter());
 					udpSla.setSlaUdpLossRate(slaList.get(i).getLossRate());
-					udpSla.setFail(recordFail.getFail());
-					udpSla.setTotal(recordFail.getTotal());
-					map.put("service_type",11);
+					RecordFailEntity failEntity = new RecordFailEntity();
+					failEntity.setCityId(slaList.get(i).getCityId());
+					failEntity.setCountyId(slaList.get(i).getCountyId());
+					failEntity.setProbeId(slaList.get(i).getProbeId());
+					failEntity.setTargetId(slaList.get(i).getTargetId());
+					failEntity.setPort(slaList.get(i).getPort());
+					failEntity.setRecordDate(slaList.get(i).getRecordDate());
+					failEntity.setRecordTime(slaList.get(i).getRecordTime());
+					if(failMap.containsKey(failEntity)){
+						udpSla.setFail(failMap.get(failEntity).getFail());
+						udpSla.setTotal(failMap.get(failEntity).getTotal());
+					}else{
+						udpSla.setFail(slaList.get(i).getFail());
+						udpSla.setTotal(slaList.get(i).getTotal());
+					}
+					double fail = (double) udpSla.getFail()/udpSla.getTotal();
 					udpSla.setScore(score*(1-fail));
 					udpSla.setBase(Double.parseDouble(pros.getValue("sla_udp")));
 
@@ -580,8 +616,13 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 		List<ScoreEntity> dns = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
-			RecordFailEntity recordFail = recordFailService.queryFail(map);
-			double fail = (double)recordFail.getFail()/recordFail.getTotal();
+			map.put("service_type",14);
+			map.put("type",1);
+			List<RecordFailEntity> recordFail = recordFailService.queryFail1(map);
+			Map<RecordFailEntity,RecordFailEntity> failMap = new HashMap<>();
+			for(int i=0;i<recordFail.size();i++){
+				failMap.put(recordFail.get(i),recordFail.get(i));
+			}
 			for (int i = 0; i < dnsList.size(); i++) {
 				double score=0;
 				//delay 100
@@ -661,9 +702,22 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				DNS.setRecordTime(dnsList.get(i).getRecordTime());
 				DNS.setDnsDelay(dnsList.get(i).getDelay());
 				DNS.setDnsSuccessRate(dnsList.get(i).getSuccessRate());
-				DNS.setFail(recordFail.getFail());
-				DNS.setTotal(recordFail.getTotal());
-				map.put("service_type",14);
+				RecordFailEntity failEntity = new RecordFailEntity();
+				failEntity.setCityId(dnsList.get(i).getCityId());
+				failEntity.setCountyId(dnsList.get(i).getCountyId());
+				failEntity.setProbeId(dnsList.get(i).getProbeId());
+				failEntity.setTargetId(dnsList.get(i).getTargetId());
+				failEntity.setPort(dnsList.get(i).getPort());
+				failEntity.setRecordDate(dnsList.get(i).getRecordDate());
+				failEntity.setRecordTime(dnsList.get(i).getRecordTime());
+				if(failMap.containsKey(failEntity)){
+					DNS.setFail(failMap.get(failEntity).getFail());
+					DNS.setTotal(failMap.get(failEntity).getTotal());
+				}else{
+					DNS.setFail(dnsList.get(i).getFail());
+					DNS.setTotal(dnsList.get(i).getTotal());
+				}
+				double fail = (double) DNS.getFail()/DNS.getTotal();
 				DNS.setScore(score*(1-fail));
 				DNS.setBase(Double.parseDouble(pros.getValue("dns")));
 
@@ -681,8 +735,13 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 		List<ScoreEntity> dhcp = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
-			RecordFailEntity recordFail = recordFailService.queryFail(map);
-			double fail = (double)recordFail.getFail()/recordFail.getTotal();
+			map.put("service_type",13);
+			map.put("type",1);
+			List<RecordFailEntity> recordFail = recordFailService.queryFail1(map);
+			Map<RecordFailEntity,RecordFailEntity> failMap = new HashMap<>();
+			for(int i=0;i<recordFail.size();i++){
+				failMap.put(recordFail.get(i),recordFail.get(i));
+			}
 			for (int i = 0; i < dhcpList.size(); i++) {
 				double score=0;
 				//delay 100
@@ -763,10 +822,22 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				DHCP.setRecordTime(dhcpList.get(i).getRecordTime());
 				DHCP.setDhcpDelay(dhcpList.get(i).getDelay());
 				DHCP.setDhcpSuccessRate(dhcpList.get(i).getSuccessRate());
-				DHCP.setFail(recordFail.getFail());
-				DHCP.setTotal(recordFail.getTotal());
-				map.put("service_type",13);
-				DHCP.setScore(score*(1-fail));
+				RecordFailEntity failEntity = new RecordFailEntity();
+				failEntity.setCityId(dhcpList.get(i).getCityId());
+				failEntity.setCountyId(dhcpList.get(i).getCountyId());
+				failEntity.setProbeId(dhcpList.get(i).getProbeId());
+				failEntity.setTargetId(dhcpList.get(i).getTargetId());
+				failEntity.setPort(dhcpList.get(i).getPort());
+				failEntity.setRecordDate(dhcpList.get(i).getRecordDate());
+				failEntity.setRecordTime(dhcpList.get(i).getRecordTime());
+				if(failMap.containsKey(failEntity)){
+					DHCP.setFail(failMap.get(failEntity).getFail());
+					DHCP.setTotal(failMap.get(failEntity).getTotal());
+				}else{
+					DHCP.setFail(dhcpList.get(i).getFail());
+					DHCP.setTotal(dhcpList.get(i).getTotal());
+				}
+				//DHCP.setScore(score*(1-fail));
 				DHCP.setBase(Double.parseDouble(pros.getValue("dhcp")));
 
 				dhcp.add(DHCP);
@@ -782,8 +853,13 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 		List<ScoreEntity> pppoe = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
-			RecordFailEntity recordFail = recordFailService.queryFail(map);
-			double fail = (double)recordFail.getFail()/recordFail.getTotal();
+			map.put("service_type",12);
+			map.put("type",1);
+			List<RecordFailEntity> recordFail = recordFailService.queryFail1(map);
+			Map<RecordFailEntity,RecordFailEntity> failMap = new HashMap<>();
+			for(int i=0;i<recordFail.size();i++){
+				failMap.put(recordFail.get(i),recordFail.get(i));
+			}
 			for (int i = 0; i < pppoeList.size(); i++) {
 				double score = 0;
 				//delay 100
@@ -895,9 +971,22 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				PPPOE.setPppoeDelay(pppoeList.get(i).getDelay());
 				PPPOE.setPppoeDropRate(pppoeList.get(i).getDropRate());
 				PPPOE.setPppoeSuccessRate(pppoeList.get(i).getSuccessRate());
-				PPPOE.setFail(recordFail.getFail());
-				PPPOE.setTotal(recordFail.getTotal());
-				map.put("service_type",12);
+				RecordFailEntity failEntity = new RecordFailEntity();
+				failEntity.setCityId(pppoeList.get(i).getCityId());
+				failEntity.setCountyId(pppoeList.get(i).getCountyId());
+				failEntity.setProbeId(pppoeList.get(i).getProbeId());
+				failEntity.setTargetId(pppoeList.get(i).getTargetId());
+				failEntity.setPort(pppoeList.get(i).getPort());
+				failEntity.setRecordDate(pppoeList.get(i).getRecordDate());
+				failEntity.setRecordTime(pppoeList.get(i).getRecordTime());
+				if(failMap.containsKey(failEntity)){
+					PPPOE.setFail(failMap.get(failEntity).getFail());
+					PPPOE.setTotal(failMap.get(failEntity).getTotal());
+				}else{
+					PPPOE.setFail(pppoeList.get(i).getFail());
+					PPPOE.setTotal(pppoeList.get(i).getTotal());
+				}
+				double fail = (double) PPPOE.getFail()/PPPOE.getTotal();
 				PPPOE.setScore(score*(1-fail));
 				PPPOE.setBase(Double.parseDouble(pros.getValue("adsl")));
 
@@ -914,8 +1003,13 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 		List<ScoreEntity> radius = new ArrayList<>();
 		try {
 			PropertiesUtils pros = new PropertiesUtils();
-			RecordFailEntity recordFail = recordFailService.queryFail(map);
-			double fail = (double)recordFail.getFail()/recordFail.getTotal();
+			map.put("service_type",15);
+			map.put("type",1);
+			List<RecordFailEntity> recordFail = recordFailService.queryFail1(map);
+			Map<RecordFailEntity,RecordFailEntity> failMap = new HashMap<>();
+			for(int i=0;i<recordFail.size();i++){
+				failMap.put(recordFail.get(i),recordFail.get(i));
+			}
 			for (int i = 0; i < radiusList.size(); i++) {
 				double score = 0;
 				//delay 100
@@ -996,9 +1090,22 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				RADIUS.setRecordTime(radiusList.get(i).getRecordTime());
 				RADIUS.setRadiusDelay(radiusList.get(i).getDelay());
 				RADIUS.setRadiusSuccessRate(radiusList.get(i).getSuccessRate());
-				RADIUS.setFail(recordFail.getFail());
-				RADIUS.setTotal(recordFail.getTotal());
-				map.put("service_type",15);
+				RecordFailEntity failEntity = new RecordFailEntity();
+				failEntity.setCityId(radiusList.get(i).getCityId());
+				failEntity.setCountyId(radiusList.get(i).getCountyId());
+				failEntity.setProbeId(radiusList.get(i).getProbeId());
+				failEntity.setTargetId(radiusList.get(i).getTargetId());
+				failEntity.setPort(radiusList.get(i).getPort());
+				failEntity.setRecordDate(radiusList.get(i).getRecordDate());
+				failEntity.setRecordTime(radiusList.get(i).getRecordTime());
+				if(failMap.containsKey(failEntity)){
+					RADIUS.setFail(failMap.get(failEntity).getFail());
+					RADIUS.setTotal(failMap.get(failEntity).getTotal());
+				}else{
+					RADIUS.setFail(radiusList.get(i).getFail());
+					RADIUS.setTotal(radiusList.get(i).getTotal());
+				}
+				double fail = (double) RADIUS.getFail()/RADIUS.getTotal();
 				RADIUS.setScore(score*(1-fail));
 				RADIUS.setBase(Double.parseDouble(pros.getValue("radius")));
 
