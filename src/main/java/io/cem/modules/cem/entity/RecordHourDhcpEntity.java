@@ -83,6 +83,18 @@ public class RecordHourDhcpEntity implements Serializable {
 	@ExportName(exportName = "备注")
 	private String remark;
 
+	//出口名称
+	@ExcelIgnore
+	private String exit;
+
+	public String getExit() {
+		return exit;
+	}
+
+	public void setExit(String exit) {
+		this.exit = exit;
+	}
+
 	public Integer getFail() {
 		return fail;
 	}

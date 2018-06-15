@@ -283,6 +283,7 @@ public class RecordHourGameServiceImpl implements RecordHourGameService {
 				finalScore.setPort(gameList.get(i).getPort());
 				finalScore.setRecordDate(gameList.get(i).getRecordDate());
 				finalScore.setRecordTime(gameList.get(i).getRecordTime());
+				finalScore.setExit(gameList.get(i).getExit());
 				finalScore.setGameDnsDelay(gameList.get(i).getDnsDelay());
 				finalScore.setGameConnDelay(gameList.get(i).getConnDelay());
 				finalScore.setGamePacketDelay(gameList.get(i).getPacketDelay());

@@ -42,6 +42,7 @@
 		<result property="targetName" column="target_name"/>
 		<result property="fail" column="fail"/>
 		<result property="total" column="total"/>
+		<result property="exit" column="exit"/>
     </resultMap>
 
 	<select id="queryObject" resultType="io.cem.modules.cem.entity.RecordHourSlaEntity">
@@ -180,6 +181,7 @@
 		county.county_name AS area_name,
 		probe.probe_name AS probe_name,
 		target.target_name AS target_name,
+		probe_exit.exit,
 		time_format(record_time, '%H') AS record_time,
 		AVG(record_hour_sla.delay) AS delay,
 		AVG(record_hour_sla.g_delay) AS g_delay,
@@ -199,9 +201,9 @@
 		ON record_hour_sla.probe_id = probe.id
 		INNER JOIN target
 		ON record_hour_sla.target_id = target.id
+		INNER JOIN probe_exit
+        ON record_hour_sla.probe_id= probe_exit.probe_id AND record_hour_sla.port = probe_exit.port AND probe_exit.status=0
 		WHERE record_hour_sla.record_date BETWEEN #{ava_start} AND #{ava_terminal}
-		AND record_hour_sla.port = #{port}
-		AND record_hour_sla.probe_id = #{probe_id}
 		GROUP BY
 		record_hour_sla.port,record_hour_sla.probe_id
 	</select>
@@ -212,6 +214,7 @@
 		county.county_name AS area_name,
 		probe.probe_name AS probe_name,
 		target.target_name AS target_name,
+		probe_exit.exit,
 		time_format(record_time, '%H') AS record_time,
 		AVG(record_day_sla.delay) AS delay,
 		AVG(record_day_sla.g_delay) AS g_delay,
@@ -231,9 +234,9 @@
 		ON record_day_sla.probe_id = probe.id
 		INNER JOIN target
 		ON record_day_sla.target_id = target.id
+		INNER JOIN probe_exit
+        ON record_day_sla.probe_id= probe_exit.probe_id AND record_day_sla.port = probe_exit.port AND probe_exit.status=0
 		WHERE record_day_sla.record_date BETWEEN #{ava_start} AND #{ava_terminal}
-		AND record_day_sla.port = #{port}
-		AND record_day_sla.probe_id = #{probe_id}
 		GROUP BY
 		record_day_sla.port,record_day_sla.probe_id
 	</select>

@@ -81,9 +81,23 @@ public class RecordHourPppoeEntity implements Serializable {
 	//备注
 	@ExportName(exportName = "备注")
 	private String remark;
+
+	@ExcelIgnore
 	private Integer fail;
 
+	@ExcelIgnore
 	private Integer total;
+	//出口名称
+	@ExcelIgnore
+	private String exit;
+
+	public String getExit() {
+		return exit;
+	}
+
+	public void setExit(String exit) {
+		this.exit = exit;
+	}
 
 	public Integer getFail() {
 		return fail;

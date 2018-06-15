@@ -188,20 +188,19 @@ public class ProbeExitController {
 			map.put("limit", limit);
 			total = probeExitService.queryTotal(map);//error!!!!
 		}
-		List<ProbeExitEntity> probeExitList = probeExitService.queryscoreList(map);
-		List<ScoreEntity> scoreList = new ArrayList<>();
+		//List<ProbeExitEntity> probeExitList = probeExitService.queryscoreList(map);
+		//List<ScoreEntity> scoreList = new ArrayList<>();
 
-		for(int i=0;i<probeExitList.size();i++){
-			Map<String, Object> exitMap = new HashMap<>();
-			map.put("probe_id",probeExitList.get(i).getProbeId());
-			map.put("port",probeExitList.get(i).getPort());
-			ScoreEntity score=probeExitService.calculateScore(map);
-			if(score.getProbeId()!=null){
-				score.setExit(probeExitList.get(i).getExit());
-				scoreList.add(score);}
-		}
+		//for(int i=0;i<probeExitList.size();i++){
+			//Map<String, Object> exitMap = new HashMap<>();
+			//map.put("probe_id",probeExitList.get(i).getProbeId());
+			//map.put("port",probeExitList.get(i).getPort());
+		map.put("type",1);
+			List<ScoreEntity> score=probeExitService.calculateScore(map);
 
-		PageUtils pageUtil = new PageUtils(scoreList, total, limit, page);
+		//}
+
+		PageUtils pageUtil = new PageUtils(score, total, limit, page);
 
 		return R.ok().put("page", pageUtil);
 	}
@@ -238,20 +237,10 @@ public class ProbeExitController {
 			e.printStackTrace();
 		}
 
-		List<ProbeExitEntity> probeExitList = probeExitService.queryscoreList(map);
-		List<ScoreEntity> scoreList = new ArrayList<>();
+		map.put("type",1);
+		List<ScoreEntity> score=probeExitService.calculateScore(map);
 
-		for(int i=0;i<probeExitList.size();i++){
-			Map<String, Object> exitMap = new HashMap<>();
-			map.put("probe_id",probeExitList.get(i).getProbeId());
-			map.put("port",probeExitList.get(i).getPort());
-			ScoreEntity score=probeExitService.calculateScore(map);
-			if(score.getProbeId()!=null){
-				score.setExit(probeExitList.get(i).getExit());
-				scoreList.add(score);}
-		}
-
-		CollectionToFile.collectionToFile(response, scoreList, ScoreEntity.class);
+		CollectionToFile.collectionToFile(response, score, ScoreEntity.class);
 	}
 
 	/**

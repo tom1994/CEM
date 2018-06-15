@@ -91,6 +91,17 @@ public class RecordHourGameEntity implements Serializable {
 	private Integer total;
 @ExcelIgnore
 	private Integer accessLayer;
+	//出口名称
+	@ExcelIgnore
+	private String exit;
+
+	public String getExit() {
+		return exit;
+	}
+
+	public void setExit(String exit) {
+		this.exit = exit;
+	}
 
 	public Integer getFail() {
 		return fail;

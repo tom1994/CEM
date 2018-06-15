@@ -25,6 +25,7 @@
 		<result property="targetName" column="target_name"/>
 		<result property="fail" column="fail"/>
 		<result property="total" column="total"/>
+		<result property="exit" column="exit"/>
     </resultMap>
 
 	<select id="queryObject" resultType="io.cem.modules.cem.entity.RecordHourDnsEntity">
@@ -152,30 +153,33 @@
 	</select>
 
 	<select id="queryExitList" resultType="io.cem.modules.cem.entity.RecordHourDnsEntity">
-		select record_hour_dns.id,record_hour_dns.city_id,record_hour_dns.county_id,record_hour_dns.probe_id,record_hour_dns.port,record_hour_dns.task_id,record_hour_dns.service_type,record_hour_dns.target_id,record_hour_dns.target_ip,record_hour_dns.record_date,record_hour_dns.remark,
+		select t.*,
 		city.city_name AS city_name,
 		county.county_name AS area_name,
 		probe.probe_name AS probe_name,
 		target.target_name AS target_name,
+		probe_exit.exit
+		FROM (select record_hour_dns.id,record_hour_dns.city_id,record_hour_dns.county_id,record_hour_dns.probe_id,record_hour_dns.port,record_hour_dns.task_id,record_hour_dns.service_type,record_hour_dns.target_id,record_hour_dns.target_ip,record_hour_dns.record_date,record_hour_dns.remark,
 		time_format(record_time, '%H') AS record_time,
 		AVG(record_hour_dns.delay) AS delay,
 		AVG(record_hour_dns.success_rate) AS success_rate,
 		SUM(record_hour_dns.fail) AS fail,
 		SUM(record_hour_dns.total) AS total
 		FROM record_hour_dns
-		LEFT JOIN city
-		ON record_hour_dns.city_id = city.city_id
-		LEFT JOIN county
-		ON record_hour_dns.county_id = county.county_id
-		INNER JOIN probe
-		ON record_hour_dns.probe_id = probe.id
-		INNER JOIN target
-		ON record_hour_dns.target_id = target.id
+		force index(idx_score)
 		WHERE record_hour_dns.record_date BETWEEN #{ava_start} AND #{ava_terminal}
-		AND record_hour_dns.port = #{port}
-		AND record_hour_dns.probe_id = #{probe_id}
-		GROUP BY
-		record_hour_dns.port,record_hour_dns.probe_id;
+		GROUP BY record_hour_dns.probe_id,record_hour_dns.port)t
+		LEFT JOIN city
+		ON t.city_id = city.city_id
+		LEFT JOIN county
+		ON t.county_id = county.county_id
+		INNER JOIN probe
+		ON t.probe_id = probe.id
+		INNER JOIN target
+		ON t.target_id = target.id
+		INNER JOIN probe_exit
+        ON t.probe_id= probe_exit.probe_id AND t.port = probe_exit.port AND probe_exit.status=0
+
 	</select>
 
 	<select id="queryDayExitList" resultType="io.cem.modules.cem.entity.RecordHourDnsEntity">
@@ -184,6 +188,7 @@
 		county.county_name AS area_name,
 		probe.probe_name AS probe_name,
 		target.target_name AS target_name,
+		probe_exit.exit,
 		time_format(record_time, '%H') AS record_time,
 		AVG(record_day_dns.delay) AS delay,
 		AVG(record_day_dns.success_rate) AS success_rate,
@@ -198,9 +203,9 @@
 		ON record_day_dns.probe_id = probe.id
 		INNER JOIN target
 		ON record_day_dns.target_id = target.id
+		INNER JOIN probe_exit
+        ON record_day_dns.probe_id= probe_exit.probe_id AND record_day_dns.port = probe_exit.port AND probe_exit.status=0
 		WHERE record_day_dns.record_date BETWEEN #{ava_start} AND #{ava_terminal}
-		AND record_day_dns.port = #{port}
-		AND record_day_dns.probe_id = #{probe_id}
 		GROUP BY
 		record_day_dns.port,record_day_dns.probe_id;
 	</select>

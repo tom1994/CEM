@@ -35,6 +35,7 @@
 		<result property="targetName" column="target_name"/>
 		<result property="fail" column="fail"/>
 		<result property="total" column="total"/>
+		<result property="exit" column="exit"/>
     </resultMap>
 
 	<select id="queryObject" resultType="io.cem.modules.cem.entity.RecordHourWebVideoEntity">
@@ -112,13 +113,14 @@
 	</select>
 
 	<select id="queryExitList" resultType="io.cem.modules.cem.entity.RecordHourWebVideoEntity">
-		select
-		record_hour_web_video.id,record_hour_web_video.city_id,record_hour_web_video.county_id,record_hour_web_video.probe_id,record_hour_web_video.port,record_hour_web_video.task_id,record_hour_web_video.service_type,record_hour_web_video.target_id,record_hour_web_video.target_ip,record_hour_web_video.record_date,record_hour_web_video.remark,
+		select t.*,
 		city.city_name AS city_name,
 		county.county_name AS area_name,
 		probe.probe_name AS probe_name,
 		target.target_name AS target_name,
 		probe.access_layer AS accessLayer,
+		probe_exit.exit
+		FROM (select record_hour_web_video.id,record_hour_web_video.city_id,record_hour_web_video.county_id,record_hour_web_video.probe_id,record_hour_web_video.port,record_hour_web_video.task_id,record_hour_web_video.service_type,record_hour_web_video.target_id,record_hour_web_video.target_ip,record_hour_web_video.record_date,record_hour_web_video.remark,
 		time_format(record_hour_web_video.record_time, '%H') AS record_time,
 		AVG(record_hour_web_video.dns_delay) AS dns_delay,
 		AVG(record_hour_web_video.ws_conn_delay) AS ws_conn_delay,
@@ -132,19 +134,20 @@
 		SUM(record_hour_web_video.fail) AS fail,
 		SUM(record_hour_web_video.total) AS total
 		FROM record_hour_web_video
-		LEFT JOIN city
-		ON record_hour_web_video.city_id = city.city_id
-		LEFT JOIN county
-		ON record_hour_web_video.county_id = county.county_id
-		INNER JOIN probe
-		ON record_hour_web_video.probe_id = probe.id
-		INNER JOIN target
-		ON record_hour_web_video.target_id = target.id
+		force index(idx_score)
 		WHERE record_hour_web_video.record_date BETWEEN #{ava_start} AND #{ava_terminal}
-		AND record_hour_web_video.port = #{port}
-        AND record_hour_web_video.probe_id = #{probe_id}
-        GROUP BY
-        record_hour_web_video.port,record_hour_web_video.probe_id;
+        GROUP BY record_hour_web_video.probe_id,record_hour_web_video.port)t
+		LEFT JOIN city
+		ON t.city_id = city.city_id
+		LEFT JOIN county
+		ON t.county_id = county.county_id
+		INNER JOIN probe
+		ON t.probe_id = probe.id
+		INNER JOIN target
+		ON t.target_id = target.id
+		INNER JOIN probe_exit
+        ON t.probe_id= probe_exit.probe_id AND t.port = probe_exit.port AND probe_exit.status=0
+
 	</select>
 
 	<select id="queryDayExitList" resultType="io.cem.modules.cem.entity.RecordHourWebVideoEntity">
@@ -155,6 +158,7 @@
 		probe.probe_name AS probe_name,
 		target.target_name AS target_name,
 		probe.access_layer AS accessLayer,
+		probe_exit.exit,
 		time_format(record_day_web_video.record_time, '%H') AS record_time,
 		AVG(record_day_web_video.dns_delay) AS dns_delay,
 		AVG(record_day_web_video.ws_conn_delay) AS ws_conn_delay,
@@ -176,9 +180,9 @@
 		ON record_day_web_video.probe_id = probe.id
 		INNER JOIN target
 		ON record_day_web_video.target_id = target.id
+		INNER JOIN probe_exit
+        ON record_day_web_video.probe_id= probe_exit.probe_id AND record_day_web_video.port = probe_exit.port AND probe_exit.status=0
 		WHERE record_day_web_video.record_date BETWEEN #{ava_start} AND #{ava_terminal}
-		AND record_day_web_video.port = #{port}
-		AND record_day_web_video.probe_id = #{probe_id}
 		GROUP BY
 		record_day_web_video.port,record_day_web_video.probe_id;
 	</select>

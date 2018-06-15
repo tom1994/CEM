@@ -312,6 +312,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						icmpPing.setAccessLayer(pingList.get(i).getAccessLayer());
 						icmpPing.setRecordDate(pingList.get(i).getRecordDate());
 						icmpPing.setRecordTime(pingList.get(i).getRecordTime());
+						icmpPing.setExit(pingList.get(i).getExit());
 						RecordFailEntity failEntity = new RecordFailEntity();
 						failEntity.setCityId(pingList.get(i).getCityId());
 						failEntity.setCountyId(pingList.get(i).getCountyId());
@@ -592,6 +593,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						tcpPing.setAccessLayer(pingList.get(i).getAccessLayer());
 						tcpPing.setRecordDate(pingList.get(i).getRecordDate());
 						tcpPing.setRecordTime(pingList.get(i).getRecordTime());
+						tcpPing.setExit(pingList.get(i).getExit());
 						RecordFailEntity failEntity = new RecordFailEntity();
 						failEntity.setCityId(pingList.get(i).getCityId());
 						failEntity.setCountyId(pingList.get(i).getCountyId());
@@ -870,6 +872,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						udpPing.setAccessLayer(pingList.get(i).getAccessLayer());
 						udpPing.setRecordDate(pingList.get(i).getRecordDate());
 						udpPing.setRecordTime(pingList.get(i).getRecordTime());
+						udpPing.setExit(pingList.get(i).getExit());
 						RecordFailEntity failEntity = new RecordFailEntity();
 						failEntity.setCityId(pingList.get(i).getCityId());
 						failEntity.setCountyId(pingList.get(i).getCountyId());
@@ -1146,6 +1149,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						icmpTracert.setAccessLayer(tracertList.get(i).getAccessLayer());
 						icmpTracert.setRecordDate(tracertList.get(i).getRecordDate());
 						icmpTracert.setRecordTime(tracertList.get(i).getRecordTime());
+						icmpTracert.setExit(tracertList.get(i).getExit());
 						RecordFailEntity failEntity = new RecordFailEntity();
 						failEntity.setCityId(tracertList.get(i).getCityId());
 						failEntity.setCountyId(tracertList.get(i).getCountyId());
@@ -1422,6 +1426,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 						tcpTracert.setAccessLayer(tracertList.get(i).getAccessLayer());
 						tcpTracert.setRecordDate(tracertList.get(i).getRecordDate());
 						tcpTracert.setRecordTime(tracertList.get(i).getRecordTime());
+						tcpTracert.setExit(tracertList.get(i).getExit());
 						RecordFailEntity failEntity = new RecordFailEntity();
 						failEntity.setCityId(tracertList.get(i).getCityId());
 						failEntity.setCountyId(tracertList.get(i).getCountyId());
@@ -1480,6 +1485,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 				scoreTarget.setRecordTime(pingIcmp.get(i).getRecordTime());
 				scoreTarget.setFail(pingIcmp.get(i).getFail());
 				scoreTarget.setTotal(pingIcmp.get(i).getTotal());
+				scoreTarget.setExit(pingIcmp.get(i).getExit());
 				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
 				scoreBase.setPingIcmpDelay(pingIcmp.get(i).getPingIcmpDelay());
 				scoreBase.setPingIcmpDelayStd(pingIcmp.get(i).getPingIcmpDelayStd());
@@ -1524,6 +1530,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 					finalScore.setPort(ite.getPort());
 					finalScore.setRecordTime(ite.getRecordTime());
 					finalScore.setRecordDate(ite.getRecordDate());
+					finalScore.setExit(ite.getExit());
 					finalScore.setScore(0.0);
 					finalScore.setBase(0.0);
 					finalScore.setFail(ite.getFail());
@@ -2152,6 +2159,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 			scoreTarget.setRecordTime(list.get(i).getRecordTime());
 			scoreTarget.setFail(list.get(i).getFail());
 			scoreTarget.setTotal(list.get(i).getTotal());
+			scoreTarget.setExit(list.get(i).getExit());
 			ScoreBaseEntity scoreBase = new ScoreBaseEntity();
 			if(type.equals("pingTcp")){
 				scoreBase.setPingTcpDelay(list.get(i).getPingTcpDelay());

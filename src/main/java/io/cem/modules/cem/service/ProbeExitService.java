@@ -39,7 +39,7 @@ public interface ProbeExitService {
 	 * @throws ExecutionException
 	 * @throws InterruptedException
 	 */
-	ScoreEntity calculateScore(Map<String, Object> map) throws ExecutionException, InterruptedException;
+	List<ScoreEntity> calculateScore(Map<String, Object> map) throws ExecutionException, InterruptedException;
 
 	/**
 	 * 获取总数

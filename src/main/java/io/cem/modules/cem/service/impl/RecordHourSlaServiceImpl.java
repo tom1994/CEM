@@ -305,6 +305,7 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 					tcpSla.setPort(slaList.get(i).getPort());
 					tcpSla.setRecordDate(slaList.get(i).getRecordDate());
 					tcpSla.setRecordTime(slaList.get(i).getRecordTime());
+					tcpSla.setExit(slaList.get(i).getExit());
 					tcpSla.setSlaTcpDelay(slaList.get(i).getDelay());
 					tcpSla.setSlaTcpGDelay(slaList.get(i).getGDelay());
 					tcpSla.setSlaTcpRDelay(slaList.get(i).getRDelay());
@@ -576,6 +577,7 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 					udpSla.setPort(slaList.get(i).getPort());
 					udpSla.setRecordDate(slaList.get(i).getRecordDate());
 					udpSla.setRecordTime(slaList.get(i).getRecordTime());
+					udpSla.setExit(slaList.get(i).getExit());
 					udpSla.setSlaUdpDelay(slaList.get(i).getDelay());
 					udpSla.setSlaUdpGDelay(slaList.get(i).getGDelay());
 					udpSla.setSlaUdpRDelay(slaList.get(i).getRDelay());
@@ -700,6 +702,7 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				DNS.setPort(dnsList.get(i).getPort());
 				DNS.setRecordDate(dnsList.get(i).getRecordDate());
 				DNS.setRecordTime(dnsList.get(i).getRecordTime());
+				DNS.setExit(dnsList.get(i).getExit());
 				DNS.setDnsDelay(dnsList.get(i).getDelay());
 				DNS.setDnsSuccessRate(dnsList.get(i).getSuccessRate());
 				RecordFailEntity failEntity = new RecordFailEntity();
@@ -820,6 +823,7 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				DHCP.setPort(dhcpList.get(i).getPort());
 				DHCP.setRecordDate(dhcpList.get(i).getRecordDate());
 				DHCP.setRecordTime(dhcpList.get(i).getRecordTime());
+				DHCP.setExit(dhcpList.get(i).getExit());
 				DHCP.setDhcpDelay(dhcpList.get(i).getDelay());
 				DHCP.setDhcpSuccessRate(dhcpList.get(i).getSuccessRate());
 				RecordFailEntity failEntity = new RecordFailEntity();
@@ -968,6 +972,7 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				PPPOE.setPort(pppoeList.get(i).getPort());
 				PPPOE.setRecordDate(pppoeList.get(i).getRecordDate());
 				PPPOE.setRecordTime(pppoeList.get(i).getRecordTime());
+				PPPOE.setExit(pppoeList.get(i).getExit());
 				PPPOE.setPppoeDelay(pppoeList.get(i).getDelay());
 				PPPOE.setPppoeDropRate(pppoeList.get(i).getDropRate());
 				PPPOE.setPppoeSuccessRate(pppoeList.get(i).getSuccessRate());
@@ -1088,6 +1093,7 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				RADIUS.setPort(radiusList.get(i).getPort());
 				RADIUS.setRecordDate(radiusList.get(i).getRecordDate());
 				RADIUS.setRecordTime(radiusList.get(i).getRecordTime());
+				RADIUS.setExit(radiusList.get(i).getExit());
 				RADIUS.setRadiusDelay(radiusList.get(i).getDelay());
 				RADIUS.setRadiusSuccessRate(radiusList.get(i).getSuccessRate());
 				RecordFailEntity failEntity = new RecordFailEntity();
@@ -1139,6 +1145,7 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				scoreTarget.setPort(slaTcp.get(i).getPort());
 				scoreTarget.setFail(slaTcp.get(i).getFail());
 				scoreTarget.setTotal(slaTcp.get(i).getTotal());
+				scoreTarget.setExit(slaTcp.get(i).getExit());
 				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
 				scoreBase.setSlaTcpDelay(slaTcp.get(i).getSlaTcpDelay());
 				scoreBase.setSlaTcpGDelay(slaTcp.get(i).getSlaTcpGDelay());
@@ -1181,6 +1188,7 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 					finalScore.setAccessLayer(ite.getAccessLayer());
 					finalScore.setRecordTime(ite.getRecordTime());
 					finalScore.setRecordDate(ite.getRecordDate());
+					finalScore.setExit(ite.getExit());
 					finalScore.setPort(ite.getPort());
 					finalScore.setScore(0.0);
 					finalScore.setBase(0.0);

@@ -82,6 +82,7 @@ public class RecordHourTracertServiceImpl implements RecordHourTracertService {
 			scoreTarget.setTargetName(connection.get(i).getTargetName());
 			scoreTarget.setRecordDate(connection.get(i).getRecordDate());
 			scoreTarget.setRecordTime(connection.get(i).getRecordTime());
+			scoreTarget.setExit(connection.get(i).getExit());
 			scoreTarget.setAccessLayer(connection.get(i).getAccessLayer());
 			scoreTarget.setPort(connection.get(i).getPort());
 			scoreTarget.setFail(connection.get(i).getFail());
@@ -158,6 +159,7 @@ public class RecordHourTracertServiceImpl implements RecordHourTracertService {
 			lastScore.setAccessLayer(ite.getAccessLayer());
 			lastScore.setRecordTime(ite.getRecordTime());
 			lastScore.setRecordDate(ite.getRecordDate());
+			lastScore.setExit(ite.getExit());
 			lastScore.setPort(ite.getPort());
 			lastScore.setAccessLayer(ite.getAccessLayer());
 			lastScore.setScore(0.0);

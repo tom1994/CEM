@@ -29,6 +29,7 @@
 		<result property="targetName" column="target_name"/>
 		<result property="fail" column="fail"/>
 		<result property="total" column="total"/>
+		<result property="exit" column="exit"/>
     </resultMap>
 
 	<select id="queryObject" resultType="io.cem.modules.cem.entity.RecordHourFtpEntity">
@@ -147,11 +148,13 @@
 	</select>
 
 	<select id="queryExitList" resultType="io.cem.modules.cem.entity.RecordHourFtpEntity">
-		select record_hour_ftp.id,record_hour_ftp.city_id,record_hour_ftp.county_id,record_hour_ftp.probe_id,record_hour_ftp.port,record_hour_ftp.task_id,record_hour_ftp.service_type,record_hour_ftp.target_id,record_hour_ftp.target_ip,record_hour_ftp.record_date,record_hour_ftp.remark,
+		select t.*,
 		city.city_name AS city_name,
 		county.county_name AS area_name,
 		probe.probe_name AS probe_name,
 		target.target_name AS target_name,
+		probe_exit.exit
+		FROM (select record_hour_ftp.id,record_hour_ftp.city_id,record_hour_ftp.county_id,record_hour_ftp.probe_id,record_hour_ftp.port,record_hour_ftp.task_id,record_hour_ftp.service_type,record_hour_ftp.target_id,record_hour_ftp.target_ip,record_hour_ftp.record_date,record_hour_ftp.remark,
 		time_format(record_hour_ftp.record_time, '%H') AS record_time,
 		AVG(record_hour_ftp.dns_delay) AS dns_delay,
 		AVG(record_hour_ftp.conn_delay) AS conn_delay,
@@ -162,19 +165,20 @@
 		SUM(record_hour_ftp.fail) AS fail,
 		SUM(record_hour_ftp.total) AS total
 		FROM record_hour_ftp
-		LEFT JOIN city
-		ON record_hour_ftp.city_id = city.city_id
-		LEFT JOIN county
-		ON record_hour_ftp.county_id = county.county_id
-		INNER JOIN probe
-		ON record_hour_ftp.probe_id = probe.id
-		INNER JOIN target
-		ON record_hour_ftp.target_id = target.id
+		force index(idx_score)
 		WHERE record_hour_ftp.record_date BETWEEN #{ava_start} AND #{ava_terminal}
-		AND record_hour_ftp.port = #{port}
-		AND record_hour_ftp.probe_id = #{probe_id}
-		GROUP BY
-		record_hour_ftp.port,record_hour_ftp.probe_id;
+		GROUP BY record_hour_ftp.probe_id,record_hour_ftp.port)t
+		LEFT JOIN city
+		ON t.city_id = city.city_id
+		LEFT JOIN county
+		ON t.county_id = county.county_id
+		INNER JOIN probe
+		ON t.probe_id = probe.id
+		INNER JOIN target
+		ON t.target_id = target.id
+		INNER JOIN probe_exit
+        ON t.probe_id= probe_exit.probe_id AND t.port = probe_exit.port AND probe_exit.status=0
+
 	</select>
 
 	<select id="queryDayExitList" resultType="io.cem.modules.cem.entity.RecordHourFtpEntity">
@@ -183,6 +187,7 @@
 		county.county_name AS area_name,
 		probe.probe_name AS probe_name,
 		target.target_name AS target_name,
+		probe_exit.exit,
 		time_format(record_day_ftp.record_time, '%H') AS record_time,
 		AVG(record_day_ftp.dns_delay) AS dns_delay,
 		AVG(record_day_ftp.conn_delay) AS conn_delay,
@@ -201,9 +206,9 @@
 		ON record_day_ftp.probe_id = probe.id
 		INNER JOIN target
 		ON record_day_ftp.target_id = target.id
+		INNER JOIN probe_exit
+        ON record_day_ftp.probe_id= probe_exit.probe_id AND record_day_ftp.port = probe_exit.port AND probe_exit.status=0
 		WHERE record_day_ftp.record_date BETWEEN #{ava_start} AND #{ava_terminal}
-		AND record_day_ftp.port = #{port}
-		AND record_day_ftp.probe_id = #{probe_id}
 		GROUP BY
 		record_day_ftp.port,record_day_ftp.probe_id;
 	</select>

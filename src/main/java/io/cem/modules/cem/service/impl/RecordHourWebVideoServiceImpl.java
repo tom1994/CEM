@@ -429,6 +429,7 @@ public class RecordHourWebVideoServiceImpl implements RecordHourWebVideoService 
 				finalScore.setTargetName(videoList.get(i).getTargetName());
 				finalScore.setRecordDate(videoList.get(i).getRecordDate());
 				finalScore.setRecordTime(videoList.get(i).getRecordTime());
+				finalScore.setExit(videoList.get(i).getExit());
 				finalScore.setAccessLayer(videoList.get(i).getAccessLayer());
 				finalScore.setPort(videoList.get(i).getPort());
 				finalScore.setWebVideoDnsDelay(videoList.get(i).getDnsDelay());

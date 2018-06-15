@@ -101,6 +101,17 @@ public class RecordHourPingEntity implements Serializable {
 	private String targettypeName;
 @ExcelIgnore
 	private String stateName;
+	//出口名称
+	@ExcelIgnore
+	private String exit;
+
+	public String getExit() {
+		return exit;
+	}
+
+	public void setExit(String exit) {
+		this.exit = exit;
+	}
 
 	public String getTargettypeName() {
 		return targettypeName;

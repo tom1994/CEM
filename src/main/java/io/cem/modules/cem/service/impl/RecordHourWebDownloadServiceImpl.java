@@ -218,6 +218,7 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 				WEBDL.setPort(webDownloadList.get(i).getPort());
 				WEBDL.setRecordDate(webDownloadList.get(i).getRecordDate());
 				WEBDL.setRecordTime(webDownloadList.get(i).getRecordTime());
+				WEBDL.setExit(webDownloadList.get(i).getExit());
 				WEBDL.setWebDownloadDnsDelay(webDownloadList.get(i).getDnsDelay());
 				WEBDL.setWebDownloadConnDelay(webDownloadList.get(i).getConnDelay());
 				WEBDL.setWebDownloadHeadbyteDelay(webDownloadList.get(i).getHeadbyteDelay());
@@ -425,6 +426,7 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 					FTPD.setPort(ftpList.get(i).getPort());
 					FTPD.setRecordTime(ftpList.get(i).getRecordTime());
 					FTPD.setRecordDate(ftpList.get(i).getRecordDate());
+					FTPD.setExit(ftpList.get(i).getExit());
 					FTPD.setFtpDownloadDnsDelay(ftpList.get(i).getDnsDelay());
 					FTPD.setFtpDownloadConnDelay(ftpList.get(i).getConnDelay());
 					FTPD.setFtpDownloadLoginDelay(ftpList.get(i).getLoginDelay());
@@ -637,6 +639,7 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 					FTPU.setFtpUploadHeadbyteDelay(ftpList.get(i).getHeadbyteDelay());
 					FTPU.setFtpUploadUploadRate(ftpList.get(i).getUploadRate());
 					FTPU.setAccessLayer(ftpList.get(i).getAccessLayer());
+					FTPU.setExit(ftpList.get(i).getExit());
 					FTPU.setPort(ftpList.get(i).getPort());
 					RecordFailEntity failEntity = new RecordFailEntity();
 					failEntity.setCityId(ftpList.get(i).getCityId());
@@ -683,6 +686,7 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 				scoreTarget.setTargetName(webDownload.get(i).getTargetName());
 				scoreTarget.setRecordDate(webDownload.get(i).getRecordDate());
 				scoreTarget.setRecordTime(webDownload.get(i).getRecordTime());
+				scoreTarget.setExit(webDownload.get(i).getExit());
 				scoreTarget.setAccessLayer(webDownload.get(i).getAccessLayer());
 				scoreTarget.setPort(webDownload.get(i).getPort());
 				scoreTarget.setFail(webDownload.get(i).getFail());
@@ -721,6 +725,7 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 					finalScore.setTargetId(ite.getTargetId());
 					finalScore.setTargetName(ite.getTargetName());
 					finalScore.setAccessLayer(ite.getAccessLayer());
+					finalScore.setExit(ite.getExit());
 					finalScore.setPort(ite.getPort());
 					finalScore.setRecordTime(ite.getRecordTime());
 					finalScore.setRecordDate(ite.getRecordDate());

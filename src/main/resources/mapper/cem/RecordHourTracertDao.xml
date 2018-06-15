@@ -27,6 +27,7 @@
         <result property="remark" column="remark"/>
 		<result property="fail" column="fail"/>
 		<result property="total" column="total"/>
+		<result property="exit" column="exit"/>
     </resultMap>
 
 	<select id="queryObject" resultType="io.cem.modules.cem.entity.RecordHourTracertEntity">
@@ -206,6 +207,7 @@
 		probe.probe_name AS probe_name,
 		probe.access_layer,
 		target.target_name AS target_name,
+		probe_exit.exit,
 		time_format(record_time, '%H') AS record_time,
 		AVG(rht.delay) AS delay,
 		AVG(rht.delay_std) AS delay_std,
@@ -225,9 +227,9 @@
 		ON rht.probe_id = probe.id
 		INNER JOIN target
 		ON rht.target_id = target.id
+		INNER JOIN probe_exit
+        ON rht.probe_id= probe_exit.probe_id AND rht.port = probe_exit.port AND probe_exit.status=0
 		WHERE rht.record_date BETWEEN #{ava_start} AND #{ava_terminal}
-		AND rht.port = #{port}
-        AND rht.probe_id = #{probe_id}
         GROUP BY
         rht.port,rht.probe_id,rht.service_type
     </select>
@@ -239,6 +241,7 @@
 		probe.probe_name AS probe_name,
 		probe.access_layer,
 		target.target_name AS target_name,
+		probe_exit.exit,
 		time_format(record_time, '%H') AS record_time,
 		AVG(record_day_tracert.delay) AS delay,
 		AVG(record_day_tracert.delay_std) AS delay_std,
@@ -258,9 +261,9 @@
 		ON record_day_tracert.probe_id = probe.id
 		INNER JOIN target
 		ON record_day_tracert.target_id = target.id
+		INNER JOIN probe_exit
+        ON record_day_tracert.probe_id= probe_exit.probe_id AND record_day_tracert.port = probe_exit.port AND probe_exit.status=0
 		WHERE record_day_tracert.record_date BETWEEN #{ava_start} AND #{ava_terminal}
-		AND record_day_tracert.port = #{port}
-		AND record_day_tracert.probe_id = #{probe_id}
 		GROUP BY
 		record_day_tracert.port,record_day_tracert.probe_id,record_day_tracert.service_type
 	</select>

@@ -113,6 +113,15 @@ public class ScoreTargetEntity {
     //丢包率
     private Double tracertTcpLossRate;
 
+    private String exit;
+
+    public String getExit() {
+        return exit;
+    }
+
+    public void setExit(String exit) {
+        this.exit = exit;
+    }
 
     public String getCityName() {
         return cityName;

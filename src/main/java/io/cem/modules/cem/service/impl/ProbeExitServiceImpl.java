@@ -88,8 +88,7 @@ public class ProbeExitServiceImpl implements ProbeExitService {
 	}
 
 	@Override
-	public ScoreEntity calculateScore(Map<String, Object> map) throws ExecutionException, InterruptedException{
-		ScoreEntity score=new ScoreEntity();
+	public List<ScoreEntity> calculateScore(Map<String, Object> map) throws ExecutionException, InterruptedException{
 		RecordHourPingService recordHourPingService= (RecordHourPingService) SpringContextUtils.getBean("recordHourPingService");
 		RecordHourTracertService recordHourTracertService= (RecordHourTracertService) SpringContextUtils.getBean("recordHourTracertService");
 		RecordHourSlaService recordHourSlaService= (RecordHourSlaService) SpringContextUtils.getBean("recordHourSlaService");
@@ -492,12 +491,8 @@ public class ProbeExitServiceImpl implements ProbeExitService {
 			}else{}
 
 		}
-        if(scoreList.size()!=0){
-		    score=scoreList.get(0);
-		}
 
-
-		return score;
+		return scoreList;
 	};
 
 }
