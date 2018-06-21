@@ -1154,6 +1154,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				scoreBase.setSlaTcpGJitter(slaTcp.get(i).getSlaTcpGJitter());
 				scoreBase.setSlaTcpRJitter(slaTcp.get(i).getSlaTcpRJitter());
 				scoreBase.setSlaTcpLossRate(slaTcp.get(i).getSlaTcpLossRate());
+				scoreBase.setSlaTcpFail(slaTcp.get(i).getFail());
+				scoreBase.setSlaTcpTotal(slaTcp.get(i).getSlaTcpTotal());
 				scoreBase.setScore(slaTcp.get(i).getScore());
 				scoreBase.setBase(slaTcp.get(i).getBase());
 				Map<String,ScoreBaseEntity> sla1 = new HashMap<>();
@@ -1208,6 +1210,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 							finalScore.setSlaTcpGJitter(map1.get(typ).getSlaTcpGJitter());
 							finalScore.setSlaTcpRJitter(map1.get(typ).getSlaTcpRJitter());
 							finalScore.setSlaTcpLossRate(map1.get(typ).getSlaTcpLossRate());
+							finalScore.setSlaTcpFail(map1.get(typ).getSlaTcpFail());
+							finalScore.setSlaTcpTotal(map1.get(typ).getSlaTcpTotal());
 						}else if(typ.equals("slaUdp")){
 							finalScore.setSlaUdpDelay(map1.get(typ).getSlaUdpDelay());
 							finalScore.setSlaUdpGDelay(map1.get(typ).getSlaUdpGDelay());
@@ -1216,19 +1220,29 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 							finalScore.setSlaUdpGJitter(map1.get(typ).getSlaUdpGJitter());
 							finalScore.setSlaUdpRJitter(map1.get(typ).getSlaUdpRJitter());
 							finalScore.setSlaUdpLossRate(map1.get(typ).getSlaUdpLossRate());
+							finalScore.setSlaUdpFail(map1.get(typ).getSlaUdpFail());
+							finalScore.setSlaUdpTotal(map1.get(typ).getSlaUdpTotal());
 						}else if(typ.equals("dns")){
 							finalScore.setDnsDelay(map1.get(typ).getDnsDelay());
 							finalScore.setDnsSuccessRate(map1.get(typ).getDnsSuccessRate());
+							finalScore.setDnsFail(map1.get(typ).getDnsFail());
+							finalScore.setDnsTotal(map1.get(typ).getDnsTotal());
 						}else if(typ.equals("dhcp")){
 							finalScore.setDhcpDelay(map1.get(typ).getDhcpDelay());
 							finalScore.setDhcpSuccessRate(map1.get(typ).getDhcpSuccessRate());
+							finalScore.setDhcpFail(map1.get(typ).getDhcpFail());
+							finalScore.setDhcpTotal(map1.get(typ).getDhcpTotal());
 						}else if(typ.equals("pppoe")){
 							finalScore.setPppoeDelay(map1.get(typ).getPppoeDelay());
 							finalScore.setPppoeDropRate(map1.get(typ).getPppoeDropRate());
 							finalScore.setPppoeSuccessRate(map1.get(typ).getPppoeSuccessRate());
+							finalScore.setPppoeFail(map1.get(typ).getPppoeFail());
+							finalScore.setPppoeTotal(map1.get(typ).getPppoeTotal());
 						}else if(typ.equals("radius")){
 							finalScore.setRadiusDelay(map1.get(typ).getRadiusDelay());
 							finalScore.setRadiusSuccessRate(map1.get(typ).getRadiusSuccessRate());
+							finalScore.setRadiusFail(map1.get(typ).getRadiusFail());
+							finalScore.setRadiusTotal(map1.get(typ).getRadiusTotal());
 						}else{}
 						finalScore.setScore(finalScore.getScore()+map1.get(typ).getScore()*map1.get(typ).getBase());
 						finalScore.setBase(finalScore.getBase()+map1.get(typ).getBase());
@@ -1277,6 +1291,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				scoreBase.setSlaTcpGJitter(slaTcp.get(i).getSlaTcpGJitter());
 				scoreBase.setSlaTcpRJitter(slaTcp.get(i).getSlaTcpRJitter());
 				scoreBase.setSlaTcpLossRate(slaTcp.get(i).getSlaTcpLossRate());
+				scoreBase.setSlaTcpTotal(slaTcp.get(i).getTotal());
+				scoreBase.setSlaTcpFail(slaTcp.get(i).getFail());
 				scoreBase.setScore(slaTcp.get(i).getScore());
 				scoreBase.setBase(slaTcp.get(i).getBase());
 				Map<String,ScoreBaseEntity> sla1 = new HashMap<>();
@@ -1330,6 +1346,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 							finalScore.setSlaTcpGJitter(map1.get(typ).getSlaTcpGJitter());
 							finalScore.setSlaTcpRJitter(map1.get(typ).getSlaTcpRJitter());
 							finalScore.setSlaTcpLossRate(map1.get(typ).getSlaTcpLossRate());
+							finalScore.setSlaTcpFail(map1.get(typ).getSlaTcpFail());
+							finalScore.setSlaTcpTotal(map1.get(typ).getSlaTcpTotal());
 						}else if(typ.equals("slaUdp")){
 							finalScore.setSlaUdpDelay(map1.get(typ).getSlaUdpDelay());
 							finalScore.setSlaUdpGDelay(map1.get(typ).getSlaUdpGDelay());
@@ -1338,19 +1356,29 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 							finalScore.setSlaUdpGJitter(map1.get(typ).getSlaUdpGJitter());
 							finalScore.setSlaUdpRJitter(map1.get(typ).getSlaUdpRJitter());
 							finalScore.setSlaUdpLossRate(map1.get(typ).getSlaUdpLossRate());
+							finalScore.setSlaUdpFail(map1.get(typ).getSlaUdpFail());
+							finalScore.setSlaUdpTotal(map1.get(typ).getSlaUdpTotal());
 						}else if(typ.equals("dns")){
 							finalScore.setDnsDelay(map1.get(typ).getDnsDelay());
 							finalScore.setDnsSuccessRate(map1.get(typ).getDnsSuccessRate());
+							finalScore.setDnsFail(map1.get(typ).getDnsFail());
+							finalScore.setDnsTotal(map1.get(typ).getDnsTotal());
 						}else if(typ.equals("dhcp")){
 							finalScore.setDhcpDelay(map1.get(typ).getDhcpDelay());
 							finalScore.setDhcpSuccessRate(map1.get(typ).getDhcpSuccessRate());
+							finalScore.setDhcpFail(map1.get(typ).getDhcpFail());
+							finalScore.setDhcpTotal(map1.get(typ).getDhcpTotal());
 						}else if(typ.equals("pppoe")){
 							finalScore.setPppoeDelay(map1.get(typ).getPppoeDelay());
 							finalScore.setPppoeDropRate(map1.get(typ).getPppoeDropRate());
 							finalScore.setPppoeSuccessRate(map1.get(typ).getPppoeSuccessRate());
+							finalScore.setPppoeFail(map1.get(typ).getPppoeFail());
+							finalScore.setPppoeTotal(map1.get(typ).getPppoeTotal());
 						}else if(typ.equals("radius")){
 							finalScore.setRadiusDelay(map1.get(typ).getRadiusDelay());
 							finalScore.setRadiusSuccessRate(map1.get(typ).getRadiusSuccessRate());
+							finalScore.setRadiusFail(map1.get(typ).getRadiusFail());
+							finalScore.setRadiusTotal(map1.get(typ).getRadiusTotal());
 						}else{}
 						finalScore.setScore(finalScore.getScore()+map1.get(typ).getScore()*map1.get(typ).getBase());
 						finalScore.setBase(finalScore.getBase()+map1.get(typ).getBase());
@@ -1399,6 +1427,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				scoreBase.setSlaTcpGJitter(slaTcp.get(i).getSlaTcpGJitter());
 				scoreBase.setSlaTcpRJitter(slaTcp.get(i).getSlaTcpRJitter());
 				scoreBase.setSlaTcpLossRate(slaTcp.get(i).getSlaTcpLossRate());
+				scoreBase.setSlaTcpTotal(slaTcp.get(i).getTotal());
+				scoreBase.setSlaTcpFail(slaTcp.get(i).getFail());
 				scoreBase.setScore(slaTcp.get(i).getScore());
 				scoreBase.setBase(slaTcp.get(i).getBase());
 				Map<String,ScoreBaseEntity> sla1 = new HashMap<>();
@@ -1452,6 +1482,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 							finalScore.setSlaTcpGJitter(map1.get(typ).getSlaTcpGJitter());
 							finalScore.setSlaTcpRJitter(map1.get(typ).getSlaTcpRJitter());
 							finalScore.setSlaTcpLossRate(map1.get(typ).getSlaTcpLossRate());
+							finalScore.setSlaTcpFail(map1.get(typ).getSlaTcpFail());
+							finalScore.setSlaTcpTotal(map1.get(typ).getSlaTcpTotal());
 						}else if(typ.equals("slaUdp")){
 							finalScore.setSlaUdpDelay(map1.get(typ).getSlaUdpDelay());
 							finalScore.setSlaUdpGDelay(map1.get(typ).getSlaUdpGDelay());
@@ -1460,19 +1492,29 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 							finalScore.setSlaUdpGJitter(map1.get(typ).getSlaUdpGJitter());
 							finalScore.setSlaUdpRJitter(map1.get(typ).getSlaUdpRJitter());
 							finalScore.setSlaUdpLossRate(map1.get(typ).getSlaUdpLossRate());
+							finalScore.setSlaUdpFail(map1.get(typ).getSlaUdpFail());
+							finalScore.setSlaUdpTotal(map1.get(typ).getSlaUdpTotal());
 						}else if(typ.equals("dns")){
 							finalScore.setDnsDelay(map1.get(typ).getDnsDelay());
 							finalScore.setDnsSuccessRate(map1.get(typ).getDnsSuccessRate());
+							finalScore.setDnsFail(map1.get(typ).getDnsFail());
+							finalScore.setDnsTotal(map1.get(typ).getDnsTotal());
 						}else if(typ.equals("dhcp")){
 							finalScore.setDhcpDelay(map1.get(typ).getDhcpDelay());
 							finalScore.setDhcpSuccessRate(map1.get(typ).getDhcpSuccessRate());
+							finalScore.setDhcpFail(map1.get(typ).getDhcpFail());
+							finalScore.setDhcpTotal(map1.get(typ).getDhcpTotal());
 						}else if(typ.equals("pppoe")){
 							finalScore.setPppoeDelay(map1.get(typ).getPppoeDelay());
 							finalScore.setPppoeDropRate(map1.get(typ).getPppoeDropRate());
 							finalScore.setPppoeSuccessRate(map1.get(typ).getPppoeSuccessRate());
+							finalScore.setPppoeFail(map1.get(typ).getPppoeFail());
+							finalScore.setPppoeTotal(map1.get(typ).getPppoeTotal());
 						}else if(typ.equals("radius")){
 							finalScore.setRadiusDelay(map1.get(typ).getRadiusDelay());
 							finalScore.setRadiusSuccessRate(map1.get(typ).getRadiusSuccessRate());
+							finalScore.setRadiusFail(map1.get(typ).getRadiusFail());
+							finalScore.setRadiusTotal(map1.get(typ).getRadiusTotal());
 						}else{}
 						finalScore.setScore(finalScore.getScore()+map1.get(typ).getScore()*map1.get(typ).getBase());
 						finalScore.setBase(finalScore.getBase()+map1.get(typ).getBase());
@@ -1521,6 +1563,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				scoreBase.setSlaTcpGJitter(slaTcp.get(i).getSlaTcpGJitter());
 				scoreBase.setSlaTcpRJitter(slaTcp.get(i).getSlaTcpRJitter());
 				scoreBase.setSlaTcpLossRate(slaTcp.get(i).getSlaTcpLossRate());
+				scoreBase.setSlaTcpFail(slaTcp.get(i).getFail());
+				scoreBase.setSlaTcpTotal(slaTcp.get(i).getTotal());
 				scoreBase.setScore(slaTcp.get(i).getScore());
 				scoreBase.setBase(slaTcp.get(i).getBase());
 				Map<String,ScoreBaseEntity> sla1 = new HashMap<>();
@@ -1574,7 +1618,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 							finalScore.setSlaTcpGJitter(map1.get(typ).getSlaTcpGJitter());
 							finalScore.setSlaTcpRJitter(map1.get(typ).getSlaTcpRJitter());
 							finalScore.setSlaTcpLossRate(map1.get(typ).getSlaTcpLossRate());
-							finalScore.setTcpSlaScore(map1.get(typ).getScore());
+							finalScore.setSlaTcpFail(map1.get(typ).getSlaTcpFail());
+							finalScore.setSlaTcpTotal(map1.get(typ).getSlaTcpTotal());
 						}else if(typ.equals("slaUdp")){
 							finalScore.setSlaUdpDelay(map1.get(typ).getSlaUdpDelay());
 							finalScore.setSlaUdpGDelay(map1.get(typ).getSlaUdpGDelay());
@@ -1583,24 +1628,29 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 							finalScore.setSlaUdpGJitter(map1.get(typ).getSlaUdpGJitter());
 							finalScore.setSlaUdpRJitter(map1.get(typ).getSlaUdpRJitter());
 							finalScore.setSlaUdpLossRate(map1.get(typ).getSlaUdpLossRate());
-							finalScore.setUdpSlaScore(map1.get(typ).getScore());
+							finalScore.setSlaUdpFail(map1.get(typ).getSlaUdpFail());
+							finalScore.setSlaUdpTotal(map1.get(typ).getSlaUdpTotal());
 						}else if(typ.equals("dns")){
 							finalScore.setDnsDelay(map1.get(typ).getDnsDelay());
 							finalScore.setDnsSuccessRate(map1.get(typ).getDnsSuccessRate());
-							finalScore.setDnsScore(map1.get(typ).getScore());
+							finalScore.setDnsFail(map1.get(typ).getDnsFail());
+							finalScore.setDnsTotal(map1.get(typ).getDnsTotal());
 						}else if(typ.equals("dhcp")){
 							finalScore.setDhcpDelay(map1.get(typ).getDhcpDelay());
 							finalScore.setDhcpSuccessRate(map1.get(typ).getDhcpSuccessRate());
-							finalScore.setDhcpScore(map1.get(typ).getScore());
+							finalScore.setDhcpFail(map1.get(typ).getDhcpFail());
+							finalScore.setDhcpTotal(map1.get(typ).getDhcpTotal());
 						}else if(typ.equals("pppoe")){
 							finalScore.setPppoeDelay(map1.get(typ).getPppoeDelay());
 							finalScore.setPppoeDropRate(map1.get(typ).getPppoeDropRate());
 							finalScore.setPppoeSuccessRate(map1.get(typ).getPppoeSuccessRate());
-							finalScore.setPppoeScore(map1.get(typ).getScore());
+							finalScore.setPppoeFail(map1.get(typ).getPppoeFail());
+							finalScore.setPppoeTotal(map1.get(typ).getPppoeTotal());
 						}else if(typ.equals("radius")){
 							finalScore.setRadiusDelay(map1.get(typ).getRadiusDelay());
 							finalScore.setRadiusSuccessRate(map1.get(typ).getRadiusSuccessRate());
-							finalScore.setRadiusScore(map1.get(typ).getScore());
+							finalScore.setRadiusFail(map1.get(typ).getRadiusFail());
+							finalScore.setRadiusTotal(map1.get(typ).getRadiusTotal());
 						}else{}
 						finalScore.setScore(finalScore.getScore()+map1.get(typ).getScore()*map1.get(typ).getBase());
 						finalScore.setBase(finalScore.getBase()+map1.get(typ).getBase());
@@ -1652,6 +1702,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 				scoreBase.setSlaTcpGJitter(slaTcp.get(i).getSlaTcpGJitter());
 				scoreBase.setSlaTcpRJitter(slaTcp.get(i).getSlaTcpRJitter());
 				scoreBase.setSlaTcpLossRate(slaTcp.get(i).getSlaTcpLossRate());
+				scoreBase.setSlaTcpTotal(slaTcp.get(i).getTotal());
+				scoreBase.setSlaTcpFail(slaTcp.get(i).getFail());
 				scoreBase.setScore(slaTcp.get(i).getScore());
 				scoreBase.setBase(slaTcp.get(i).getBase());
 				Map<String,ScoreBaseEntity> sla1 = new HashMap<>();
@@ -1705,7 +1757,8 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 							finalScore.setSlaTcpGJitter(map1.get(typ).getSlaTcpGJitter());
 							finalScore.setSlaTcpRJitter(map1.get(typ).getSlaTcpRJitter());
 							finalScore.setSlaTcpLossRate(map1.get(typ).getSlaTcpLossRate());
-							finalScore.setTcpSlaScore(map1.get(typ).getScore());
+							finalScore.setSlaTcpFail(map1.get(typ).getSlaTcpFail());
+							finalScore.setSlaTcpTotal(map1.get(typ).getSlaTcpTotal());
 						}else if(typ.equals("slaUdp")){
 							finalScore.setSlaUdpDelay(map1.get(typ).getSlaUdpDelay());
 							finalScore.setSlaUdpGDelay(map1.get(typ).getSlaUdpGDelay());
@@ -1714,24 +1767,29 @@ public class RecordHourSlaServiceImpl implements RecordHourSlaService {
 							finalScore.setSlaUdpGJitter(map1.get(typ).getSlaUdpGJitter());
 							finalScore.setSlaUdpRJitter(map1.get(typ).getSlaUdpRJitter());
 							finalScore.setSlaUdpLossRate(map1.get(typ).getSlaUdpLossRate());
-							finalScore.setUdpSlaScore(map1.get(typ).getScore());
+							finalScore.setSlaUdpFail(map1.get(typ).getSlaUdpFail());
+							finalScore.setSlaUdpTotal(map1.get(typ).getSlaUdpTotal());
 						}else if(typ.equals("dns")){
 							finalScore.setDnsDelay(map1.get(typ).getDnsDelay());
 							finalScore.setDnsSuccessRate(map1.get(typ).getDnsSuccessRate());
-							finalScore.setDnsScore(map1.get(typ).getScore());
+							finalScore.setDnsFail(map1.get(typ).getDnsFail());
+							finalScore.setDnsTotal(map1.get(typ).getDnsTotal());
 						}else if(typ.equals("dhcp")){
 							finalScore.setDhcpDelay(map1.get(typ).getDhcpDelay());
 							finalScore.setDhcpSuccessRate(map1.get(typ).getDhcpSuccessRate());
-							finalScore.setDhcpScore(map1.get(typ).getScore());
+							finalScore.setDhcpFail(map1.get(typ).getDhcpFail());
+							finalScore.setDhcpTotal(map1.get(typ).getDhcpTotal());
 						}else if(typ.equals("pppoe")){
 							finalScore.setPppoeDelay(map1.get(typ).getPppoeDelay());
 							finalScore.setPppoeDropRate(map1.get(typ).getPppoeDropRate());
 							finalScore.setPppoeSuccessRate(map1.get(typ).getPppoeSuccessRate());
-							finalScore.setPppoeScore(map1.get(typ).getScore());
+							finalScore.setPppoeFail(map1.get(typ).getPppoeFail());
+							finalScore.setPppoeTotal(map1.get(typ).getPppoeTotal());
 						}else if(typ.equals("radius")){
 							finalScore.setRadiusDelay(map1.get(typ).getRadiusDelay());
 							finalScore.setRadiusSuccessRate(map1.get(typ).getRadiusSuccessRate());
-							finalScore.setRadiusScore(map1.get(typ).getScore());
+							finalScore.setRadiusFail(map1.get(typ).getRadiusFail());
+							finalScore.setRadiusTotal(map1.get(typ).getRadiusTotal());
 						}else{}
 						finalScore.setScore(finalScore.getScore()+map1.get(typ).getScore()*map1.get(typ).getBase());
 						finalScore.setBase(finalScore.getBase()+map1.get(typ).getBase());

@@ -449,6 +449,35 @@ public class ScoreEntity {
     @ExcelIgnore
     private Double onlineGameScore;
 
+    private Integer pingIcmpFail;
+    private Integer pingIcmpTotal;
+    private Integer pingTcpFail;
+    private Integer pingTcpTotal;
+    private Integer pingUdpFail;
+    private Integer pingUdpTotal;
+    private Integer tracertIcmpFail;
+    private Integer tracertIcmpTotal;
+    private Integer tracertUdpFail;
+    private Integer tracertUdpTotal;
+    private Integer slaTcpFail;
+    private Integer slaTcpTotal;
+    private Integer slaUdpFail;
+    private Integer slaUdpTotal;
+    private Integer pppoeFail;
+    private Integer pppoeTotal;
+    private Integer dhcpFail;
+    private Integer dhcpTotal;
+    private Integer dnsFail;
+    private Integer dnsTotal;
+    private Integer radiusFail;
+    private Integer radiusTotal;
+    private Integer webDownloadFail;
+    private Integer webDownloadTotal;
+    private Integer ftpDownloadFail;
+    private Integer ftpDownloadTotal;
+    private Integer ftpUploadFail;
+    private Integer ftpUploadTotal;
+
 
 
 
@@ -1586,6 +1615,230 @@ public class ScoreEntity {
 
     public Double getWebpageLoadDelay() {
         return webpageLoadDelay;
+    }
+
+    public Integer getPingIcmpFail() {
+        return pingIcmpFail;
+    }
+
+    public void setPingIcmpFail(Integer pingIcmpFail) {
+        this.pingIcmpFail = pingIcmpFail;
+    }
+
+    public Integer getPingIcmpTotal() {
+        return pingIcmpTotal;
+    }
+
+    public void setPingIcmpTotal(Integer pingIcmpTotal) {
+        this.pingIcmpTotal = pingIcmpTotal;
+    }
+
+    public Integer getPingTcpFail() {
+        return pingTcpFail;
+    }
+
+    public void setPingTcpFail(Integer pingTcpFail) {
+        this.pingTcpFail = pingTcpFail;
+    }
+
+    public Integer getPingTcpTotal() {
+        return pingTcpTotal;
+    }
+
+    public void setPingTcpTotal(Integer pingTcpTotal) {
+        this.pingTcpTotal = pingTcpTotal;
+    }
+
+    public Integer getPingUdpFail() {
+        return pingUdpFail;
+    }
+
+    public void setPingUdpFail(Integer pingUdpFail) {
+        this.pingUdpFail = pingUdpFail;
+    }
+
+    public Integer getPingUdpTotal() {
+        return pingUdpTotal;
+    }
+
+    public void setPingUdpTotal(Integer pingUdpTotal) {
+        this.pingUdpTotal = pingUdpTotal;
+    }
+
+    public Integer getTracertIcmpFail() {
+        return tracertIcmpFail;
+    }
+
+    public void setTracertIcmpFail(Integer tracertIcmpFail) {
+        this.tracertIcmpFail = tracertIcmpFail;
+    }
+
+    public Integer getTracertIcmpTotal() {
+        return tracertIcmpTotal;
+    }
+
+    public void setTracertIcmpTotal(Integer tracertIcmpTotal) {
+        this.tracertIcmpTotal = tracertIcmpTotal;
+    }
+
+    public Integer getTracertUdpFail() {
+        return tracertUdpFail;
+    }
+
+    public void setTracertUdpFail(Integer tracertUdpFail) {
+        this.tracertUdpFail = tracertUdpFail;
+    }
+
+    public Integer getTracertUdpTotal() {
+        return tracertUdpTotal;
+    }
+
+    public void setTracertUdpTotal(Integer tracertUdpTotal) {
+        this.tracertUdpTotal = tracertUdpTotal;
+    }
+
+    public Integer getSlaTcpFail() {
+        return slaTcpFail;
+    }
+
+    public void setSlaTcpFail(Integer slaTcpFail) {
+        this.slaTcpFail = slaTcpFail;
+    }
+
+    public Integer getSlaTcpTotal() {
+        return slaTcpTotal;
+    }
+
+    public void setSlaTcpTotal(Integer slaTcpTotal) {
+        this.slaTcpTotal = slaTcpTotal;
+    }
+
+    public Integer getSlaUdpFail() {
+        return slaUdpFail;
+    }
+
+    public void setSlaUdpFail(Integer slaUdpFail) {
+        this.slaUdpFail = slaUdpFail;
+    }
+
+    public Integer getSlaUdpTotal() {
+        return slaUdpTotal;
+    }
+
+    public void setSlaUdpTotal(Integer slaUdpTotal) {
+        this.slaUdpTotal = slaUdpTotal;
+    }
+
+    public Integer getPppoeFail() {
+        return pppoeFail;
+    }
+
+    public void setPppoeFail(Integer pppoeFail) {
+        this.pppoeFail = pppoeFail;
+    }
+
+    public Integer getPppoeTotal() {
+        return pppoeTotal;
+    }
+
+    public void setPppoeTotal(Integer pppoeTotal) {
+        this.pppoeTotal = pppoeTotal;
+    }
+
+    public Integer getDhcpFail() {
+        return dhcpFail;
+    }
+
+    public void setDhcpFail(Integer dhcpFail) {
+        this.dhcpFail = dhcpFail;
+    }
+
+    public Integer getDhcpTotal() {
+        return dhcpTotal;
+    }
+
+    public void setDhcpTotal(Integer dhcpTotal) {
+        this.dhcpTotal = dhcpTotal;
+    }
+
+    public Integer getDnsFail() {
+        return dnsFail;
+    }
+
+    public void setDnsFail(Integer dnsFail) {
+        this.dnsFail = dnsFail;
+    }
+
+    public Integer getDnsTotal() {
+        return dnsTotal;
+    }
+
+    public void setDnsTotal(Integer dnsTotal) {
+        this.dnsTotal = dnsTotal;
+    }
+
+    public Integer getRadiusFail() {
+        return radiusFail;
+    }
+
+    public void setRadiusFail(Integer radiusFail) {
+        this.radiusFail = radiusFail;
+    }
+
+    public Integer getRadiusTotal() {
+        return radiusTotal;
+    }
+
+    public void setRadiusTotal(Integer radiusTotal) {
+        this.radiusTotal = radiusTotal;
+    }
+
+    public Integer getWebDownloadFail() {
+        return webDownloadFail;
+    }
+
+    public void setWebDownloadFail(Integer webDownloadFail) {
+        this.webDownloadFail = webDownloadFail;
+    }
+
+    public Integer getWebDownloadTotal() {
+        return webDownloadTotal;
+    }
+
+    public void setWebDownloadTotal(Integer webDownloadTotal) {
+        this.webDownloadTotal = webDownloadTotal;
+    }
+
+    public Integer getFtpDownloadFail() {
+        return ftpDownloadFail;
+    }
+
+    public void setFtpDownloadFail(Integer ftpDownloadFail) {
+        this.ftpDownloadFail = ftpDownloadFail;
+    }
+
+    public Integer getFtpDownloadTotal() {
+        return ftpDownloadTotal;
+    }
+
+    public void setFtpDownloadTotal(Integer ftpDownloadTotal) {
+        this.ftpDownloadTotal = ftpDownloadTotal;
+    }
+
+    public Integer getFtpUploadFail() {
+        return ftpUploadFail;
+    }
+
+    public void setFtpUploadFail(Integer ftpUploadFail) {
+        this.ftpUploadFail = ftpUploadFail;
+    }
+
+    public Integer getFtpUploadTotal() {
+        return ftpUploadTotal;
+    }
+
+    public void setFtpUploadTotal(Integer ftpUploadTotal) {
+        this.ftpUploadTotal = ftpUploadTotal;
     }
 
     public void setWebpageLoadDelay(Double webpageLoadDelay) {
