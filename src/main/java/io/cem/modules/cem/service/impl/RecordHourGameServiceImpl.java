@@ -378,8 +378,6 @@ public class RecordHourGameServiceImpl implements RecordHourGameService {
 				scoreLayer.setRecordDate(gameList.get(i).getRecordDate());
 				scoreLayer.setRecordTime(gameList.get(i).getRecordTime());
 				scoreLayer.setPort(gameList.get(i).getPort());
-				scoreLayer.setFail(gameList.get(i).getFail());
-				scoreLayer.setTotal(gameList.get(i).getTotal());
 				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
 				scoreBase.setGameDnsDelay(gameList.get(i).getGameDnsDelay());
 				scoreBase.setGameConnDelay(gameList.get(i).getGameConnDelay());
@@ -388,6 +386,8 @@ public class RecordHourGameServiceImpl implements RecordHourGameService {
 				scoreBase.setGameLossRate(gameList.get(i).getGameLossRate());
 				scoreBase.setScore(gameList.get(i).getScore());
 				scoreBase.setBase(gameList.get(i).getBase());
+				scoreBase.setFail(gameList.get(i).getFail());
+				scoreBase.setTotal(gameList.get(i).getTotal());
 				if (!connection.containsKey(scoreLayer)) {
 
 					connection.put(scoreLayer,scoreBase);
@@ -429,7 +429,8 @@ public class RecordHourGameServiceImpl implements RecordHourGameService {
 					} else if(scoreBase.getGameLossRate()==null&&scoreBaseDul.getGameLossRate()!=null){
 						scoreBase.setIcmpPingScore(scoreBaseDul.getGameLossRate());
 					}
-
+					scoreBase.setTotal(scoreBase.getTotal()+scoreBaseDul.getTotal());
+					scoreBase.setFail(scoreBase.getFail()+scoreBaseDul.getFail());
 					scoreBase.setScore((scoreBase.getScore()+scoreBaseDul.getScore())/2);
 					scoreBase.setBase(scoreBase.getBase());
 
@@ -465,6 +466,8 @@ public class RecordHourGameServiceImpl implements RecordHourGameService {
 					finalScore.setGamePacketDelay(connection.get(ite).getGamePacketDelay());
 					finalScore.setGamePacketJitter(connection.get(ite).getGamePacketJitter());
 					finalScore.setGameLossRate(connection.get(ite).getGameLossRate());
+					finalScore.setFail(connection.get(ite).getFail());
+					finalScore.setTotal(connection.get(ite).getTotal());
 					finalScore.setScore(connection.get(ite).getScore());
 					finalScore.setBase(connection.get(ite).getBase());
 					finalScore.setBase(Double.parseDouble(pros.getValue("browseweight")));
@@ -499,8 +502,6 @@ public class RecordHourGameServiceImpl implements RecordHourGameService {
 				scoreDate.setRecordDate(gameList.get(i).getRecordDate());
 				scoreDate.setRecordTime(gameList.get(i).getRecordTime());
 				scoreDate.setPort(gameList.get(i).getPort());
-				scoreDate.setFail(gameList.get(i).getFail());
-				scoreDate.setTotal(gameList.get(i).getTotal());
 				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
 				scoreBase.setGameDnsDelay(gameList.get(i).getGameDnsDelay());
 				scoreBase.setGameConnDelay(gameList.get(i).getGameConnDelay());
@@ -509,6 +510,8 @@ public class RecordHourGameServiceImpl implements RecordHourGameService {
 				scoreBase.setGameLossRate(gameList.get(i).getGameLossRate());
 				scoreBase.setScore(gameList.get(i).getScore());
 				scoreBase.setBase(gameList.get(i).getBase());
+				scoreBase.setFail(gameList.get(i).getFail());
+				scoreBase.setTotal(gameList.get(i).getTotal());
 				if (!connection.containsKey(scoreDate)) {
 
 					connection.put(scoreDate,scoreBase);
@@ -550,7 +553,8 @@ public class RecordHourGameServiceImpl implements RecordHourGameService {
 					} else if(scoreBase.getGameLossRate()==null&&scoreBaseDul.getGameLossRate()!=null){
 						scoreBase.setIcmpPingScore(scoreBaseDul.getGameLossRate());
 					}
-
+					scoreBase.setFail(scoreBase.getFail()+scoreBaseDul.getFail());
+					scoreBase.setTotal(scoreBase.getTotal()+scoreBaseDul.getTotal());
 					scoreBase.setScore((scoreBase.getScore()+scoreBaseDul.getScore())/2);
 					scoreBase.setBase(scoreBase.getBase());
 
@@ -586,6 +590,8 @@ public class RecordHourGameServiceImpl implements RecordHourGameService {
 					finalScore.setGamePacketDelay(connection.get(ite).getGamePacketDelay());
 					finalScore.setGamePacketJitter(connection.get(ite).getGamePacketJitter());
 					finalScore.setGameLossRate(connection.get(ite).getGameLossRate());
+					finalScore.setTotal(connection.get(ite).getTotal());
+					finalScore.setFail(connection.get(ite).getFail());
 					finalScore.setScore(connection.get(ite).getScore());
 					finalScore.setBase(connection.get(ite).getBase());
 					finalScore.setBase(Double.parseDouble(pros.getValue("browseweight")));

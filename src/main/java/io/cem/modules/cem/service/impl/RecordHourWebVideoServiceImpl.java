@@ -532,8 +532,6 @@ public class RecordHourWebVideoServiceImpl implements RecordHourWebVideoService 
 				scoreLayer.setRecordDate(videoList.get(i).getRecordDate());
 				scoreLayer.setRecordTime(videoList.get(i).getRecordTime());
 				scoreLayer.setPort(videoList.get(i).getPort());
-				scoreLayer.setFail(videoList.get(i).getFail());
-				scoreLayer.setTotal(videoList.get(i).getTotal());
 				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
 				scoreBase.setWebVideoDnsDelay(videoList.get(i).getWebVideoDnsDelay());
 				scoreBase.setWebVideoWsConnDelay(videoList.get(i).getWebVideoWsConnDelay());
@@ -549,6 +547,8 @@ public class RecordHourWebVideoServiceImpl implements RecordHourWebVideoService 
 				scoreBase.setWebVideoBufferTime(videoList.get(i).getWebVideoBufferTime());
 				scoreBase.setScore(videoList.get(i).getScore());
 				scoreBase.setBase(videoList.get(i).getBase());
+				scoreBase.setFail(videoList.get(i).getFail());
+				scoreBase.setTotal(videoList.get(i).getTotal());
 				if (!connection.containsKey(scoreLayer)) {
 
 					connection.put(scoreLayer,scoreBase);
@@ -568,6 +568,8 @@ public class RecordHourWebVideoServiceImpl implements RecordHourWebVideoService 
 					scoreBase.setWebVideoDownloadRate(scoreBase.getWebVideoDownloadRate());
 					scoreBase.setWebVideoBufferTime(scoreBase.getWebVideoBufferTime());
 					scoreBase.setScore((scoreBase.getScore()+scoreBaseDul.getScore())/2);
+					scoreBase.setFail(scoreBase.getFail()+scoreBaseDul.getFail());
+					scoreBase.setTotal(scoreBase.getTotal()+scoreBaseDul.getTotal());
 					scoreBase.setBase(scoreBase.getBase());
 
 					connection.put(scoreLayer,scoreBase);
@@ -609,6 +611,8 @@ public class RecordHourWebVideoServiceImpl implements RecordHourWebVideoService 
 					finalScore.setWebVideoTotalBufferDelay(connection.get(ite).getWebVideoTotalBufferDelay());
 					finalScore.setWebVideoDownloadRate(connection.get(ite).getWebVideoDownloadRate());
 					finalScore.setWebVideoBufferTime(connection.get(ite).getWebVideoBufferTime());
+					finalScore.setFail(connection.get(ite).getFail());
+					finalScore.setTotal(connection.get(ite).getTotal());
 					finalScore.setScore(connection.get(ite).getScore());
 					finalScore.setBase(connection.get(ite).getBase());
 					finalScore.setBase(Double.parseDouble(pros.getValue("videoweight")));
@@ -642,8 +646,6 @@ public class RecordHourWebVideoServiceImpl implements RecordHourWebVideoService 
 				scoreDate.setRecordDate(videoList.get(i).getRecordDate());
 				scoreDate.setRecordTime(videoList.get(i).getRecordTime());
 				scoreDate.setPort(videoList.get(i).getPort());
-				scoreDate.setFail(videoList.get(i).getFail());
-				scoreDate.setTotal(videoList.get(i).getTotal());
 				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
 				scoreBase.setWebVideoDnsDelay(videoList.get(i).getWebVideoDnsDelay());
 				scoreBase.setWebVideoWsConnDelay(videoList.get(i).getWebVideoWsConnDelay());
@@ -657,6 +659,8 @@ public class RecordHourWebVideoServiceImpl implements RecordHourWebVideoService 
 				scoreBase.setWebVideoTotalBufferDelay(videoList.get(i).getWebVideoTotalBufferDelay());
 				scoreBase.setWebVideoDownloadRate(videoList.get(i).getWebVideoDownloadRate());
 				scoreBase.setWebVideoBufferTime(videoList.get(i).getWebVideoBufferTime());
+				scoreBase.setFail(videoList.get(i).getFail());
+				scoreBase.setTotal(videoList.get(i).getTotal());
 				scoreBase.setScore(videoList.get(i).getScore());
 				scoreBase.setBase(videoList.get(i).getBase());
 				if (!connection.containsKey(scoreDate)) {
@@ -677,6 +681,9 @@ public class RecordHourWebVideoServiceImpl implements RecordHourWebVideoService 
 					scoreBase.setWebVideoTotalBufferDelay(scoreBase.getWebVideoTotalBufferDelay());
 					scoreBase.setWebVideoDownloadRate(scoreBase.getWebVideoDownloadRate());
 					scoreBase.setWebVideoBufferTime(scoreBase.getWebVideoBufferTime());
+					scoreBase.setFail(scoreBase.getFail()+scoreBaseDul.getFail());
+					scoreBase.setTotal(scoreBase.getTotal()+scoreBaseDul.getTotal());
+					scoreBase.setScore((scoreBase.getScore()+scoreBaseDul.getScore())/2);
 					scoreBase.setScore((scoreBase.getScore()+scoreBaseDul.getScore())/2);
 					scoreBase.setBase(scoreBase.getBase());
 
@@ -719,6 +726,8 @@ public class RecordHourWebVideoServiceImpl implements RecordHourWebVideoService 
 					finalScore.setWebVideoTotalBufferDelay(connection.get(ite).getWebVideoTotalBufferDelay());
 					finalScore.setWebVideoDownloadRate(connection.get(ite).getWebVideoDownloadRate());
 					finalScore.setWebVideoBufferTime(connection.get(ite).getWebVideoBufferTime());
+					finalScore.setTotal(connection.get(ite).getTotal());
+					finalScore.setFail(connection.get(ite).getFail());
 					finalScore.setScore(connection.get(ite).getScore());
 					finalScore.setBase(connection.get(ite).getBase());
 					finalScore.setBase(Double.parseDouble(pros.getValue("videoweight")));

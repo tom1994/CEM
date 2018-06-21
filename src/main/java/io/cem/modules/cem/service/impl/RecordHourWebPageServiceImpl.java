@@ -496,8 +496,6 @@ public class RecordHourWebPageServiceImpl implements RecordHourWebPageService {
 				scoreDate.setRecordDate(webPageList.get(i).getRecordDate());
 				scoreDate.setRecordTime(webPageList.get(i).getRecordTime());
 				scoreDate.setPort(webPageList.get(i).getPort());
-				scoreDate.setFail(webPageList.get(i).getFail());
-				scoreDate.setTotal(webPageList.get(i).getTotal());
 				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
 				scoreBase.setWebpageDnsDelay(webPageList.get(i).getWebpageDnsDelay());
 				scoreBase.setWebpageConnDelay(webPageList.get(i).getWebpageConnDelay());
@@ -510,6 +508,8 @@ public class RecordHourWebPageServiceImpl implements RecordHourWebPageService {
 				scoreBase.setWebpageDownloadRate(webPageList.get(i).getWebpageDownloadRate());
 				scoreBase.setScore(webPageList.get(i).getScore());
 				scoreBase.setBase(webPageList.get(i).getBase());
+				scoreBase.setFail(webPageList.get(i).getFail());
+				scoreBase.setTotal(webPageList.get(i).getTotal());
 				if (!connection.containsKey(scoreDate)) {
 
 					connection.put(scoreDate,scoreBase);
@@ -526,6 +526,8 @@ public class RecordHourWebPageServiceImpl implements RecordHourWebPageService {
 					scoreBase.setWebpageLoadDelay(scoreBase.getWebpageLoadDelay());
 					scoreBase.setWebpageDownloadRate(scoreBase.getWebpageDownloadRate());
 					scoreBase.setScore((scoreBase.getScore()+scoreBaseDul.getScore())/2);
+					scoreBase.setFail(scoreBase.getFail()+scoreBaseDul.getFail());
+					scoreBase.setTotal(scoreBase.getTotal()+scoreBaseDul.getTotal());
 					scoreBase.setBase(scoreBase.getBase());
 
 					connection.put(scoreDate,scoreBase);
@@ -565,6 +567,8 @@ public class RecordHourWebPageServiceImpl implements RecordHourWebPageService {
 					finalScore.setWebpageLoadDelay(connection.get(ite).getWebpageLoadDelay());
 					finalScore.setWebpageDownloadRate(connection.get(ite).getWebpageDownloadRate());
 					finalScore.setScore(connection.get(ite).getScore());
+					finalScore.setFail(connection.get(ite).getFail());
+					finalScore.setTotal(connection.get(ite).getTotal());
 					finalScore.setBase(connection.get(ite).getBase());
 					finalScore.setBase(Double.parseDouble(pros.getValue("browseweight")));
 					connectionScore.add(finalScore);
@@ -601,8 +605,6 @@ public class RecordHourWebPageServiceImpl implements RecordHourWebPageService {
 				scoreLayer.setRecordDate(webPageList.get(i).getRecordDate());
 				scoreLayer.setRecordTime(webPageList.get(i).getRecordTime());
 				scoreLayer.setPort(webPageList.get(i).getPort());
-				scoreLayer.setFail(webPageList.get(i).getFail());
-				scoreLayer.setTotal(webPageList.get(i).getTotal());
 				ScoreBaseEntity scoreBase = new ScoreBaseEntity();
 				scoreBase.setWebpageDnsDelay(webPageList.get(i).getWebpageDnsDelay());
 				scoreBase.setWebpageConnDelay(webPageList.get(i).getWebpageConnDelay());
@@ -615,6 +617,8 @@ public class RecordHourWebPageServiceImpl implements RecordHourWebPageService {
 				scoreBase.setWebpageDownloadRate(webPageList.get(i).getWebpageDownloadRate());
 				scoreBase.setScore(webPageList.get(i).getScore());
 				scoreBase.setBase(webPageList.get(i).getBase());
+				scoreBase.setFail(webPageList.get(i).getFail());
+				scoreBase.setTotal(webPageList.get(i).getTotal());
 				if (!connection.containsKey(scoreLayer)) {
 
 					connection.put(scoreLayer,scoreBase);
@@ -631,6 +635,8 @@ public class RecordHourWebPageServiceImpl implements RecordHourWebPageService {
 					scoreBase.setWebpageLoadDelay(scoreBase.getWebpageLoadDelay());
 					scoreBase.setWebpageDownloadRate(scoreBase.getWebpageDownloadRate());
 					scoreBase.setScore((scoreBase.getScore()+scoreBaseDul.getScore())/2);
+					scoreBase.setFail(scoreBase.getFail()+scoreBaseDul.getFail());
+					scoreBase.setTotal(scoreBase.getTotal()+scoreBaseDul.getTotal());
 					scoreBase.setBase(scoreBase.getBase());
 
 					connection.put(scoreLayer,scoreBase);
@@ -669,6 +675,8 @@ public class RecordHourWebPageServiceImpl implements RecordHourWebPageService {
 					finalScore.setWebpagePageElementDelay(connection.get(ite).getWebpagePageElementDelay());
 					finalScore.setWebpageLoadDelay(connection.get(ite).getWebpageLoadDelay());
 					finalScore.setWebpageDownloadRate(connection.get(ite).getWebpageDownloadRate());
+					finalScore.setFail(connection.get(ite).getFail());
+					finalScore.setTotal(connection.get(ite).getTotal());
 					finalScore.setScore(connection.get(ite).getScore());
 					finalScore.setBase(connection.get(ite).getBase());
 					finalScore.setBase(Double.parseDouble(pros.getValue("browseweight")));

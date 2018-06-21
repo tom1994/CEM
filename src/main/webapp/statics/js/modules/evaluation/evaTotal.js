@@ -1483,6 +1483,7 @@ var broswer_table=new Vue({
             {title: '<div style="width:100px">首屏时延(ms)</div>'},
             {title: '<div style="width:115px">页面加载时延(ms)</div>'},
             {title: '<div style="width:100px">下载速率(KB/s)</div>'},
+            {title: '<div style="width:100px">失败率(KB/s)</div>'},
         ],
         rows: [],
         dtHandle: null,
@@ -1552,6 +1553,7 @@ var broswer_table=new Vue({
                         row.push(fixed(item.webpageAboveFoldDelay));
                         row.push(fixed(item.webpageLoadDelay));
                         row.push(fixed(item.webpageDownloadRate));
+                        row.push(fixed(item.fail/item.total));
                         rows.push(row);
 
                     });

@@ -233,6 +233,7 @@ public class RecordHourPingController {
         System.out.println(chartdata_jsonobject);
         try {
             map.putAll(JSONUtils.jsonToMap(chartdata_jsonobject));
+            map.put("type",1);
         } catch (RuntimeException e) {
             throw new RRException("内部参数错误，请重试！");
         }
@@ -249,7 +250,7 @@ public class RecordHourPingController {
             e.printStackTrace();
         }
 
-        map.put("type",1);
+
         List<ScoreEntity> scoreList = new ArrayList<>();
         if (dateDifferent > 5) {
             scoreList = recordHourDhcpService.pageDayChart(map);
@@ -328,6 +329,7 @@ public class RecordHourPingController {
         System.out.println(chartdata_jsonobject);
         try {
             map.putAll(JSONUtils.jsonToMap(chartdata_jsonobject));
+            map.put("type",1);
         } catch (RuntimeException e) {
             throw new RRException("内部参数错误，请重试！");
         }
@@ -344,7 +346,6 @@ public class RecordHourPingController {
             e.printStackTrace();
         }
 
-        map.put("type",1);
         List<ScoreEntity> scoreList;
         if (dateDifferent > 5) {
             scoreList = recordHourDhcpService.videoDayChart(map);
@@ -376,6 +377,7 @@ public class RecordHourPingController {
         System.out.println(chartdata_jsonobject);
         try {
             map.putAll(JSONUtils.jsonToMap(chartdata_jsonobject));
+            map.put("type",1);
         } catch (RuntimeException e) {
             throw new RRException("内部参数错误，请重试！");
         }
@@ -392,7 +394,7 @@ public class RecordHourPingController {
             e.printStackTrace();
         }
 
-        map.put("type",1);
+
         List<ScoreEntity> scoreList;
         if (dateDifferent > 5) {
             scoreList = recordHourDhcpService.gameDayChart(map);

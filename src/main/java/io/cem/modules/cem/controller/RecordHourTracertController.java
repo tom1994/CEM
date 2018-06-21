@@ -82,6 +82,7 @@ public class RecordHourTracertController {
 		JSONObject probedata_jsonobject = JSONObject.parseObject(probedata);
 		try {
 			map.putAll(JSONUtils.jsonToMap(probedata_jsonobject));
+			map.put("type",3);
 		} catch (RuntimeException e) {
 			throw new RRException("内部参数错误，请重试！");
 		}
@@ -99,7 +100,7 @@ public class RecordHourTracertController {
 			e.printStackTrace();
 		}
 		List<ScoreEntity> scoreList;
-		map.put("type",3);
+
 		if(dateDifferent==0){
 			scoreList = recordHourRadiusService.calculateAreaHourScore(map);
 		}else if(dateDifferent==1){
@@ -165,6 +166,7 @@ public class RecordHourTracertController {
 		JSONObject probedata_jsonobject = JSONObject.parseObject(probedata);
 		try {
 			map.putAll(JSONUtils.jsonToMap(probedata_jsonobject));
+			map.put("type",4);
 		} catch (RuntimeException e) {
 			throw new RRException("内部参数错误，请重试！");
 		}
@@ -181,7 +183,7 @@ public class RecordHourTracertController {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		map.put("type",4);
+
 		List<ScoreEntity> scoreList;
 		if(dateDifferent==0){
 			scoreList = recordHourRadiusService.calculateTargetHourScore(map);
@@ -256,6 +258,7 @@ public class RecordHourTracertController {
 		JSONObject probedata_jsonobject = JSONObject.parseObject(probedata);
 		try {
 			map.putAll(JSONUtils.jsonToMap(probedata_jsonobject));
+			map.put("type",3);
 		} catch (RuntimeException e) {
 			throw new RRException("内部参数错误，请重试！");
 		}
@@ -345,8 +348,10 @@ public class RecordHourTracertController {
 	public void downloadDoor(HttpServletResponse response, @PathVariable String probedata) throws ExecutionException, InterruptedException {
 		Map<String, Object> map = new HashMap<>();
 		JSONObject jsonobject = JSONObject.parseObject(probedata);
+
 		try {
 			map.putAll(JSONUtils.jsonToMap(jsonobject));
+			map.put("type",4);
 		} catch (RuntimeException e) {
 			throw new RRException("内部参数错误，请重试！");
 		}
@@ -362,7 +367,7 @@ public class RecordHourTracertController {
 			e.printStackTrace();
 		}
 		List<ScoreEntity> scoreList;
-		map.put("type",4);
+
 		if(dateDifferent==0){
 			scoreList = recordHourRadiusService.calculateTargetHourScore(map);
 		}else if(dateDifferent==1){
@@ -409,6 +414,7 @@ public class RecordHourTracertController {
 		JSONObject jsonobject = JSONObject.parseObject(probedata);
 		try {
 			map.putAll(JSONUtils.jsonToMap(jsonobject));
+			map.put("type",3);
 		} catch (RuntimeException e) {
 			throw new RRException("内部参数错误，请重试！");
 		}
@@ -423,7 +429,7 @@ public class RecordHourTracertController {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		map.put("type",3);
+
 		List<ScoreEntity> scoreList;
 		if(dateDifferent==0){
 			scoreList = recordHourRadiusService.calculateAreaHourScore(map);
