@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 
@@ -52,29 +51,30 @@ public class ScoreCollectController {
         return  R.ok().put("scoreCollects",scoreCollects).put("startDate",pm.get("startDate")).put("endDate",pm.get("endDate"));
 
     }
-    //显示n个月的柱图
+    //显示n个月的柱图(2)
     @RequestMapping("/qoeview")
     @ResponseBody
     public R getQoEView(String serviceType){// test http://localhost:8080/cem/collect/qoeview
-        List<Date> p = getQueryMouth();
+         List<Date> p = getQueryMouth();
         List<ScoreCollectAllEntity> scoreCollects = new ArrayList<ScoreCollectAllEntity>();
         for(Date d:p){
             Map<String,Object> pm = new LinkedHashMap<String,Object>();
-            pm.put("startDate",DateUtils.setStartEndDay(d,1));
-            pm.put("endDate",DateUtils.setStartEndDay(d,0));
-            pm.put("startTime","00:00:00");
-            pm.put("endTime","23:59:59");
+            pm.put("stime",DateUtils.setStartEndDayFormat(d,1)+" 00:00:00");
+            pm.put("etime",DateUtils.setStartEndDayFormat(d,0)+ " 23:59:59");
             pm.put("serviceType",serviceType);
-            log.info("getQoEView 开始时间："+pm.get("startDate"));
-            log.info("getQoEView 结束时间："+pm.get("endDate"));
-            scoreCollects.addAll(scoreCollectAllService.getScores(pm));
+            log.info("getQoEView 开始时间："+pm.get("stime"));
+            log.info("getQoEView 结束时间："+pm.get("etime"));
+            List<ScoreCollectAllEntity>  list = scoreCollectAllService.getScores(pm);
+            if(list.get(0) != null) {
+            	scoreCollects.addAll(scoreCollectAllService.getScores(pm));
+            }
         }
         log.info("各应用网络QOE分析测计算结果:"+scoreCollects);
         //return "{\"id\":\"0\"1,\"name\":\"dder\"}";
         return  R.ok().put("scoreCollects",scoreCollects).put("queryDate",p);
 
     }
-    //显示n天的层级曲线图
+    //显示n天的层级曲线图(5)
     @RequestMapping("/layerqoeview")
     @ResponseBody
     public R getLayerQoEView(String serviceType){
@@ -82,22 +82,22 @@ public class ScoreCollectController {
         List<ScoreCollectLayerEntity> scoreCollects = new ArrayList<ScoreCollectLayerEntity>();
         Map<String,Object> layersParams = new LinkedHashMap<String, Object>();
 
-        for(Date d:p){
+        //for(Date d:p){
             Map<String,Object> pm = new LinkedHashMap<String,Object>();
-            pm.put("startDate",DateUtils.setStartEndDay(d,1));
+          /*  pm.put("startDate",DateUtils.setStartEndDay(d,1));
             pm.put("endDate",DateUtils.setStartEndDay(d,0));
             pm.put("startTime","00:00:00");
-            pm.put("endTime","23:59:59");
+            pm.put("endTime","23:59:59");*/
             pm.put("serviceType",serviceType);
             log.info("/layerqoeview 层级 查询参数，开始时间："+pm.get("startDate"));
             log.info("/layerqoeview 层级 查询参数，结束时间："+pm.get("endDate"));
             scoreCollects.addAll(scoreCollectLayerService.getScores(pm));
-        }
+       // }
         log.info("网络分层评测计算结果1:"+scoreCollects);
         return  R.ok().put("scoreCollects",scoreCollects);
 
     }
-    //显示忙时闲时雷达图
+    //显示忙时闲时雷达图(3)
     @RequestMapping("/dayscoresview")
     @ResponseBody
     public R getDayScoresView(@RequestParam String interval){// http://localhost:8080/cem/index/dayscoresview?interval=2
@@ -114,21 +114,11 @@ public class ScoreCollectController {
         return  R.ok().put("scoreCollects",scoreCollects);
 
     }
-    //显示地图数据
+    //显示地图数据(1)
     @RequestMapping("/cityrankingview")
     @ResponseBody
     public R getCityRankingView(){// http://localhost:8080/cem/index/cityrankingview
-        /*Date[] dateParam = getQueryMouth();
-        Date startTime = dateParam[0];
-        Date endTime = dateParam[1];
-        Map p = new LinkedHashMap<String,Object>();
-        p.put("startTime",startTime);
-        p.put("endTime",endTime);123456
-        List<ScoreCollectCityEntity> scoreCollects = scoreCollectService.getCityRanking(p);*/
-        Date[] p = getQueryDay();
         Map<String,Object> pm = new LinkedHashMap<String,Object>();
-        pm.put("startDate",p[1]);
-        pm.put("endDate",p[0]);
         pm.put("qtype",1);
         List<ScoreCollectCityEntity> scoreCollects = scoreCollectCityService.getScores(pm);
         List<Map<String,Object>> json = new ArrayList<Map<String,Object>>();

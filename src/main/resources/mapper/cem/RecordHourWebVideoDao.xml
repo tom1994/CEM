@@ -85,7 +85,21 @@
 		SUM(total) AS total
 		FROM record_hour_web_video
 		force index(idx_score)
-		WHERE record_date BETWEEN #{ava_start} AND #{ava_terminal}
+		WHERE id IS NOT NULL
+		<if test="startTime == null and ava_start==ava_terminal ">
+			AND record_date BETWEEN #{ava_start} AND #{ava_terminal}
+		</if>
+
+		<if test="startTime != null and ava_start!=ava_terminal ">
+			AND (record_date &gt; #{ava_start} AND record_date &lt; #{ava_terminal})
+			OR (record_date=#{ava_start} AND record_time &gt;= #{startTime} )
+			OR (record_date=#{ava_terminal} AND record_time &lt;= #{terminalTime} )
+		</if>
+
+		<if test="startTime != null and ava_start==ava_terminal ">
+			AND (record_date BETWEEN #{ava_start} AND #{ava_terminal})
+			AND (record_time BETWEEN #{startTime} AND #{terminalTime})
+		</if>
 		<if test="city_id != null and city_id != ''">
 			AND city_id = #{city_id}
 		</if>
@@ -97,9 +111,6 @@
 		</if>
 		<if test="target_id != null and target_id != ''">
 			AND target_id = #{target_id}
-		</if>
-		<if test="startTime != null and terminalTime != null">
-			AND record_time BETWEEN #{startTime} AND #{terminalTime}
 		</if>
 		GROUP BY record_date,city_id,county_id,probe_id,record_time ) t
 		LEFT JOIN city
@@ -336,7 +347,7 @@
 		probe.probe_name AS probe_name,
 		target.target_name AS target_name,
 		probe.access_layer AS accessLayer,
-		time_format(record_time, '%H') AS record_time,
+		time_format(record_time, '%00') AS record_time,
 		AVG(webv.dns_delay) AS dns_delay,
 		AVG(webv.ws_conn_delay) AS ws_conn_delay,
 		AVG(webv.web_page_delay) AS web_page_delay,
@@ -370,7 +381,8 @@
 		<if test="probe_id != null and probe_id != ''">
 			AND webv.probe_id = #{probe_id}
 		</if>
-		GROUP BY webv.city_id,webv.county_id,webv.service_type,webv.probe_id,webv.record_date,webv.record_time
+		GROUP BY webv.city_id,webv.county_id,webv.service_type,webv.probe_id,webv.record_date
+
 
 	</select>
 

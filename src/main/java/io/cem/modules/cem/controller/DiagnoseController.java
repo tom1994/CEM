@@ -46,6 +46,7 @@ public class DiagnoseController {
         JSONObject probedata_jsonobject = JSONObject.parseObject(probedata);
         try {
             map.putAll(JSONUtils.jsonToMap(probedata_jsonobject));
+            map.put("type",1);
         } catch (RuntimeException e) {
             throw new RRException("内部参数错误，请重试！");
         }

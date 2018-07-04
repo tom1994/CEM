@@ -208,7 +208,7 @@
 		probe.access_layer,
 		target.target_name AS target_name,
 		probe_exit.exit,
-		time_format(record_time, '%H') AS record_time,
+		time_format(record_time, '%00') AS record_time,
 		AVG(rht.delay) AS delay,
 		AVG(rht.delay_std) AS delay_std,
 		AVG(rht.delay_var) AS delay_var,

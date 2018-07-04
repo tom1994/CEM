@@ -922,6 +922,7 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 				scoreBase.setWebDownloadDownloadRate(webDownload.get(i).getWebDownloadDownloadRate());
 				scoreBase.setWebDownloadFail(webDownload.get(i).getFail());
 				scoreBase.setWebDownloadTotal(webDownload.get(i).getTotal());
+				scoreBase.setWebDownloadScore(webDownload.get(i).getScore());
 				scoreBase.setScore(webDownload.get(i).getScore());
 				scoreBase.setBase(webDownload.get(i).getBase());
 				Map<String,ScoreBaseEntity> webdownload = new HashMap<>();
@@ -969,6 +970,7 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 							finalScore.setWebDownloadConnDelay(map1.get(typ).getWebDownloadConnDelay());
 							finalScore.setWebDownloadHeadbyteDelay(map1.get(typ).getWebDownloadHeadbyteDelay());
 							finalScore.setWebDownloadDownloadRate(map1.get(typ).getWebDownloadDownloadRate());
+							finalScore.setWebDownloadScore(map1.get(typ).getWebDownloadScore());
 							finalScore.setWebDownloadFail(map1.get(typ).getWebDownloadFail());
 							finalScore.setWebDownloadTotal(map1.get(typ).getWebDownloadTotal());
 						}else if(typ.equals("ftpDownload")){
@@ -977,6 +979,7 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 							finalScore.setFtpDownloadLoginDelay(map1.get(typ).getFtpDownloadLoginDelay());
 							finalScore.setFtpDownloadHeadbyteDelay(map1.get(typ).getFtpDownloadHeadbyteDelay());
 							finalScore.setFtpDownloadDownloadRate(map1.get(typ).getFtpDownloadDownloadRate());
+							finalScore.setFtpDownloadScore(map1.get(typ).getFtpDownloadScore());
 							finalScore.setFtpDownloadFail(map1.get(typ).getFtpDownloadFail());
 							finalScore.setFtpDownloadTotal(map1.get(typ).getFtpDownloadTotal());
 						}else if(typ.equals("ftpUpload")){
@@ -985,6 +988,7 @@ public class RecordHourWebDownloadServiceImpl implements RecordHourWebDownloadSe
 							finalScore.setFtpUploadLoginDelay(map1.get(typ).getFtpUploadLoginDelay());
 							finalScore.setFtpUploadHeadbyteDelay(map1.get(typ).getFtpUploadHeadbyteDelay());
 							finalScore.setFtpUploadUploadRate(map1.get(typ).getFtpUploadUploadRate());
+							finalScore.setFtpUploadScore(map1.get(typ).getFtpUploadScore());
 							finalScore.setFtpUploadFail(map1.get(typ).getFtpUploadFail());
 							finalScore.setFtpUploadTotal(map1.get(typ).getFtpUploadTotal());
 						}else{}

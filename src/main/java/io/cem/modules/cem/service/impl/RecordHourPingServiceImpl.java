@@ -1786,6 +1786,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 				scoreBase.setPingIcmpJitterStd(pingIcmp.get(i).getPingIcmpJitterStd());
 				scoreBase.setPingIcmpJitterVar(pingIcmp.get(i).getPingIcmpJitterVar());
 				scoreBase.setPingIcmpLossRate(pingIcmp.get(i).getPingIcmpLossRate());
+				scoreBase.setIcmpPingScore(pingIcmp.get(i).getScore());
 				scoreBase.setPingIcmpFail(pingIcmp.get(i).getFail());
 				scoreBase.setPingIcmpTotal(pingIcmp.get(i).getTotal());
 				scoreBase.setScore(pingIcmp.get(i).getScore());
@@ -1838,6 +1839,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 							finalScore.setPingIcmpJitterStd(map1.get(typ).getPingIcmpJitterStd());
 							finalScore.setPingIcmpJitterVar(map1.get(typ).getPingIcmpJitterVar());
 							finalScore.setPingIcmpLossRate(map1.get(typ).getPingIcmpLossRate());
+							finalScore.setIcmpPingScore(map1.get(typ).getIcmpPingScore());
 							finalScore.setPingIcmpFail(map1.get(typ).getPingIcmpFail());
 							finalScore.setPingIcmpTotal(map1.get(typ).getPingIcmpTotal());
 						} else if (typ.equals("pingTcp")) {
@@ -1848,6 +1850,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 							finalScore.setPingTcpJitterStd(map1.get(typ).getPingTcpJitterStd());
 							finalScore.setPingTcpJitterVar(map1.get(typ).getPingTcpJitterVar());
 							finalScore.setPingTcpLossRate(map1.get(typ).getPingTcpLossRate());
+							finalScore.setTcpPingScore(map1.get(typ).getTcpPingScore());
 							finalScore.setPingTcpFail(map1.get(typ).getPingTcpFail());
 							finalScore.setPingTcpTotal(map1.get(typ).getPingTcpTotal());
 						} else if (typ.equals("pingUdp")) {
@@ -1858,6 +1861,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 							finalScore.setPingUdpJitterStd(map1.get(typ).getPingUdpJitterStd());
 							finalScore.setPingUdpJitterVar(map1.get(typ).getPingUdpJitterVar());
 							finalScore.setPingUdpLossRate(map1.get(typ).getPingUdpLossRate());
+							finalScore.setUdpPingScore(map1.get(typ).getUdpPingScore());
 							finalScore.setPingUdpFail(map1.get(typ).getPingUdpFail());
 							finalScore.setPingUdpTotal(map1.get(typ).getPingUdpTotal());
 						} else if (typ.equals("tracertIcmp")) {
@@ -1868,6 +1872,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 							finalScore.setTracertIcmpJitterStd(map1.get(typ).getTracertIcmpJitterStd());
 							finalScore.setTracertIcmpJitterVar(map1.get(typ).getTracertIcmpJitterVar());
 							finalScore.setTracertIcmpLossRate(map1.get(typ).getTracertIcmpLossRate());
+							finalScore.setIcmpTracertScore(map1.get(typ).getIcmpTracertScore());
 							finalScore.setTracertIcmpFail(map1.get(typ).getTracertIcmpFail());
 							finalScore.setTracertIcmpTotal(map1.get(typ).getTracertIcmpTotal());
 						} else if (typ.equals("tracertUdp")) {
@@ -1878,6 +1883,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 							finalScore.setTracertTcpJitterStd(map1.get(typ).getTracertTcpJitterStd());
 							finalScore.setTracertTcpJitterVar(map1.get(typ).getTracertTcpJitterVar());
 							finalScore.setTracertTcpLossRate(map1.get(typ).getTracertTcpLossRate());
+							finalScore.setUdpTracertScore(map1.get(typ).getUdpTracertScore());
 							finalScore.setTracertUdpFail(map1.get(typ).getTracertUdpFail());
 							finalScore.setTracertUdpTotal(map1.get(typ).getTracertUdpTotal());
 						} else {
@@ -2474,6 +2480,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 				scoreBase.setPingTcpJitterStd(list.get(i).getPingTcpJitterStd());
 				scoreBase.setPingTcpJitterVar(list.get(i).getPingTcpJitterVar());
 				scoreBase.setPingTcpLossRate(list.get(i).getPingTcpLossRate());
+				scoreBase.setTcpPingScore(list.get(i).getScore());
 				scoreBase.setPingTcpFail(list.get(i).getFail());
 				scoreBase.setPingTcpTotal(list.get(i).getTotal());
 			}else if(type.equals("pingUdp")){
@@ -2484,6 +2491,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 				scoreBase.setPingUdpJitterStd(list.get(i).getPingUdpJitterStd());
 				scoreBase.setPingUdpJitterVar(list.get(i).getPingUdpJitterVar());
 				scoreBase.setPingUdpLossRate(list.get(i).getPingUdpLossRate());
+				scoreBase.setUdpPingScore(list.get(i).getScore());
 				scoreBase.setPingUdpFail(list.get(i).getFail());
 				scoreBase.setPingUdpTotal(list.get(i).getTotal());
 			}else if(type.equals("tracertIcmp")){
@@ -2494,6 +2502,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 				scoreBase.setTracertIcmpJitterStd(list.get(i).getTracertIcmpJitterStd());
 				scoreBase.setTracertIcmpJitterVar(list.get(i).getTracertIcmpJitterVar());
 				scoreBase.setTracertIcmpLossRate(list.get(i).getTracertIcmpLossRate());
+				scoreBase.setIcmpTracertScore(list.get(i).getScore());
 				scoreBase.setTracertIcmpFail(list.get(i).getFail());
 				scoreBase.setTracertIcmpTotal(list.get(i).getTotal());
 			}else if(type.equals("tracertUdp")){
@@ -2504,6 +2513,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 				scoreBase.setTracertTcpJitterStd(list.get(i).getTracertTcpJitterStd());
 				scoreBase.setTracertTcpJitterVar(list.get(i).getTracertTcpJitterVar());
 				scoreBase.setTracertTcpLossRate(list.get(i).getTracertTcpLossRate());
+				scoreBase.setUdpTracertScore(list.get(i).getScore());
 				scoreBase.setTracertUdpFail(list.get(i).getFail());
 				scoreBase.setTracertUdpTotal(list.get(i).getTotal());
 			}else if(type.equals("slaUdp")){
@@ -2514,27 +2524,32 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 				scoreBase.setSlaUdpGJitter(list.get(i).getSlaUdpGJitter());
 				scoreBase.setSlaUdpRJitter(list.get(i).getSlaUdpRJitter());
 				scoreBase.setSlaUdpLossRate(list.get(i).getSlaUdpLossRate());
+				scoreBase.setUdpSlaScore(list.get(i).getScore());
 				scoreBase.setSlaUdpFail(list.get(i).getFail());
 				scoreBase.setSlaUdpTotal(list.get(i).getTotal());
 			}else if(type.equals("dns")){
 				scoreBase.setDnsDelay(list.get(i).getDnsDelay());
 				scoreBase.setDnsSuccessRate(list.get(i).getDnsSuccessRate());
+				scoreBase.setDnsScore(list.get(i).getScore());
 				scoreBase.setDnsFail(list.get(i).getFail());
 				scoreBase.setDnsTotal(list.get(i).getTotal());
 			}else if(type.equals("dhcp")){
 				scoreBase.setDhcpDelay(list.get(i).getDhcpDelay());
 				scoreBase.setDhcpSuccessRate(list.get(i).getDhcpSuccessRate());
+				scoreBase.setDhcpScore(list.get(i).getScore());
 				scoreBase.setDhcpFail(list.get(i).getFail());
 				scoreBase.setDhcpTotal(list.get(i).getTotal());
 			}else if(type.equals("pppoe")){
 				scoreBase.setPppoeDelay(list.get(i).getPppoeDelay());
 				scoreBase.setPppoeDropRate(list.get(i).getPppoeDropRate());
 				scoreBase.setPppoeSuccessRate(list.get(i).getPppoeSuccessRate());
+				scoreBase.setPppoeScore(list.get(i).getScore());
 				scoreBase.setPppoeFail(list.get(i).getFail());
 				scoreBase.setPppoeTotal(list.get(i).getTotal());
 			}else if(type.equals("radius")){
 				scoreBase.setRadiusDelay(list.get(i).getRadiusDelay());
 				scoreBase.setRadiusSuccessRate(list.get(i).getRadiusSuccessRate());
+				scoreBase.setRadiusScore(list.get(i).getScore());
 				scoreBase.setRadiusFail(list.get(i).getFail());
 				scoreBase.setRadiusTotal(list.get(i).getTotal());
 			}else if(type.equals("ftpDownload")){
@@ -2543,6 +2558,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 				scoreBase.setFtpDownloadLoginDelay(list.get(i).getFtpDownloadLoginDelay());
 				scoreBase.setFtpDownloadHeadbyteDelay(list.get(i).getFtpDownloadHeadbyteDelay());
 				scoreBase.setFtpDownloadDownloadRate(list.get(i).getFtpDownloadDownloadRate());
+				scoreBase.setFtpDownloadScore(list.get(i).getScore());
 				scoreBase.setFtpDownloadFail(list.get(i).getFail());
 				scoreBase.setFtpDownloadTotal(list.get(i).getTotal());
 			}else if(type.equals("ftpUpload")){
@@ -2551,6 +2567,7 @@ public class RecordHourPingServiceImpl implements RecordHourPingService {
 				scoreBase.setFtpUploadLoginDelay(list.get(i).getFtpUploadLoginDelay());
 				scoreBase.setFtpUploadHeadbyteDelay(list.get(i).getFtpUploadHeadbyteDelay());
 				scoreBase.setFtpUploadUploadRate(list.get(i).getFtpUploadUploadRate());
+				scoreBase.setFtpUploadScore(list.get(i).getScore());
 				scoreBase.setFtpUploadFail(list.get(i).getFail());
 				scoreBase.setFtpUploadTotal(list.get(i).getTotal());
 			}else{}

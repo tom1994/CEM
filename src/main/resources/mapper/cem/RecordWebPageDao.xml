@@ -161,7 +161,7 @@ GROUP BY rp.port,rp.service_type,rp.target_id,rp.task_id,rp.probe_id
        rp.service_type AS service_type,
        rp.target_id AS target_id,
        rp.target_ip AS target_ip,
-       rp.record_time AS record_time,
+       time_format(rp.record_time,'%00:%30:%00') AS record_time,
        rp.record_date AS record_date,
        probe.city_id AS city_id,
        probe.county_id AS county_id,

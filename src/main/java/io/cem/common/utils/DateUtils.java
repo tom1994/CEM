@@ -246,6 +246,48 @@ public class DateUtils {
         }
         return rs;
     }
+    
+
+    /*
+     * type = 0 返回当月的最后一天
+     * type = 非0其它值 返回当月的第一天
+     * 示例： 当前为5月 调用 setStartEndDay(new Date(),1)
+     * 返回：Tue May 01 00:00:00 CST 2018
+     * 调用 setStartEndDay(new Date(),0)
+     * 返回： 2018-01-01
+     */
+    public static String setStartEndDayFormat(Date d,int type){
+        Calendar cal  = Calendar.getInstance();
+        cal.setTime(d);
+        cal.set(Calendar.HOUR_OF_DAY,0);
+        cal.set(Calendar.MINUTE,0);
+        cal.set(Calendar.SECOND,0);
+        cal.set(Calendar.MILLISECOND,0);
+
+        if(type==0){
+            cal.add(Calendar.MONTH, 1);//向前推一个月，如果不加这行，将得到上个月的最后一天。
+            cal.set(Calendar.DAY_OF_MONTH,0);
+        }else {
+            cal.set(Calendar.DAY_OF_MONTH,1);
+
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String date = sdf.format(cal.getTime());
+        return date;
+
+    }
+    /**
+     * 返回格式化后的时间
+     * @param d
+     * @param type
+     * @return
+     */
+    public static String dateFormat(Date d){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String date = sdf.format(d);
+        return date;
+
+    }
 
 
     public static void main(String args[]){

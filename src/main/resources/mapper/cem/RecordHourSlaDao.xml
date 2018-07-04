@@ -248,7 +248,7 @@
 		probe.probe_name AS probe_name,
 		probe.access_layer AS access_layer,
 		target.target_name AS target_name,
-		time_format(record_time, '%H') AS record_time,
+		time_format(record_time, '%00') AS record_time,
 		AVG(sla.delay) AS delay,
 		AVG(sla.g_delay) AS g_delay,
 		AVG(sla.r_delay) AS r_delay,

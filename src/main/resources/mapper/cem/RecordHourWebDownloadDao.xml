@@ -208,7 +208,7 @@
 		probe.probe_name AS probe_name,
 		probe.access_layer AS access_layer,
 		target.target_name AS target_name,
-		time_format(webd.record_time, '%H') AS record_time,
+		time_format(record_time, '%00') AS record_time,
 		AVG(webd.dns_delay) AS dns_delay,
 		AVG(webd.conn_delay) AS conn_delay,
 		AVG(webd.headbyte_delay) AS headbyte_delay,

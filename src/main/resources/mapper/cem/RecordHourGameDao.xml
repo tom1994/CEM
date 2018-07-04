@@ -73,7 +73,21 @@
 		SUM(total) AS total
 		FROM record_hour_game
 		force index(idx_score)
-		WHERE record_date BETWEEN #{ava_start} AND #{ava_terminal}
+		WHERE id IS NOT NULL
+		<if test="startTime == null and ava_start==ava_terminal ">
+			AND record_date BETWEEN #{ava_start} AND #{ava_terminal}
+		</if>
+
+		<if test="startTime != null and ava_start!=ava_terminal ">
+			AND (record_date &gt; #{ava_start} AND record_date &lt; #{ava_terminal})
+			OR (record_date=#{ava_start} AND record_time &gt;= #{startTime} )
+			OR (record_date=#{ava_terminal} AND record_time &lt;= #{terminalTime} )
+		</if>
+
+		<if test="startTime != null and ava_start==ava_terminal ">
+			AND (record_date BETWEEN #{ava_start} AND #{ava_terminal})
+			AND (record_time BETWEEN #{startTime} AND #{terminalTime})
+		</if>
 		<if test="city_id != null and city_id != ''">
 			AND city_id = #{city_id}
 		</if>
@@ -82,9 +96,6 @@
 		</if>
 		<if test="probe_id != null and probe_id != ''">
 			AND probe_id = #{probe_id}
-		</if>
-		<if test="startTime != null and terminalTime != null">
-			AND record_time BETWEEN #{startTime} AND #{terminalTime}
 		</if>
 		<if test="target_id != null and target_id != ''">
 			AND target_id = #{target_id}
@@ -299,7 +310,7 @@
 		probe.probe_name AS probe_name,
 		probe.access_layer AS access_layer,
 		target.target_name AS target_name,
-		time_format(game.record_time, '%H') AS record_time,
+		time_format(record_time, '%00') AS record_time,
 		AVG(game.dns_delay) AS dns_delay,
 		AVG(game.conn_delay) AS conn_delay,
 		AVG(game.packet_delay) AS packet_delay,

@@ -9,6 +9,7 @@ import io.cem.modules.cem.service.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,6 +24,7 @@ import java.util.Properties;
 
 @Controller
 @RequestMapping("/cem/test")
+@Component("testController")
 public class TestController {
     public static Log log=LogFactory.getLog(TestController.class);
 
@@ -81,13 +83,16 @@ public class TestController {
         List<ScoreEntity> scores = new ArrayList<ScoreEntity>();
         String stime ="";
         String ntime ="";
+        String fix = "";
         try {
 
             InputStream in = new BufferedInputStream(new FileInputStream(PropertiesUtils.class.getClassLoader().getResource("chart.properties").getPath()));
             Properties prop = new Properties();
             prop.load(in);
-            stime = prop.getProperty("stime");
-            ntime = prop.getProperty("etime");
+            fix = prop.getProperty("queryDayRange2");
+
+            stime = DateUtils.format(DateUtils.getPreviousDay(new Date(),Integer.parseInt(fix)));
+            ntime = DateUtils.format(DateUtils.getPreviousDay(new Date(),1));
 
             log.info("保存最近n个月的汇总数据，开始调用scoreCollectAllService.saveConnectivityScore");
             scoreCollectAllService.saveConnectivityScore(stime,ntime);
@@ -120,8 +125,8 @@ public class TestController {
             InputStream in = new BufferedInputStream(new FileInputStream(PropertiesUtils.class.getClassLoader().getResource("chart.properties").getPath()));
             Properties prop = new Properties();
             prop.load(in);
-            stime = prop.getProperty("stime");
-            ntime = prop.getProperty("etime");
+           /* stime = prop.getProperty("stime");
+            ntime = prop.getProperty("etime");*/
 
             fix = prop.getProperty("queryDayRange");
 
@@ -182,8 +187,8 @@ public class TestController {
             InputStream in = new BufferedInputStream(new FileInputStream(PropertiesUtils.class.getClassLoader().getResource("chart.properties").getPath()));
             Properties prop = new Properties();
             prop.load(in);
-            stime = prop.getProperty("stime");
-            etime = prop.getProperty("etime");
+            /*stime = prop.getProperty("stime");
+            etime = prop.getProperty("etime");*/
             fix = prop.getProperty("queryDayRange");
 
             stime = DateUtils.format(DateUtils.getPreviousDay(new Date(),Integer.parseInt(fix)));
@@ -200,7 +205,5 @@ public class TestController {
         return  R.ok().put("startTime",stime).put("endTime",etime);
 
     }
-
-
 
 }
